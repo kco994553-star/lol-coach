@@ -14,6 +14,9 @@ import threading
 from urllib.parse import urlsplit
 
 from .storage import Store, ServiceError
+from .research import ResearchStore
+from coach_intake.audit import inspect as inspect_raw
+from coach_intake.video import index_transcript
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -61,7 +64,9 @@ class Workbench(ThreadingHTTPServer):
                 fcntl.flock(self.db_lock.fileno(),fcntl.LOCK_EX|fcntl.LOCK_NB)
         except OSError:
             self.db_lock.close();raise ValueError('Database already owned by another workbench') from None
-        try:self.store=Store(db)
+        try:
+            self.store=Store(db)
+            self.research=ResearchStore(str(db)+'.research.sqlite')
         except Exception:self.db_lock.close();raise
         self.token=token
         self.limits=limits
@@ -172,7 +177,7 @@ class Handler(BaseHTTPRequestHandler):
         path=urlsplit(self.path)
         if path.query or path.fragment:raise ServiceError(400,'QUERY_NOT_SUPPORTED')
         route=path.path
-        assets={'/':('index.html','text/html; charset=utf-8'),'/app.js':('app.js','text/javascript; charset=utf-8'),'/styles.css':('styles.css','text/css; charset=utf-8')}
+        assets={'/':('index.html','text/html; charset=utf-8'),'/app.js':('app.js','text/javascript; charset=utf-8'),'/styles.css':('styles.css','text/css; charset=utf-8'),'/research.js':('research.js','text/javascript; charset=utf-8')}
         if self.command=='GET' and route in assets:
             filename,ctype=assets[route]
             return self.reply(200,(ROOT/'web_r4'/filename).read_bytes(),ctype)
@@ -180,7 +185,7 @@ class Handler(BaseHTTPRequestHandler):
         store=self.server.store
         prefix='/dev/v1'
         if self.command=='GET' and route==prefix+'/status':
-            return self.reply(200,dict(version='R4',mode='SYNTHETIC_ONLY',real_data_enabled=False,limits=vars(self.server.limits)))
+            return self.reply(200,dict(version='R6',mode='SYNTHETIC_ONLY',real_data_enabled=False,limits=vars(self.server.limits)))
         examples={'insufficient-evidence':'정보 부족 확인','compare-wait-retreat':'대기와 후퇴 비교'}
         if self.command=='GET' and route==prefix+'/examples':
             return self.reply(200,[dict(id=k,title=v) for k,v in examples.items()])
@@ -188,6 +193,36 @@ class Handler(BaseHTTPRequestHandler):
             name=route.removeprefix(prefix+'/examples/')
             if name not in examples:raise ServiceError(404,'NOT_FOUND')
             return self.reply(200,json.loads((ROOT/'examples/r3'/(name+'.json')).read_text()))
+        if route==prefix+'/research':
+            if self.command=='GET':return self.reply(200,self.server.research.list())
+            if self.command=='POST':
+                b=self.body();source=b.get('source_type')
+                if source in ('official_sample','video_example'):
+                    self.fields(b,('source_type','title'))
+                    if source=='official_sample':
+                        raw=(ROOT/'evidence/r5/official-sample-retry-20261004/raw.json').read_bytes()
+                        report=inspect_raw(raw,'DOCUMENTATION_SAMPLE');kind='RAW_DIAGNOSTIC'
+                    else:
+                        report=json.loads((ROOT/'evidence/r5/video-index.json').read_text());kind='VIDEO'
+                elif source in ('raw_json','transcript'):
+                    self.fields(b,('source_type','title','raw_text'),('video_id',) if source=='transcript' else ())
+                    if not isinstance(b['raw_text'],str):raise ServiceError(422,'TEXT_REQUIRED')
+                    raw=b['raw_text'].encode('utf-8')
+                    if source=='raw_json':report=inspect_raw(raw);kind='RAW_DIAGNOSTIC'
+                    else:report=index_transcript(raw,b.get('video_id',''));kind='VIDEO'
+                else:raise ServiceError(422,'SOURCE_TYPE_REQUIRED')
+                return self.reply(201,self.server.research.add(kind,b['title'],report))
+        m=re.fullmatch(re.escape(prefix)+r'/research/([a-f0-9]{64})(?:/notes/(overview|[0-9]+))?',route)
+        if m:
+            rid,anchor=m.groups();rs=self.server.research
+            if anchor:
+                if self.command=='GET':return self.reply(200,rs.get_note(rid,anchor))
+                if self.command=='PUT':
+                    b=self.body();self.fields(b,('note','expected_revision'))
+                    return self.reply(200,rs.put_note(rid,anchor,b['note'],self.revision(b['expected_revision'])))
+            else:
+                if self.command=='GET':return self.reply(200,rs.get(rid))
+                if self.command=='DELETE':return self.reply(200,rs.delete(rid))
         if route==prefix+'/sessions':
             if self.command=='GET':return self.reply(200,store.list_sessions())
             if self.command=='POST':
