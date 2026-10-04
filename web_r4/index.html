@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>LoL Coach · 복기 워크벤치</title><link rel="stylesheet" href="/styles.css"><script src="/app.js" defer></script></head>
+<body>
+<header><a href="/" class="brand">LoL Coach <span>REVIEW LAB</span></a><span class="mode">개발용 · 합성 사례</span></header>
+<main>
+<section class="intro"><p class="eyebrow">좋은 판단을 다시 살펴보는 곳</p><h1>무엇을 알았고,<br>어떤 선택이 가능했을까?</h1><p>장면의 근거를 정리하고 선택을 비교합니다.<br>실제 경기 자동 분석은 아직 연결되지 않았습니다.</p>
+<ol class="steps"><li>① 사례 선택</li><li>② 근거 확인</li><li>③ 선택 비교</li><li>④ 복기 저장</li></ol></section>
+<section id="auth-panel" class="panel"><h2>로컬 워크벤치 연결</h2><form id="login-form"><label for="token">접속키</label><div class="row"><input id="token" type="password" autocomplete="off" placeholder="실행 시 생성된 접속키" required><button type="submit">연결</button></div></form><p class="small">접속키는 이 탭에서만 보관합니다. 외부 AI·유료 서비스로 데이터를 보내지 않습니다.</p></section>
+<p id="notice" role="status" aria-live="polite"></p>
+<div id="workspace" hidden>
+<div class="layout"><aside class="panel"><div class="section-head"><h2>저장한 사례</h2><button id="refresh" class="quiet">새로고침</button></div><div id="sessions" class="session-list"></div><button id="logout" class="quiet">연결 해제</button></aside>
+<div class="content"><section class="panel"><div class="section-head"><h2>새 사례</h2><span class="tag">SYNTHETIC</span></div><label for="example">시작할 예시</label><div class="row"><select id="example"><option value="insufficient-evidence">정보가 부족한 상황</option><option value="compare-wait-retreat">대기와 후퇴를 비교하는 상황</option></select><button id="load-example" class="secondary">예시 불러오기</button></div><label for="title">사례 이름</label><input id="title" maxlength="120" value="나의 연습 사례"><details><summary>합성 입력 확인·수정</summary><label for="case-json">구조화 입력 JSON</label><textarea id="case-json" spellcheck="false" rows="14"></textarea><label for="import-file">합성 JSON 파일 불러오기</label><input id="import-file" type="file" accept="application/json,.json"><p class="small">실제 경기 자료 업로드용이 아닙니다. 입력을 수정해도 기존 기록은 새 버전으로 남습니다.</p></details><div class="actions"><button id="save-case">사례 저장</button><button id="analyze" disabled>분석 실행</button><button id="cancel" class="secondary" disabled>작업 취소</button></div><p id="current" class="small">아직 선택한 사례가 없습니다.</p></section>
+<section id="report-panel" class="panel" hidden><div class="section-head"><h2>복기 결과</h2><span id="report-state" class="tag"></span></div><p id="objective"></p><p class="callout">아래 비교는 제공된 합성 조건 안의 결과입니다. 게임 승률이나 실제 행동 권고가 아닙니다.</p><div id="evaluations" class="cards"></div><h3>무엇을 알고 있었나</h3><div class="table-wrap"><table><thead><tr><th>정보</th><th>상태</th><th>값·사유</th></tr></thead><tbody id="evidence"></tbody></table></div><h3>추가로 확인할 것</h3><div id="questions"></div><h3>판단과 결과 구분</h3><p id="reflection"></p><details><summary>출처·조건·전체 기록</summary><pre id="report-json"></pre></details><div class="actions"><button id="download" class="secondary">결과 JSON 내려받기</button></div></section>
+<section id="session-actions" class="panel" hidden><button id="delete-session" class="danger">선택한 사례와 결과 삭제</button><p class="small">입력·작업·복기 결과를 함께 삭제합니다.</p></section>
+</div></div></div>
+</main><footer>LoL Coach · 개인용 복기 프로젝트 / R4 개발 워크벤치<br>실제 경기 연결과 코칭 정확도는 아직 검증되지 않았습니다.</footer>
+</body></html>

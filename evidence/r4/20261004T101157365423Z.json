@@ -1,0 +1,119 @@
+{
+  "at_utc": "2026-10-04T10:11:57.365379+00:00",
+  "evidence_kind": "FRESH_SYNTHETIC_EXECUTION",
+  "tests_run": 63,
+  "failures": 0,
+  "errors": 1,
+  "passed": false,
+  "ui_races_passed": true,
+  "frozen_regression": {
+    "at_utc": "2026-10-04T10:11:57.331894+00:00",
+    "python": "3.12.14",
+    "pydantic": "2.13.5",
+    "evidence_kind": "FRESH_EXECUTION",
+    "historical_R1_reproduced": false,
+    "v1_runtime_tested": false,
+    "passed": 9,
+    "failed": 0,
+    "checks": [
+      {
+        "id": "REC-CHECK-SOURCE",
+        "status": "PASS",
+        "detail": {
+          "source_files": 14,
+          "python_files": 13,
+          "historical_identity": "UNKNOWN"
+        }
+      },
+      {
+        "id": "REC-CHECK-TRACEABILITY",
+        "status": "PASS",
+        "detail": {
+          "requirements": 24,
+          "scenarios": 18,
+          "scope": "reference integrity only; semantics independently reviewed"
+        }
+      },
+      {
+        "id": "REC-CHECK-HISTORY",
+        "status": "PASS",
+        "detail": "Historical IDs reserved, no claim of original 32/32 reproduction."
+      },
+      {
+        "id": "REC-CORE-UNKNOWN",
+        "status": "PASS",
+        "detail": {
+          "jungle": "UNKNOWN",
+          "permission": "P3",
+          "recommended": "SHORT_TRADE",
+          "classification": "legacy behavior, not v1 coaching correctness"
+        }
+      },
+      {
+        "id": "REC-CORE-FAR",
+        "status": "PASS",
+        "detail": {
+          "jungle": "CONFIRMED_FAR",
+          "permission": "P4",
+          "recommended": "SHORT_TRADE",
+          "classification": "legacy behavior, not v1 coaching correctness"
+        }
+      },
+      {
+        "id": "REC-CORE-NEAR",
+        "status": "PASS",
+        "detail": {
+          "jungle": "CONFIRMED_NEAR",
+          "permission": "P2",
+          "recommended": "THREAT",
+          "classification": "legacy behavior, not v1 coaching correctness"
+        }
+      },
+      {
+        "id": "REC-CORE-COUNTERFACTUAL",
+        "status": "PASS",
+        "detail": "Controlled jungle-state changes and removing CS-approach opportunity; new REC check."
+      },
+      {
+        "id": "REC-CHECK-MIGRATION",
+        "status": "PASS",
+        "detail": "Verified known legacy gaps: 16 enums / 9 definitions; return_path does not affect output. Not a desired v1 invariant."
+      },
+      {
+        "id": "REC-CHECK-FROZEN-PAYLOAD",
+        "status": "PASS",
+        "detail": {
+          "payload_files": 27,
+          "scope": "frozen payload integrity"
+        }
+      }
+    ]
+  },
+  "source_sha256": {
+    "coach_v1/__init__.py": "5bf777370450f55aca6dabf4e7235e72fad4fb3b7f53a1125046ab790cb3dca2",
+    "coach_v1/__main__.py": "da42f47917ca3d373c937cfb1c81e79507dd2a91f02943c7aa1796622068de52",
+    "coach_v1/capture.py": "77f650ea018938d9959c2741b6d71c0ca3e46b1b462c5aeb37c9ccb467fdac45",
+    "coach_v1/engine.py": "37bb801a02df3464707fdd2012678d4fd174d7261c2df3765610abe47db5128a",
+    "coach_v1/models.py": "20366f44a66b17fba2eaa9a5e6f3ae21c9a7898475bc1dcdfc63de4facfa7ae8",
+    "coach_v1/server.py": "81aa53c6336ad915dd90f62e52e69e2441804a62f77c9155413765436c95c37a",
+    "coach_v1/state.py": "b0624cd06abcada3df414a4d1cf8e5e116c1cab6d0e786051106bd64bd51d025",
+    "coach_v1/storage.py": "45e4c4725fd516c66cf9348f1afe9aba8c8bebe8aae574939f8d47394f1ce6e0",
+    "web_r4/app.js": "c3986df5508c19dead28085bfe4a479c3a87f74dbf6f13cdf6bd2547869eab18",
+    "web_r4/index.html": "38002b315659c4962b82ef450cfbbaac3a895e524d85f2464dbd9e16a086a3f0",
+    "web_r4/styles.css": "f9bc6eae9523d139a257ae97e64a286f7d0564c7d9bdd2e31b683d78c6f328bd",
+    "tests_r3/__init__.py": "9ad489ee881d706c740d2cd597f637cc7f979e52cf9dbb5e381cf5c337530dfc",
+    "tests_r3/helpers.py": "020ceed97455798f06c29f1abac5c3b9896ca5ccd09d7b11b895584cd1030902",
+    "tests_r3/test_engine.py": "8aa473d717894024a93c34abe0a2c73c4e58a2cff3379b8ab9c0afc7935c4d23",
+    "tests_r3/test_state.py": "4bf26174a809bb6a95b090b06f547015b30193e79c32d958f12022f55b3ae67e",
+    "tests_r4/__init__.py": "2f873f3aeb588668b2f9e74322f32677a907f2ed21f3bc3bec4f8dc3df9af24f",
+    "tests_r4/test_capture.py": "ebb4a6a06142904e8623dcc881aa190c6cc65c0aafc793ce2d775da492fe6ff4",
+    "tests_r4/test_http.py": "f739fa31833145aae0f92f40c0d11bab76f20f8d2175d0b474f95adcd7305701",
+    "tests_r4/test_storage.py": "61bbbb55373c59157d1abc613bdf9b2eb1bcefa8200fddb4d46500580e8c8edf",
+    "tests_r4/ui_races.cjs": "e09988a361dc105ecef72435815b7f88455d37ee7a207fce0f92114f203f4f4c",
+    "scripts/verify_r3.py": "22f4e0177cf2ca651317aadca5f6b21ceef6f62378255d2820f3e9e27e8ca0ef",
+    "scripts/verify_r4.py": "985ae827af274c197f63dd815ffe00b1a276a1a6e1ca3399596a497dea3bc327",
+    "schemas/r3-review-input.schema.json": "523cda1ca6abd830b607f8a1858e219a0165ff561db70e85f338fec40d571a22"
+  },
+  "real_game_capture_tested": false,
+  "production_enabled": false
+}
