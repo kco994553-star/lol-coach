@@ -1,0 +1,259 @@
+[
+  {
+    "id": "REC-SC-001",
+    "title": "라인전 CS 접근",
+    "requirement_ids": [
+      "REC-REQ-002",
+      "REC-REQ-006",
+      "REC-REQ-007",
+      "REC-REQ-008",
+      "REC-REQ-009",
+      "REC-REQ-024"
+    ],
+    "input_summary": "상대 접근/큰 아군 wave/정글 미확인",
+    "expected": "의도 단정 금지; wave 기여와 실제 이탈 미확인; 짧은 교환 유리 확정 불가",
+    "variation": "상대 대응·미니언 기여 근거가 추가되면 해당 후보만 재평가",
+    "evidence_kind": "DESIGN_EXPECTATION",
+    "runtime_status": "NOT_RUN"
+  },
+  {
+    "id": "REC-SC-002",
+    "title": "스킬 사용과 준비",
+    "requirement_ids": [
+      "REC-REQ-005",
+      "REC-REQ-009",
+      "REC-REQ-012"
+    ],
+    "input_summary": "시전 영상만 확보, 경과/초기화 미확인",
+    "expected": "사용 사실 보존; 현재 사용 불가 미확정",
+    "variation": "patch 검증된 경과·초기화 근거가 있어야 현재 상태 판정",
+    "evidence_kind": "DESIGN_EXPECTATION",
+    "runtime_status": "NOT_RUN"
+  },
+  {
+    "id": "REC-SC-003",
+    "title": "오래된 정글 목격",
+    "requirement_ids": [
+      "REC-REQ-003",
+      "REC-REQ-005",
+      "REC-REQ-016"
+    ],
+    "input_summary": "정글 과거 위치만 관찰",
+    "expected": "last_seen 보존, 현재 위치 UNKNOWN",
+    "variation": "목격 제거가 안전 결론 강화로 이어지지 않음",
+    "evidence_kind": "DESIGN_EXPECTATION",
+    "runtime_status": "NOT_RUN"
+  },
+  {
+    "id": "REC-SC-004",
+    "title": "웨이브 데이터 결손",
+    "requirement_ids": [
+      "REC-REQ-004",
+      "REC-REQ-006",
+      "REC-REQ-016"
+    ],
+    "input_summary": "CS 증가, 미니언 관찰 없음",
+    "expected": "wave 방향/전투 우세 확정 금지",
+    "variation": "미니언 위치/체력/공격 대상이 추가되면 독립적으로 평가",
+    "evidence_kind": "DESIGN_EXPECTATION",
+    "runtime_status": "NOT_RUN"
+  },
+  {
+    "id": "REC-SC-005",
+    "title": "다이브 수비",
+    "requirement_ids": [
+      "REC-REQ-007",
+      "REC-REQ-009",
+      "REC-REQ-010",
+      "REC-REQ-011"
+    ],
+    "input_summary": "낮은 체력/큰 적 wave/정글 미확인",
+    "expected": "수비·경험치 포기·이탈 비용 비교; 무조건 후퇴 금지",
+    "variation": "지원·탈출 근거에 따라 조건부 분기",
+    "evidence_kind": "DESIGN_EXPECTATION",
+    "runtime_status": "NOT_RUN"
+  },
+  {
+    "id": "REC-SC-006",
+    "title": "귀환·로밍",
+    "requirement_ids": [
+      "REC-REQ-007",
+      "REC-REQ-011",
+      "REC-REQ-024"
+    ],
+    "input_summary": "웨이브 정리 후 이동 후보, 귀환 완료 미확인",
+    "expected": "채널 시작을 완료로 오인 금지; 이동+완료+복귀 비용",
+    "variation": "이동 마감 후 얻은 정보는 당시 확인 대안으로 사용 금지",
+    "evidence_kind": "DESIGN_EXPECTATION",
+    "runtime_status": "NOT_RUN"
+  },
+  {
+    "id": "REC-SC-007",
+    "title": "로밍인 척 매복",
+    "requirement_ids": [
+      "REC-REQ-007",
+      "REC-REQ-009",
+      "REC-REQ-024"
+    ],
+    "input_summary": "라인에서 사라짐, 부시 관찰 없음",
+    "expected": "로밍 의도/매복 위치를 사실화 금지; 대기 손실 비교",
+    "variation": "관전자 부시 위치는 outcome-only",
+    "evidence_kind": "DESIGN_EXPECTATION",
+    "runtime_status": "NOT_RUN"
+  },
+  {
+    "id": "REC-SC-008",
+    "title": "아군 무리한 진입",
+    "requirement_ids": [
+      "REC-REQ-010",
+      "REC-REQ-014",
+      "REC-REQ-015"
+    ],
+    "input_summary": "라인 밖 교전, 원거리 지원 가능",
+    "expected": "완전/제한/퇴로/반대편/이탈 비교, 도착 시 기여 확인",
+    "variation": "아군 미호응이면 협조 의존 효과 철회; 사용 자원 매몰비용으로 추가 진입 금지",
+    "evidence_kind": "DESIGN_EXPECTATION",
+    "runtime_status": "NOT_RUN"
+  },
+  {
+    "id": "REC-SC-009",
+    "title": "한타와 역할",
+    "requirement_ids": [
+      "REC-REQ-007",
+      "REC-REQ-013",
+      "REC-REQ-014",
+      "REC-REQ-024"
+    ],
+    "input_summary": "딜러/보호자 위치와 스킬 일부 확인",
+    "expected": "호응 가능 시간·역할·진입 범위 미확인 표시",
+    "variation": "인원수만 같아도 도착/자원이 다르면 같은 판단 강제 금지",
+    "evidence_kind": "DESIGN_EXPECTATION",
+    "runtime_status": "NOT_RUN"
+  },
+  {
+    "id": "REC-SC-010",
+    "title": "넥서스 수비",
+    "requirement_ids": [
+      "REC-REQ-009",
+      "REC-REQ-010",
+      "REC-REQ-015"
+    ],
+    "input_summary": "모든 후보 손실, 후퇴하면 패배 가능",
+    "expected": "생존 절대 우선 금지; 목표와 남는 선택권 설명",
+    "variation": "불가능한 역전/정리 행동을 차선으로 제시 금지",
+    "evidence_kind": "DESIGN_EXPECTATION",
+    "runtime_status": "NOT_RUN"
+  },
+  {
+    "id": "REC-SC-011",
+    "title": "draft 변경",
+    "requirement_ids": [
+      "REC-REQ-001",
+      "REC-REQ-012",
+      "REC-REQ-013",
+      "REC-REQ-024"
+    ],
+    "input_summary": "픽/역할 수정 또는 adapter 끊김",
+    "expected": "기존 gameplan 만료; 수정된 조건만 반영, stale/unknown 표시",
+    "variation": "자동 수집 불가시 수동 전환과 미지원 표시",
+    "evidence_kind": "DESIGN_EXPECTATION",
+    "runtime_status": "NOT_RUN"
+  },
+  {
+    "id": "REC-SC-012",
+    "title": "늦은·중복 이벤트",
+    "requirement_ids": [
+      "REC-REQ-002",
+      "REC-REQ-004",
+      "REC-REQ-020"
+    ],
+    "input_summary": "오래된 event가 늦게 수신, 같은 영상 다중 요약",
+    "expected": "최신 상태 덮어쓰기 금지; 독립 증거 수 증가 금지",
+    "variation": "동일 ID 다른 hash는 충돌, 같은 hash 재수신은 무효",
+    "evidence_kind": "DESIGN_EXPECTATION",
+    "runtime_status": "NOT_RUN"
+  },
+  {
+    "id": "REC-SC-013",
+    "title": "관전자와 당시 지식",
+    "requirement_ids": [
+      "REC-REQ-003",
+      "REC-REQ-015"
+    ],
+    "input_summary": "숨겨진 적이 observer 영상에 보임",
+    "expected": "player 근거에서 제외; 결과 설명에만 사용",
+    "variation": "나중 분석한 player-visible 영상은 별도 cutoff semantics로 사용 가능",
+    "evidence_kind": "DESIGN_EXPECTATION",
+    "runtime_status": "NOT_RUN"
+  },
+  {
+    "id": "REC-SC-014",
+    "title": "실행·결과 편향",
+    "requirement_ids": [
+      "REC-REQ-008",
+      "REC-REQ-015"
+    ],
+    "input_summary": "짧은 교환 후 계속 추격해 사망",
+    "expected": "의도 UNKNOWN; 관찰 실행과 가정 대안 계획 분리; 실제 계획 위반 확정 금지; 판단/실행/결과 분리",
+    "variation": "사망↔생존 결과만 바꿔 당시 판단을 뒤집지 않음",
+    "evidence_kind": "DESIGN_EXPECTATION",
+    "runtime_status": "NOT_RUN"
+  },
+  {
+    "id": "REC-SC-015",
+    "title": "patch/지식 충돌",
+    "requirement_ids": [
+      "REC-REQ-009",
+      "REC-REQ-012"
+    ],
+    "input_summary": "상충 상성 규칙 또는 미지원 patch",
+    "expected": "가설 명시; 무근거 cutoff 생성 금지; 해당 평가 제한",
+    "variation": "다른 AI의 동의로 evidence 승격하지 않음",
+    "evidence_kind": "DESIGN_EXPECTATION",
+    "runtime_status": "NOT_RUN"
+  },
+  {
+    "id": "REC-SC-016",
+    "title": "AI 오염·모드 우회",
+    "requirement_ids": [
+      "REC-REQ-001",
+      "REC-REQ-018",
+      "REC-REQ-019",
+      "REC-REQ-022"
+    ],
+    "input_summary": "clip 내 지시, LIVE 모드로 동적 복기 요청",
+    "expected": "지시 무시; mode gate 거부; 출처 없는 설명 격리",
+    "variation": "AI 실패여도 구조화 결과 보존; live로 사후정보 노출 금지",
+    "evidence_kind": "DESIGN_EXPECTATION",
+    "runtime_status": "NOT_RUN"
+  },
+  {
+    "id": "REC-SC-017",
+    "title": "업로드/삭제/실패",
+    "requirement_ids": [
+      "REC-REQ-017",
+      "REC-REQ-019",
+      "REC-REQ-020"
+    ],
+    "input_summary": "중복 요청/파싱 오류/삭제 중 job 완료",
+    "expected": "오류·부분 성공 명시, 삭제 후 결과 재노출 금지",
+    "variation": "새 요청 key 없이 중복 job 생성 금지, 외부 비밀 반환 금지",
+    "evidence_kind": "DESIGN_EXPECTATION",
+    "runtime_status": "NOT_RUN"
+  },
+  {
+    "id": "REC-SC-018",
+    "title": "Freeze와 출시",
+    "requirement_ids": [
+      "REC-REQ-016",
+      "REC-REQ-021",
+      "REC-REQ-022",
+      "REC-REQ-023"
+    ],
+    "input_summary": "계약 감사 통과, 실표본 없음",
+    "expected": "design-only 상태; runtime/real-data PASS 금지",
+    "variation": "legacy 바이트/역사 ID 유지; 원본 발견시 별도 대조",
+    "evidence_kind": "DESIGN_EXPECTATION",
+    "runtime_status": "NOT_RUN"
+  }
+]
