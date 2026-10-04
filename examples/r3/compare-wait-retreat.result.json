@@ -1,0 +1,189 @@
+{
+  "schema_version": "r3.v1",
+  "evidence_kind": "SYNTHETIC",
+  "decision_id": "d3f8eab4cb7ae98336b85bd8a22881a3b4cb5184bb12168e07d81a97cf93f332",
+  "mode": "TEST",
+  "objective": "합성 사례: 경험치와 다음 선택권 보존",
+  "scope_reason": "Two fixture branches only: no reinforcement / reinforcement. Not a real match prediction.",
+  "scope_limit": "Only supplied scenarios; scope completeness and game annotations are not independently verified.",
+  "snapshot": {
+    "snapshot_id": "f8bee5cd8db4cfab7292d61bbe31e01338e21114c569e19f9a83ddbefd3e3b23",
+    "request": {
+      "session_id": "synthetic-1",
+      "patch": "SYNTHETIC-1",
+      "as_of_event_time_ms": 1000,
+      "knowledge_cutoff": "2026-10-04T10:00:00Z",
+      "game_clock_basis": "fixture-clock",
+      "view": "PLAYER_REVIEW",
+      "required_keys": [
+        "self:position"
+      ],
+      "revision_parent": null
+    },
+    "schema_version": "r3.v1",
+    "reducer_version": "r3.v1",
+    "fields": [
+      {
+        "key": "self:position",
+        "value": "lane",
+        "state": "KNOWN",
+        "evidence_refs": [
+          "o1"
+        ],
+        "reasons": [],
+        "independent_groups": [
+          "frame-1"
+        ]
+      }
+    ],
+    "observation_hashes": [
+      [
+        "o1",
+        "41f80d31a8b004b0e306501e97a7301d30d6e36f3d11c15d6578d19953cf58cb"
+      ]
+    ],
+    "excluded": [],
+    "conflict_ids": []
+  },
+  "evaluations": [
+    {
+      "action_id": "wait",
+      "action_type": "WAIT",
+      "feasibility": "POSSIBLE",
+      "sufficiency": "SUFFICIENT",
+      "assessment": "CONTESTED",
+      "missing_fields": [],
+      "expired": false,
+      "scenario_assessments": [
+        {
+          "scenario_id": "s1",
+          "assessment": "CONTESTED",
+          "rationale": "수동으로 정의한 합성 기대값; 게임 규칙 추론 아님",
+          "evidence_refs": [
+            "o1"
+          ],
+          "annotation_status": "ELIGIBLE_SYNTHETIC_ANNOTATION",
+          "conditions": [
+            "아군 지원 가능이라고 가정"
+          ]
+        },
+        {
+          "scenario_id": "s2",
+          "assessment": "CONTESTED",
+          "rationale": "수동으로 정의한 합성 기대값; 게임 규칙 추론 아님",
+          "evidence_refs": [
+            "o1"
+          ],
+          "annotation_status": "ELIGIBLE_SYNTHETIC_ANNOTATION",
+          "conditions": [
+            "아군 지원 불가라고 가정"
+          ]
+        }
+      ],
+      "contract": {
+        "action_id": "wait",
+        "action_type": "WAIT",
+        "feasibility": "POSSIBLE",
+        "feasibility_refs": [
+          "o1"
+        ],
+        "required_keys": [
+          "self:position"
+        ],
+        "target": "synthetic target",
+        "path": "fixture path",
+        "entry_condition": "verified in synthetic scene",
+        "resource_budget": "preserve escape resource",
+        "exit_condition": "return to initial position",
+        "abort_conditions": [
+          "enemy_arrives"
+        ],
+        "postcondition": "retain return route",
+        "deadline_event": "wave_arrives"
+      }
+    },
+    {
+      "action_id": "retreat",
+      "action_type": "DISENGAGE",
+      "feasibility": "POSSIBLE",
+      "sufficiency": "SUFFICIENT",
+      "assessment": "CONTESTED",
+      "missing_fields": [],
+      "expired": false,
+      "scenario_assessments": [
+        {
+          "scenario_id": "s1",
+          "assessment": "CONTESTED",
+          "rationale": "수동으로 정의한 합성 기대값; 게임 규칙 추론 아님",
+          "evidence_refs": [
+            "o1"
+          ],
+          "annotation_status": "ELIGIBLE_SYNTHETIC_ANNOTATION",
+          "conditions": [
+            "아군 지원 가능이라고 가정"
+          ]
+        },
+        {
+          "scenario_id": "s2",
+          "assessment": "CONTESTED",
+          "rationale": "수동으로 정의한 합성 기대값; 게임 규칙 추론 아님",
+          "evidence_refs": [
+            "o1"
+          ],
+          "annotation_status": "ELIGIBLE_SYNTHETIC_ANNOTATION",
+          "conditions": [
+            "아군 지원 불가라고 가정"
+          ]
+        }
+      ],
+      "contract": {
+        "action_id": "retreat",
+        "action_type": "DISENGAGE",
+        "feasibility": "POSSIBLE",
+        "feasibility_refs": [
+          "o1"
+        ],
+        "required_keys": [
+          "self:position"
+        ],
+        "target": "synthetic target",
+        "path": "fixture path",
+        "entry_condition": "verified in synthetic scene",
+        "resource_budget": "preserve escape resource",
+        "exit_condition": "return to initial position",
+        "abort_conditions": [
+          "enemy_arrives"
+        ],
+        "postcondition": "retain return route",
+        "deadline_event": "wave_arrives"
+      }
+    }
+  ],
+  "dominance": [
+    {
+      "better": "retreat",
+      "worse": "wait"
+    }
+  ],
+  "comparison_conflicts": [],
+  "alternatives": [
+    "retreat"
+  ],
+  "recommendation": null,
+  "information_requests": [],
+  "deferred_information": [],
+  "intention": {
+    "state": "UNKNOWN",
+    "text": null,
+    "execution_violation": "NOT_EVALUATED"
+  },
+  "outcome": {
+    "text": null,
+    "used_for_decision": false
+  },
+  "limitations": [
+    "Offline synthetic contract execution only.",
+    "No damage, matchup, cooldown, win-probability or live game inference.",
+    "No production adapter, AI service, API or web UI enabled."
+  ]
+}

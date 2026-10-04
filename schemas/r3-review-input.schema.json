@@ -1,0 +1,818 @@
+{
+  "$defs": {
+    "Action": {
+      "additionalProperties": false,
+      "properties": {
+        "action_id": {
+          "minLength": 1,
+          "title": "Action Id",
+          "type": "string"
+        },
+        "action_type": {
+          "enum": [
+            "THREAT",
+            "SINGLE_HIT",
+            "SHORT_TRADE",
+            "EXTENDED_TRADE",
+            "ALL_IN",
+            "CHASE",
+            "CONCEDE_RESOURCE",
+            "HOLD_PRESSURE",
+            "FREEZE",
+            "SLOW_PUSH",
+            "CRASH",
+            "CLAIM_SPACE",
+            "CLAIM_RESOURCE",
+            "WAIT",
+            "PROBE",
+            "DISENGAGE",
+            "FULL_COMMIT",
+            "LIMITED_SUPPORT",
+            "EXIT_COVER",
+            "CROSS_MAP_TRADE",
+            "RECALL",
+            "ROAM",
+            "AMBUSH"
+          ],
+          "title": "Action Type",
+          "type": "string"
+        },
+        "feasibility": {
+          "enum": [
+            "POSSIBLE",
+            "IMPOSSIBLE",
+            "UNKNOWN"
+          ],
+          "title": "Feasibility",
+          "type": "string"
+        },
+        "feasibility_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Feasibility Refs",
+          "type": "array"
+        },
+        "required_keys": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Required Keys",
+          "type": "array"
+        },
+        "target": {
+          "minLength": 1,
+          "title": "Target",
+          "type": "string"
+        },
+        "path": {
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        },
+        "entry_condition": {
+          "minLength": 1,
+          "title": "Entry Condition",
+          "type": "string"
+        },
+        "resource_budget": {
+          "minLength": 1,
+          "title": "Resource Budget",
+          "type": "string"
+        },
+        "exit_condition": {
+          "minLength": 1,
+          "title": "Exit Condition",
+          "type": "string"
+        },
+        "abort_conditions": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Abort Conditions",
+          "type": "array"
+        },
+        "postcondition": {
+          "minLength": 1,
+          "title": "Postcondition",
+          "type": "string"
+        },
+        "deadline_event": {
+          "minLength": 1,
+          "title": "Deadline Event",
+          "type": "string"
+        }
+      },
+      "required": [
+        "action_id",
+        "action_type",
+        "feasibility",
+        "feasibility_refs",
+        "required_keys",
+        "target",
+        "path",
+        "entry_condition",
+        "resource_budget",
+        "exit_condition",
+        "abort_conditions",
+        "postcondition",
+        "deadline_event"
+      ],
+      "title": "Action",
+      "type": "object"
+    },
+    "Assessment": {
+      "additionalProperties": false,
+      "properties": {
+        "action_id": {
+          "title": "Action Id",
+          "type": "string"
+        },
+        "scenario_id": {
+          "title": "Scenario Id",
+          "type": "string"
+        },
+        "assessment": {
+          "enum": [
+            "FAVORABLE",
+            "UNFAVORABLE",
+            "CONTESTED",
+            "UNDETERMINED"
+          ],
+          "title": "Assessment",
+          "type": "string"
+        },
+        "rationale": {
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "knowledge_status": {
+          "enum": [
+            "REVIEWED",
+            "EXPLORATORY"
+          ],
+          "title": "Knowledge Status",
+          "type": "string"
+        },
+        "patch": {
+          "title": "Patch",
+          "type": "string"
+        },
+        "knowledge_ref": {
+          "minLength": 1,
+          "title": "Knowledge Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "action_id",
+        "scenario_id",
+        "assessment",
+        "rationale",
+        "evidence_refs",
+        "knowledge_status",
+        "patch",
+        "knowledge_ref"
+      ],
+      "title": "Assessment",
+      "type": "object"
+    },
+    "Comparison": {
+      "additionalProperties": false,
+      "properties": {
+        "left_action_id": {
+          "title": "Left Action Id",
+          "type": "string"
+        },
+        "right_action_id": {
+          "title": "Right Action Id",
+          "type": "string"
+        },
+        "scenario_id": {
+          "title": "Scenario Id",
+          "type": "string"
+        },
+        "dimensions": {
+          "items": {
+            "$ref": "#/$defs/DimensionRelation"
+          },
+          "title": "Dimensions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "left_action_id",
+        "right_action_id",
+        "scenario_id",
+        "dimensions"
+      ],
+      "title": "Comparison",
+      "type": "object"
+    },
+    "DimensionRelation": {
+      "additionalProperties": false,
+      "properties": {
+        "dimension": {
+          "enum": [
+            "survival_exposure",
+            "resources",
+            "growth",
+            "position_wave",
+            "time_objectives",
+            "options"
+          ],
+          "title": "Dimension",
+          "type": "string"
+        },
+        "relation": {
+          "enum": [
+            "BETTER",
+            "SAME",
+            "WORSE",
+            "UNKNOWN"
+          ],
+          "title": "Relation",
+          "type": "string"
+        },
+        "rationale": {
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "dimension",
+        "relation",
+        "rationale",
+        "evidence_refs"
+      ],
+      "title": "DimensionRelation",
+      "type": "object"
+    },
+    "InformationRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "field_key": {
+          "title": "Field Key",
+          "type": "string"
+        },
+        "action_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Action Ids",
+          "type": "array"
+        },
+        "changes_conclusion": {
+          "title": "Changes Conclusion",
+          "type": "boolean"
+        },
+        "minimum_observation": {
+          "minLength": 1,
+          "title": "Minimum Observation",
+          "type": "string"
+        },
+        "available_before_deadline": {
+          "enum": [
+            "YES",
+            "NO",
+            "UNKNOWN"
+          ],
+          "title": "Available Before Deadline",
+          "type": "string"
+        },
+        "waiting_cost": {
+          "minLength": 1,
+          "title": "Waiting Cost",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field_key",
+        "action_ids",
+        "changes_conclusion",
+        "minimum_observation",
+        "available_before_deadline",
+        "waiting_cost"
+      ],
+      "title": "InformationRequest",
+      "type": "object"
+    },
+    "Observation": {
+      "additionalProperties": false,
+      "properties": {
+        "observation_id": {
+          "minLength": 1,
+          "title": "Observation Id",
+          "type": "string"
+        },
+        "session_id": {
+          "minLength": 1,
+          "title": "Session Id",
+          "type": "string"
+        },
+        "entity_id": {
+          "minLength": 1,
+          "title": "Entity Id",
+          "type": "string"
+        },
+        "field_key": {
+          "minLength": 1,
+          "title": "Field Key",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "kind": {
+          "enum": [
+            "OBSERVED",
+            "DERIVED",
+            "INFERRED",
+            "MANUAL"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "event_time_ms": {
+          "minimum": 0,
+          "title": "Event Time Ms",
+          "type": "integer"
+        },
+        "received_at": {
+          "format": "date-time",
+          "title": "Received At",
+          "type": "string"
+        },
+        "game_clock_basis": {
+          "minLength": 1,
+          "title": "Game Clock Basis",
+          "type": "string"
+        },
+        "source_id": {
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        },
+        "source_version": {
+          "minLength": 1,
+          "title": "Source Version",
+          "type": "string"
+        },
+        "source_location": {
+          "minLength": 1,
+          "title": "Source Location",
+          "type": "string"
+        },
+        "source_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Hash",
+          "type": "string"
+        },
+        "lineage_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Lineage Ids",
+          "type": "array"
+        },
+        "independent_group_id": {
+          "minLength": 1,
+          "title": "Independent Group Id",
+          "type": "string"
+        },
+        "perspective": {
+          "enum": [
+            "PLAYER",
+            "OBSERVER",
+            "UNKNOWN"
+          ],
+          "title": "Perspective",
+          "type": "string"
+        },
+        "visibility_at_event": {
+          "enum": [
+            "KNOWN",
+            "UNKNOWN",
+            "NOT_VISIBLE"
+          ],
+          "title": "Visibility At Event",
+          "type": "string"
+        },
+        "patch": {
+          "minLength": 1,
+          "title": "Patch",
+          "type": "string"
+        },
+        "quality_state": {
+          "$ref": "#/$defs/QualityState"
+        },
+        "validity": {
+          "enum": [
+            "AT_EVENT",
+            "HISTORICAL_FACT"
+          ],
+          "title": "Validity",
+          "type": "string"
+        },
+        "formula": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Formula"
+        },
+        "formula_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Formula Version"
+        },
+        "hypothesis": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Hypothesis"
+        },
+        "conditions": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Conditions",
+          "type": "array"
+        },
+        "counterevidence": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Counterevidence",
+          "type": "array"
+        },
+        "author": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Author"
+        },
+        "missing_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Missing Reason"
+        }
+      },
+      "required": [
+        "observation_id",
+        "session_id",
+        "entity_id",
+        "field_key",
+        "value",
+        "kind",
+        "event_time_ms",
+        "received_at",
+        "game_clock_basis",
+        "source_id",
+        "source_version",
+        "source_location",
+        "source_hash",
+        "lineage_ids",
+        "independent_group_id",
+        "perspective",
+        "visibility_at_event",
+        "patch",
+        "quality_state",
+        "validity"
+      ],
+      "title": "Observation",
+      "type": "object"
+    },
+    "Quality": {
+      "enum": [
+        "VERIFIED",
+        "UNVERIFIED",
+        "CONFLICTING",
+        "NOT_APPLICABLE"
+      ],
+      "title": "Quality",
+      "type": "string"
+    },
+    "QualityState": {
+      "additionalProperties": false,
+      "properties": {
+        "accuracy": {
+          "$ref": "#/$defs/Quality"
+        },
+        "completeness": {
+          "$ref": "#/$defs/Quality"
+        },
+        "freshness": {
+          "$ref": "#/$defs/Quality"
+        }
+      },
+      "required": [
+        "accuracy",
+        "completeness",
+        "freshness"
+      ],
+      "title": "QualityState",
+      "type": "object"
+    },
+    "Scenario": {
+      "additionalProperties": false,
+      "properties": {
+        "scenario_id": {
+          "minLength": 1,
+          "title": "Scenario Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "support_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Support Refs",
+          "type": "array"
+        },
+        "conditions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Conditions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "scenario_id",
+        "description",
+        "support_refs",
+        "conditions"
+      ],
+      "title": "Scenario",
+      "type": "object"
+    },
+    "SnapshotRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "session_id": {
+          "minLength": 1,
+          "title": "Session Id",
+          "type": "string"
+        },
+        "patch": {
+          "minLength": 1,
+          "title": "Patch",
+          "type": "string"
+        },
+        "as_of_event_time_ms": {
+          "minimum": 0,
+          "title": "As Of Event Time Ms",
+          "type": "integer"
+        },
+        "knowledge_cutoff": {
+          "format": "date-time",
+          "title": "Knowledge Cutoff",
+          "type": "string"
+        },
+        "game_clock_basis": {
+          "minLength": 1,
+          "title": "Game Clock Basis",
+          "type": "string"
+        },
+        "view": {
+          "enum": [
+            "PLAYER_REVIEW",
+            "RECEIVED_AS_OF"
+          ],
+          "title": "View",
+          "type": "string"
+        },
+        "required_keys": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Required Keys",
+          "type": "array"
+        },
+        "revision_parent": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Revision Parent"
+        }
+      },
+      "required": [
+        "session_id",
+        "patch",
+        "as_of_event_time_ms",
+        "knowledge_cutoff",
+        "game_clock_basis",
+        "view",
+        "required_keys"
+      ],
+      "title": "SnapshotRequest",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "r3.v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "evidence_kind": {
+      "const": "SYNTHETIC",
+      "title": "Evidence Kind",
+      "type": "string"
+    },
+    "mode": {
+      "enum": [
+        "TEST",
+        "PRE_GAME",
+        "POST_GAME",
+        "LIVE_STATIC"
+      ],
+      "title": "Mode",
+      "type": "string"
+    },
+    "objective": {
+      "minLength": 1,
+      "title": "Objective",
+      "type": "string"
+    },
+    "scope_reason": {
+      "minLength": 1,
+      "title": "Scope Reason",
+      "type": "string"
+    },
+    "snapshot_request": {
+      "$ref": "#/$defs/SnapshotRequest"
+    },
+    "observations": {
+      "items": {
+        "$ref": "#/$defs/Observation"
+      },
+      "title": "Observations",
+      "type": "array"
+    },
+    "scenarios": {
+      "items": {
+        "$ref": "#/$defs/Scenario"
+      },
+      "minItems": 1,
+      "title": "Scenarios",
+      "type": "array"
+    },
+    "actions": {
+      "items": {
+        "$ref": "#/$defs/Action"
+      },
+      "minItems": 1,
+      "title": "Actions",
+      "type": "array"
+    },
+    "assessments": {
+      "items": {
+        "$ref": "#/$defs/Assessment"
+      },
+      "title": "Assessments",
+      "type": "array"
+    },
+    "comparisons": {
+      "items": {
+        "$ref": "#/$defs/Comparison"
+      },
+      "title": "Comparisons",
+      "type": "array"
+    },
+    "information_requests": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/InformationRequest"
+      },
+      "title": "Information Requests",
+      "type": "array"
+    },
+    "occurred_events": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Occurred Events",
+      "type": "array"
+    },
+    "intended_plan": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Intended Plan"
+    },
+    "outcome_note": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Outcome Note"
+    }
+  },
+  "required": [
+    "schema_version",
+    "evidence_kind",
+    "mode",
+    "objective",
+    "scope_reason",
+    "snapshot_request",
+    "observations",
+    "scenarios",
+    "actions",
+    "assessments",
+    "comparisons"
+  ],
+  "title": "ReviewInput",
+  "type": "object"
+}

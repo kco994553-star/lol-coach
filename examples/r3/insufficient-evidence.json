@@ -1,0 +1,317 @@
+{
+  "schema_version": "r3.v1",
+  "evidence_kind": "SYNTHETIC",
+  "mode": "TEST",
+  "objective": "합성 사례: 경험치와 다음 선택권 보존",
+  "scope_reason": "Two fixture branches only: no reinforcement / reinforcement. Not a real match prediction.",
+  "snapshot_request": {
+    "session_id": "synthetic-1",
+    "patch": "SYNTHETIC-1",
+    "as_of_event_time_ms": 1000,
+    "knowledge_cutoff": "2026-10-04T10:00:00+00:00",
+    "game_clock_basis": "fixture-clock",
+    "view": "PLAYER_REVIEW",
+    "required_keys": [
+      "self:position"
+    ],
+    "revision_parent": null
+  },
+  "observations": [
+    {
+      "observation_id": "o1",
+      "session_id": "synthetic-1",
+      "entity_id": "self",
+      "field_key": "position",
+      "value": "lane",
+      "kind": "OBSERVED",
+      "event_time_ms": 1000,
+      "received_at": "2026-10-04T09:00:00+00:00",
+      "game_clock_basis": "fixture-clock",
+      "source_id": "synthetic-frame",
+      "source_version": "1",
+      "source_location": "fixture://synthetic/frame-1",
+      "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "lineage_ids": [],
+      "independent_group_id": "frame-1",
+      "perspective": "PLAYER",
+      "visibility_at_event": "KNOWN",
+      "patch": "SYNTHETIC-1",
+      "quality_state": {
+        "accuracy": "VERIFIED",
+        "completeness": "VERIFIED",
+        "freshness": "VERIFIED"
+      },
+      "validity": "AT_EVENT"
+    },
+    {
+      "observation_id": "jungle",
+      "session_id": "synthetic-1",
+      "entity_id": "self",
+      "field_key": "enemy_jungle.last_seen",
+      "value": "river",
+      "kind": "OBSERVED",
+      "event_time_ms": 500,
+      "received_at": "2026-10-04T09:00:00+00:00",
+      "game_clock_basis": "fixture-clock",
+      "source_id": "synthetic-frame",
+      "source_version": "1",
+      "source_location": "fixture://synthetic/frame-1",
+      "source_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "lineage_ids": [],
+      "independent_group_id": "frame-1",
+      "perspective": "PLAYER",
+      "visibility_at_event": "KNOWN",
+      "patch": "SYNTHETIC-1",
+      "quality_state": {
+        "accuracy": "VERIFIED",
+        "completeness": "VERIFIED",
+        "freshness": "VERIFIED"
+      },
+      "validity": "HISTORICAL_FACT"
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario_id": "s1",
+      "description": "합성 조건 A",
+      "support_refs": [
+        "o1"
+      ],
+      "conditions": [
+        "아군 지원 가능이라고 가정"
+      ]
+    },
+    {
+      "scenario_id": "s2",
+      "description": "합성 조건 B",
+      "support_refs": [
+        "o1"
+      ],
+      "conditions": [
+        "아군 지원 불가라고 가정"
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "action_id": "wait",
+      "action_type": "WAIT",
+      "feasibility": "POSSIBLE",
+      "feasibility_refs": [
+        "o1"
+      ],
+      "required_keys": [
+        "self:position",
+        "enemy:response"
+      ],
+      "target": "synthetic target",
+      "path": "fixture path",
+      "entry_condition": "verified in synthetic scene",
+      "resource_budget": "preserve escape resource",
+      "exit_condition": "return to initial position",
+      "abort_conditions": [
+        "enemy_arrives"
+      ],
+      "postcondition": "retain return route",
+      "deadline_event": "wave_arrives"
+    },
+    {
+      "action_id": "retreat",
+      "action_type": "DISENGAGE",
+      "feasibility": "POSSIBLE",
+      "feasibility_refs": [
+        "o1"
+      ],
+      "required_keys": [
+        "self:position"
+      ],
+      "target": "synthetic target",
+      "path": "fixture path",
+      "entry_condition": "verified in synthetic scene",
+      "resource_budget": "preserve escape resource",
+      "exit_condition": "return to initial position",
+      "abort_conditions": [
+        "enemy_arrives"
+      ],
+      "postcondition": "retain return route",
+      "deadline_event": "wave_arrives"
+    }
+  ],
+  "assessments": [
+    {
+      "action_id": "wait",
+      "scenario_id": "s1",
+      "assessment": "CONTESTED",
+      "rationale": "수동으로 정의한 합성 기대값; 게임 규칙 추론 아님",
+      "evidence_refs": [
+        "o1"
+      ],
+      "knowledge_status": "REVIEWED",
+      "patch": "SYNTHETIC-1",
+      "knowledge_ref": "fixture://annotation/v1"
+    },
+    {
+      "action_id": "wait",
+      "scenario_id": "s2",
+      "assessment": "CONTESTED",
+      "rationale": "수동으로 정의한 합성 기대값; 게임 규칙 추론 아님",
+      "evidence_refs": [
+        "o1"
+      ],
+      "knowledge_status": "REVIEWED",
+      "patch": "SYNTHETIC-1",
+      "knowledge_ref": "fixture://annotation/v1"
+    },
+    {
+      "action_id": "retreat",
+      "scenario_id": "s1",
+      "assessment": "CONTESTED",
+      "rationale": "수동으로 정의한 합성 기대값; 게임 규칙 추론 아님",
+      "evidence_refs": [
+        "o1"
+      ],
+      "knowledge_status": "REVIEWED",
+      "patch": "SYNTHETIC-1",
+      "knowledge_ref": "fixture://annotation/v1"
+    },
+    {
+      "action_id": "retreat",
+      "scenario_id": "s2",
+      "assessment": "CONTESTED",
+      "rationale": "수동으로 정의한 합성 기대값; 게임 규칙 추론 아님",
+      "evidence_refs": [
+        "o1"
+      ],
+      "knowledge_status": "REVIEWED",
+      "patch": "SYNTHETIC-1",
+      "knowledge_ref": "fixture://annotation/v1"
+    }
+  ],
+  "comparisons": [
+    {
+      "left_action_id": "wait",
+      "right_action_id": "retreat",
+      "scenario_id": "s1",
+      "dimensions": [
+        {
+          "dimension": "survival_exposure",
+          "relation": "SAME",
+          "rationale": "합성 사례에서 동등하다고 제공한 관계",
+          "evidence_refs": [
+            "o1"
+          ]
+        },
+        {
+          "dimension": "resources",
+          "relation": "SAME",
+          "rationale": "합성 사례에서 동등하다고 제공한 관계",
+          "evidence_refs": [
+            "o1"
+          ]
+        },
+        {
+          "dimension": "growth",
+          "relation": "SAME",
+          "rationale": "합성 사례에서 동등하다고 제공한 관계",
+          "evidence_refs": [
+            "o1"
+          ]
+        },
+        {
+          "dimension": "position_wave",
+          "relation": "SAME",
+          "rationale": "합성 사례에서 동등하다고 제공한 관계",
+          "evidence_refs": [
+            "o1"
+          ]
+        },
+        {
+          "dimension": "time_objectives",
+          "relation": "SAME",
+          "rationale": "합성 사례에서 동등하다고 제공한 관계",
+          "evidence_refs": [
+            "o1"
+          ]
+        },
+        {
+          "dimension": "options",
+          "relation": "SAME",
+          "rationale": "합성 사례에서 동등하다고 제공한 관계",
+          "evidence_refs": [
+            "o1"
+          ]
+        }
+      ]
+    },
+    {
+      "left_action_id": "wait",
+      "right_action_id": "retreat",
+      "scenario_id": "s2",
+      "dimensions": [
+        {
+          "dimension": "survival_exposure",
+          "relation": "SAME",
+          "rationale": "합성 사례에서 동등하다고 제공한 관계",
+          "evidence_refs": [
+            "o1"
+          ]
+        },
+        {
+          "dimension": "resources",
+          "relation": "SAME",
+          "rationale": "합성 사례에서 동등하다고 제공한 관계",
+          "evidence_refs": [
+            "o1"
+          ]
+        },
+        {
+          "dimension": "growth",
+          "relation": "SAME",
+          "rationale": "합성 사례에서 동등하다고 제공한 관계",
+          "evidence_refs": [
+            "o1"
+          ]
+        },
+        {
+          "dimension": "position_wave",
+          "relation": "SAME",
+          "rationale": "합성 사례에서 동등하다고 제공한 관계",
+          "evidence_refs": [
+            "o1"
+          ]
+        },
+        {
+          "dimension": "time_objectives",
+          "relation": "SAME",
+          "rationale": "합성 사례에서 동등하다고 제공한 관계",
+          "evidence_refs": [
+            "o1"
+          ]
+        },
+        {
+          "dimension": "options",
+          "relation": "SAME",
+          "rationale": "합성 사례에서 동등하다고 제공한 관계",
+          "evidence_refs": [
+            "o1"
+          ]
+        }
+      ]
+    }
+  ],
+  "information_requests": [
+    {
+      "field_key": "enemy:response",
+      "action_ids": [
+        "wait"
+      ],
+      "changes_conclusion": true,
+      "minimum_observation": "상대 대응 스킬 시전부터 종료까지 이어지는 장면",
+      "available_before_deadline": "YES",
+      "waiting_cost": "확인하는 동안 파밍 기회가 사라질 수 있음"
+    }
+  ],
+  "occurred_events": [],
+  "intended_plan": null,
+  "outcome_note": null
+}

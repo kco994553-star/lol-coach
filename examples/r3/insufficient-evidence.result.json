@@ -1,0 +1,217 @@
+{
+  "schema_version": "r3.v1",
+  "evidence_kind": "SYNTHETIC",
+  "decision_id": "9ee0239a0bd66bf6efb220a7052cbef726de903951a43e4be8e8ea230d764bb1",
+  "mode": "TEST",
+  "objective": "합성 사례: 경험치와 다음 선택권 보존",
+  "scope_reason": "Two fixture branches only: no reinforcement / reinforcement. Not a real match prediction.",
+  "scope_limit": "Only supplied scenarios; scope completeness and game annotations are not independently verified.",
+  "snapshot": {
+    "snapshot_id": "d26a123f8519835082b76f7f5b30c5d06fa347d58bc21eb46d5ceb0e887063b9",
+    "request": {
+      "session_id": "synthetic-1",
+      "patch": "SYNTHETIC-1",
+      "as_of_event_time_ms": 1000,
+      "knowledge_cutoff": "2026-10-04T10:00:00Z",
+      "game_clock_basis": "fixture-clock",
+      "view": "PLAYER_REVIEW",
+      "required_keys": [
+        "self:position"
+      ],
+      "revision_parent": null
+    },
+    "schema_version": "r3.v1",
+    "reducer_version": "r3.v1",
+    "fields": [
+      {
+        "key": "self:enemy_jungle.last_seen",
+        "value": "river",
+        "state": "KNOWN",
+        "evidence_refs": [
+          "jungle"
+        ],
+        "reasons": [],
+        "independent_groups": [
+          "frame-1"
+        ]
+      },
+      {
+        "key": "self:position",
+        "value": "lane",
+        "state": "KNOWN",
+        "evidence_refs": [
+          "o1"
+        ],
+        "reasons": [],
+        "independent_groups": [
+          "frame-1"
+        ]
+      }
+    ],
+    "observation_hashes": [
+      [
+        "jungle",
+        "d97b96b204e5ef3a2eb7d307504f8b013e91403cf511aa5578c85947577fd4b6"
+      ],
+      [
+        "o1",
+        "41f80d31a8b004b0e306501e97a7301d30d6e36f3d11c15d6578d19953cf58cb"
+      ]
+    ],
+    "excluded": [],
+    "conflict_ids": []
+  },
+  "evaluations": [
+    {
+      "action_id": "wait",
+      "action_type": "WAIT",
+      "feasibility": "POSSIBLE",
+      "sufficiency": "INSUFFICIENT",
+      "assessment": "UNDETERMINED",
+      "missing_fields": [
+        "enemy:response"
+      ],
+      "expired": false,
+      "scenario_assessments": [
+        {
+          "scenario_id": "s1",
+          "assessment": "UNDETERMINED",
+          "rationale": "수동으로 정의한 합성 기대값; 게임 규칙 추론 아님",
+          "evidence_refs": [
+            "o1"
+          ],
+          "annotation_status": "ELIGIBLE_SYNTHETIC_ANNOTATION",
+          "conditions": [
+            "아군 지원 가능이라고 가정"
+          ]
+        },
+        {
+          "scenario_id": "s2",
+          "assessment": "UNDETERMINED",
+          "rationale": "수동으로 정의한 합성 기대값; 게임 규칙 추론 아님",
+          "evidence_refs": [
+            "o1"
+          ],
+          "annotation_status": "ELIGIBLE_SYNTHETIC_ANNOTATION",
+          "conditions": [
+            "아군 지원 불가라고 가정"
+          ]
+        }
+      ],
+      "contract": {
+        "action_id": "wait",
+        "action_type": "WAIT",
+        "feasibility": "POSSIBLE",
+        "feasibility_refs": [
+          "o1"
+        ],
+        "required_keys": [
+          "self:position",
+          "enemy:response"
+        ],
+        "target": "synthetic target",
+        "path": "fixture path",
+        "entry_condition": "verified in synthetic scene",
+        "resource_budget": "preserve escape resource",
+        "exit_condition": "return to initial position",
+        "abort_conditions": [
+          "enemy_arrives"
+        ],
+        "postcondition": "retain return route",
+        "deadline_event": "wave_arrives"
+      }
+    },
+    {
+      "action_id": "retreat",
+      "action_type": "DISENGAGE",
+      "feasibility": "POSSIBLE",
+      "sufficiency": "SUFFICIENT",
+      "assessment": "CONTESTED",
+      "missing_fields": [],
+      "expired": false,
+      "scenario_assessments": [
+        {
+          "scenario_id": "s1",
+          "assessment": "CONTESTED",
+          "rationale": "수동으로 정의한 합성 기대값; 게임 규칙 추론 아님",
+          "evidence_refs": [
+            "o1"
+          ],
+          "annotation_status": "ELIGIBLE_SYNTHETIC_ANNOTATION",
+          "conditions": [
+            "아군 지원 가능이라고 가정"
+          ]
+        },
+        {
+          "scenario_id": "s2",
+          "assessment": "CONTESTED",
+          "rationale": "수동으로 정의한 합성 기대값; 게임 규칙 추론 아님",
+          "evidence_refs": [
+            "o1"
+          ],
+          "annotation_status": "ELIGIBLE_SYNTHETIC_ANNOTATION",
+          "conditions": [
+            "아군 지원 불가라고 가정"
+          ]
+        }
+      ],
+      "contract": {
+        "action_id": "retreat",
+        "action_type": "DISENGAGE",
+        "feasibility": "POSSIBLE",
+        "feasibility_refs": [
+          "o1"
+        ],
+        "required_keys": [
+          "self:position"
+        ],
+        "target": "synthetic target",
+        "path": "fixture path",
+        "entry_condition": "verified in synthetic scene",
+        "resource_budget": "preserve escape resource",
+        "exit_condition": "return to initial position",
+        "abort_conditions": [
+          "enemy_arrives"
+        ],
+        "postcondition": "retain return route",
+        "deadline_event": "wave_arrives"
+      }
+    }
+  ],
+  "dominance": [],
+  "comparison_conflicts": [],
+  "alternatives": [
+    "wait",
+    "retreat"
+  ],
+  "recommendation": null,
+  "information_requests": [
+    {
+      "field_key": "enemy:response",
+      "action_ids": [
+        "wait"
+      ],
+      "changes_conclusion": true,
+      "minimum_observation": "상대 대응 스킬 시전부터 종료까지 이어지는 장면",
+      "available_before_deadline": "YES",
+      "waiting_cost": "확인하는 동안 파밍 기회가 사라질 수 있음",
+      "inactive_action_ids": [],
+      "reason": "ACTIVE_BEFORE_DEADLINE"
+    }
+  ],
+  "deferred_information": [],
+  "intention": {
+    "state": "UNKNOWN",
+    "text": null,
+    "execution_violation": "NOT_EVALUATED"
+  },
+  "outcome": {
+    "text": null,
+    "used_for_decision": false
+  },
+  "limitations": [
+    "Offline synthetic contract execution only.",
+    "No damage, matchup, cooldown, win-probability or live game inference.",
+    "No production adapter, AI service, API or web UI enabled."
+  ]
+}
