@@ -1,0 +1,1452 @@
+{
+  "schema_version": "r7.state-source-matrix.v1",
+  "scope": "SOURCE_FEASIBILITY_DESIGN_ONLY; no production or live dynamic activation",
+  "layer_definitions": {
+    "L0": "Raw State(원천 상태): 챔피언/역할 배정·레벨·아이템·좌표 등 관찰 또는 원자료의 명시적 값. 직접 근거와 의미 검증 필요.",
+    "L1": "Tactical State(전술 상태): 원천 입력의 시간·공간·자원 관계를 연결한 노출·간격·호응·경로·웨이브 상태. 가설은 별도 epistemic_kind로 보존.",
+    "L2": "Strategic/Decision State(전략·판단 상태): 행동 허용, 피해를 줄 수 있는 기회, 불가피한 손실, 회복 계획 등 L0/L1 및 목표/조건에 기반한 판단. 단순 역할/의도 추정은 L2 확정 상태가 아님."
+  },
+  "status_scope": "현재 접근 가능한 자료·구현에서 해당 의미를 취득하는 경로의 상태. VISION_REQUIRED는 현재 자료의 제한이며 미래 구조화 provider의 전역적 불가능 선언 아님. 검증된 실제 게임 DIRECT/DERIVED 상태는 없음.",
+  "source_refs": [
+    "SRC-LIVE-DOC",
+    "SRC-LIVE-SAMPLE",
+    "SRC-MATCH-DOC",
+    "SRC-DDRAGON",
+    "SRC-REPLAY-DOC",
+    "SRC-VIDEO-TRANSCRIPT",
+    "SRC-VISION",
+    "SRC-MANUAL"
+  ],
+  "evidence": [
+    {
+      "path": "docs/DESIGN.md",
+      "sha256": "ce02b32f9e7a970a8c7acedc7aa121c5a42a78fcd6c63991efe050bab5c147ac"
+    },
+    {
+      "path": "coach_v1/models.py",
+      "sha256": "20366f44a66b17fba2eaa9a5e6f3ae21c9a7898475bc1dcdfc63de4facfa7ae8"
+    },
+    {
+      "path": "coach_v1/state.py",
+      "sha256": "b0624cd06abcada3df414a4d1cf8e5e116c1cab6d0e786051106bd64bd51d025"
+    },
+    {
+      "path": "coach_v1/engine.py",
+      "sha256": "37bb801a02df3464707fdd2012678d4fd174d7261c2df3765610abe47db5128a"
+    },
+    {
+      "path": "evidence/r5/official-sample-retry-20261004/audit.json",
+      "sha256": "22ba705c1fc8fc26b10d4a46197daea980c442f4507209bb5e808c71899e2ec2"
+    },
+    {
+      "path": "evidence/r5/official-sample-retry-20261004/raw.json",
+      "sha256": "d754b6c27edf950679dd9478742a8c4b9402e70101a3b46764c28f2aeafd72d3"
+    },
+    {
+      "path": "evidence/r5/local-connectivity-status.json",
+      "sha256": "9623ea82388aa8f688ad047746c9af7c6bdea992b08fe9a0933811d5bcaae9e8"
+    },
+    {
+      "path": "evidence/r5/video-index.json",
+      "sha256": "edb424c5e399a0bdb5d1f5b5d391b82146d7a2f25bddf0464a3307f144822b29"
+    }
+  ],
+  "documented_sample_scope": {
+    "source_ref": "SRC-LIVE-SAMPLE",
+    "classification": "DOCUMENTATION_SAMPLE_NOT_REAL_CAPTURE",
+    "observed_sections": [
+      "activePlayer",
+      "allPlayers",
+      "events",
+      "gameData"
+    ],
+    "observed_active_fields": [
+      "abilities",
+      "championStats",
+      "currentGold",
+      "fullRunes",
+      "level"
+    ],
+    "observed_player_fields": [
+      "championName",
+      "items",
+      "level",
+      "position",
+      "runes",
+      "scores",
+      "summonerSpells",
+      "team"
+    ],
+    "observed_event": "GameStart only; not objective/tower/recall readiness verification",
+    "limits": [
+      "source_authenticity_verified=false",
+      "maxHealth=0 semantics unverified",
+      "single player fixture, not all-player coverage",
+      "local capture ENDPOINT_UNAVAILABLE",
+      "no real freshness/missingness/clock/patch/perspective verification"
+    ]
+  },
+  "global_rules": [
+    "SRC-DDRAGON supplies patch-pinned static identity/rule candidates, never current game state.",
+    "SRC-MATCH-DOC historical match/timeline capabilities require actual schema/field/sample validation; do not infer live access.",
+    "SRC-VIDEO-TRANSCRIPT provides speech timestamps/candidates, never visual truth or game-clock alignment.",
+    "L0/L1/L2 classify raw, tactical, and strategic/decision state respectively; epistemic_kind separately marks observation, derivation, or hypothesis. Neither is implementation completion or source quality.",
+    "preferred_source is a feasibility investigation preference, not an enabled adapter."
+  ],
+  "entries": [
+    {
+      "id": "R7-SV-01",
+      "variable": "Draft/Champion",
+      "layer": "L0",
+      "decision_impact": "상성·조합·픽 변경에 따른 계획 적용 범위",
+      "required_precision": "챔피언 identity와 visible pick/ban, draft revision·phase 분리",
+      "preferred_source": "SRC-LIVE-DOC",
+      "fallback_source": "SRC-MANUAL",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "픽 변경/phase 전환/patch 변경 때 재확인",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "챔피언 identity 문서 필드 후보; 자동 draft adapter는 미검증",
+      "manual_fallback": "픽·밴과 확인 시각·출처를 수동 기록",
+      "vision_needed": "CONDITIONAL",
+      "availability_status": "UNKNOWN_PENDING_VERIFICATION",
+      "semantic_limits": "진행 중 챔피언 목록이 픽창 revision·ban·phase를 증명하지 않음",
+      "status_reason": "문서에 후보 필드 또는 이벤트가 있어도 실제 취득·의미·시점·누락 검증 전임.",
+      "epistemic_kind": "OBSERVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-02",
+      "variable": "Role",
+      "layer": "L0",
+      "decision_impact": "명시적 역할/라인 배정은 상성·조합 입력; 보호·진입·마무리 기여 역할은 별도 전술 가설",
+      "required_precision": "배정/신고 role metadata와 실제 위치를 분리; 전술 기여 역할은 확정 원천값이 아님",
+      "preferred_source": "SRC-MANUAL",
+      "fallback_source": "SRC-VISION",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "조합·라인 스왑·목표·자원 변화 때 재평가",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "position 문자열은 의미 검증 필요; 캐리·보호 역할은 파생 해석",
+      "manual_fallback": "역할 가정과 반증 조건 기록",
+      "vision_needed": "CONDITIONAL",
+      "availability_status": "UNKNOWN_PENDING_VERIFICATION",
+      "semantic_limits": "API position은 지도 좌표가 아님; lane label도 현재 전술적 역할 확정 아님",
+      "status_reason": "명시적 role/position metadata의 의미와 실제 source 취득 범위를 검증 전이며 전술 역할 가설로 자동 변환하지 않음.",
+      "epistemic_kind": "EXPLICIT_ROLE_ASSIGNMENT_METADATA",
+      "hypothesis_separation": {
+        "tactical_role_hypothesis": "보호/진입/마무리 역할은 이 L0 배정값과 별도 조건부 L1 가설로 보존",
+        "no_auto_promotion": true
+      }
+    },
+    {
+      "id": "R7-SV-03",
+      "variable": "Level",
+      "layer": "L0",
+      "decision_impact": "교환·올인·레벨 상승 시점 판단",
+      "required_precision": "대상별 현재 레벨 및 상승 사건의 시간 정렬",
+      "preferred_source": "SRC-LIVE-DOC",
+      "fallback_source": "SRC-VISION",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "레벨 상승 사건 또는 다음 검증 관찰까지 제한",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "문서/fixture 필드 존재; 실경기 갱신·누락 미검증",
+      "manual_fallback": "해당 장면 레벨과 출처 기록",
+      "vision_needed": "CONDITIONAL",
+      "availability_status": "UNKNOWN_PENDING_VERIFICATION",
+      "semantic_limits": "현재 레벨로 과거 교전 레벨을 덮어쓰지 않음",
+      "status_reason": "문서에 후보 필드 또는 이벤트가 있어도 실제 취득·의미·시점·누락 검증 전임.",
+      "epistemic_kind": "OBSERVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-04",
+      "variable": "Item",
+      "layer": "L0",
+      "decision_impact": "전투 자원·귀환 가치·상성 규칙 조건",
+      "required_precision": "소유 아이템 identity·슬롯·관찰 시점, 정적 효과와 구분",
+      "preferred_source": "SRC-LIVE-DOC",
+      "fallback_source": "SRC-VISION",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "구매·판매·변환 사건 또는 관찰 시점으로 제한",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "items 문서 후보; 실제 갱신·효과 상태 미검증",
+      "manual_fallback": "스코어보드/화면 근거로 시점별 입력",
+      "vision_needed": "CONDITIONAL",
+      "availability_status": "UNKNOWN_PENDING_VERIFICATION",
+      "semantic_limits": "아이템 보유만으로 액티브·중첩·사용 가능 상태 확정 금지",
+      "status_reason": "문서에 후보 필드 또는 이벤트가 있어도 실제 취득·의미·시점·누락 검증 전임.",
+      "epistemic_kind": "OBSERVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-05",
+      "variable": "Rune",
+      "layer": "L0",
+      "decision_impact": "상성 규칙·자원·회복 조건",
+      "required_precision": "룬 identity/설정과 현재 발동·중첩 분리",
+      "preferred_source": "SRC-LIVE-DOC",
+      "fallback_source": "SRC-MANUAL",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "설정은 경기 identity에 귀속; 효과는 해당 사건 재확인",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "active fullRunes 및 player runes 문서 후보; 범위 차이 검증 필요",
+      "manual_fallback": "원자료의 룬 설정만 수동 기록",
+      "vision_needed": "CONDITIONAL",
+      "availability_status": "UNKNOWN_PENDING_VERIFICATION",
+      "semantic_limits": "Data Dragon 정적 룬 정보는 이번 경기 발동 증거 아님",
+      "status_reason": "문서에 후보 필드 또는 이벤트가 있어도 실제 취득·의미·시점·누락 검증 전임.",
+      "epistemic_kind": "OBSERVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-06",
+      "variable": "Summoner Spell",
+      "layer": "L0",
+      "decision_impact": "탈출·추격·교전 자원",
+      "required_precision": "장착 주문 identity와 현재 사용 가능성을 별도 필드화",
+      "preferred_source": "SRC-LIVE-DOC",
+      "fallback_source": "SRC-VISION",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "주문 교체/시전/초기화 및 시점 정렬 검증 필요",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "장착 목록 후보 존재; 현재 cooldown 직접 취득 보장 없음",
+      "manual_fallback": "관찰된 주문/시전 사건만 기록",
+      "vision_needed": "CONDITIONAL",
+      "availability_status": "UNKNOWN_PENDING_VERIFICATION",
+      "semantic_limits": "시전 관찰만으로 현재 재사용 불가를 확정하지 않음",
+      "status_reason": "문서에 후보 필드 또는 이벤트가 있어도 실제 취득·의미·시점·누락 검증 전임.",
+      "epistemic_kind": "OBSERVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-07",
+      "variable": "KDA/CS",
+      "layer": "L0",
+      "decision_impact": "성장 기록과 장면 후보·기회비용",
+      "required_precision": "대상별 누적 수치의 관찰 시점과 실제 event time 구분",
+      "preferred_source": "SRC-LIVE-DOC",
+      "fallback_source": "SRC-MATCH-DOC",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "처치/사망/어시스트/CS 갱신 사건; 현재값 소급 금지",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "scores 후보 존재; 전체 시간 이력 실측 없음",
+      "manual_fallback": "스코어보드와 시점 기록",
+      "vision_needed": "CONDITIONAL",
+      "availability_status": "UNKNOWN_PENDING_VERIFICATION",
+      "semantic_limits": "CS 증가를 wave 위치·방향·우위의 증거로 변환 금지",
+      "status_reason": "문서에 후보 필드 또는 이벤트가 있어도 실제 취득·의미·시점·누락 검증 전임.",
+      "epistemic_kind": "OBSERVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-08",
+      "variable": "Game Time",
+      "layer": "L0",
+      "decision_impact": "판단 시점·사건 순서·마감",
+      "required_precision": "game clock basis 및 영상/수신 시계 대응과 오차 범위",
+      "preferred_source": "SRC-LIVE-DOC",
+      "fallback_source": "SRC-VISION",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "각 수집 응답과 clock reset/session change 확인",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "gameTime fixture 있음; 실경기 clock alignment 미검증",
+      "manual_fallback": "보이는 경기 시계와 영상 시각을 함께 기록",
+      "vision_needed": "CONDITIONAL",
+      "availability_status": "UNKNOWN_PENDING_VERIFICATION",
+      "semantic_limits": "영상 업로드 시각·영상 재생 시간은 game time 아님",
+      "status_reason": "문서에 후보 필드 또는 이벤트가 있어도 실제 취득·의미·시점·누락 검증 전임.",
+      "epistemic_kind": "OBSERVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-09",
+      "variable": "Objective",
+      "layer": "L1",
+      "decision_impact": "목표물 준비·합류·반대편 교환 가치",
+      "required_precision": "종류·사건·생존/준비 상태·지역 접근을 분리",
+      "preferred_source": "SRC-LIVE-DOC",
+      "fallback_source": "SRC-MATCH-DOC",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "생성/처치/상태 전환 및 주변 진입 변화 재확인",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "이벤트 스키마 후보; readiness는 추가 근거/규칙 필요",
+      "manual_fallback": "목표물 화면/사건/불확실성 기록",
+      "vision_needed": "CONDITIONAL",
+      "availability_status": "UNKNOWN_PENDING_VERIFICATION",
+      "semantic_limits": "objective event는 현재 준비·획득 가능성 또는 팀 우선순위가 아님",
+      "status_reason": "문서에 후보 필드 또는 이벤트가 있어도 실제 취득·의미·시점·누락 검증 전임.",
+      "epistemic_kind": "DERIVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-10",
+      "variable": "Tower",
+      "layer": "L1",
+      "decision_impact": "다이브·수비·이탈·구조물 손실",
+      "required_precision": "타워 identity/생존과 체력·공격 대상·노출 범위 분리",
+      "preferred_source": "SRC-LIVE-DOC",
+      "fallback_source": "SRC-VISION",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "파괴·타깃 변경·교전 이동마다 재확인",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "파괴 이벤트 후보와 전투 중 상태 취득 능력 별도",
+      "manual_fallback": "타워 상태와 교전 전후 장면 기록",
+      "vision_needed": "CONDITIONAL",
+      "availability_status": "UNKNOWN_PENDING_VERIFICATION",
+      "semantic_limits": "타워 존재만으로 수비 안전을 확정하지 않음",
+      "status_reason": "문서에 후보 필드 또는 이벤트가 있어도 실제 취득·의미·시점·누락 검증 전임.",
+      "epistemic_kind": "DERIVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-11",
+      "variable": "Recall",
+      "layer": "L0",
+      "decision_impact": "귀환 타이밍·복귀·로밍 계획",
+      "required_precision": "채널 시작/중단/완료와 위치 변화를 사건 단위로 구분",
+      "preferred_source": "SRC-VISION",
+      "fallback_source": "SRC-MANUAL",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "시작에서 취소 또는 완료까지 연속 사건 확인",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "구조화 직접 필드 검증 없음; 영상 인식 미구현",
+      "manual_fallback": "채널 전후 장면으로 완료 여부 명시",
+      "vision_needed": "YES",
+      "availability_status": "VISION_REQUIRED",
+      "semantic_limits": "정지·화면 이탈 또는 집 근처 출현만으로 중간 채널 과정 추정 금지",
+      "status_reason": "현재 접근 가능한 구조화 문서 예제/자막만으로 해당 세밀 상태를 확보하지 못해 장면 영상 관찰이 필요함. 적합한 구조화 provider가 실제 검증되면 영상 의존성은 줄어들 수 있음; 전역적 API 불가능 선언 아님.",
+      "epistemic_kind": "OBSERVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-12",
+      "variable": "Champion Position",
+      "layer": "L0",
+      "decision_impact": "접근·공격 범위·도착·퇴로",
+      "required_precision": "entity별 좌표/지도 공간과 관점·시각·오차",
+      "preferred_source": "SRC-REPLAY-DOC",
+      "fallback_source": "SRC-VISION",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "각 장면/이동 사건; last_seen은 현재 좌표로 연장 금지",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "replay/API 공간 좌표 공급 범위 검증 필요; Live position 라벨은 좌표 아님",
+      "manual_fallback": "미니맵/화면 위치와 당시 가시성 기록",
+      "vision_needed": "CONDITIONAL",
+      "availability_status": "VISION_REQUIRED",
+      "semantic_limits": "관전자 위치는 플레이어가 당시 알았던 위치와 별도 저장",
+      "status_reason": "현재 접근 가능한 구조화 문서 예제/자막만으로 해당 세밀 상태를 확보하지 못해 장면 영상 관찰이 필요함. 적합한 구조화 provider가 실제 검증되면 영상 의존성은 줄어들 수 있음; 전역적 API 불가능 선언 아님.",
+      "epistemic_kind": "OBSERVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-13",
+      "variable": "Enemy Jungle Information",
+      "layer": "L0",
+      "decision_impact": "정글 개입 노출과 추가 확인",
+      "required_precision": "마지막 목격의 위치·시각·관점과 현재 미확인 구분",
+      "preferred_source": "SRC-VISION",
+      "fallback_source": "SRC-MANUAL",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "목격 사실은 historical; 현재 위치 유효성 별도 검증",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "API 전체 정글 위치 제공 가정 금지; 영상 관측 범위 한정",
+      "manual_fallback": "목격/핑의 출처·시간·확실성 기록",
+      "vision_needed": "YES",
+      "availability_status": "VISION_REQUIRED",
+      "semantic_limits": "숨겨진 정글이 관전자에 보였어도 당시 판단 근거로 누설 금지",
+      "status_reason": "현재 접근 가능한 구조화 문서 예제/자막만으로 해당 세밀 상태를 확보하지 못해 장면 영상 관찰이 필요함. 적합한 구조화 provider가 실제 검증되면 영상 의존성은 줄어들 수 있음; 전역적 API 불가능 선언 아님.",
+      "epistemic_kind": "OBSERVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-14",
+      "variable": "Jungle Reachability",
+      "layer": "L1",
+      "decision_impact": "정글이 교전 종료 전에 개입 가능한가",
+      "required_precision": "출발 근거·경로·이동 수단·도착 범위와 불확실성",
+      "preferred_source": "SRC-VISION",
+      "fallback_source": "SRC-MANUAL",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "출발/경로/이동 자원/목표 시점 변화 때 재계산",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "위치·지형·규칙 검증 후 파생 가능; 현재 엔진 계산 없음",
+      "manual_fallback": "가능/불가를 단정하지 않고 조건별 경로 기록",
+      "vision_needed": "YES",
+      "availability_status": "VISION_REQUIRED",
+      "semantic_limits": "오래된 last_seen과 직선거리만으로 도착 불가 확정 금지",
+      "status_reason": "현재 접근 가능한 구조화 문서 예제/자막만으로 해당 세밀 상태를 확보하지 못해 장면 영상 관찰이 필요함. 적합한 구조화 provider가 실제 검증되면 영상 의존성은 줄어들 수 있음; 전역적 API 불가능 선언 아님.",
+      "epistemic_kind": "DERIVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-15",
+      "variable": "Wave State",
+      "layer": "L1",
+      "decision_impact": "freeze/slow push/crash·귀환·로밍",
+      "required_precision": "미니언 종류·위치·체력·공격 대상의 시간 변화",
+      "preferred_source": "SRC-VISION",
+      "fallback_source": "SRC-MANUAL",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "미니언 사망·증원·타깃·라인 위치 변화 때 재관찰",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "live 구조화 필드 입증 없음; 연속 영상 관찰/추론 필요",
+      "manual_fallback": "관련 시작·종료 장면을 연결한 상태 가정 기록",
+      "vision_needed": "YES",
+      "availability_status": "VISION_REQUIRED",
+      "semantic_limits": "CS 누계나 정지화면 마릿수만으로 흐름·crash 완료 확정 금지",
+      "status_reason": "현재 접근 가능한 구조화 문서 예제/자막만으로 해당 세밀 상태를 확보하지 못해 장면 영상 관찰이 필요함. 적합한 구조화 provider가 실제 검증되면 영상 의존성은 줄어들 수 있음; 전역적 API 불가능 선언 아님.",
+      "epistemic_kind": "DERIVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-16",
+      "variable": "Wave Mass",
+      "layer": "L1",
+      "decision_impact": "교환 중 실제 미니언 지원과 자원 손실",
+      "required_precision": "wave_size_balance와 wave_combat_support를 별도 산출",
+      "preferred_source": "SRC-VISION",
+      "fallback_source": "SRC-MANUAL",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "체력·거리·타깃·교전 위치 변화 때 만료",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "개체 관찰 및 교전 범위 모델 검증 전 수치 지원값 없음",
+      "manual_fallback": "관찰 마릿수와 실제 지원의 미확인을 분리 기록",
+      "vision_needed": "YES",
+      "availability_status": "VISION_REQUIRED",
+      "semantic_limits": "큰 웨이브=전투 우위로 치환 금지",
+      "status_reason": "현재 접근 가능한 구조화 문서 예제/자막만으로 해당 세밀 상태를 확보하지 못해 장면 영상 관찰이 필요함. 적합한 구조화 provider가 실제 검증되면 영상 의존성은 줄어들 수 있음; 전역적 API 불가능 선언 아님.",
+      "epistemic_kind": "DERIVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-17",
+      "variable": "Skill Availability",
+      "layer": "L1",
+      "decision_impact": "진입·반격·교환 종료·탈출 가능성",
+      "required_precision": "스킬 identity/시전/자원/재사용/초기화 상태 분리",
+      "preferred_source": "SRC-VISION",
+      "fallback_source": "SRC-MANUAL",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "시전·재사용·초기화·자원/레벨 변경 사건마다 검증",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "능력 이름/레벨 문서 필드는 준비 상태 증거 아님",
+      "manual_fallback": "자기 UI 또는 시전 전후 장면과 미확인 이유 기록",
+      "vision_needed": "YES",
+      "availability_status": "VISION_REQUIRED",
+      "semantic_limits": "최근 사용을 현재 unavailable로 바꾸려면 patch 규칙과 시계 검증 필요",
+      "status_reason": "현재 접근 가능한 구조화 문서 예제/자막만으로 해당 세밀 상태를 확보하지 못해 장면 영상 관찰이 필요함. 적합한 구조화 provider가 실제 검증되면 영상 의존성은 줄어들 수 있음; 전역적 API 불가능 선언 아님.",
+      "epistemic_kind": "DERIVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-18",
+      "variable": "Key Ultimate Availability",
+      "layer": "L1",
+      "decision_impact": "한타 진입·보호·강제 교전 분기",
+      "required_precision": "핵심 궁극기 선택 근거와 identity/ready state 분리",
+      "preferred_source": "SRC-VISION",
+      "fallback_source": "SRC-MANUAL",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "시전·초기화·자원·레벨/변신 사건 재확인",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "현재 실시간 자동 추적 미지원; 복기에서도 입력 근거 필요",
+      "manual_fallback": "경기 후 자기 UI/당시 알려진 시전 사건을 구분 기록",
+      "vision_needed": "YES",
+      "availability_status": "VISION_REQUIRED",
+      "semantic_limits": "적 궁극기 실시간 추적 출력은 비활성; 관전자 정보 누설 금지",
+      "status_reason": "현재 접근 가능한 구조화 문서 예제/자막만으로 해당 세밀 상태를 확보하지 못해 장면 영상 관찰이 필요함. 적합한 구조화 provider가 실제 검증되면 영상 의존성은 줄어들 수 있음; 전역적 API 불가능 선언 아님.",
+      "epistemic_kind": "DERIVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-19",
+      "variable": "HP/Resource",
+      "layer": "L0",
+      "decision_impact": "교환·생존·다이브·지속 전투력",
+      "required_precision": "대상별 HP/max HP/자원 종류·보호막과 시점",
+      "preferred_source": "SRC-LIVE-DOC",
+      "fallback_source": "SRC-VISION",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "피해·회복·자원 소모/획득 사건 및 동일 시점 대조",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "active stats fixture만 존재; 상대 전체 HP 제공 가정 금지",
+      "manual_fallback": "관련 대상 UI/체력바와 정밀도 한계 기록",
+      "vision_needed": "CONDITIONAL",
+      "availability_status": "UNKNOWN_PENDING_VERIFICATION",
+      "semantic_limits": "fixture maxHealth=0은 실제 체력 0 또는 사용 가능한 비율 증거 아님",
+      "status_reason": "문서에 후보 필드 또는 이벤트가 있어도 실제 취득·의미·시점·누락 검증 전임.",
+      "epistemic_kind": "OBSERVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-20",
+      "variable": "Numbers",
+      "layer": "L1",
+      "decision_impact": "합류·추격·한타의 실질 인원 비교",
+      "required_precision": "현재 보이는 수와 도착/기여 가능한 수를 분리",
+      "preferred_source": "SRC-VISION",
+      "fallback_source": "SRC-MANUAL",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "도착·사망·이탈·기여 범위 변화 때 재평가",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "전 선수 명단/생존은 해당 교전 인원수 아님",
+      "manual_fallback": "현재 참여자와 합류 가정을 별도 기록",
+      "vision_needed": "YES",
+      "availability_status": "VISION_REQUIRED",
+      "semantic_limits": "생존 아군 수를 유효 지원 인원으로 자동 집계 금지",
+      "status_reason": "현재 접근 가능한 구조화 문서 예제/자막만으로 해당 세밀 상태를 확보하지 못해 장면 영상 관찰이 필요함. 적합한 구조화 provider가 실제 검증되면 영상 의존성은 줄어들 수 있음; 전역적 API 불가능 선언 아님.",
+      "epistemic_kind": "DERIVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-21",
+      "variable": "Carry Exposure",
+      "layer": "L1",
+      "decision_impact": "딜러 보호·진입·후퇴 우선순위",
+      "required_precision": "대상 역할·적 접근 경로·거리·위협 자원과 탈출",
+      "preferred_source": "SRC-VISION",
+      "fallback_source": "SRC-MANUAL",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "위치·위협·보호/탈출 자원 변경 때 재평가",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "검증된 공간·자원 입력과 적용 규칙 필요; 자동 미구현",
+      "manual_fallback": "노출 경로 및 보호 조건 가설 기록",
+      "vision_needed": "YES",
+      "availability_status": "INFERENCE_ONLY",
+      "semantic_limits": "캐리 identity와 노출 정도는 KDA 순위 하나로 확정 불가",
+      "status_reason": "현재 의미/가설 추론으로만 취급하며 확정 사실 아님. 검증된 관찰과 적용 조건·반증이 필요함.",
+      "epistemic_kind": "TACTICAL_INFERENCE_HYPOTHESIS"
+    },
+    {
+      "id": "R7-SV-22",
+      "variable": "Follow-up Access",
+      "layer": "L1",
+      "decision_impact": "아군 호응·완전 합류·제한 지원의 실제 효과",
+      "required_precision": "도착 가능 시점과 스킬/사거리 기여·협조 의존성",
+      "preferred_source": "SRC-VISION",
+      "fallback_source": "SRC-MANUAL",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "경로·자원·군중제어·아군 행동 변화 때 재평가",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "자원/공간/시간 연결 필요; API 명단으로 산출 불가",
+      "manual_fallback": "내 단독 효과와 아군 반응 필요 효과를 구분",
+      "vision_needed": "YES",
+      "availability_status": "VISION_REQUIRED",
+      "semantic_limits": "도착 가능=구조/후속 피해 가능 아님; 아군 반응 확정 금지",
+      "status_reason": "현재 접근 가능한 구조화 문서 예제/자막만으로 해당 세밀 상태를 확보하지 못해 장면 영상 관찰이 필요함. 적합한 구조화 provider가 실제 검증되면 영상 의존성은 줄어들 수 있음; 전역적 API 불가능 선언 아님.",
+      "epistemic_kind": "DERIVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-23",
+      "variable": "Return Path",
+      "layer": "L1",
+      "decision_impact": "교환 종료·로밍·추격 이후 이탈",
+      "required_precision": "지형상 경로와 적 통제·이동 수단 포함 실제 이탈 가능성",
+      "preferred_source": "SRC-VISION",
+      "fallback_source": "SRC-MANUAL",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "경로 폐쇄·적 진입·자원 소모 때 만료",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "지도 정적 경로만으론 동적 복귀 안전 계산 불가",
+      "manual_fallback": "출구·중단 조건과 미확인 적 통제를 기록",
+      "vision_needed": "YES",
+      "availability_status": "VISION_REQUIRED",
+      "semantic_limits": "뒤쪽 빈 공간은 안전한 퇴로가 아님",
+      "status_reason": "현재 접근 가능한 구조화 문서 예제/자막만으로 해당 세밀 상태를 확보하지 못해 장면 영상 관찰이 필요함. 적합한 구조화 provider가 실제 검증되면 영상 의존성은 줄어들 수 있음; 전역적 API 불가능 선언 아님.",
+      "epistemic_kind": "DERIVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-24",
+      "variable": "Vision/Fog Information",
+      "layer": "L0",
+      "decision_impact": "당시 정보 경계·추격 경로·매복 노출",
+      "required_precision": "player perspective별 가시/비가시 영역과 관찰 시각",
+      "preferred_source": "SRC-REPLAY-DOC",
+      "fallback_source": "SRC-VISION",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "시야원·시점·관점 변경 때 재확인",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "replay 관점 제어·시야 재현 정확성 샘플 검증 필요",
+      "manual_fallback": "플레이어 화면/미니맵으로 가시성 한계 기록",
+      "vision_needed": "CONDITIONAL",
+      "availability_status": "VISION_REQUIRED",
+      "semantic_limits": "관전자에서 보이는 적을 PLAYER KNOWN으로 승격 금지",
+      "status_reason": "현재 접근 가능한 구조화 문서 예제/자막만으로 해당 세밀 상태를 확보하지 못해 장면 영상 관찰이 필요함. 적합한 구조화 provider가 실제 검증되면 영상 의존성은 줄어들 수 있음; 전역적 API 불가능 선언 아님.",
+      "epistemic_kind": "OBSERVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-25",
+      "variable": "Spacing",
+      "layer": "L1",
+      "decision_impact": "응징·사거리·반격·이탈 판단",
+      "required_precision": "두 entity 거리와 스킬 범위/판정·시간 정렬",
+      "preferred_source": "SRC-VISION",
+      "fallback_source": "SRC-MANUAL",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "위치·이동·사거리 조건 변경 때 재산출",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "화면 거리의 world 좌표 대응과 오차 검증 필요",
+      "manual_fallback": "범위 안/밖/불확실 및 근거 장면 기록",
+      "vision_needed": "YES",
+      "availability_status": "VISION_REQUIRED",
+      "semantic_limits": "픽셀 거리만으로 hit 여부 또는 안전 간격 확정 금지",
+      "status_reason": "현재 접근 가능한 구조화 문서 예제/자막만으로 해당 세밀 상태를 확보하지 못해 장면 영상 관찰이 필요함. 적합한 구조화 provider가 실제 검증되면 영상 의존성은 줄어들 수 있음; 전역적 API 불가능 선언 아님.",
+      "epistemic_kind": "DERIVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-26",
+      "variable": "Formation",
+      "layer": "L1",
+      "decision_impact": "한타 진입·보호·고립·지역 통제",
+      "required_precision": "다수 위치·역할·접근 경로·시간에 따른 배치 해석",
+      "preferred_source": "SRC-VISION",
+      "fallback_source": "SRC-MANUAL",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "이동·진입·분산·위협 변화 때 재평가",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "검증된 다중 위치에서 조건부 의미 추론; 미구현",
+      "manual_fallback": "전열/후열/측면 가정과 반증 장면 기록",
+      "vision_needed": "YES",
+      "availability_status": "INFERENCE_ONLY",
+      "semantic_limits": "포지션 문자열 또는 정지화면 위치만으로 지속 진형 우세 단정 금지",
+      "status_reason": "현재 의미/가설 추론으로만 취급하며 확정 사실 아님. 검증된 관찰과 적용 조건·반증이 필요함.",
+      "epistemic_kind": "TACTICAL_INFERENCE_HYPOTHESIS"
+    },
+    {
+      "id": "R7-SV-27",
+      "variable": "Player-available Information",
+      "layer": "L1",
+      "decision_impact": "당시 결정의 합리성·후견지명 차단",
+      "required_precision": "event time·수신 시점·관점·시야·인식 가능성 구분",
+      "preferred_source": "SRC-VISION",
+      "fallback_source": "SRC-MANUAL",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "각 decision point의 player view/clock에 고정",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "R3 provenance gate 구현; 실제 입력 adapter 검증 미완료",
+      "manual_fallback": "당시 보였던 사실과 기억/사후 설명을 분리",
+      "vision_needed": "YES",
+      "availability_status": "MANUAL_ONLY",
+      "semantic_limits": "보였음과 실제로 알아차렸음도 구분; 시스템 수신 지연과 시야 여부는 별개",
+      "status_reason": "현재 자동 판정 경로가 없어 운영자가 원자료·관점·시각을 검토해야 함. 수동 입력 자체는 VERIFIED ground truth를 만들지 않음.",
+      "epistemic_kind": "DERIVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-28",
+      "variable": "Ground Truth",
+      "layer": "L0",
+      "decision_impact": "사후 실제 결과·관찰/실행 오류 검토",
+      "required_precision": "원본 사건·시각·entity·관전자 범위와 독립 확인",
+      "preferred_source": "SRC-REPLAY-DOC",
+      "fallback_source": "SRC-VISION",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "해당 과거 사건에 귀속; 수정은 새 revision",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "관전자 자료도 검증되지 않으면 truth label 확정 불가",
+      "manual_fallback": "사후 확인 사실과 미확인/추정 결과를 구분",
+      "vision_needed": "CONDITIONAL",
+      "availability_status": "MANUAL_ONLY",
+      "semantic_limits": "당시 알 수 없던 사실은 outcome-only; 합성 expectation은 실제 정답 아님",
+      "status_reason": "현재 자동 판정 경로가 없어 운영자가 원자료·관점·시각을 검토해야 함. 수동 입력 자체는 VERIFIED ground truth를 만들지 않음.",
+      "epistemic_kind": "OBSERVATION_CANDIDATE"
+    },
+    {
+      "id": "R7-SV-29",
+      "variable": "Intent Hypothesis",
+      "layer": "L1",
+      "decision_impact": "플레이어 계획/상대 유도/실행 차이 구분",
+      "required_precision": "당사자 의도 진술과 외부 추정·행동 관찰을 분리",
+      "preferred_source": "SRC-MANUAL",
+      "fallback_source": "SRC-VIDEO-TRANSCRIPT",
+      "provenance": {
+        "required": [
+          "session_id",
+          "entity_id",
+          "event_time_ms",
+          "received_at",
+          "game_clock_basis",
+          "source_id",
+          "source_version",
+          "source_location",
+          "source_hash",
+          "lineage_ids",
+          "independent_group_id",
+          "perspective",
+          "visibility_at_event",
+          "patch",
+          "quality_state"
+        ],
+        "additional": "L1 파생은 formula/version 및 입력 refs; 가설은 별도 가설·조건·반증; L2 판단은 목표·적용 조건·입력 계보; MANUAL은 author. 실제 ground truth와 player view를 분리."
+      },
+      "freshness_ttl": {
+        "numeric_ttl": null,
+        "rule": "의도 진술이 해당 장면에 적용되는지 재확인; 반증 보존",
+        "current_engine": "AT_EVENT는 snapshot과 동일 event_time이 아니면 STALE; 과거 사실은 explicit .last_seen/.cast_event/.event만 허용."
+      },
+      "confidence_requirement": {
+        "numeric_confidence": null,
+        "required": "accuracy/completeness/freshness 및 관점·시계·patch 검증; 미충족은 UNKNOWN/CONDITIONAL/CONFLICTING 보존",
+        "promotion": "문서 필드·fixture hash·다수 AI 동의로 실경기 VERIFIED 승격 금지"
+      },
+      "automatic_acquisition_feasibility": "위치·CS 접근만으로 의도 자동 인식 불가",
+      "manual_fallback": "사용자 계획을 요청; 없으면 UNKNOWN",
+      "vision_needed": "NO",
+      "availability_status": "INFERENCE_ONLY",
+      "semantic_limits": "자막 발언은 진술 증거일 뿐 실제 의도·화면 사건 증명 아님",
+      "status_reason": "의도는 별도 가설 공간에 보존하며 L1 입력 연결에만 사용. L2 전략 판단의 확정 사실로 취급하지 않음.",
+      "epistemic_kind": "INTENT_HYPOTHESIS_ONLY",
+      "hypothesis_separation": {
+        "namespace": "hypotheses.intent",
+        "truth_status": "NOT_ESTABLISHED",
+        "decision_use": "관찰 사실과 분리한 조건부 scenario 입력만 가능; L2 전략적 사실로 자동 승격 금지",
+        "self_report": "사용자 의도 진술도 author/source/event context를 보존한 진술이다."
+      }
+    }
+  ],
+  "availability_status_enum": [
+    "VERIFIED_DIRECT",
+    "VERIFIED_DERIVED",
+    "INFERENCE_ONLY",
+    "VISION_REQUIRED",
+    "MANUAL_ONLY",
+    "UNAVAILABLE",
+    "UNKNOWN_PENDING_VERIFICATION"
+  ],
+  "layer_scope": "29개 요청 변수는 주로 판단 입력이다. L2 출력 항목을 채우기 위해 입력을 임의 승격하거나 새로운 변수를 29개 목록에 끼워 넣지 않는다. Intent Hypothesis는 별도 가설 공간의 L1 입력이며 전략적 사실이 아니다."
+}

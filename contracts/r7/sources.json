@@ -1,0 +1,273 @@
+{
+  "schema_version": "r7.source-audit.v1",
+  "audited_at_utc": "2026-10-04T11:02:52.395576+00:00",
+  "scope": "Documentation availability and preserved sample inspection only; no real match validation.",
+  "sources": [
+    {
+      "id": "SRC-LIVE-DOC",
+      "source_kind": "OFFICIAL_DOCUMENTATION",
+      "availability": "DOCUMENTED_ONLY",
+      "urls": [
+        "https://developer.riotgames.com/docs/lol#game-client-api",
+        "https://developer.riotgames.com/docs/lol#live-client-data-api",
+        "https://static.developer.riotgames.com/docs/lol/liveclientdata_events.json"
+      ],
+      "verified_scope": "Official document retrieved; live endpoint not exercised in R7.",
+      "documented_endpoints": [
+        "https://127.0.0.1:2999/swagger/v3/openapi.json",
+        "https://127.0.0.1:2999/liveclientdata/allgamedata",
+        "https://127.0.0.1:2999/liveclientdata/activeplayer",
+        "https://127.0.0.1:2999/liveclientdata/playerlist",
+        "https://127.0.0.1:2999/liveclientdata/eventdata",
+        "https://127.0.0.1:2999/liveclientdata/gamestats"
+      ],
+      "timing": {
+        "update_interval_ms": null,
+        "delivery_latency_ms": null,
+        "retention_or_event_completeness": null,
+        "status": "NOT_ESTABLISHED_BY_RETRIEVED_DOCUMENTATION"
+      },
+      "limitations": [
+        "Local native-client HTTPS access; remote Work cannot assume access to user PC.",
+        "RiotID fields described in current docs are absent from preserved sample.",
+        "Event examples use repeated zero IDs/timestamps; not a real event stream.",
+        "GameEnd absent in retrieved event-example catalog; ending validation remains blocked."
+      ],
+      "fallback": "Preserve missing/conflicting fields and event/reception clocks; request authorized local sample or player-perspective clip.",
+      "actual_match_sample_verified": false,
+      "coaching_enabled": false,
+      "decision_eligible": false
+    },
+    {
+      "id": "SRC-LIVE-SAMPLE",
+      "source_kind": "DOCUMENTATION_SAMPLE",
+      "availability": "ARTIFACT_INTEGRITY_CONFIRMED_ONLY",
+      "urls": [
+        "https://static.developer.riotgames.com/docs/lol/liveclientdata_sample.json"
+      ],
+      "local_artifact": "evidence/r5/official-sample-retry-20261004/raw.json",
+      "receipt_path": "evidence/r5/official-sample-retry-20261004/receipt.json",
+      "sha256": "d754b6c27edf950679dd9478742a8c4b9402e70101a3b46764c28f2aeafd72d3",
+      "bytes": 6561,
+      "retrieved_at_utc": "2026-10-04T10:25:30.131161+00:00",
+      "integrity_rechecked_at_utc": "2026-10-04T11:02:52.395576+00:00",
+      "available_top_level": [
+        "activePlayer",
+        "allPlayers",
+        "events",
+        "gameData"
+      ],
+      "sample_field_groups": {
+        "active_player": [
+          "abilities",
+          "championStats",
+          "currentGold",
+          "fullRunes",
+          "level",
+          "summonerName"
+        ],
+        "active_stats": [
+          "abilityPower",
+          "armor",
+          "armorPenetrationFlat",
+          "armorPenetrationPercent",
+          "attackDamage",
+          "attackRange",
+          "attackSpeed",
+          "bonusArmorPenetrationPercent",
+          "bonusMagicPenetrationPercent",
+          "cooldownReduction",
+          "critChance",
+          "critDamage",
+          "currentHealth",
+          "healthRegenRate",
+          "lifeSteal",
+          "magicLethality",
+          "magicPenetrationFlat",
+          "magicPenetrationPercent",
+          "magicResist",
+          "maxHealth",
+          "moveSpeed",
+          "physicalLethality",
+          "resourceMax",
+          "resourceRegenRate",
+          "resourceType",
+          "resourceValue",
+          "spellVamp",
+          "tenacity"
+        ],
+        "all_players_entry": [
+          "championName",
+          "isBot",
+          "isDead",
+          "items",
+          "level",
+          "position",
+          "rawChampionName",
+          "respawnTimer",
+          "runes",
+          "scores",
+          "skinID",
+          "summonerName",
+          "summonerSpells",
+          "team"
+        ],
+        "game_data": [
+          "gameMode",
+          "gameTime",
+          "mapName",
+          "mapNumber",
+          "mapTerrain"
+        ]
+      },
+      "events_observed": [
+        "GameStart"
+      ],
+      "timing": {
+        "snapshot_game_time": 0.0,
+        "event_time_values": [
+          0.0
+        ],
+        "real_update_frequency_verified": false
+      },
+      "limitations": [
+        "One documentation snapshot at gameTime 0; no current patch/match identity established.",
+        "Preserved sample allPlayers[0].position is an empty string, not coordinates; the fresh official documentation example uses MIDDLE.",
+        "abilityLevel/name/description are not spell readiness or remaining cooldown.",
+        "No minion-level positions/health/targets, actual escape feasibility, player intent or current enemy jungle location established.",
+        "Zero-valued example stats are not measured current health/resources."
+      ],
+      "fallback": "Use only for parser/field-path tests; no state-confidence or actual-match promotion.",
+      "actual_match_sample_verified": false,
+      "coaching_enabled": false,
+      "decision_eligible": false
+    },
+    {
+      "id": "SRC-MATCH-DOC",
+      "source_kind": "OFFICIAL_REFERENCE_TARGET",
+      "availability": "REFERENCE_SHELL_ONLY",
+      "urls": [
+        "https://developer.riotgames.com/apis#match-v5/GET_getMatch",
+        "https://developer.riotgames.com/apis#match-v5/GET_getTimeline"
+      ],
+      "access_attempt": {
+        "opened_url": "https://developer.riotgames.com/apis#match-v5/GET_getTimeline",
+        "resolved_url": "https://developer.riotgames.com/apis",
+        "result": "36-line portal shell; no endpoint response schema rendered. Two targeted official-site searches did not recover schema; unrelated search results excluded."
+      },
+      "confirmed_response_fields": [],
+      "timing": {
+        "frame_interval_ms": null,
+        "event_timestamp_unit": null,
+        "publication_delay": null
+      },
+      "limitations": [
+        "Match/Timeline field availability, units and coverage are NOT_VERIFIED in this audit.",
+        "No authenticated match request or real response obtained.",
+        "No one-minute frame interval, coordinate coverage, cooldown or player-visibility claim inferred from memory."
+      ],
+      "fallback": "Obtain official rendered schema and authorized matching raw response before binding fields; keep dependent state UNKNOWN.",
+      "actual_match_sample_verified": false,
+      "coaching_enabled": false,
+      "decision_eligible": false
+    },
+    {
+      "id": "SRC-DDRAGON",
+      "source_kind": "OFFICIAL_DOCUMENTATION",
+      "availability": "DOCUMENTED_ONLY",
+      "urls": [
+        "https://developer.riotgames.com/docs/lol#data-dragon",
+        "https://ddragon.leagueoflegends.com/api/versions.json",
+        "https://ddragon.leagueoflegends.com/realms/na.json"
+      ],
+      "verified_scope": "Static-data/version documentation read; this audit did not fetch a version-pinned champion asset.",
+      "documented_categories": [
+        "champions",
+        "items",
+        "runes",
+        "summoner spells",
+        "images"
+      ],
+      "timing": {
+        "live_refresh": false,
+        "patch_publish_delay": null
+      },
+      "limitations": [
+        "Static source, not observed game state.",
+        "Manual publication may lag patch; regional client and Data Dragon versions can differ.",
+        "No current readiness, opponent intent or real damage outcome established."
+      ],
+      "fallback": "Pin version, language, asset hash and match patch mapping before rule use; unsupported mapping blocks patch-sensitive evaluation.",
+      "actual_match_sample_verified": false,
+      "coaching_enabled": false,
+      "decision_eligible": false
+    },
+    {
+      "id": "SRC-REPLAY-DOC",
+      "source_kind": "OFFICIAL_DOCUMENTATION",
+      "availability": "DOCUMENTED_ONLY",
+      "urls": [
+        "https://developer.riotgames.com/docs/lol#replay-api"
+      ],
+      "documented_endpoints": [
+        "https://127.0.0.1:2999/replay/game",
+        "https://127.0.0.1:2999/replay/playback",
+        "https://127.0.0.1:2999/replay/render",
+        "https://127.0.0.1:2999/replay/recording",
+        "https://127.0.0.1:2999/replay/sequence"
+      ],
+      "timing": {
+        "playback_clock_to_video_clock_mapping": null,
+        "camera_refresh_or_detection_latency": null
+      },
+      "limitations": [
+        "Disabled by default; local replay process/config required.",
+        "Documented playback/camera/recording control does not certify object-level tactical-state extraction.",
+        "Observer-visible hidden state must not become player-known decision evidence."
+      ],
+      "fallback": "Root-owned replay review supplies verified player-visible frames/clock mapping; no implicit automatic replay parser.",
+      "actual_match_sample_verified": false,
+      "coaching_enabled": false,
+      "decision_eligible": false
+    },
+    {
+      "id": "SRC-VIDEO-TRANSCRIPT",
+      "source_kind": "PUBLIC_VIDEO_TRANSCRIPT",
+      "availability": "INDEX_AVAILABLE_NO_FRAMES",
+      "local_artifact": "evidence/r5/video-index.json",
+      "limitations": [
+        "Auto captions are speech claims, not state observations. Video/game clocks, perspective and patch unverified. R5 media timeout is historical; no fresh visual PASS."
+      ],
+      "actual_match_sample_verified": false,
+      "decision_eligible": false,
+      "coaching_enabled": false,
+      "fallback": "Keep UNKNOWN with explicit acquisition/unlock requirement"
+    },
+    {
+      "id": "SRC-VISION",
+      "source_kind": "SELECTIVE_OBSERVATION",
+      "availability": "NO_VERIFIED_FRAME",
+      "local_artifact": null,
+      "limitations": [
+        "No frame/clip observation performed. May describe visible geometry/interactions; cannot infer L2 judgment or hidden state."
+      ],
+      "actual_match_sample_verified": false,
+      "decision_eligible": false,
+      "coaching_enabled": false,
+      "fallback": "Keep UNKNOWN with explicit acquisition/unlock requirement"
+    },
+    {
+      "id": "SRC-MANUAL",
+      "source_kind": "OPERATOR_REFERENCE",
+      "availability": "PROTOCOL_READY_REFERENCE_ABSENT",
+      "local_artifact": "fixtures/r7/representative_set.json",
+      "limitations": [
+        "Manual author tags require source/time/view provenance. Cannot certify truth by assertion alone."
+      ],
+      "actual_match_sample_verified": false,
+      "decision_eligible": false,
+      "coaching_enabled": false,
+      "fallback": "Keep UNKNOWN with explicit acquisition/unlock requirement"
+    }
+  ]
+}

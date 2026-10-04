@@ -1,0 +1,130 @@
+{
+  "schema_version": "r7.requirements.v1",
+  "knowledge_status": "EXPLORATORY",
+  "frozen_contract_change": false,
+  "default_permission": false,
+  "deep_chase_mapping": "CHASE + deep commitment audit context; core enum unchanged",
+  "numeric_ttl": null,
+  "confidence_threshold": null,
+  "actions": [
+    {
+      "action": "THREAT",
+      "engine_action_type": "THREAT",
+      "required_keys": [
+        "self.position",
+        "target.position",
+        "player.visibility",
+        "return_path"
+      ],
+      "commitment_rank": 0,
+      "context": "Exploratory conservative audit profile. Context-specific omissions require explicit evidence, not a new universal rule."
+    },
+    {
+      "action": "SINGLE_HIT",
+      "engine_action_type": "SINGLE_HIT",
+      "required_keys": [
+        "self.position",
+        "target.position",
+        "player.visibility",
+        "return_path",
+        "hit_window",
+        "target.response"
+      ],
+      "commitment_rank": 1,
+      "context": "Exploratory conservative audit profile. Context-specific omissions require explicit evidence, not a new universal rule."
+    },
+    {
+      "action": "SHORT_TRADE",
+      "engine_action_type": "SHORT_TRADE",
+      "required_keys": [
+        "self.position",
+        "target.position",
+        "player.visibility",
+        "return_path",
+        "hit_window",
+        "target.response",
+        "hp_resource",
+        "wave_state",
+        "jungle_reachability",
+        "skill_availability"
+      ],
+      "commitment_rank": 2,
+      "context": "Exploratory conservative audit profile. Context-specific omissions require explicit evidence, not a new universal rule."
+    },
+    {
+      "action": "EXTENDED_TRADE",
+      "engine_action_type": "EXTENDED_TRADE",
+      "required_keys": [
+        "self.position",
+        "target.position",
+        "player.visibility",
+        "return_path",
+        "hit_window",
+        "target.response",
+        "hp_resource",
+        "wave_state",
+        "jungle_reachability",
+        "skill_availability",
+        "wave_mass",
+        "follow_up_access",
+        "reinforcement_window"
+      ],
+      "commitment_rank": 3,
+      "context": "Exploratory conservative audit profile. Context-specific omissions require explicit evidence, not a new universal rule."
+    },
+    {
+      "action": "ALL_IN",
+      "engine_action_type": "ALL_IN",
+      "required_keys": [
+        "self.position",
+        "target.position",
+        "player.visibility",
+        "return_path",
+        "hit_window",
+        "target.response",
+        "hp_resource",
+        "wave_state",
+        "jungle_reachability",
+        "skill_availability",
+        "wave_mass",
+        "follow_up_access",
+        "reinforcement_window",
+        "key_ultimate_availability",
+        "summoner_availability",
+        "tower_threat",
+        "numbers"
+      ],
+      "commitment_rank": 4,
+      "context": "Exploratory conservative audit profile. Context-specific omissions require explicit evidence, not a new universal rule."
+    },
+    {
+      "action": "DEEP_CHASE",
+      "engine_action_type": "CHASE",
+      "required_keys": [
+        "self.position",
+        "target.position",
+        "player.visibility",
+        "return_path",
+        "hit_window",
+        "target.response",
+        "hp_resource",
+        "wave_state",
+        "jungle_reachability",
+        "skill_availability",
+        "wave_mass",
+        "follow_up_access",
+        "reinforcement_window",
+        "key_ultimate_availability",
+        "summoner_availability",
+        "tower_threat",
+        "numbers",
+        "route_vision",
+        "route_geometry",
+        "return_cost",
+        "carry_exposure"
+      ],
+      "commitment_rank": 5,
+      "context": "Exploratory conservative audit profile. Context-specific omissions require explicit evidence, not a new universal rule."
+    }
+  ]
+}
