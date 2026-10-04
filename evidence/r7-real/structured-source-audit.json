@@ -1,0 +1,640 @@
+{
+  "schema_version": "r7-real.structured-source-audit.v1",
+  "observed_date_utc": "2026-10-04",
+  "repository_base_sha": "6951f5cafbc360c4637107fe3a3fb4dc0eed0d25",
+  "scope": "R7_REAL_EVIDENCE_FOLLOWUP_NO_R8_CORE_OR_MATRIX_CHANGE",
+  "search_budget": {
+    "rounds": 3,
+    "stop_reason": "BOUND_RAW_CANDIDATE_ACQUIRED_AND_MATCH_ID_MISMATCH_CONFIRMED_NO_MORE_SEARCH"
+  },
+  "acquired_sources": [
+    {
+      "key": "match",
+      "publisher": "eoinpinaqui/machine-learning",
+      "pinned_commit": "ef01002ec22f5815abfd10490f43f5cab758d81c",
+      "url": "https://github.com/eoinpinaqui/machine-learning/blob/ef01002ec22f5815abfd10490f43f5cab758d81c/match.json",
+      "github_blob_sha": "c9b5aca569e950ecaad95b0480ae669c2dd62449",
+      "bytes": 69604,
+      "sha256": "0b599f9af3ee3cbdc9b316ca336008102f8b591835961f8ecdf80814bc0387bd",
+      "github_blob_integrity_matched": true,
+      "private_raw_path": "/workspace/scratch/7240cfa27170/private-r7-real-structured/match.json",
+      "status": "PUBLISHER_COLLECTED_CANDIDATE_NOT_INDEPENDENTLY_VERIFIED",
+      "exact_file_provenance_gap": "README claims Riot collection for project dataset but does not explicitly attest the provenance of root match.json. Sample queueId 400 is outside the stated ranked/high-ranked collection. Git bytes/game identity are verified; actual Riot origin is not."
+    },
+    {
+      "key": "timeline",
+      "publisher": "eoinpinaqui/machine-learning",
+      "pinned_commit": "ef01002ec22f5815abfd10490f43f5cab758d81c",
+      "url": "https://github.com/eoinpinaqui/machine-learning/blob/ef01002ec22f5815abfd10490f43f5cab758d81c/timeline.json",
+      "github_blob_sha": "d56d832f4d5b99515036238a19e6dd4724304c5c",
+      "bytes": 1751842,
+      "sha256": "b4f75ac8aae6ffdb3afdb4235084481f80dc93dc37f9d8c7eca4724aad1a9726",
+      "github_blob_integrity_matched": true,
+      "private_raw_path": "/workspace/scratch/7240cfa27170/private-r7-real-structured/timeline.json",
+      "status": "PUBLISHER_COLLECTED_CANDIDATE_NOT_INDEPENDENTLY_VERIFIED",
+      "exact_file_provenance_gap": "README claims Riot collection for project dataset but does not explicitly attest root timeline.json. No first-party response receipt or matched Match-V5 source/patch/player POV was acquired."
+    }
+  ],
+  "retrieval": {
+    "credential_or_payment_used": false,
+    "raw_download_failure": {
+      "source": "timeline",
+      "route": "commit-pinned raw URL via GitHub connector",
+      "status": 400,
+      "reason": "file may be too large or unsupported"
+    },
+    "recovery": "GitHub git/blobs endpoint decoded UTF-8 content. Original bytes reconstructed and independently matched source Git blob SHA for each file; no schema/value transformation."
+  },
+  "source_claim": {
+    "url": "https://github.com/eoinpinaqui/machine-learning/blob/ef01002ec22f5815abfd10490f43f5cab758d81c/README.md",
+    "readme_blob_sha": "ffdd0da4a3b31c48ae3971430475916d4a294e6d",
+    "claim": "Publisher says the project dataset's 13,803 matches were collected with Riot Games API, using the timeline endpoint and later parsing. This is source-author evidence, not a receipt for either exact root sample."
+  },
+  "join_validation": {
+    "match_id": "EUW1_5564229827",
+    "timeline_match_id": "EUW1_5584130728",
+    "same_match": false,
+    "status": "REJECTED_MATCH_ID_MISMATCH",
+    "patch_join_allowed": false,
+    "participant_identity_join_allowed": false,
+    "player_information_state_established": false,
+    "ground_truth_state_established": false
+  },
+  "manual_reference": {
+    "method": "MANUALLY_TRANSCRIBED_FROM_DIRECT_SOURCE_FIELD_DISPLAY_BEFORE_CURRENT_EXTRACTOR",
+    "decision_eligible": false,
+    "source_authenticity_status": "PUBLISHER_COLLECTED_CANDIDATE_NOT_INDEPENDENTLY_VERIFIED",
+    "fields": [
+      {
+        "source": "match",
+        "pointer": "/metadata/matchId",
+        "expected": "EUW1_5564229827"
+      },
+      {
+        "source": "match",
+        "pointer": "/info/gameVersion",
+        "expected": "11.23.409.111"
+      },
+      {
+        "source": "match",
+        "pointer": "/info/gameStartTimestamp",
+        "expected": 1637337220017
+      },
+      {
+        "source": "match",
+        "pointer": "/info/gameEndTimestamp",
+        "expected": 1637338775965
+      },
+      {
+        "source": "match",
+        "pointer": "/info/queueId",
+        "expected": 400
+      },
+      {
+        "source": "match",
+        "pointer": "/info/participants/0/participantId",
+        "expected": 1
+      },
+      {
+        "source": "match",
+        "pointer": "/info/participants/0/championName",
+        "expected": "Yorick"
+      },
+      {
+        "source": "match",
+        "pointer": "/info/participants/0/teamId",
+        "expected": 100
+      },
+      {
+        "source": "timeline",
+        "pointer": "/metadata/matchId",
+        "expected": "EUW1_5584130728"
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frameInterval",
+        "expected": 60000
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/timestamp",
+        "expected": 60003
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/participantFrames/1/participantId",
+        "expected": 1
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/participantFrames/1/level",
+        "expected": 1
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/participantFrames/1/championStats/health",
+        "expected": 574
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/participantFrames/1/championStats/healthMax",
+        "expected": 586
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/participantFrames/1/position/x",
+        "expected": 8147
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/participantFrames/1/position/y",
+        "expected": 5066
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/participantFrames/1/currentGold",
+        "expected": 0
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/participantFrames/1/minionsKilled",
+        "expected": 1
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/events/0/type",
+        "expected": "SKILL_LEVEL_UP"
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/events/0/participantId",
+        "expected": 7
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/events/0/skillSlot",
+        "expected": 3
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/events/0/timestamp",
+        "expected": 3075
+      }
+    ]
+  },
+  "metrics": {
+    "verified_real_matches": 0,
+    "verified_player_references": 0,
+    "state_accuracy": null,
+    "coaching_accuracy": null
+  },
+  "public_data_minimization": {
+    "raw_published": false,
+    "summoner_names_puuids_account_ids_published": false,
+    "license_for_redistribution": "NOT_ESTABLISHED",
+    "published_only": "Source URLs, integrity hashes, selected non-identifying field values, blockers and diagnostics"
+  },
+  "extractor_run": "COMPLETED_DIAGNOSTIC_ONLY",
+  "reference_freeze": {
+    "frozen_before_current_extractor": true,
+    "frozen_at_utc": "2026-10-04T11:33:03.435502+00:00",
+    "canonical_sha256": "57e0b05e9a125f245903fef01a42dcfbc7e9db8fae3652d3654bb002ec044271",
+    "canonicalization": "JSON sorted keys, compact separators, UTF-8, ensure_ascii=False"
+  },
+  "manual_reference_check": {
+    "checked_at_utc": "2026-10-04T11:34:13.737546+00:00",
+    "selected_fields": 23,
+    "agreed": 23,
+    "checks": [
+      {
+        "source": "match",
+        "pointer": "/metadata/matchId",
+        "agreement": true
+      },
+      {
+        "source": "match",
+        "pointer": "/info/gameVersion",
+        "agreement": true
+      },
+      {
+        "source": "match",
+        "pointer": "/info/gameStartTimestamp",
+        "agreement": true
+      },
+      {
+        "source": "match",
+        "pointer": "/info/gameEndTimestamp",
+        "agreement": true
+      },
+      {
+        "source": "match",
+        "pointer": "/info/queueId",
+        "agreement": true
+      },
+      {
+        "source": "match",
+        "pointer": "/info/participants/0/participantId",
+        "agreement": true
+      },
+      {
+        "source": "match",
+        "pointer": "/info/participants/0/championName",
+        "agreement": true
+      },
+      {
+        "source": "match",
+        "pointer": "/info/participants/0/teamId",
+        "agreement": true
+      },
+      {
+        "source": "timeline",
+        "pointer": "/metadata/matchId",
+        "agreement": true
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frameInterval",
+        "agreement": true
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/timestamp",
+        "agreement": true
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/participantFrames/1/participantId",
+        "agreement": true
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/participantFrames/1/level",
+        "agreement": true
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/participantFrames/1/championStats/health",
+        "agreement": true
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/participantFrames/1/championStats/healthMax",
+        "agreement": true
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/participantFrames/1/position/x",
+        "agreement": true
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/participantFrames/1/position/y",
+        "agreement": true
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/participantFrames/1/currentGold",
+        "agreement": true
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/participantFrames/1/minionsKilled",
+        "agreement": true
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/events/0/type",
+        "agreement": true
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/events/0/participantId",
+        "agreement": true
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/events/0/skillSlot",
+        "agreement": true
+      },
+      {
+        "source": "timeline",
+        "pointer": "/info/frames/1/events/0/timestamp",
+        "agreement": true
+      }
+    ],
+    "interpretation": "Exact selected source-field transcription agreement only; not independent actual-match/player-state accuracy."
+  },
+  "current_extractor_results": {
+    "match": {
+      "raw_sha256": "0b599f9af3ee3cbdc9b316ca336008102f8b591835961f8ecdf80814bc0387bd",
+      "source_kind": "UNVERIFIED_IMPORT",
+      "current_allowlist_fields": 17,
+      "present": 0,
+      "missing": 17,
+      "sections": {
+        "activePlayer": "MISSING",
+        "allPlayers": "MISSING",
+        "events": "MISSING",
+        "gameData": "MISSING"
+      },
+      "source_authenticity_verified": false,
+      "integrity_hash_matched": true,
+      "raw_field_states": [
+        {
+          "field": "game_time_seconds",
+          "pointer": "/gameData/gameTime",
+          "state": "MISSING"
+        },
+        {
+          "field": "active_health",
+          "pointer": "/activePlayer/championStats/currentHealth",
+          "state": "MISSING"
+        },
+        {
+          "field": "active_max_health",
+          "pointer": "/activePlayer/championStats/maxHealth",
+          "state": "MISSING"
+        },
+        {
+          "field": "active_gold",
+          "pointer": "/activePlayer/currentGold",
+          "state": "MISSING"
+        },
+        {
+          "field": "active_level",
+          "pointer": "/activePlayer/level",
+          "state": "MISSING"
+        },
+        {
+          "field": "active_resource",
+          "pointer": "/activePlayer/championStats/resourceValue",
+          "state": "MISSING"
+        },
+        {
+          "field": "active_resource_max",
+          "pointer": "/activePlayer/championStats/resourceMax",
+          "state": "MISSING"
+        },
+        {
+          "field": "champion_name",
+          "pointer": "/allPlayers/0/championName",
+          "state": "MISSING"
+        },
+        {
+          "field": "role_label",
+          "pointer": "/allPlayers/0/position",
+          "state": "MISSING"
+        },
+        {
+          "field": "kills",
+          "pointer": "/allPlayers/0/scores/kills",
+          "state": "MISSING"
+        },
+        {
+          "field": "deaths",
+          "pointer": "/allPlayers/0/scores/deaths",
+          "state": "MISSING"
+        },
+        {
+          "field": "assists",
+          "pointer": "/allPlayers/0/scores/assists",
+          "state": "MISSING"
+        },
+        {
+          "field": "cs",
+          "pointer": "/allPlayers/0/scores/creepScore",
+          "state": "MISSING"
+        },
+        {
+          "field": "keystone_id",
+          "pointer": "/allPlayers/0/runes/keystone/id",
+          "state": "MISSING"
+        },
+        {
+          "field": "summoner_one_name",
+          "pointer": "/allPlayers/0/summonerSpells/summonerSpellOne/displayName",
+          "state": "MISSING"
+        },
+        {
+          "field": "summoner_two_name",
+          "pointer": "/allPlayers/0/summonerSpells/summonerSpellTwo/displayName",
+          "state": "MISSING"
+        },
+        {
+          "field": "ultimate_level",
+          "pointer": "/activePlayer/abilities/R/abilityLevel",
+          "state": "MISSING"
+        }
+      ],
+      "health_fraction": {
+        "field": "health_fraction",
+        "layer": "L1",
+        "value": null,
+        "state": "UNKNOWN",
+        "formula": "active_health / active_max_health",
+        "formula_version": "r7.health_fraction.v1",
+        "lineage": [
+          "active_health",
+          "active_max_health"
+        ],
+        "source_sha256": "0b599f9af3ee3cbdc9b316ca336008102f8b591835961f8ecdf80814bc0387bd",
+        "decision_eligible": false,
+        "missing_reason": "HEALTH_INPUT_MISSING_OR_SEMANTICALLY_INVALID"
+      },
+      "coaching_enabled": false,
+      "player_information_state": null,
+      "ground_truth_state": null
+    },
+    "timeline": {
+      "raw_sha256": "b4f75ac8aae6ffdb3afdb4235084481f80dc93dc37f9d8c7eca4724aad1a9726",
+      "source_kind": "UNVERIFIED_IMPORT",
+      "current_allowlist_fields": 17,
+      "present": 0,
+      "missing": 17,
+      "sections": {
+        "activePlayer": "MISSING",
+        "allPlayers": "MISSING",
+        "events": "MISSING",
+        "gameData": "MISSING"
+      },
+      "source_authenticity_verified": false,
+      "integrity_hash_matched": true,
+      "raw_field_states": [
+        {
+          "field": "game_time_seconds",
+          "pointer": "/gameData/gameTime",
+          "state": "MISSING"
+        },
+        {
+          "field": "active_health",
+          "pointer": "/activePlayer/championStats/currentHealth",
+          "state": "MISSING"
+        },
+        {
+          "field": "active_max_health",
+          "pointer": "/activePlayer/championStats/maxHealth",
+          "state": "MISSING"
+        },
+        {
+          "field": "active_gold",
+          "pointer": "/activePlayer/currentGold",
+          "state": "MISSING"
+        },
+        {
+          "field": "active_level",
+          "pointer": "/activePlayer/level",
+          "state": "MISSING"
+        },
+        {
+          "field": "active_resource",
+          "pointer": "/activePlayer/championStats/resourceValue",
+          "state": "MISSING"
+        },
+        {
+          "field": "active_resource_max",
+          "pointer": "/activePlayer/championStats/resourceMax",
+          "state": "MISSING"
+        },
+        {
+          "field": "champion_name",
+          "pointer": "/allPlayers/0/championName",
+          "state": "MISSING"
+        },
+        {
+          "field": "role_label",
+          "pointer": "/allPlayers/0/position",
+          "state": "MISSING"
+        },
+        {
+          "field": "kills",
+          "pointer": "/allPlayers/0/scores/kills",
+          "state": "MISSING"
+        },
+        {
+          "field": "deaths",
+          "pointer": "/allPlayers/0/scores/deaths",
+          "state": "MISSING"
+        },
+        {
+          "field": "assists",
+          "pointer": "/allPlayers/0/scores/assists",
+          "state": "MISSING"
+        },
+        {
+          "field": "cs",
+          "pointer": "/allPlayers/0/scores/creepScore",
+          "state": "MISSING"
+        },
+        {
+          "field": "keystone_id",
+          "pointer": "/allPlayers/0/runes/keystone/id",
+          "state": "MISSING"
+        },
+        {
+          "field": "summoner_one_name",
+          "pointer": "/allPlayers/0/summonerSpells/summonerSpellOne/displayName",
+          "state": "MISSING"
+        },
+        {
+          "field": "summoner_two_name",
+          "pointer": "/allPlayers/0/summonerSpells/summonerSpellTwo/displayName",
+          "state": "MISSING"
+        },
+        {
+          "field": "ultimate_level",
+          "pointer": "/activePlayer/abilities/R/abilityLevel",
+          "state": "MISSING"
+        }
+      ],
+      "health_fraction": {
+        "field": "health_fraction",
+        "layer": "L1",
+        "value": null,
+        "state": "UNKNOWN",
+        "formula": "active_health / active_max_health",
+        "formula_version": "r7.health_fraction.v1",
+        "lineage": [
+          "active_health",
+          "active_max_health"
+        ],
+        "source_sha256": "b4f75ac8aae6ffdb3afdb4235084481f80dc93dc37f9d8c7eca4724aad1a9726",
+        "decision_eligible": false,
+        "missing_reason": "HEALTH_INPUT_MISSING_OR_SEMANTICALLY_INVALID"
+      },
+      "coaching_enabled": false,
+      "player_information_state": null,
+      "ground_truth_state": null
+    }
+  },
+  "extractor_interpretation": {
+    "reference_paths_supported": 0,
+    "reference_paths_selected": 23,
+    "observation": "Existing extractor reads Live Client activePlayer/allPlayers/events/gameData paths; acquired responses have metadata/info. All 17 Live Client allowlist paths are MISSING in each response.",
+    "classification": "EXTRACTION_ERROR_CANDIDATE_SCHEMA_COVERAGE_GAP",
+    "fix_authorized_here": false,
+    "not_state_accuracy_measurement": true,
+    "engine_invoked": false,
+    "synthetic_relabelling_performed": false
+  },
+  "timeline_observations": {
+    "frame_count": 35,
+    "frame_interval_ms": 60000,
+    "metadata_participant_count": 10,
+    "gameVersion_at_info_present": false,
+    "gameStartTimestamp_at_info_present": false,
+    "info_keys": [
+      "frameInterval",
+      "frames",
+      "gameId",
+      "participants"
+    ],
+    "position_scope": "POST_GAME_PARTICIPANT_FRAMES_NO_PLAYER_VISIBILITY_PROOF",
+    "opponent_positions_player_known": false
+  },
+  "other_sources": [
+    {
+      "source": "Riot Developer Portal",
+      "url": "https://developer.riotgames.com/docs/portal",
+      "status": "FIRST_PARTY_API_KEY_REQUIRED",
+      "observed": "Official getting-started/API-key/401 sections establish authenticated access; no credential used. API reference crawler returned service index only, so detailed schema tables not claimed verified here."
+    },
+    {
+      "source": "AngryBacteria/league_of_legends",
+      "url": "https://huggingface.co/datasets/AngryBacteria/league_of_legends/tree/main",
+      "status": "PUBLISHER_CLAIMED_REAL_NO_RECORD_ACQUIRED",
+      "observed": "Publisher card says >13,000 Riot API matches, minute timelines and XY event coordinates. Public file listing: match_v5.json 1.34 GB, timeline_v5.json 14.5 GB. No mass download. Single file web open returned Internal Error."
+    },
+    {
+      "source": "GPTilt datasets current catalogue",
+      "url": "https://github.com/gptilt/datasets",
+      "readme_blob_sha": "b3116a6948f407851d04151bac9640f8e755b167",
+      "status": "NO_CURRENT_PUBLIC_RIOT_MATCH_TIMELINE_LISTING",
+      "observed": "Current published catalogue lists Leaguepedia esports entities/matches; Riot internal table lists league-entry/rank snapshots. Older public announcement is not evidence of current raw match/timeline access."
+    },
+    {
+      "source": "ddori/LeagueOfLegends_Data_Curation",
+      "url": "https://github.com/ddori/LeagueOfLegends_Data_Curation",
+      "status": "DERIVED_CSV_NOT_RAW_MATCH_TIMELINE",
+      "observed": "README claims SoloQ collection from Riot. Collector saves match/timeline files, but inspected SoloQ/data contains only a 515-byte one-row clean CSV. Its provenance.json describes a 43,635-byte clean CSV and 510,886-byte raw CSV, not the current file; provenance cannot authenticate the current sample. No raw matching pair acquired.",
+      "current_clean_csv_blob_sha": "e1e1e715f0d90a3bd1aec98dc92e86614ce9d582",
+      "current_clean_csv_bytes": 515,
+      "provenance_blob_sha": "25417f3682ab6d4cf65f896fd9aef7512e4159e6"
+    },
+    {
+      "source": "artoria-dev/data-science-lol",
+      "url": "https://github.com/artoria-dev/data-science-lol",
+      "status": "COLLECTION_CODE_AND_DOCUMENTATION_FRAGMENT_NOT_COMPLETE_RAW_RECORD",
+      "observed": "README describes API collection; displayed timeline structure explicitly pseudo-version and one participant fragment lacks a complete tied record. Inspected get-data/readme-files paths contain scripts and images, no bounded complete JSON pair."
+    }
+  ],
+  "remaining_blockers": [
+    "EXACT_SAMPLE_RIOT_ORIGIN_NOT_INDEPENDENTLY_ATTESTED",
+    "MATCH_TIMELINE_GAME_ID_MISMATCH",
+    "TIMELINE_PATCH_AND_ABSOLUTE_START_NOT_ACQUIRED",
+    "PLAYER_POV_VISIBILITY_CLOCK_REFERENCE_NOT_ESTABLISHED",
+    "CURRENT_EXTRACTOR_MATCH_TIMELINE_SCHEMA_UNSUPPORTED",
+    "REPLAY_METADATA_OR_RAW_REPLAY_NOT_ACQUIRED",
+    "RAW_REPUBLICATION_LICENSE_NOT_ESTABLISHED",
+    "ENGINE_SYNTHETIC_ONLY"
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "at_utc": "2026-10-04T11:28:28.123244+00:00",
+  "at_kst": "2026-10-04T20:28:28.123244+09:00",
+  "scope": "Local environment and fixed LoL Live Client Data API port only; no credentials, raw payload, unrelated process names, broad port scan, or TLS bypass.",
+  "platform": {
+    "sys_platform": "linux",
+    "system": "Linux",
+    "release": "6.18.44",
+    "machine": "x86_64",
+    "docker_marker_present": false,
+    "environment_context": "ChatGPT Work execution container, as supplied by this task/session; absence of /.dockerenv is not taken as evidence that the environment is the user gaming machine."
+  },
+  "process_check": {
+    "source": "/proc/[0-9]*/comm",
+    "case_insensitive_pattern": "(league|riot|(^|[^a-z])lol([^a-z]|$))",
+    "readable_process_count": 51,
+    "unreadable_process_counts_by_errno": {},
+    "matches": [],
+    "game_process_present": false,
+    "limitation": "Comm can be truncated or renamed; broad League/Riot substrings cover normal truncated names, and this observation is combined with the fixed-port socket and reachability checks.",
+    "at_utc": "2026-10-04T11:29:40.060606+00:00",
+    "at_kst": "2026-10-04T20:29:40.060606+09:00"
+  },
+  "socket_check": {
+    "sources": [
+      "/proc/net/tcp",
+      "/proc/net/tcp6"
+    ],
+    "filter": "local port == 2999",
+    "matching_entries": [],
+    "table_read_errors": []
+  },
+  "fixed_loopback_tcp_probe": {
+    "host": "127.0.0.1",
+    "port": 2999,
+    "transport": "TCP",
+    "timeout_seconds": 1.0,
+    "attempt_count": 1,
+    "result": "FAILED",
+    "error_type": "ConnectionRefusedError",
+    "errno": 111,
+    "errno_name": "ECONNREFUSED",
+    "detail": "[Errno 111] Connection refused"
+  },
+  "certificate_check": {
+    "path": "private/capture-20261004T102647476180Z/riotgames.pem",
+    "official_source_url": "https://static.developer.riotgames.com/docs/lol/riotgames.pem",
+    "prior_reference": "evidence/r7/local-connectivity-retry.json",
+    "expected_sha256": "da884275737f024b33c93ae5d28bdb002768a3cb73752ab40254a32218193521",
+    "sha256": "da884275737f024b33c93ae5d28bdb002768a3cb73752ab40254a32218193521",
+    "matches_prior_official_hash": true,
+    "context_load_result": "OK",
+    "check_hostname": true,
+    "verify_mode": "CERT_REQUIRED"
+  },
+  "endpoint_acquisition": {
+    "url": "https://127.0.0.1:2999/liveclientdata/allgamedata",
+    "attempted": false,
+    "attempt_count": 0,
+    "reason": "No matching game/client process and connection refused on the sole TCP reachability probe; do not retry HTTP acquisition without a game process.",
+    "tls_handshake_attempted": false,
+    "tls_verification_disabled": false,
+    "proxy_used": false
+  },
+  "diagnosis": {
+    "classification": "EXTERNAL_ENVIRONMENT_BLOCKER",
+    "process": "ABSENT",
+    "endpoint": "UNAVAILABLE_CONNECTION_REFUSED",
+    "tls": "NOT_REACHED; official CA hash matches and strict verification context loads",
+    "permission": "NO_PERMISSION_ERROR_OBSERVED",
+    "port_session": "NO_PORT_2999_LISTENER_OR_GAME_SESSION_OBSERVED",
+    "platform_environment": "LINUX_WORK_CONTAINER; endpoint is only loopback in this execution environment, not the user’s Windows/macOS gaming computer",
+    "implementation_bug": "NOT_EVIDENCED; TCP refusal occurs before HTTP parsing and TLS handshake; coach_intake/io.py uses fixed loopback URL, strict CA verification, and no proxy",
+    "is_user_permission_blocker": false,
+    "game_capture_available": false,
+    "coaching_enabled": false
+  },
+  "prior_evidence_unchanged": [
+    "evidence/r7/local-connectivity-retry.json",
+    "evidence/r7/local-acquisition-first-attempt.json",
+    "evidence/r5/local-connectivity-status.json"
+  ],
+  "implementation_review": {
+    "file": "coach_intake/io.py",
+    "facts": [
+      "GAME_URL is fixed at https://127.0.0.1:2999/liveclientdata/allgamedata",
+      "GAME_CA_REQUIRED is raised without a CA",
+      "ssl.create_default_context(cafile=...) retains hostname and certificate verification",
+      "ProxyHandler({}) is used for GAME_URL",
+      "NoRedirect refuses redirects"
+    ]
+  }
+}

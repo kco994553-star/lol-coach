@@ -1,0 +1,40 @@
+[
+  {
+    "at_kst": "2026-10-04T20:48:35.306866+09:00",
+    "phase": "FIRST_AUDIT_RUN",
+    "status": "FAIL",
+    "classification": "REPAIR",
+    "error": "KeyError sha256: independent extraction uses provenance.image_sha256; output schema integration mismatch, not a source observation failure",
+    "action": "Align audit reader to delivered schema, preserve original extraction and locked reference unchanged",
+    "prior_failure_preserved": true
+  },
+  {
+    "at_kst": "2026-10-04T20:49:22.556281+09:00",
+    "phase": "SECOND_AUDIT_RUN",
+    "status": "FAIL",
+    "classification": "REPAIR",
+    "error": "AttributeError missing field: reader used dot-qualified keys; existing Observation.key uses entity:field",
+    "action": "Correct new audit field lookup to existing colon key; core unchanged"
+  },
+  {
+    "at_kst": "2026-10-04T20:50:24.858104+09:00",
+    "phase": "FIRST_COMPLETE_COMPARISON",
+    "status": "MATERIAL_MISMATCH",
+    "reference_fields_equal": 56,
+    "reference_fields_compared": 58,
+    "player_frame_fields_equal": 53,
+    "player_frame_fields_compared": 53,
+    "classification": "EXTRACTION_ERROR",
+    "error": "AI operator reference selected Sona HP/maxHP mistranscribed 1000 instead of 1050",
+    "action": "Original locked reference and comparison retained; source reinspection correction in separate reference-revisions.json",
+    "real_coaching_accuracy_claimed": false
+  },
+  {
+    "at_kst": "2026-10-04T20:57:30.676332+09:00",
+    "phase": "HANDOFF_UPDATE",
+    "status": "FAIL",
+    "classification": "REPAIR",
+    "error": "apply_patch rejected delete/add of same path in one patch; no file changed",
+    "action": "Write the authorized mutable handoff as one operation"
+  }
+]

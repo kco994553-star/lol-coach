@@ -1,0 +1,449 @@
+{
+  "schema_version": "1.0",
+  "extracted_at": "2026-10-04T20:47:27+09:00",
+  "extracted_at_timezone": "Asia/Seoul",
+  "method": {
+    "type": "selective_vision_transcription",
+    "source_inspection": "All five original screenshots were viewed at original detail before transcription.",
+    "independence": "No operator reference JSON, existing reference lock, parent reasoning, or parent values were consulted.",
+    "human_annotator": false,
+    "independent_ai_observation": true,
+    "accuracy_label": "independent AI observation; not human gold accuracy",
+    "scope": "Readable HUD fields and main-viewport observations only; minimap and roster icons are excluded from viewport counts.",
+    "unreadable_policy": "Unreadable, absent, or semantically unresolved fields are null or explicitly marked uncertain; no intent, psychological state, match patch, or time-sequence inference is assigned."
+  },
+  "limitations": [
+    "Garen has no readable numeric resource field in this source; resource fields are null.",
+    "Observer screenshot has a 12:53 upper game clock and a 12:52 replay label.",
+    "Observer screenshot shows purple minions; red_minions_present remains null rather than assuming a red/purple alias.",
+    "Carry roles, threat absorption, and trade sequences cannot be resolved from these still frames.",
+    "Visual effects do not reliably identify spell identity, cast order, damage attribution, or future follow-up."
+  ],
+  "references": [
+    {
+      "reference_id": "REAL-VIS-01",
+      "observed_values": {
+        "hud_type": "player_style",
+        "game_time_seconds": 379,
+        "champion": "Garen",
+        "level": 5,
+        "hp": 848,
+        "max_hp": 1103,
+        "resource": null,
+        "max_resource": null,
+        "kills": 0,
+        "deaths": 0,
+        "assists": 1,
+        "cs": 16,
+        "viewport_count_scope": "relative_to_player_champion",
+        "visible_enemy_champions": 1,
+        "visible_allied_other_champions": 1,
+        "blue_minions_present": true,
+        "red_minions_present": true,
+        "enemy_champions": [
+          {
+            "champion": "Cho'Gath",
+            "nameplate": "Cho'Gath Bot",
+            "level": 4
+          }
+        ]
+      },
+      "uncertain_fields": [
+        "resource",
+        "max_resource",
+        "carry_exposure",
+        "skill_interaction.ability_identity",
+        "skill_interaction.cast_order",
+        "skill_interaction.hit_outcome",
+        "threat_absorption",
+        "followup_access.execution",
+        "trade_sequence"
+      ],
+      "uncertainty_notes": {
+        "resource": "No numeric player resource is displayed; null is not a zero-valued reading.",
+        "max_resource": "No numeric player maximum resource is displayed."
+      },
+      "observations": {
+        "carry_exposure": {
+          "status": "not_resolvable",
+          "detail": "Carry role, intended positioning, and resulting exposure cannot be established from this still frame."
+        },
+        "threat_absorption": {
+          "status": "not_resolvable",
+          "detail": "Who absorbed attacks or abilities, and how much damage they absorbed, cannot be established from this still frame."
+        },
+        "trade_sequence": {
+          "status": "not_resolvable",
+          "detail": "The order of movement, attacks, abilities, damage, and disengagement cannot be established from a single still frame."
+        },
+        "wave_geometry": {
+          "status": "observed",
+          "detail": "Blue and red minions interleave in the central lane area. Blue caster minions form a loose rear group toward the lower left, with a blue siege minion farther forward and left of the player. A red siege minion is below and right of the player. A red turret is visible farther up and right."
+        },
+        "spacing": {
+          "status": "observed",
+          "detail": "Garen and Cho'Gath are close together among the forward minions. The other allied champion is farther to the right, separated from Garen by the enemy champion and nearby lane space."
+        },
+        "formation": {
+          "status": "observed",
+          "detail": "The two visible allied champions are separated across the forward minion area; the enemy champion lies between their horizontal positions. The minions are clustered rather than forming a clean separated front."
+        },
+        "skill_interaction": {
+          "status": "partially_observed",
+          "detail": "Purple-white visual effects surround the enemy champion, and a green glow is visible on the allied champion at the right. The responsible ability, cast order, target, and hit outcome are not readable."
+        },
+        "followup_access": {
+          "status": "partially_observed",
+          "detail": "Both allied champions and the enemy are visible near the same minion group. Spatial proximity is visible, but actual follow-up timing, movement access, cooldown availability, and execution are not resolvable."
+        },
+        "hud_scope": {
+          "status": "observed",
+          "detail": "The bottom player HUD supplies Garen's level and HP. The top-left panel displays a different selected target, Cho'Gath at level 4 with HP 572/836 and resource 178/362; those are not Garen's player HUD values."
+        },
+        "minimap_scope": {
+          "status": "observed",
+          "detail": "Champion icons in the minimap and ally portrait strip are excluded from main-viewport champion counts."
+        }
+      },
+      "provenance": {
+        "image_path": "/workspace/scratch/7240cfa27170/r7-real-images/thesis-p9-image1.jpeg",
+        "image_sha256": "cd268d9062d105fd4e9ada25654c4a4aa50e5322e26889ce40d25f964a1ae8cb",
+        "image_scope": "original_public_screenshot",
+        "human_annotator": false,
+        "independent_ai_observation": true
+      }
+    },
+    {
+      "reference_id": "REAL-VIS-02",
+      "observed_values": {
+        "hud_type": "player_style",
+        "game_time_seconds": 96,
+        "champion": "Irelia",
+        "level": 1,
+        "hp": 670,
+        "max_hp": 670,
+        "resource": 350,
+        "max_resource": 350,
+        "kills": 0,
+        "deaths": 0,
+        "assists": 0,
+        "cs": 0,
+        "viewport_count_scope": "relative_to_player_champion",
+        "visible_enemy_champions": 1,
+        "visible_allied_other_champions": 0,
+        "blue_minions_present": true,
+        "red_minions_present": true,
+        "enemy_champions": [
+          {
+            "champion": "Annie",
+            "nameplate": "Annie Bot",
+            "level": 1
+          }
+        ]
+      },
+      "uncertain_fields": [
+        "carry_exposure",
+        "skill_interaction.ability_identity",
+        "skill_interaction.target",
+        "skill_interaction.damage_source",
+        "skill_interaction.cast_order",
+        "threat_absorption",
+        "followup_access",
+        "trade_sequence"
+      ],
+      "observations": {
+        "carry_exposure": {
+          "status": "not_resolvable",
+          "detail": "Carry role, intended positioning, and resulting exposure cannot be established from this still frame."
+        },
+        "threat_absorption": {
+          "status": "not_resolvable",
+          "detail": "Who absorbed attacks or abilities, and how much damage they absorbed, cannot be established from this still frame."
+        },
+        "trade_sequence": {
+          "status": "not_resolvable",
+          "detail": "The order of movement, attacks, abilities, damage, and disengagement cannot be established from a single still frame."
+        },
+        "wave_geometry": {
+          "status": "observed",
+          "detail": "The two minion groups meet along a diagonal lane. Melee minions from both colors cluster in the middle; three blue casters trail toward the lower left, and three red casters are separated farther up and right."
+        },
+        "spacing": {
+          "status": "observed",
+          "detail": "Irelia stands to the left and above the central melee-minion cluster. Annie stands to the right and above the red caster group. The champions are separated by lane space and the intervening minion wave."
+        },
+        "formation": {
+          "status": "observed",
+          "detail": "Only the player and one enemy champion are visible in the main viewport. Each is offset from the minion clash, with the two caster groups behind opposite sides of the melee cluster."
+        },
+        "skill_interaction": {
+          "status": "partially_observed",
+          "detail": "A small blue luminous effect is visible near Annie and several minions have reduced health bars. This does not establish a particular spell, target, damage source, or cast order."
+        },
+        "followup_access": {
+          "status": "not_resolvable",
+          "detail": "No other allied champion is visible in the main viewport. Allies outside this viewport, movement opportunities, ability range, cooldowns, and later follow-up cannot be established."
+        },
+        "minimap_scope": {
+          "status": "observed",
+          "detail": "Minimap icons and the ally portrait strip are excluded from main-viewport champion counts."
+        }
+      },
+      "provenance": {
+        "image_path": "/workspace/scratch/7240cfa27170/r7-real-images/thesis-p46-image2.jpeg",
+        "image_sha256": "1dfd8ac0a4becd07c42e43a0d161dc10a64a1a204208d72ec9142140ccefa054",
+        "image_scope": "original_public_screenshot",
+        "human_annotator": false,
+        "independent_ai_observation": true
+      }
+    },
+    {
+      "reference_id": "REAL-VIS-03",
+      "observed_values": {
+        "hud_type": "player_style",
+        "game_time_seconds": 1022,
+        "champion": "Ryze",
+        "level": 9,
+        "hp": 1134,
+        "max_hp": 1134,
+        "resource": 1339,
+        "max_resource": 1339,
+        "kills": 0,
+        "deaths": 4,
+        "assists": 4,
+        "cs": 51,
+        "viewport_count_scope": "relative_to_player_champion",
+        "visible_enemy_champions": 0,
+        "visible_allied_other_champions": 0,
+        "blue_minions_present": false,
+        "red_minions_present": false,
+        "enemy_champions": []
+      },
+      "uncertain_fields": [
+        "wave_geometry",
+        "formation",
+        "carry_exposure",
+        "skill_interaction",
+        "threat_absorption",
+        "followup_access",
+        "trade_sequence"
+      ],
+      "observations": {
+        "carry_exposure": {
+          "status": "not_resolvable",
+          "detail": "Carry role, intended positioning, and resulting exposure cannot be established from this still frame."
+        },
+        "threat_absorption": {
+          "status": "not_resolvable",
+          "detail": "Who absorbed attacks or abilities, and how much damage they absorbed, cannot be established from this still frame."
+        },
+        "trade_sequence": {
+          "status": "not_resolvable",
+          "detail": "The order of movement, attacks, abilities, damage, and disengagement cannot be established from a single still frame."
+        },
+        "wave_geometry": {
+          "status": "not_resolvable",
+          "detail": "No minion wave is visible in the main viewport."
+        },
+        "spacing": {
+          "status": "observed",
+          "detail": "Ryze is the only visible champion in the main viewport, standing on open terrain near grass and rocks. Other champions shown in minimap icons or portrait panels are outside this count."
+        },
+        "formation": {
+          "status": "not_resolvable",
+          "detail": "No multi-champion formation or minion formation is visible in the main viewport."
+        },
+        "skill_interaction": {
+          "status": "not_resolvable",
+          "detail": "No readable attack or spell interaction with another champion or minion is visible."
+        },
+        "followup_access": {
+          "status": "not_resolvable",
+          "detail": "No allied or enemy champion is visible in the main viewport, so actual follow-up access cannot be established."
+        },
+        "minimap_scope": {
+          "status": "observed",
+          "detail": "Minimap icons and the ally portrait strip are excluded from main-viewport champion counts."
+        }
+      },
+      "provenance": {
+        "image_path": "/workspace/scratch/7240cfa27170/r7-real-images/blog-screen-5.png",
+        "image_sha256": "d2884eda7aa09742c8568714b1ba1f73532900a7f4cc9e99285dcfef347bdd10",
+        "image_scope": "original_public_screenshot",
+        "human_annotator": false,
+        "independent_ai_observation": true
+      }
+    },
+    {
+      "reference_id": "REAL-VIS-04",
+      "observed_values": {
+        "hud_type": "player_style",
+        "game_time_seconds": 13,
+        "champion": "Sivir",
+        "level": 1,
+        "hp": 460,
+        "max_hp": 460,
+        "resource": 246,
+        "max_resource": 246,
+        "kills": 0,
+        "deaths": 0,
+        "assists": 0,
+        "cs": 0,
+        "viewport_count_scope": "relative_to_player_champion",
+        "visible_enemy_champions": 0,
+        "visible_allied_other_champions": 3,
+        "blue_minions_present": false,
+        "red_minions_present": false,
+        "enemy_champions": []
+      },
+      "uncertain_fields": [
+        "wave_geometry",
+        "carry_exposure",
+        "skill_interaction",
+        "threat_absorption",
+        "followup_access.execution",
+        "trade_sequence"
+      ],
+      "observations": {
+        "carry_exposure": {
+          "status": "not_resolvable",
+          "detail": "Carry role, intended positioning, and resulting exposure cannot be established from this still frame."
+        },
+        "threat_absorption": {
+          "status": "not_resolvable",
+          "detail": "Who absorbed attacks or abilities, and how much damage they absorbed, cannot be established from this still frame."
+        },
+        "trade_sequence": {
+          "status": "not_resolvable",
+          "detail": "The order of movement, attacks, abilities, damage, and disengagement cannot be established from a single still frame."
+        },
+        "wave_geometry": {
+          "status": "not_resolvable",
+          "detail": "No minion wave is visible in the main viewport."
+        },
+        "spacing": {
+          "status": "observed",
+          "detail": "Sivir stands on the left part of a circular rune platform. One allied champion stands near its center-right, one is farther up and right on paved terrain, and another is farther down and right near the edge of that terrain."
+        },
+        "formation": {
+          "status": "observed",
+          "detail": "Four allied champions including the player are visible, spread around and to the right of the circular platform. The three other champions each have a visible level-1 marker. No enemy champion is visible in the main viewport."
+        },
+        "skill_interaction": {
+          "status": "not_resolvable",
+          "detail": "The HUD displays skill-rank controls, but no readable attack or spell interaction is visible in the main viewport."
+        },
+        "followup_access": {
+          "status": "partially_observed",
+          "detail": "Three other allied champions are visible at different distances around the player. Their presence and positions are visible, but combat follow-up access and execution cannot be established without an opponent and a time sequence."
+        },
+        "minimap_scope": {
+          "status": "observed",
+          "detail": "Minimap icons and the ally portrait strip are excluded from main-viewport champion counts."
+        }
+      },
+      "provenance": {
+        "image_path": "/workspace/scratch/7240cfa27170/r7-real-images/blog-screen-4.png",
+        "image_sha256": "22838b50c6c4daf8d4d91b914d6415cb079df678f310490e8a4500ae05f858fb",
+        "image_scope": "original_public_screenshot",
+        "human_annotator": false,
+        "independent_ai_observation": true
+      }
+    },
+    {
+      "reference_id": "REAL-OBS-01",
+      "observed_values": {
+        "hud_type": "observer",
+        "game_time_seconds": 773,
+        "replay_label_time_seconds": 772,
+        "selected_champion": "Sona",
+        "selected_level": 7,
+        "selected_hp": 1050,
+        "selected_max_hp": 1050,
+        "selected_resource": 664,
+        "selected_max_resource": 664,
+        "selected_kills": 1,
+        "selected_deaths": 2,
+        "selected_assists": 3,
+        "selected_cs": 12,
+        "viewport_count_scope": "relative_to_selected_champion_team",
+        "visible_enemy_champions": 0,
+        "visible_allied_other_champions": 1,
+        "blue_minions_present": true,
+        "red_minions_present": null,
+        "purple_minions_present": true,
+        "enemy_champions": []
+      },
+      "uncertain_fields": [
+        "red_minions_present",
+        "carry_exposure",
+        "skill_interaction.ability_identity",
+        "skill_interaction.damage_recipient",
+        "skill_interaction.cast_order",
+        "threat_absorption",
+        "followup_access.execution",
+        "trade_sequence"
+      ],
+      "uncertainty_notes": {
+        "red_minions_present": "Purple minions are visible; no red/purple alias is inferred from the image."
+      },
+      "observations": {
+        "carry_exposure": {
+          "status": "not_resolvable",
+          "detail": "Carry role, intended positioning, and resulting exposure cannot be established from this still frame."
+        },
+        "threat_absorption": {
+          "status": "not_resolvable",
+          "detail": "Who absorbed attacks or abilities, and how much damage they absorbed, cannot be established from this still frame."
+        },
+        "trade_sequence": {
+          "status": "not_resolvable",
+          "detail": "The order of movement, attacks, abilities, damage, and disengagement cannot be established from a single still frame."
+        },
+        "wave_geometry": {
+          "status": "observed",
+          "detail": "Blue minions cluster to the left of the selected champion, while purple-colored minions are farther up the lane and one is near the blue group. The wave extends vertically through the upper-middle lane area. No literal red-colored minion reading is assigned."
+        },
+        "spacing": {
+          "status": "observed",
+          "detail": "The selected Sona is in or beside the brush along the right lane wall. One other purple-bar champion is farther up the lane near purple minions. Blue minions lie between the two champions along the lane direction and to Sona's left."
+        },
+        "formation": {
+          "status": "observed",
+          "detail": "Two champions with purple team bars are visible at separated positions: the selected Sona by the right brush and another champion higher in the lane. No blue-team enemy champion is visible in the main viewport."
+        },
+        "skill_interaction": {
+          "status": "partially_observed",
+          "detail": "Blue glows are visible around the right brush, a red-orange visual effect is visible on the upper champion, and a floating +18g label is visible above that area. These pixels do not establish a specific skill, damage recipient, last-hit action, or ordered sequence."
+        },
+        "followup_access": {
+          "status": "partially_observed",
+          "detail": "The selected champion and one teammate are visible in the same lane, with a substantial gap along the lane and minions between their positions. This shows geometry but does not establish reachable follow-up, ability availability, or later actions."
+        },
+        "hud_scope": {
+          "status": "observed",
+          "detail": "This is an observer/replay HUD. The selected portrait and camera-mode label identify Sona (Heindel); her row on the purple-side scoreboard reads 1/2/3 with 12 CS. These are selected-champion values, not a player HUD."
+        },
+        "clock_discrepancy": {
+          "status": "observed",
+          "detail": "The upper game clock reads 12:53, while the replay control label reads 12:52. game_time_seconds uses the upper game clock and the other reading is preserved separately."
+        },
+        "minimap_scope": {
+          "status": "observed",
+          "detail": "Minimap icons and champions listed in both side rosters are excluded from main-viewport champion counts."
+        },
+        "minion_color_scope": {
+          "status": "observed",
+          "detail": "Both blue and purple minion colors are visible. red_minions_present is null because the source does not show a literal red minion color or explicitly define red as the purple-side alias."
+        }
+      },
+      "provenance": {
+        "image_path": "/workspace/scratch/7240cfa27170/r7-real-images/blog-screen-3.png",
+        "image_sha256": "c0bfaa8931cf95f3228b37abf8adf4a665c79e76ec03c48279d0b7b5e68342c6",
+        "image_scope": "original_public_screenshot",
+        "human_annotator": false,
+        "independent_ai_observation": true
+      }
+    }
+  ]
+}

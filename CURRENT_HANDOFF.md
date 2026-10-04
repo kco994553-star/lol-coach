@@ -1,15 +1,17 @@
 # CURRENT HANDOFF — LoL Coach
 
-2026-10-04 UTC. Design v1.0 동결 유지. **R7 출처·상태 감사와 offline diagnostics 추가. 실제 경기 검증은 자료 미확보로 BLOCKED/N=0.**
+2026-10-04 KST. Design v1.0 동결 유지. **R7 real-evidence 후속: 실제 공개 화면 진단 완료, Decision/Coach 엔진 연결은 D3/Core Contract 경계에서 중단. R8 아님.**
 
-- 상세 결과: docs/r7/R7_REPORT.md. Matrix: docs/r7/STATE_SOURCE_MATRIX.md. 출처: docs/r7/DATA_AVAILABILITY_AUDIT.md.
-- 시작 GitHub main HEAD 884a435e52fa20e21971269dd52e30239fc4f8ff: remote124/local124 blob 일치. materialized tree이며 로컬 Git checkout 아님.
-- R6 fresh 96/96, 보호9/9, browser/390px mobile PASS. evidence/r7/r6-fresh. 기존 evidence/r3~r6 원본 보존.
-- 최종 R7 통합 111/111(기존96+신규15), 보호9/9 PASS. 독립 발견 2건 수정·반례 확인, evidence/r7/HISTORY.md.
-- 29 state variables + 8 sources. VERIFIED real sources0. 문서 예제 파서17경로 값/누락 대조; 실제 GameState 자동 승격 차단.
-- coach_audit: L0 진단/L1 health fraction lineage, exploratory action information requirements, source ladder, reference/ground-truth separation. 실제 엔진은 SYNTHETIC_ONLY 유지.
-- 10유형 replay 검토 슬롯; 실제 reference0/frame0/코칭 평가0. 슬롯·자막 keyword를 검증 사례로 계산하지 않음.
-- 재현: python3 scripts/verify_r7.py. 서버 실행은 기존 docs/R4_IMPLEMENTATION.md, R6 사용법은 docs/R6_IMPLEMENTATION.md.
-- 원천 수집은 기존 scripts/collect_local.py 사용. R7 신규 시도: 인증서 다운로드 timeout 후 기존 공식 CA hash/TLS 검증하여 재사용; endpoint connection refused.
-- 다음: 실제 player POV/수집물→독립 Reference→state 비교→필요한 selective vision→knowledge/decision 검증. 실제 core mode 변경이 필요할 때만 별도 D3/C3.
-- 추가 결제/권한 요청 없음. 백그라운드 수집 또는 외부 사용자 PC 접근을 설정했다고 주장하지 않음.
+- 시작 실제 GitHub main HEAD `6951f5cafbc360c4637107fe3a3fb4dc0eed0d25`: remote165/local165 blob 일치. 로컬은 materialized tree, Git checkout 아님.
+- 상세 결과 `docs/r7-real/REAL_EVIDENCE_REPORT.md`. C3 제안 `docs/r7-real/C3_REAL_AUDIT_PROPOSAL.md`는 **미승인/미구현**. 최소 자료 조건 `docs/r7-real/MINIMUM_INPUT_PACKAGE.md`.
+- R7 baseline fresh111/111·보호9/9·Frozen27 PASS. `evidence/r7-real/r7-fresh/` 및 binding receipt. R6 browser/mobile는 hash 동일한 Historical evidence 재사용이며 이번 fresh browser PASS 아님.
+- 실제 원본5화면 확보: player-style4 + observer1. 기존10 슬롯 유지, lane trade/CS access/jungle uncertainty3 슬롯은 PARTIAL reference. fully verified real replay0, authenticated match0, human annotator0.
+- 먼저 고정한 AI operator reference vs blind AI Vision: player53/53 선택 필드 일치. 최초 전체56/58; observer HP/maxHP 오독2필드는 원본 재확인 후 별도 revision. 원본 lock/불일치 history 보존. 이는 human-gold/state accuracy 아님.
+- Selective Vision RUN: HUD·정지 geometry 관찰, sequence/흡수/damage window/intent 미확인. Observer NOT_PLAYER_KNOWN 제외 및 실제 cross-session 거절 PASS; 같은 경기 player/ground-truth pair0.
+- public Match/Timeline 파일 취득·23경로 전사 확인; 서로 다른 matchId join 거절. 기존 LiveClient extractor는 두 파일 모두0/17 present(미지원 schema). 실제 원천 인증·patch/player visibility 연결 미완료.
+- source overlay29: pending12/Vision-required12/inference3/manual2, VERIFIED_DIRECT0/DERIVED0. Timeline x/y로 사후 position의 비영상 경로 후보 확인; player-known 승격 없음. 원본 R7 matrix/evidence/fixture 그대로.
+- Local EXTERNAL_ENVIRONMENT_BLOCKER: Linux Work에서 LoL/Riot process0/listener0, 한 TCP refused. CA 검증 완료·TLS handshake 전 실패. YouTube frame 획득 실패 후 공개 원본 PDF/blog 이미지로 대체 성공.
+- 재현 `python3 scripts/audit_real_r7.py --media-dir <original-assets-directory>`. 공개 URL/hash와 PDF page/image 순번은 `evidence/r7-real/visual-source-manifest.json`; 최종 run은 `AUDIT_INDEX.json`. media와 전체 publisher raw JSON을 Git에 재게시하지 않음.
+- 기존 엔진은 `ReviewInput.evidence_kind=SYNTHETIC` 및 `run_review` TEST guard. 실제 REAL 요청5개 schema 거절; 합성으로 바꾸지 않음. 실제 Coach N0/Accuracy null. Frozen27/core/old111 expected 변경0.
+- Stop A/B 미충족: 3완전한 실제 Decision Reference가 아니며 공개 화면 확보 불가는 아님. D1/D2 evidence work는 완료했고 실제 엔진 평가 계약 변경만 D3 요청한다. 승인 후 별도 offline REAL_AUDIT 계약/adapter/회귀를 구현하되 자료·Knowledge 미검증 사례는 계속 차단한다.
+- 결제/credential/외부 메시지/백그라운드 수집/사용자 PC 연결 없음. C3 승인 전 실제 평가 경로를 구현하거나 기존 mode guard를 완화하지 않는다.
