@@ -1,5 +1,23 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — CI_PENDING
+- run_token: `main-20261005T0444-knowledge-proposal-root`
+- status: `CI_PENDING`
+- writer_active: false
+- task_scope: Source-bound EXPLORATORY Knowledge proposals; resume exact PR6 only.
+- owner_branch: `feat/source-bound-knowledge-proposals-2026-10-05`
+- intake_main_head: `d92ded9743b591030a55e355e914ab238589e447`
+- pr: https://github.com/kco994553-star/lol-coach/pull/6
+- implementation_head: `fdf4b1572170f015b89335bafed99716d553936e`
+- implementation_tree: `86cccef58af92d2ec5f88c25c97fcc64c1711960`
+- evidence: required local regression PASS evidence/mvp/20261005T052343958609Z-6c010746/verification.json; 173 current input hashes checked; independent SQLite and 8/8 UI race review PASS. Actual browser79 required in Actions; no actual CI PASS claimed yet.
+- next: exact PR/head/run verification, gated merge, postmerge verification, then explicit note-history recovery into an unsaved draft (existing documented gap).
+- external_dependency_only: Independent player reference/preaction context PARKED_EXTERNAL; actual Coach N0/accuracy null. Other executable gaps remain; whole Work is not parked.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — RUNNING
 - run_token: `main-20261005T0444-knowledge-proposal-root`
 - status: `RUNNING`
