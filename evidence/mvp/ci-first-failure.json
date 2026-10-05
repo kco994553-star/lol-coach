@@ -1,0 +1,65 @@
+{
+  "at_utc": "2026-10-05T01:18:35.243648+00:00",
+  "evidence_kind": "REPORTED_GITHUB_RUN_FAILURE_AND_FRESH_STATIC_WORKFLOW_REPAIR",
+  "first_run": {
+    "run_id": 37250757334,
+    "run_url": "https://github.com/kco994553-star/lol-coach/actions/runs/37250757334",
+    "head_sha_prefix": "b30c9c7",
+    "status": "COMPLETED",
+    "conclusion": "FAILURE",
+    "jobs_count": 0,
+    "check_runs_count": 0,
+    "observation_source": "Parent agent fresh GitHub API read; repair agent did not independently fetch live run metadata"
+  },
+  "workflow_path": ".github/workflows/private-mvp-ci.yml",
+  "before_source_sha256": "0663de146f93353ebd73afc59c0c857fad9416007b4956f7646b14cece225030",
+  "before_git_blob_sha": "f22fc14efc4b0697ebf2c4d37e770e0679a4cc52",
+  "after_source_sha256": "25de302dd447f3adecb680b4d4aee420c2623fffc25ae2038b5bb99b6420839f",
+  "diagnosis": {
+    "documented_violation": "runner.temp was used inside jobs.browser-regression.env, where runner context is unavailable",
+    "official_source_url": "https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#context-availability",
+    "official_source_checked_utc_date": "2026-10-05",
+    "job_env_allowed_contexts": [
+      "github",
+      "inputs",
+      "matrix",
+      "needs",
+      "secrets",
+      "strategy",
+      "vars"
+    ],
+    "specific_live_error_annotation_observed_by_repair_agent": false,
+    "causal_status": "INFERENCE: confirmed workflow context-rule violation is consistent with the observed zero-job failure; live error annotation pending"
+  },
+  "repair": {
+    "removed": "Job-level MVP_BROWSER_SUMMARY_FILE expression using runner.temp",
+    "runtime_shell_path": "$RUNNER_TEMP/mvp-browser-summary.json",
+    "runtime_python_path": "Path(os.environ['RUNNER_TEMP']) / 'mvp-browser-summary.json'",
+    "other_workflow_behavior_changed": false
+  },
+  "fresh_static_validation": {
+    "passed": true,
+    "checks": {
+      "yaml_parses": true,
+      "triggers_preserved": true,
+      "read_only_permissions": true,
+      "job_ids_preserved": true,
+      "job_level_runner_context_removed": true,
+      "job_level_summary_env_removed": true,
+      "runtime_summary_path_shell": true,
+      "runtime_summary_path_python": true,
+      "obsolete_summary_alias_removed": true,
+      "public_only_standard_runner_both_jobs": true,
+      "allowed_job_env_contexts_checked": true,
+      "official_action_pins_preserved": true,
+      "shell_syntax_checks_passed": true,
+      "embedded_python_syntax_checks_passed": true,
+      "launcher_pipefail_shell": true
+    },
+    "shell_scripts_checked": 7,
+    "embedded_python_blocks_checked": 2
+  },
+  "historical_receipts_overwritten": false,
+  "repaired_workflow_execution_status": "NOT_YET_PUBLISHED_OR_EXECUTED_BY_THIS_REPAIR_AGENT",
+  "real_game_or_coaching_accuracy_validated": false
+}

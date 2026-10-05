@@ -60,8 +60,6 @@ jobs:
     if: github.event.repository.private == false
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    env:
-      MVP_BROWSER_SUMMARY_FILE: ${{ runner.temp }}/mvp-browser-summary.json
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -83,7 +81,7 @@ jobs:
           export NODE_PATH="$RUNNER_TEMP/mvp-playwright/node_modules"
           CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
           export CHROMIUM_EXECUTABLE
-          python scripts/browser_mvp.py | tee "$MVP_BROWSER_SUMMARY_FILE"
+          python scripts/browser_mvp.py | tee "$RUNNER_TEMP/mvp-browser-summary.json"
       - name: Print fresh browser receipts and source binding
         if: always()
         run: |
@@ -95,7 +93,7 @@ jobs:
                      'run_attempt': os.environ['GITHUB_RUN_ATTEMPT'],
                      'scope': 'Actual browser against an isolated synthetic backend; no real game data',
                      'workflow_conclusion': 'Not established by this receipt-printing step'}
-          summary = Path(os.environ['MVP_BROWSER_SUMMARY_FILE'])
+          summary = Path(os.environ['RUNNER_TEMP']) / 'mvp-browser-summary.json'
           try:
               launch = json.loads(summary.read_text())
               directory = Path(launch['evidence_directory'])

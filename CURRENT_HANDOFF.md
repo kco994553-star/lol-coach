@@ -1,3 +1,10 @@
+# Remote CI repair continuation — 2026-10-05
+
+- Main publication `b30c9c7a9b5aa265477b1337c220ecea721b9957` fresh-ref/commit/tree verified315/315blobs. Branch main only, open PR0.
+- First Actions run37250757334 was FAILURE before jobs (jobs0/check-runs0). Record `evidence/mvp/ci-first-failure.json` preserves actual parent API observation and the repair's documented context-rule diagnosis. Specific live error annotation unavailable; cause is a documented-rule inference, not a fabricated annotation.
+- Minimal workflow repair moves runner temp path evaluation into executing shell/Python steps. Public/free/pinned/no-upload configuration and all app/test source bytes unchanged. Fifteen targeted static checks PASS; new Actions execution still pending remote confirmation. Original111+23+protected9+Frozen27 evidence remains hash-applicable to unchanged app/test sources, not a current old-R7 identity PASS.
+- Sole root writer continues automatically to publish→fresh CI/browser run→repair if needed→handoff.
+
 # CURRENT HANDOFF — LoL Coach Main Work
 
 ## 最新 Private Web MVP correctness/recovery — 2026-10-05
