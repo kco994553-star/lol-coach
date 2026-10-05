@@ -1,5 +1,22 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — RUNNING
+- run_token: `main-20261005T0842-draft-retry-safety-root`
+- status: `RUNNING`
+- writer_active: true
+- task_scope: Bounded retry-safe manual draft POST/PUT save integrity after PR8 merge; exact idempotent replay across process restart, changed-payload conflict, genuine response-loss browser recovery, no analysis activation.
+- owner_branch: `feat/manual-draft-retry-safety-2026-10-05`
+- intake_main_head: `6f5c2c30db54f962ac5881a8d628336ca62cd7e5`
+- inherited_verified_evidence: PR8 normal merged6f5c2c30/tree23f490c; actual PR Actions37277401539 and postmerge37285005092 SUCCESS, exact262 input hashes unchanged, actualChrome108/108, old111/protected9/Frozen27/backup23/new31+14+19 PASS. First failed37276347795 retained.
+- risk: CRITICAL persistent-write correctness. Frozen/protected/history preserved; no expectation weakening, no schema or dependency assumed before source inspection. Manual records remain UNVERIFIED and isolated from gameplan/coaching.
+- acceptance: Real SQLite/HTTP tests first reproduce duplicate POST and replayed PUT failure; same Idempotency-Key plus same request returns the original success without a second row/revision, same key plus different request returns conflict, new key preserves CAS. Browser uses stable attempt key so a genuinely committed response loss can be retried without duplicate storage. Restart/backup/privacy/history and full required regression remain green.
+- only_external_dependency: Independent Player reference/preaction context PARKED_EXTERNAL; real Player/Decision/Coach N0/null not whole Work STOP.
+- next: Reconfirm token before local branch mutation; inspect exact current API/schema/backup/UI contracts, record bounded design, RED tests, minimal implementation, targeted/full/browser verification, publication and gated merge.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — CI_PENDING
 - run_token: `main-20261005T0832-pr8-gated-merge-root`
 - status: `CI_PENDING`
