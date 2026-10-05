@@ -1,5 +1,21 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — CI_PENDING
+- run_token: `main-20261005T0436-research-errors-ci-root`
+- status: `CI_PENDING`
+- writer_active: false
+- task_scope: PR5 merged afterrequiredhardgates, verifyexactpostmerge CI.
+- owner_branch: `fix/research-save-error-scope-2026-10-05`
+- code_head: `4ca365f6950b81894069ee8917693407c4559e68`
+- resulting_main: `d92ded9743b591030a55e355e914ab238589e447`
+- PR:#5; PRrun:37264041430 SUCCESS; postrun:37264322615; attempt:1
+- terminal_evidence: normalGitHubmerge result +actualPRChrome63/old111/protected9/Frozen27/backup23/allUI/sourceguards; testedmergeref/tree/145hashesexact. Allfirstfailurespreserved.
+- next_requirement: Knowledgeproposal lifecycle implementingFrozenphysicalPK/FK additiveV2 withstrictmigration+backup; no REVIEWED oractualPlayerpromotion.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — RUNNING
 - run_token: `main-20261005T0436-research-errors-ci-root`
 - status: `RUNNING`
