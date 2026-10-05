@@ -1,3 +1,15 @@
+# MAIN EXECUTION CLAIM
+
+status: RUNNING
+run_token: main-20261005T0203-import-selection-root
+owner_branch: fix/mvp-import-selection-2026-10-05
+scope: synthetic import selection integrity; additive verification; Main continuation policy
+intake_main: f3f0b38e2c751c40ca7851474e30914cd3e2abc2
+writer: this Main Work root
+coordination_ref: work/main-execution-claim
+
+Only this token may write/release while RUNNING. Unknown termination is not expiry.
+
 # CURRENT HANDOFF — Main Work verified code / external evidence park
 
 ## 2026-10-05 최종 원격 확인
