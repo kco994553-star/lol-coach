@@ -1,5 +1,22 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — RUNNING
+- run_token: `main-20261005T0444-knowledge-proposal-root`
+- status: `RUNNING`
+- writer_active: true
+- task_scope: Frozen KnowledgeRule EXPLORATORY proposal workflow; actualphysicalknowledge_rules PK/FK, boundedone-source verticalslice, strictadditive schemaV2 migration +twoDB backup validation, immutableCASversions/sourcecascade/userdownload.
+- owner_branch: `feat/source-bound-knowledge-proposals-2026-10-05`
+- intake_main_head: `d92ded9743b591030a55e355e914ab238589e447`
+- prior_terminal_evidence: PR5 normalmergedd92ded9; actualpostmerge37264322615 SUCCESS exactSHA, Chrome63/old111/protected9/Frozen27/backup23/history19+HTTP5/allguards and145input hashesmatch. Initialsave2/4 andnav3/6 preserved; final4+6PASS.
+- risk: CRITICAL (personaldata migration/deletion/backup integrity), protectedFrozenfiles/oldtests/expectations/history stayunchanged; implementationfollowsFrozenphysicalcompoundPK/FK ratherthangenericadapter substitute.
+- boundaries: legacyResearchStorev1 bytesunchanged; newKnowledgeStore subclass explicitlymigratesvalidv1 toknownv2; existingbackups supportv1/v2, no3rdDB. Exactlyone source savednote required; opaque rule/version tokens/CAS; no REVIEWED route/engineactivation/actualCoachpromotion.
+- required_evidence: migration/restart/corruptionrefusal, genuineFKcascade/descendants/noPIItombstone, concurrentCAS/sourcehashpin, validinvalidv1/v2backuprestore, auth/limits/readonlyUI/draftsave races/actualbrowser/fullprotectedregression/sourceversion chain/remoteSHA.
+- external_dependency_only: Playerindependentreference/preactioncontext parked, N0accuracynull. No paidservices/newdependency/auth/userquery.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — CI_PENDING
 - run_token: `main-20261005T0436-research-errors-ci-root`
 - status: `CI_PENDING`
