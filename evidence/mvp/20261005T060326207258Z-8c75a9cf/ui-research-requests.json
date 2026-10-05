@@ -1,0 +1,320 @@
+{
+  "scope": "Research current and superseded API error routing; synthetic fixtures only",
+  "verifier": "Node VM DOM stub and deferred API failures; not browser E2E or real server",
+  "executed_at": "2026-10-05T06:03:42.831Z",
+  "node_version": "v24.19.0",
+  "source_sha256": "39ae97ef2e9623961f054e9c07e5460255dc4664d0387abda3f0bd56fe6e8978",
+  "test_sha256": "f119f880546a99fd393f840064488aab024df1e269b60996b8a7bfd400f3f81a",
+  "fixture_sha256": "a9a5f031e0a227045b4caa97dd5b69d368999f65635e55fffc3beba106a8a979",
+  "passed": 4,
+  "total": 4,
+  "results": [
+    {
+      "id": "RESEARCH-CURRENT-RESOURCE-GET-ERROR",
+      "passed": true,
+      "checks": {
+        "current_error_reported": true,
+        "old_resource_and_note_retained": true,
+        "old_note_editable": true,
+        "own_open_epoch_reached": true
+      },
+      "before": {
+        "id": "old",
+        "note": {
+          "resource_id": "old",
+          "anchor": "overview",
+          "revision": 3
+        },
+        "dirty": false,
+        "edit": 2,
+        "epoch": 0,
+        "read": 0,
+        "known": "보존할 원본 노트",
+        "title": "old",
+        "notice": "",
+        "note_disabled": false,
+        "save_disabled": false
+      },
+      "after": {
+        "id": "old",
+        "note": {
+          "resource_id": "old",
+          "anchor": "overview",
+          "revision": 3
+        },
+        "dirty": false,
+        "edit": 2,
+        "epoch": 2,
+        "read": 1,
+        "known": "보존할 원본 노트",
+        "title": "old",
+        "notice": "처리하지 못했습니다: CURRENT_RESOURCE_LOOKUP_FAILED",
+        "note_disabled": false,
+        "save_disabled": false
+      },
+      "requests": [
+        {
+          "route": "/research",
+          "method": "POST",
+          "title": "A.json"
+        },
+        {
+          "route": "/research",
+          "method": "GET",
+          "title": null
+        },
+        {
+          "route": "/research/resource-a",
+          "method": "GET",
+          "title": null
+        }
+      ]
+    },
+    {
+      "id": "RESEARCH-CURRENT-NOTE-GET-ERROR",
+      "passed": true,
+      "checks": {
+        "current_error_reported": true,
+        "old_resource_and_note_retained": true,
+        "old_note_editable": true,
+        "own_open_epoch_reached": true
+      },
+      "before": {
+        "id": "old",
+        "note": {
+          "resource_id": "old",
+          "anchor": "overview",
+          "revision": 3
+        },
+        "dirty": false,
+        "edit": 2,
+        "epoch": 0,
+        "read": 0,
+        "known": "보존할 원본 노트",
+        "title": "old",
+        "notice": "",
+        "note_disabled": false,
+        "save_disabled": false
+      },
+      "after": {
+        "id": "old",
+        "note": {
+          "resource_id": "old",
+          "anchor": "overview",
+          "revision": 3
+        },
+        "dirty": false,
+        "edit": 2,
+        "epoch": 2,
+        "read": 1,
+        "known": "보존할 원본 노트",
+        "title": "old",
+        "notice": "처리하지 못했습니다: CURRENT_NOTE_LOOKUP_FAILED",
+        "note_disabled": false,
+        "save_disabled": false
+      },
+      "requests": [
+        {
+          "route": "/research",
+          "method": "POST",
+          "title": "A.json"
+        },
+        {
+          "route": "/research",
+          "method": "GET",
+          "title": null
+        },
+        {
+          "route": "/research/resource-a",
+          "method": "GET",
+          "title": null
+        },
+        {
+          "route": "/research/resource-a/notes/overview",
+          "method": "GET",
+          "title": null
+        }
+      ]
+    },
+    {
+      "id": "RESEARCH-STALE-GET-ERROR-AFTER-NEW-SELECTION",
+      "passed": true,
+      "checks": {
+        "selection_changed_without_epoch_change": true,
+        "no_stale_error": true,
+        "old_resource_and_note_retained_while_b_pending": true,
+        "newest_file_retained": true,
+        "only_original_post_before_b": true,
+        "latest_b_opens": true
+      },
+      "beforeSelection": {
+        "id": "old",
+        "note": {
+          "resource_id": "old",
+          "anchor": "overview",
+          "revision": 3
+        },
+        "dirty": false,
+        "edit": 2,
+        "epoch": 2,
+        "read": 1,
+        "known": "보존할 원본 노트",
+        "title": "old",
+        "notice": "",
+        "note_disabled": true,
+        "save_disabled": true
+      },
+      "beforeStale": {
+        "id": "old",
+        "note": {
+          "resource_id": "old",
+          "anchor": "overview",
+          "revision": 3
+        },
+        "dirty": false,
+        "edit": 2,
+        "epoch": 2,
+        "read": 2,
+        "known": "보존할 원본 노트",
+        "title": "old",
+        "notice": "",
+        "note_disabled": true,
+        "save_disabled": true
+      },
+      "afterStale": {
+        "id": "old",
+        "note": {
+          "resource_id": "old",
+          "anchor": "overview",
+          "revision": 3
+        },
+        "dirty": false,
+        "edit": 2,
+        "epoch": 2,
+        "read": 2,
+        "known": "보존할 원본 노트",
+        "title": "old",
+        "notice": "",
+        "note_disabled": false,
+        "save_disabled": false
+      },
+      "afterB": {
+        "id": "resource-b",
+        "note": {
+          "resource_id": "resource-b",
+          "anchor": "overview",
+          "revision": 0,
+          "known": "",
+          "intention": "",
+          "alternative": "",
+          "outcome": ""
+        },
+        "dirty": false,
+        "edit": 0,
+        "epoch": 4,
+        "read": 2,
+        "known": "",
+        "title": "B.json",
+        "notice": "저장된 자료를 열었습니다.",
+        "note_disabled": false,
+        "save_disabled": false
+      },
+      "requests": [
+        {
+          "route": "/research",
+          "method": "POST",
+          "title": "A.json"
+        },
+        {
+          "route": "/research",
+          "method": "GET",
+          "title": null
+        },
+        {
+          "route": "/research/resource-a",
+          "method": "GET",
+          "title": null
+        },
+        {
+          "route": "/research",
+          "method": "POST",
+          "title": "B.json"
+        },
+        {
+          "route": "/research",
+          "method": "GET",
+          "title": null
+        },
+        {
+          "route": "/research/resource-b",
+          "method": "GET",
+          "title": null
+        },
+        {
+          "route": "/research/resource-b/notes/overview",
+          "method": "GET",
+          "title": null
+        }
+      ]
+    },
+    {
+      "id": "RESEARCH-STALE-GET-ERROR-AFTER-LOGOUT",
+      "passed": true,
+      "checks": {
+        "exact_logged_out_state_retained": true,
+        "cleared_resource_and_note": true,
+        "no_stale_error": true,
+        "no_followup_requests": true
+      },
+      "loggedOut": {
+        "id": null,
+        "note": null,
+        "dirty": false,
+        "edit": 0,
+        "epoch": 3,
+        "read": 2,
+        "known": "",
+        "title": "old",
+        "notice": "",
+        "note_disabled": false,
+        "save_disabled": false
+      },
+      "after": {
+        "id": null,
+        "note": null,
+        "dirty": false,
+        "edit": 0,
+        "epoch": 3,
+        "read": 2,
+        "known": "",
+        "title": "old",
+        "notice": "",
+        "note_disabled": false,
+        "save_disabled": false
+      },
+      "requests": [
+        {
+          "route": "/research",
+          "method": "POST",
+          "title": "A.json"
+        },
+        {
+          "route": "/research",
+          "method": "GET",
+          "title": null
+        },
+        {
+          "route": "/research/resource-a",
+          "method": "GET",
+          "title": null
+        }
+      ]
+    }
+  ],
+  "process": {
+    "exit_code": 0,
+    "signal": null,
+    "stdout": "{\"scope\":\"Research current and superseded API error routing; synthetic fixtures only\",\"verifier\":\"Node VM DOM stub and deferred API failures; not browser E2E or real server\",\"executed_at\":\"2026-10-05T06:03:42.831Z\",\"node_version\":\"v24.19.0\",\"source_sha256\":\"39ae97ef2e9623961f054e9c07e5460255dc4664d0387abda3f0bd56fe6e8978\",\"test_sha256\":\"f119f880546a99fd393f840064488aab024df1e269b60996b8a7bfd400f3f81a\",\"fixture_sha256\":\"a9a5f031e0a227045b4caa97dd5b69d368999f65635e55fffc3beba106a8a979\",\"passed\":4,\"total\":4,\"results\":[{\"id\":\"RESEARCH-CURRENT-RESOURCE-GET-ERROR\",\"passed\":true,\"checks\":{\"current_error_reported\":true,\"old_resource_and_note_retained\":true,\"old_note_editable\":true,\"own_open_epoch_reached\":true},\"before\":{\"id\":\"old\",\"note\":{\"resource_id\":\"old\",\"anchor\":\"overview\",\"revision\":3},\"dirty\":false,\"edit\":2,\"epoch\":0,\"read\":0,\"known\":\"보존할 원본 노트\",\"title\":\"old\",\"notice\":\"\",\"note_disabled\":false,\"save_disabled\":false},\"after\":{\"id\":\"old\",\"note\":{\"resource_id\":\"old\",\"anchor\":\"overview\",\"revision\":3},\"dirty\":false,\"edit\":2,\"epoch\":2,\"read\":1,\"known\":\"보존할 원본 노트\",\"title\":\"old\",\"notice\":\"처리하지 못했습니다: CURRENT_RESOURCE_LOOKUP_FAILED\",\"note_disabled\":false,\"save_disabled\":false},\"requests\":[{\"route\":\"/research\",\"method\":\"POST\",\"title\":\"A.json\"},{\"route\":\"/research\",\"method\":\"GET\",\"title\":null},{\"route\":\"/research/resource-a\",\"method\":\"GET\",\"title\":null}]},{\"id\":\"RESEARCH-CURRENT-NOTE-GET-ERROR\",\"passed\":true,\"checks\":{\"current_error_reported\":true,\"old_resource_and_note_retained\":true,\"old_note_editable\":true,\"own_open_epoch_reached\":true},\"before\":{\"id\":\"old\",\"note\":{\"resource_id\":\"old\",\"anchor\":\"overview\",\"revision\":3},\"dirty\":false,\"edit\":2,\"epoch\":0,\"read\":0,\"known\":\"보존할 원본 노트\",\"title\":\"old\",\"notice\":\"\",\"note_disabled\":false,\"save_disabled\":false},\"after\":{\"id\":\"old\",\"note\":{\"resource_id\":\"old\",\"anchor\":\"overview\",\"revision\":3},\"dirty\":false,\"edit\":2,\"epoch\":2,\"read\":1,\"known\":\"보존할 원본 노트\",\"title\":\"old\",\"notice\":\"처리하지 못했습니다: CURRENT_NOTE_LOOKUP_FAILED\",\"note_disabled\":false,\"save_disabled\":false},\"requests\":[{\"route\":\"/research\",\"method\":\"POST\",\"title\":\"A.json\"},{\"route\":\"/research\",\"method\":\"GET\",\"title\":null},{\"route\":\"/research/resource-a\",\"method\":\"GET\",\"title\":null},{\"route\":\"/research/resource-a/notes/overview\",\"method\":\"GET\",\"title\":null}]},{\"id\":\"RESEARCH-STALE-GET-ERROR-AFTER-NEW-SELECTION\",\"passed\":true,\"checks\":{\"selection_changed_without_epoch_change\":true,\"no_stale_error\":true,\"old_resource_and_note_retained_while_b_pending\":true,\"newest_file_retained\":true,\"only_original_post_before_b\":true,\"latest_b_opens\":true},\"beforeSelection\":{\"id\":\"old\",\"note\":{\"resource_id\":\"old\",\"anchor\":\"overview\",\"revision\":3},\"dirty\":false,\"edit\":2,\"epoch\":2,\"read\":1,\"known\":\"보존할 원본 노트\",\"title\":\"old\",\"notice\":\"\",\"note_disabled\":true,\"save_disabled\":true},\"beforeStale\":{\"id\":\"old\",\"note\":{\"resource_id\":\"old\",\"anchor\":\"overview\",\"revision\":3},\"dirty\":false,\"edit\":2,\"epoch\":2,\"read\":2,\"known\":\"보존할 원본 노트\",\"title\":\"old\",\"notice\":\"\",\"note_disabled\":true,\"save_disabled\":true},\"afterStale\":{\"id\":\"old\",\"note\":{\"resource_id\":\"old\",\"anchor\":\"overview\",\"revision\":3},\"dirty\":false,\"edit\":2,\"epoch\":2,\"read\":2,\"known\":\"보존할 원본 노트\",\"title\":\"old\",\"notice\":\"\",\"note_disabled\":false,\"save_disabled\":false},\"afterB\":{\"id\":\"resource-b\",\"note\":{\"resource_id\":\"resource-b\",\"anchor\":\"overview\",\"revision\":0,\"known\":\"\",\"intention\":\"\",\"alternative\":\"\",\"outcome\":\"\"},\"dirty\":false,\"edit\":0,\"epoch\":4,\"read\":2,\"known\":\"\",\"title\":\"B.json\",\"notice\":\"저장된 자료를 열었습니다.\",\"note_disabled\":false,\"save_disabled\":false},\"requests\":[{\"route\":\"/research\",\"method\":\"POST\",\"title\":\"A.json\"},{\"route\":\"/research\",\"method\":\"GET\",\"title\":null},{\"route\":\"/research/resource-a\",\"method\":\"GET\",\"title\":null},{\"route\":\"/research\",\"method\":\"POST\",\"title\":\"B.json\"},{\"route\":\"/research\",\"method\":\"GET\",\"title\":null},{\"route\":\"/research/resource-b\",\"method\":\"GET\",\"title\":null},{\"route\":\"/research/resource-b/notes/overview\",\"method\":\"GET\",\"title\":null}]},{\"id\":\"RESEARCH-STALE-GET-ERROR-AFTER-LOGOUT\",\"passed\":true,\"checks\":{\"exact_logged_out_state_retained\":true,\"cleared_resource_and_note\":true,\"no_stale_error\":true,\"no_followup_requests\":true},\"loggedOut\":{\"id\":null,\"note\":null,\"dirty\":false,\"edit\":0,\"epoch\":3,\"read\":2,\"known\":\"\",\"title\":\"old\",\"notice\":\"\",\"note_disabled\":false,\"save_disabled\":false},\"after\":{\"id\":null,\"note\":null,\"dirty\":false,\"edit\":0,\"epoch\":3,\"read\":2,\"known\":\"\",\"title\":\"old\",\"notice\":\"\",\"note_disabled\":false,\"save_disabled\":false},\"requests\":[{\"route\":\"/research\",\"method\":\"POST\",\"title\":\"A.json\"},{\"route\":\"/research\",\"method\":\"GET\",\"title\":null},{\"route\":\"/research/resource-a\",\"method\":\"GET\",\"title\":null}]}]}\n",
+    "stderr": ""
+  }
+}

@@ -1,0 +1,695 @@
+{
+  "scope": "History to editable draft recovery only",
+  "verifier": "Node VM production Research script with synthetic DOM/service replies; not actual browser/HTTP/SQLite/game evidence",
+  "executed_at": "2026-10-05T05:47:42.964Z",
+  "node_version": "v24.19.0",
+  "source_sha256": "bbe60c90b6596f092112eeaa6b1dee0b0ecaebee81842a74e873cec93442a73f",
+  "test_sha256": "72960118c9de8101dd5b00c1a6a5b15d6dfb25c36ab1835b8c1379cebed01677",
+  "fixture_sha256": "eb487b2e21229e4399d31d39508b9720c27fbf609cc74d43cbad86919ec59841",
+  "passed": 5,
+  "total": 5,
+  "results": [
+    {
+      "id": "NOTE-RECOVERY-EXACT-UNICODE-DRAFT-KEEPS-CURRENT-CAS-NO-PUT",
+      "passed": true,
+      "checks": {
+        "exact_four_unicode_fields": true,
+        "current_saved_note_preserved": true,
+        "dirty_edit_advanced": true,
+        "save_enabled": true,
+        "no_write": true,
+        "unsaved_notice": true
+      },
+      "before": {
+        "note": {
+          "resource_id": "A",
+          "anchor": "overview",
+          "revision": 3,
+          "known": "현재 저장된 v3",
+          "intention": "현재 의도",
+          "alternative": "현재 대안",
+          "outcome": "현재 결과"
+        },
+        "resource": "A",
+        "dirty": false,
+        "edit": 0,
+        "epoch": 1,
+        "values": {
+          "known": "현재 저장된 v3",
+          "intention": "현재 의도",
+          "alternative": "현재 대안",
+          "outcome": "현재 결과"
+        },
+        "note_state": "저장 버전 3 · 자동 검증 상태는 바뀌지 않습니다.",
+        "notice": "저장된 자료를 열었습니다.",
+        "preview": {
+          "resource_id": "A",
+          "anchor": "overview",
+          "revision": 1,
+          "current_revision": 3,
+          "note": {
+            "known": "과거 근거 한글·日本語·😀\n\"정확한 인용\"",
+            "intention": "의도 α",
+            "alternative": "대안 👀 <조건>",
+            "outcome": "사후 결과는 분리"
+          },
+          "read_only": true
+        },
+        "history_state": "저장 버전 1 조회 중 · 조회 시 최신 버전 3",
+        "recover_disabled": false,
+        "save_disabled": false,
+        "detail_hidden": false,
+        "workspace_hidden": false,
+        "research_hidden": false
+      },
+      "after": {
+        "note": {
+          "resource_id": "A",
+          "anchor": "overview",
+          "revision": 3,
+          "known": "현재 저장된 v3",
+          "intention": "현재 의도",
+          "alternative": "현재 대안",
+          "outcome": "현재 결과"
+        },
+        "resource": "A",
+        "dirty": true,
+        "edit": 1,
+        "epoch": 1,
+        "values": {
+          "known": "과거 근거 한글·日本語·😀\n\"정확한 인용\"",
+          "intention": "의도 α",
+          "alternative": "대안 👀 <조건>",
+          "outcome": "사후 결과는 분리"
+        },
+        "note_state": "조회한 버전 1을 미저장 초안으로 복사했습니다. 다음 저장 기준은 현재 버전 3입니다.",
+        "notice": "과거 내용을 편집 초안으로 복사했습니다. 노트 저장을 눌러야 새 버전으로 저장됩니다.",
+        "preview": {
+          "resource_id": "A",
+          "anchor": "overview",
+          "revision": 1,
+          "current_revision": 3,
+          "note": {
+            "known": "과거 근거 한글·日本語·😀\n\"정확한 인용\"",
+            "intention": "의도 α",
+            "alternative": "대안 👀 <조건>",
+            "outcome": "사후 결과는 분리"
+          },
+          "read_only": true
+        },
+        "history_state": "저장 버전 1 조회 중 · 조회 시 최신 버전 3",
+        "recover_disabled": false,
+        "save_disabled": false,
+        "detail_hidden": false,
+        "workspace_hidden": false,
+        "research_hidden": false
+      },
+      "calls": [
+        {
+          "route": "/research/A",
+          "method": "GET"
+        },
+        {
+          "route": "/research/A/notes/overview",
+          "method": "GET"
+        },
+        {
+          "route": "/research/A/notes/overview/revisions/1",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "id": "NOTE-RECOVERY-NATIVE-CANCEL-LEAVES-DIRTY-EDITOR-UNCHANGED",
+      "passed": true,
+      "checks": {
+        "confirmation_requested": true,
+        "exact_state_unchanged": true,
+        "no_put": true
+      },
+      "before": {
+        "note": {
+          "resource_id": "A",
+          "anchor": "overview",
+          "revision": 3,
+          "known": "현재 저장된 v3",
+          "intention": "현재 의도",
+          "alternative": "현재 대안",
+          "outcome": "현재 결과"
+        },
+        "resource": "A",
+        "dirty": true,
+        "edit": 4,
+        "epoch": 1,
+        "values": {
+          "known": "복구 전에 작성한 초안",
+          "intention": "초안 의도",
+          "alternative": "초안 대안",
+          "outcome": "초안 사후 메모"
+        },
+        "note_state": "저장하지 않은 변경이 있습니다.",
+        "notice": "저장된 자료를 열었습니다.",
+        "preview": {
+          "resource_id": "A",
+          "anchor": "overview",
+          "revision": 1,
+          "current_revision": 3,
+          "note": {
+            "known": "과거 근거 한글·日本語·😀\n\"정확한 인용\"",
+            "intention": "의도 α",
+            "alternative": "대안 👀 <조건>",
+            "outcome": "사후 결과는 분리"
+          },
+          "read_only": true
+        },
+        "history_state": "저장 버전 1 조회 중 · 조회 시 최신 버전 3",
+        "recover_disabled": false,
+        "save_disabled": false,
+        "detail_hidden": false,
+        "workspace_hidden": false,
+        "research_hidden": false
+      },
+      "after": {
+        "note": {
+          "resource_id": "A",
+          "anchor": "overview",
+          "revision": 3,
+          "known": "현재 저장된 v3",
+          "intention": "현재 의도",
+          "alternative": "현재 대안",
+          "outcome": "현재 결과"
+        },
+        "resource": "A",
+        "dirty": true,
+        "edit": 4,
+        "epoch": 1,
+        "values": {
+          "known": "복구 전에 작성한 초안",
+          "intention": "초안 의도",
+          "alternative": "초안 대안",
+          "outcome": "초안 사후 메모"
+        },
+        "note_state": "저장하지 않은 변경이 있습니다.",
+        "notice": "저장된 자료를 열었습니다.",
+        "preview": {
+          "resource_id": "A",
+          "anchor": "overview",
+          "revision": 1,
+          "current_revision": 3,
+          "note": {
+            "known": "과거 근거 한글·日本語·😀\n\"정확한 인용\"",
+            "intention": "의도 α",
+            "alternative": "대안 👀 <조건>",
+            "outcome": "사후 결과는 분리"
+          },
+          "read_only": true
+        },
+        "history_state": "저장 버전 1 조회 중 · 조회 시 최신 버전 3",
+        "recover_disabled": false,
+        "save_disabled": false,
+        "detail_hidden": false,
+        "workspace_hidden": false,
+        "research_hidden": false
+      },
+      "confirmations": [
+        {
+          "message": "현재 미저장 초안을 조회한 과거 내용으로 바꿀까요?",
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "id": "NOTE-RECOVERY-LOADING-AND-PENDING-SAVE-HANDLER-BLOCKED",
+      "passed": true,
+      "checks": {
+        "loading_control_disabled": true,
+        "loading_direct_handler_no_change": true,
+        "save_control_disabled": true,
+        "pending_save_direct_handler_no_change": true,
+        "sole_put_original_current_draft": true
+      },
+      "loadingBefore": {
+        "note": {
+          "resource_id": "A",
+          "anchor": "overview",
+          "revision": 3,
+          "known": "현재 저장된 v3",
+          "intention": "현재 의도",
+          "alternative": "현재 대안",
+          "outcome": "현재 결과"
+        },
+        "resource": "A",
+        "dirty": false,
+        "edit": 0,
+        "epoch": 1,
+        "values": {
+          "known": "현재 저장된 v3",
+          "intention": "현재 의도",
+          "alternative": "현재 대안",
+          "outcome": "현재 결과"
+        },
+        "note_state": "저장 버전 3 · 자동 검증 상태는 바뀌지 않습니다.",
+        "notice": "저장된 자료를 열었습니다.",
+        "preview": null,
+        "history_state": "",
+        "recover_disabled": true,
+        "save_disabled": true,
+        "detail_hidden": false,
+        "workspace_hidden": false,
+        "research_hidden": false
+      },
+      "loadingAfter": {
+        "note": {
+          "resource_id": "A",
+          "anchor": "overview",
+          "revision": 3,
+          "known": "현재 저장된 v3",
+          "intention": "현재 의도",
+          "alternative": "현재 대안",
+          "outcome": "현재 결과"
+        },
+        "resource": "A",
+        "dirty": false,
+        "edit": 0,
+        "epoch": 1,
+        "values": {
+          "known": "현재 저장된 v3",
+          "intention": "현재 의도",
+          "alternative": "현재 대안",
+          "outcome": "현재 결과"
+        },
+        "note_state": "저장 버전 3 · 자동 검증 상태는 바뀌지 않습니다.",
+        "notice": "저장된 자료를 열었습니다.",
+        "preview": null,
+        "history_state": "",
+        "recover_disabled": true,
+        "save_disabled": true,
+        "detail_hidden": false,
+        "workspace_hidden": false,
+        "research_hidden": false
+      },
+      "saveBefore": {
+        "note": {
+          "resource_id": "A",
+          "anchor": "overview",
+          "revision": 3,
+          "known": "현재 저장된 v3",
+          "intention": "현재 의도",
+          "alternative": "현재 대안",
+          "outcome": "현재 결과"
+        },
+        "resource": "A",
+        "dirty": true,
+        "edit": 4,
+        "epoch": 1,
+        "values": {
+          "known": "복구 전에 작성한 초안",
+          "intention": "초안 의도",
+          "alternative": "초안 대안",
+          "outcome": "초안 사후 메모"
+        },
+        "note_state": "저장하지 않은 변경이 있습니다.",
+        "notice": "저장된 자료를 열었습니다.",
+        "preview": {
+          "resource_id": "A",
+          "anchor": "overview",
+          "revision": 1,
+          "current_revision": 3,
+          "note": {
+            "known": "과거 근거 한글·日本語·😀\n\"정확한 인용\"",
+            "intention": "의도 α",
+            "alternative": "대안 👀 <조건>",
+            "outcome": "사후 결과는 분리"
+          },
+          "read_only": true
+        },
+        "history_state": "저장 버전 1 조회 중 · 조회 시 최신 버전 3",
+        "recover_disabled": true,
+        "save_disabled": true,
+        "detail_hidden": false,
+        "workspace_hidden": false,
+        "research_hidden": false
+      },
+      "saveAfter": {
+        "note": {
+          "resource_id": "A",
+          "anchor": "overview",
+          "revision": 3,
+          "known": "현재 저장된 v3",
+          "intention": "현재 의도",
+          "alternative": "현재 대안",
+          "outcome": "현재 결과"
+        },
+        "resource": "A",
+        "dirty": true,
+        "edit": 4,
+        "epoch": 1,
+        "values": {
+          "known": "복구 전에 작성한 초안",
+          "intention": "초안 의도",
+          "alternative": "초안 대안",
+          "outcome": "초안 사후 메모"
+        },
+        "note_state": "저장하지 않은 변경이 있습니다.",
+        "notice": "저장된 자료를 열었습니다.",
+        "preview": {
+          "resource_id": "A",
+          "anchor": "overview",
+          "revision": 1,
+          "current_revision": 3,
+          "note": {
+            "known": "과거 근거 한글·日本語·😀\n\"정확한 인용\"",
+            "intention": "의도 α",
+            "alternative": "대안 👀 <조건>",
+            "outcome": "사후 결과는 분리"
+          },
+          "read_only": true
+        },
+        "history_state": "저장 버전 1 조회 중 · 조회 시 최신 버전 3",
+        "recover_disabled": true,
+        "save_disabled": true,
+        "detail_hidden": false,
+        "workspace_hidden": false,
+        "research_hidden": false
+      },
+      "calls": [
+        {
+          "route": "/research/A",
+          "method": "GET"
+        },
+        {
+          "route": "/research/A/notes/overview",
+          "method": "GET"
+        },
+        {
+          "route": "/research/A/notes/overview/revisions/1",
+          "method": "GET"
+        },
+        {
+          "route": "/research/A/notes/overview",
+          "method": "PUT",
+          "body": {
+            "note": {
+              "known": "복구 전에 작성한 초안",
+              "intention": "초안 의도",
+              "alternative": "초안 대안",
+              "outcome": "초안 사후 메모"
+            },
+            "expected_revision": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOTE-RECOVERY-NAVIGATION-VIEW-LOGOUT-DELETION-PREVIEW-BLOCKED",
+      "passed": true,
+      "checks": {
+        "all_invalidated": true,
+        "all_direct_handlers_blocked": true
+      },
+      "states": [
+        {
+          "action": "navigation",
+          "before": {
+            "note": {
+              "resource_id": "B",
+              "anchor": "overview",
+              "revision": 0,
+              "known": "",
+              "intention": "",
+              "alternative": "",
+              "outcome": ""
+            },
+            "resource": "B",
+            "dirty": false,
+            "edit": 0,
+            "epoch": 2,
+            "values": {
+              "known": "",
+              "intention": "",
+              "alternative": "",
+              "outcome": ""
+            },
+            "note_state": "저장 버전 0 · 자동 검증 상태는 바뀌지 않습니다.",
+            "notice": "저장된 자료를 열었습니다.",
+            "preview": null,
+            "history_state": "",
+            "recover_disabled": true,
+            "save_disabled": false,
+            "detail_hidden": false,
+            "workspace_hidden": false,
+            "research_hidden": false
+          },
+          "after": {
+            "note": {
+              "resource_id": "B",
+              "anchor": "overview",
+              "revision": 0,
+              "known": "",
+              "intention": "",
+              "alternative": "",
+              "outcome": ""
+            },
+            "resource": "B",
+            "dirty": false,
+            "edit": 0,
+            "epoch": 2,
+            "values": {
+              "known": "",
+              "intention": "",
+              "alternative": "",
+              "outcome": ""
+            },
+            "note_state": "저장 버전 0 · 자동 검증 상태는 바뀌지 않습니다.",
+            "notice": "저장된 자료를 열었습니다.",
+            "preview": null,
+            "history_state": "",
+            "recover_disabled": true,
+            "save_disabled": false,
+            "detail_hidden": false,
+            "workspace_hidden": false,
+            "research_hidden": false
+          },
+          "unchanged": true,
+          "disabled": true
+        },
+        {
+          "action": "view",
+          "before": {
+            "note": {
+              "resource_id": "A",
+              "anchor": "overview",
+              "revision": 3,
+              "known": "현재 저장된 v3",
+              "intention": "현재 의도",
+              "alternative": "현재 대안",
+              "outcome": "현재 결과"
+            },
+            "resource": "A",
+            "dirty": false,
+            "edit": 0,
+            "epoch": 1,
+            "values": {
+              "known": "현재 저장된 v3",
+              "intention": "현재 의도",
+              "alternative": "현재 대안",
+              "outcome": "현재 결과"
+            },
+            "note_state": "저장 버전 3 · 자동 검증 상태는 바뀌지 않습니다.",
+            "notice": "저장된 자료를 열었습니다.",
+            "preview": null,
+            "history_state": "",
+            "recover_disabled": true,
+            "save_disabled": false,
+            "detail_hidden": false,
+            "workspace_hidden": false,
+            "research_hidden": true
+          },
+          "after": {
+            "note": {
+              "resource_id": "A",
+              "anchor": "overview",
+              "revision": 3,
+              "known": "현재 저장된 v3",
+              "intention": "현재 의도",
+              "alternative": "현재 대안",
+              "outcome": "현재 결과"
+            },
+            "resource": "A",
+            "dirty": false,
+            "edit": 0,
+            "epoch": 1,
+            "values": {
+              "known": "현재 저장된 v3",
+              "intention": "현재 의도",
+              "alternative": "현재 대안",
+              "outcome": "현재 결과"
+            },
+            "note_state": "저장 버전 3 · 자동 검증 상태는 바뀌지 않습니다.",
+            "notice": "저장된 자료를 열었습니다.",
+            "preview": null,
+            "history_state": "",
+            "recover_disabled": true,
+            "save_disabled": false,
+            "detail_hidden": false,
+            "workspace_hidden": false,
+            "research_hidden": true
+          },
+          "unchanged": true,
+          "disabled": true
+        },
+        {
+          "action": "logout",
+          "before": {
+            "note": null,
+            "resource": null,
+            "dirty": false,
+            "edit": 0,
+            "epoch": 2,
+            "values": {
+              "known": "",
+              "intention": "",
+              "alternative": "",
+              "outcome": ""
+            },
+            "note_state": "저장 버전 3 · 자동 검증 상태는 바뀌지 않습니다.",
+            "notice": "저장된 자료를 열었습니다.",
+            "preview": null,
+            "history_state": "",
+            "recover_disabled": true,
+            "save_disabled": false,
+            "detail_hidden": true,
+            "workspace_hidden": false,
+            "research_hidden": false
+          },
+          "after": {
+            "note": null,
+            "resource": null,
+            "dirty": false,
+            "edit": 0,
+            "epoch": 2,
+            "values": {
+              "known": "",
+              "intention": "",
+              "alternative": "",
+              "outcome": ""
+            },
+            "note_state": "저장 버전 3 · 자동 검증 상태는 바뀌지 않습니다.",
+            "notice": "저장된 자료를 열었습니다.",
+            "preview": null,
+            "history_state": "",
+            "recover_disabled": true,
+            "save_disabled": false,
+            "detail_hidden": true,
+            "workspace_hidden": false,
+            "research_hidden": false
+          },
+          "unchanged": true,
+          "disabled": true
+        },
+        {
+          "action": "delete",
+          "before": {
+            "note": null,
+            "resource": null,
+            "dirty": false,
+            "edit": 0,
+            "epoch": 2,
+            "values": {
+              "known": "",
+              "intention": "",
+              "alternative": "",
+              "outcome": ""
+            },
+            "note_state": "저장 버전 3 · 자동 검증 상태는 바뀌지 않습니다.",
+            "notice": "자료와 노트를 삭제했습니다.",
+            "preview": null,
+            "history_state": "",
+            "recover_disabled": true,
+            "save_disabled": false,
+            "detail_hidden": true,
+            "workspace_hidden": false,
+            "research_hidden": false
+          },
+          "after": {
+            "note": null,
+            "resource": null,
+            "dirty": false,
+            "edit": 0,
+            "epoch": 2,
+            "values": {
+              "known": "",
+              "intention": "",
+              "alternative": "",
+              "outcome": ""
+            },
+            "note_state": "저장 버전 3 · 자동 검증 상태는 바뀌지 않습니다.",
+            "notice": "자료와 노트를 삭제했습니다.",
+            "preview": null,
+            "history_state": "",
+            "recover_disabled": true,
+            "save_disabled": false,
+            "detail_hidden": true,
+            "workspace_hidden": false,
+            "research_hidden": false
+          },
+          "unchanged": true,
+          "disabled": true
+        }
+      ]
+    },
+    {
+      "id": "NOTE-RECOVERY-NEXT-SAVE-USES-LOADED-LATEST-NOT-HISTORICAL-REVISION",
+      "passed": true,
+      "checks": {
+        "current_latest_cas": true,
+        "exact_recovered_payload": true,
+        "new_revision_four": true,
+        "old_preview_fixture_preserved": true
+      },
+      "request": {
+        "route": "/research/A/notes/overview",
+        "method": "PUT",
+        "body": {
+          "note": {
+            "known": "과거 근거 한글·日本語·😀\n\"정확한 인용\"",
+            "intention": "의도 α",
+            "alternative": "대안 👀 <조건>",
+            "outcome": "사후 결과는 분리"
+          },
+          "expected_revision": 3
+        }
+      },
+      "after": {
+        "note": {
+          "resource_id": "A",
+          "anchor": "overview",
+          "revision": 4,
+          "known": "과거 근거 한글·日本語·😀\n\"정확한 인용\"",
+          "intention": "의도 α",
+          "alternative": "대안 👀 <조건>",
+          "outcome": "사후 결과는 분리"
+        },
+        "resource": "A",
+        "dirty": false,
+        "edit": 1,
+        "epoch": 1,
+        "values": {
+          "known": "과거 근거 한글·日本語·😀\n\"정확한 인용\"",
+          "intention": "의도 α",
+          "alternative": "대안 👀 <조건>",
+          "outcome": "사후 결과는 분리"
+        },
+        "note_state": "저장 버전 4 · 자동 검증 상태는 바뀌지 않습니다.",
+        "notice": "복기 노트를 저장했습니다.",
+        "preview": null,
+        "history_state": "",
+        "recover_disabled": true,
+        "save_disabled": false,
+        "detail_hidden": false,
+        "workspace_hidden": false,
+        "research_hidden": false
+      }
+    }
+  ]
+}

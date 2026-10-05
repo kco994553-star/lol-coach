@@ -17,3 +17,12 @@ Context7·MagicPath·Figma·Linear·Supabase·Vercel은 이 기록에서 사용�
 새 도구가 필요한 경우 실제 저장소 의존성과 대상부터 확인하고, 목적·읽기/쓰기
 범위·실제 결과·근거·정확한 링크를 추가한다. 이후 결과는 기존 기록을 삭제하지
 않고 CURRENT_HANDOFF 및 additive(이력 보존 추가) 증거에 연결한다.
+
+
+후속 실제 결과: PR6 병합594ef3c, PR37268750816 및 postmerge(병합 후)37268897569
+SUCCESS(성공), 실제 Chrome79/79 및176 입력 해시 일치. 최초 실패는 그대로 보존.
+노트 복구의 native textarea(실제 다중행 입력창) 줄 끝 동작을 확인하기 위해
+[공식 HTML Standard](https://html.spec.whatwg.org/multipage/form-elements.html#the-textarea-element)
+API value 항목을 Read-only(읽기 전용) 조회했다(2026-10-05, 문서 갱신2026-10-04).
+줄바꿈 LF 정규화는 원래 이력 바이트와 구분해 실제 브라우저에서 검사한다.
+문서 조회는 구현 완료 또는 검사 통과로 계산하지 않는다. 외부 대상 생성 없음.

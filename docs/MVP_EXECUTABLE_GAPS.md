@@ -1,3 +1,37 @@
+# Latest executable gap delta — PR6 verified / recovery deletion boundary
+
+2026-10-05 KST. Actual PR6 normal merge594ef3c, PR37268750816 and
+postmerge37268897569 SUCCESS, Chrome79/old111/protected9/Frozen27/backup23,
+Knowledge42+backup19+HTTP5/history19+HTTP5/all176inputs exact. First actual
+browser37268245767 serialization-verifier failure is preserved; POST/GET
+contents matched but byte-order expectation was corrected with genuine
+viewed+independent GET byte checks. No product source changed for that repair.
+
+Saved-note history recovery is the current executable usability task: explicit
+copy into unsaved draft, loaded-current CAS, no automatic PUT, immutable old
+Knowledge refs. Test-first0/5→5/5 retained. Independent review reproduced a
+blocking same-resource deletion cache issue at intermediateResearchbbe60c90:
+DELETEA→openanotheranchorA→completion clears recovery history but still exports
+the deleted stored note via the general download. Current risk escalated to
+CRITICAL; purge matching deleted source, prevent its pending reads from reviving,
+preserve a different pending B/navigation/draft. Actual browser89 and full gates
+must pass before publication/merge. No schema/API/Frozen changes required.
+
+After this integrity/usability task, next independently executable requirement
+is structured manual pre-game draft capture (REC-REQ013/SC011), not a gameplan.
+Existing TEST session/SYNTHETIC case cannot honestly store actual manual drafts.
+This needs a separate bounded capture mode and typed versioned records, with
+UNKNOWN phase/roles/patch retained, no invented game time, automatic collection
+UNAVAILABLE, gameplan NOT_GENERATED. It is CRITICAL additive schema/mode and
+backup integration; do not relabel synthetic sessions or use freeform notes as
+structured draft evidence. Actual gameplan applicability remains dependent on
+reviewed knowledge and real inputs. Player/preaction dependency alone is parked;
+Main Work continues, actual Player/Decision/CoachN0 and accuracy null.
+
+Earlier assessments and failures stay below unchanged.
+
+---
+
 # Latest executable gap delta — source-bound Knowledge proposals
 
 2026-10-05 KST. PR5 merged d92ded9 with actual PR/postmerge Actions success and

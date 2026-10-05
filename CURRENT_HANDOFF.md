@@ -1,3 +1,56 @@
+# CURRENT HANDOFF — Note-history draft recovery / local gates verified
+
+2026-10-05 KST. Fresh actual main594ef3cf6138421de8a8c77c7ec1c390e7cfedea.
+PR6 head25ff68b/treea36cdda0 normalmerged594ef3c; actualPR37268750816 and
+postmerge37268897569 SUCCESS, exactSHA/tree/parents/all176hashes, Chrome79,
+old111/protected9/Frozen27/backup23/history19+5/Knowledge42+19+5/Node8 allPASS.
+First actual browser37268245767 failure and verifier-only serialization repair
+are preserved. Immutable actual terminal receipts knowledge-ci-*.json added.
+
+Current independent executable requirement is explicit saved-note history
+recovery to an unsaved draft. Native dirtyconfirmation/cancel; exact4fields
+with native LF newline normalization; originalCRLF history/download/Knowledge
+hashes preserved. Current loaded rNote revision remains CAS, no automaticPUT,
+newSave appends; actualexternalupdate conflicts retain draft. No schema/API/core
+change; Source-version binds only Research/index. Test-first0/5→5/5→final5/5.
+
+Independent privacy counterexample at intermediatebbe60: DELETEA→otheranchorA
+kept deleted saved note exportable; pending sameA resurrected it; pendingB kept
+inactiveA cache. CRITICAL escalation retained. Fixed3 cases before0/3→3/3;
+rPendingResource ownership suppresses deleted pending target and purges matching
+source/cache while preserving different pendingB and unknownnewcreate. Exact
+parent63b517 and intermediatebbe60 actualJS archived, historical receipts unchanged.
+Independent final review39ae97ef: fixed3+5PASS plus8 one-off pendingA/currentB
+and new-create assertions PASS; these remain explicitly synthetic scheduling.
+
+Required local regression evidence/mvp/20261005T060326207258Z-8c75a9cf/
+verification.json PASS, all189 inputs current: old111/protected9/Frozen27/
+backup23/history19+5/Knowledge42+19+5/priorUI/KnowledgeNode8/recovery5+delete3.
+Actual Chrome89 (previous79+new10) is required; localPASS is not browser/Actions
+PASS and current remote publication is pending. Private archive4 NOT_RUN stays
+separate. Browser covers genuine CAS409/source-linked history immutability,
+CRLF old bytes vs LF editor, nativeconfirmation/noautomaticwrites, pendingreads/
+delete/view/logout and390px. Known scope single-tab native source events only.
+
+Owner token main-20261005T0545-note-history-recovery-root on common
+work/main-execution-claim; branchfeat/note-history-draft-recovery-2026-10-05
+is separate. Newtoolpolicy applied/recorded docs/TOOL_USAGE.md. No Context7
+needed (no package/lib/API addition), no Figma/MagicPath/Linear/DB/deploy target
+assumed orcreated, no payment. GitHub remains authoritative.
+
+Next independently executable acceptance: structured manual pre-game draft
+capture REC-REQ013/SC011, not gameplan generation. Current TEST/SYNTHETIC paths
+cannot truthfully accept actual manual drafts. Plan a CRITICAL additive mode/
+mainDB typed-record migration with actual prebackup/compatiblebackup/CAS/history/
+sourceparentFK/deletion and actualbrowser validation. Keep unknownphase/roles/
+patch/time explicit, auto collectionUNAVAILABLE, gameplanNOT_GENERATED; reviewed
+knowledge/playerdecision remain dependent. ActualPlayer/Decision/CoachN0/null;
+only independentreference/preaction dependency PARKED_EXTERNAL. Whole Workcontinues.
+
+Prior handoff fully preserved below.
+
+---
+
 # CURRENT HANDOFF — PR6 actual browser verifier repair / remote retest pending
 
 2026-10-05 KST. Exact PR6 fdf4b157/tree86cccef is published. Actual Actions
