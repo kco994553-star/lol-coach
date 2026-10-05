@@ -1,3 +1,30 @@
+# CURRENT HANDOFF — PR6 actual browser verifier repair / remote retest pending
+
+2026-10-05 KST. Exact PR6 fdf4b157/tree86cccef is published. Actual Actions
+37268245767 attempt1 regression PASS at merge-refe36a954f tree86cccef with parents
+d92ded9/fdf4b157; all173 inputs match. Browser had65 executed rows,64PASS and
+knowledge-old-version-authentic-download-exact-saved-object FAIL. Full first
+receipt and exact original browser test bytes are retained.
+
+REPLAN: actual authenticated HTTP/SQLite reproduction confirms POST and stored
+GET are semantically equal but have different property serialization order.
+Verifier now checks exact authentic download bytes against the actual viewed
+GET plus independent immutable GET, keeps POST semantic equality, strengthens
+Unicode/file-name/dirty-draft guards. Product source2011b3 remains unchanged;
+16 Knowledge /79 required browser count unchanged. New local required receipt
+evidence/mvp/20261005T053751974692Z-0002714a/verification.json PASS, no actual
+repaired-browser PASS claimed before fresh CI. Frozen/protected/history intact.
+
+Common current claim token main-20261005T0534-knowledge-ci-repair-root,
+work/main-execution-claim, exact PR6 owner branch; implementation ref is notlock.
+New tool-use instruction adopted at safe publication checkpoint, recorded in
+docs/TOOL_USAGE.md. No external project/DB/design/deploy/payment introduced.
+Next remains existing explicit note-history draft recovery after PR6 actual
+CI/gated merge/postmerge. Only independent player/preaction dependency parked;
+actual Player/Decision/CoachN0/accuracy null, whole Main Work continues.
+
+---
+
 # CURRENT HANDOFF — Source-bound Knowledge proposals / local gates verified
 
 ## 2026-10-05 KST

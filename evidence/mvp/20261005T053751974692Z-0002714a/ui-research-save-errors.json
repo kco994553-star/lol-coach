@@ -1,0 +1,273 @@
+{
+  "scope": "Research current/stale save-error routing; synthetic API failures only",
+  "verifier": "Node VM DOM stub and deferred 401/409 inputs; not browser E2E, actual HTTP auth or credential expiry",
+  "executed_at": "2026-10-05T05:38:08.906Z",
+  "node_version": "v24.19.0",
+  "source_sha256": "63b517f7765fd8d2907a975a974bae28708052ecb75a28f4eab5a2599a29cb77",
+  "test_sha256": "c4511f7b43b764bc254a5cc4f3780d7692676cbcfb04bf83b54b739d44fa137e",
+  "fixture_sha256": "b7c84cee47afccde5a2babd88a776587411bab1524161029a916e6a756d21626",
+  "passed": 4,
+  "total": 4,
+  "results": [
+    {
+      "id": "RESEARCH-STALE-SAVE-401-AFTER-B-DRAFT",
+      "passed": true,
+      "checks": {
+        "save_target_and_cas_are_a": true,
+        "exact_b_state_retained": true,
+        "b_dirty_draft_retained": true,
+        "no_old_auth_delegation": true
+      },
+      "before": {
+        "id": "B",
+        "note": {
+          "resource_id": "B",
+          "anchor": "overview",
+          "revision": 2,
+          "known": "B saved",
+          "intention": "",
+          "alternative": "",
+          "outcome": ""
+        },
+        "known": "B exact newer unsaved draft 😀",
+        "intention": "",
+        "alternative": "",
+        "outcome": "",
+        "title": "B",
+        "dirty": true,
+        "edit": 1,
+        "epoch": 1,
+        "hidden": false,
+        "notice": "저장된 자료를 열었습니다.",
+        "note_state": "저장하지 않은 변경이 있습니다.",
+        "save_disabled": false
+      },
+      "after": {
+        "id": "B",
+        "note": {
+          "resource_id": "B",
+          "anchor": "overview",
+          "revision": 2,
+          "known": "B saved",
+          "intention": "",
+          "alternative": "",
+          "outcome": ""
+        },
+        "known": "B exact newer unsaved draft 😀",
+        "intention": "",
+        "alternative": "",
+        "outcome": "",
+        "title": "B",
+        "dirty": true,
+        "edit": 1,
+        "epoch": 1,
+        "hidden": false,
+        "notice": "저장된 자료를 열었습니다.",
+        "note_state": "저장하지 않은 변경이 있습니다.",
+        "save_disabled": false
+      },
+      "globalErrors": [],
+      "calls": [
+        {
+          "route": "/research/A/notes/overview",
+          "method": "PUT",
+          "body": {
+            "note": {
+              "known": "A exact current unsaved draft",
+              "intention": "",
+              "alternative": "",
+              "outcome": ""
+            },
+            "expected_revision": 1
+          }
+        },
+        {
+          "route": "/research/B",
+          "method": "GET"
+        },
+        {
+          "route": "/research/B/notes/overview",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "id": "RESEARCH-STALE-SAVE-409-AFTER-B-DRAFT",
+      "passed": true,
+      "checks": {
+        "save_target_and_cas_are_a": true,
+        "exact_b_state_retained": true,
+        "b_dirty_draft_retained": true,
+        "no_old_auth_delegation": true
+      },
+      "before": {
+        "id": "B",
+        "note": {
+          "resource_id": "B",
+          "anchor": "overview",
+          "revision": 2,
+          "known": "B saved",
+          "intention": "",
+          "alternative": "",
+          "outcome": ""
+        },
+        "known": "B exact newer unsaved draft 😀",
+        "intention": "",
+        "alternative": "",
+        "outcome": "",
+        "title": "B",
+        "dirty": true,
+        "edit": 1,
+        "epoch": 1,
+        "hidden": false,
+        "notice": "저장된 자료를 열었습니다.",
+        "note_state": "저장하지 않은 변경이 있습니다.",
+        "save_disabled": false
+      },
+      "after": {
+        "id": "B",
+        "note": {
+          "resource_id": "B",
+          "anchor": "overview",
+          "revision": 2,
+          "known": "B saved",
+          "intention": "",
+          "alternative": "",
+          "outcome": ""
+        },
+        "known": "B exact newer unsaved draft 😀",
+        "intention": "",
+        "alternative": "",
+        "outcome": "",
+        "title": "B",
+        "dirty": true,
+        "edit": 1,
+        "epoch": 1,
+        "hidden": false,
+        "notice": "저장된 자료를 열었습니다.",
+        "note_state": "저장하지 않은 변경이 있습니다.",
+        "save_disabled": false
+      },
+      "globalErrors": [],
+      "calls": [
+        {
+          "route": "/research/A/notes/overview",
+          "method": "PUT",
+          "body": {
+            "note": {
+              "known": "A exact current unsaved draft",
+              "intention": "",
+              "alternative": "",
+              "outcome": ""
+            },
+            "expected_revision": 1
+          }
+        },
+        {
+          "route": "/research/B",
+          "method": "GET"
+        },
+        {
+          "route": "/research/B/notes/overview",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "id": "RESEARCH-CURRENT-SAVE-409-SHOWS-ERROR-KEEPS-DRAFT",
+      "passed": true,
+      "checks": {
+        "current_error_shown": true,
+        "current_resource_note_and_draft_retained": true,
+        "save_reenabled": true,
+        "no_auth_delegation": true
+      },
+      "before": {
+        "id": "A",
+        "note": {
+          "resource_id": "A",
+          "anchor": "overview",
+          "revision": 1,
+          "known": "A saved",
+          "intention": "",
+          "alternative": "",
+          "outcome": ""
+        },
+        "known": "A exact current unsaved draft",
+        "intention": "",
+        "alternative": "",
+        "outcome": "",
+        "title": "A",
+        "dirty": true,
+        "edit": 1,
+        "epoch": 0,
+        "hidden": false,
+        "notice": "",
+        "note_state": "저장하지 않은 변경이 있습니다.",
+        "save_disabled": false
+      },
+      "after": {
+        "id": "A",
+        "note": {
+          "resource_id": "A",
+          "anchor": "overview",
+          "revision": 1,
+          "known": "A saved",
+          "intention": "",
+          "alternative": "",
+          "outcome": ""
+        },
+        "known": "A exact current unsaved draft",
+        "intention": "",
+        "alternative": "",
+        "outcome": "",
+        "title": "A",
+        "dirty": true,
+        "edit": 1,
+        "epoch": 0,
+        "hidden": false,
+        "notice": "처리하지 못했습니다: REVISION_CONFLICT",
+        "note_state": "저장하지 않은 변경이 있습니다.",
+        "save_disabled": false
+      },
+      "globalErrors": []
+    },
+    {
+      "id": "RESEARCH-CURRENT-SAVE-401-SHOWS-ERROR-CLEARS-AUTH-CONTEXT",
+      "passed": true,
+      "checks": {
+        "current_auth_error_shown": true,
+        "research_context_cleared": true,
+        "one_current_auth_delegation": true
+      },
+      "after": {
+        "id": null,
+        "note": null,
+        "known": "",
+        "intention": "",
+        "alternative": "",
+        "outcome": "",
+        "title": "A",
+        "dirty": false,
+        "edit": 0,
+        "epoch": 1,
+        "hidden": true,
+        "notice": "처리하지 못했습니다: AUTH_REQUIRED",
+        "note_state": "저장하지 않은 변경이 있습니다.",
+        "save_disabled": false
+      },
+      "globalErrors": [
+        {
+          "message": "AUTH_REQUIRED",
+          "status": 401
+        }
+      ]
+    }
+  ],
+  "process": {
+    "exit_code": 0,
+    "signal": null,
+    "stdout": "{\"scope\":\"Research current/stale save-error routing; synthetic API failures only\",\"verifier\":\"Node VM DOM stub and deferred 401/409 inputs; not browser E2E, actual HTTP auth or credential expiry\",\"executed_at\":\"2026-10-05T05:38:08.906Z\",\"node_version\":\"v24.19.0\",\"source_sha256\":\"63b517f7765fd8d2907a975a974bae28708052ecb75a28f4eab5a2599a29cb77\",\"test_sha256\":\"c4511f7b43b764bc254a5cc4f3780d7692676cbcfb04bf83b54b739d44fa137e\",\"fixture_sha256\":\"b7c84cee47afccde5a2babd88a776587411bab1524161029a916e6a756d21626\",\"passed\":4,\"total\":4,\"results\":[{\"id\":\"RESEARCH-STALE-SAVE-401-AFTER-B-DRAFT\",\"passed\":true,\"checks\":{\"save_target_and_cas_are_a\":true,\"exact_b_state_retained\":true,\"b_dirty_draft_retained\":true,\"no_old_auth_delegation\":true},\"before\":{\"id\":\"B\",\"note\":{\"resource_id\":\"B\",\"anchor\":\"overview\",\"revision\":2,\"known\":\"B saved\",\"intention\":\"\",\"alternative\":\"\",\"outcome\":\"\"},\"known\":\"B exact newer unsaved draft 😀\",\"intention\":\"\",\"alternative\":\"\",\"outcome\":\"\",\"title\":\"B\",\"dirty\":true,\"edit\":1,\"epoch\":1,\"hidden\":false,\"notice\":\"저장된 자료를 열었습니다.\",\"note_state\":\"저장하지 않은 변경이 있습니다.\",\"save_disabled\":false},\"after\":{\"id\":\"B\",\"note\":{\"resource_id\":\"B\",\"anchor\":\"overview\",\"revision\":2,\"known\":\"B saved\",\"intention\":\"\",\"alternative\":\"\",\"outcome\":\"\"},\"known\":\"B exact newer unsaved draft 😀\",\"intention\":\"\",\"alternative\":\"\",\"outcome\":\"\",\"title\":\"B\",\"dirty\":true,\"edit\":1,\"epoch\":1,\"hidden\":false,\"notice\":\"저장된 자료를 열었습니다.\",\"note_state\":\"저장하지 않은 변경이 있습니다.\",\"save_disabled\":false},\"globalErrors\":[],\"calls\":[{\"route\":\"/research/A/notes/overview\",\"method\":\"PUT\",\"body\":{\"note\":{\"known\":\"A exact current unsaved draft\",\"intention\":\"\",\"alternative\":\"\",\"outcome\":\"\"},\"expected_revision\":1}},{\"route\":\"/research/B\",\"method\":\"GET\"},{\"route\":\"/research/B/notes/overview\",\"method\":\"GET\"}]},{\"id\":\"RESEARCH-STALE-SAVE-409-AFTER-B-DRAFT\",\"passed\":true,\"checks\":{\"save_target_and_cas_are_a\":true,\"exact_b_state_retained\":true,\"b_dirty_draft_retained\":true,\"no_old_auth_delegation\":true},\"before\":{\"id\":\"B\",\"note\":{\"resource_id\":\"B\",\"anchor\":\"overview\",\"revision\":2,\"known\":\"B saved\",\"intention\":\"\",\"alternative\":\"\",\"outcome\":\"\"},\"known\":\"B exact newer unsaved draft 😀\",\"intention\":\"\",\"alternative\":\"\",\"outcome\":\"\",\"title\":\"B\",\"dirty\":true,\"edit\":1,\"epoch\":1,\"hidden\":false,\"notice\":\"저장된 자료를 열었습니다.\",\"note_state\":\"저장하지 않은 변경이 있습니다.\",\"save_disabled\":false},\"after\":{\"id\":\"B\",\"note\":{\"resource_id\":\"B\",\"anchor\":\"overview\",\"revision\":2,\"known\":\"B saved\",\"intention\":\"\",\"alternative\":\"\",\"outcome\":\"\"},\"known\":\"B exact newer unsaved draft 😀\",\"intention\":\"\",\"alternative\":\"\",\"outcome\":\"\",\"title\":\"B\",\"dirty\":true,\"edit\":1,\"epoch\":1,\"hidden\":false,\"notice\":\"저장된 자료를 열었습니다.\",\"note_state\":\"저장하지 않은 변경이 있습니다.\",\"save_disabled\":false},\"globalErrors\":[],\"calls\":[{\"route\":\"/research/A/notes/overview\",\"method\":\"PUT\",\"body\":{\"note\":{\"known\":\"A exact current unsaved draft\",\"intention\":\"\",\"alternative\":\"\",\"outcome\":\"\"},\"expected_revision\":1}},{\"route\":\"/research/B\",\"method\":\"GET\"},{\"route\":\"/research/B/notes/overview\",\"method\":\"GET\"}]},{\"id\":\"RESEARCH-CURRENT-SAVE-409-SHOWS-ERROR-KEEPS-DRAFT\",\"passed\":true,\"checks\":{\"current_error_shown\":true,\"current_resource_note_and_draft_retained\":true,\"save_reenabled\":true,\"no_auth_delegation\":true},\"before\":{\"id\":\"A\",\"note\":{\"resource_id\":\"A\",\"anchor\":\"overview\",\"revision\":1,\"known\":\"A saved\",\"intention\":\"\",\"alternative\":\"\",\"outcome\":\"\"},\"known\":\"A exact current unsaved draft\",\"intention\":\"\",\"alternative\":\"\",\"outcome\":\"\",\"title\":\"A\",\"dirty\":true,\"edit\":1,\"epoch\":0,\"hidden\":false,\"notice\":\"\",\"note_state\":\"저장하지 않은 변경이 있습니다.\",\"save_disabled\":false},\"after\":{\"id\":\"A\",\"note\":{\"resource_id\":\"A\",\"anchor\":\"overview\",\"revision\":1,\"known\":\"A saved\",\"intention\":\"\",\"alternative\":\"\",\"outcome\":\"\"},\"known\":\"A exact current unsaved draft\",\"intention\":\"\",\"alternative\":\"\",\"outcome\":\"\",\"title\":\"A\",\"dirty\":true,\"edit\":1,\"epoch\":0,\"hidden\":false,\"notice\":\"처리하지 못했습니다: REVISION_CONFLICT\",\"note_state\":\"저장하지 않은 변경이 있습니다.\",\"save_disabled\":false},\"globalErrors\":[]},{\"id\":\"RESEARCH-CURRENT-SAVE-401-SHOWS-ERROR-CLEARS-AUTH-CONTEXT\",\"passed\":true,\"checks\":{\"current_auth_error_shown\":true,\"research_context_cleared\":true,\"one_current_auth_delegation\":true},\"after\":{\"id\":null,\"note\":null,\"known\":\"\",\"intention\":\"\",\"alternative\":\"\",\"outcome\":\"\",\"title\":\"A\",\"dirty\":false,\"edit\":0,\"epoch\":1,\"hidden\":true,\"notice\":\"처리하지 못했습니다: AUTH_REQUIRED\",\"note_state\":\"저장하지 않은 변경이 있습니다.\",\"save_disabled\":false},\"globalErrors\":[{\"message\":\"AUTH_REQUIRED\",\"status\":401}]}]}\n",
+    "stderr": ""
+  }
+}

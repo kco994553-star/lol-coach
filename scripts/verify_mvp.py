@@ -127,6 +127,23 @@ def knowledge_version_binding() -> dict:
             'version_sha256':sha(ROOT / 'evidence/mvp/knowledge-source-version.json')}
 
 
+def knowledge_browser_repair_binding() -> dict:
+    repair = read_json(ROOT / 'evidence/mvp/knowledge-browser-repair.json')
+    failed = read_json(ROOT / repair['failure_receipt'])
+    browser = failed['browser']['browser_receipt']
+    archive = ROOT / repair['archived_before']
+    checks = {
+        'actual_first_run_failure_retained': failed['run']['id'] == repair['failed_run'] == 37268245767 and failed['run']['attempt'] == 1 and failed['run']['conclusion'] == 'failure' and failed['regression']['status'] == 'PASS' and browser['passed'] is False,
+        'exact_first_failure': [r['id'] for r in browser['checks'] if r['passed'] is False] == [repair['failure_id']],
+        'actual_failed_source_archived': sha(archive) == repair['browser_test_before_sha256'] == browser['source_sha256']['tests_mvp/browser_knowledge.cjs'],
+        'current_repaired_verifier': sha(ROOT / 'tests_mvp/browser_knowledge.cjs') == repair['browser_test_after_sha256'],
+        'production_unchanged_by_verifier_repair': sha(ROOT / 'web_r4/knowledge.js') == repair['production_knowledge_sha256'] == browser['source_sha256']['web_r4/knowledge.js'],
+        'tested_tree_bound': failed['tested_commit']['tree'] == repair['failed_tree'] and failed['tested_commit']['sha'] == repair['failed_tested_commit'] == failed['browser']['commit_sha'],
+        'required_count_preserved': repair['required_browser_checks'] == 79 and repair['knowledge_cases'] == 16,
+    }
+    return {'status': 'PASS' if all(checks.values()) else 'FAIL', 'checks': checks}
+
+
 def knowledge_deletion_binding() -> dict:
     names=('knowledge-ui-before.json','knowledge-ui-after.json','knowledge-ui-final.json')
     before,after,final=[read_json(ROOT / 'evidence/mvp' / name) for name in names]
@@ -564,6 +581,7 @@ def input_hashes() -> dict[str, str]:
               for p in sorted((ROOT / folder).rglob("*"))
               if p.is_file() and "__pycache__" not in p.parts}
     values.update({p.relative_to(ROOT).as_posix():sha(p) for p in sorted((ROOT / 'evidence/mvp/knowledge-ui-sources').glob('*.js')) if p.is_file()})
+    values.update({p.relative_to(ROOT).as_posix():sha(p) for p in sorted((ROOT / 'evidence/mvp/knowledge-browser-sources').glob('*.cjs')) if p.is_file()})
     for name in ("FREEZE_MANIFEST.json", "requirements-r3.txt", R7_SOURCE_RECEIPT, R6_SOURCE_RECEIPT,
                  "evidence/r7/baseline-tree.json", "evidence/mvp/save-race-before.json",
                  "evidence/mvp/save-race-after.json", "evidence/mvp/ci-cost-basis.json",
@@ -582,6 +600,7 @@ def input_hashes() -> dict[str, str]:
                  "evidence/mvp/knowledge-ui-final.json", "evidence/mvp/knowledge-ui-ack-before.json", "evidence/mvp/knowledge-ui-ack-after.json",
                  "evidence/mvp/knowledge-ui-error-before.json", "evidence/mvp/knowledge-ui-error-after.json", "evidence/mvp/knowledge-ui-read-before.json", "evidence/mvp/knowledge-ui-read-after.json",
                  "evidence/mvp/knowledge-ui-proposal-delete-before.json", "evidence/mvp/knowledge-ui-proposal-delete-after.json",
+                 "evidence/mvp/knowledge-browser-repair.json", "evidence/mvp/knowledge-ci-37268245767-failure.json",
                  "evidence/mvp/github-ci-visibility.json",
                  "docs/MVP_VALIDATION.md", "docs/MVP_BACKUP.md", "docs/MVP_KNOWLEDGE_PROPOSALS.md"):
         if (ROOT / name).is_file():
@@ -604,6 +623,8 @@ def main() -> int:
     try:
         checks["preservation"] = preservation_gate()
         save(out, "preservation.json", checks["preservation"])
+        checks["knowledge_browser_repair_binding"] = knowledge_browser_repair_binding()
+        save(out, "knowledge-browser-repair-binding.json", checks["knowledge_browser_repair_binding"])
         checks["ui_repair_receipt_binding"] = repair_binding()
         save(out, "ui-repair-receipt-binding.json", checks["ui_repair_receipt_binding"])
         if any(checks[name]["status"] != "PASS" for name in checks):

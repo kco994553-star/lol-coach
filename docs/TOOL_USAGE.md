@@ -1,0 +1,19 @@
+# 도구 사용 기록
+
+2026-10-05 KST. GitHub가 코드·계약·검증 근거·인수 기록의 기준이다.
+연결 상태는 다른 서비스의 프로젝트·DB·디자인·배포가 준비됐다는 근거가 아니다.
+
+| 실제 사용 도구 | 목적 / 대상 | 범위 | 결과와 근거 |
+| --- | --- | --- | --- |
+| GitHub | 최신 main·공통 owner·PR·Actions 인수, 검증된 트리 게시 | Read-only(읽기 전용) 인수 후 Write(쓰기): 비강제 ref, PR, 조건 충족 병합 | [PR6](https://github.com/kco994553-star/lol-coach/pull/6), 트리 86cccef58af92d2ec5f88c25c97fcc64c1711960; 실제 CI 최초 실패 knowledge-ci-37268245767-failure.json 보존 |
+| Superpowers | 기존 Knowledge 구현의 Review(검토), Verification(검증), CI 실패의 Debugging(디버깅); 다음 노트 복구의 Bounded planning(좁은 계획) | 절차와 읽기 전용 분석; 실제 저장소 코드/검사는 별도 기록 | 기존 설계를 재시작하지 않음. 독립 SQLite/Node 검토와 로컬 필수 회귀 PASS. 실제 브라우저 최초 실패는 아래 별도 근거이며 완료 선언하지 않음 |
+| Browser Verification(브라우저 검증), 기존 GitHub Actions Chrome | 실제 격리 개발 서버·HTTP·SQLite에서 업로드/선택/저장/코칭 카드/390px/오류/다운로드 검사 | 임시 합성 자료만 Write(쓰기); 개인 실제 자료/서비스 배포 없음 | [실행37268245767](https://github.com/kco994553-star/lol-coach/actions/runs/37268245767): 서버 회귀 PASS, 브라우저 다운로드 검사 FAIL. 실제 Coach N0, accuracy=null |
+
+Context7·MagicPath·Figma·Linear·Supabase·Vercel은 이 기록에서 사용하지 않았다.
+외부 프로젝트·이슈·디자인·배포 생성 없음. 신규 의존성·유료 지출 없음.
+현재 구현은 로컬 진단/합성 워크플로와 EXPLORATORY(탐색) 후보 저장이다.
+실제 경기 검증과 도구 또는 디자인 완성을 같은 상태로 보고하지 않는다.
+
+새 도구가 필요한 경우 실제 저장소 의존성과 대상부터 확인하고, 목적·읽기/쓰기
+범위·실제 결과·근거·정확한 링크를 추가한다. 이후 결과는 기존 기록을 삭제하지
+않고 CURRENT_HANDOFF 및 additive(이력 보존 추가) 증거에 연결한다.
