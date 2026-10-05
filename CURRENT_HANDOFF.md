@@ -1,5 +1,21 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — RUNNING
+- run_token: `main-20261005T0613-note-recovery-ci-repair-root`
+- status: `RUNNING`
+- writer_active: true
+- task_scope: Exact existing PR7/head b3bd758dd461ef503f07adaddd0ecb62db810b60, actual failed run37270809307 attempt1; preserve failure and diagnose completed-delete browser snapshot timing, repair only confirmed cause, required regression and actual retest.
+- owner_branch: `feat/note-history-draft-recovery-2026-10-05`
+- intake_main_head: `594ef3cf6138421de8a8c77c7ec1c390e7cfedea`
+- pr: https://github.com/kco994553-star/lol-coach/pull/7
+- risk: CRITICAL retained same cycle; Frozen/protected/history unchanged, no expectation weakening.
+- evidence: Fresh main594ef3c; common terminal69781365 CI_PENDING; exact PR7 b3bd758d and run37270809307 completed FAILURE, server regression PASS and browser84 executed. No product cause assumed before diagnosis; actual source/test/failure bytes retained.
+- next: same PR7 repair/retest/gated merge/postmerge, then existing structured manual draft capture requirement. Independent player reference dependency only PARKED_EXTERNAL, real CoachN0/null.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — CI_PENDING
 - run_token: `main-20261005T0545-note-history-recovery-root`
 - status: `CI_PENDING`
