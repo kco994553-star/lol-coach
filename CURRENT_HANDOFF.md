@@ -1,5 +1,25 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — CI_PENDING
+- run_token: `main-20261005T071452087-draft-ci-repair-root`
+- status: `CI_PENDING`
+- writer_active: false
+- task_scope: Existing PR8 repaired native manualcapture workflow actual Actions verification; gatedmerge/postmerge then retry-safe saves.
+- owner_branch: `feat/manual-draft-capture-2026-10-05`
+- intake_main_head: `0f2b333e44c1918e7a2a9dd7d9f6fce67d1d76a2`
+- implementation_head: `e05efe2c170a8acbd6dd63da0c754f0e0b34df77`
+- implementation_tree: `23f490c9900bd1e75a116da2be133b8f8827ad37`
+- exact_pr: 8
+- exact_ci_run: 37277401539 attempt1 pull_request observed in_progress; requiredactualChrome108.
+- prior_failure: First37276347795 original066f444 testedmerge9b5850e7/tree5edb656/regressionPASS257 retained;87priorbrowserchecks passed then collapsed native slotfill timedout. Originalf251module archived. Native summary.click repair8316b1 keeps19IDs/108total/fixtures/expected/timeouts/production unchanged.
+- terminal_evidence: Freshrequired local evidence/mvp/20261005T071931398362Z-cb7b5c40/verification.json PASS262 exactinputs/allprotected; source-treeAPIpublication matches local23f490c; branch e05efe2 readback verified.
+- next_owner_rule: Exact terminal owner/PR/head/run can be reacquired from observed common HEAD; no RUNNING theft and no parallel duplicate branch.
+- only_external_dependency: Independent Player reference/preaction PARKED_EXTERNAL; realCoachN0/null not wholeSTOP. Retry-safe save gap actualnativeHTTP executable next.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — RUNNING
 - run_token: `main-20261005T071452087-draft-ci-repair-root`
 - status: `RUNNING`
