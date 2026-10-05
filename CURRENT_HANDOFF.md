@@ -1,5 +1,21 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — RUNNING
+- run_token: `main-20261005T0436-research-errors-ci-root`
+- status: `RUNNING`
+- writer_active: true
+- task_scope: Exact PR5 actualCI takeover→gated merge→postmerge; no duplicate implementation.
+- owner_branch: `fix/research-save-error-scope-2026-10-05`
+- intake_main_head: `c1b777f52c1c90d611753264a767e96ef943aeed`
+- code_head: `4ca365f6950b81894069ee8917693407c4559e68`
+- PR: #5; run_id:37264041430; run_attempt:1; conclusion:SUCCESS
+- observed_evidence: actualChrome63/old111/protected9/Frozen27/backup23/storage19/HTTP5/allguards PASS, testedmerge7ccef9a1 expectedparents andidenticaltree83750a8b,145source hashes match.
+- next_executable_requirement: source-bound EXPLORATORY Knowledgeproposal immutableversion/deletion/backup lifecycle; no reviewer/pit/playerpromotion; Player externaldependency onlyparked.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — CI_PENDING
 - run_token: `main-20261005T0422-research-save-errors-root`
 - status: `CI_PENDING`
