@@ -14,7 +14,7 @@ import threading
 from urllib.parse import urlsplit
 
 from .storage import Store, ServiceError
-from .research import ResearchStore
+from .knowledge import KnowledgeStore
 from .note_history import note_history, note_revision
 from coach_intake.audit import inspect as inspect_raw
 from coach_intake.video import index_transcript
@@ -67,7 +67,7 @@ class Workbench(ThreadingHTTPServer):
             self.db_lock.close();raise ValueError('Database already owned by another workbench') from None
         try:
             self.store=Store(db)
-            self.research=ResearchStore(str(db)+'.research.sqlite')
+            self.research=KnowledgeStore(str(db)+'.research.sqlite')
         except Exception:self.db_lock.close();raise
         self.token=token
         self.limits=limits
@@ -178,7 +178,7 @@ class Handler(BaseHTTPRequestHandler):
         path=urlsplit(self.path)
         if path.query or path.fragment:raise ServiceError(400,'QUERY_NOT_SUPPORTED')
         route=path.path
-        assets={'/':('index.html','text/html; charset=utf-8'),'/app.js':('app.js','text/javascript; charset=utf-8'),'/styles.css':('styles.css','text/css; charset=utf-8'),'/research.js':('research.js','text/javascript; charset=utf-8')}
+        assets={'/':('index.html','text/html; charset=utf-8'),'/app.js':('app.js','text/javascript; charset=utf-8'),'/styles.css':('styles.css','text/css; charset=utf-8'),'/research.js':('research.js','text/javascript; charset=utf-8'),'/knowledge.js':('knowledge.js','text/javascript; charset=utf-8')}
         if self.command=='GET' and route in assets:
             filename,ctype=assets[route]
             return self.reply(200,(ROOT/'web_r4'/filename).read_bytes(),ctype)
@@ -231,6 +231,19 @@ class Handler(BaseHTTPRequestHandler):
             else:
                 if self.command=='GET':return self.reply(200,rs.get(rid))
                 if self.command=='DELETE':return self.reply(200,rs.delete(rid))
+        if route==prefix+'/knowledge/proposals':
+            ks=self.server.research;limit=self.server.limits.body_bytes
+            if self.command=='GET':return self.reply(200,ks.list_proposals(limit))
+            if self.command=='POST':
+                b=self.body();self.fields(b,('rule','source','rule_id','expected_version'))
+                return self.reply(201,ks.propose(b['rule'],b['source'],b['rule_id'],b['expected_version'],max_bytes=limit))
+        knowledge=re.fullmatch(re.escape(prefix)+r'/knowledge/proposals/([a-f0-9]{32})(?:/versions/([a-f0-9]{32}))?',route)
+        if knowledge:
+            rule_id,version=knowledge.groups();ks=self.server.research;limit=self.server.limits.body_bytes
+            if self.command=='GET':return self.reply(200,ks.get_proposal(rule_id,version,max_bytes=limit))
+            if self.command=='DELETE' and version is None:
+                b=self.body();self.fields(b,('expected_version',))
+                return self.reply(200,ks.delete_proposal(rule_id,b['expected_version'],limit))
         if route==prefix+'/sessions':
             if self.command=='GET':return self.reply(200,store.list_sessions())
             if self.command=='POST':
@@ -298,6 +311,8 @@ def main():
     server=Workbench(args.db,token,limits,args.port)
     print(f'개발용 합성 복기 화면: http://127.0.0.1:{server.server_port}',flush=True)
     print(f'접속키는 {args.token_file} 파일에서 확인하세요. 실제 경기 기능은 잠겨 있습니다.',flush=True)
+    if server.research.migration_backup:
+        print(f'자료 저장 구조 변경 전 복구 사본: {server.research.migration_backup["path"]} · 이후 자료 삭제는 이 사본에 반영되지 않습니다.',flush=True)
     try:server.serve_forever()
     except KeyboardInterrupt:pass
     finally:server.server_close()

@@ -1,0 +1,214 @@
+{
+  "scope": "Synthetic JSON import read ordering, selection invalidation, session transition, and dirty-draft cancellation only",
+  "verifier": "Node VM DOM/File stubs with deferred file.text promises; not browser E2E or real LoL evidence",
+  "evidence_kind": "FRESH_EXECUTION",
+  "executed_at": "2026-10-05T05:16:30.932Z",
+  "node_version": "v24.19.0",
+  "source_path": "web_r4/app.js",
+  "loaded_source_path": "/workspace/scratch/b091e55de8cd/lol-coach/web_r4/app.js",
+  "source_sha256": "1d31505b1e88cbf5d68f163f8728f06138b421949c416961d19069af61fe79bb",
+  "fixture_path": "examples/r3/compare-wait-retreat.json",
+  "fixture_sha256": "e74764c9151df568061c730fda8ada0fa9d45fc60325785a8423563d0113e391",
+  "test_path": "tests_mvp/ui_import_races.cjs",
+  "test_sha256": "448171663e914bd7b427d35da318e62b6ea215b5c7759140af127a9de445e79d",
+  "passed": 7,
+  "total": 7,
+  "results": [
+    {
+      "id": "MVP-IMPORT-A-FIRST-B-LATEST",
+      "passed": true,
+      "checks": {
+        "newest_selected_file_loaded": true,
+        "imported_input_not_associated_with_prior_session": true,
+        "only_applied_file_selection_cleared": true,
+        "import_not_saved_automatically": true,
+        "no_unexpected_confirmation": true,
+        "old_completion_does_not_replace_latest_input": true,
+        "old_completion_preserves_new_file_selection": true
+      },
+      "actual": {
+        "interim": {
+          "session_id": null,
+          "editor_objective": null,
+          "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "saved_editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "selected_file": "B.json",
+          "analyze_disabled": false,
+          "confirmations": [],
+          "notice": ""
+        },
+        "final": {
+          "session_id": null,
+          "editor_objective": "Latest selected file B",
+          "editor_sha256": "192c876acb7eea5cd3c8e8ca9fc49250a042464024da67436fafe431e22d9fb7",
+          "saved_editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "selected_file": "",
+          "analyze_disabled": true,
+          "confirmations": [],
+          "notice": "합성 입력 파일을 불러왔습니다."
+        },
+        "latest_selection": "B.json"
+      }
+    },
+    {
+      "id": "MVP-IMPORT-B-FIRST-B-LATEST",
+      "passed": true,
+      "checks": {
+        "newest_selected_file_loaded": true,
+        "imported_input_not_associated_with_prior_session": true,
+        "only_applied_file_selection_cleared": true,
+        "import_not_saved_automatically": true,
+        "no_unexpected_confirmation": true,
+        "old_completion_does_not_replace_latest_input": true,
+        "old_completion_preserves_new_file_selection": true
+      },
+      "actual": {
+        "interim": {
+          "session_id": null,
+          "editor_objective": "Latest selected file B",
+          "editor_sha256": "192c876acb7eea5cd3c8e8ca9fc49250a042464024da67436fafe431e22d9fb7",
+          "saved_editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "selected_file": "",
+          "analyze_disabled": true,
+          "confirmations": [],
+          "notice": "합성 입력 파일을 불러왔습니다."
+        },
+        "final": {
+          "session_id": null,
+          "editor_objective": "Latest selected file B",
+          "editor_sha256": "192c876acb7eea5cd3c8e8ca9fc49250a042464024da67436fafe431e22d9fb7",
+          "saved_editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "selected_file": "",
+          "analyze_disabled": true,
+          "confirmations": [],
+          "notice": "합성 입력 파일을 불러왔습니다."
+        },
+        "latest_selection": "B.json"
+      }
+    },
+    {
+      "id": "MVP-IMPORT-CLEARED-SELECTION",
+      "passed": true,
+      "checks": {
+        "cleared_selection_does_not_load_old_file": true,
+        "session_identity_retained": true,
+        "saved_baseline_retained": true,
+        "no_discard_confirmation_for_cleared_selection": true,
+        "cleared_file_input_stays_empty": true
+      },
+      "actual": {
+        "session_id": "session-A",
+        "editor_objective": "Saved session-A",
+        "editor_sha256": "def6579418e89e0c39ba2a57ecd03c73d2d73b610dac14d9ca8d40e9ba8d8cee",
+        "saved_editor_sha256": "def6579418e89e0c39ba2a57ecd03c73d2d73b610dac14d9ca8d40e9ba8d8cee",
+        "selected_file": "",
+        "analyze_disabled": false,
+        "confirmations": [],
+        "notice": "저장한 사례를 열었습니다."
+      }
+    },
+    {
+      "id": "MVP-IMPORT-SESSION-SWITCH",
+      "passed": true,
+      "checks": {
+        "new_session_identity_retained": true,
+        "exact_new_session_draft_retained": true,
+        "new_session_saved_baseline_retained": true,
+        "dirty_new_session_analysis_stays_disabled": true,
+        "no_spurious_discard_confirmation": true
+      },
+      "actual": {
+        "session_id": "session-B",
+        "editor_objective": "Unsaved B after switch",
+        "editor_sha256": "fc3b07cdcb170f8f3d72e6a8e6b0c123b0b3674c19f63ba5c5a422d7f8586179",
+        "saved_editor_sha256": "b8a184f33d8256264c1c0562ef7fb9d3afde95c1f652ca301866c27c0c668d39",
+        "selected_file": "",
+        "analyze_disabled": true,
+        "confirmations": [],
+        "notice": "저장한 사례를 열었습니다."
+      }
+    },
+    {
+      "id": "MVP-IMPORT-DIRTY-CANCEL",
+      "passed": true,
+      "checks": {
+        "discard_confirmation_offered": true,
+        "cancellation_retains_current_identity": true,
+        "cancellation_retains_exact_draft": true,
+        "cancellation_retains_saved_baseline": true,
+        "cancellation_keeps_analysis_disabled": true
+      },
+      "actual": {
+        "session_id": "session-A",
+        "editor_objective": "Dirty current draft",
+        "editor_sha256": "798cc06681d6d9a471b956a95d44e3f1dfc6998b5ab8dbbf2f978194e1f11526",
+        "saved_editor_sha256": "def6579418e89e0c39ba2a57ecd03c73d2d73b610dac14d9ca8d40e9ba8d8cee",
+        "selected_file": "",
+        "analyze_disabled": true,
+        "confirmations": [
+          "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?"
+        ],
+        "notice": "저장한 사례를 열었습니다."
+      }
+    },
+    {
+      "id": "MVP-IMPORT-STALE-PARSE-ERROR",
+      "passed": true,
+      "checks": {
+        "latest_successful_import_retained": true,
+        "latest_successful_notice_retained": true,
+        "no_spurious_discard_confirmation": true
+      },
+      "actual": {
+        "notice_before_old_failure": "합성 입력 파일을 불러왔습니다.",
+        "final": {
+          "session_id": null,
+          "editor_objective": "Latest valid file B",
+          "editor_sha256": "7a5b29fffa7767489d98f5c7215dc7f6a4b41b4f57fe7028d589616583a1efd6",
+          "saved_editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "selected_file": "",
+          "analyze_disabled": true,
+          "confirmations": [],
+          "notice": "합성 입력 파일을 불러왔습니다."
+        }
+      }
+    },
+    {
+      "id": "MVP-IMPORT-STALE-READ-ERROR",
+      "passed": true,
+      "checks": {
+        "latest_successful_import_retained": true,
+        "latest_successful_notice_retained": true,
+        "no_spurious_discard_confirmation": true
+      },
+      "actual": {
+        "notice_before_old_failure": "합성 입력 파일을 불러왔습니다.",
+        "final": {
+          "session_id": null,
+          "editor_objective": "Latest valid file B",
+          "editor_sha256": "7a5b29fffa7767489d98f5c7215dc7f6a4b41b4f57fe7028d589616583a1efd6",
+          "saved_editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "selected_file": "",
+          "analyze_disabled": true,
+          "confirmations": [],
+          "notice": "합성 입력 파일을 불러왔습니다."
+        }
+      }
+    }
+  ],
+  "process": {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "tests_mvp/ui_import_races.cjs",
+      "--run",
+      "/workspace/scratch/b091e55de8cd/lol-coach/web_r4/app.js"
+    ],
+    "started_at": "2026-10-05T05:16:30.865Z",
+    "finished_at": "2026-10-05T05:16:30.938Z",
+    "exit_code": 0,
+    "signal": null,
+    "stdout": "{\"scope\":\"Synthetic JSON import read ordering, selection invalidation, session transition, and dirty-draft cancellation only\",\"verifier\":\"Node VM DOM/File stubs with deferred file.text promises; not browser E2E or real LoL evidence\",\"evidence_kind\":\"FRESH_EXECUTION\",\"executed_at\":\"2026-10-05T05:16:30.932Z\",\"node_version\":\"v24.19.0\",\"source_path\":\"web_r4/app.js\",\"loaded_source_path\":\"/workspace/scratch/b091e55de8cd/lol-coach/web_r4/app.js\",\"source_sha256\":\"1d31505b1e88cbf5d68f163f8728f06138b421949c416961d19069af61fe79bb\",\"fixture_path\":\"examples/r3/compare-wait-retreat.json\",\"fixture_sha256\":\"e74764c9151df568061c730fda8ada0fa9d45fc60325785a8423563d0113e391\",\"test_path\":\"tests_mvp/ui_import_races.cjs\",\"test_sha256\":\"448171663e914bd7b427d35da318e62b6ea215b5c7759140af127a9de445e79d\",\"passed\":7,\"total\":7,\"results\":[{\"id\":\"MVP-IMPORT-A-FIRST-B-LATEST\",\"passed\":true,\"checks\":{\"newest_selected_file_loaded\":true,\"imported_input_not_associated_with_prior_session\":true,\"only_applied_file_selection_cleared\":true,\"import_not_saved_automatically\":true,\"no_unexpected_confirmation\":true,\"old_completion_does_not_replace_latest_input\":true,\"old_completion_preserves_new_file_selection\":true},\"actual\":{\"interim\":{\"session_id\":null,\"editor_objective\":null,\"editor_sha256\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"saved_editor_sha256\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"selected_file\":\"B.json\",\"analyze_disabled\":false,\"confirmations\":[],\"notice\":\"\"},\"final\":{\"session_id\":null,\"editor_objective\":\"Latest selected file B\",\"editor_sha256\":\"192c876acb7eea5cd3c8e8ca9fc49250a042464024da67436fafe431e22d9fb7\",\"saved_editor_sha256\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"selected_file\":\"\",\"analyze_disabled\":true,\"confirmations\":[],\"notice\":\"합성 입력 파일을 불러왔습니다.\"},\"latest_selection\":\"B.json\"}},{\"id\":\"MVP-IMPORT-B-FIRST-B-LATEST\",\"passed\":true,\"checks\":{\"newest_selected_file_loaded\":true,\"imported_input_not_associated_with_prior_session\":true,\"only_applied_file_selection_cleared\":true,\"import_not_saved_automatically\":true,\"no_unexpected_confirmation\":true,\"old_completion_does_not_replace_latest_input\":true,\"old_completion_preserves_new_file_selection\":true},\"actual\":{\"interim\":{\"session_id\":null,\"editor_objective\":\"Latest selected file B\",\"editor_sha256\":\"192c876acb7eea5cd3c8e8ca9fc49250a042464024da67436fafe431e22d9fb7\",\"saved_editor_sha256\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"selected_file\":\"\",\"analyze_disabled\":true,\"confirmations\":[],\"notice\":\"합성 입력 파일을 불러왔습니다.\"},\"final\":{\"session_id\":null,\"editor_objective\":\"Latest selected file B\",\"editor_sha256\":\"192c876acb7eea5cd3c8e8ca9fc49250a042464024da67436fafe431e22d9fb7\",\"saved_editor_sha256\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"selected_file\":\"\",\"analyze_disabled\":true,\"confirmations\":[],\"notice\":\"합성 입력 파일을 불러왔습니다.\"},\"latest_selection\":\"B.json\"}},{\"id\":\"MVP-IMPORT-CLEARED-SELECTION\",\"passed\":true,\"checks\":{\"cleared_selection_does_not_load_old_file\":true,\"session_identity_retained\":true,\"saved_baseline_retained\":true,\"no_discard_confirmation_for_cleared_selection\":true,\"cleared_file_input_stays_empty\":true},\"actual\":{\"session_id\":\"session-A\",\"editor_objective\":\"Saved session-A\",\"editor_sha256\":\"def6579418e89e0c39ba2a57ecd03c73d2d73b610dac14d9ca8d40e9ba8d8cee\",\"saved_editor_sha256\":\"def6579418e89e0c39ba2a57ecd03c73d2d73b610dac14d9ca8d40e9ba8d8cee\",\"selected_file\":\"\",\"analyze_disabled\":false,\"confirmations\":[],\"notice\":\"저장한 사례를 열었습니다.\"}},{\"id\":\"MVP-IMPORT-SESSION-SWITCH\",\"passed\":true,\"checks\":{\"new_session_identity_retained\":true,\"exact_new_session_draft_retained\":true,\"new_session_saved_baseline_retained\":true,\"dirty_new_session_analysis_stays_disabled\":true,\"no_spurious_discard_confirmation\":true},\"actual\":{\"session_id\":\"session-B\",\"editor_objective\":\"Unsaved B after switch\",\"editor_sha256\":\"fc3b07cdcb170f8f3d72e6a8e6b0c123b0b3674c19f63ba5c5a422d7f8586179\",\"saved_editor_sha256\":\"b8a184f33d8256264c1c0562ef7fb9d3afde95c1f652ca301866c27c0c668d39\",\"selected_file\":\"\",\"analyze_disabled\":true,\"confirmations\":[],\"notice\":\"저장한 사례를 열었습니다.\"}},{\"id\":\"MVP-IMPORT-DIRTY-CANCEL\",\"passed\":true,\"checks\":{\"discard_confirmation_offered\":true,\"cancellation_retains_current_identity\":true,\"cancellation_retains_exact_draft\":true,\"cancellation_retains_saved_baseline\":true,\"cancellation_keeps_analysis_disabled\":true},\"actual\":{\"session_id\":\"session-A\",\"editor_objective\":\"Dirty current draft\",\"editor_sha256\":\"798cc06681d6d9a471b956a95d44e3f1dfc6998b5ab8dbbf2f978194e1f11526\",\"saved_editor_sha256\":\"def6579418e89e0c39ba2a57ecd03c73d2d73b610dac14d9ca8d40e9ba8d8cee\",\"selected_file\":\"\",\"analyze_disabled\":true,\"confirmations\":[\"저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?\"],\"notice\":\"저장한 사례를 열었습니다.\"}},{\"id\":\"MVP-IMPORT-STALE-PARSE-ERROR\",\"passed\":true,\"checks\":{\"latest_successful_import_retained\":true,\"latest_successful_notice_retained\":true,\"no_spurious_discard_confirmation\":true},\"actual\":{\"notice_before_old_failure\":\"합성 입력 파일을 불러왔습니다.\",\"final\":{\"session_id\":null,\"editor_objective\":\"Latest valid file B\",\"editor_sha256\":\"7a5b29fffa7767489d98f5c7215dc7f6a4b41b4f57fe7028d589616583a1efd6\",\"saved_editor_sha256\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"selected_file\":\"\",\"analyze_disabled\":true,\"confirmations\":[],\"notice\":\"합성 입력 파일을 불러왔습니다.\"}}},{\"id\":\"MVP-IMPORT-STALE-READ-ERROR\",\"passed\":true,\"checks\":{\"latest_successful_import_retained\":true,\"latest_successful_notice_retained\":true,\"no_spurious_discard_confirmation\":true},\"actual\":{\"notice_before_old_failure\":\"합성 입력 파일을 불러왔습니다.\",\"final\":{\"session_id\":null,\"editor_objective\":\"Latest valid file B\",\"editor_sha256\":\"7a5b29fffa7767489d98f5c7215dc7f6a4b41b4f57fe7028d589616583a1efd6\",\"saved_editor_sha256\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"selected_file\":\"\",\"analyze_disabled\":true,\"confirmations\":[],\"notice\":\"합성 입력 파일을 불러왔습니다.\"}}}]}\n",
+    "stderr": "",
+    "error": null
+  }
+}

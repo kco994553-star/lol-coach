@@ -1,0 +1,70 @@
+{
+  "scope": "Cached exact-read acknowledgment across middle-source deletion only",
+  "verifier": "Node VM synthetic DOM/service replies; not actual browser/HTTP/SQLite/game evidence",
+  "executed_at": "2026-10-05T05:02:17.048Z",
+  "node_version": "v24.19.0",
+  "source_sha256": "7026b4c25a030f31aa8404a65febc248f20ba67f1a7863add0d50adf7067cd06",
+  "test_sha256": "bdd3cf2b2d8cdaeb699058b0b7bd8881e4296077f848130318df5adb92bb5267",
+  "fixture_sha256": "9a8837092164b6563c4319d29ea9a8a572772677411fc88b06a0aa10b1e677a8",
+  "passed": 0,
+  "total": 1,
+  "results": [
+    {
+      "id": "KNOWLEDGE-CACHED-EXACT-ACK-CANNOT-REAPPLY-DELETED-DESCENDANT",
+      "passed": false,
+      "checks": {
+        "preserved_ancestor_not_replaced": false,
+        "postdeletion_latest_preserved": false,
+        "independent_draft_retained": false,
+        "postdeletion_exact_revalidation": false
+      },
+      "exactReads": 1,
+      "afterDeletion": {
+        "record": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "latest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source": "source3",
+        "claim": "NEW-INDEPENDENT-D-DRAFT",
+        "dirty": true,
+        "notice": ""
+      },
+      "afterOldVerification": {
+        "record": "dddddddddddddddddddddddddddddddd",
+        "latest": "dddddddddddddddddddddddddddddddd",
+        "source": "source3",
+        "claim": "NEW-INDEPENDENT-D-DRAFT",
+        "dirty": false,
+        "notice": "탐색 제안을 새 버전으로 저장했습니다. 자동 코칭에는 사용되지 않습니다."
+      },
+      "calls": [
+        {
+          "route": "/knowledge/proposals",
+          "method": "POST"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111/versions/dddddddddddddddddddddddddddddddd",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111/versions/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "method": "GET"
+        },
+        {
+          "route": "/research/source3",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals",
+          "method": "GET"
+        }
+      ]
+    }
+  ]
+}

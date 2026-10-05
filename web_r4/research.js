@@ -31,8 +31,8 @@ async function rSave(){if(!rResource||!rNote)return;const mark=rEpoch,edit=rEdit
  try{const saved=await api('/research/'+id+'/notes/'+anchor,'PUT',{note,expected_revision:rNote.revision});if(mark!==rEpoch)return;rHistoryClear();rNote=saved;if(edit===rEdit)rApply(saved);else{$('r-note-state').textContent='버전 '+saved.revision+' 저장 완료 · 이후 수정은 아직 저장되지 않았습니다.';}rNotice('복기 노트를 저장했습니다.');}
  catch(e){if(mark===rEpoch&&rResource&&rResource.id===id&&rNote&&rNote.anchor===anchor)rError(e);}
  finally{if(mark===rEpoch)$('r-save').disabled=false;}}
-$('show-research').addEventListener('click',()=>{$('synthetic-view').hidden=true;$('research-view').hidden=false;rUi(()=>rRefresh());});
-$('show-synthetic').addEventListener('click',()=>{rHistoryClear();$('research-view').hidden=true;$('synthetic-view').hidden=false;});
+$('show-research').addEventListener('click',()=>{$('synthetic-view').hidden=true;$('knowledge-view').hidden=true;$('research-view').hidden=false;rUi(()=>rRefresh());});
+$('show-synthetic').addEventListener('click',()=>{rHistoryClear();$('research-view').hidden=true;$('knowledge-view').hidden=true;$('synthetic-view').hidden=false;});
 $('r-refresh').addEventListener('click',()=>rUi(()=>rRefresh()));
 $('r-sample').addEventListener('click',()=>rAdd({source_type:'official_sample',title:'공식 응답 예제'}).catch(rError));
 $('r-video').addEventListener('click',()=>rAdd({source_type:'video_example',title:'공개 영상 · 해설 후보'}).catch(rError));
@@ -59,11 +59,13 @@ $('r-file').addEventListener('change',async()=>{
  finally{if($('r-file').files[0]===file)$('r-file').value='';}
 });
 $('r-delete').addEventListener('click',async()=>{
- if($('r-delete').disabled||!rResource||!confirm('이 자료와 모든 복기 노트를 삭제할까요?'))return;
+ if($('r-delete').disabled||!rResource||!confirm('이 자료와 모든 복기 노트, 연결된 지식 후보 및 후속 버전을 삭제할까요?'))return;
  let mark=rEpoch,cleared=false;const id=rResource.id;
  const current=()=>mark===rEpoch&&(cleared?rResource===null:rResource&&rResource.id===id);
  try{
-  await api('/research/'+id,'DELETE');if(!current())return;
+  const deleted=await api('/research/'+id,'DELETE');
+  if(typeof document.dispatchEvent==='function')document.dispatchEvent(new CustomEvent('research-resource-deleted',{detail:{id,deleted_versions:deleted.deleted_versions||0}}));
+  if(!current())return;
   rClear();mark=rEpoch;cleared=true;
   await rRefresh();if(current())rNotice('자료와 노트를 삭제했습니다.');
  }catch(e){if(current())rError(e);}

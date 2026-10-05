@@ -1,0 +1,135 @@
+{
+  "scope": "Knowledge deletion reconciliation/ack races only",
+  "verifier": "Node VM synthetic DOM/service replies; not actual browser/HTTP/SQLite/game evidence",
+  "executed_at": "2026-10-05T04:58:03.156Z",
+  "node_version": "v24.19.0",
+  "source_sha256": "c7f7c991f53f95a8cc80cb60d934175ac188b97f62dd7c0574360ec35cad492e",
+  "test_sha256": "3530e46234fb1dd9d8094b44aa65ab17a9f344ce0c47d18bad27007077d96b4c",
+  "fixture_sha256": "e1e057fbd269a88b45c170e0bcfaffb5db58255b7438a11896016efcf3158504",
+  "passed": 0,
+  "total": 3,
+  "results": [
+    {
+      "id": "KNOWLEDGE-DELETED-DISPLAYED-DESCENDANT-CLEARED-WITH-ANCESTOR-SURVIVING",
+      "passed": false,
+      "checks": {
+        "deleted_saved_state_cleared": false,
+        "deleted_content_cleared": false,
+        "deleted_download_blocked": false
+      },
+      "before": {
+        "record": "cccccccccccccccccccccccccccccccc",
+        "latest": "cccccccccccccccccccccccccccccccc",
+        "source": "source3",
+        "claim": "DELETED-C-SENTINEL",
+        "dirty": false,
+        "download_disabled": false,
+        "notice": ""
+      },
+      "after": {
+        "record": "cccccccccccccccccccccccccccccccc",
+        "latest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source": "source3",
+        "claim": "DELETED-C-SENTINEL",
+        "dirty": false,
+        "download_disabled": false,
+        "notice": ""
+      },
+      "calls": [
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111",
+          "method": "GET"
+        },
+        {
+          "route": "/research/source3",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "id": "KNOWLEDGE-LATE-DELETION-READ-CANNOT-CLEAR-NEW-INDEPENDENT-SOURCE-DRAFT",
+      "passed": false,
+      "checks": {
+        "independent_new_draft_retained": false,
+        "independent_source_retained": false,
+        "deleted_saved_record_detached": true
+      },
+      "before": {
+        "record": "cccccccccccccccccccccccccccccccc",
+        "latest": "cccccccccccccccccccccccccccccccc",
+        "source": "source4",
+        "claim": "NEW-INDEPENDENT-DRAFT",
+        "dirty": true,
+        "download_disabled": false,
+        "notice": ""
+      },
+      "after": {
+        "record": null,
+        "latest": null,
+        "source": null,
+        "claim": "",
+        "dirty": false,
+        "download_disabled": true,
+        "notice": "출처 삭제로 연결된 제안과 화면 내용을 지웠습니다."
+      },
+      "calls": [
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111",
+          "method": "GET"
+        },
+        {
+          "route": "/research/source3",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "id": "KNOWLEDGE-HELD-CREATED-ACK-CANNOT-RESURRECT-CASCADED-DESCENDANT",
+      "passed": false,
+      "checks": {
+        "removed_ack_not_displayed": false,
+        "removed_payload_not_rendered": false,
+        "removed_download_blocked": false
+      },
+      "after": {
+        "record": "dddddddddddddddddddddddddddddddd",
+        "latest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source": "source3",
+        "claim": "DELETED-D-HELD-ACK",
+        "dirty": false,
+        "download_disabled": false,
+        "notice": "탐색 제안을 새 버전으로 저장했습니다. 자동 코칭에는 사용되지 않습니다."
+      },
+      "calls": [
+        {
+          "route": "/knowledge/proposals",
+          "method": "POST"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111",
+          "method": "GET"
+        },
+        {
+          "route": "/research/source3",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals",
+          "method": "GET"
+        }
+      ]
+    }
+  ]
+}

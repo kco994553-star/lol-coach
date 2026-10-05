@@ -1,3 +1,45 @@
+# CURRENT HANDOFF — PR6 actual browser verifier repair / remote retest pending
+
+2026-10-05 KST. Exact PR6 fdf4b157/tree86cccef is published. Actual Actions
+37268245767 attempt1 regression PASS at merge-refe36a954f tree86cccef with parents
+d92ded9/fdf4b157; all173 inputs match. Browser had65 executed rows,64PASS and
+knowledge-old-version-authentic-download-exact-saved-object FAIL. Full first
+receipt and exact original browser test bytes are retained.
+
+REPLAN: actual authenticated HTTP/SQLite reproduction confirms POST and stored
+GET are semantically equal but have different property serialization order.
+Verifier now checks exact authentic download bytes against the actual viewed
+GET plus independent immutable GET, keeps POST semantic equality, strengthens
+Unicode/file-name/dirty-draft guards. Product source2011b3 remains unchanged;
+16 Knowledge /79 required browser count unchanged. New local required receipt
+evidence/mvp/20261005T053751974692Z-0002714a/verification.json PASS, no actual
+repaired-browser PASS claimed before fresh CI. Frozen/protected/history intact.
+
+Common current claim token main-20261005T0534-knowledge-ci-repair-root,
+work/main-execution-claim, exact PR6 owner branch; implementation ref is notlock.
+New tool-use instruction adopted at safe publication checkpoint, recorded in
+docs/TOOL_USAGE.md. No external project/DB/design/deploy/payment introduced.
+Next remains existing explicit note-history draft recovery after PR6 actual
+CI/gated merge/postmerge. Only independent player/preaction dependency parked;
+actual Player/Decision/CoachN0/accuracy null, whole Main Work continues.
+
+---
+
+# CURRENT HANDOFF — Source-bound Knowledge proposals / local gates verified
+
+## 2026-10-05 KST
+
+- Fresh actual intake main d92ded9743b591030a55e355e914ab238589e447. PR5 code4ca365f6950b81894069ee8917693407c4559e68 merged d92ded9; actual PR37264041430 and postmerge37264322615 SUCCESS, Chrome63/63 and145 exact input hashes. Immutable actual receipts research-error-ci-*.json included here. Historical handoffs below are preserved, not current ownership.
+- Single writer uses common work/main-execution-claim token main-20261005T0444-knowledge-proposal-root, owner branch feat/source-bound-knowledge-proposals-2026-10-05; the implementation branch is not a lock. Risk CRITICAL for personal-data migration/deletion/recovery; authority already granted. Scope Frozen KNOWLEDGE/PERSISTENCE REC-REQ-012/REC-SC-015 bounded to one exact saved source note per immutable EXPLORATORY rule version; no engine/review activation.
+- Actual research schema2 physical knowledge_rules(id,version,status,payload) plus source-note and predecessor compound FKs. Original ResearchStore bytes and original two tables/rows preserved; main schema1 unchanged. UUID version tokens, latest CAS, exact server-computed stored source/note hashes, lists/read/download/newversion/delete. UNKNOWN remains operator text, not applicability wildcard or fabricated facts. No inferred author/time/numeric confidence.
+- Independent Frozen review found missing pre-migration recovery. Repaired actual private v1 SQLite snapshot before DDL under writer exclusion, schema/content/exact-row/hash/size verification,0600/nooverwrite, transaction rollback. Snapshot failure503 leavesv1; later DDL failure preserves valid recovery copy. Snapshot/ZIP archival retention remains separate from live deletion and is documented. Two-DB ZIP format1 admits actualresearch1/2 and checks manifest-versus-actual version before publication; no constructors/job reexecution inbackuprestore.
+- Independent UI privacy counterexamples retained: first0/3→3/3, cached exactACK0/1→1/1, explicitlysynthetic stale4010/1→1/1, cachedopen/list0/2→2/2, proposalDELETE cachedsame-ruleopen0/1→1/1. Latest deletion generation binds save/open/list/reconciliation and is advanced before a successful stale proposalDELETE can return; pending deletion blocks download immediately. Source-middle cascade deletes descendants even when their own source survives, retaining earlier ancestors. Current single-tab UI reconciliation is not global cross-tab/direct-API cache invalidation. Actual saved reports remain exact and cannot be downloaded from unsaved draft. Initialtwo developmentJS byte snapshots were notretained; their real execution/hash/failure receipts remain. Later parent/currentactualJS archives are preserved, never reconstructed.
+- Local final evidence evidence/mvp/20261005T052343958609Z-6c010746/verification.json PASS, all173 boundinputs unchanged; old111/protected9/Frozen27/backup23, notehistory19/HTTP5, KnowledgeStore42/backup19/HTTP5, currentNodeKnowledge8 and earlierUIguards allPASS. Earlier localPASS receipts remain scoped to their earlier source/test bytes. Fresh independent final currentNode8/8/process0 and focused criticalreview found no blocking defect. Actual browser79/Actions required and currentlypending; localPASS is not remotePASS. Pinnedprivatearchive4 remain NOT_RUN separately.
+- Frozen27/core/oldtests/fixtures/expected/history preserved; additive source versions and no real evidence promotion. Source26direct/2derived stay separate; Player0/DecisionN0/CoachN0/accuracy null, Product NOT_COMPLETE. Only actual independent Player/pre-action dependency PARKED_EXTERNAL. No payments/newdependencies/externalmessages.
+- Next independentlyexecutable documented gap afterpublication: explicit saved-note recovery into a new unsaved editor draft, using existing history/source/CAS without automaticPUT or oldrevision reuse. Subsequent manualdraft capture is separately implementable; actualgameplan/KnowledgeREVIEWED/playerdecision retain their genuine knowledge/phase/evidence gates. No arbitrary framework or feature filler. Main Work continues.
+
+Prior handoff fully preserved below.
+
 # CURRENT HANDOFF — Research error integrity execution / note history remotely verified
 
 ## 2026-10-05 KST
