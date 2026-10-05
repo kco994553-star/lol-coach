@@ -5,9 +5,10 @@ v1.0 authorize reasonable implementation, tests, publication and gated merges.
 Actual payment still requires approval. Historical policy text remains intact;
 it does not override this later instruction or provide missing real evidence.
 
-The three existing Progress, CI and Evidence Watch tasks remain read-only.
-Their notifications are not proof that implementation resumed. A separate
-single Main executor performs continuation only after fresh repository intake,
+The three historical Progress, CI and Evidence Watch tasks were found paused
+in the final automation read and were not re-enabled. Their read-only prompts
+remain preserved. One enabled Main executor checks the three lenses in a
+read-only intake phase, then performs continuation only after fresh repository intake,
 dependency and ownership checks. No new scheduling or agent software framework
 is introduced. The saved automation prompt is the operating policy.
 
@@ -51,6 +52,15 @@ second coordination ref or take over an unknown RUNNING claim. If the shared
 ref cannot be initialized or inspected safely, remain read-only.
 
 ## Delta and verification
+
+Configuration observed on 2026-10-05: the separate **LoL Coach Main 자동 재개**
+automation is enabled with hourly condition checking in Asia/Seoul. The three
+historical Watch tasks remain paused; their read-only scope is preserved. Configuration is evidence of
+scheduling and saved authority, not proof that future implementation completed.
+An actual sibling non-force update test on the shared ref succeeded for its
+first candidate and rejected its second with HTTP422; the winner ref was read
+again. Receipt: `evidence/mvp/main-claim-cas.json`. The test retained this root's
+RUNNING token and never created a second implementation writer.
 
 Compare head, semantic input hashes, handoff, PR/review IDs, CI run/attempt and
 evidence state with the last processed state in the automation's private prompt

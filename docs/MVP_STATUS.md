@@ -1,3 +1,24 @@
+# 2026-10-05 import repair and current remote verification
+
+Latest implementation: PR1 merged at377a1065. Actual push Actions37254286657
+SUCCESS: existing111/protected9/Frozen27/backup23, import7, actual Chrome38.
+Receipts: `evidence/mvp/import-ci-37254286657.json`, import before/after.
+The new file-selection generation preserves latest B when A/B reads finish
+out of order and prevents stale read/parse errors changing the newest notice.
+Original failure3/7 is preserved; repaired7/7 and previous save regressions pass.
+
+The old Progress/CI/Evidence Watch tasks were already paused on final read and
+were left paused. One enabled **LoL Coach Main 자동 재개** performs a read-only
+progress/CI/evidence intake and an hourly condition check, then continues eligible authorized
+work using one shared coordination ref. Actual sibling update rejection was
+verified. General state checking is polling; immediate main-push/CI delivery is
+not provided by the exposed PR-only webhook. See `docs/AUTONOMOUS_EXECUTION.md`.
+Future-run configuration is verified; future real implementation execution is
+not yet evidence. Actual Player/Coach gate remains external, N0/accuracy null,
+and whole-product completion remains NOT_COMPLETE.
+
+## Earlier status retained
+
 # 2026-10-05 현재 코드 원격 검증
 
 현재 코드 tested SHA915f2a17ae4c6b4cf4d28841c12c6cc4ff91c4d2의 Actions37251321530이
