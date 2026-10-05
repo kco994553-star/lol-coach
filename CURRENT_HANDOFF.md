@@ -1,3 +1,14 @@
+# CURRENT HANDOFF — Note history implementation / PR3 remotely verified
+
+## 2026-10-05 KST
+
+- Actual continuation intake mainccd3a3f23869966bdbbe8288a29e9f4b43d25687 → PR3 code01a6b80c62c47ddc4f1d14d124d0dafe058f512d → mergedmain321ecbd9515fa50a3ef8bff67dd0cbdd322d9fe4. Real PRCI37261674093 SUCCESS testedmerge915062a6f4f94931b3217195a76c51c4905d3d88 exactownertree/parents; postmerge37262029506 SUCCESS exactmain321ecbd. Actual Chrome154.0.8037.57 50/50, old111/protected9/Frozen27/backup23 and priorguards PASS, source-input hashes matched. Recorded immutable navigation-ci receipts, first1/4 and repaired4/4 retained.
+- Highest remaining independent usability gap now executing: existing stored Research note revisions were inaccessible through API/UI. Read-only index/exact preview/download uses existing SQLite note_history without schema change. No restoration/write endpoint, inferred timestamps/authors or validation promotion. Preview never alters current dirty editor, rNote or latest save target. Loading/current selection/view/logout/save invalidates superseded preview; UTF-8 response cap uses explicit existing operational body_bytes.
+- DEEP; two independent implementation scopes (new storage helper/tests and actual browser history tests), one read-only integrity reviewer. Initial view-navigation invalidation finding repaired; full affected regression/browser/remote results pending. New authorization is exact versioned source hashes only; all Frozen/oldtests/fixtures/evidence remain unchanged. Whole Work continues beyond external Player reference, as user requested; next task re-evaluated from actual requirements/gaps.
+- Shared root claim token main-20261005T0410-note-history-root on work/main-execution-claim; implementation branch feat/research-note-history-2026-10-05 distinct. Paid dependency0, no remote user game data or external messages. PLAYER0/DecisionN0/CoachN0/accuracy null; only Player reference/pre-action context PARKED_EXTERNAL, Product NOT_COMPLETE.
+
+Prior handoff fully preserved below.
+
 # CURRENT HANDOFF — Broader product continuation / navigation repair CI pending
 
 ## 2026-10-05 KST
