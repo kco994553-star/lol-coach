@@ -1,0 +1,230 @@
+{
+  "scope": "Synthetic session save acknowledgements, exact draft retention, revision preconditions, navigation cancellation, and stale responses only",
+  "verifier": "Node VM DOM stub with deterministic deferred HTTP responses; not browser E2E or real LoL evidence",
+  "executed_at": "2026-10-05T02:03:38.239Z",
+  "node_version": "v24.19.0",
+  "source_path": "web_r4/app.js",
+  "source_sha256": "1d31505b1e88cbf5d68f163f8728f06138b421949c416961d19069af61fe79bb",
+  "fixture_path": "examples/r3/compare-wait-retreat.json",
+  "fixture_sha256": "e74764c9151df568061c730fda8ada0fa9d45fc60325785a8423563d0113e391",
+  "evidence_kind": "FRESH_EXECUTION",
+  "passed": 7,
+  "total": 7,
+  "results": [
+    {
+      "id": "MVP-SAVE-TYPING-REVISION",
+      "passed": true,
+      "checks": {
+        "server_saved_first_payload_as_v2": true,
+        "acknowledged_v2": true,
+        "exact_draft_retained": true,
+        "canonical_saved_baseline_recorded": true,
+        "analysis_disabled_for_dirty_draft": true,
+        "next_save_expected_revision_2": true,
+        "next_save_succeeds_as_v3": true,
+        "next_save_canonical_and_analyzable": true
+      },
+      "actual": {
+        "after_delayed_ack": {
+          "session_id": "session-A",
+          "client_revision": 2,
+          "editor_objective": "Typed while v2 PUT pending",
+          "exact_editor_retained": true,
+          "editor_sha256": "d5755898d2442e82f4d9cb08729b951e76a00899be16ac362dd03ef2df22a5e2",
+          "saved_editor_sha256": "25954a6df7e941040804141cb03d7c8a70ab71e1e30d229de4473cb42bfb5f38",
+          "editor_equals_saved": false,
+          "analyze_disabled": true,
+          "save_disabled": false,
+          "current_label": "session-A · 저장 버전 2"
+        },
+        "server_after_delayed_ack": {
+          "revision": 2,
+          "saved_objective": "Submitted edit"
+        },
+        "after_next_save": {
+          "session_id": "session-A",
+          "client_revision": 3,
+          "editor_objective": "Typed while v2 PUT pending",
+          "editor_sha256": "06ae4ca0c77a7e7aa99a3083df5fb4d145952436f6c53fe935453d0f22602662",
+          "saved_editor_sha256": "06ae4ca0c77a7e7aa99a3083df5fb4d145952436f6c53fe935453d0f22602662",
+          "editor_equals_saved": true,
+          "analyze_disabled": false,
+          "save_disabled": false,
+          "current_label": "session-A · 저장 버전 3"
+        },
+        "next_save_error": null,
+        "put_expected_revisions": [
+          1,
+          2
+        ],
+        "server_revision": 3
+      }
+    },
+    {
+      "id": "MVP-SAVE-UNCHANGED-CANONICAL",
+      "passed": true,
+      "checks": {
+        "revision_2_acknowledged": true,
+        "canonical_response_replaces_unchanged_editor": true,
+        "saved_baseline_matches_canonical": true,
+        "analysis_enabled": true
+      },
+      "actual": {
+        "session_id": "session-A",
+        "client_revision": 2,
+        "editor_objective": "Canonical save",
+        "editor_sha256": "fc0f6d093914d57895089cc06371d38040d38fdfc3f49affac9573905eadc5a8",
+        "saved_editor_sha256": "fc0f6d093914d57895089cc06371d38040d38fdfc3f49affac9573905eadc5a8",
+        "editor_equals_saved": true,
+        "analyze_disabled": false,
+        "save_disabled": false,
+        "current_label": "session-A · 저장 버전 2",
+        "server_revision": 2
+      }
+    },
+    {
+      "id": "MVP-CREATE-TYPING-ACK",
+      "passed": true,
+      "checks": {
+        "created_identity_acknowledged": true,
+        "created_case_saved_and_revision_acknowledged": true,
+        "saved_original_submission": true,
+        "exact_later_draft_retained": true,
+        "saved_baseline_matches_created_case": true,
+        "analysis_disabled_for_dirty_draft": true
+      },
+      "actual": {
+        "session_id": "created-1",
+        "client_revision": 1,
+        "editor_objective": "Typed during create POST",
+        "exact_editor_retained": true,
+        "editor_sha256": "63ffd1c445b56cf9a0e7581de11a0750959cd64a0110d412e1f0188a325e5b53",
+        "saved_editor_sha256": "b11112760f0cefa0c57ea3278e949219627879e656b070f263ecf452de1c880c",
+        "editor_equals_saved": false,
+        "analyze_disabled": true,
+        "save_disabled": false,
+        "current_label": "Created case · 저장 버전 1",
+        "server_revision": 1,
+        "server_saved_objective": "Submitted new case",
+        "case_put_expected_revisions": [
+          0
+        ]
+      }
+    },
+    {
+      "id": "MVP-OLD-SAVE-RESET-SWITCH",
+      "passed": true,
+      "checks": {
+        "b_identity_and_revision_preserved": true,
+        "exact_b_draft_preserved": true,
+        "b_saved_baseline_preserved": true,
+        "b_current_label_preserved": true,
+        "b_analysis_stays_disabled": true,
+        "a_server_save_committed": true,
+        "b_server_revision_unchanged": true
+      },
+      "actual": {
+        "session_id": "session-B",
+        "client_revision": 1,
+        "editor_objective": "Unsaved B after reset and switch",
+        "exact_editor_retained": true,
+        "editor_sha256": "dd3f77043565014902fffe4db9f96be1e22864a56b17f0531828645017ffd010",
+        "saved_editor_sha256": "b8a184f33d8256264c1c0562ef7fb9d3afde95c1f652ca301866c27c0c668d39",
+        "editor_equals_saved": false,
+        "analyze_disabled": true,
+        "save_disabled": false,
+        "current_label": "session-B · 저장 버전 1"
+      }
+    },
+    {
+      "id": "MVP-DIRTY-CURRENT-REOPEN-CANCEL",
+      "passed": true,
+      "checks": {
+        "discard_confirmation_offered": true,
+        "cancellation_retains_identity_and_revision": true,
+        "cancellation_retains_exact_draft": true,
+        "cancellation_retains_saved_baseline": true,
+        "cancellation_keeps_analysis_disabled": true
+      },
+      "actual": {
+        "session_id": "session-A",
+        "client_revision": 1,
+        "editor_objective": "Dirty draft before reopen",
+        "exact_editor_retained": true,
+        "editor_sha256": "fcf82bb2f7ef3c8ee40c59c6ad5627c039ac443c33f1151b8103bad2db6fd872",
+        "saved_editor_sha256": "def6579418e89e0c39ba2a57ecd03c73d2d73b610dac14d9ca8d40e9ba8d8cee",
+        "editor_equals_saved": false,
+        "analyze_disabled": true,
+        "save_disabled": false,
+        "current_label": "session-A · 저장 버전 1",
+        "confirmation_messages": [
+          "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?"
+        ]
+      }
+    },
+    {
+      "id": "MVP-DIRTY-REFRESHED-REOPEN-CANCEL",
+      "passed": true,
+      "checks": {
+        "discard_confirmation_offered": true,
+        "cancellation_retains_identity_and_revision": true,
+        "cancellation_retains_exact_draft": true,
+        "cancellation_retains_saved_baseline": true,
+        "cancellation_keeps_analysis_disabled": true
+      },
+      "actual": {
+        "session_id": "session-A",
+        "client_revision": 1,
+        "editor_objective": "Dirty draft before reopen",
+        "exact_editor_retained": true,
+        "editor_sha256": "fcf82bb2f7ef3c8ee40c59c6ad5627c039ac443c33f1151b8103bad2db6fd872",
+        "saved_editor_sha256": "def6579418e89e0c39ba2a57ecd03c73d2d73b610dac14d9ca8d40e9ba8d8cee",
+        "editor_equals_saved": false,
+        "analyze_disabled": true,
+        "save_disabled": false,
+        "current_label": "session-A · 저장 버전 1",
+        "confirmation_messages": [
+          "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?"
+        ]
+      }
+    },
+    {
+      "id": "MVP-OLD-CREATE-AFTER-RESET",
+      "passed": true,
+      "checks": {
+        "old_create_not_associated": true,
+        "new_exact_draft_retained": true,
+        "no_case_save_for_abandoned_creation": true,
+        "abandoned_server_session_has_no_saved_case": true,
+        "analysis_stays_disabled": true
+      },
+      "actual": {
+        "session_id": null,
+        "client_revision": null,
+        "editor_objective": "New draft after reset",
+        "exact_editor_retained": true,
+        "editor_sha256": "3b97d1b9df8db1e061682ae157c0a384688d58bf994c1d2a8a0700937f5fc28b",
+        "saved_editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "editor_equals_saved": false,
+        "analyze_disabled": true,
+        "save_disabled": false,
+        "current_label": "아직 선택한 사례가 없습니다.",
+        "abandoned_server_revision": 0
+      }
+    }
+  ],
+  "process": {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "tests_mvp/ui_save_race.cjs",
+      "--run"
+    ],
+    "started_at": "2026-10-05T02:03:38.172Z",
+    "finished_at": "2026-10-05T02:03:38.244Z",
+    "exit_code": 0,
+    "signal": null,
+    "stdout": "{\"scope\":\"Synthetic session save acknowledgements, exact draft retention, revision preconditions, navigation cancellation, and stale responses only\",\"verifier\":\"Node VM DOM stub with deterministic deferred HTTP responses; not browser E2E or real LoL evidence\",\"executed_at\":\"2026-10-05T02:03:38.239Z\",\"node_version\":\"v24.19.0\",\"source_path\":\"web_r4/app.js\",\"source_sha256\":\"1d31505b1e88cbf5d68f163f8728f06138b421949c416961d19069af61fe79bb\",\"fixture_path\":\"examples/r3/compare-wait-retreat.json\",\"fixture_sha256\":\"e74764c9151df568061c730fda8ada0fa9d45fc60325785a8423563d0113e391\",\"evidence_kind\":\"FRESH_EXECUTION\",\"passed\":7,\"total\":7,\"results\":[{\"id\":\"MVP-SAVE-TYPING-REVISION\",\"passed\":true,\"checks\":{\"server_saved_first_payload_as_v2\":true,\"acknowledged_v2\":true,\"exact_draft_retained\":true,\"canonical_saved_baseline_recorded\":true,\"analysis_disabled_for_dirty_draft\":true,\"next_save_expected_revision_2\":true,\"next_save_succeeds_as_v3\":true,\"next_save_canonical_and_analyzable\":true},\"actual\":{\"after_delayed_ack\":{\"session_id\":\"session-A\",\"client_revision\":2,\"editor_objective\":\"Typed while v2 PUT pending\",\"exact_editor_retained\":true,\"editor_sha256\":\"d5755898d2442e82f4d9cb08729b951e76a00899be16ac362dd03ef2df22a5e2\",\"saved_editor_sha256\":\"25954a6df7e941040804141cb03d7c8a70ab71e1e30d229de4473cb42bfb5f38\",\"editor_equals_saved\":false,\"analyze_disabled\":true,\"save_disabled\":false,\"current_label\":\"session-A · 저장 버전 2\"},\"server_after_delayed_ack\":{\"revision\":2,\"saved_objective\":\"Submitted edit\"},\"after_next_save\":{\"session_id\":\"session-A\",\"client_revision\":3,\"editor_objective\":\"Typed while v2 PUT pending\",\"editor_sha256\":\"06ae4ca0c77a7e7aa99a3083df5fb4d145952436f6c53fe935453d0f22602662\",\"saved_editor_sha256\":\"06ae4ca0c77a7e7aa99a3083df5fb4d145952436f6c53fe935453d0f22602662\",\"editor_equals_saved\":true,\"analyze_disabled\":false,\"save_disabled\":false,\"current_label\":\"session-A · 저장 버전 3\"},\"next_save_error\":null,\"put_expected_revisions\":[1,2],\"server_revision\":3}},{\"id\":\"MVP-SAVE-UNCHANGED-CANONICAL\",\"passed\":true,\"checks\":{\"revision_2_acknowledged\":true,\"canonical_response_replaces_unchanged_editor\":true,\"saved_baseline_matches_canonical\":true,\"analysis_enabled\":true},\"actual\":{\"session_id\":\"session-A\",\"client_revision\":2,\"editor_objective\":\"Canonical save\",\"editor_sha256\":\"fc0f6d093914d57895089cc06371d38040d38fdfc3f49affac9573905eadc5a8\",\"saved_editor_sha256\":\"fc0f6d093914d57895089cc06371d38040d38fdfc3f49affac9573905eadc5a8\",\"editor_equals_saved\":true,\"analyze_disabled\":false,\"save_disabled\":false,\"current_label\":\"session-A · 저장 버전 2\",\"server_revision\":2}},{\"id\":\"MVP-CREATE-TYPING-ACK\",\"passed\":true,\"checks\":{\"created_identity_acknowledged\":true,\"created_case_saved_and_revision_acknowledged\":true,\"saved_original_submission\":true,\"exact_later_draft_retained\":true,\"saved_baseline_matches_created_case\":true,\"analysis_disabled_for_dirty_draft\":true},\"actual\":{\"session_id\":\"created-1\",\"client_revision\":1,\"editor_objective\":\"Typed during create POST\",\"exact_editor_retained\":true,\"editor_sha256\":\"63ffd1c445b56cf9a0e7581de11a0750959cd64a0110d412e1f0188a325e5b53\",\"saved_editor_sha256\":\"b11112760f0cefa0c57ea3278e949219627879e656b070f263ecf452de1c880c\",\"editor_equals_saved\":false,\"analyze_disabled\":true,\"save_disabled\":false,\"current_label\":\"Created case · 저장 버전 1\",\"server_revision\":1,\"server_saved_objective\":\"Submitted new case\",\"case_put_expected_revisions\":[0]}},{\"id\":\"MVP-OLD-SAVE-RESET-SWITCH\",\"passed\":true,\"checks\":{\"b_identity_and_revision_preserved\":true,\"exact_b_draft_preserved\":true,\"b_saved_baseline_preserved\":true,\"b_current_label_preserved\":true,\"b_analysis_stays_disabled\":true,\"a_server_save_committed\":true,\"b_server_revision_unchanged\":true},\"actual\":{\"session_id\":\"session-B\",\"client_revision\":1,\"editor_objective\":\"Unsaved B after reset and switch\",\"exact_editor_retained\":true,\"editor_sha256\":\"dd3f77043565014902fffe4db9f96be1e22864a56b17f0531828645017ffd010\",\"saved_editor_sha256\":\"b8a184f33d8256264c1c0562ef7fb9d3afde95c1f652ca301866c27c0c668d39\",\"editor_equals_saved\":false,\"analyze_disabled\":true,\"save_disabled\":false,\"current_label\":\"session-B · 저장 버전 1\"}},{\"id\":\"MVP-DIRTY-CURRENT-REOPEN-CANCEL\",\"passed\":true,\"checks\":{\"discard_confirmation_offered\":true,\"cancellation_retains_identity_and_revision\":true,\"cancellation_retains_exact_draft\":true,\"cancellation_retains_saved_baseline\":true,\"cancellation_keeps_analysis_disabled\":true},\"actual\":{\"session_id\":\"session-A\",\"client_revision\":1,\"editor_objective\":\"Dirty draft before reopen\",\"exact_editor_retained\":true,\"editor_sha256\":\"fcf82bb2f7ef3c8ee40c59c6ad5627c039ac443c33f1151b8103bad2db6fd872\",\"saved_editor_sha256\":\"def6579418e89e0c39ba2a57ecd03c73d2d73b610dac14d9ca8d40e9ba8d8cee\",\"editor_equals_saved\":false,\"analyze_disabled\":true,\"save_disabled\":false,\"current_label\":\"session-A · 저장 버전 1\",\"confirmation_messages\":[\"저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?\"]}},{\"id\":\"MVP-DIRTY-REFRESHED-REOPEN-CANCEL\",\"passed\":true,\"checks\":{\"discard_confirmation_offered\":true,\"cancellation_retains_identity_and_revision\":true,\"cancellation_retains_exact_draft\":true,\"cancellation_retains_saved_baseline\":true,\"cancellation_keeps_analysis_disabled\":true},\"actual\":{\"session_id\":\"session-A\",\"client_revision\":1,\"editor_objective\":\"Dirty draft before reopen\",\"exact_editor_retained\":true,\"editor_sha256\":\"fcf82bb2f7ef3c8ee40c59c6ad5627c039ac443c33f1151b8103bad2db6fd872\",\"saved_editor_sha256\":\"def6579418e89e0c39ba2a57ecd03c73d2d73b610dac14d9ca8d40e9ba8d8cee\",\"editor_equals_saved\":false,\"analyze_disabled\":true,\"save_disabled\":false,\"current_label\":\"session-A · 저장 버전 1\",\"confirmation_messages\":[\"저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?\"]}},{\"id\":\"MVP-OLD-CREATE-AFTER-RESET\",\"passed\":true,\"checks\":{\"old_create_not_associated\":true,\"new_exact_draft_retained\":true,\"no_case_save_for_abandoned_creation\":true,\"abandoned_server_session_has_no_saved_case\":true,\"analysis_stays_disabled\":true},\"actual\":{\"session_id\":null,\"client_revision\":null,\"editor_objective\":\"New draft after reset\",\"exact_editor_retained\":true,\"editor_sha256\":\"3b97d1b9df8db1e061682ae157c0a384688d58bf994c1d2a8a0700937f5fc28b\",\"saved_editor_sha256\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"editor_equals_saved\":false,\"analyze_disabled\":true,\"save_disabled\":false,\"current_label\":\"아직 선택한 사례가 없습니다.\",\"abandoned_server_revision\":0}}]}\n",
+    "stderr": "",
+    "error": null
+  }
+}

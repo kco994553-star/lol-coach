@@ -32,6 +32,11 @@ SAVE_CASE_IDS = {
     "MVP-DIRTY-CURRENT-REOPEN-CANCEL", "MVP-DIRTY-REFRESHED-REOPEN-CANCEL",
     "MVP-OLD-CREATE-AFTER-RESET",
 }
+IMPORT_CASE_IDS = {
+    "MVP-IMPORT-A-FIRST-B-LATEST", "MVP-IMPORT-B-FIRST-B-LATEST", "MVP-IMPORT-CLEARED-SELECTION",
+    "MVP-IMPORT-SESSION-SWITCH", "MVP-IMPORT-DIRTY-CANCEL",
+    "MVP-IMPORT-STALE-PARSE-ERROR", "MVP-IMPORT-STALE-READ-ERROR",
+}
 
 
 def utc() -> str:
@@ -184,6 +189,10 @@ def node_check(out: Path, name: str, script: str, source: str,
         passed = passed and all(row.get("passed") is True for row in result.get("results", []))
     elif name == "ui-file-race":
         passed = receipt.get("fixed_result", {}).get("passed") is True
+    elif name == "ui-import":
+        passed = receipt.get("passed") == count and receipt.get("total") == count
+        passed = passed and {row.get("id") for row in receipt.get("results", [])} == IMPORT_CASE_IDS
+        passed = passed and all(row.get("passed") is True for row in receipt.get("results", []))
     else:
         passed = receipt.get("passed") == count and receipt.get("total") == count
         passed = passed and {row.get("id") for row in receipt.get("results", [])} == SAVE_CASE_IDS
@@ -210,17 +219,41 @@ def repair_binding() -> dict:
             == {r.get("id") for r in after.get("results", [])} == SAVE_CASE_IDS,
         "before_after_same_fixture": before.get("fixture_sha256")
             == after.get("fixture_sha256") == fixture_hash,
-        "after_binds_current_source": after.get("source_sha256") == sha(ROOT / "web_r4/app.js"),
+        "save_repair_binds_import_repair_parent": after.get("source_sha256")
+            == read_json(ROOT / "evidence/mvp/import-race-before.json").get("source_sha256"),
         "source_changed": before.get("source_sha256") != after.get("source_sha256"),
         "before_binds_preserved_r6_source": before.get("source_sha256")
             == read_json(ROOT / R6_SOURCE_RECEIPT)["source_sha256"]["web_r4/app.js"],
         "honest_execution_receipts": all(r.get("evidence_kind") == "FRESH_EXECUTION"
             for r in receipts.values()),
     }
+    import_before = read_json(ROOT / "evidence/mvp/import-race-before.json")
+    import_after = read_json(ROOT / "evidence/mvp/import-race-after.json")
+    checks.update({
+        "import_before_has_actual_failure": import_before.get("process", {}).get("exit_code") == 1
+            and import_before.get("passed", 0) < import_before.get("total", 0),
+        "import_after_all_cases_passed": import_after.get("passed") == len(IMPORT_CASE_IDS)
+            and import_after.get("total") == len(IMPORT_CASE_IDS)
+            and import_after.get("process", {}).get("exit_code") == 0
+            and all(r.get("passed") is True for r in import_after.get("results", [])),
+        "import_same_case_ids": {r.get("id") for r in import_before.get("results", [])}
+            == {r.get("id") for r in import_after.get("results", [])} == IMPORT_CASE_IDS,
+        "import_same_source_fixture": import_before.get("fixture_sha256")
+            == import_after.get("fixture_sha256") == fixture_hash,
+        "import_test_binds_current_script": import_before.get("test_sha256")
+            == import_after.get("test_sha256") == sha(ROOT / "tests_mvp/ui_import_races.cjs"),
+        "import_repair_binds_current_source": import_after.get("source_sha256") == sha(ROOT / "web_r4/app.js"),
+        "import_source_changed": import_before.get("source_sha256") != import_after.get("source_sha256"),
+        "import_honest_execution_receipts": all(r.get("evidence_kind") == "FRESH_EXECUTION"
+            for r in (import_before, import_after)),
+    })
     return {"status": "PASS" if all(checks.values()) else "FAIL", "checks": checks,
             "receipt_sha256": {"evidence/mvp/" + n: sha(ROOT / "evidence/mvp" / n) for n in names},
             "before_source_sha256": before.get("source_sha256"),
             "after_source_sha256": after.get("source_sha256"),
+            "current_source_sha256": sha(ROOT / "web_r4/app.js"),
+            "import_receipt_sha256": {"evidence/mvp/" + name: sha(ROOT / "evidence/mvp" / name)
+                for name in ("import-race-before.json", "import-race-after.json")},
             "before_source_reference": R6_SOURCE_RECEIPT,
             "before_source_reference_sha256": sha(ROOT / R6_SOURCE_RECEIPT)}
 
@@ -258,6 +291,7 @@ def input_hashes() -> dict[str, str]:
     for name in ("FREEZE_MANIFEST.json", "requirements-r3.txt", R7_SOURCE_RECEIPT, R6_SOURCE_RECEIPT,
                  "evidence/r7/baseline-tree.json", "evidence/mvp/save-race-before.json",
                  "evidence/mvp/save-race-after.json", "evidence/mvp/ci-cost-basis.json",
+                 "evidence/mvp/import-race-before.json", "evidence/mvp/import-race-after.json",
                  "evidence/mvp/github-ci-visibility.json",
                  "docs/MVP_VALIDATION.md", "docs/MVP_BACKUP.md"):
         if (ROOT / name).is_file():
@@ -297,6 +331,7 @@ def main() -> int:
         checks["ui_save"] = node_check(out, "ui-save", "tests_mvp/ui_save_race.cjs", "web_r4/app.js", 7)
         checks["ui_delete_import"] = node_check(out, "ui-delete-import", "tests_r4/ui_races.cjs", "web_r4/app.js", 2)
         checks["ui_file_race"] = node_check(out, "ui-file-race", "tests_r6/ui_file_race.cjs", "web_r4/research.js", 1)
+        checks["ui_import"] = node_check(out, "ui-import", "tests_mvp/ui_import_races.cjs", "web_r4/app.js", len(IMPORT_CASE_IDS))
         checks["postgame"] = postgame_checks(out, args.postgame_raw_dir)
     except Exception as error:
         errors.append(type(error).__name__ + ": " + str(error))

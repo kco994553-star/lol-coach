@@ -1,3 +1,19 @@
+# CURRENT HANDOFF — import selection repair / remote verification pending
+
+## 2026-10-05 Main delta
+
+- status: IN_PROGRESS; owner: this Main Work root; owner branch: `fix/mvp-import-selection-2026-10-05`. Shared claim ref `work/main-execution-claim`, token `main-20261005T0203-import-selection-root`; remote claim c23ce00b verified. Scheduled same-scope writers must inspect that ref and must not create a second claim on a separate implementation branch.
+- Fresh main intake `f3f0b38e2c751c40ca7851474e30914cd3e2abc2`, default main, open PR0, no rulesets. Prior working-code CI at915f2 is Historical for this changed app and is not the current change's CI.
+- Reproduced stale synthetic JSON import: choosing A then B can apply old A and discard latest B. Minimal app change adds read generation/current-file/epoch checks before parsing and stale-error guards. Dirty draft confirmation and TEST/SYNTHETIC gate remain intact.
+- Original execution `evidence/mvp/import-race-before.json`: actual3/7, exit1, four failures. Separate after7/7, exit0. Existing save before/after bytes unchanged; verifier binds save-after→import-before→current import-after and reruns both sets.
+- Fresh local scoped verification `evidence/mvp/20261005T020328456751Z-51152ab1/verification.json`: old111(skip0), protected9, Frozen27, backup23, save7+import7+delete/import2+research1, postgame synthetic13 PASS; pinned archive4 NOT_RUN. Previous original archive evidence is reused only in its unchanged scope. Node browser-script syntax PASS; six actual-browser cases added (existing32 preserved, total38). New Actions/browser NOT_RUN at this checkpoint.
+- DEEP; no Frozen meaning/Core/old expected changes. Independent lenses found import flaw and separately rejected redundant same-clip OCR as no new reference gold. Shared-ref ambiguity in the draft operating policy was repaired before executor activation. Current policy: `docs/AUTONOMOUS_EXECUTION.md`.
+- Existing three Watchdogs are read-only and do not prove automatic implementation. Separate single Main conditional executor configuration is pending this publication/CI closeout; do not claim it is active yet. Exposed GitHub webhook covers PR events, not arbitrary main pushes/CI completion/PC files; general state resume uses an explicit condition check.
+- Actual Player/Decision/Coach remains PARKED_EXTERNAL: PLAYERdirect0/derived0/complete0/same-time independent pair0, DecisionN0/CoachN0/accuracy null. Static existing HUD review can start without patch/new clip; another AI/OCR agreement is not independent gold. Product NOT_COMPLETE. No paid use or credentials needed for this repair.
+- Automatic next step: API publication→exact remote ref/tree verification→PR CI/browser38→repair if needed→gated merge/post-merge check→release claim and finalize continuation configuration. Historical evidence/handoff below retained intact.
+
+## Previous handoff preserved
+
 # CURRENT HANDOFF — Main Work verified code / external evidence park
 
 ## 2026-10-05 최종 원격 확인

@@ -32,6 +32,7 @@ The required scope is:
 | Backup and restore | All current `tests_mvp/test_backup.py` tests pass, with zero skips |
 | Save acknowledgement and draft retention | Seven synthetic Node VM cases pass |
 | Existing delete/import and research-file races | Two and one synthetic Node VM cases pass |
+| Latest synthetic import selection and stale errors | Seven new Node VM cases pass |
 | Postgame schema mechanics | Thirteen synthetic schema tests pass |
 
 The historical `scripts/verify_r7.py` hard gate still requires the original web
@@ -47,6 +48,19 @@ The new verifier checks their fixture and source binding, compares the seven
 case identities, checks the initial 3/7 and repaired 7/7 results and exit codes,
 and reruns the current-source cases into its own new evidence directory. These
 tests use deterministic HTTP replies and a DOM stub, not a browser.
+
+The later import repair keeps those save receipts unchanged. Its separate
+`import-race-before.json` and `import-race-after.json` bind the saved repair's
+source hash to the import repair's parent and current source. The same seven
+case IDs, fixture hash and test-script hash must match. The initial import run
+has three passes and four actual failures; the repaired run has seven passes.
+The current verifier reruns both save and import cases. It does not rewrite the
+old save receipt to pretend that it tested the new app bytes.
+
+The actual browser suite retains the previous 32 checks and adds six import
+checks using native browser File objects with delayed `File.text()` completion.
+Both A/B read orders and clearing the newest selection are exercised. This is
+38 checks against a synthetic backend, never real-match coaching accuracy.
 
 ## Optional preserved-source integration
 
