@@ -1,5 +1,22 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — CI_PENDING
+- run_token: `main-20261005T0534-knowledge-ci-repair-root`
+- status: `CI_PENDING`
+- writer_active: false
+- task_scope: Exact PR6 repaired verifier remote retest.
+- owner_branch: `feat/source-bound-knowledge-proposals-2026-10-05`
+- intake_main_head: `d92ded9743b591030a55e355e914ab238589e447`
+- pr: https://github.com/kco994553-star/lol-coach/pull/6
+- implementation_head: `25ff68b8cd01fc4d1bdbc1c190880b8fb5f81d59`
+- implementation_tree: `a36cdda0d19973f4bbaa8165f163e84a86921520`
+- evidence: first actual CI37268245767 regressionPASS/browserFAIL65rows preserved; POST/GET ordering root cause independently actualHTTP confirmed. Verifier only repaired; exact viewed+independent GET bytes/semantic POST/Unicode/filename/draft assertions, product unchanged. Fresh local mandatory PASS176inputs 20261005T053751974692Z-0002714a. Actual Chrome79 retest pending.
+- next: Verify exact head/tree CI; gated merge/postmerge; then existing note-history recovery gap. Player dependency only PARKED_EXTERNAL, CoachN0/null.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — RUNNING
 - run_token: `main-20261005T0534-knowledge-ci-repair-root`
 - status: `RUNNING`
