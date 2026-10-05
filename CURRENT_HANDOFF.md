@@ -1,5 +1,21 @@
 # MAIN EXECUTION CLAIM
 
+status: RUNNING
+run_token: main-20261005T0315-research-ci-closeout-root
+writer_active: true
+owner: root Main Work
+owner_branch: fix/research-source-bytes-2026-10-05
+intake_main: c30bb2ca553e1346e00aebd9871283101ca51950
+pr: 2
+implementation_head: d07000255265e82e429ba6d184c43681921f8e44
+verified_pr_ci: 37258576190 SUCCESS / actual Chrome46 / regression PASS
+scope: Existing PR2 gated merge, postmerge verification and history-preserving closeout
+coordination_ref: work/main-execution-claim
+
+Prior claim history preserved below.
+
+# MAIN EXECUTION CLAIM
+
 status: CI_PENDING
 run_token: main-20261005T0303-research-utf8-root
 writer_active: false
