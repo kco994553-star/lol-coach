@@ -1,5 +1,24 @@
 # MAIN EXECUTION CLAIM
 
+status: CI_PENDING
+run_token: main-20261005T0315-research-ci-closeout-root
+writer_active: false
+owner_branch: fix/research-source-bytes-2026-10-05
+pr: 2 MERGED
+implementation_head: d07000255265e82e429ba6d184c43681921f8e44
+canonical_main: ed533fd980f47313014b7874e171ca4c5f1a2d6b
+workflow_run: 37258742782
+verified_pr_ci: 37258576190 SUCCESS / Chrome46 / regression PASS
+scope: exact postmerge run verification and documentation closeout only
+next_step: verify resulting main SHA/run/receipts; append handoff; PARK external actual-player dependency
+coordination_ref: work/main-execution-claim
+
+Owner released RUNNING during postmerge CI. New token/common ref claim required before writes; no new implementation for already merged PR2.
+
+Prior claim history preserved below.
+
+# MAIN EXECUTION CLAIM
+
 status: RUNNING
 run_token: main-20261005T0315-research-ci-closeout-root
 writer_active: true
