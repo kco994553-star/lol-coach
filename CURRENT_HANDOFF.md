@@ -1,5 +1,20 @@
 # MAIN EXECUTION CLAIM
 
+status: RUNNING
+run_token: main-20261005T0303-research-utf8-root
+writer_active: true
+owner: root Main Work
+owner_branch: fix/research-source-bytes-2026-10-05
+intake_main: c30bb2ca553e1346e00aebd9871283101ca51950
+scope: Research UTF-8 source-byte preservation and explicit invalid-input rejection
+risk: DEEP
+acceptance: original UTF-8 hash preserved; invalid UTF-8 adds no resource; current notes and race guards preserved; required regression and actual browser CI pass
+coordination_ref: work/main-execution-claim
+
+Prior claim history preserved below.
+
+# MAIN EXECUTION CLAIM
+
 status: PARKED_EXTERNAL
 run_token: main-20261005T0209-import-closeout-root
 writer_active: false
