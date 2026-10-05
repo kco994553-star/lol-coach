@@ -234,6 +234,28 @@ def draft_roundtrip_binding() -> dict:
     return {'status':'PASS' if all(checks.values()) else 'FAIL','checks':checks}
 
 
+
+def draft_browser_repair_binding() -> dict:
+    import re
+    repair = read_json(ROOT / 'evidence/mvp/draft-browser-repair.json')
+    failed = read_json(ROOT / repair['failure_receipt'])
+    browser = failed['browser']['browser_receipt']
+    old = ROOT / repair['archived_before']
+    current = ROOT / 'tests_mvp/browser_draft_capture.cjs'
+    identities = lambda p: re.findall(r"check\('([^']+)'", p.read_text())
+    checks = {
+        'actual_first_failure_retained': failed['run']['id'] == repair['failed_run'] == 37276347795 and failed['run']['attempt'] == repair['failed_attempt'] == 1 and failed['run']['conclusion'] == 'failure' and failed['regression']['status'] == 'PASS' and browser['passed'] is False,
+        'actual_visibility_failure': browser['first_failure']['stage'] == 'manual-draft-capture' and 'd-pick-ALLY-1' in browser['first_failure']['error'] and 'not visible' in browser['first_failure']['error'],
+        'prior_checks_preserved': len(browser['checks']) == 87 and all(row['passed'] is True for row in browser['checks']) and not browser['page_errors'],
+        'actual_test_bytes_archived': sha(old) == repair['browser_before_sha256'] == browser['source_sha256']['tests_mvp/browser_draft_capture.cjs'],
+        'current_repaired_test': sha(current) == repair['browser_after_sha256'],
+        'same_exact_literal_cases': identities(old) == identities(current) == repair['literal_case_ids'] and len(identities(current)) == repair['manual_case_count'] == 19 and repair['required_browser_checks'] == 108,
+        'production_unchanged': all(sha(ROOT / p) == h == browser['source_sha256'][p] for p,h in repair['production_sha256'].items()),
+        'actual_tested_tree_and_parents': failed['tested_commit']['sha'] == repair['failed_tested_commit'] == failed['browser']['commit_sha'] and failed['tested_commit']['tree'] == repair['failed_tree'] and failed['tested_commit']['parents'] == [repair['intake_main'],repair['failed_pr_head']],
+    }
+    return {'status':'PASS' if all(checks.values()) else 'FAIL','checks':checks}
+
+
 def knowledge_browser_repair_binding() -> dict:
     repair = read_json(ROOT / 'evidence/mvp/knowledge-browser-repair.json')
     failed = read_json(ROOT / repair['failure_receipt'])
@@ -718,7 +740,7 @@ def input_hashes() -> dict[str, str]:
     values.update({p.relative_to(ROOT).as_posix():sha(p) for p in sorted((ROOT / 'evidence/mvp/note-recovery-sources').glob('*.js')) if p.is_file()})
     values.update({p.relative_to(ROOT).as_posix():sha(p) for p in sorted((ROOT / 'evidence/mvp/note-recovery-browser-sources').glob('*.cjs')) if p.is_file()})
     values.update({p.relative_to(ROOT).as_posix():sha(p) for p in sorted((ROOT / 'evidence/mvp').glob('draft-*')) if p.is_file()})
-    for folder,pattern in (('draft-ui-test-sources','*.cjs'),('draft-storage-sources','*.py'),('draft-roundtrip-sources','*')):
+    for folder,pattern in (('draft-ui-test-sources','*.cjs'),('draft-storage-sources','*.py'),('draft-roundtrip-sources','*'),('draft-browser-sources','*.cjs')):
         values.update({p.relative_to(ROOT).as_posix():sha(p) for p in sorted((ROOT / 'evidence/mvp' / folder).glob(pattern)) if p.is_file()})
     for name in ("FREEZE_MANIFEST.json", "requirements-r3.txt", R7_SOURCE_RECEIPT, R6_SOURCE_RECEIPT,
                  "evidence/r7/baseline-tree.json", "evidence/mvp/save-race-before.json",
@@ -743,7 +765,7 @@ def input_hashes() -> dict[str, str]:
                  "evidence/mvp/note-recovery-final.json", "evidence/mvp/note-recovery-delete-before.json", "evidence/mvp/note-recovery-delete-after.json",
                  "evidence/mvp/note-recovery-browser-repair.json", "evidence/mvp/note-recovery-ci-37270809307-failure.json",
                  "evidence/mvp/note-recovery-delete-order-repro.cjs", "evidence/mvp/note-recovery-delete-order-repro.json",
-                 "evidence/mvp/github-ci-visibility.json",
+                 "evidence/mvp/github-ci-visibility.json", "evidence/mvp/manual-capture-ci-37276347795-failure.json",
                  "docs/MVP_DRAFT_CAPTURE.md", "docs/superpowers/plans/2026-10-05-manual-draft-capture.md", "docs/MVP_VALIDATION.md", "docs/MVP_BACKUP.md", "docs/MVP_KNOWLEDGE_PROPOSALS.md", "docs/MVP_NOTE_RECOVERY.md"):
         if (ROOT / name).is_file():
             values[name] = sha(ROOT / name)
@@ -765,6 +787,8 @@ def main() -> int:
     try:
         checks["preservation"] = preservation_gate()
         save(out, "preservation.json", checks["preservation"])
+        checks["draft_browser_repair_binding"] = draft_browser_repair_binding()
+        save(out, "draft-browser-repair-binding.json", checks["draft_browser_repair_binding"])
         checks["knowledge_browser_repair_binding"] = knowledge_browser_repair_binding()
         save(out, "knowledge-browser-repair-binding.json", checks["knowledge_browser_repair_binding"])
         checks["note_recovery_browser_repair_binding"] = note_recovery_browser_repair_binding()

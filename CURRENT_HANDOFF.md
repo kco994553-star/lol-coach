@@ -1,3 +1,21 @@
+# Latest checkpoint(최신 검증) — PR8 native workflow repair(실제 사용자 순서 보완)
+
+Actual PR8/run37276347795 attempt1FAIL(실패), testedmerge9b5850e7/tree5edb656,
+parents0f2b333e/066f444, regressionPASS/all257inputs. ActualChrome87 prior checks
+passed; manual stage fill of hidden d-pick-ALLY-1 stopped before new checks.
+Full actual firstfailure and originalf251 testbytes preserved. Test now clicks
+native summary to unfold ally/enemy inputs before typing and after opening a
+saved record. Same19literalIDs/total108, unchangedfixtures/expected/timeouts,
+no DOM-open assignment. All production source bytes remain identical.
+
+Fresh required local071931/cb7b5c40 PASS with new strict failed-run/tree/source/
+case-identity binding. Actual repaired Chrome108 still PENDING(대기). Common
+RUNNING token main-20261005T071452087-draft-ci-repair-root; same PR8/branch,
+no duplicate implementation. Only Player/preaction dependency parkedN0/null.
+Retry-safe save correctness remains next executable task after actual verify.
+
+---
+
 # Latest verified local checkpoint(최신 로컬 검증)
 
 2026-10-05. Required full regression(필수 전체 회귀)

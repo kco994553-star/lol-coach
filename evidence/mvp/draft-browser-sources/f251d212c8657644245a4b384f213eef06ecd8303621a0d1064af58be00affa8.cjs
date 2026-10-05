@@ -74,23 +74,12 @@ module.exports = async function checkManualDraftCapture({ page, check, baseUrl, 
       authenticated: Boolean(sessionStorage.getItem('lol-coach-dev-token')),
       workspace_hidden: document.getElementById('workspace').hidden }), fields);
   }
-  async function unfoldSlotGroups() {
-    for (const side of ['ALLY', 'ENEMY']) {
-      const input = page.locator('#d-pick-' + side + '-1');
-      const group = page.locator('#draft-view details').filter({ has: input });
-      if (!(await group.evaluate(element => element.open))) await group.locator('summary').click();
-      await input.waitFor({ state: 'visible' });
-    }
-  }
   async function open(record, answer = 'accept') {
     const selector = '#d-list button[data-capture-id="' + record.session_id + '"]';
     await page.waitForSelector(selector);
     const confirmation = await page.evaluate(() => dDirty) ? await native(() => page.click(selector), answer) : (await page.click(selector), null);
-    if (answer === 'accept') {
-      await page.waitForFunction(expected => dRecord && dRecord.session_id === expected.session_id &&
-        dRecord.revision === expected.revision && !document.getElementById('d-title').disabled, record);
-      await unfoldSlotGroups();
-    }
+    if (answer === 'accept') await page.waitForFunction(expected => dRecord && dRecord.session_id === expected.session_id &&
+      dRecord.revision === expected.revision && !document.getElementById('d-title').disabled, record);
     return confirmation;
   }
   async function save(method, path) {
@@ -144,7 +133,6 @@ module.exports = async function checkManualDraftCapture({ page, check, baseUrl, 
     await page.selectOption('#d-perspective', 'UNKNOWN');
     await page.fill('#d-source', 'Player 검증 전 · 직접 입력한 픽창 α');
     for (const id of ['patch', 'phase', 'observed']) await page.fill('#d-' + id, '');
-    await unfoldSlotGroups();
     await page.fill('#d-pick-ALLY-1', '아리'); await page.fill('#d-ban-ALLY-2', 'Yasuo'); await page.fill('#d-pick-ENEMY-5', 'Lux');
     const unsaved = await state(), listBefore = await api('/draft-captures'), writesBefore = writes.length;
     check('draft-native-operator-input-does-not-auto-save', unsaved.record === null && unsaved.dirty && writesBefore === 0 &&
