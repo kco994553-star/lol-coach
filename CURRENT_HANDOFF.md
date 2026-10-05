@@ -1,15 +1,20 @@
 # MAIN EXECUTION CLAIM
 
-status: RUNNING
+status: PARKED_EXTERNAL
 run_token: main-20261005T0209-import-closeout-root
-owner_branch: fix/mvp-import-selection-2026-10-05
-pull_request: 1
-owner_head: 90916356b5a7bd9e422d07fca9ac8df0aafe717d
+writer_active: false
+canonical_main: c30bb2ca553e1346e00aebd9871283101ca51950
+verified_code_main: 377a1065ea54a0a597a5805a46571d35be9a3266
+completed_pr: 1
+verified_ci: 37254286657 SUCCESS / Chrome38 / regression PASS
 coordination_ref: work/main-execution-claim
-scope: gated merge, post-merge verification, continuation setup and final handoff
-writer_active: true
+next_dependency: independent source-backed Player reference and pre-action context
 
-Acquired from released CI_PENDING claim. Only held token may mutate/release.
+Root completed implementation/publication/remote verification and releases ownership.
+No same-scope implementation remains IN_PROGRESS. One enabled Main hourly condition
+executor must acquire a new shared claim only for actually eligible work. Unknown
+RUNNING claims must never be stolen on elapsed time. Whole product NOT_COMPLETE;
+actual Player/Decision/Coach N0 and accuracy null. Historical state is in Git history.
 
 # CURRENT HANDOFF — Main Work verified code / external evidence park
 
