@@ -1,5 +1,23 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — CI_PENDING
+- run_token: `main-20261005T0545-note-history-recovery-root`
+- status: `CI_PENDING`
+- writer_active: false
+- task_scope: Exact PR7 note-history recovery/source-deletion privacy repair remote verification.
+- owner_branch: `feat/note-history-draft-recovery-2026-10-05`
+- intake_main_head: `594ef3cf6138421de8a8c77c7ec1c390e7cfedea`
+- implementation_head: `b3bd758dd461ef503f07adaddd0ecb62db810b60`
+- implementation_tree: `ae357a1a67cbfbb596f9b74852e74eabac80fbb4`
+- pr: https://github.com/kco994553-star/lol-coach/pull/7
+- risk: CRITICAL escalated/deletionprivacy; samecycle retained.
+- evidence: localrequiredPASS189inputs/old111/protected9/Frozen27/backup23/new5+3 andpreviousallguards; before0/5→5→final5 anddeletion0/3→3 preserved; actualsourcearchives/independentreview pass. ActualChrome89 pending; no browserPASSclaimed.
+- next: exacttestedtree/parents/hashes/actions, gatedmerge/postmerge/handoff; then structuredmanualdraftcapture planning. Only playerreference/preaction dependency parked, CoachN0/null.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — RUNNING
 - run_token: `main-20261005T0545-note-history-recovery-root`
 - status: `RUNNING`
