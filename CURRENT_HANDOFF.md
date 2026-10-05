@@ -1,5 +1,22 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — RUNNING
+- run_token: `main-20261005T1008-pr9-closeout-root`
+- status: `RUNNING`
+- writer_active: true
+- task_scope: Verify exact PR9 post-merge run and publish history-preserving documentation closeout on main; recalculate only evidenced executable gaps.
+- owner_branch: `chore/pr9-closeout-2026-10-05`
+- intake_main_head: `e006b3124f74604e257851c781fa1317e4c6936a`
+- exact_pr: 9 merged
+- exact_postmerge_ci: run `37293206383` attempt1 SUCCESS; regression/browser-regression jobs SUCCESS; actual browser expected111 exact and source-bound.
+- prior_terminal_evidence: Common parent 10c87a20 CI_PENDING for exact merged head/run; no duplicate implementation.
+- constraints: Documentation-only closeout, no code/schema/Frozen/expected/evidence mutation; reuse exact verified code tree and runs.
+- next: Reconfirm claim/main before direct non-force closeout publication; verify new main commit changes only current status docs, then terminal PARKED_EXTERNAL if no independent material gap remains.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — CI_PENDING
 - run_token: `main-20261005T0942-pr9-gated-merge-root`
 - status: `CI_PENDING`
