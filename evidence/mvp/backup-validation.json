@@ -1,0 +1,88 @@
+{
+  "scope": "Additive complete Workbench personal-data backup and restore; no frozen design/core/storage/server changes",
+  "risk": "DEEP",
+  "recorded_at_utc": "2026-10-05T01:11:09.050381+00:00",
+  "environment": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "python": "3.12.14",
+    "sqlite": "3.53.1"
+  },
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests_mvp.test_backup",
+    "tests_r4.test_storage",
+    "tests_r6.test_research",
+    "-v"
+  ],
+  "exit_code": 0,
+  "tests_run": 43,
+  "focused_backup_tests": 23,
+  "elapsed_wall_seconds": 1.3488,
+  "output": "test_active_writer_in_either_database_fails_promptly (tests_mvp.test_backup.CompleteBackupTests.test_active_writer_in_either_database_fails_promptly) ... ok\ntest_archive_publication_race_preserves_winner (tests_mvp.test_backup.CompleteBackupTests.test_archive_publication_race_preserves_winner) ... ok\ntest_backup_cli_separate_reader_under_reserved_locks_finishes_with_timeout (tests_mvp.test_backup.CompleteBackupTests.test_backup_cli_separate_reader_under_reserved_locks_finishes_with_timeout) ... ok\ntest_complete_history_restores_through_workbench_without_source_mutation (tests_mvp.test_backup.CompleteBackupTests.test_complete_history_restores_through_workbench_without_source_mutation) ... ok\ntest_directory_publication_race_preserves_existing_empty_directory (tests_mvp.test_backup.CompleteBackupTests.test_directory_publication_race_preserves_existing_empty_directory) ... ok\ntest_existing_archive_and_even_empty_restore_directory_are_preserved (tests_mvp.test_backup.CompleteBackupTests.test_existing_archive_and_even_empty_restore_directory_are_preserved) ... ok\ntest_existing_research_numeric_dictionary_keys_preserve_original_identity (tests_mvp.test_backup.CompleteBackupTests.test_existing_research_numeric_dictionary_keys_preserve_original_identity) ... ok\ntest_failed_backup_copy_cleans_staging_and_preserves_sources (tests_mvp.test_backup.CompleteBackupTests.test_failed_backup_copy_cleans_staging_and_preserves_sources) ... ok\ntest_hot_journal_is_rejected_without_recovering_or_mutating_source (tests_mvp.test_backup.CompleteBackupTests.test_hot_journal_is_rejected_without_recovering_or_mutating_source) ... ok\ntest_malformed_archive_is_rejected_and_staging_cleaned (tests_mvp.test_backup.CompleteBackupTests.test_malformed_archive_is_rejected_and_staging_cleaned) ... ok\ntest_missing_duplicate_traversal_and_extra_members_are_rejected (tests_mvp.test_backup.CompleteBackupTests.test_missing_duplicate_traversal_and_extra_members_are_rejected) ... ok\ntest_missing_main_never_creates_an_empty_database (tests_mvp.test_backup.CompleteBackupTests.test_missing_main_never_creates_an_empty_database) ... ok\ntest_missing_research_never_creates_an_empty_replacement (tests_mvp.test_backup.CompleteBackupTests.test_missing_research_never_creates_an_empty_replacement) ... ok\ntest_rehashed_but_invalid_schema_foreign_keys_or_note_content_are_rejected (tests_mvp.test_backup.CompleteBackupTests.test_rehashed_but_invalid_schema_foreign_keys_or_note_content_are_rejected) ... ok\ntest_source_hardlink_alias_and_bookkeeping_output_collision_are_rejected (tests_mvp.test_backup.CompleteBackupTests.test_source_hardlink_alias_and_bookkeeping_output_collision_are_rejected) ... ok\ntest_source_schema_or_integrity_failure_never_publishes (tests_mvp.test_backup.CompleteBackupTests.test_source_schema_or_integrity_failure_never_publishes) ... ok\ntest_strict_manifest_version_fields_types_and_duplicate_keys (tests_mvp.test_backup.CompleteBackupTests.test_strict_manifest_version_fields_types_and_duplicate_keys) ... ok\ntest_symlink_source_output_destination_and_ancestor_are_rejected (tests_mvp.test_backup.CompleteBackupTests.test_symlink_source_output_destination_and_ancestor_are_rejected) ... ok\ntest_tampered_member_is_rejected_without_touching_archive_or_sources (tests_mvp.test_backup.CompleteBackupTests.test_tampered_member_is_rejected_without_touching_archive_or_sources) ... ok\ntest_unsupported_publication_fails_closed_and_cleans_staging (tests_mvp.test_backup.CompleteBackupTests.test_unsupported_publication_fails_closed_and_cleans_staging) ... ok\ntest_unsupported_zip_flags_and_invalid_local_utf8_have_structured_errors (tests_mvp.test_backup.CompleteBackupTests.test_unsupported_zip_flags_and_invalid_local_utf8_have_structured_errors) ... ok\ntest_wal_committed_rows_and_original_main_file_bytes_are_preserved (tests_mvp.test_backup.CompleteBackupTests.test_wal_committed_rows_and_original_main_file_bytes_are_preserved) ... ok\ntest_zip_symlink_members_are_rejected (tests_mvp.test_backup.CompleteBackupTests.test_zip_symlink_members_are_rejected) ... ok\ntest_backup_and_restore (tests_r4.test_storage.StorageTests.test_backup_and_restore) ... ok\ntest_cancel_during_compute_never_publishes (tests_r4.test_storage.StorageTests.test_cancel_during_compute_never_publishes) ... ok\ntest_delete_during_compute_never_resurrects (tests_r4.test_storage.StorageTests.test_delete_during_compute_never_resurrects) ... ok\ntest_failure_has_no_raw_payload (tests_r4.test_storage.StorageTests.test_failure_has_no_raw_payload) ... ok\ntest_idempotency_and_stale_revision (tests_r4.test_storage.StorageTests.test_idempotency_and_stale_revision) ... ok\ntest_jobs_persist_results_and_stale (tests_r4.test_storage.StorageTests.test_jobs_persist_results_and_stale) ... ok\ntest_mode_patch_and_validation_failure_rollback (tests_r4.test_storage.StorageTests.test_mode_patch_and_validation_failure_rollback) ... ok\ntest_queued_cancellation_is_not_executed (tests_r4.test_storage.StorageTests.test_queued_cancellation_is_not_executed) ... ok\ntest_restart_recovers_interrupted_only (tests_r4.test_storage.StorageTests.test_restart_recovers_interrupted_only) ... ok\ntest_same_version_wrong_shape_is_refused (tests_r4.test_storage.StorageTests.test_same_version_wrong_shape_is_refused) ... ok\ntest_schema_refusal_preserves_data (tests_r4.test_storage.StorageTests.test_schema_refusal_preserves_data) ... ok\ntest_anchor_and_resource_checks (tests_r6.test_research.ResearchTests.test_anchor_and_resource_checks) ... ok\ntest_concurrent_compare_and_swap (tests_r6.test_research.ResearchTests.test_concurrent_compare_and_swap) ... ok\ntest_delete_cascades_history (tests_r6.test_research.ResearchTests.test_delete_cascades_history) ... ok\ntest_foreign_or_wrong_shape_database_refused (tests_r6.test_research.ResearchTests.test_foreign_or_wrong_shape_database_refused) ... ok\ntest_idempotence_canonical_order_title_excluded (tests_r6.test_research.ResearchTests.test_idempotence_canonical_order_title_excluded) ... ok\ntest_incompatible_schema_refused_unchanged (tests_r6.test_research.ResearchTests.test_incompatible_schema_refused_unchanged) ... ok\ntest_invalid_payload_or_revision_no_partial_write (tests_r6.test_research.ResearchTests.test_invalid_payload_or_revision_no_partial_write) ... ok\ntest_non_json_reports_and_titles_rejected (tests_r6.test_research.ResearchTests.test_non_json_reports_and_titles_rejected) ... ok\ntest_note_defaults_revision_history_restart (tests_r6.test_research.ResearchTests.test_note_defaults_revision_history_restart) ... ok\n\n----------------------------------------------------------------------\nRan 43 tests in 1.179s\n\nOK\n",
+  "cli_contract": {
+    "backup": "python3 -m coach_v1.backup backup --db PATH --output NEW_ARCHIVE.zip",
+    "restore": "python3 -m coach_v1.backup restore --archive ARCHIVE.zip --destination NEW_DIRECTORY",
+    "restore_files": [
+      "workbench.sqlite",
+      "workbench.sqlite.research.sqlite"
+    ],
+    "success": "JSON stdout; exit 0",
+    "failure": "JSON stderr error_code; exit 1",
+    "no_overwrite": "Existing archive and every existing restore destination, including empty directories, refused"
+  },
+  "validated": [
+    "Two case revisions, completed stale saved review, idempotency rows and tombstones preserved",
+    "Research report, anchor note revisions 1 and 2, overview note preserved; full SQLite rows compared",
+    "Fresh Workbench reopens restored case/result/resource/latest note",
+    "Default rollback-journal source database bytes and archive input bytes unchanged",
+    "WAL committed rows included and source main-file bytes unchanged; restored snapshots use DELETE journal mode",
+    "Real crashed writer hot journal rejected without recovery or changes to database/journal bytes",
+    "Active writer on either source fails promptly and staging/first acquired lock cleans up",
+    "CLI backup and restore finish within targeted subprocess timeout of 5 seconds; separate read connection under reserved guards does not hang",
+    "Real Linux renameat2 no-replace race preserves an empty destination directory created immediately before publish",
+    "Archive link race preserves unrelated file created immediately before publish",
+    "Missing research/main never creates fake empty database",
+    "Archive tamper, traversal, extra/missing/duplicate members, symlinks and invalid manifest/version/types rejected",
+    "Rehashed invalid schema/FK/case/session/result/resource/anchor/history/nonfinite content rejected",
+    "Unsupported ZIP flags and invalid local UTF-8 map to structured errors without publication",
+    "Copy failure, invalid restore and unsupported publication clean temporary staging",
+    "POSIX archive mode 0600; private restore directory and database modes retained",
+    "Existing ResearchStore numeric dictionary-key reports preserve their original content identity and all stored rows"
+  ],
+  "review_corrections": [
+    {
+      "finding": "WAL-header snapshots could create bookkeeping siblings when opened",
+      "correction": "Normalize only private copy to DELETE mode and validate private snapshot immutable"
+    },
+    {
+      "finding": "Shallow JSON-object checks accepted rehashed case {} and invalid session state",
+      "correction": "Reuse pinned ReviewInput and verify persisted metadata/reference/history contracts"
+    },
+    {
+      "finding": "Exponent overflow JSON and malformed ZIP encoding/options escaped strict checks",
+      "correction": "Finite UTF-8 JSON round-trip, supported flag allowlist and structured archive exceptions"
+    },
+    {
+      "finding": "Re-decoding numeric report keys changes their canonical sort order and could reject existing accepted data",
+      "correction": "Reconstruct identity using the original stored canonical report substring; add accepted-data regression"
+    }
+  ],
+  "limits": [
+    "Linux publication primitive exercised here; Windows/macOS branches not executed",
+    "Unsupported atomic no-overwrite directory rename fails closed",
+    "Committed shared write-excluded snapshot; multi-transaction in-flight application operation is not made atomic",
+    "WAL/SHM locking bookkeeping bytes are outside the byte-identity guarantee",
+    "Trusted personal local parent directories; observed symlinks/traversal/aliases rejected",
+    "Existing pinned app Pydantic dependency reused; no new or cloud dependency",
+    "Per database 256000000-byte limit, manifest 16384-byte limit, per-copy 30-second deadline",
+    "Token, external captures/downloads/video files excluded; ZIP is not encrypted"
+  ],
+  "artifact_sha256": {
+    "coach_v1/backup.py": "d2347aa3ea2d44f28b9cfdd1139bb585edc2674f48f47cf352d37bb6f6d062db",
+    "tests_mvp/__init__.py": "64807a70a050b4cf85a9e7689e3ab496d6ce6bde4d5a4f79b6975047172fe83f",
+    "tests_mvp/test_backup.py": "835eada77781f3988834d65d40b20b4d42bd58d37230b9edd20ab5ab1e4b781f",
+    "docs/MVP_BACKUP.md": "d7041bb77117f0abf506f28df06bacfe306354acfa47be05f7904f119497e48d"
+  }
+}

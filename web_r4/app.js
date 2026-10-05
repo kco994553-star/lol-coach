@@ -1,7 +1,7 @@
 'use strict';
 const $=id=>document.getElementById(id);
 let token=sessionStorage.getItem('lol-coach-dev-token')||'';
-let current=null,jobId=null,report=null,pollTimer=null,epoch=0,limits=null;
+let current=null,jobId=null,report=null,pollTimer=null,epoch=0,selectionEpoch=0,limits=null;
 let savedEditor='',saveAttempt=null,reviewAttempt=null;
 const labels={KNOWN:'확인됨',UNKNOWN:'미확인',CONDITIONAL:'조건부',CONFLICTING:'근거 충돌',STALE:'유효성 만료',SUFFICIENT:'정보 충분',INSUFFICIENT:'정보 부족',FAVORABLE:'유리',UNFAVORABLE:'불리',CONTESTED:'경합',UNDETERMINED:'판단 보류',POSSIBLE:'실행 가능',IMPOSSIBLE:'실행 불가',WAIT:'대기',DISENGAGE:'후퇴',SHORT_TRADE:'짧은 교환'};
 const text=v=>v===null||v===undefined?'—':typeof v==='object'?JSON.stringify(v):String(v);
@@ -9,7 +9,8 @@ function node(tag,value,cls){const n=document.createElement(tag);if(value!==unde
 function notice(message,error=false){$('notice').textContent=message;$('notice').className=error?'error':'';}
 function clearPoll(){if(pollTimer)clearTimeout(pollTimer);pollTimer=null;}
 function hideReport(){report=null;$('report-panel').hidden=true;}
-function reset(){epoch++;clearPoll();current=null;jobId=null;saveAttempt=null;reviewAttempt=null;savedEditor='';hideReport();$('current').textContent='아직 선택한 사례가 없습니다.';$('analyze').disabled=true;$('cancel').disabled=true;$('session-actions').hidden=true;}
+function reset(){epoch++;selectionEpoch++;clearPoll();current=null;jobId=null;saveAttempt=null;reviewAttempt=null;savedEditor='';hideReport();$('current').textContent='아직 선택한 사례가 없습니다.';$('analyze').disabled=true;$('cancel').disabled=true;$('session-actions').hidden=true;}
+function confirmDraftReplacement(){return !$('case-json').value.trim()||$('case-json').value===savedEditor||confirm('저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?');}
 async function api(path,method='GET',body,idem){
   const headers={Authorization:'Bearer '+token};if(body!==undefined)headers['Content-Type']='application/json';if(idem)headers['Idempotency-Key']=idem;
   const response=await fetch('/dev/v1'+path,{method,headers,body:body===undefined?undefined:JSON.stringify(body),cache:'no-store'});
@@ -18,21 +19,22 @@ async function api(path,method='GET',body,idem){
 function error(e){if(e.status===401){sessionStorage.removeItem('lol-coach-dev-token');token='';$('auth-panel').hidden=false;$('workspace').hidden=true;reset();}notice('처리하지 못했습니다: '+e.message,true);}
 async function connect(){const mark=epoch;const data=await api('/status');if(mark!==epoch)return;limits=data.limits;$('auth-panel').hidden=true;$('workspace').hidden=false;sessionStorage.setItem('lol-coach-dev-token',token);$('token').value='';await refresh();notice('연결됐습니다. 합성 사례를 불러와 시작하세요.');}
 async function refresh(){const mark=epoch;const rows=await api('/sessions');if(mark!==epoch)return;$('sessions').replaceChildren();if(!rows.length)$('sessions').append(node('p','저장한 사례가 없습니다.','small'));for(const s of rows){const b=node('button',s.title+' · v'+s.revision,current&&s.id===current.id?'active':'');b.type='button';b.addEventListener('click',()=>openSession(s.id).catch(error));$('sessions').append(b);}}
-async function openSession(id){reset();const mark=epoch;const s=await api('/sessions/'+id);const entry=s.revision?await api('/sessions/'+id+'/case'):null;const jobs=await api('/sessions/'+id+'/reviews');const done=jobs.find(j=>j.status==='COMPLETED');const result=done?await api('/reviews/'+done.result_ref):null;if(mark!==epoch)return;current=s;$('title').value=s.title;$('case-json').value=entry?JSON.stringify(entry.case,null,2):'';savedEditor=$('case-json').value;$('current').textContent=s.title+' · 저장 버전 '+s.revision;$('analyze').disabled=!entry;$('session-actions').hidden=false;if(result)render(result);await refresh();if(mark===epoch)notice(result?'저장한 입력과 복기 결과를 열었습니다.':'저장한 사례를 열었습니다.');}
+async function openSession(id){if(!confirmDraftReplacement())return;reset();const mark=epoch;const s=await api('/sessions/'+id);const entry=s.revision?await api('/sessions/'+id+'/case'):null;const jobs=await api('/sessions/'+id+'/reviews');const done=jobs.find(j=>j.status==='COMPLETED');const result=done?await api('/reviews/'+done.result_ref):null;if(mark!==epoch)return;current=s;$('title').value=s.title;$('case-json').value=entry?JSON.stringify(entry.case,null,2):'';savedEditor=$('case-json').value;$('current').textContent=s.title+' · 저장 버전 '+s.revision;$('analyze').disabled=!entry;$('session-actions').hidden=false;if(result)render(result);await refresh();if(mark===epoch)notice(result?'저장한 입력과 복기 결과를 열었습니다.':'저장한 사례를 열었습니다.');}
 function assignSession(payload,id){payload.snapshot_request.session_id=id;for(const o of payload.observations)o.session_id=id;return payload;}
-async function loadExample(){reset();const mark=epoch;const data=await api('/examples/'+$('example').value);if(mark!==epoch)return;$('case-json').value=JSON.stringify(data,null,2);$('title').value=$('example').selectedOptions[0].textContent;notice('합성 예시를 불러왔습니다. 사례 저장 후 분석하세요.');}
+async function loadExample(){if(!confirmDraftReplacement())return;reset();const mark=epoch;const data=await api('/examples/'+$('example').value);if(mark!==epoch)return;$('case-json').value=JSON.stringify(data,null,2);$('title').value=$('example').selectedOptions[0].textContent;notice('합성 예시를 불러왔습니다. 사례 저장 후 분석하세요.');}
 async function save(){
-  const mark=epoch;const payload=JSON.parse($('case-json').value);if(payload.mode!=='TEST'||payload.evidence_kind!=='SYNTHETIC')throw new Error('합성 TEST 사례만 저장할 수 있습니다.');
+  const selection=selectionEpoch,editorAtStart=$('case-json').value;const payload=JSON.parse(editorAtStart);if(payload.mode!=='TEST'||payload.evidence_kind!=='SYNTHETIC')throw new Error('합성 TEST 사례만 저장할 수 있습니다.');
   $('save-case').disabled=true;
   try{
-    if(!current){const created=await api('/sessions','POST',{title:$('title').value,patch:payload.snapshot_request.patch,mode:'TEST'});if(mark!==epoch)return;current=created;}
+    if(!current){const created=await api('/sessions','POST',{title:$('title').value,patch:payload.snapshot_request.patch,mode:'TEST'});if(selection!==selectionEpoch)return;current=created;}
+    const sid=current.id;
     assignSession(payload,current.id);
     const body={case:payload,expected_revision:current.revision};const fingerprint=JSON.stringify(body);
     if(!saveAttempt||saveAttempt.fingerprint!==fingerprint)saveAttempt={fingerprint,key:crypto.randomUUID()};
-    const result=await api('/sessions/'+current.id+'/case','PUT',body,saveAttempt.key);
-    if(mark!==epoch)return;current.revision=result.revision;saveAttempt=null;reviewAttempt=null;$('case-json').value=JSON.stringify(result.case,null,2);savedEditor=$('case-json').value;hideReport();
-    $('current').textContent=current.title+' · 저장 버전 '+current.revision;$('analyze').disabled=false;$('session-actions').hidden=false;
-    await refresh();notice('입력을 저장했습니다. 분석 실행으로 이어가세요.');
+    const result=await api('/sessions/'+sid+'/case','PUT',body,saveAttempt.key);
+    if(selection!==selectionEpoch||!current||current.id!==sid)return;current.revision=result.revision;saveAttempt=null;reviewAttempt=null;savedEditor=JSON.stringify(result.case,null,2);if($('case-json').value===editorAtStart)$('case-json').value=savedEditor;hideReport();
+    $('current').textContent=current.title+' · 저장 버전 '+current.revision;$('analyze').disabled=$('case-json').value!==savedEditor;$('session-actions').hidden=false;
+    await refresh();if(selection===selectionEpoch&&current&&current.id===sid)notice($('case-json').value===savedEditor?'입력을 저장했습니다. 분석 실행으로 이어가세요.':'요청한 입력은 저장했습니다. 저장 중 수정한 초안은 그대로 남아 있으니 추가 저장하세요.');
   }finally{$('save-case').disabled=false;}
 }
 async function analyze(){
@@ -63,7 +65,7 @@ $('save-case').addEventListener('click',()=>save().catch(error));
 $('analyze').addEventListener('click',()=>analyze().catch(error));
 $('cancel').addEventListener('click',()=>{if(jobId)api('/jobs/'+jobId+'/cancel','POST',{}).then(()=>notice('취소 요청을 처리했습니다.')).catch(error);});
 $('case-json').addEventListener('input',()=>{epoch++;clearPoll();$('cancel').disabled=true;$('analyze').disabled=!current||$('case-json').value!==savedEditor;hideReport();});
-$('import-file').addEventListener('change',async()=>{const mark=epoch;const selected=$('import-file').files[0];try{const file=$('import-file').files[0];if(!file)return;if(!limits||file.size>limits.body_bytes)throw new Error('허용된 파일 크기를 초과했습니다.');const data=JSON.parse(await file.text());if(mark!==epoch)return;if(data.mode!=='TEST'||data.evidence_kind!=='SYNTHETIC')throw new Error('합성 TEST JSON만 사용할 수 있습니다.');reset();$('case-json').value=JSON.stringify(data,null,2);notice('합성 입력 파일을 불러왔습니다.');}catch(e){error(e);}finally{if($('import-file').files[0]===selected)$('import-file').value='';}});
+$('import-file').addEventListener('change',async()=>{const mark=epoch;const selected=$('import-file').files[0];try{const file=$('import-file').files[0];if(!file)return;if(!limits||file.size>limits.body_bytes)throw new Error('허용된 파일 크기를 초과했습니다.');const data=JSON.parse(await file.text());if(mark!==epoch)return;if(data.mode!=='TEST'||data.evidence_kind!=='SYNTHETIC')throw new Error('합성 TEST JSON만 사용할 수 있습니다.');if(!confirmDraftReplacement())return;reset();$('case-json').value=JSON.stringify(data,null,2);notice('합성 입력 파일을 불러왔습니다.');}catch(e){error(e);}finally{if($('import-file').files[0]===selected)$('import-file').value='';}});
 $('delete-session').addEventListener('click',async()=>{if(!current||!confirm('이 사례의 입력과 모든 복기 결과를 삭제할까요?'))return;const mark=epoch,sid=current.id;try{await api('/sessions/'+sid,'DELETE');if(mark!==epoch||!current||current.id!==sid)return;reset();$('case-json').value='';await refresh();notice('사례와 결과를 삭제했습니다.');}catch(e){error(e);}});
 $('download').addEventListener('click',()=>{if(!report)return;const url=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));const a=node('a');a.href=url;a.download='lol-coach-synthetic-review.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
 if(token)connect().catch(error);

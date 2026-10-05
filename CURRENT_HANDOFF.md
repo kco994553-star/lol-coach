@@ -1,3 +1,20 @@
+# CURRENT HANDOFF — LoL Coach Main Work
+
+## 最新 Private Web MVP correctness/recovery — 2026-10-05
+
+- Actual GitHub main fresh-read parent `30c36de871de4ab7ac190d0f3f876f577994698a` (tree c057244c…). Earlier user reference47a5 was superseded by the published R7 player-grounded evidence. Materialized local tree is not a Git checkout. Main Work root is the sole integration/publication writer; parallel scopes are new backup/verifier/test files only.
+- Objective: private personal Web workflow with actual-match validated coaching. Product is **NOT_COMPLETE**. Risk DEEP; new Autonomous Execution Authority v1.0 applies. Frozen27/old expected/Core unchanged. Status/run path: `docs/MVP_STATUS.md`, repair decision: `docs/MVP_SAVE_DECISION.md`, backup: `docs/MVP_BACKUP.md`, current verification: `docs/MVP_VALIDATION.md`.
+- Proven actual JS save/edit bug repaired: server version2 ACK now survives intervening edits, exact newer draft preserved, next PUT expects2, stale selected-session ACK ignored. Dirty reopen/load/import can be cancelled. Before3/7 and after7/7 receipts preserved separately; new actual browser test awaits remote CI, not counted as executed here.
+- Additive complete backup/restore CLI snapshots **both** main/research DBs, histories and saved results under shared writer exclusion. Strict schema/content/hash, bounded copy, no-overwrite publication, source/failed-run preservation. Fresh focused23/23; agent combined existing storage/research43/43. Linux atomic publication exercised, Windows/macOS not run.
+- Fresh scoped root verification: `evidence/mvp/20261005T011303368811Z-a5a61a74/verification.json`: old111/111 skip0, protected9/9, Frozen27 PASS, backup23/23, Node VM7+2+1 PASS, postgame13 synthetic+4 exact-byte preserved archive tests PASS. Historical153 evidence files unchanged; input hashes unchanged. Pinned raw bytes are private and not committed.
+- Historical `scripts/verify_r7.py` and exact old baseline stay unchanged. Its identity gate on current app bytes is FAIL due to this authorized repair (other protected byte differences0). New scoped verifier binds immutable before/after repair receipts and protects the other bytes. Do not claim a fresh old-verifier PASS.
+- New CI has two public-only standard ubuntu-latest jobs: current regression and actual browser against isolated TEST server/SQLite. Verified documented free scope, pinned official actions/Playwright, preinstalled Chrome, no browser downloads/artifact uploads/secrets/paid services. At this publication point Actions/browser **NOT_RUN**; commit/run/result are to be independently fresh-read. Work local Chromium download failed bounded attempts; no network control changes. Failure/repair history: `evidence/mvp/execution-checkpoint.json` plus backup/save receipts.
+- Source-level26direct/2derived unchanged. New original uploader POV sequence1/clip Vision1 remains PARTIAL. PLAYER VERIFIED_DIRECT0/DERIVED0, complete Player reference0, same-match independent same-time Player/Truthpair0, DecisionN0/CoachN0/accuracy null. AI agreement is not gold. Prior no-hindsight future51 exclusion/state guards remain valid; no REAL→SYNTHETIC conversion or real Engine activation.
+- Actual Player quality/Decision/Coach is PARKED_EXTERNAL: needs independent reference validation and usable decision context. Existing `docs/r7-continuation/MINIMUM_INPUT_PACKAGE.md` reused. Local game process/2999 blocker unchanged with retry0. Preserve existing old C3 proposal as historical; new authority does not supply missing real evidence.
+- Progress/CI/Evidence hourly read-only Watchdogs created/enabled, deduplicating same state and avoiding another writer. Main Work next automatic step: publish→remote SHA/blob verification→fresh Actions/job/browser receipt verification→repair if required→append handoff. All justified independent correctness/recovery work continues while actual player state gate is parked. No payment/user credential required.
+
+## Prior30c36 handoff preserved below
+
 # CURRENT HANDOFF — LoL Coach
 
 ## 최신 R7 Player-grounded 추가 근거 — 2026-10-05 KST
