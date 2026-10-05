@@ -1,3 +1,19 @@
+# CURRENT_HANDOFF — main executor claim
+
+## Latest common execution claim — CI_PENDING
+- run_token: `main-20261005T0355-research-navigation-root`
+- status: `CI_PENDING`
+- writer_active: false
+- task_scope: Research navigation deletion reply integrity; PR #3 merged after actual PR hard gates.
+- owner_branch: `fix/research-navigation-delete-2026-10-05`
+- intake_main_head: `ccd3a3f23869966bdbbe8288a29e9f4b43d25687`
+- code_head: `01a6b80c62c47ddc4f1d14d124d0dafe058f512d`
+- resulting_main: `321ecbd9515fa50a3ef8bff67dd0cbdd322d9fe4`
+- PR: #3; PR Actions 37261674093 SUCCESS; tested tree `5e179d89c6b3e6f83e69dc807d4928b606c5ca3f`, Chrome 50/50, old 111, protected 9, Frozen 27.
+- terminal_evidence: Actual GitHub merge result and PR Actions receipt; post-merge verification pending. Next executable gap is existing stored note history access, not external Player evidence.
+
+---
+
 # MAIN EXECUTION CLAIM
 
 status: RUNNING
