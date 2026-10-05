@@ -1,5 +1,26 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — CI_PENDING
+- run_token: `main-20261005T0942-pr9-gated-merge-root`
+- status: `CI_PENDING`
+- writer_active: false
+- task_scope: PR9 merged exactly; resulting main post-merge Actions verification, then next highest-value executable acceptance gap.
+- owner_branch: `feat/manual-draft-retry-safety-2026-10-05`
+- intake_main_head: `6f5c2c30db54f962ac5881a8d628336ca62cd7e5`
+- implementation_head: `ffe3b3d3c1ce0ee9c800cfb03395db2710e42999`
+- merged_main_head: `e006b3124f74604e257851c781fa1317e4c6936a`
+- resulting_tree: `e36fa03b1e01ca68955dba3acebdb57961df5ddc`
+- merge_parents: `6f5c2c30db54f962ac5881a8d628336ca62cd7e5`, `ffe3b3d3c1ce0ee9c800cfb03395db2710e42999`
+- exact_pr: 9; https://github.com/kco994553-star/lol-coach/pull/9
+- evidence: Actual PR Actions `37292198759` SUCCESS; regression/browser-regression jobs SUCCESS, reviews/comments 0, expected head and mergeability verified immediately before merge. Normal merge SHA/tree/parents freshly verified.
+- actual_postmerge_ci: run `37293206383` attempt1 IN_PROGRESS for head `e006b3124f74604e257851c781fa1317e4c6936a`.
+- risk: CRITICAL retained; Frozen/protected/history unchanged. Actual Player/Decision/Coach N0/null; external reference context remains PARKED_EXTERNAL dependency only.
+- next_owner_rule: Reacquire from this exact terminal claim only for post-merge run 37293206383 verification. Do not hold RUNNING while Actions executes; after success recalculate executable repository gaps.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — RUNNING
 - run_token: `main-20261005T0942-pr9-gated-merge-root`
 - status: `RUNNING`
