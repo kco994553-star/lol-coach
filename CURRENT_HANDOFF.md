@@ -1,5 +1,24 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — CI_PENDING
+- run_token: `main-20261005T0625-note-recovery-gated-merge-root`
+- status: `CI_PENDING`
+- writer_active: false
+- task_scope: Exact PR7 merged main post-merge Actions verification, then manual draft capture.
+- owner_branch: `feat/note-history-draft-recovery-2026-10-05`
+- intake_main_head: `594ef3cf6138421de8a8c77c7ec1c390e7cfedea`
+- implementation_head: `83b7718a4b09d1d79c741d38294b5f502b8c9f52`
+- merged_main_head: `0f2b333e44c1918e7a2a9dd7d9f6fce67d1d76a2`
+- resulting_tree: `9a7d08bd13a07c5c705bf2b782459d7fa866f4e4`
+- pr: https://github.com/kco994553-star/lol-coach/pull/7
+- evidence: Actual PR37271933712SUCCESS Chrome89/194inputs/mandatoryregression. NormalmergeSHA/tree/parents freshlyverified; firstfailedCI37270809307 archived/corrected verifierboundarywithoutproductchange. PostmergeActions pending, no newPASSclaimed.
+- risk: CRITICAL retained; Frozen/history preserved. RealCoachN0/null, only externalreference dependency parked.
+- next: actualpostmergeexactSHA/tree194inputs/89browser; then separatecommonclaimforstructuredmanualcapture noengineactivation.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — RUNNING
 - run_token: `main-20261005T0625-note-recovery-gated-merge-root`
 - status: `RUNNING`
