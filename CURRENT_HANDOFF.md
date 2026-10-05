@@ -1,14 +1,15 @@
 # MAIN EXECUTION CLAIM
 
-status: RUNNING
+status: CI_PENDING
 run_token: main-20261005T0203-import-selection-root
 owner_branch: fix/mvp-import-selection-2026-10-05
-scope: synthetic import selection integrity; additive verification; Main continuation policy
-intake_main: f3f0b38e2c751c40ca7851474e30914cd3e2abc2
-writer: this Main Work root
+pull_request: 1
+owner_head: 90916356b5a7bd9e422d07fca9ac8df0aafe717d
 coordination_ref: work/main-execution-claim
+writer_active: false
+scope: verify current PR CI/browser38; repair if needed; gated merge and continuation setup
 
-Only this token may write/release while RUNNING. Unknown termination is not expiry.
+RUNNING ownership released for external CI. A continuation must acquire a new shared-ref claim.
 
 # CURRENT HANDOFF — Main Work verified code / external evidence park
 
