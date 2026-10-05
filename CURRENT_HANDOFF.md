@@ -1,5 +1,24 @@
 # MAIN EXECUTION CLAIM
 
+status: CI_PENDING
+run_token: main-20261005T0303-research-utf8-root
+writer_active: false
+owner_branch: fix/research-source-bytes-2026-10-05
+intake_main: c30bb2ca553e1346e00aebd9871283101ca51950
+pr: 2
+implementation_head: d07000255265e82e429ba6d184c43681921f8e44
+workflow_run: 37258576190
+scope: Research source-byte repair; exact existing PR continuation only
+local_verification: PASS old111/protected9/Frozen27/backup23/Research9+4
+next_step: verify exact CI tree and browser46; repair if FAIL, otherwise gated merge and postmerge verification
+coordination_ref: work/main-execution-claim
+
+RUNNING ownership released while remote CI executes. A continuation must acquire this common ref with a new token; never create another same-scope implementation.
+
+Prior claim history preserved below.
+
+# MAIN EXECUTION CLAIM
+
 status: RUNNING
 run_token: main-20261005T0303-research-utf8-root
 writer_active: true
