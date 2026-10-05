@@ -1,5 +1,21 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — RUNNING
+- run_token: `main-20261005T0534-knowledge-ci-repair-root`
+- status: `RUNNING`
+- writer_active: true
+- task_scope: Exact PR6 CI repair for historical Knowledge download, no parallel replacement implementation.
+- owner_branch: `feat/source-bound-knowledge-proposals-2026-10-05`
+- intake_main_head: `d92ded9743b591030a55e355e914ab238589e447`
+- pr: https://github.com/kco994553-star/lol-coach/pull/6
+- implementation_head: `fdf4b1572170f015b89335bafed99716d553936e`
+- failed_run: 37268245767 attempt1; actual regression PASS, actual browser failure knowledge-old-version-authentic-download-exact-saved-object. Preserve first failure, investigate actual saved/download bytes then targeted repair/full required gates.
+- risk: CRITICAL retained; Frozen/old fixtures/expected/history unchanged; actual Coach N0/accuracy null. Only player dependency parked.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — CI_PENDING
 - run_token: `main-20261005T0444-knowledge-proposal-root`
 - status: `CI_PENDING`
