@@ -25,7 +25,7 @@ The required scope is:
 | Check | Required result |
 | --- | --- |
 | Frozen contract payload | All 27 manifest hashes match |
-| Historical R0–R6 protected bytes | Match the preserved baseline, except the evidence-bound `web_r4/app.js` and `web_r4/research.js` repairs and the baseline's handoff exemption |
+| Historical R0–R6 protected bytes | Match the preserved baseline, except the evidence-bound UI repairs and the versioned read-only note-history UI/API addition, plus the baseline's handoff exemption |
 | Preserved R7 sources and old test file sets | Match the preserved historical receipt and baseline |
 | Protected legacy validator | Nine checks pass in an isolated copy |
 | Unchanged `tests_r3` through `tests_r7` | Exactly 111 tests run, with zero skips, failures, errors, or expected failures |
@@ -36,13 +36,14 @@ The required scope is:
 | Research UTF-8 provenance | Nine synthetic codec/adapter/read-order cases pass; preserved 5/9→9/9→9/9 history binds old/current source |
 | Research current/stale API errors | Four separate Node cases pass; actual introduced 2/4 failure and repaired 4/4 preserved |
 | Research navigation/deletion | Four cases pass; first1/4 failure and first/final4/4 receipts preserve exact old/current source chain |
+| Stored note history | Exactly 19 storage and five real HTTP tests pass; explicit UTF-8 response cap, auth/Host/Origin, original rows/schema/CAS unchanged |
 | Postgame schema mechanics | Thirteen synthetic schema tests pass |
 
 The historical `scripts/verify_r7.py` hard gate still requires the original web
 app's exact bytes. The authorized repair changes that file, so its historical
 identity check is expected to fail. The new verifier explicitly records that
 identity difference; it does not modify the historical baseline or claim a
-fresh historical-verifier pass. The Research byte repair additionally requires its strict before/first/final receipt binding. Any other protected historical difference fails
+fresh historical-verifier pass. The Research byte repair additionally requires its strict before/first/final receipt binding. Read-only note history additionally authorizes only the exact versioned `web_r4/index.html`, `web_r4/research.js` and `coach_v1/server.py` hashes; unchanged ResearchStore schema/storage and old guards remain required. Any other protected historical difference fails
 the new verifier. Frozen design and legacy engine bytes remain protected.
 
 The before/after save receipts are preserved separately at
@@ -127,3 +128,5 @@ does not substitute for an Actions run URL and conclusion.
 Research source-byte repair and preserved failure details: `docs/MVP_RESEARCH_BYTES_DECISION.md`. The old text-only Research test stub is preserved; `R6-LATEST-FILE-A-FIRST` reruns its unchanged ordering expectations in the ArrayBuffer-capable harness.
 
 Navigation response identity repair adds a further strict source-chain gate with unchanged previous byte/request repair receipts, then reruns all prior9+4 guards. Exact original expected4 navigation cases and first1/4 failures are preserved; no stale deletion result may clear a different resource and draft. Current gaps: `docs/MVP_EXECUTABLE_GAPS.md`.
+
+Stored note history reuses existing immutable personal note rows. The web path is documented in `docs/MVP_NOTE_HISTORY.md`; prior versions are previewed/downloaded separately and never become the editable latest note or game evidence. No timestamp/author is inferred. The source-version record preserves exact pre-change and current hashes. Eleven actual browser history checks extend the prior50 to61, including exact download, preserved latest draft/CAS, genuine delayed success/error/index replies, navigation and deletion. Fresh Actions must establish this result before completion is claimed.

@@ -1,3 +1,27 @@
+# Executable gap delta — 2026-10-05 KST
+
+Navigation/delete integrity is now remotely verified: PR3 merged321ecbd,
+actual PR37261674093/postmerge37262029506 success, actual browser50/old111/
+protected9/Frozen27/backup23. Prior source-bound failures stay preserved.
+
+Existing stored note history is implemented in a narrow read-only vertical
+slice, with local storage19 +authenticatedHTTP5 passing and actual browser61
+required in the forthcoming PR. Source/schema/latest CAS remain separate from
+preview; remote validation is pending. No new real coaching N is claimed.
+
+Next priority is a newly reproduced integrity defect: a late Research A save
+401 handled by the global unscoped listener after navigating to dirty B clears
+B's draft; a late409 also reports in the wrong context. Reproduction is a
+read-only deterministic deferred-service check, not an actual token-expiry
+claim. After note-history publication, capture the full before cases, bind
+errors to the save's selection/resource/anchor, retain current errors, and
+verify affected UI/nativeHTTP behavior before any Knowledge catalog expansion.
+Only the independent Player/reference/pre-action input dependency is parked.
+
+The earlier assessment and its exact intake are preserved below.
+
+---
+
 # Current executable gaps — 2026-10-05 KST
 
 Fresh intake main `ccd3a3f23869966bdbbe8288a29e9f4b43d25687`, open PR0,

@@ -85,6 +85,31 @@ def manifest_hash(values: dict[str, str]) -> str:
     return hashlib.sha256(json.dumps(values, sort_keys=True).encode()).hexdigest()
 
 
+def history_version_binding() -> dict:
+    baseline = read_json(ROOT / "evidence/mvp/note-history-baseline.json")
+    version = read_json(ROOT / "evidence/mvp/note-history-source-version.json")
+    parent = {
+        "web_r4/research.js": "327a951630c8d629c9208160acdd9f3142baae3de0b97d472fc1940a7e333b4e",
+        "web_r4/index.html": "680714346cfff1a2bf2856fea267012cf6c13d224d64d5e66a44634c1fbddb70",
+        "coach_v1/server.py": "b1601a55950438f5ec1093dfdccd0bce7bc393b6299e653b0a5aa103160581e9",
+    }
+    current = version.get("current_sha256", {})
+    checks = {
+        "exact_intake_main": baseline.get("intake_main") == "321ecbd9515fa50a3ef8bff67dd0cbdd322d9fe4",
+        "exact_parent_source": baseline.get("sha256") == parent,
+        "versioned_paths_only": set(current) == set(parent),
+        "current_source_bound": all((ROOT / p).is_file() and sha(ROOT / p) == v for p, v in current.items()),
+        "prior_navigation_source_preserved": read_json(ROOT / "evidence/mvp/research-navigation-final.json").get("source_sha256") == parent["web_r4/research.js"],
+        "unchanged_storage_schema": version.get("unchanged_research_store_sha256") == sha(ROOT / "coach_v1/research.py") == "42912d1e7ac660c67b00514d7aa76b6d10252e77c0a478db55bc37ad21d3eb27",
+        "read_only_module_and_tests_present": all((ROOT / p).is_file() for p in (
+            "coach_v1/note_history.py", "tests_mvp/test_note_history.py", "tests_mvp/test_note_history_http.py", "tests_mvp/browser_note_history.cjs")),
+    }
+    return {"status": "PASS" if all(checks.values()) else "FAIL", "checks": checks,
+            "baseline_sha256": sha(ROOT / "evidence/mvp/note-history-baseline.json"),
+            "version_sha256": sha(ROOT / "evidence/mvp/note-history-source-version.json"),
+            "authorized_versioned_paths": sorted(current)}
+
+
 def preservation_gate() -> dict:
     frozen = read_json(ROOT / "FREEZE_MANIFEST.json")["payload_sha256"]
     frozen_errors = [p for p, expected in frozen.items()
@@ -96,9 +121,12 @@ def preservation_gate() -> dict:
                    if not (ROOT / row["path"]).is_file()
                    or git_blob(ROOT / row["path"]) != row["sha"]]
     research = research_binding()
+    history = history_version_binding()
     authorized = {"web_r4/app.js"}
     if research["status"] == "PASS":
         authorized.add("web_r4/research.js")
+    if history["status"] == "PASS":
+        authorized.update(("web_r4/index.html", "coach_v1/server.py"))
     protected_errors = [p for p in differences if p not in authorized]
     r7_sources = read_json(ROOT / R7_SOURCE_RECEIPT)["source_sha256"]
     r7_errors = [p for p, expected in r7_sources.items()
@@ -127,6 +155,7 @@ def preservation_gate() -> dict:
         "mvp_authorized_changed_path": "web_r4/app.js",
         "mvp_authorized_changed_paths": sorted(authorized),
         "research_repair_binding": research,
+        "note_history_version_binding": history,
         "other_historical_byte_errors": protected_errors,
         "historical_source_receipt": R7_SOURCE_RECEIPT,
         "historical_source_receipt_sha256": sha(ROOT / R7_SOURCE_RECEIPT),
@@ -249,7 +278,8 @@ def navigation_binding() -> dict:
         "repaired_all_pass": all(row.get("passed") == 4 and all(r.get("passed") is True
             for r in row["results"]) for row in (first, final)),
         "binds_previous_source": before.get("source_sha256") == read_json(ROOT / "evidence/mvp/research-request-after.json").get("source_sha256"),
-        "binds_current_source": final.get("source_sha256") == sha(ROOT / "web_r4/research.js"),
+        "binds_note_history_parent": final.get("source_sha256") == read_json(ROOT / "evidence/mvp/note-history-baseline.json")["sha256"]["web_r4/research.js"],
+        "note_history_version_binding": history_version_binding()["status"] == "PASS",
         "separate_repair_versions": len({row.get("source_sha256") for row in rows}) == 3,
     }
     return {"status": "PASS" if all(checks.values()) else "FAIL", "checks": checks,
@@ -390,6 +420,7 @@ def input_hashes() -> dict[str, str]:
                  "evidence/mvp/research-request-before.json", "evidence/mvp/research-request-after.json",
                  "evidence/mvp/research-navigation-before.json", "evidence/mvp/research-navigation-after.json",
                  "evidence/mvp/research-navigation-final.json",
+                 "evidence/mvp/note-history-baseline.json", "evidence/mvp/note-history-source-version.json",
                  "evidence/mvp/github-ci-visibility.json",
                  "docs/MVP_VALIDATION.md", "docs/MVP_BACKUP.md"):
         if (ROOT / name).is_file():
@@ -426,6 +457,12 @@ def main() -> int:
         if checks["backup"]["tests_run"] == 0:
             checks["backup"]["status"] = "FAIL"
             save(out, "backup.json", checks["backup"])
+        checks["note_history_store"] = run_suite(out, "note-history-store", unittest.defaultTestLoader.discover(
+            str(ROOT / "tests_mvp"), pattern="test_note_history.py", top_level_dir=str(ROOT)), 19)
+        checks["note_history_http"] = run_suite(out, "note-history-http", unittest.defaultTestLoader.discover(
+            str(ROOT / "tests_mvp"), pattern="test_note_history_http.py", top_level_dir=str(ROOT)), 5)
+        if checks["note_history_store"]["tests_run"] == 0:
+            checks["note_history_store"]["status"] = "FAIL"
         checks["ui_save"] = node_check(out, "ui-save", "tests_mvp/ui_save_race.cjs", "web_r4/app.js", 7)
         checks["ui_delete_import"] = node_check(out, "ui-delete-import", "tests_r4/ui_races.cjs", "web_r4/app.js", 2)
         checks["ui_research_bytes"] = node_check(out, "ui-research-bytes", "tests_mvp/ui_research_bytes.cjs", "web_r4/research.js", 9)

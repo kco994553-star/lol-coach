@@ -15,6 +15,7 @@ from urllib.parse import urlsplit
 
 from .storage import Store, ServiceError
 from .research import ResearchStore
+from .note_history import note_history, note_revision
 from coach_intake.audit import inspect as inspect_raw
 from coach_intake.video import index_transcript
 
@@ -212,6 +213,13 @@ class Handler(BaseHTTPRequestHandler):
                     else:report=index_transcript(raw,b.get('video_id',''));kind='VIDEO'
                 else:raise ServiceError(422,'SOURCE_TYPE_REQUIRED')
                 return self.reply(201,self.server.research.add(kind,b['title'],report))
+        history=re.fullmatch(re.escape(prefix)+r'/research/([a-f0-9]{64})/notes/(overview|[0-9]+)/(history|revisions/([^/]+))',route)
+        if history and self.command=='GET':
+            rid,anchor,action,revision=history.groups()
+            rs=self.server.research
+            result=(note_history(rs,rid,anchor,self.server.limits.body_bytes) if action=='history'
+                    else note_revision(rs,rid,anchor,revision,self.server.limits.body_bytes))
+            return self.reply(200,result)
         m=re.fullmatch(re.escape(prefix)+r'/research/([a-f0-9]{64})(?:/notes/(overview|[0-9]+))?',route)
         if m:
             rid,anchor=m.groups();rs=self.server.research
