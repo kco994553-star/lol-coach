@@ -1,3 +1,46 @@
+# Latest verified checkpoint(최신 검증 체크포인트) — PR9 retry-safe save(재시도 안전 저장)
+
+2026-10-05 KST. PR9 head `ffe3b3d3c1ce0ee9c800cfb03395db2710e42999`
+was normally merged as main `e006b3124f74604e257851c781fa1317e4c6936a`.
+The resulting tree `e36fa03b1e01ca68955dba3acebdb57961df5ddc` exactly
+matches the published implementation tree and has parents `6f5c2c30` / `ffe3b3d3`.
+Actual PR Actions `37292198759` and post-merge Actions `37293206383` both
+completed SUCCESS(성공); both regression(회귀) and browser-regression(브라우저
+회귀) jobs passed. The post-merge browser receipt binds `GITHUB_SHA=e006b312`,
+run/attempt `37293206383/1`, exact current source hashes and 111/111 actual
+Chrome checks. The final scoped regression receipt is PASS with exact 269 input
+hashes, old111, protected9, Frozen27, backup23, draft31+17+19 and UI7+4+1.
+
+Manual draft POST/PUT now requires one valid Idempotency-Key(멱등성 키). Same
+key plus the same normalized request replays the original immutable response
+across restart without another row/revision; changed payload conflicts; a new
+key keeps CAS(버전 비교 저장). The browser retains the exact attempted key/body
+after a committed response loss and rotates only after an acknowledged success.
+Manual records remain UNVERIFIED(미검증), NOT_GENERATED(미생성), coaching false.
+The local missing-browser executable failure and the first verifier-routing
+failure remain preserved and are not counted as PASS.
+
+The documented independent internal sequence—Research byte/navigation
+integrity, immutable note history and recovery, source-bound EXPLORATORY
+Knowledge proposals, structured manual draft capture and retry-safe capture
+saves—is now remotely verified. No currently evidenced independent regression,
+integrity, acceptance or private-Web usability gap remains that can be fixed
+without inventing game facts or building unused framework. Windows/macOS runtime
+execution remains an unexecuted platform validation, not a Linux code failure.
+
+Current disposition is PARKED_EXTERNAL(외부 입력 대기) only after exhausting
+those internal tasks. The required resume input is an independent source-backed
+Player reference plus decision-preceding Player-visible context; a reviewed,
+patch/applicability-bounded Knowledge source is additionally required before a
+real gameplan/decision can be activated. Actual PLAYER_DIRECT0, PLAYER_DERIVED0,
+complete reference0, same-match Player/Truth pair0, DecisionN0, CoachingN0 and
+accuracy=null remain unchanged. Source-level 26 direct / 2 derived fields are
+not added to the Player denominator. Resume on new qualifying evidence, a new
+regression/CI failure, or a material repository acceptance change; do not create
+filler features or relabel synthetic/browser receipts as real coaching evidence.
+
+---
+
 # Latest checkpoint(최신 체크포인트) — retry-safe manual draft saves(안전한 재시도 저장)
 
 2026-10-05 KST. Common owner(공통 소유자) `work/main-execution-claim`, token

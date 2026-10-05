@@ -1,3 +1,25 @@
+# Latest verified status(최신 검증 상태) — PR9 merged(병합 완료)
+
+PR9 retry-safe manual draft saves are merged at main
+`e006b3124f74604e257851c781fa1317e4c6936a`. Actual PR run `37292198759` and
+post-merge run `37293206383` are SUCCESS(성공), including regression and exact
+111-check Chrome browser jobs bound to the merged tree. Local required
+verification remains exact269 inputs with old111/protected9/Frozen27/backup23
+and all current draft/UI suites PASS. The first local browser-launch failure and
+first full-verifier routing failure remain historical failures, not overwritten.
+
+Private Web capture/research/note-history/recovery/Knowledge-proposal/backup and
+retry paths are VERIFIED(검증됨) for their explicitly synthetic or operator-input
+scope. They are UNVERIFIED(미검증) as real-match coaching. Player reference,
+Player-state, Decision and Coach evidence remain N=0 and accuracy=null. The next
+material product gate is PARKED_EXTERNAL(외부 입력 대기): independent
+source-backed Player reference, pre-action Player-visible context, and reviewed
+patch/applicability-bounded Knowledge. No user decision, payment, service, DB or
+deployment approval is currently required; new qualifying evidence or a fresh
+regression resumes execution.
+
+---
+
 # Latest checkpoint(최신 검증) — PR8 native workflow repair(실제 사용자 순서 보완)
 
 Actual PR8/run37276347795 attempt1FAIL(실패), testedmerge9b5850e7/tree5edb656,
