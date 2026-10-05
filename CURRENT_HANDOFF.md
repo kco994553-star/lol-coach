@@ -1,3 +1,47 @@
+# Latest checkpoint(최신 체크포인트) — retry-safe manual draft saves(안전한 재시도 저장)
+
+2026-10-05 KST. Common owner(공통 소유자) `work/main-execution-claim`, token
+`main-20261005T0842-draft-retry-safety-root`, branch
+`feat/manual-draft-retry-safety-2026-10-05`, intake main
+`6f5c2c30db54f962ac5881a8d628336ca62cd7e5`. Status RUNNING(실행 중) until
+publication(게시); token must be rechecked before every remote mutation.
+
+Implemented bounded idempotent(멱등) POST/PUT for manual draft saves without a
+schema/Frozen/expected-result change. Exactly one valid `Idempotency-Key` is
+required over HTTP. Same key + same normalized request returns the original
+immutable snapshot across restart; same key + different request is
+`IDEMPOTENCY_CONFLICT`; a new key retains existing CAS(버전 비교 저장). UI keeps
+the exact attempted key/body after an ambiguous network loss, preserves edits
+made while saving, and rotates the key only after an acknowledged success.
+Manual records remain UNVERIFIED(미검증), NOT_GENERATED(미생성), coaching false.
+
+TDD(검사 주도 개발) history preserved: HTTP duplicate/replay/missing-key tests
+first failed 3/3 then pass. UI response-loss case 0/1→1/1. Existing test fixture
+adaptation initially exposed 15 missing-header failures, then draft Python
+storage31 + backup19 + HTTP17 = 67/67 PASS. First required full verifier run
+`evidence/mvp/20261005T092328111444Z-9024c8d4` FAIL retained: product case was
+1/1 PASS but new case ID was routed to legacy SAVE IDs. Routing-only repair,
+no expected/product change. A later same-method test added the explicit duplicate-header
+boundary; final required local `evidence/mvp/20261005T092851299783Z-65f066ea`
+PASS: exact269 inputs unchanged,
+historical153 unchanged, old111, protected9, Frozen27, backup23, draft31+17+19,
+UI7+4+1, postgame schema13 PASS.
+
+Local actual-browser attempt
+`evidence/mvp/browser-20261005T091351459385Z-7c8d2305` is an explicit
+`BROWSER_LAUNCH_FAILURE`: this runtime has no Playwright Chromium executable.
+It is not a product PASS. GitHub Actions actual Chrome now requires 111 checks,
+including genuine real-server PUT commit followed by dropped response, exact
+key/body replay with no extra revision, then key rotation after ACK. Publish,
+PR, Actions and gated merge are still PENDING(대기) at this checkpoint.
+
+Actual Player direct0/derived0/complete0/truth_pair0/DecisionN0/CoachN0,
+accuracy=null. Independent source-backed Player reference and pre-action
+context remain `PARKED_EXTERNAL` dependency only; they did not become synthetic
+evidence and do not stop this independent integrity work.
+
+---
+
 # Latest checkpoint(최신 검증) — PR8 native workflow repair(실제 사용자 순서 보완)
 
 Actual PR8/run37276347795 attempt1FAIL(실패), testedmerge9b5850e7/tree5edb656,

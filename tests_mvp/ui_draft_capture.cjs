@@ -26,9 +26,10 @@ function harness({latest=1,heldHistory=false,heldOpenA=false,heldOpenB=false}={}
  const blobs=new Map();let blobNumber=0;
  class TestBlob{constructor(parts){this.bytes=parts.join('');}}
  function node(tag,text=''){const element={textContent:text,value:'',dataset:{},addEventListener(){},append(){},click(){if(tag==='a')exports.push(blobs.get(this.href));}};return element;}
- const api=async(route,method='GET',body)=>{
-  calls.push({route,method,...(body===undefined?{}:{body:clone(body)})});
-  if(method==='PUT'){const queued=deferred();saveQueue.push({body:clone(body),queued});return queued.promise;}
+ let keyNumber=0;
+ const api=async(route,method='GET',body,idem)=>{
+  calls.push({route,method,...(body===undefined?{}:{body:clone(body)}),idempotency_key:idem||null});
+  if(method==='PUT'){const queued=deferred();saveQueue.push({body:clone(body),idem,queued});return queued.promise;}
   if(method==='DELETE')return deleteReply.promise;
   if(route==='/draft-captures')return [...(deleted?[]:[clone(stored.get(latest))]),clone(fixtures.B1)];
   if(route==='/draft-captures/'+A+'/history'){if(deleted)throw serviceError(404,'DRAFT_CAPTURE_NOT_FOUND');return {session_id:A,current_revision:latest,revision_count:latest,revisions:Array.from({length:latest},(_,i)=>i+1)};}
@@ -41,7 +42,7 @@ function harness({latest=1,heldHistory=false,heldOpenA=false,heldOpenB=false}={}
   if(matched){if(deleted||!stored.has(Number(matched[1])))throw serviceError(404,'DRAFT_CAPTURE_NOT_FOUND');return clone(stored.get(Number(matched[1])));}
   throw Error('Unexpected synthetic service route '+method+' '+route);
  };
- const context=vm.createContext({$:el,node,document:{addEventListener(){},querySelector:()=>el('query'),querySelectorAll:()=>[]},confirm:message=>{confirmations.push(message);return true;},error(){authClears++;},api,Blob:TestBlob,URL:{createObjectURL(blob){const url='synthetic-blob-'+(++blobNumber);blobs.set(url,blob.bytes);return url;},revokeObjectURL(){}},setTimeout:fn=>{fn();return 0;},console});
+ const context=vm.createContext({$:el,node,document:{addEventListener(){},querySelector:()=>el('query'),querySelectorAll:()=>[]},confirm:message=>{confirmations.push(message);return true;},error(){authClears++;},api,crypto:{randomUUID:()=>`draft-retry-key-${++keyNumber}`},Blob:TestBlob,URL:{createObjectURL(blob){const url='synthetic-blob-'+(++blobNumber);blobs.set(url,blob.bytes);return url;},revokeObjectURL(){}},setTimeout:fn=>{fn();return 0;},console});
  vm.runInContext(source,context,{filename:'web_r4/draft.js'});
  const evaluate=code=>vm.runInContext(code,context);
  const state=()=>JSON.parse(evaluate('JSON.stringify({record:dRecord,latest:dLatest,dirty:dDirty,edit:dEdit,epoch:dEpoch,preview:dPreview,notice:$("d-notice").textContent,values:Object.fromEntries('+JSON.stringify(inputIds)+'.map(id=>[id,$("d-"+id).value])),save_disabled:$("d-save").disabled,download_disabled:$("d-download").disabled,history_download_disabled:$("d-history-download").disabled})'));

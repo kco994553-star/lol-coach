@@ -1,0 +1,133 @@
+{
+  "scope": "Successful proposal deletion across same-rule cached open and independent new draft only",
+  "verifier": "Node VM synthetic DOM/service transactions; not actual browser/HTTP/SQLite/game evidence",
+  "executed_at": "2026-10-05T09:23:55.791Z",
+  "node_version": "v24.19.0",
+  "source_sha256": "2011b3f9d0fd2847cc2561c49d39e994f9eb2fe824c3022c64bf430bb6b47803",
+  "test_sha256": "ce7018d54c6f3225551a5021729b7c6f89b82e89e01818b1691b1779d3df69de",
+  "fixture_sha256": "2352989c9f16d68525f9fe864693dde999f1284461363a06b904a0506e153926",
+  "passed": 1,
+  "total": 1,
+  "results": [
+    {
+      "id": "KNOWLEDGE-PROPOSAL-DELETE-CANNOT-RESURRECT-SAME-RULE-CACHED-OPEN",
+      "passed": true,
+      "checks": {
+        "deleted_descendant_not_displayed": true,
+        "deleted_current_record_purged": true,
+        "deleted_record_download_and_delete_blocked": true,
+        "postcommit_exact_revalidation_observed": true,
+        "independent_new_draft_preserved": true,
+        "independent_draft_download_remains_blocked": true
+      },
+      "sameRule": {
+        "afterDelete": {
+          "record": null,
+          "latest": null,
+          "source": null,
+          "claim": "",
+          "dirty": false,
+          "downloadDisabled": true,
+          "deleteDisabled": true,
+          "notice": "출처 삭제로 연결된 제안과 화면 내용을 지웠습니다."
+        },
+        "afterCachedRead": {
+          "record": null,
+          "latest": null,
+          "source": null,
+          "claim": "",
+          "dirty": false,
+          "downloadDisabled": true,
+          "deleteDisabled": true,
+          "notice": "출처 삭제로 연결된 제안과 화면 내용을 지웠습니다."
+        },
+        "calls": [
+          {
+            "route": "/knowledge/proposals/11111111111111111111111111111111",
+            "method": "DELETE",
+            "status": 200
+          },
+          {
+            "route": "/knowledge/proposals/11111111111111111111111111111111/versions/cccccccccccccccccccccccccccccccc",
+            "method": "GET",
+            "status": 200
+          },
+          {
+            "route": "/knowledge/proposals/11111111111111111111111111111111",
+            "method": "GET",
+            "status": 200
+          },
+          {
+            "route": "/knowledge/proposals/11111111111111111111111111111111",
+            "method": "GET",
+            "status": 404
+          },
+          {
+            "route": "/knowledge/proposals/11111111111111111111111111111111/versions/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "method": "GET",
+            "status": 404
+          },
+          {
+            "route": "/research/source1",
+            "method": "GET",
+            "status": 200
+          },
+          {
+            "route": "/knowledge/proposals",
+            "method": "GET",
+            "status": 200
+          }
+        ],
+        "checks": {
+          "deleted_descendant_not_displayed": true,
+          "deleted_current_record_purged": true,
+          "deleted_record_download_and_delete_blocked": true,
+          "postcommit_exact_revalidation_observed": true
+        }
+      },
+      "independent": {
+        "beforeCommit": {
+          "record": null,
+          "latest": null,
+          "source": "independent-source",
+          "claim": "new independent draft",
+          "dirty": true,
+          "downloadDisabled": true,
+          "deleteDisabled": true,
+          "notice": ""
+        },
+        "afterCommit": {
+          "record": null,
+          "latest": null,
+          "source": "independent-source",
+          "claim": "new independent draft",
+          "dirty": true,
+          "downloadDisabled": true,
+          "deleteDisabled": true,
+          "notice": ""
+        },
+        "calls": [
+          {
+            "route": "/knowledge/proposals/11111111111111111111111111111111",
+            "method": "DELETE",
+            "status": 200
+          },
+          {
+            "route": "/research/independent-source",
+            "method": "GET",
+            "status": 200
+          },
+          {
+            "route": "/knowledge/proposals",
+            "method": "GET",
+            "status": 200
+          }
+        ],
+        "checks": {
+          "independent_new_draft_preserved": true,
+          "independent_draft_download_remains_blocked": true
+        }
+      }
+    }
+  ]
+}

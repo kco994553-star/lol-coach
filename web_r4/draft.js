@@ -1,6 +1,6 @@
 'use strict';
 // Operator-declared input only; neither verified state nor automatic coaching.
-let dRecord=null,dLatest=0,dEpoch=0,dEdit=0,dDirty=false,dSaving=false,dPendingCapture=null,dPreview=null,dPreviewOwner=null,dHistoryEpoch=0;
+let dRecord=null,dLatest=0,dEpoch=0,dEdit=0,dDirty=false,dSaving=false,dSaveAttempt=null,dPendingCapture=null,dPreview=null,dPreviewOwner=null,dHistoryEpoch=0;
 const dDeletedIds=new Set(),dDeletingIds=new Set();
 // The editor owns its declared row representation independently of save ACKs.
 let dCaptureBase=null;
@@ -61,7 +61,7 @@ function dCurrent(){
  $('d-current').textContent=dRecord?'UNVERIFIED(미검증) · 조회 버전 '+dRecord.revision+' · 다음 저장 기준 '+dLatest+' · 관찰 시각 '+(dRecord.capture.observed_at||'미확인')+' · 저장 시각 '+dRecord.received_at+(dDirty?' · 미저장 변경 있음':''):'새 기록 · 아직 저장하지 않았습니다.';
 }
 function dClear(){
- dEpoch++;dEdit=0;dDirty=false;dSaving=false;dPendingCapture=null;dRecord=null;dLatest=0;dBlank();dHistoryClear();$('d-list').replaceChildren();$('d-detail').hidden=true;dControls();dCurrent();dNotice('');
+ dEpoch++;dEdit=0;dDirty=false;dSaving=false;dSaveAttempt=null;dPendingCapture=null;dRecord=null;dLatest=0;dBlank();dHistoryClear();$('d-list').replaceChildren();$('d-detail').hidden=true;dControls();dCurrent();dNotice('');
 }
 function dError(e){dNotice('처리하지 못했습니다: '+e.message);if(e.status===401){dClear();if(typeof rClear==='function')rClear();if(typeof kClear==='function')kClear();error(e);}}
 function dLeave(){return !dDirty||confirm('저장하지 않은 픽창 기록 변경을 버리고 이동할까요?');}
@@ -75,7 +75,7 @@ async function dRefresh(){
 }
 async function dOpen(cid,revision){
  if(!dLeave()||dDeletedIds.has(cid))return;
- const mark=++dEpoch;dPendingCapture=cid;dSaving=false;dHistoryClear();dControls(true);
+ const mark=++dEpoch;dSaveAttempt=null;dPendingCapture=cid;dSaving=false;dHistoryClear();dControls(true);
  try{
   const record=await api('/draft-captures/'+cid+(revision===undefined?'':'/revisions/'+revision));
   const latest=revision===undefined?record:await api('/draft-captures/'+cid);
@@ -86,18 +86,27 @@ async function dOpen(cid,revision){
 }
 async function dSave(){
  if($('d-save').disabled||dSaving)return;
- const capture=dReadCapture(),mark=dEpoch,edit=dEdit,cid=dRecord&&dRecord.session_id,expected=dLatest;
+ const currentId=dRecord&&dRecord.session_id;
+ if(dSaveAttempt&&(dSaveAttempt.epoch!==dEpoch||dSaveAttempt.cid!==currentId))dSaveAttempt=null;
+ if(!dSaveAttempt)dSaveAttempt={capture:dReadCapture(),epoch:dEpoch,edit:dEdit,cid:currentId,expected:dLatest,key:crypto.randomUUID()};
+ const {capture,epoch:mark,edit,cid,expected,key}=dSaveAttempt;
  if(cid&&(dDeletedIds.has(cid)||dDeletingIds.has(cid)))return;
  dSaving=true;dControls();
  try{
-  const record=await api('/draft-captures'+(cid?'/'+cid:''),cid?'PUT':'POST',cid?{capture,expected_revision:expected}:{capture});
+  const record=await api('/draft-captures'+(cid?'/'+cid:''),cid?'PUT':'POST',cid?{capture,expected_revision:expected}:{capture},key);
   if(mark!==dEpoch||dDeletedIds.has(record.session_id)||(cid&&(!dRecord||dRecord.session_id!==cid)))return;
-  dHistoryClear();dRecord=record;dLatest=record.revision;
+  dSaveAttempt=null;dHistoryClear();dRecord=record;dLatest=record.revision;
   if(edit===dEdit){dApplyCapture(record.capture);dDirty=false;}
   $('d-detail').hidden=false;dCurrent();
   dNotice(dDirty?'요청한 기록은 저장했습니다. 저장 중 수정한 초안은 그대로 남아 있습니다.':'수동 기록을 새 버전으로 저장했습니다.');
   await dRefresh();
- }catch(e){if(mark===dEpoch&&(!cid||(dRecord&&dRecord.session_id===cid&&!dDeletedIds.has(cid))))dError(e);}
+ }catch(e){
+  if(e.status!==undefined)dSaveAttempt=null;
+  if(mark===dEpoch&&(!cid||(dRecord&&dRecord.session_id===cid&&!dDeletedIds.has(cid)))){
+   if(e.status===undefined)dNotice('저장 응답을 받지 못했습니다. 다시 저장하면 같은 요청을 안전하게 확인합니다.');
+   else dError(e);
+  }
+ }
  finally{if(mark===dEpoch){dSaving=false;dControls();}}
 }
 function dHistoryCurrent(owner,mark){return Boolean(owner&&mark===dHistoryEpoch&&owner.epoch===dEpoch&&dRecord&&dRecord.session_id===owner.id&&!dDeletedIds.has(owner.id)&&!dDeletingIds.has(owner.id)&&!$('workspace').hidden&&!$('draft-view').hidden);}

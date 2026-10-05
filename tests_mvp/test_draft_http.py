@@ -40,6 +40,7 @@ class DraftHTTPTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.db = Path(self.temp.name) / 'private.sqlite'
+        self.key_number = 0
         self.start_server()
 
     def start_server(self, body_bytes=1_000_000):
@@ -75,9 +76,14 @@ class DraftHTTPTests(unittest.TestCase):
 
     def create(self, capture=None):
         value = partial_capture() if capture is None else capture
-        status, record, _ = self.call(method='POST', body={'capture': value})
+        status, record, _ = self.call(method='POST', body={'capture': value},
+                                      headers=self.save_headers('create'))
         self.assertEqual(status, 201, record)
         return value, record
+
+    def save_headers(self, prefix='draft-test'):
+        self.key_number += 1
+        return {'Idempotency-Key': f'{prefix}-{self.key_number}'}
 
     def test_partial_create_preserves_null_and_unverified_provenance(self):
         value, record = self.create()
@@ -95,13 +101,107 @@ class DraftHTTPTests(unittest.TestCase):
         self.assertEqual(record['input_sha256'], hashlib.sha256(canonical).hexdigest())
         self.assertRegex(record['received_at'], r'^\d{4}-\d{2}-\d{2}T.*(?:Z|\+00:00)$')
 
+    def test_idempotent_create_and_update_replay_exact_success_after_restart(self):
+        value = partial_capture()
+        create_headers = {'Idempotency-Key': 'draft-create-response-loss'}
+        status, first, _ = self.call(method='POST', body={'capture': value}, headers=create_headers)
+        self.assertEqual(status, 201, first)
+
+        self.stop_server()
+        self.start_server()
+        self.assertEqual(self.call(method='POST', body={'capture': value}, headers=create_headers)[:2],
+                         (201, first))
+        self.assertEqual(self.call()[1], [first])
+
+        changed = copy.deepcopy(value)
+        changed['title'] = '응답 유실 뒤 동일 저장 재시도'
+        update = {'capture': changed, 'expected_revision': 1}
+        update_headers = {'Idempotency-Key': 'draft-update-response-loss'}
+        status, second, _ = self.call(PREFIX+'/'+first['session_id'], 'PUT', update,
+                                      update_headers)
+        self.assertEqual(status, 200, second)
+
+        self.stop_server()
+        self.start_server()
+        self.assertEqual(self.call(PREFIX+'/'+first['session_id'], 'PUT', update,
+                                   update_headers)[:2], (200, second))
+        self.assertEqual(self.call(PREFIX+'/'+first['session_id']+'/history')[1]['revisions'], [1, 2])
+
+    def test_same_idempotency_key_different_request_conflicts_and_new_key_keeps_cas(self):
+        value = partial_capture()
+        create_headers = {'Idempotency-Key': 'draft-create-conflict'}
+        status, first, _ = self.call(method='POST', body={'capture': value}, headers=create_headers)
+        self.assertEqual(status, 201, first)
+
+        different = copy.deepcopy(value)
+        different['title'] = '같은 키의 다른 생성 요청'
+        status, problem, _ = self.call(method='POST', body={'capture': different},
+                                       headers=create_headers)
+        self.assertEqual((status, problem.get('error_code')), (409, 'IDEMPOTENCY_CONFLICT'))
+        self.assertEqual(self.call()[1], [first])
+
+        changed = copy.deepcopy(value)
+        changed['title'] = '첫 수정'
+        path = PREFIX+'/'+first['session_id']
+        update_headers = {'Idempotency-Key': 'draft-update-conflict'}
+        status, second, _ = self.call(path, 'PUT', {'capture': changed, 'expected_revision': 1},
+                                      update_headers)
+        self.assertEqual(status, 200, second)
+
+        other = copy.deepcopy(value)
+        other['title'] = '같은 키의 다른 수정 요청'
+        status, problem, _ = self.call(path, 'PUT', {'capture': other, 'expected_revision': 1},
+                                       update_headers)
+        self.assertEqual((status, problem.get('error_code')), (409, 'IDEMPOTENCY_CONFLICT'))
+        status, problem, _ = self.call(path, 'PUT', {'capture': other, 'expected_revision': 1},
+                                       {'Idempotency-Key': 'draft-update-new-key'})
+        self.assertEqual((status, problem.get('error_code')), (409, 'REVISION_CONFLICT'))
+        self.assertEqual(self.call(path)[1], second)
+        self.assertEqual(self.call(path+'/history')[1]['revisions'], [1, 2])
+
+    def test_draft_saves_require_one_valid_idempotency_key_without_writing(self):
+        value = partial_capture()
+        for headers in (None, {'Idempotency-Key': 'bad/key'}):
+            with self.subTest(headers=headers):
+                status, problem, _ = self.call(method='POST', body={'capture': value},
+                                               headers=headers)
+                self.assertEqual((status, problem.get('error_code')),
+                                 (422, 'IDEMPOTENCY_KEY_REQUIRED'))
+        raw = json.dumps({'capture': value}, ensure_ascii=False).encode('utf-8')
+        connection = http.client.HTTPConnection('127.0.0.1', self.server.server_port, timeout=5)
+        connection.putrequest('POST', PREFIX)
+        connection.putheader('Authorization', 'Bearer '+TOKEN)
+        connection.putheader('Content-Type', 'application/json')
+        connection.putheader('Content-Length', str(len(raw)))
+        connection.putheader('Idempotency-Key', 'duplicate-a')
+        connection.putheader('Idempotency-Key', 'duplicate-b')
+        connection.endheaders(raw)
+        response = connection.getresponse()
+        problem = json.loads(response.read())
+        self.assertEqual((response.status, problem.get('error_code')),
+                         (422, 'IDEMPOTENCY_KEY_REQUIRED'))
+        connection.close()
+        self.assertEqual(self.call()[1], [])
+
+        _, first, _ = self.call(method='POST', body={'capture': value},
+                                headers={'Idempotency-Key': 'valid-create-key'})
+        for headers in (None, {'Idempotency-Key': 'bad/key'}):
+            with self.subTest(method='PUT', headers=headers):
+                status, problem, _ = self.call(PREFIX+'/'+first['session_id'], 'PUT',
+                    {'capture': dict(value, title='수정'), 'expected_revision': 1}, headers)
+                self.assertEqual((status, problem.get('error_code')),
+                                 (422, 'IDEMPOTENCY_KEY_REQUIRED'))
+        self.assertEqual(self.call(PREFIX+'/'+first['session_id'])[1], first)
+
     def test_list_current_and_immutable_history_keep_exact_old_input(self):
         original, first = self.create()
         cid = first['session_id']
         changed = copy.deepcopy(original)
         changed['title'] = '정정한 픽창'
         changed['visible_picks'][0]['champion'] = 'Lux'
-        status, second, _ = self.call(PREFIX+'/'+cid, 'PUT', {'capture': changed, 'expected_revision': 1})
+        status, second, _ = self.call(PREFIX+'/'+cid, 'PUT',
+                                      {'capture': changed, 'expected_revision': 1},
+                                      self.save_headers('history-update'))
         self.assertEqual(status, 200, second)
         self.assertEqual(second['revision'], 2)
         self.assertEqual(second['parent_id'], first['id'])
@@ -120,11 +220,14 @@ class DraftHTTPTests(unittest.TestCase):
         value, first = self.create()
         path = PREFIX+'/'+first['session_id']
         newer = dict(value, title='서버 최신 정정')
-        status, second, _ = self.call(path, 'PUT', {'capture': newer, 'expected_revision': 1})
+        status, second, _ = self.call(path, 'PUT',
+                                      {'capture': newer, 'expected_revision': 1},
+                                      self.save_headers('current-update'))
         self.assertEqual(status, 200, second)
         for method, body in [('PUT', {'capture': dict(value, title='오래된 초안'), 'expected_revision': 1}),
                              ('DELETE', {'expected_revision': 1})]:
-            status, problem, _ = self.call(path, method, body)
+            headers = self.save_headers('stale-update') if method == 'PUT' else None
+            status, problem, _ = self.call(path, method, body, headers)
             self.assertEqual(status, 409, problem)
             self.assertEqual(problem['error_code'], 'REVISION_CONFLICT')
         self.assertEqual(self.call(path)[1], second)
@@ -150,7 +253,9 @@ class DraftHTTPTests(unittest.TestCase):
                                       (True, {'Host': 'evil.test'}, 403), (True, {'Origin': 'https://evil.test'}, 403),
                                       (True, {'Sec-Fetch-Site': 'cross-site'}, 403)]:
             with self.subTest(expected=expected, headers=extra):
-                self.assertEqual(self.call(method='POST', body={'capture': partial_capture()}, auth=auth, headers=extra)[0], expected)
+                headers = dict(extra or {}, **self.save_headers('rejected-request'))
+                self.assertEqual(self.call(method='POST', body={'capture': partial_capture()},
+                                           auth=auth, headers=headers)[0], expected)
         self.assertEqual(self.call()[1], [])
 
     def test_duplicate_json_keys_nonfinite_and_malformed_utf8_are_rejected(self):
@@ -159,7 +264,8 @@ class DraftHTTPTests(unittest.TestCase):
             with self.subTest(raw=repr(raw)):
                 self.assertEqual(self.call(method='POST', raw=raw)[0], 422)
         self.assertEqual(self.call()[1], [])
-        self.assertEqual(self.call(method='POST', raw=valid)[0], 201)
+        self.assertEqual(self.call(method='POST', raw=valid,
+                                   headers=self.save_headers('valid-raw'))[0], 201)
 
     def test_exact_capture_fields_reject_injected_verification_and_real_modes(self):
         for field, injected in [('validation_state', 'VERIFIED_DIRECT'), ('coaching_enabled', True),
@@ -167,7 +273,8 @@ class DraftHTTPTests(unittest.TestCase):
             value = partial_capture()
             value[field] = injected
             with self.subTest(field=field):
-                status, problem, _ = self.call(method='POST', body={'capture': value})
+                status, problem, _ = self.call(method='POST', body={'capture': value},
+                                               headers=self.save_headers('invalid-field'))
                 self.assertEqual(status, 422, problem)
                 self.assertEqual(problem['error_code'], 'INVALID_DRAFT_CAPTURE')
         self.assertEqual(self.call()[1], [])
@@ -183,7 +290,8 @@ class DraftHTTPTests(unittest.TestCase):
             if perspective:
                 value['source']['perspective'] = perspective
             with self.subTest(rows=rows, perspective=perspective):
-                self.assertEqual(self.call(method='POST', body={'capture': value})[0], 422)
+                self.assertEqual(self.call(method='POST', body={'capture': value},
+                                           headers=self.save_headers('invalid-row'))[0], 422)
         self.assertEqual(self.call()[1], [])
 
     def test_declared_timezone_timestamp_preserved_and_naive_time_rejected(self):
@@ -197,7 +305,8 @@ class DraftHTTPTests(unittest.TestCase):
         for bad in ('2026-10-05T15:20:30', 'yesterday', True, 123):
             invalid = dict(value, observed_at=bad)
             with self.subTest(timestamp=bad):
-                self.assertEqual(self.call(method='POST', body={'capture': invalid})[0], 422)
+                self.assertEqual(self.call(method='POST', body={'capture': invalid},
+                                           headers=self.save_headers('invalid-time'))[0], 422)
         self.assertEqual(len(self.call()[1]), 1)
         self.assertEqual(record['validation_state'], 'UNVERIFIED')
 
@@ -219,7 +328,10 @@ class DraftHTTPTests(unittest.TestCase):
         results = []
         def update(title):
             barrier.wait()
-            results.append(self.call(PREFIX+'/'+cid, 'PUT', {'capture': dict(value, title=title), 'expected_revision': 1}))
+            results.append(self.call(PREFIX+'/'+cid, 'PUT',
+                                     {'capture': dict(value, title=title), 'expected_revision': 1},
+                                     {'Idempotency-Key': 'concurrent-'+hashlib.sha256(
+                                         title.encode('utf-8')).hexdigest()[:24]}))
         threads = [threading.Thread(target=update, args=(title,)) for title in ('수정 A', '수정 B')]
         for thread in threads:
             thread.start()
@@ -237,7 +349,9 @@ class DraftHTTPTests(unittest.TestCase):
     def test_delete_physically_removes_current_and_all_snapshot_payloads(self):
         value, first = self.create()
         cid = first['session_id']
-        self.assertEqual(self.call(PREFIX+'/'+cid, 'PUT', {'capture': dict(value, title='두 번째'), 'expected_revision': 1})[0], 200)
+        self.assertEqual(self.call(PREFIX+'/'+cid, 'PUT',
+                                   {'capture': dict(value, title='두 번째'), 'expected_revision': 1},
+                                   self.save_headers('delete-setup'))[0], 200)
         status, deleted, _ = self.call(PREFIX+'/'+cid, 'DELETE', {'expected_revision': 2})
         self.assertEqual(status, 200, deleted)
         self.assertEqual(deleted, {'id': cid, 'status': 'DELETED', 'deleted_snapshots': 2})
@@ -253,7 +367,9 @@ class DraftHTTPTests(unittest.TestCase):
         path = PREFIX+'/'+record['session_id']
         for revision in (None, True, -1, '1', 1.0):
             with self.subTest(revision=revision):
-                self.assertEqual(self.call(path, 'PUT', {'capture': value, 'expected_revision': revision})[0], 422)
+                self.assertEqual(self.call(path, 'PUT',
+                                           {'capture': value, 'expected_revision': revision},
+                                           self.save_headers('invalid-revision'))[0], 422)
                 self.assertEqual(self.call(path, 'DELETE', {'expected_revision': revision})[0], 422)
         self.assertEqual(self.call(path, 'DELETE', {})[0], 422)
         self.assertEqual(self.call(path+'/revisions/2')[0], 404)
