@@ -1,5 +1,20 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — RUNNING
+- run_token: `main-20261005T0625-note-recovery-gated-merge-root`
+- status: `RUNNING`
+- writer_active: true
+- task_scope: Exact existing PR7 83b7718a4b09d1d79c741d38294b5f502b8c9f52 gated merge and resulting SHA/tree verification.
+- owner_branch: `feat/note-history-draft-recovery-2026-10-05`
+- intake_main_head: `594ef3cf6138421de8a8c77c7ec1c390e7cfedea`
+- evidence: Actual repaired PR Actions37271933712 SUCCESS, tested merge60bea203/tree9a7d08b parents594ef3c/83b7718a; all194inputs exact, actualChrome89/89/noerrors/firstfailure null/launcherPASS. Required server regressionPASS old111/protected9/Frozen27/backup23/current5+3 and prior mandatory guards. Independent reviewPASS; reviews/comments0/mergeableclean/rulesets0/publicstandardUbuntu/free basis. Firstfailure37270809307 andtestbytes/independentdiagnosis retained. Product39ae97 unchanged by verifier repair.
+- risk: CRITICAL retained. RealCoachN0/null; onlyplayerreferenceexternaldependency parked.
+- next: normal merge, postmergeactualCI, freshclaim/handoff, then existingmanualdraftcapture requirement.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — CI_PENDING
 - run_token: `main-20261005T0613-note-recovery-ci-repair-root`
 - status: `CI_PENDING`
