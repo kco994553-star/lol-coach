@@ -1,3 +1,88 @@
+# Latest checkpoint(최신 검증) — PR8 native workflow repair(실제 사용자 순서 보완)
+
+Actual PR8/run37276347795 attempt1FAIL(실패), testedmerge9b5850e7/tree5edb656,
+parents0f2b333e/066f444, regressionPASS/all257inputs. ActualChrome87 prior checks
+passed; manual stage fill of hidden d-pick-ALLY-1 stopped before new checks.
+Full actual firstfailure and originalf251 testbytes preserved. Test now clicks
+native summary to unfold ally/enemy inputs before typing and after opening a
+saved record. Same19literalIDs/total108, unchangedfixtures/expected/timeouts,
+no DOM-open assignment. All production source bytes remain identical.
+
+Fresh required local071931/cb7b5c40 PASS with new strict failed-run/tree/source/
+case-identity binding. Actual repaired Chrome108 still PENDING(대기). Common
+RUNNING token main-20261005T071452087-draft-ci-repair-root; same PR8/branch,
+no duplicate implementation. Only Player/preaction dependency parkedN0/null.
+Retry-safe save correctness remains next executable task after actual verify.
+
+---
+
+# Latest verified local checkpoint(최신 로컬 검증)
+
+2026-10-05. Required full regression(필수 전체 회귀)
+evidence/mvp/20261005T070629748821Z-0f0b7f60/verification.json PASS(통과),
+257 exact inputs(정확한 입력), historical evidence(과거 근거)153 unchanged.
+Frozen27/protected9/old111/backup23/current31+14+19/currentUI7+4 and every prior
+guard pass. Original first full070325/40566e2e FAIL(실패) retained: new7+4
+actually passed but missing new-suite ID routing compared old SAVE_CASE_IDS.
+Verifier routing repaired with exact new literal identities, no expected/product
+change. Source bound fe02bea5; independent narrow review blocker0, original null
+counterexample and extra scalar/ACK checks pass. Synthetic scheduling only.
+Actual Chrome108 / PR publication(게시) / gatedmerge(조건 충족 병합) /
+postmerge(병합 후) verification remain PENDING(대기) at this checkpoint.
+
+Next identified executable integrity gap: retry-safe saves(안전한 재시도 저장).
+Actual isolated HTTP identical POST/key duplicates and successful PUT replay409
+were reproduced. This dev/v1 bounded capture does not claim canonical /v1
+idempotency(같은 요청의 중복 방지) completion. Continue that narrow correction
+after actual current publication; do not stop whole Work for realCoachN0.
+
+---
+
+# CURRENT HANDOFF — Manual draft capture(수동 픽창 기록) / current execution(현재 실행)
+
+2026-10-05 KST. Actual main(실제 기준)0f2b333e44c1918e7a2a9dd7d9f6fce67d1d76a2.
+PR7 head83b7718/tree9a7d08 normalmerged0f2b333e; actual PR37271933712 and
+postmerge37272079828 SUCCESS(성공), exact tree/parents/all194inputs/Chrome89.
+First37270809307FAIL and verifier-only completed-delete repair remain archived.
+These are historical verified parent results, not current manual capture CI.
+
+Current scope(범위): existing Frozen TEAM_DRAFT REC-REQ013 / bounded input
+portion of SC011. Risk CRITICAL(중대한 변경) retained. Manual operator inputs
+have isolated main-schema2 tables, immutable snapshots(불변 저장본), strict
+raw null/UNKNOWN(알 수 없음) provenance(출처), transactional CAS(버전 비교 저장),
+actual validated private pre-migration v1 recovery copy and compatible two-DB
+backup format1. Original Store/legacy TEST engine/tables and Research/Knowledge
+bytes remain unchanged. Dedicated authenticated HTTP/UI records cannot become
+legacy analysis sessions/cases/jobs. No automatic collector/gameplan activation.
+
+Fresh targeted storage31 + unchangedStore11, HTTP14, backup19 + unchanged23 +
+Knowledge19 PASS(통과). Initial missing capability, backup support/fixture
+failures and corrected metadata remain additive(이력 보존 추가). Storage's
+huge corrupted revision MemoryError counterexample is retained and repaired.
+Initial UI7PASS did not detect explicit-null row reconstruction loss; independent
+review reproduced genuine no-edit loss at b9784c66. This BLOCKING(병합 차단)
+issue has separate actual RED/GREEN(실패 후 수리) tests and source archives.
+Current final source binding/full regression/actual browser are still required.
+The prior89 checks plus manual19 require native Chrome108(실제 브라우저 검사).
+No current Chrome/Actions PASS is claimed before completed run evidence.
+
+Common ownership(공통 소유권) ref work/main-execution-claim, RUNNING(실행 중)
+token main-20261005T0630-manual-draft-capture-root; separate implementation
+branch feat/manual-draft-capture-2026-10-05. Latest token/ref must match before
+mutations; no competing PR(검토 요청) or owner observed. Plan/docs are
+MVP_DRAFT_CAPTURE.md and docs/superpowers/plans/2026-10-05-manual-draft-capture.md.
+
+Actual Player direct0/derived0/complete0/truth_pair0/DecisionN0/CoachN0,
+accuracy(정확도)=null. Only independent Player reference(플레이어 기준) and
+pre-action context(행동 전 문맥) dependency is PARKED_EXTERNAL(외부 입력 대기).
+Whole Work continues through required verification/publication and then the
+next grounded executable requirement. No paid dependency/service/database/
+design/deploy or automation expansion. Tool record docs/TOOL_USAGE.md.
+
+Previous handoff(인수 기록) remains historical below.
+
+---
+
 # CURRENT HANDOFF — PR7 actual browser completion-boundary repair
 
 2026-10-05 KST. Fresh exact main594ef3c / PR7b3bd758d and actual Actions

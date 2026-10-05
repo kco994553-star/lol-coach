@@ -164,3 +164,28 @@ before the stale DELETE completion returns; independent resource drafts stay.
 Parent Research bytes and first missing-capability0/5 are retained; source-chain
 checks bind the precise two-file additive implementation. Actual browser PASS is
 claimed only from completed Actions/source/tree receipts. Details: MVP_NOTE_RECOVERY.md.
+
+
+## Manual draft capture(수동 픽창 기록) version(버전) 1
+
+The bounded input portion of Frozen TEAM_DRAFT / REC-REQ-013 adds isolated
+main-v2 capture tables, authenticated routes and a separate manual tab.
+Main-v1 TEST storage, old engine, Research/Knowledge code and frozen bytes stay
+protected. Exact source-version binding chains through the actual merged PR7
+parent; no historical source receipt is rewritten to pretend it tested new code.
+
+Required additional suites are storage31, actual HTTP14, backup19 and the
+original seven draft UI concurrency/privacy cases. The independent no-edit
+UNKNOWN/null membership/order reconstruction-loss counterexample has its own
+fixed RED/GREEN cases, before-source archive and current-source rerun. Backup
+format1 remains exactly two DBs, admits actual main1/2 and research1/2 only with
+exact DDL/content/hash/manifest binding, and never invokes app constructors.
+Legacy backup23/Knowledge19 remain required unchanged.
+
+All previous89 actual browser checks remain required. The manual input module
+adds native capture/current-save/history/exact download/CAS409/cancel/deletion/
+stale-read/logout/mobile paths and an actual no-edit typed-null roundtrip.
+Only completed Actions logs establish the resulting exact browser count; Node
+VM and local unittest passes remain distinct. No coaching/real-player evidence
+is created by these automated scenarios. See MVP_DRAFT_CAPTURE.md and the
+source-bound additive draft-* receipts. Real Player/Decision/CoachN0/null stays.
