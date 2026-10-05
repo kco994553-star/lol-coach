@@ -1,3 +1,18 @@
+# CURRENT HANDOFF — Main Work verified code / external evidence park
+
+## 2026-10-05 최종 원격 확인
+
+- 시작 main47a5→R7 evidence30c36→MVP repairb30c9→CI configfc81→검사 가정 수정915f2a17ae4c6b4cf4d28841c12c6cc4ff91c4d2. 각 단계는 fresh main/ref/tree를 확인하고 nonforce GitHub API publication했다. Root가 유일한 통합 writer였고 open PR0/main branch1이다.
+- 실제 Actions run37251321530 **SUCCESS**, regression job111579375717/browser job111579375829 SUCCESS. 원격 logs의 full fresh receipts를 추출·head/source/hash/run binding 검증했다. Canonical receipt `evidence/mvp/github-ci-37251321530.json`, closeout `evidence/mvp/CLOSEOUT.json`.
+- Fresh CI: 기존111/111(skip0), protected9/9, Frozen27, backup23/23, Node VM7+2+1, postgame synthetic13 PASS. CI의 private archive4는 NOT_RUN이며 로컬 exact-byte preserved inputs를 준17/17 PASS와 구분한다. 옛 R7 verifier identity는 앱 수정으로 FAIL인 채 보존한다.
+- 실제 Chrome154.0.8037.57 **32/32 PASS**: 실제 서버/SQLite의 PUT commitv2를 지연 전달하며 편집→버전 ACK/초안 보존→expected2/v3저장→재열람→native cancel→합성 분석1→390px overflow/pageerror 확인. 실제 게임 코칭 N으로 합산하지 않는다. 최초 CI 설정 FAIL과 브라우저 JSON key-order 검사 FAIL, 수정 근거/원본 hashes 모두 보존했다.
+- 현재 검증 입력114개 해시가 CI tested915f2와 동일하다. 마지막 기록 commit은 handoff/status/new observed evidence만 담고 `[skip ci]`로 같은 검사를 중복 실행하지 않는다. 그 기록 HEAD 자체의 fresh CI PASS를 주장하지 않으며, 정확한 tested SHA와 scope/hash 적용 근거를 유지한다. 마지막 main SHA는 publication 후 remote ref에서 읽는다.
+- 전체 Private Web MVP는 **NOT_COMPLETE**. Source26direct/2derived, 새 POV partial sequence1/clip Vision1은 보존. PLAYER DIRECT0/DERIVED0/complete0/same-match independent same-time pair0, DecisionN0/CoachN0/accuracy null. Future51제외/no hindsight guard 유지, real Engine0, source postgame→Player 승격0.
+- 실제 Player state/Coach의 독립 reference·행동 문맥 의존성은 PARKED_EXTERNAL. 기존 clip의 source-backed 독립 HUD 검수로 정적 변수부터 진행 가능하다. 모든 HUD 검수에 새 clip/확정 patch를 필수로 요구하지 않는다. 실제 행동 평가에는 결정 전 문맥이 필요하다. 기존 minimum input 문서 재사용, 계정/API key/결제 불필요. LoL process/endpoint 부재 blocker는 historical 적용 근거 유지/retry0.
+- DEEP 유지/Frozen 의미 변경0/새 D3없음. 좁은 completeness critic에서 현재 원격검증 외 더 높은 가치의 독립 실행 작업을 입증하지 못했다. 무관한 새 기능은 만들지 않는다. Progress/CI/Evidence hourly read-only Watchdog enabled. 새 관련 reference/blocker해소 event 때 dependency/owner/hash를 확인하고 Reference-first→State→No-hindsight→Knowledge/Decision/Coach로 자동 재개한다. 자료가 같은 동안 반복 audit/알림/병렬 writer없음.
+
+## 아래는 이전 작업 기록 전체 보존
+
 # Actual browser run continuation — 2026-10-05
 
 - Repaired workflow published at `fc81e06834cc67c75906054fd20c64c3c3611470`, fresh remote316blobs verified. Actions37250989049 created both jobs; regression SUCCESS, browser FAILURE. Actual Chrome154.0.8037.57 launched against isolated synthetic server. First browser receipt preserved `evidence/mvp/browser-first-failure.json` with source hashes, real backend versions and first failure.

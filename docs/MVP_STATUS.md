@@ -1,3 +1,18 @@
+# 2026-10-05 현재 코드 원격 검증
+
+현재 코드 tested SHA915f2a17ae4c6b4cf4d28841c12c6cc4ff91c4d2의 Actions37251321530이
+SUCCESS다. 기존111/보호9/Frozen27, backup23, actual Chrome32(390px 포함)가 통과했다.
+수치와 실패 이력은 `evidence/mvp/github-ci-37251321530.json`, `CLOSEOUT.json`.
+마지막 기록은 코드·검사·설정 입력114개 동일 hash를 재확인해 기존 fresh 실행을 재사용한다.
+실경기 검증은 Player0/N0이므로 전체 MVP 완료로 보고하지 않는다.
+
+기존 공개 clip의 독립 source-backed HUD 검수부터 정적 상태를 승격할 수 있다.
+새 개인 POV 한 장면도 가능하지만, HUD-only 검수에 새 clip/확정 patch를 강제하지 않는다.
+실제 Decision/Coach에는 그 장면의 행동 전 문맥과 Player 정보 경계가 추가로 필요하다.
+기존 minimum input package를 그대로 사용하며 credential/결제는 요구하지 않는다.
+
+## 아래는 이전 상태 기록 보존
+
 # Private Web MVP 현재 상태
 
 2026-10-05. Objective는 개인 PC에서 쓰는 비공개 Web workflow와 실제 경기 근거로

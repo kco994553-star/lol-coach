@@ -1,0 +1,911 @@
+{
+  "at_utc": "2026-10-05T01:26:43.163Z",
+  "evidence_kind": "OBSERVED_GITHUB_ACTIONS_COMPLETION_AND_ACTUAL_TEST_RECEIPTS",
+  "run": {
+    "id": 37251321530,
+    "url": "https://github.com/kco994553-star/lol-coach/actions/runs/37251321530",
+    "head_sha": "915f2a17ae4c6b4cf4d28841c12c6cc4ff91c4d2",
+    "status": "completed",
+    "conclusion": "success",
+    "run_attempt": 1
+  },
+  "jobs": {
+    "regression": 111579375717,
+    "browser": 111579375829
+  },
+  "regression_receipt": {
+    "at_utc": "2026-10-05T01:25:09.305895+00:00",
+    "evidence_kind": "FRESH_SCOPED_MVP_EXECUTION",
+    "status": "PASS",
+    "passed": true,
+    "scope": "Frozen payload, preserved regressions, local backup/restore, and synthetic UI mechanics",
+    "python": "3.12.14",
+    "run_directory": "evidence/mvp/20261005T012456258366Z-497ced6c",
+    "checks": {
+      "preservation": {
+        "status": "PASS",
+        "frozen_payload_files": 27,
+        "frozen_errors": [],
+        "historical_r0_r6_blob_count": 123,
+        "historical_exact_identity_matches": 122,
+        "historical_exact_identity_differences": [
+          "web_r4/app.js"
+        ],
+        "historical_r7_verifier_identity_status": "FAIL",
+        "historical_verifier_executed": false,
+        "historical_identity_note": "The unchanged verify_r7.py gate binds the pre-repair app; an authorized UI repair causes its exact-byte identity gate to fail.",
+        "mvp_authorized_changed_path": "web_r4/app.js",
+        "other_historical_byte_errors": [],
+        "historical_source_receipt": "evidence/r7/20261005T004048234257Z/verification.json",
+        "historical_source_receipt_sha256": "c356e99f4e97d8b7ad6cc440b1ca7abb7c9563dcc8672c612d5a7217719fb018",
+        "r7_sources_pinned": 14,
+        "r7_source_errors": [],
+        "old_test_file_set_errors": []
+      },
+      "ui_repair_receipt_binding": {
+        "status": "PASS",
+        "checks": {
+          "before_captured_failures": true,
+          "after_all_seven_passed": true,
+          "before_after_same_case_ids": true,
+          "before_after_same_fixture": true,
+          "after_binds_current_source": true,
+          "source_changed": true,
+          "before_binds_preserved_r6_source": true,
+          "honest_execution_receipts": true
+        },
+        "receipt_sha256": {
+          "evidence/mvp/save-race-before.json": "8b84e4e23729af9b8e74f87c3bf8632050774d735bb66aaa4187181d20c17f2f",
+          "evidence/mvp/save-race-after.json": "c78c91ac92f4230b9c7d3892ec434a7917feb0774be4414760776574becb0d24"
+        },
+        "before_source_sha256": "c3986df5508c19dead28085bfe4a479c3a87f74dbf6f13cdf6bd2547869eab18",
+        "after_source_sha256": "2d644c17d041210f5a7691278a32911401944613bc7bdcb8d4f95901fbcd9393",
+        "before_source_reference": "evidence/r6/20261004T104558015957Z.json",
+        "before_source_reference_sha256": "d96ece393884844ae5f386ca01b6eb8106718361603b0adfa19e6ecc10bdb9da"
+      },
+      "protected_regression": {
+        "status": "PASS",
+        "scope": "Protected nine legacy checks",
+        "execution": "Temporary isolated working-tree copy",
+        "result": {
+          "at_utc": "2026-10-05T01:24:56.419907+00:00",
+          "python": "3.12.14",
+          "pydantic": "2.13.5",
+          "evidence_kind": "FRESH_EXECUTION",
+          "historical_R1_reproduced": false,
+          "v1_runtime_tested": false,
+          "passed": 9,
+          "failed": 0,
+          "checks": [
+            {
+              "id": "REC-CHECK-SOURCE",
+              "status": "PASS",
+              "detail": {
+                "source_files": 14,
+                "python_files": 13,
+                "historical_identity": "UNKNOWN"
+              }
+            },
+            {
+              "id": "REC-CHECK-TRACEABILITY",
+              "status": "PASS",
+              "detail": {
+                "requirements": 24,
+                "scenarios": 18,
+                "scope": "reference integrity only; semantics independently reviewed"
+              }
+            },
+            {
+              "id": "REC-CHECK-HISTORY",
+              "status": "PASS",
+              "detail": "Historical IDs reserved, no claim of original 32/32 reproduction."
+            },
+            {
+              "id": "REC-CORE-UNKNOWN",
+              "status": "PASS",
+              "detail": {
+                "jungle": "UNKNOWN",
+                "permission": "P3",
+                "recommended": "SHORT_TRADE",
+                "classification": "legacy behavior, not v1 coaching correctness"
+              }
+            },
+            {
+              "id": "REC-CORE-FAR",
+              "status": "PASS",
+              "detail": {
+                "jungle": "CONFIRMED_FAR",
+                "permission": "P4",
+                "recommended": "SHORT_TRADE",
+                "classification": "legacy behavior, not v1 coaching correctness"
+              }
+            },
+            {
+              "id": "REC-CORE-NEAR",
+              "status": "PASS",
+              "detail": {
+                "jungle": "CONFIRMED_NEAR",
+                "permission": "P2",
+                "recommended": "THREAT",
+                "classification": "legacy behavior, not v1 coaching correctness"
+              }
+            },
+            {
+              "id": "REC-CORE-COUNTERFACTUAL",
+              "status": "PASS",
+              "detail": "Controlled jungle-state changes and removing CS-approach opportunity; new REC check."
+            },
+            {
+              "id": "REC-CHECK-MIGRATION",
+              "status": "PASS",
+              "detail": "Verified known legacy gaps: 16 enums / 9 definitions; return_path does not affect output. Not a desired v1 invariant."
+            },
+            {
+              "id": "REC-CHECK-FROZEN-PAYLOAD",
+              "status": "PASS",
+              "detail": {
+                "payload_files": 27,
+                "scope": "frozen payload integrity"
+              }
+            }
+          ]
+        }
+      },
+      "old_regression": {
+        "status": "PASS",
+        "tests_discovered": 111,
+        "tests_run": 111,
+        "required_count": 111,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skip_details": [],
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "log_path": "old-regression.log"
+      },
+      "backup": {
+        "status": "PASS",
+        "tests_discovered": 23,
+        "tests_run": 23,
+        "required_count": null,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skip_details": [],
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "log_path": "backup.log"
+      },
+      "ui_save": {
+        "status": "PASS",
+        "receipt_path": "ui-save.json",
+        "receipt_sha256": "7c84a1249e9afe86448c3467c11739ce8a4f1823eea17a652b604b588e2fa9aa",
+        "source_path": "web_r4/app.js",
+        "source_sha256": "2d644c17d041210f5a7691278a32911401944613bc7bdcb8d4f95901fbcd9393",
+        "required_cases": 7,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "ui_delete_import": {
+        "status": "PASS",
+        "receipt_path": "ui-delete-import.json",
+        "receipt_sha256": "30f90971a069e3a348607e4031e48ea3a8e01e09dc7c5fb87c47bdd00da6f5c9",
+        "source_path": "web_r4/app.js",
+        "source_sha256": "2d644c17d041210f5a7691278a32911401944613bc7bdcb8d4f95901fbcd9393",
+        "required_cases": 2,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "ui_file_race": {
+        "status": "PASS",
+        "receipt_path": "ui-file-race.json",
+        "receipt_sha256": "04633f80a82a47d6baf3766144862189454e0fef48ef86328e073cc2251fb086",
+        "source_path": "web_r4/research.js",
+        "source_sha256": "51bd8489f45b38e82931af4df8551b193211557e8f09ed862ed05c0fed2d462d",
+        "required_cases": 1,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "postgame": {
+        "schema": {
+          "status": "PASS",
+          "tests_discovered": 13,
+          "tests_run": 13,
+          "required_count": 13,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "skip_details": [],
+          "expected_failures": 0,
+          "unexpected_successes": 0,
+          "log_path": "postgame-schema.log"
+        },
+        "pinned_source_integration": {
+          "status": "NOT_RUN",
+          "tests_planned": 4,
+          "tests_run": 0,
+          "skipped": 0,
+          "reason": "R7_POSTGAME_RAW_DIR or --postgame-raw-dir not supplied; preserved exact-byte private sources are unavailable to default CI",
+          "required_for_default_mvp_scope": false
+        },
+        "all_17_passed": false,
+        "coaching_accuracy_validated": false
+      }
+    },
+    "runner_errors": [],
+    "input_source_sha256": {
+      ".github/workflows/private-mvp-ci.yml": "0400961e25dec6ffc7c8e8b1c9e396d5595a1eaa67f8521801f2205d040aba5c",
+      "FREEZE_MANIFEST.json": "fdbda5b6847763d91945debb737a941bc3710ffdfc71743d7f0d4196bf9d0ef9",
+      "coach_audit/__init__.py": "868c53acda9ab1d49332f6648846ad4cf30126f41dea3708a68e4301eb2827ba",
+      "coach_audit/__main__.py": "3bb3df409e3424e19ff4baa7e2058cfbd251b0186b87396afc793dc3cd347572",
+      "coach_audit/extraction.py": "d43ce27a4bb15dc1d73a7d6c13ef4b36554e654959539eeacc7f954e18a9471f",
+      "coach_audit/postgame.py": "1041bd16e92c1bcd76c34421a141ce0c201ec937479ae11412f6530252aaba26",
+      "coach_audit/replay.py": "5a337e02d5f083e56d4dd8941646e495baadb49710bc0500cbc8afa49d775ac1",
+      "coach_audit/sufficiency.py": "4e851900de4d6a7afb078198b0e9d75d08893955212c79e6c5a2626127fb5473",
+      "coach_intake/__init__.py": "842d9350a262049699ed31065b9d8939b5e098271cc2cc84a40dccdb15d54773",
+      "coach_intake/__main__.py": "f352dc6edb5486b48340611767fbb14f1b589c547243fe897bbc582046a6d83a",
+      "coach_intake/audit.py": "a37cf14e335adfa8115f93d4b4c2c3524004cd3b472b609a40b72b2e7b432186",
+      "coach_intake/io.py": "7d5ec3f0ecadd9c2a7a1f3ceb6169b7e4648fabb833b28cf73f321c6e55f4049",
+      "coach_intake/video.py": "ce686e843cc17a3c0b3f3d3f6265c91ede7cb168b7209d0c5ceab1e3fc65173a",
+      "coach_v1/__init__.py": "5bf777370450f55aca6dabf4e7235e72fad4fb3b7f53a1125046ab790cb3dca2",
+      "coach_v1/__main__.py": "da42f47917ca3d373c937cfb1c81e79507dd2a91f02943c7aa1796622068de52",
+      "coach_v1/backup.py": "d2347aa3ea2d44f28b9cfdd1139bb585edc2674f48f47cf352d37bb6f6d062db",
+      "coach_v1/capture.py": "77f650ea018938d9959c2741b6d71c0ca3e46b1b462c5aeb37c9ccb467fdac45",
+      "coach_v1/engine.py": "37bb801a02df3464707fdd2012678d4fd174d7261c2df3765610abe47db5128a",
+      "coach_v1/models.py": "20366f44a66b17fba2eaa9a5e6f3ae21c9a7898475bc1dcdfc63de4facfa7ae8",
+      "coach_v1/research.py": "42912d1e7ac660c67b00514d7aa76b6d10252e77c0a478db55bc37ad21d3eb27",
+      "coach_v1/server.py": "b1601a55950438f5ec1093dfdccd0bce7bc393b6299e653b0a5aa103160581e9",
+      "coach_v1/state.py": "b0624cd06abcada3df414a4d1cf8e5e116c1cab6d0e786051106bd64bd51d025",
+      "coach_v1/storage.py": "45e4c4725fd516c66cf9348f1afe9aba8c8bebe8aae574939f8d47394f1ce6e0",
+      "contracts/r7/action_requirements.json": "12a28ab0f20cd88382bcf03af0862ffda5dfc091f44f46eadccb5a88c872bb3c",
+      "contracts/r7/sources.json": "0ad7374eeb4f7432f85578899d2935b4df666ce51b4d31f89b116c8b50cea962",
+      "contracts/r7/state_source_matrix.json": "786f56d4b4af9ddb95aff28e1a75ca4936ce9abc24f4b988ca10a7e6815ab1de",
+      "contracts/requirements.json": "39442744cade349c05f3ad8e5dbf5cf14101d1709617ee80f1eb3c26ac21874f",
+      "contracts/reserved_history_ids.json": "103eee1ef1722b5341944b1c420c3700b7cb043699bee9c17c5e3a2ea1993364",
+      "contracts/scenarios.json": "2f2685b81a2ecda03ff8fc5fc640e193d5e81b6f06300bbf0bd2e9baf8e3531d",
+      "docs/MVP_BACKUP.md": "d7041bb77117f0abf506f28df06bacfe306354acfa47be05f7904f119497e48d",
+      "docs/MVP_VALIDATION.md": "925f9bfec2d1adda47f52208904a37e9705faec153e7b3b12584b19c74b8ee29",
+      "evidence/mvp/ci-cost-basis.json": "4aa063a77308f8b51862ee01ae9e642f854570ff8cb68ad0bcbfb59ac67cf5d4",
+      "evidence/mvp/github-ci-visibility.json": "15cc9b3675ca317f9cfc4ae3bd97632869056f3aafa9bdce127a877f001c5e0c",
+      "evidence/mvp/save-race-after.json": "c78c91ac92f4230b9c7d3892ec434a7917feb0774be4414760776574becb0d24",
+      "evidence/mvp/save-race-before.json": "8b84e4e23729af9b8e74f87c3bf8632050774d735bb66aaa4187181d20c17f2f",
+      "evidence/r6/20261004T104558015957Z.json": "d96ece393884844ae5f386ca01b6eb8106718361603b0adfa19e6ecc10bdb9da",
+      "evidence/r7/20261005T004048234257Z/verification.json": "c356e99f4e97d8b7ad6cc440b1ca7abb7c9563dcc8672c612d5a7217719fb018",
+      "evidence/r7/baseline-tree.json": "bd5ca914d4ed2aa30ff67b40407934ed3131cda14e2bd0b06fa3f64adf3e230e",
+      "examples/r3/compare-wait-retreat.json": "e74764c9151df568061c730fda8ada0fa9d45fc60325785a8423563d0113e391",
+      "examples/r3/compare-wait-retreat.result.json": "18b009b7326b5d3f246d260bef5c370d98090159d588840ba94761bebbc0c423",
+      "examples/r3/insufficient-evidence.json": "e91fd29460cd5ec819415bae2e3b23a056386a6117bab20194d0a0e96ea217d6",
+      "examples/r3/insufficient-evidence.result.json": "8a5e9f244f35f96c30b0e7fc8b26eacccc2d981888946b8bc6604becdebf6ade",
+      "fixtures/r7-continuation/representative-overlay.json": "1ce4e1e63f5ce87f34abf878ec5365392d2562ced2e3152041e4933cb913b083",
+      "fixtures/r7-continuation/structured-source-reference.json": "15dca7c4d9034ba6df5f6f192ae9b3bcfb738f6922c091880263875fb5bc4e0b",
+      "fixtures/r7-continuation/visual-reference-initial.json": "11347d22c84b4291ddc1d5bcd0d60291ff283bde93b997ee0a03d454bb9501ab",
+      "fixtures/r7-player-grounded/player-reference-initial.json": "591f3d2d2d25c4e0423e15ff74480723a39cd4a4702d9da0759b28c4d45a98a8",
+      "fixtures/r7-player-grounded/representative-overlay.json": "70fa14bc49aa86c95b6d8e4553ae9c4d0881ed26967c9467cc0bd1adce79a7b5",
+      "fixtures/r7-real/representative-overlay.json": "3dcb9f75617bd4319824c0c6f143f2e0e6feb5c3bd6a130e94e273866c05cb28",
+      "fixtures/r7-real/visual-reference-initial.json": "90284119fdf6e6edf078e5ee0bdf3f70cc54302e62287d5b04c21cfcc0491cde",
+      "fixtures/r7/documentation_reference.json": "26cbe67f55ccd5535cc71d6e3b024876ce1018877f4504f91cbfd3290af30d79",
+      "fixtures/r7/representative_set.json": "06bae4dceed14134d538e68d943c6b8800db2622b4b55b6a64d5318289a4c62f",
+      "legacy/README.md": "8384b2accba03e35efebda47b7fc79ac25056d1866d83099125b1bda6b1238fd",
+      "legacy/backend/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "legacy/backend/decision/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "legacy/backend/decision/actions.py": "94a1d770b615230cc6cf890c1606edce125ba2c684a82aa3051934610a144e3a",
+      "legacy/backend/decision/engine.py": "ede22fbf3575b5c4958cee7775a07eee463f27045baef794824a900a243dabc7",
+      "legacy/backend/decision/evaluator.py": "19e2c759631db60dbe9284d11b2e96ed076ea72fdeed024c2d21de34c23b7544",
+      "legacy/backend/decision/models.py": "417803b3664c224d24fa530617015954d62f76610e16a38a3b086d48b7ff18e0",
+      "legacy/backend/decision/opportunity.py": "018de17118c611423b2ddd1727ecfc6258c3f36d43b48c4a3265f740517de872",
+      "legacy/backend/decision/permission.py": "0f1c6505d6e6f5c89593f755b5d5048211f6de7d3efaba1b12d293903b497f62",
+      "legacy/backend/decision/reason_codes.py": "90c9fb53e77557192abc9bdcc97a631daa6d114d6259d0ca82707d454a9022e2",
+      "legacy/backend/decision/selector.py": "e937c132ffb26151163ffdb07f36d9e1ca754f31a5d77ccf6d534dfaf967a3a2",
+      "legacy/backend/decision/trace.py": "d45753079564302315cfb65dce369c1b2fc57c8aeaf90854e1f6420a1af4fafb",
+      "legacy/backend/state/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "legacy/backend/state/models.py": "e18b47809c6b2fe5eb012da6cd837b7349a4f986304b6cb44b303c208e27b5ff",
+      "requirements-r3.txt": "0327507575147a456e617e6222e4a8a9baf8a914053e324f5da5b2ef081cb580",
+      "schemas/r3-review-input.schema.json": "523cda1ca6abd830b607f8a1858e219a0165ff561db70e85f338fec40d571a22",
+      "scripts/audit_player_pov_r7.py": "43e506bae25881345f63e5788552436f7784c79e9bc09db31aaaed37c1587dae",
+      "scripts/audit_real_r7.py": "f0468cbd437fa63e7fd982b3bfc322678cd76caf47761d34be064a6390f19e81",
+      "scripts/browser_mvp.py": "77ad8e7a70c63548db336a84905201343567cb2096cb4a90b1ecadc5a068678a",
+      "scripts/browser_r4.py": "2f037208175a447acd9b357ee136173980649b4050474aa73652bd4f466c7ecf",
+      "scripts/browser_r6.py": "593d64e1b9748f911577173d7ccefb5ee5df8a2fc9f650ee1af1109fd3a4b9a0",
+      "scripts/collect_local.py": "062e939aa0cf02d6a005983d188c36e9bd5ab782dd58f3132a8babd34c2a4ae8",
+      "scripts/verify_mvp.py": "cb58b00c733808e08259a378eb7867be7c67812ee2b6d5a917b6e971e948a3c3",
+      "scripts/verify_r3.py": "22f4e0177cf2ca651317aadca5f6b21ceef6f62378255d2820f3e9e27e8ca0ef",
+      "scripts/verify_r4.py": "985ae827af274c197f63dd815ffe00b1a276a1a6e1ca3399596a497dea3bc327",
+      "scripts/verify_r5.py": "1dacee0920f851d3e91a9e06524835642001ce2a0980881ec6a20353b534d544",
+      "scripts/verify_r6.py": "0bf1462dc79fa002f50e35418ef83948a17c25e23518ba5eb63869b536499146",
+      "scripts/verify_r7.py": "2d1b0266eba823163d6e16b4a14ad1f074a57eca1a8c5f744e887e044cb07506",
+      "scripts/verify_r7_source_reference.py": "05e62596bd574c600fb83c807773dd882e4ffc97d17137457f28f9780654f7fa",
+      "scripts/video_report.py": "3319e7e3e9ffcd3a97d53aef0850f64acd021e77f0380b85c1563c8c124ed606",
+      "tests_mvp/__init__.py": "64807a70a050b4cf85a9e7689e3ab496d6ce6bde4d5a4f79b6975047172fe83f",
+      "tests_mvp/browser_save_race.cjs": "a28e764ba6a8b9c005d78136de3fdc7a5e45109642fc037e1b3d31bfb452cfbf",
+      "tests_mvp/test_backup.py": "835eada77781f3988834d65d40b20b4d42bd58d37230b9edd20ab5ab1e4b781f",
+      "tests_mvp/ui_save_race.cjs": "497293ac5003089975e32f2e9073894eca0cd34cda8a26f73b414601a9f1ce08",
+      "tests_r3/__init__.py": "9ad489ee881d706c740d2cd597f637cc7f979e52cf9dbb5e381cf5c337530dfc",
+      "tests_r3/helpers.py": "020ceed97455798f06c29f1abac5c3b9896ca5ccd09d7b11b895584cd1030902",
+      "tests_r3/test_engine.py": "8aa473d717894024a93c34abe0a2c73c4e58a2cff3379b8ab9c0afc7935c4d23",
+      "tests_r3/test_state.py": "4bf26174a809bb6a95b090b06f547015b30193e79c32d958f12022f55b3ae67e",
+      "tests_r4/__init__.py": "2f873f3aeb588668b2f9e74322f32677a907f2ed21f3bc3bec4f8dc3df9af24f",
+      "tests_r4/browser.cjs": "ead6a8d18cb59e8142bfe0e1ddb965172462a37c7216efffca4f244dfb5181fc",
+      "tests_r4/test_capture.py": "ebb4a6a06142904e8623dcc881aa190c6cc65c0aafc793ce2d775da492fe6ff4",
+      "tests_r4/test_http.py": "b1cfb96191dac8a4b4f865d1fbb9bcba49e5796d44395cd586343fa9335ac4c4",
+      "tests_r4/test_storage.py": "61bbbb55373c59157d1abc613bdf9b2eb1bcefa8200fddb4d46500580e8c8edf",
+      "tests_r4/ui_races.cjs": "e09988a361dc105ecef72435815b7f88455d37ee7a207fce0f92114f203f4f4c",
+      "tests_r5/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tests_r5/test_intake.py": "4ce304d19bfd53827a6f2443d7b9033afacb449d591fa33afcd5df43ba0ca791",
+      "tests_r5/test_transport.py": "aeaec2f86c83ad6c593f67e47bcf4a342e1e4fcd9ef90485c7fde0226a9a9bc2",
+      "tests_r5/test_video.py": "9aac55af47eac71c4897588af258cb8ad0efb07cf58376b4e35aa24df4cabbbf",
+      "tests_r6/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tests_r6/browser.cjs": "e61ac49141dd79b41534ffbb0e914fb89cf570e2688056d981af79b697a1982b",
+      "tests_r6/test_api.py": "4f7f65efc524e5805d12263a0c33393f93f67205c2e9866a3d43ac541a98fcb8",
+      "tests_r6/test_research.py": "1c44530b01ff8f550027b9411ac6dc70e5657c055378fd00dda0649a34d91ef0",
+      "tests_r6/ui_file_race.cjs": "d9353c0f5d221e0a5ebf39a21587bdf68a764fca8a0a74342ae6860d2a72284b",
+      "tests_r7/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tests_r7/test_audit.py": "a861aefd326a12aa4bec35c0781421774d2a237e030a76f28bb76b577f36b620",
+      "tests_r7_player_grounded/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tests_r7_player_grounded/test_postgame.py": "6a6677990340774c72de849cb6b1d0483b79574efc216cc32fd4d2acb17f89e9",
+      "validation/__init__.py": "88a219d794d05c60efebfcbf2cd8d89fb8062826ef88f07f64025c41487f1027",
+      "validation/__main__.py": "7dd2d8ee8c3ba71531fb2de98bb529762c8ecc615badfb748c0b315f73818fc5",
+      "web_r4/app.js": "2d644c17d041210f5a7691278a32911401944613bc7bdcb8d4f95901fbcd9393",
+      "web_r4/index.html": "680714346cfff1a2bf2856fea267012cf6c13d224d64d5e66a44634c1fbddb70",
+      "web_r4/research.js": "51bd8489f45b38e82931af4df8551b193211557e8f09ed862ed05c0fed2d462d",
+      "web_r4/styles.css": "24fd8a7e75fa5bb26a053ad2117d49352f1396978c44b13f52e830d4473aec0d"
+    },
+    "inputs_changed_during_run": [],
+    "historical_evidence": {
+      "files_checked": 153,
+      "before_manifest_sha256": "bf9061cffc1c065958eef6b572a57eab4e6449534fc4f52f9b8bc31088ea3424",
+      "after_manifest_sha256": "bf9061cffc1c065958eef6b572a57eab4e6449534fc4f52f9b8bc31088ea3424",
+      "changed": []
+    },
+    "github_actions_run_status": "STEP_EXECUTION_ONLY_WORKFLOW_CONCLUSION_NOT_OBSERVED",
+    "github_actions_context": {
+      "run_id": "37251321530",
+      "run_attempt": "1",
+      "commit_sha": "915f2a17ae4c6b4cf4d28841c12c6cc4ff91c4d2"
+    },
+    "full_postgame_17_passed": false,
+    "real_match_coaching_validation_passed": false,
+    "coaching_enabled": false,
+    "browser_e2e_executed": false,
+    "historical_R1_reproduced": false
+  },
+  "browser_execution": {
+    "runner_receipt": {
+      "verifier": "Actual browser subprocess and isolated synthetic server launcher",
+      "started_at": "2026-10-05T01:24:56.471709+00:00",
+      "finished_at": "2026-10-05T01:25:06.619318+00:00",
+      "server_started": true,
+      "process_exit_code": 0,
+      "runner_error": null,
+      "passed": true,
+      "command": [
+        "node",
+        "tests_mvp/browser_save_race.cjs"
+      ],
+      "chromium_executable_override": true,
+      "source_sha256": {
+        "web_r4/app.js": "2d644c17d041210f5a7691278a32911401944613bc7bdcb8d4f95901fbcd9393",
+        "web_r4/index.html": "680714346cfff1a2bf2856fea267012cf6c13d224d64d5e66a44634c1fbddb70",
+        "web_r4/styles.css": "24fd8a7e75fa5bb26a053ad2117d49352f1396978c44b13f52e830d4473aec0d",
+        "coach_v1/server.py": "b1601a55950438f5ec1093dfdccd0bce7bc393b6299e653b0a5aa103160581e9",
+        "coach_v1/storage.py": "45e4c4725fd516c66cf9348f1afe9aba8c8bebe8aae574939f8d47394f1ce6e0",
+        "examples/r3/compare-wait-retreat.json": "e74764c9151df568061c730fda8ada0fa9d45fc60325785a8423563d0113e391",
+        "tests_mvp/browser_save_race.cjs": "a28e764ba6a8b9c005d78136de3fdc7a5e45109642fc037e1b3d31bfb452cfbf",
+        "scripts/browser_mvp.py": "77ad8e7a70c63548db336a84905201343567cb2096cb4a90b1ecadc5a068678a"
+      },
+      "github_binding": {
+        "GITHUB_SHA": "915f2a17ae4c6b4cf4d28841c12c6cc4ff91c4d2",
+        "GITHUB_RUN_ID": "37251321530",
+        "GITHUB_RUN_ATTEMPT": "1",
+        "GITHUB_REPOSITORY": "kco994553-star/lol-coach",
+        "GITHUB_WORKFLOW": "MVP regression checks",
+        "GITHUB_JOB": "browser-regression"
+      },
+      "expected_browser_check_count": 32,
+      "browser_receipt_validation": {
+        "receipt_present": true,
+        "receipt_passed": true,
+        "actual_fresh_browser": true,
+        "browser_version_present": true,
+        "check_count_exact": true,
+        "check_ids_unique": true,
+        "all_checks_passed": true,
+        "no_first_failure": true,
+        "no_page_errors": true,
+        "tested_source_hashes_match_current": true,
+        "launcher_source_hashes_unchanged_during_run": true
+      },
+      "browser_receipt_error": null,
+      "browser_receipt_present": true,
+      "credential_handling": "Isolated temporary token file; token values and Authorization headers excluded from logs"
+    },
+    "browser_receipt": {
+      "verifier": "Actual Playwright Chromium browser with isolated coach_v1.server and SQLite; not Node VM",
+      "scope": "Affected synthetic save race, revision acknowledgement, exact draft retention, reload, native cancellation, one synthetic analysis, 390px overflow and page errors",
+      "evidence_kind": "FRESH_BROWSER_EXECUTION",
+      "started_at": "2026-10-05T01:24:57.070Z",
+      "finished_at": "2026-10-05T01:25:06.454Z",
+      "node_version": "v22.23.3",
+      "browser_version": "154.0.8037.57",
+      "source_sha256": {
+        "web_r4/app.js": "2d644c17d041210f5a7691278a32911401944613bc7bdcb8d4f95901fbcd9393",
+        "web_r4/index.html": "680714346cfff1a2bf2856fea267012cf6c13d224d64d5e66a44634c1fbddb70",
+        "web_r4/styles.css": "24fd8a7e75fa5bb26a053ad2117d49352f1396978c44b13f52e830d4473aec0d",
+        "coach_v1/server.py": "b1601a55950438f5ec1093dfdccd0bce7bc393b6299e653b0a5aa103160581e9",
+        "coach_v1/storage.py": "45e4c4725fd516c66cf9348f1afe9aba8c8bebe8aae574939f8d47394f1ce6e0",
+        "examples/r3/compare-wait-retreat.json": "e74764c9151df568061c730fda8ada0fa9d45fc60325785a8423563d0113e391",
+        "tests_mvp/browser_save_race.cjs": "a28e764ba6a8b9c005d78136de3fdc7a5e45109642fc037e1b3d31bfb452cfbf",
+        "scripts/browser_mvp.py": "77ad8e7a70c63548db336a84905201343567cb2096cb4a90b1ecadc5a068678a"
+      },
+      "passed": true,
+      "checks": [
+        {
+          "id": "initial-real-save-v1",
+          "passed": true,
+          "actual": {
+            "http_status": 200,
+            "session_id": "45505142-523d-4798-8d7c-512a7bc9fa37",
+            "revision": 1,
+            "request_expected_revision": 0,
+            "snapshot_session_id": "45505142-523d-4798-8d7c-512a7bc9fa37",
+            "all_observation_session_ids_match_actual_server_id": true
+          }
+        },
+        {
+          "id": "initial-v1-backend-200",
+          "passed": true,
+          "actual": {
+            "status": 200
+          }
+        },
+        {
+          "id": "initial-v1-independently-stored",
+          "passed": true,
+          "actual": {
+            "revision": 1
+          }
+        },
+        {
+          "id": "held-put-actually-commits-v2",
+          "passed": true,
+          "actual": {
+            "http_status": 200,
+            "committed_revision": 2,
+            "request_expected_revision": 1
+          }
+        },
+        {
+          "id": "backend-v2-before-browser-ack-backend-200",
+          "passed": true,
+          "actual": {
+            "status": 200
+          }
+        },
+        {
+          "id": "backend-v2-visible-before-response-release",
+          "passed": true,
+          "actual": {
+            "revision": 2,
+            "objective": "Browser submitted edit for v2"
+          }
+        },
+        {
+          "id": "draft-entered-before-v2-ack",
+          "passed": true,
+          "actual": {
+            "current_label": "MVP actual browser save race · 저장 버전 1",
+            "exact_draft": true,
+            "save_disabled": true
+          }
+        },
+        {
+          "id": "real-v2-ack-exact-draft-retained",
+          "passed": true,
+          "actual": {
+            "exact_draft": true
+          }
+        },
+        {
+          "id": "real-v2-ack-analysis-disabled",
+          "passed": true,
+          "actual": {
+            "analyze_disabled": true
+          }
+        },
+        {
+          "id": "next-real-put-expects-v2-and-saves-v3",
+          "passed": true,
+          "actual": {
+            "request_expected_revision": 2,
+            "http_status": 200,
+            "committed_revision": 3
+          }
+        },
+        {
+          "id": "v3-save-canonical-editor",
+          "passed": true,
+          "actual": {
+            "exact_canonical": true,
+            "analyze_disabled": false
+          }
+        },
+        {
+          "id": "backend-after-v3-backend-200",
+          "passed": true,
+          "actual": {
+            "status": 200
+          }
+        },
+        {
+          "id": "backend-v3-has-newer-draft",
+          "passed": true,
+          "actual": {
+            "revision": 3,
+            "objective": "Browser newer draft while v2 response held",
+            "stored_case_semantically_matches_ack": true
+          }
+        },
+        {
+          "id": "reload-reopens-real-v3",
+          "passed": true,
+          "actual": {
+            "exact_canonical_from_stored_get": true,
+            "current_label": "MVP actual browser save race · 저장 버전 3",
+            "analyze_disabled": false,
+            "stored_case_semantically_matches_ack": true,
+            "ack_editor_sha256": "b16481b0ad380dca02bcc253506f0c56e78ba24a295e415435881d3ecc737e5a",
+            "stored_get_editor_sha256": "bb833c5ec3daa7b3020256d170b0a85bca0a211ba43ca9b7a8d092bacd1285c0",
+            "reloaded_editor_sha256": "bb833c5ec3daa7b3020256d170b0a85bca0a211ba43ca9b7a8d092bacd1285c0"
+          }
+        },
+        {
+          "id": "real-synthetic-analysis-of-v3",
+          "passed": true,
+          "actual": {
+            "submission_status": 202,
+            "job_id": "4f40fceb-82c7-4af3-b99c-e29d2e72e6b5",
+            "job_input_revision": 3,
+            "report_input_revision": 3,
+            "stale": false,
+            "objective": "Browser newer draft while v2 response held"
+          }
+        },
+        {
+          "id": "390px-no-horizontal-overflow",
+          "passed": true,
+          "actual": {
+            "scroll_width": 390,
+            "inner_width": 390
+          }
+        },
+        {
+          "id": "dirty-refreshed-reopen-cancel-native-confirm",
+          "passed": true,
+          "actual": {
+            "action": "dirty-refreshed-reopen-cancel",
+            "type": "confirm",
+            "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+            "response": "dismiss"
+          }
+        },
+        {
+          "id": "dirty-refreshed-reopen-cancel-exact-draft-retained",
+          "passed": true,
+          "actual": {
+            "editor_sha256": "8943b04def3c742a97be3096f9c43ce382a5c103c926f961315fd2734cf93beb",
+            "expected_sha256": "8943b04def3c742a97be3096f9c43ce382a5c103c926f961315fd2734cf93beb"
+          }
+        },
+        {
+          "id": "dirty-refreshed-reopen-cancel-current-session-retained",
+          "passed": true,
+          "actual": {
+            "current_label": "MVP actual browser save race · 저장 버전 3"
+          }
+        },
+        {
+          "id": "dirty-refreshed-reopen-cancel-analysis-disabled",
+          "passed": true,
+          "actual": {
+            "analyze_disabled": true
+          }
+        },
+        {
+          "id": "dirty-load-example-cancel-native-confirm",
+          "passed": true,
+          "actual": {
+            "action": "dirty-load-example-cancel",
+            "type": "confirm",
+            "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+            "response": "dismiss"
+          }
+        },
+        {
+          "id": "dirty-load-example-cancel-exact-draft-retained",
+          "passed": true,
+          "actual": {
+            "editor_sha256": "8943b04def3c742a97be3096f9c43ce382a5c103c926f961315fd2734cf93beb",
+            "expected_sha256": "8943b04def3c742a97be3096f9c43ce382a5c103c926f961315fd2734cf93beb"
+          }
+        },
+        {
+          "id": "dirty-load-example-cancel-current-session-retained",
+          "passed": true,
+          "actual": {
+            "current_label": "MVP actual browser save race · 저장 버전 3"
+          }
+        },
+        {
+          "id": "dirty-load-example-cancel-analysis-disabled",
+          "passed": true,
+          "actual": {
+            "analyze_disabled": true
+          }
+        },
+        {
+          "id": "dirty-import-cancel-native-confirm",
+          "passed": true,
+          "actual": {
+            "action": "dirty-import-cancel",
+            "type": "confirm",
+            "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+            "response": "dismiss"
+          }
+        },
+        {
+          "id": "dirty-import-cancel-exact-draft-retained",
+          "passed": true,
+          "actual": {
+            "editor_sha256": "8943b04def3c742a97be3096f9c43ce382a5c103c926f961315fd2734cf93beb",
+            "expected_sha256": "8943b04def3c742a97be3096f9c43ce382a5c103c926f961315fd2734cf93beb"
+          }
+        },
+        {
+          "id": "dirty-import-cancel-current-session-retained",
+          "passed": true,
+          "actual": {
+            "current_label": "MVP actual browser save race · 저장 버전 3"
+          }
+        },
+        {
+          "id": "dirty-import-cancel-analysis-disabled",
+          "passed": true,
+          "actual": {
+            "analyze_disabled": true
+          }
+        },
+        {
+          "id": "backend-after-native-cancellations-backend-200",
+          "passed": true,
+          "actual": {
+            "status": 200
+          }
+        },
+        {
+          "id": "native-cancellations-leave-backend-v3",
+          "passed": true,
+          "actual": {
+            "revision": 3,
+            "objective": "Browser newer draft while v2 response held"
+          }
+        },
+        {
+          "id": "no-page-errors",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "id": "tested-source-unchanged-during-run",
+          "passed": true,
+          "actual": {
+            "web_r4/app.js": "2d644c17d041210f5a7691278a32911401944613bc7bdcb8d4f95901fbcd9393",
+            "web_r4/index.html": "680714346cfff1a2bf2856fea267012cf6c13d224d64d5e66a44634c1fbddb70",
+            "web_r4/styles.css": "24fd8a7e75fa5bb26a053ad2117d49352f1396978c44b13f52e830d4473aec0d",
+            "coach_v1/server.py": "b1601a55950438f5ec1093dfdccd0bce7bc393b6299e653b0a5aa103160581e9",
+            "coach_v1/storage.py": "45e4c4725fd516c66cf9348f1afe9aba8c8bebe8aae574939f8d47394f1ce6e0",
+            "examples/r3/compare-wait-retreat.json": "e74764c9151df568061c730fda8ada0fa9d45fc60325785a8423563d0113e391",
+            "tests_mvp/browser_save_race.cjs": "a28e764ba6a8b9c005d78136de3fdc7a5e45109642fc037e1b3d31bfb452cfbf",
+            "scripts/browser_mvp.py": "77ad8e7a70c63548db336a84905201343567cb2096cb4a90b1ecadc5a068678a"
+          }
+        }
+      ],
+      "backend_snapshots": [
+        {
+          "label": "initial-v1",
+          "observed_at": "2026-10-05T01:25:05.080Z",
+          "http_status": 200,
+          "session_id": "45505142-523d-4798-8d7c-512a7bc9fa37",
+          "revision": 1,
+          "objective": "합성 사례: 경험치와 다음 선택권 보존",
+          "case_sha256": "c89a59281860577ae5d1de0e851a3f0637311927b40a90802a042cdf0b71603b"
+        },
+        {
+          "label": "backend-v2-before-browser-ack",
+          "observed_at": "2026-10-05T01:25:05.157Z",
+          "http_status": 200,
+          "session_id": "45505142-523d-4798-8d7c-512a7bc9fa37",
+          "revision": 2,
+          "objective": "Browser submitted edit for v2",
+          "case_sha256": "a284887d6509999ecf425de1a009ff1b45b734ff58809b1d567d10ed28550ee2"
+        },
+        {
+          "label": "backend-after-v3",
+          "observed_at": "2026-10-05T01:25:05.487Z",
+          "http_status": 200,
+          "session_id": "45505142-523d-4798-8d7c-512a7bc9fa37",
+          "revision": 3,
+          "objective": "Browser newer draft while v2 response held",
+          "case_sha256": "41b20edbf53727998e0bb3c9ee3be1625622a6e331ff5121bf2978079caffd74"
+        },
+        {
+          "label": "backend-after-native-cancellations",
+          "observed_at": "2026-10-05T01:25:06.453Z",
+          "http_status": 200,
+          "session_id": "45505142-523d-4798-8d7c-512a7bc9fa37",
+          "revision": 3,
+          "objective": "Browser newer draft while v2 response held",
+          "case_sha256": "41b20edbf53727998e0bb3c9ee3be1625622a6e331ff5121bf2978079caffd74"
+        }
+      ],
+      "ui_snapshots": [
+        {
+          "label": "typed-draft-before-release",
+          "observed_at": "2026-10-05T01:25:05.400Z",
+          "current_label": "MVP actual browser save race · 저장 버전 1",
+          "editor_sha256": "bae6a66244d3f66c074b4e0bae33b64e4c9cbdc5d3693ddf0c468100edebd9c5",
+          "exact_editor_match": true,
+          "editor_objective": "Browser newer draft while v2 response held",
+          "analyze_disabled": true,
+          "save_disabled": true,
+          "report_hidden": true,
+          "notice": "입력을 저장했습니다. 분석 실행으로 이어가세요."
+        },
+        {
+          "label": "after-real-v2-ack",
+          "observed_at": "2026-10-05T01:25:05.425Z",
+          "current_label": "MVP actual browser save race · 저장 버전 2",
+          "editor_sha256": "bae6a66244d3f66c074b4e0bae33b64e4c9cbdc5d3693ddf0c468100edebd9c5",
+          "exact_editor_match": true,
+          "editor_objective": "Browser newer draft while v2 response held",
+          "analyze_disabled": true,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "요청한 입력은 저장했습니다. 저장 중 수정한 초안은 그대로 남아 있으니 추가 저장하세요."
+        },
+        {
+          "label": "after-v3-save",
+          "observed_at": "2026-10-05T01:25:05.484Z",
+          "current_label": "MVP actual browser save race · 저장 버전 3",
+          "editor_sha256": "b16481b0ad380dca02bcc253506f0c56e78ba24a295e415435881d3ecc737e5a",
+          "exact_editor_match": true,
+          "editor_objective": "Browser newer draft while v2 response held",
+          "analyze_disabled": false,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "입력을 저장했습니다. 분석 실행으로 이어가세요."
+        },
+        {
+          "label": "reloaded-v3",
+          "observed_at": "2026-10-05T01:25:05.624Z",
+          "current_label": "MVP actual browser save race · 저장 버전 3",
+          "editor_sha256": "bb833c5ec3daa7b3020256d170b0a85bca0a211ba43ca9b7a8d092bacd1285c0",
+          "exact_editor_match": true,
+          "editor_objective": "Browser newer draft while v2 response held",
+          "analyze_disabled": false,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "저장한 사례를 열었습니다."
+        },
+        {
+          "label": "dirty-refreshed-reopen-cancel-after-cancel",
+          "observed_at": "2026-10-05T01:25:06.385Z",
+          "current_label": "MVP actual browser save race · 저장 버전 3",
+          "editor_sha256": "8943b04def3c742a97be3096f9c43ce382a5c103c926f961315fd2734cf93beb",
+          "exact_editor_match": true,
+          "editor_objective": "Browser dirty draft kept after native cancellation",
+          "analyze_disabled": true,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "복기 결과를 저장했습니다."
+        },
+        {
+          "label": "dirty-load-example-cancel-after-cancel",
+          "observed_at": "2026-10-05T01:25:06.417Z",
+          "current_label": "MVP actual browser save race · 저장 버전 3",
+          "editor_sha256": "8943b04def3c742a97be3096f9c43ce382a5c103c926f961315fd2734cf93beb",
+          "exact_editor_match": true,
+          "editor_objective": "Browser dirty draft kept after native cancellation",
+          "analyze_disabled": true,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "복기 결과를 저장했습니다."
+        },
+        {
+          "label": "dirty-import-cancel-after-cancel",
+          "observed_at": "2026-10-05T01:25:06.447Z",
+          "current_label": "MVP actual browser save race · 저장 버전 3",
+          "editor_sha256": "8943b04def3c742a97be3096f9c43ce382a5c103c926f961315fd2734cf93beb",
+          "exact_editor_match": true,
+          "editor_objective": "Browser dirty draft kept after native cancellation",
+          "analyze_disabled": true,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "복기 결과를 저장했습니다."
+        }
+      ],
+      "native_dialogs": [
+        {
+          "action": "dirty-refreshed-reopen-cancel",
+          "type": "confirm",
+          "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+          "response": "dismiss"
+        },
+        {
+          "action": "dirty-load-example-cancel",
+          "type": "confirm",
+          "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+          "response": "dismiss"
+        },
+        {
+          "action": "dirty-import-cancel",
+          "type": "confirm",
+          "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+          "response": "dismiss"
+        }
+      ],
+      "actual_browser_write_requests": [
+        {
+          "at": "2026-10-05T01:25:05.029Z",
+          "route": "/dev/v1/sessions",
+          "method": "POST",
+          "title": "MVP actual browser save race"
+        },
+        {
+          "at": "2026-10-05T01:25:05.047Z",
+          "route": "/dev/v1/sessions/45505142-523d-4798-8d7c-512a7bc9fa37/case",
+          "method": "PUT",
+          "expected_revision": 0,
+          "objective": "합성 사례: 경험치와 다음 선택권 보존"
+        },
+        {
+          "at": "2026-10-05T01:25:05.146Z",
+          "route": "/dev/v1/sessions/45505142-523d-4798-8d7c-512a7bc9fa37/case",
+          "method": "PUT",
+          "expected_revision": 1,
+          "objective": "Browser submitted edit for v2"
+        },
+        {
+          "at": "2026-10-05T01:25:05.460Z",
+          "route": "/dev/v1/sessions/45505142-523d-4798-8d7c-512a7bc9fa37/case",
+          "method": "PUT",
+          "expected_revision": 2,
+          "objective": "Browser newer draft while v2 response held"
+        },
+        {
+          "at": "2026-10-05T01:25:05.661Z",
+          "route": "/dev/v1/sessions/45505142-523d-4798-8d7c-512a7bc9fa37/reviews",
+          "method": "POST",
+          "expected_revision": 3
+        }
+      ],
+      "page_errors": [],
+      "first_failure": null
+    },
+    "evidence_directory": "/home/runner/work/lol-coach/lol-coach/evidence/mvp/browser-20261005T012456471595Z-c6746a7c"
+  },
+  "real_player_verification": {
+    "direct": 0,
+    "derived": 0,
+    "complete_reference": 0,
+    "same_match_pair": 0,
+    "decision_n": 0,
+    "coach_n": 0,
+    "accuracy": null
+  },
+  "historical_failures": [
+    "evidence/mvp/ci-first-failure.json",
+    "evidence/mvp/browser-first-failure.json",
+    "evidence/mvp/browser-reload-assumption-repair.json"
+  ],
+  "no_raw_personal_media_uploaded": true
+}
