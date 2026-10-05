@@ -1,5 +1,19 @@
 # MAIN EXECUTION CLAIM
 
+status: RUNNING
+run_token: main-20261005T0318-research-closeout-root
+writer_active: true
+owner: root Main Work
+canonical_main: ed533fd980f47313014b7874e171ca4c5f1a2d6b
+pr: 2 MERGED
+verified_ci: 37258742782 SUCCESS / actual Chrome46 / regression PASS
+scope: documentation/evidence closeout; tested source bytes unchanged
+coordination_ref: work/main-execution-claim
+
+Prior claim history preserved below.
+
+# MAIN EXECUTION CLAIM
+
 status: CI_PENDING
 run_token: main-20261005T0315-research-ci-closeout-root
 writer_active: false
