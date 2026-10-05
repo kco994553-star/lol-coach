@@ -1,3 +1,28 @@
+# Latest delta — PR7 verifier completion-boundary repair
+
+Actual first run37270809307 browserFAIL retained, regressionPASS189inputs.
+Independent scheduling reproduction found only notice changed after cacheclear;
+existing completed-delete notice now binds before-state. Product39ae97 unchanged,
+89 required checks unchanged. Fresh local required061833/1db93441 PASS; actual
+repaired browser and gatedmerge/postmerge pending. Continue manual draft capture
+after PR7; only Player/preaction dependency parked, realCoachN0/null.
+
+---
+
+# Current status delta — note-history recovery
+
+Actual PR6 merged594ef3c and terminalPR37268750816/post37268897569 SUCCESS:
+Chrome79/requiredregression/all176hashes verified. New explicit recovery and
+same-source deletion privacy repair localrequiredPASS189inputs/current39ae97ef;
+first0/5 and deletion0/3 preserved, final5+3PASS. Actual browser89/remotepublication
+still required. Frozen/old tests/history unchanged; no schema/API/core change.
+Tool-first-use record docs/TOOL_USAGE.md; no external service project/deploy.
+Actual Player/Decision/CoachN0, accuracy null. Product NOT_COMPLETE. Only player
+independentreference/preaction dependency parked; internal manual pregame draft
+capture next. Previous statuses below remain historical.
+
+---
+
 # Latest implementation delta — 2026-10-05 KST
 
 PR3 navigation/delete, PR4 saved-note history and PR5 current/stale errors are

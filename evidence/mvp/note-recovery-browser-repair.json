@@ -1,0 +1,19 @@
+{
+  "classification": "REPLAN_VERIFIER_COMPLETION_BOUNDARY",
+  "failed_run": 37270809307,
+  "attempt": 1,
+  "failed_tested_commit": "256b4ba245064cde87aa8ab1b7e48133768d860c",
+  "failed_tree": "ae357a1a67cbfbb596f9b74852e74eabac80fbb4",
+  "failure_receipt": "evidence/mvp/note-recovery-ci-37270809307-failure.json",
+  "failure_id": "note-recovery-current-delete-cannot-recover-delayed-removed-preview",
+  "browser_test_before_sha256": "bcae2cf14a7e43b7115ddb484f852c96e8d80bc0e9e96127ce308e566369d6c4",
+  "browser_test_after_sha256": "0ede01ad631c8062f569096f415680cfa37afc525757b321cf4a9938a62d3c46",
+  "archived_before": "evidence/mvp/note-recovery-browser-sources/bcae2cf14a7e43b7115ddb484f852c96e8d80bc0e9e96127ce308e566369d6c4.cjs",
+  "production_research_sha256": "39ae97ef2e9623961f054e9c07e5460255dc4664d0387abda3f0bd56fe6e8978",
+  "required_browser_checks": 89,
+  "recovery_cases": 10,
+  "independent_reproduction": "evidence/mvp/note-recovery-delete-order-repro.json",
+  "independent_reproducer": "evidence/mvp/note-recovery-delete-order-repro.cjs",
+  "independent_reproducer_sha256": "228e88924106ceb2879bf0e806850d2c5df03aa23f517a6e790af29b3b8f7a62",
+  "reason": "Production DELETE clears cached editor, then awaits its genuine GET list refresh and sets the existing completed-delete notice. The old snapshot awaited only cleared cache, included that still-changing notice, and compared it with the completed handler. Bind the snapshot to the same existing completion notice used by the previous note-history browser test; retain whole editor/history equality after genuinely held pre-delete GET delivery, recovery invocation, actual source/history404, exact Unicode/CAS/no PUT/cascade/privacy checks. Product and fixed count unchanged. No repaired browser PASS claimed before actual retest."
+}

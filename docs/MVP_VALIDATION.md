@@ -153,3 +153,14 @@ they do not prove the operator claim, actual player state, patch applicability,
 decision validity or coaching accuracy. `EXPLORATORY` is fixed; coaching stays
 disabled, PLAYER and real Decision/Coaching N remain0, accuracy null. Unsupported
 multi-source rules and reviewed-rule activation remain outside this slice.
+
+
+Explicit saved-note history recovery adds five fixed Node cases and ten actual
+browser/HTTP/SQLite checks (required count89, previous79 retained). It copies
+only four saved strings into an unsaved draft, never automatically PUTs, retains
+loaded-current CAS, and preserves immutable source-bound Knowledge references.
+Matching-resource deletion invalidates even a same-resource/other-anchor preview
+before the stale DELETE completion returns; independent resource drafts stay.
+Parent Research bytes and first missing-capability0/5 are retained; source-chain
+checks bind the precise two-file additive implementation. Actual browser PASS is
+claimed only from completed Actions/source/tree receipts. Details: MVP_NOTE_RECOVERY.md.
