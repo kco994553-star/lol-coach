@@ -1,5 +1,21 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — RUNNING
+- run_token: `main-20261005T0419-note-history-ci-root`
+- status: `RUNNING`
+- writer_active: true
+- task_scope: Exact PR4 CI handoff takeover, gated merge and postmerge verification; no duplicate implementation.
+- owner_branch: `feat/research-note-history-2026-10-05`
+- intake_main_head: `321ecbd9515fa50a3ef8bff67dd0cbdd322d9fe4`
+- code_head: `d870874a3b34813c02d1cd779a327f81b7cf45b7`
+- PR: #4; run_id: 37262887752; run_attempt: 1
+- observed_evidence: Actual PR Actions SUCCESS, Chrome61/newstore19+HTTP5/old111/protected9/Frozen27; testedmerge5ebe258c identical publishedtree13fbb784 and both expectedparents. Source hashes exactly match current137inputs.
+- next_executable_gap: Reproduced stale Research save401/409 overwrites B draft/notice, before2/4 preserved in scratch. Not blocked on Player reference.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — CI_PENDING
 - run_token: `main-20261005T0410-note-history-root`
 - status: `CI_PENDING`
