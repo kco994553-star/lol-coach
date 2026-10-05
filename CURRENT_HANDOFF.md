@@ -4,6 +4,22 @@
 - run_token: `main-20261005T0545-note-history-recovery-root`
 - status: `RUNNING`
 - writer_active: true
+- task_scope: Explicit saved-note draft recovery plus reproduced same-resource stale DELETE privacy/cache repair; exactexisting branch only.
+- owner_branch: `feat/note-history-draft-recovery-2026-10-05`
+- intake_main_head: `594ef3cf6138421de8a8c77c7ec1c390e7cfedea`
+- risk: CRITICAL escalated from DEEP; same-cycle no downgrade. Actual independent VM counterexample at Research bbe60c90: pending DELETEA→openanchor1A→success leaves deleted rNote exportable by genuine production downloadhandler. Recoveryhistoryowner wascleared butother cache not. Requiredrepair mustpurgesameA, suppresssameA pendingread resurrection, preservependingdifferentB andindependentBdraft.
+- evidence: Recoverybefore0/5missingcapability→after5/5 retained; current source archived beforeprivacyrepair/newfixedcounterexamples. Actual browser89 (prior79+new10) andfullmandatoryregression required. No Frozen/schema/API/corechanges or actualCoachpromotion.
+- prior_terminal_evidence: PR6merged594ef3c, PR37268750816/post37268897569 actualSUCCESS Chrome79/all176hashes; firstactualCI failureretained.
+- external_dependency_only: independent player/preaction reference PARKED_EXTERNAL, actualCoachN0/null. Internal usability/integrity Workcontinues.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
+## Latest common execution claim — RUNNING
+- run_token: `main-20261005T0545-note-history-recovery-root`
+- status: `RUNNING`
+- writer_active: true
 - task_scope: Existing documented saved-note history recovery into unsaved draft; exact4strings/currentloadedCAS/no automaticPUT; no schema/API/corechange.
 - owner_branch: `feat/note-history-draft-recovery-2026-10-05`
 - intake_main_head: `594ef3cf6138421de8a8c77c7ec1c390e7cfedea`
