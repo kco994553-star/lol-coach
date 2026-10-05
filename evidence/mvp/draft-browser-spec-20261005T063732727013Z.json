@@ -1,0 +1,54 @@
+{
+  "evidence_kind": "SPEC_AND_STATIC_CHECK_ONLY",
+  "browser_executed": false,
+  "browser_result": "NOT_RUN",
+  "reason": "Actual native Chrome checks will run only in the root managed GitHub Actions launcher; syntax inspection is not browser evidence",
+  "module_path": "tests_mvp/browser_draft_capture.cjs",
+  "module_sha256": "a22e2c91a9d5f429d64bd6dd06ab10021f4729bd70467de5ed65e6bc849b2ac9",
+  "source_paths_required": [
+    "coach_v1/draft.py",
+    "coach_v1/server.py",
+    "web_r4/draft.js",
+    "web_r4/index.html",
+    "tests_mvp/browser_draft_capture.cjs"
+  ],
+  "new_check_count": 18,
+  "literal_check_ids": [
+    "draft-native-operator-input-does-not-auto-save",
+    "draft-native-partial-save-preserves-declared-null-and-unverified-state",
+    "draft-native-saved-list-and-exact-version-use-actual-record",
+    "draft-native-reload-restores-null-and-two-side-input",
+    "draft-native-explicit-correction-cas-creates-immutable-successor",
+    "draft-native-current-download-is-exact-saved-record-not-dirty-input",
+    "draft-native-old-preview-download-preserves-exact-immutable-input",
+    "draft-native-real-409-keeps-exact-dirty-input-and-loaded-cas",
+    "draft-native-cancel-new-keeps-dirty-input-without-write",
+    "draft-native-confirmed-reopen-loads-current-external-revision",
+    "draft-native-cancel-delete-preserves-current-and-old-preview",
+    "draft-native-real-delete-purges-current-history-and-downloads",
+    "draft-native-late-real-history-get-cannot-resurrect-deleted-input",
+    "draft-native-empty-refresh-has-no-phantom-record",
+    "draft-native-late-real-capture-get-keeps-new-owner-draft",
+    "draft-native-mobile-390-save-usable-without-overflow",
+    "draft-native-logout-clears-private-input-and-blocks-late-get",
+    "draft-native-capture-remains-separate-from-synthetic-engine-and-real-coach"
+  ],
+  "prior_checks_preserved": 89,
+  "combined_required_checks": 107,
+  "syntax_process": {
+    "command": [
+      "node",
+      "--check",
+      "tests_mvp/browser_draft_capture.cjs"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "recorded_at": "2026-10-05T06:37:32.726811+00:00",
+  "reviewed_interface_amendment": {
+    "http_historical_invalid_grammar": "422 INVALID_DRAFT_REVISION",
+    "http_missing_positive_revision": "404",
+    "basis": "Existing tests_mvp/test_note_history_http.py historical saved-note route grammar; interface meaning maintained, absent zero is not latest or valid"
+  }
+}

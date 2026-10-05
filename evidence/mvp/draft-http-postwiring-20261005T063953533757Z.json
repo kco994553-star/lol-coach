@@ -1,0 +1,25 @@
+{
+  "evidence_kind": "FRESH_EXECUTION",
+  "stage": "POST_WIRING_TARGETED_HTTP",
+  "scope": "Actual loopback HTTP/SQLite fixed14 draft capture contract; not browser/realCoach evidence",
+  "source_sha256": {
+    "tests_mvp/test_draft_http.py": "fef67c894f2ca0e698ceadce91570cc58abe15328aca505b46a45db13832d20d",
+    "coach_v1/server.py": "2047f2fbdd69165ec6bef86b0bfe33e7d049244569e25d47ed3ea7f7cb66da7e",
+    "coach_v1/storage.py": "45e4c4725fd516c66cf9348f1afe9aba8c8bebe8aae574939f8d47394f1ce6e0",
+    "coach_v1/draft.py": "5308c0e45ae79db8f7195e604b87ebc9a865c3ff928221cdbdc8d4d5bcffe814"
+  },
+  "required_tests": 14,
+  "started_at": "2026-10-05T06:39:53.534116+00:00",
+  "finished_at": "2026-10-05T06:40:01.382399+00:00",
+  "python_version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-m",
+    "unittest",
+    "tests_mvp.test_draft_http",
+    "-v"
+  ],
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "test_auth_host_origin_and_same_site_protection_do_not_create (tests_mvp.test_draft_http.DraftHTTPTests.test_auth_host_origin_and_same_site_protection_do_not_create) ... ok\ntest_capture_id_never_becomes_legacy_case_review_or_real_mode (tests_mvp.test_draft_http.DraftHTTPTests.test_capture_id_never_becomes_legacy_case_review_or_real_mode) ... ok\ntest_concurrent_same_revision_writers_commit_one_history_successor (tests_mvp.test_draft_http.DraftHTTPTests.test_concurrent_same_revision_writers_commit_one_history_successor) ... ok\ntest_content_length_cap_rejects_before_any_capture_write (tests_mvp.test_draft_http.DraftHTTPTests.test_content_length_cap_rejects_before_any_capture_write) ... ok\ntest_declared_timezone_timestamp_preserved_and_naive_time_rejected (tests_mvp.test_draft_http.DraftHTTPTests.test_declared_timezone_timestamp_preserved_and_naive_time_rejected) ... ok\ntest_delete_physically_removes_current_and_all_snapshot_payloads (tests_mvp.test_draft_http.DraftHTTPTests.test_delete_physically_removes_current_and_all_snapshot_payloads) ... ok\ntest_duplicate_json_keys_nonfinite_and_malformed_utf8_are_rejected (tests_mvp.test_draft_http.DraftHTTPTests.test_duplicate_json_keys_nonfinite_and_malformed_utf8_are_rejected) ... ok\ntest_exact_capture_fields_reject_injected_verification_and_real_modes (tests_mvp.test_draft_http.DraftHTTPTests.test_exact_capture_fields_reject_injected_verification_and_real_modes) ... ok\ntest_expected_revision_is_required_strict_integer_and_missing_revision_is_not_latest (tests_mvp.test_draft_http.DraftHTTPTests.test_expected_revision_is_required_strict_integer_and_missing_revision_is_not_latest) ... ok\ntest_list_current_and_immutable_history_keep_exact_old_input (tests_mvp.test_draft_http.DraftHTTPTests.test_list_current_and_immutable_history_keep_exact_old_input) ... ERROR\ntest_partial_create_preserves_null_and_unverified_provenance (tests_mvp.test_draft_http.DraftHTTPTests.test_partial_create_preserves_null_and_unverified_provenance) ... ok\ntest_rows_reject_boolean_slot_duplicate_side_slot_and_observer_perspective (tests_mvp.test_draft_http.DraftHTTPTests.test_rows_reject_boolean_slot_duplicate_side_slot_and_observer_perspective) ... ok\ntest_stale_update_and_delete_do_not_overwrite_current_or_history (tests_mvp.test_draft_http.DraftHTTPTests.test_stale_update_and_delete_do_not_overwrite_current_or_history) ... ok\ntest_unknown_empty_arrays_survive_actual_server_restart (tests_mvp.test_draft_http.DraftHTTPTests.test_unknown_empty_arrays_survive_actual_server_restart) ... ok\n\n======================================================================\nERROR: test_list_current_and_immutable_history_keep_exact_old_input (tests_mvp.test_draft_http.DraftHTTPTests.test_list_current_and_immutable_history_keep_exact_old_input)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/scratch/b091e55de8cd/lol-coach/tests_mvp/test_draft_http.py\", line 115, in test_list_current_and_immutable_history_keep_exact_old_input\n    self.assertEqual([row['revision'] for row in history['revisions']], [1, 2])\n                      ~~~^^^^^^^^^^^^\nTypeError: 'int' object is not subscriptable\n\n----------------------------------------------------------------------\nRan 14 tests in 7.681s\n\nFAILED (errors=1)\n"
+}

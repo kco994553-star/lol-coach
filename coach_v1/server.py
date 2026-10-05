@@ -13,7 +13,8 @@ import secrets
 import threading
 from urllib.parse import urlsplit
 
-from .storage import Store, ServiceError
+from .storage import ServiceError
+from .draft import DraftStore
 from .knowledge import KnowledgeStore
 from .note_history import note_history, note_revision
 from coach_intake.audit import inspect as inspect_raw
@@ -66,7 +67,7 @@ class Workbench(ThreadingHTTPServer):
         except OSError:
             self.db_lock.close();raise ValueError('Database already owned by another workbench') from None
         try:
-            self.store=Store(db)
+            self.store=DraftStore(db)
             self.research=KnowledgeStore(str(db)+'.research.sqlite')
         except Exception:self.db_lock.close();raise
         self.token=token
@@ -178,7 +179,7 @@ class Handler(BaseHTTPRequestHandler):
         path=urlsplit(self.path)
         if path.query or path.fragment:raise ServiceError(400,'QUERY_NOT_SUPPORTED')
         route=path.path
-        assets={'/':('index.html','text/html; charset=utf-8'),'/app.js':('app.js','text/javascript; charset=utf-8'),'/styles.css':('styles.css','text/css; charset=utf-8'),'/research.js':('research.js','text/javascript; charset=utf-8'),'/knowledge.js':('knowledge.js','text/javascript; charset=utf-8')}
+        assets={'/':('index.html','text/html; charset=utf-8'),'/app.js':('app.js','text/javascript; charset=utf-8'),'/styles.css':('styles.css','text/css; charset=utf-8'),'/research.js':('research.js','text/javascript; charset=utf-8'),'/knowledge.js':('knowledge.js','text/javascript; charset=utf-8'),'/draft.js':('draft.js','text/javascript; charset=utf-8')}
         if self.command=='GET' and route in assets:
             filename,ctype=assets[route]
             return self.reply(200,(ROOT/'web_r4'/filename).read_bytes(),ctype)
@@ -186,7 +187,7 @@ class Handler(BaseHTTPRequestHandler):
         store=self.server.store
         prefix='/dev/v1'
         if self.command=='GET' and route==prefix+'/status':
-            return self.reply(200,dict(version='R6',mode='SYNTHETIC_ONLY',real_data_enabled=False,limits=vars(self.server.limits)))
+            return self.reply(200,dict(version='R6',mode='SYNTHETIC_ONLY',real_data_enabled=False,manual_draft_capture='AVAILABLE',automatic_draft_collection='UNAVAILABLE',gameplan_status='NOT_GENERATED',limits=vars(self.server.limits)))
         examples={'insufficient-evidence':'정보 부족 확인','compare-wait-retreat':'대기와 후퇴 비교'}
         if self.command=='GET' and route==prefix+'/examples':
             return self.reply(200,[dict(id=k,title=v) for k,v in examples.items()])
@@ -244,6 +245,27 @@ class Handler(BaseHTTPRequestHandler):
             if self.command=='DELETE' and version is None:
                 b=self.body();self.fields(b,('expected_version',))
                 return self.reply(200,ks.delete_proposal(rule_id,b['expected_version'],limit))
+        if route==prefix+'/draft-captures':
+            ds=self.server.store;limit=self.server.limits.body_bytes
+            if self.command=='GET':return self.reply(200,ds.list_captures(max_bytes=limit))
+            if self.command=='POST':
+                b=self.body();self.fields(b,('capture',))
+                return self.reply(201,ds.create_capture(b['capture'],max_bytes=limit))
+        draft=re.fullmatch(re.escape(prefix)+r'/draft-captures/([a-f0-9]{32})(?:/(history|revisions/([^/]+)))?',route)
+        if draft:
+            cid,action,revision=draft.groups();ds=self.server.store;limit=self.server.limits.body_bytes
+            if action=='history' and self.command=='GET':return self.reply(200,ds.capture_history(cid,max_bytes=limit))
+            if revision is not None and self.command=='GET':
+                if not re.fullmatch(r'[1-9][0-9]*',revision):raise ServiceError(422,'INVALID_DRAFT_REVISION')
+                return self.reply(200,ds.get_capture(cid,int(revision),max_bytes=limit))
+            if action is None:
+                if self.command=='GET':return self.reply(200,ds.get_capture(cid,max_bytes=limit))
+                if self.command=='PUT':
+                    b=self.body();self.fields(b,('capture','expected_revision'))
+                    return self.reply(200,ds.put_capture(cid,b['capture'],self.revision(b['expected_revision']),max_bytes=limit))
+                if self.command=='DELETE':
+                    b=self.body();self.fields(b,('expected_revision',))
+                    return self.reply(200,ds.delete_capture(cid,self.revision(b['expected_revision']),max_bytes=limit))
         if route==prefix+'/sessions':
             if self.command=='GET':return self.reply(200,store.list_sessions())
             if self.command=='POST':

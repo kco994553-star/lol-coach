@@ -77,6 +77,22 @@ NOTE_RECOVERY_DELETE_CASE_IDS = {
     'NOTE-DELETE-PENDING-SAME-RESOURCE-READ-CANNOT-REVIVE-DELETED-NOTE',
     'NOTE-DELETE-PENDING-DIFFERENT-RESOURCE-LOAD-SURVIVES-DELETED-CACHE-PURGE',
 }
+DRAFT_UI_CASE_IDS = {
+    'DRAFT-UI-LATE-ACK-KEEPS-LATER-DRAFT-AND-NEXT-CAS',
+    'DRAFT-UI-OLD-409-401-CANNOT-CHANGE-NEW-B-DRAFT-OR-AUTH',
+    'DRAFT-UI-CURRENT-CONFLICT-RETAINS-DRAFT-CURRENT-401-CLEARS',
+    'DRAFT-UI-HISTORY-READONLY-KEEPS-CURRENT-CAS-AND-SAVED-EXPORT',
+    'DRAFT-UI-LATE-HISTORY-CANNOT-FOLLOW-NAVIGATION-NEW-LOGOUT',
+    'DRAFT-UI-DELETE-INVALIDATES-SAME-CAPTURE-CACHED-OPEN-EXPORT',
+    'DRAFT-UI-INACTIVE-A-DELETE-PURGES-CACHE-PRESERVES-PENDING-B',
+}
+DRAFT_ROUNDTRIP_CASE_IDS = {
+    'DRAFT-ROUNDTRIP-UNTOUCHED-NULL-MEMBERSHIP-ORDER',
+    'DRAFT-ROUNDTRIP-SELECTIVE-EDITS-PRESERVE-OTHER-ROWS',
+    'DRAFT-ROUNDTRIP-LATE-ACK-KEEPS-CAPTURED-DRAFT-BASE',
+    'DRAFT-ROUNDTRIP-NEW-INPUT-NO-INFERRED-ROLE-ROWS',
+}
+
 KNOWLEDGE_FOLLOWUP_CASE_IDS = {
     'ui-knowledge-ack': {'KNOWLEDGE-CACHED-EXACT-ACK-CANNOT-REAPPLY-DELETED-DESCENDANT'},
     'ui-knowledge-reconcile-error': {'KNOWLEDGE-STALE-DELETION-ERROR-CANNOT-CLEAR-NEW-DRAFT-AUTH'},
@@ -127,7 +143,7 @@ def knowledge_version_binding() -> dict:
         'parent_research_errors': baseline.get('sha256', {}).get('web_r4/research.js') == read_json(ROOT / 'evidence/mvp/research-navigation-errors-after.json').get('source_sha256') == read_json(ROOT / 'evidence/mvp/research-save-errors-final.json').get('source_sha256'),
         'parent_history_sources': all(baseline.get('sha256', {}).get(p) == read_json(ROOT / 'evidence/mvp/note-history-source-version.json')['current_sha256'][p] for p in ('web_r4/index.html','coach_v1/server.py')),
         'exact_version_paths': set(current) == set(baseline.get('sha256', {})) | {'coach_v1/knowledge.py','web_r4/knowledge.js'},
-        'actual_current_hashes': all((ROOT / p).is_file() and (read_json(ROOT / 'evidence/mvp/note-recovery-baseline.json')['sha256'][p] if p in ('web_r4/research.js','web_r4/index.html') else read_json(ROOT / 'evidence/mvp/knowledge-ui-proposal-delete-before.json').get('source_sha256') if p == 'web_r4/knowledge.js' else sha(ROOT / p)) == h for p,h in current.items()),
+        'actual_current_hashes': all((ROOT / p).is_file() and (read_json(ROOT / 'evidence/mvp/note-recovery-baseline.json')['sha256'][p] if p in ('web_r4/research.js','web_r4/index.html') else read_json(ROOT / 'evidence/mvp/knowledge-ui-proposal-delete-before.json').get('source_sha256') if p == 'web_r4/knowledge.js' else read_json(ROOT / 'evidence/mvp/draft-baseline.json')['sha256'][p] if p in ('coach_v1/server.py','coach_v1/backup.py') else sha(ROOT / p)) == h for p,h in current.items()),
         'later_recovery_source_chain': note_recovery_version_binding()['status'] == 'PASS',
         'legacy_store_unchanged': baseline.get('unchanged_research_store_sha256') == sha(ROOT / 'coach_v1/research.py') == '42912d1e7ac660c67b00514d7aa76b6d10252e77c0a478db55bc37ad21d3eb27',
         'independent_lifecycle_tests_present': all((ROOT / p).is_file() for p in ('tests_mvp/test_knowledge.py','tests_mvp/test_knowledge_backup.py','tests_mvp/test_knowledge_http.py','tests_mvp/browser_knowledge.cjs')),
@@ -151,7 +167,8 @@ def note_recovery_version_binding() -> dict:
         'exact_intake': baseline['intake_main'] == '594ef3cf6138421de8a8c77c7ec1c390e7cfedea',
         'exact_version_paths': set(baseline['sha256']) == set(current) == {'web_r4/research.js','web_r4/index.html'},
         'preserved_parent': all(baseline['sha256'][p] == read_json(ROOT / 'evidence/mvp/knowledge-source-version.json')['current_sha256'][p] for p in current),
-        'actual_current_source': all(sha(ROOT / p) == h for p,h in current.items()),
+        'actual_current_source': all((read_json(ROOT / 'evidence/mvp/draft-baseline.json')['sha256'][p] if p == 'web_r4/index.html' else sha(ROOT / p)) == h for p,h in current.items()),
+        'later_manual_draft_source_chain': draft_version_binding()['status'] == 'PASS',
         'actual_parent_archive': sha(ROOT / version['archived_parent']) == baseline['sha256']['web_r4/research.js'] == before['source_sha256'],
         'fixed_cases': all(row['total'] == 5 and {r['id'] for r in row['results']} == NOTE_RECOVERY_CASE_IDS for row in (before,after,final)),
         'first_missing_capability_failures': before['passed'] == 0 and all(r['passed'] is False for r in before['results']),
@@ -165,6 +182,56 @@ def note_recovery_version_binding() -> dict:
         'bounded_scope': baseline['schema_change'] is False and baseline['api_change'] is False and version['automatic_write'] is False and version['loaded_revision_cas'] is True,
     }
     return {'status': 'PASS' if all(checks.values()) else 'FAIL', 'checks': checks}
+
+
+def draft_version_binding() -> dict:
+    import ast
+    baseline = read_json(ROOT / 'evidence/mvp/draft-baseline.json')
+    version = read_json(ROOT / 'evidence/mvp/draft-source-version.json')
+    current = version['current_sha256']
+    ui_before = read_json(ROOT / 'evidence/mvp/draft-ui-before-service-head-correction.json')
+    ui_after = read_json(ROOT / 'evidence/mvp/draft-ui-after.json')
+    stored = read_json(ROOT / 'evidence/mvp/draft-storage-after-corrected.json')
+    backed = read_json(ROOT / 'evidence/mvp/draft-backup-after.json')
+    ui_final = read_json(ROOT / 'evidence/mvp/draft-ui-scalar-final.json')
+    backup = (ROOT / 'coach_v1/backup.py').read_text()
+    main_validator = next(node for node in ast.parse(backup).body if isinstance(node, ast.FunctionDef) and node.name == '_validate_main_content')
+    checks = {
+        'exact_intake': baseline['intake_main'] == '0f2b333e44c1918e7a2a9dd7d9f6fce67d1d76a2',
+        'exact_current_paths': set(current) == {'coach_v1/draft.py','coach_v1/server.py','coach_v1/backup.py','web_r4/index.html','web_r4/draft.js'},
+        'actual_current_source': all(sha(ROOT / p) == h for p,h in current.items()),
+        'parent_server_and_backup': all(baseline['sha256'][p] == read_json(ROOT / 'evidence/mvp/knowledge-source-version.json')['current_sha256'][p] for p in ('coach_v1/server.py','coach_v1/backup.py')),
+        'parent_index': baseline['sha256']['web_r4/index.html'] == read_json(ROOT / 'evidence/mvp/note-recovery-source-version.json')['current_sha256']['web_r4/index.html'],
+        'original_store_unchanged': sha(ROOT / 'coach_v1/storage.py') == baseline['sha256']['coach_v1/storage.py'] == '45e4c4725fd516c66cf9348f1afe9aba8c8bebe8aae574939f8d47394f1ce6e0',
+        'research_and_knowledge_unchanged': all(sha(ROOT / p) == baseline['sha256'][p] for p in ('web_r4/research.js','web_r4/knowledge.js')),
+        'legacy_main_validator_unchanged': hashlib.sha256(ast.get_source_segment(backup,main_validator).encode()).hexdigest() == '8aad8a6fed29b8305963486421877b2555283a65a5b02eb34864f73c732df690',
+        'storage_native_suite_bound': stored['exit_code'] == 0 and stored['draft_tests'] == 31 and stored['legacy_storage_tests'] == 11 and stored['test_sha256'] == sha(ROOT / 'tests_mvp/test_draft_capture.py') and stored['draft_source_sha256'] == current['coach_v1/draft.py'],
+        'fixed_ui_cases_bound': ui_before['total'] == ui_after['total'] == 7 and {row['id'] for row in ui_before['results']} == {row['id'] for row in ui_after['results']} and ui_before['test_sha256'] == ui_after['test_sha256'] == sha(ROOT / 'tests_mvp/ui_draft_capture.cjs') and ui_before['fixture_sha256'] == ui_after['fixture_sha256'],
+        'actual_missing_ui_and_repaired_pass': ui_before['source_exists'] is False and ui_before['source_sha256'] is None and ui_before['passed'] == 0 and ui_after['passed'] == 7 and all(row['passed'] for row in ui_after['results']) and ui_after['source_sha256'] == sha(ROOT / version['archived_initial_ui']),
+        'current_seven_ui_guards': ui_final['passed'] == ui_final['total'] == 7 and all(row['passed'] for row in ui_final['results']) and ui_final['source_sha256'] == current['web_r4/draft.js'] and ui_final['test_sha256'] == ui_after['test_sha256'] and ui_final['fixture_sha256'] == ui_after['fixture_sha256'],
+        'backup_native_suite_bound': backed['source_sha256'] == current['coach_v1/backup.py'] and backed['draft_source_sha256'] == current['coach_v1/draft.py'] and backed['test_sha256'] == sha(ROOT / 'tests_mvp/test_draft_backup.py') and backed['tests_run'] == 61 and backed['failed_test_methods'] == backed['failure_events'] == backed['error_events'] == 0 and backed['suite_counts'] == {'new_draft_backup':19,'unchanged_legacy_backup':23,'unchanged_knowledge_backup':19},
+        'exact_roundtrip_repair': draft_roundtrip_binding()['status'] == 'PASS',
+        'bounded_manual_capture': version['main_schema'] == 2 and version['research_schema'] == 2 and version['engine_activation'] is False and version['real_match_coaching_validation_gain'] is False and version['frozen_design_change'] is False,
+    }
+    return {'status': 'PASS' if all(checks.values()) else 'FAIL', 'checks': checks}
+
+
+
+def draft_roundtrip_binding() -> dict:
+    version = read_json(ROOT / 'evidence/mvp/draft-source-version.json')
+    first, array_pass, scalar_before, scalar_after = [read_json(ROOT / ('evidence/mvp/draft-roundtrip-'+name+'.json')) for name in ('before','after','scalar-before','scalar-after')]
+    cases = {'DRAFT-ROUNDTRIP-UNTOUCHED-NULL-MEMBERSHIP-ORDER', 'DRAFT-ROUNDTRIP-SELECTIVE-EDITS-PRESERVE-OTHER-ROWS', 'DRAFT-ROUNDTRIP-LATE-ACK-KEEPS-CAPTURED-DRAFT-BASE', 'DRAFT-ROUNDTRIP-NEW-INPUT-NO-INFERRED-ROLE-ROWS'}
+    checks = {
+        'fixed_case_identities': all(row['total'] == 4 and {item['id'] for item in row['results']} == cases for row in (first,array_pass,scalar_before,scalar_after)),
+        'original_actual_failure_preserved': first['passed'] == 0 and all(item['passed'] is False for item in first['results']) and first['source_sha256'] == sha(ROOT / version['archived_initial_ui']),
+        'array_first_pass_preserved': array_pass['passed'] == 4 and all(item['passed'] is True for item in array_pass['results']) and first['test_sha256'] == array_pass['test_sha256'] and first['fixture_sha256'] == array_pass['fixture_sha256'],
+        'array_source_archived': sha(ROOT / version['archived_array_ui']) == array_pass['source_sha256'] == scalar_before['source_sha256'],
+        'scalar_actual_failure_preserved': scalar_before['passed'] < 4 and any(item['passed'] is False for item in scalar_before['results']),
+        'scalar_fixed_test_fixture': scalar_before['test_sha256'] == scalar_after['test_sha256'] == sha(ROOT / 'tests_mvp/ui_draft_roundtrip.cjs') and scalar_before['fixture_sha256'] == scalar_after['fixture_sha256'],
+        'current_exact_roundtrip_pass': scalar_after['passed'] == 4 and all(item['passed'] is True for item in scalar_after['results']) and scalar_after['source_sha256'] == version['current_sha256']['web_r4/draft.js'] == sha(ROOT / 'web_r4/draft.js'),
+        'no_fake_native_evidence': 'synthetic' in scalar_after['verifier'].lower(),
+    }
+    return {'status':'PASS' if all(checks.values()) else 'FAIL','checks':checks}
 
 
 def knowledge_browser_repair_binding() -> dict:
@@ -480,6 +547,11 @@ def node_check(out: Path, name: str, script: str, source: str,
         passed = receipt.get("passed") == count and receipt.get("total") == count
         passed = passed and {row.get("id") for row in receipt.get("results", [])} == (NOTE_RECOVERY_CASE_IDS if name == "ui-note-recovery" else NOTE_RECOVERY_DELETE_CASE_IDS)
         passed = passed and all(row.get("passed") is True for row in receipt.get("results", []))
+    elif name in ("ui-draft-capture", "ui-draft-roundtrip"):
+        passed = receipt.get("passed") == count and receipt.get("total") == count
+        cases = DRAFT_UI_CASE_IDS if name == "ui-draft-capture" else DRAFT_ROUNDTRIP_CASE_IDS
+        passed = passed and {row.get("id") for row in receipt.get("results", [])} == cases
+        passed = passed and all(row.get("passed") is True for row in receipt.get("results", []))
     elif name == "ui-import":
         passed = receipt.get("passed") == count and receipt.get("total") == count
         passed = passed and {row.get("id") for row in receipt.get("results", [])} == IMPORT_CASE_IDS
@@ -645,6 +717,9 @@ def input_hashes() -> dict[str, str]:
     values.update({p.relative_to(ROOT).as_posix():sha(p) for p in sorted((ROOT / 'evidence/mvp/knowledge-browser-sources').glob('*.cjs')) if p.is_file()})
     values.update({p.relative_to(ROOT).as_posix():sha(p) for p in sorted((ROOT / 'evidence/mvp/note-recovery-sources').glob('*.js')) if p.is_file()})
     values.update({p.relative_to(ROOT).as_posix():sha(p) for p in sorted((ROOT / 'evidence/mvp/note-recovery-browser-sources').glob('*.cjs')) if p.is_file()})
+    values.update({p.relative_to(ROOT).as_posix():sha(p) for p in sorted((ROOT / 'evidence/mvp').glob('draft-*')) if p.is_file()})
+    for folder,pattern in (('draft-ui-test-sources','*.cjs'),('draft-storage-sources','*.py'),('draft-roundtrip-sources','*')):
+        values.update({p.relative_to(ROOT).as_posix():sha(p) for p in sorted((ROOT / 'evidence/mvp' / folder).glob(pattern)) if p.is_file()})
     for name in ("FREEZE_MANIFEST.json", "requirements-r3.txt", R7_SOURCE_RECEIPT, R6_SOURCE_RECEIPT,
                  "evidence/r7/baseline-tree.json", "evidence/mvp/save-race-before.json",
                  "evidence/mvp/save-race-after.json", "evidence/mvp/ci-cost-basis.json",
@@ -669,7 +744,7 @@ def input_hashes() -> dict[str, str]:
                  "evidence/mvp/note-recovery-browser-repair.json", "evidence/mvp/note-recovery-ci-37270809307-failure.json",
                  "evidence/mvp/note-recovery-delete-order-repro.cjs", "evidence/mvp/note-recovery-delete-order-repro.json",
                  "evidence/mvp/github-ci-visibility.json",
-                 "docs/MVP_VALIDATION.md", "docs/MVP_BACKUP.md", "docs/MVP_KNOWLEDGE_PROPOSALS.md", "docs/MVP_NOTE_RECOVERY.md"):
+                 "docs/MVP_DRAFT_CAPTURE.md", "docs/superpowers/plans/2026-10-05-manual-draft-capture.md", "docs/MVP_VALIDATION.md", "docs/MVP_BACKUP.md", "docs/MVP_KNOWLEDGE_PROPOSALS.md", "docs/MVP_NOTE_RECOVERY.md"):
         if (ROOT / name).is_file():
             values[name] = sha(ROOT / name)
     return dict(sorted(values.items()))
@@ -698,6 +773,10 @@ def main() -> int:
         save(out, "ui-repair-receipt-binding.json", checks["ui_repair_receipt_binding"])
         if any(checks[name]["status"] != "PASS" for name in checks):
             raise RuntimeError("Preservation or UI receipt binding gate failed")
+        checks["draft_version_binding"] = draft_version_binding()
+        save(out, "draft-version-binding.json", checks["draft_version_binding"])
+        if checks["draft_version_binding"]["status"] != "PASS":
+            raise RuntimeError("Manual draft source binding gate failed")
         checks["protected_regression"] = protected_validation(out)
         suite = unittest.TestSuite()
         for folder in OLD_FOLDERS:
@@ -708,6 +787,12 @@ def main() -> int:
         if checks["backup"]["tests_run"] == 0:
             checks["backup"]["status"] = "FAIL"
             save(out, "backup.json", checks["backup"])
+        checks["draft_store"] = run_suite(out, "draft-store", unittest.defaultTestLoader.discover(
+            str(ROOT / "tests_mvp"), pattern="test_draft_capture.py", top_level_dir=str(ROOT)), 31)
+        checks["draft_http"] = run_suite(out, "draft-http", unittest.defaultTestLoader.discover(
+            str(ROOT / "tests_mvp"), pattern="test_draft_http.py", top_level_dir=str(ROOT)), 14)
+        checks["draft_backup"] = run_suite(out, "draft-backup", unittest.defaultTestLoader.discover(
+            str(ROOT / "tests_mvp"), pattern="test_draft_backup.py", top_level_dir=str(ROOT)), 19)
         checks["note_history_store"] = run_suite(out, "note-history-store", unittest.defaultTestLoader.discover(
             str(ROOT / "tests_mvp"), pattern="test_note_history.py", top_level_dir=str(ROOT)), 19)
         checks["note_history_http"] = run_suite(out, "note-history-http", unittest.defaultTestLoader.discover(
@@ -733,6 +818,8 @@ def main() -> int:
         checks["ui_knowledge_read_deletion"] = node_check(out, "ui-knowledge-read-deletion", "tests_mvp/ui_knowledge_read_deletion.cjs", "web_r4/knowledge.js", 2)
         checks["ui_knowledge_proposal_delete"] = node_check(out, "ui-knowledge-proposal-delete", "tests_mvp/ui_knowledge_proposal_delete.cjs", "web_r4/knowledge.js", 1)
         checks["ui_note_recovery"] = node_check(out, "ui-note-recovery", "tests_mvp/ui_note_recovery.cjs", "web_r4/research.js", 5)
+        checks["ui_draft_capture"] = node_check(out, "ui-draft-capture", "tests_mvp/ui_draft_capture.cjs", "web_r4/draft.js", 7)
+        checks["ui_draft_roundtrip"] = node_check(out, "ui-draft-roundtrip", "tests_mvp/ui_draft_roundtrip.cjs", "web_r4/draft.js", 4)
         checks["ui_note_recovery_delete"] = node_check(out, "ui-note-recovery-delete", "tests_mvp/ui_note_recovery_delete.cjs", "web_r4/research.js", 3)
         checks["ui_file_race"] = {"status": checks["ui_research_bytes"]["status"],
             "required_cases": 1, "case_id": "R6-LATEST-FILE-A-FIRST",
