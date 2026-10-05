@@ -1,0 +1,128 @@
+{
+  "scope": "Research navigation and deletion identity only; no real game validation",
+  "verifier": "Node VM synthetic DOM and deferred service replies; not browser",
+  "executed_at": "2026-10-05T03:55:38.156Z",
+  "source_sha256": "36a964522752fcef55b58332505bc3b3effab90def7df1a61d4065ffb37118c8",
+  "test_sha256": "2c7f0c8bab63cb8c5d3849580bee798c0670ef3b11eaf45ad5cf7dac88775de9",
+  "passed": 1,
+  "total": 4,
+  "results": [
+    {
+      "id": "RESEARCH-NAV-DELETE-DISABLED-NO-REQUEST",
+      "passed": false,
+      "checks": {
+        "delete_disabled": false,
+        "handler_no_request": false
+      },
+      "pending": {
+        "id": "A",
+        "known": "A old note",
+        "dirty": false,
+        "epoch": 1,
+        "hidden": false,
+        "notice": "",
+        "delete_disabled": false
+      },
+      "requestsWhileLoading": 1
+    },
+    {
+      "id": "RESEARCH-NAV-LEGACY-DELETE-CANNOT-CLEAR-B-DRAFT",
+      "passed": false,
+      "checks": {
+        "delete_target_a": true,
+        "exact_b_draft_retained": false,
+        "notice_retained": false
+      },
+      "before": {
+        "id": "B",
+        "known": "B exact unsaved draft",
+        "dirty": true,
+        "epoch": 1,
+        "hidden": false,
+        "notice": "저장된 자료를 열었습니다.",
+        "delete_disabled": false
+      },
+      "after": {
+        "id": null,
+        "known": "",
+        "dirty": false,
+        "epoch": 2,
+        "hidden": true,
+        "notice": "자료와 노트를 삭제했습니다.",
+        "delete_disabled": false
+      },
+      "calls": [
+        {
+          "route": "/research/B",
+          "method": "GET"
+        },
+        {
+          "route": "/research/A",
+          "method": "DELETE"
+        },
+        {
+          "route": "/research/B/notes/overview",
+          "method": "GET"
+        },
+        {
+          "route": "/research",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "id": "RESEARCH-NAV-CURRENT-DELETE-CLEARS",
+      "passed": true,
+      "checks": {
+        "current_deleted": true,
+        "notes_cleared": true,
+        "success_notice": true
+      },
+      "after": {
+        "id": null,
+        "known": "",
+        "dirty": false,
+        "epoch": 1,
+        "hidden": true,
+        "notice": "자료와 노트를 삭제했습니다.",
+        "delete_disabled": false
+      },
+      "calls": [
+        {
+          "route": "/research/A",
+          "method": "DELETE"
+        },
+        {
+          "route": "/research",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "id": "RESEARCH-NAV-LATE-A-DELETE-ERROR-CANNOT-REPORT-ON-B",
+      "passed": false,
+      "checks": {
+        "b_draft_retained": true,
+        "no_stale_error": false
+      },
+      "before": {
+        "id": "B",
+        "known": "B exact unsaved draft",
+        "dirty": true,
+        "epoch": 1,
+        "hidden": false,
+        "notice": "저장된 자료를 열었습니다.",
+        "delete_disabled": false
+      },
+      "after": {
+        "id": "B",
+        "known": "B exact unsaved draft",
+        "dirty": true,
+        "epoch": 1,
+        "hidden": false,
+        "notice": "처리하지 못했습니다: RESOURCE_NOT_FOUND",
+        "delete_disabled": false
+      }
+    }
+  ]
+}

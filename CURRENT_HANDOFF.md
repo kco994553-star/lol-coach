@@ -1,3 +1,15 @@
+# CURRENT HANDOFF — Broader product continuation / navigation repair CI pending
+
+## 2026-10-05 KST
+
+- User reopened acceptance/integration/usability gaps under Autonomous Execution Authority. Fresh mainccd3a3f23869966bdbbe8288a29e9f4b43d25687; PR0, branches/current shared terminal claim84935655… and existing applicable CI37258742782 confirmed. Whole work did not stop for external Player reference; additive gap assessment docs/MVP_EXECUTABLE_GAPS.md, canonical24 requirement status/Frozen files untouched.
+- Selected actual integrity defect: B navigation leaves A displayed and delete enabled, DELETE A captures B's epoch, B completes and receives dirty draft, delayedA success clearsB. Before same4case1/4 and original36a96452 hash preserved. Fix disables/rejects loading deletion and ties completion/errors to target resource plus own clear/refresh phase. First/final4/4; previous byte9/request4 guards still required. Intermediate sources and first failures retained; current scoped source allowance extends strict previous-chain binding, old exact R7 verifier remainsFAIL.
+- New actual browser50 suite retains46 and adds4 genuine GET/DELETE/SQLite/confirmation checks. One response-identity case explicitly re-enables the historical-control window as an adversarial check; actual backend execution is real, not a mocked result. Local required baseline111/protected9/Frozen27/backup23 plus affected checks pass; fresh remote browser/CI not yet claimed. Root continues exact tree/API publication→PR/CI→gated merge→postmerge→closeout.
+- Next independently executable gap selected: stored note revision index/exact version read-only preview/download; existing note_history schema and complete2DB backup reused. Initial scope does not invent saved timestamp/author or turn notes into Knowledge/Player gold. Knowledge proposal lifecycle remains OPEN_INTERNAL beyond duplicate freeform notes; manualdraft/actualstrategy still gated by applicable input/knowledge/phase dependencies.
+- Player independent reference/pre-action context alone PARKED_EXTERNAL; PLAYER/Decision/Coach N0, accuracy null unchanged. Source26direct/2derived separate. No paid service/dependency/authentication/external messages. Root common ref is single writer; before/after evidence additive.
+
+Prior handoff fully preserved below.
+
 # CURRENT HANDOFF — Research integrity repair remotely verified
 
 ## 2026-10-05 KST

@@ -5,7 +5,7 @@ const rLabels={ROAM:'로밍',WAVE:'웨이브',JUNGLE:'정글',VISION:'시야',TR
 function rNotice(s){$('r-notice').textContent=s;}
 function rError(e){rNotice('처리하지 못했습니다: '+e.message);if(e.status===401){rClear();error(e);}}
 function rClear(){rEpoch++;rFileRead++;rReading(false);rResource=null;rNote=null;rDirty=false;rEdit=0;$('r-list').replaceChildren();$('r-candidates').replaceChildren();$('r-diagnostic').replaceChildren();$('r-detail').hidden=true;for(const f of rFields)$('r-'+f).value='';}
-function rReading(b){for(const f of rFields)$('r-'+f).disabled=b;$('r-save').disabled=b;}
+function rReading(b){for(const f of rFields)$('r-'+f).disabled=b;$('r-save').disabled=b;$('r-delete').disabled=b;}
 function rLeave(){return !rDirty||confirm('저장하지 않은 노트 변경을 버리고 이동할까요?');}
 function rApply(note){rNote=note;for(const f of rFields)$('r-'+f).value=note[f];rDirty=false;$('r-save').disabled=false;$('r-note-state').textContent='저장 버전 '+note.revision+' · 자동 검증 상태는 바뀌지 않습니다.';}
 async function rRefresh(){const mark=rEpoch;const rows=await api('/research');if(mark!==rEpoch)return;$('r-list').replaceChildren();if(!rows.length)$('r-list').append(node('p','저장한 자료가 없습니다.','small'));for(const row of rows){const b=node('button',row.title);b.dataset.resourceId=row.id;b.addEventListener('click',()=>rOpen(row.id).catch(rError));$('r-list').append(b);}}
@@ -56,6 +56,15 @@ $('r-file').addEventListener('change',async()=>{
  }catch(e){if(current())rError(e);}
  finally{if($('r-file').files[0]===file)$('r-file').value='';}
 });
-$('r-delete').addEventListener('click',async()=>{if(!rResource||!confirm('이 자료와 모든 복기 노트를 삭제할까요?'))return;const mark=rEpoch,id=rResource.id;try{await api('/research/'+id,'DELETE');if(mark!==rEpoch)return;rClear();await rRefresh();rNotice('자료와 노트를 삭제했습니다.');}catch(e){rError(e);}});
+$('r-delete').addEventListener('click',async()=>{
+ if($('r-delete').disabled||!rResource||!confirm('이 자료와 모든 복기 노트를 삭제할까요?'))return;
+ let mark=rEpoch,cleared=false;const id=rResource.id;
+ const current=()=>mark===rEpoch&&(cleared?rResource===null:rResource&&rResource.id===id);
+ try{
+  await api('/research/'+id,'DELETE');if(!current())return;
+  rClear();mark=rEpoch;cleared=true;
+  await rRefresh();if(current())rNotice('자료와 노트를 삭제했습니다.');
+ }catch(e){if(current())rError(e);}
+});
 $('r-download').addEventListener('click',()=>{if(!rResource||!rNote)return;const data={resource:rResource,saved_note:rNote,unsaved_changes_not_included:rDirty};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=node('a');a.href=url;a.download='lol-coach-research-note.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
 $('logout').addEventListener('click',rClear);
