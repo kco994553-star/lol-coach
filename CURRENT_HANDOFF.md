@@ -1,5 +1,21 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — CI_PENDING
+- run_token: `main-20261005T0419-note-history-ci-root`
+- status: `CI_PENDING`
+- writer_active: false
+- task_scope: PR4 merged after required hard gates, exact post-merge Actions pending.
+- owner_branch: `feat/research-note-history-2026-10-05`
+- code_head: `d870874a3b34813c02d1cd779a327f81b7cf45b7`
+- resulting_main: `c1b777f52c1c90d611753264a767e96ef943aeed`
+- PR: #4; PR run: 37262887752 SUCCESS; postmerge run: 37263078939; run_attempt:1
+- terminal_evidence: GitHub normal merge result; actual PR testedmerge tree/parents +137source hashes checked, browser61/newstorage19/HTTP5/old111/protected9/Frozen27/backup23 PASS. No realCoach Npromotion.
+- next_executable_gap: Reproduced stale save error2/4, preserve draft/notice after switched resource. No duplicate same-scope implementation.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — RUNNING
 - run_token: `main-20261005T0419-note-history-ci-root`
 - status: `RUNNING`
