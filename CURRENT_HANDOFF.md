@@ -1,5 +1,22 @@
 # MAIN EXECUTION CLAIM
 
+status: PARKED_EXTERNAL
+run_token: main-20261005T0318-research-closeout-root
+writer_active: false
+canonical_main: ccd3a3f23869966bdbbe8288a29e9f4b43d25687
+verified_code_main: ed533fd980f47313014b7874e171ca4c5f1a2d6b
+completed_pr: 2
+verified_pr_ci: 37258576190 SUCCESS
+verified_postmerge_ci: 37258742782 SUCCESS / Chrome46 / regression PASS
+coordination_ref: work/main-execution-claim
+next_dependency: independent source-backed Player reference and pre-action context
+
+Research source-byte/current-error repair is complete and remotely verified. Required hard gates passed; failure history retained. Documentation-only closeout preserves126 tested inputs and claims no separate fresh CI. No active writer or unfinished implementation remains. Product NOT_COMPLETE, real Player/Decision/Coach N0 and accuracy null. Existing source-backed review protocol remains the smallest next path; no speculative importer/new framework. Future material source/blocker/regression change may acquire a new common claim; same self-receipts/history cause no repeated execution.
+
+Prior claim history preserved below.
+
+# MAIN EXECUTION CLAIM
+
 status: RUNNING
 run_token: main-20261005T0318-research-closeout-root
 writer_active: true
