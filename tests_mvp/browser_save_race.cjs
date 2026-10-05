@@ -81,6 +81,116 @@ async function cancelNativeDialog(label, action, draft, currentLabel) {
   check(label + '-analysis-disabled', state.analyze_disabled === true, { analyze_disabled: state.analyze_disabled });
 }
 
+async function prepareHeldImportReads(label, fileNames) {
+  stage = label;
+  // A new document isolates each race from prior dirty drafts and pending reads.
+  await page.reload();
+  await page.waitForFunction(() => !document.getElementById('workspace').hidden &&
+    document.getElementById('notice').textContent.startsWith('연결됐습니다.'));
+  const initial = await uiSnapshot(label + '-initial');
+  await page.evaluate(names => {
+    const nativeText = File.prototype.text;
+    const reads = Object.create(null);
+    window.__mvpHeldImportReads = reads;
+    File.prototype.text = function () {
+      if (!names.includes(this.name)) return nativeText.call(this);
+      const nativeRead = nativeText.call(this);
+      let release;
+      const gate = new Promise(resolve => { release = resolve; });
+      const read = { name: this.name, native_ready: false, released: false, native_error: null,
+        release: () => { read.released = true; release(); } };
+      reads[this.name] = read;
+      nativeRead.then(() => { read.native_ready = true; }, error => { read.native_error = error.message; });
+      // Read the actual browser File bytes; hold delivery to the app only.
+      return gate.then(() => nativeRead);
+    };
+  }, fileNames);
+  return initial;
+}
+
+async function selectHeldImport(name, raw) {
+  await page.setInputFiles('#import-file', { name, mimeType: 'application/json', buffer: Buffer.from(raw) });
+  await page.waitForFunction(fileName => {
+    const read = window.__mvpHeldImportReads[fileName];
+    return Boolean(read && read.native_ready);
+  }, name);
+}
+
+async function releaseHeldImport(name) {
+  await page.evaluate(async fileName => {
+    window.__mvpHeldImportReads[fileName].release();
+    // Drain promise continuations and the app's change-handler finally block.
+    await new Promise(resolve => setTimeout(resolve, 0));
+  }, name);
+}
+
+async function importSnapshot(label, expectedEditor) {
+  const state = await uiSnapshot(label, expectedEditor);
+  const fileState = await page.evaluate(() => ({
+    selected_file: document.getElementById('import-file').files[0]?.name || null,
+    notice_is_error: document.getElementById('notice').classList.contains('error')
+  }));
+  return { ...state, ...fileState };
+}
+
+async function checkImportReadRaces(baseCase) {
+  const caseA = JSON.parse(JSON.stringify(baseCase));
+  const caseB = JSON.parse(JSON.stringify(baseCase));
+  caseA.objective = 'Older native File A must never replace the latest selection';
+  caseB.objective = 'Newest native File B survives either completion order';
+  const rawA = JSON.stringify(caseA, null, 4) + '\n';
+  const rawB = JSON.stringify(caseB, null, 4) + '\n';
+  const expectedB = JSON.stringify(caseB, null, 2);
+
+  let initial = await prepareHeldImportReads('import-a-before-b', ['a-first.json', 'b-second.json']);
+  await selectHeldImport('a-first.json', rawA);
+  await selectHeldImport('b-second.json', rawB);
+  await releaseHeldImport('a-first.json');
+  let state = await importSnapshot('import-stale-a-while-b-pending', initial.editor);
+  check('import-a-first-keeps-newer-b-pending', state.editor === initial.editor && state.selected_file === 'b-second.json' &&
+    state.notice === initial.notice && !state.notice_is_error && state.current_label === initial.current_label,
+    { exact_initial_editor: state.editor === initial.editor, selected_file: state.selected_file,
+      unchanged_notice: state.notice === initial.notice, notice_is_error: state.notice_is_error, current_label: state.current_label });
+  await releaseHeldImport('b-second.json');
+  state = await importSnapshot('import-a-then-b-final', expectedB);
+  check('import-a-then-b-loads-exact-latest-b', state.editor === expectedB && state.selected_file === null &&
+    state.notice === '합성 입력 파일을 불러왔습니다.' && !state.notice_is_error && state.analyze_disabled && state.report_hidden,
+    { exact_latest_editor: state.editor === expectedB, selected_file: state.selected_file, notice: state.notice,
+      notice_is_error: state.notice_is_error, analyze_disabled: state.analyze_disabled, report_hidden: state.report_hidden });
+
+  await prepareHeldImportReads('import-b-before-a', ['a-delayed.json', 'b-ready.json']);
+  await selectHeldImport('a-delayed.json', rawA);
+  await selectHeldImport('b-ready.json', rawB);
+  await releaseHeldImport('b-ready.json');
+  state = await importSnapshot('import-b-before-stale-a', expectedB);
+  check('import-b-first-loads-exact-latest-b', state.editor === expectedB && state.selected_file === null &&
+    state.notice === '합성 입력 파일을 불러왔습니다.' && !state.notice_is_error,
+    { exact_latest_editor: state.editor === expectedB, selected_file: state.selected_file,
+      notice: state.notice, notice_is_error: state.notice_is_error });
+  await releaseHeldImport('a-delayed.json');
+  state = await importSnapshot('import-b-then-stale-a-final', expectedB);
+  check('import-stale-a-after-b-cannot-replace-editor', state.editor === expectedB && state.selected_file === null &&
+    state.notice === '합성 입력 파일을 불러왔습니다.' && !state.notice_is_error && state.analyze_disabled && state.report_hidden,
+    { exact_latest_editor: state.editor === expectedB, selected_file: state.selected_file, notice: state.notice,
+      notice_is_error: state.notice_is_error, analyze_disabled: state.analyze_disabled, report_hidden: state.report_hidden });
+
+  initial = await prepareHeldImportReads('import-cleared-selection', ['cleared-malformed-a.json']);
+  await selectHeldImport('cleared-malformed-a.json', '{"objective":"Cleared native read must not surface a stale parse error",');
+  await page.setInputFiles('#import-file', []);
+  state = await importSnapshot('import-cleared-before-read-release', initial.editor);
+  check('import-clear-selection-retains-initial-editor', state.editor === initial.editor && state.selected_file === null &&
+    state.notice === initial.notice && !state.notice_is_error,
+    { exact_initial_editor: state.editor === initial.editor, selected_file: state.selected_file,
+      unchanged_notice: state.notice === initial.notice, notice_is_error: state.notice_is_error });
+  await releaseHeldImport('cleared-malformed-a.json');
+  state = await importSnapshot('import-cleared-after-stale-read', initial.editor);
+  check('import-cleared-stale-read-cannot-surface-error', state.editor === initial.editor && state.selected_file === null &&
+    state.notice === initial.notice && !state.notice_is_error && state.current_label === initial.current_label && state.analyze_disabled,
+    { exact_initial_editor: state.editor === initial.editor, selected_file: state.selected_file,
+      unchanged_notice: state.notice === initial.notice, notice_is_error: state.notice_is_error,
+      current_label: state.current_label, analyze_disabled: state.analyze_disabled });
+}
+
 async function run() {
   try {
     browser = await chromium.launch({ headless: true, executablePath: process.env.CHROMIUM_EXECUTABLE || undefined,
@@ -240,6 +350,7 @@ async function run() {
     const finalStored = await serverCase(sid, 'backend-after-native-cancellations');
     check('native-cancellations-leave-backend-v3', finalStored.revision === 3 && finalStored.case.objective === newer.objective,
       { revision: finalStored.revision, objective: finalStored.case.objective });
+    await checkImportReadRaces(storedV3.case);
     check('no-page-errors', pageErrors.length === 0, pageErrors);
     check('tested-source-unchanged-during-run', JSON.stringify(initialHashes) === JSON.stringify(sourceHashes()), sourceHashes());
   } catch (error) {
@@ -251,7 +362,7 @@ async function run() {
   } finally {
     if (releaseHeldResponse) releaseHeldResponse();
     const receipt = { verifier: browser ? 'Actual Playwright Chromium browser with isolated coach_v1.server and SQLite; not Node VM' : 'Playwright Chromium launch attempt; browser did not start',
-      scope: 'Affected synthetic save race, revision acknowledgement, exact draft retention, reload, native cancellation, one synthetic analysis, 390px overflow and page errors',
+      scope: 'Affected synthetic save race, revision acknowledgement, exact draft retention, reload, native cancellation, native File read ordering/clearing, one synthetic analysis, 390px overflow and page errors',
       evidence_kind: browser ? 'FRESH_BROWSER_EXECUTION' : 'BROWSER_LAUNCH_FAILURE', started_at: startedAt, finished_at: new Date().toISOString(),
       node_version: process.version, browser_version: browser ? browser.version() : null,
       source_sha256: initialHashes, passed: firstFailure === null && checks.every(item => item.passed),

@@ -18,7 +18,7 @@ import uuid
 from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_BROWSER_CHECK_COUNT = 32
+EXPECTED_BROWSER_CHECK_COUNT = 38
 BROWSER_SOURCE_FILES = ['web_r4/app.js', 'web_r4/index.html', 'web_r4/styles.css',
     'coach_v1/server.py', 'coach_v1/storage.py', 'examples/r3/compare-wait-retreat.json',
     'tests_mvp/browser_save_race.cjs', 'scripts/browser_mvp.py']
