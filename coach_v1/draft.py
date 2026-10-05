@@ -38,6 +38,7 @@ _RECORD_FIELDS = frozenset(('schema_version', 'id', 'session_id', 'revision', 'p
                            'received_at', 'capture', 'input_sha256', 'adapter_capability',
                            'validation_state', 'gameplan_status', 'coaching_enabled'))
 _TOKEN = re.compile(r'[a-f0-9]{32}')
+_IDEMPOTENCY_KEY = re.compile(r'[A-Za-z0-9_.-]{1,128}')
 _TIMESTAMP = re.compile(r'\d{4}-\d{2}-\d{2}[Tt]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:\d{2})')
 _MAX_INTEGER = 9223372036854775807
 # The existing private Workbench body limit also bounds stored main payloads.
@@ -189,6 +190,16 @@ def _id(value):
         raise ServiceError(422, 'INVALID_DRAFT_ID')
 
 
+def _key(value):
+    if not isinstance(value, str) or not _IDEMPOTENCY_KEY.fullmatch(value):
+        raise ServiceError(422, 'INVALID_IDEMPOTENCY_KEY')
+
+
+def _operation_id(operation, key, cid=None):
+    value = [operation, key] if cid is None else [operation, cid, key]
+    return hashlib.sha256(_json(value).encode('utf-8')).hexdigest()[:32]
+
+
 def _revision(value):
     if type(value) is not int or not 1 <= value <= _MAX_INTEGER:
         raise ServiceError(422, 'INVALID_DRAFT_REVISION')
@@ -320,6 +331,12 @@ class DraftStore(Store):
         return value
 
     @staticmethod
+    def _id_taken(db, value):
+        return db.execute('SELECT id FROM sessions WHERE id=? UNION SELECT id FROM tombstones WHERE id=? '
+                          'UNION SELECT id FROM draft_captures WHERE id=? UNION SELECT id FROM draft_snapshots WHERE id=?',
+                          (value, value, value, value)).fetchone() is not None
+
+    @staticmethod
     def _record(sid, cid, revision, parent, entered):
         return dict(schema_version='mvp.manual-draft.v1', id=sid, session_id=cid,
             revision=revision, parent_id=parent, received_at=datetime.now(timezone.utc).isoformat(),
@@ -327,13 +344,24 @@ class DraftStore(Store):
             adapter_capability={'automatic_collection':'UNAVAILABLE', 'manual_capture':'AVAILABLE'},
             validation_state='UNVERIFIED', gameplan_status='NOT_GENERATED', coaching_enabled=False)
 
-    def create_capture(self, capture, max_bytes):
+    def create_capture(self, capture, max_bytes, key=None):
         _budget(max_bytes); entered = _capture(capture)
+        if key is not None:
+            _key(key)
         with self._db() as db:
             validate_draft_content(db)
-            cid = self._fresh_id(db)
+            cid = self._fresh_id(db) if key is None else _operation_id('CREATE_DRAFT', key)
+            if key is not None and db.execute('SELECT id FROM draft_captures WHERE id=?', (cid,)).fetchone():
+                prior = self._snapshot(db, cid, 1)
+                if prior['capture'] != entered:
+                    raise ServiceError(409, 'IDEMPOTENCY_CONFLICT')
+                return _bounded(prior, max_bytes)
+            if key is not None and self._id_taken(db, cid):
+                raise ServiceError(409, 'DRAFT_CAPTURE_ID_CONFLICT')
             db.execute('INSERT INTO draft_captures VALUES (?,?,?)', (cid, entered['title'], 1))
-            sid = self._fresh_id(db)
+            sid = self._fresh_id(db) if key is None else _operation_id('CREATE_DRAFT_SNAPSHOT', key)
+            if key is not None and self._id_taken(db, sid):
+                raise ServiceError(409, 'DRAFT_CAPTURE_ID_CONFLICT')
             record = _bounded(self._record(sid, cid, 1, None, entered), max_bytes)
             db.execute('INSERT INTO draft_snapshots VALUES (?,?,?,?,?)', (sid, cid, 1, None, _json(record)))
             return record
@@ -364,16 +392,28 @@ class DraftStore(Store):
             return _bounded(dict(session_id=cid, current_revision=current['revision'],
                                  revision_count=len(revisions), revisions=revisions), max_bytes)
 
-    def put_capture(self, cid, capture, expected_revision, max_bytes):
+    def put_capture(self, cid, capture, expected_revision, max_bytes, key=None):
         _budget(max_bytes); _id(cid); _revision(expected_revision); entered = _capture(capture)
+        if key is not None:
+            _key(key)
         with self._db() as db:
             validate_draft_content(db)
+            sid = self._fresh_id(db) if key is None else _operation_id('PUT_DRAFT', key, cid)
+            if key is not None:
+                row = db.execute('SELECT payload FROM draft_snapshots WHERE id=?', (sid,)).fetchone()
+                if row is not None:
+                    prior = strict_json(row[0])
+                    if (prior['session_id'] != cid or prior['revision'] != expected_revision+1
+                        or prior['capture'] != entered):
+                        raise ServiceError(409, 'IDEMPOTENCY_CONFLICT')
+                    return _bounded(prior, max_bytes)
+                if self._id_taken(db, sid):
+                    raise ServiceError(409, 'DRAFT_CAPTURE_ID_CONFLICT')
             current = self._capture_row(db, cid)
             if current['revision'] != expected_revision:
                 raise ServiceError(409, 'REVISION_CONFLICT')
             revision = expected_revision+1; _revision(revision)
             parent = self._snapshot(db, cid, expected_revision)['id']
-            sid = self._fresh_id(db)
             record = _bounded(self._record(sid, cid, revision, parent, entered), max_bytes)
             db.execute('INSERT INTO draft_snapshots VALUES (?,?,?,?,?)', (sid, cid, revision, parent, _json(record)))
             db.execute('UPDATE draft_captures SET title=?,revision=? WHERE id=?', (entered['title'], revision, cid))

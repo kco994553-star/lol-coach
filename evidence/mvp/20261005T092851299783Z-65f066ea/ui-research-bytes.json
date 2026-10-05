@@ -1,0 +1,263 @@
+{
+  "scope": "Source UTF-8 byte preservation and stale-read guards; synthetic data only",
+  "verifier": "Node VM DOM stub with native TextDecoder and unchanged Python adapters; not browser",
+  "executed_at": "2026-10-05T09:29:18.315Z",
+  "node_version": "v24.19.0",
+  "source_sha256": "39ae97ef2e9623961f054e9c07e5460255dc4664d0387abda3f0bd56fe6e8978",
+  "test_sha256": "10f48bfd934a183511d4cc13b3151d775223741964fcf370bdcb0ae4d9d08522",
+  "fixture_sha256": {
+    "bom_json": "df9d5a15e8c9505d361d2308d9897bfd8ee391fa832ed5d9b197d14c3d3dd70e",
+    "bom_transcript": "4470a53f8d4d8f63a3fb593704bcd0cb27da6524614c85b4813cf070fbb3c6b8",
+    "valid": "8e8a378278231e61e62b7731b25fdb31f193debc24e03daa6152d3570dea4b22",
+    "invalid": "807ef83263d8eada53d6f1f8b250fb5f80408e84ec28f44042a379bd2940b3be",
+    "truncated": "c0080e2df40e72b63b204092c62885b8b17efc5c016af4da7d049bd7be44602d",
+    "empty": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+  },
+  "passed": 9,
+  "total": 9,
+  "results": [
+    {
+      "id": "RESEARCH-BOM-JSON",
+      "passed": true,
+      "checks": {
+        "single_post": true,
+        "original_submission_hash": true,
+        "original_adapter_hash": true
+      },
+      "original_sha256": "df9d5a15e8c9505d361d2308d9897bfd8ee391fa832ed5d9b197d14c3d3dd70e",
+      "post": {
+        "title": "bom_json",
+        "submitted_sha256": "df9d5a15e8c9505d361d2308d9897bfd8ee391fa832ed5d9b197d14c3d3dd70e",
+        "report_sha256": "df9d5a15e8c9505d361d2308d9897bfd8ee391fa832ed5d9b197d14c3d3dd70e"
+      }
+    },
+    {
+      "id": "RESEARCH-BOM-TRANSCRIPT",
+      "passed": true,
+      "checks": {
+        "single_post": true,
+        "original_submission_hash": true,
+        "original_adapter_hash": true
+      },
+      "original_sha256": "4470a53f8d4d8f63a3fb593704bcd0cb27da6524614c85b4813cf070fbb3c6b8",
+      "post": {
+        "title": "bom_transcript",
+        "submitted_sha256": "4470a53f8d4d8f63a3fb593704bcd0cb27da6524614c85b4813cf070fbb3c6b8",
+        "report_sha256": "4470a53f8d4d8f63a3fb593704bcd0cb27da6524614c85b4813cf070fbb3c6b8"
+      }
+    },
+    {
+      "id": "RESEARCH-VALID-MULTIBYTE",
+      "passed": true,
+      "checks": {
+        "single_post": true,
+        "original_submission_hash": true,
+        "original_adapter_hash": true
+      },
+      "original_sha256": "8e8a378278231e61e62b7731b25fdb31f193debc24e03daa6152d3570dea4b22",
+      "post": {
+        "title": "valid",
+        "submitted_sha256": "8e8a378278231e61e62b7731b25fdb31f193debc24e03daa6152d3570dea4b22",
+        "report_sha256": "8e8a378278231e61e62b7731b25fdb31f193debc24e03daa6152d3570dea4b22"
+      }
+    },
+    {
+      "id": "RESEARCH-REJECT-INVALID",
+      "passed": true,
+      "checks": {
+        "no_post": true,
+        "resource_preserved": true,
+        "dirty_note_preserved": true,
+        "explicit_error": true
+      },
+      "before": {
+        "id": "old",
+        "note": {
+          "anchor": "overview",
+          "revision": 3
+        },
+        "dirty": true,
+        "edit": 2,
+        "known": "미저장 원본 노트",
+        "title": "old",
+        "notice": ""
+      },
+      "after": {
+        "id": "old",
+        "note": {
+          "anchor": "overview",
+          "revision": 3
+        },
+        "dirty": true,
+        "edit": 2,
+        "known": "미저장 원본 노트",
+        "title": "old",
+        "notice": "처리하지 못했습니다: UTF-8 파일 형식이 올바르지 않습니다."
+      }
+    },
+    {
+      "id": "RESEARCH-REJECT-TRUNCATED",
+      "passed": true,
+      "checks": {
+        "no_post": true,
+        "resource_preserved": true,
+        "dirty_note_preserved": true,
+        "explicit_error": true
+      },
+      "before": {
+        "id": "old",
+        "note": {
+          "anchor": "overview",
+          "revision": 3
+        },
+        "dirty": true,
+        "edit": 2,
+        "known": "미저장 원본 노트",
+        "title": "old",
+        "notice": ""
+      },
+      "after": {
+        "id": "old",
+        "note": {
+          "anchor": "overview",
+          "revision": 3
+        },
+        "dirty": true,
+        "edit": 2,
+        "known": "미저장 원본 노트",
+        "title": "old",
+        "notice": "처리하지 못했습니다: UTF-8 파일 형식이 올바르지 않습니다."
+      }
+    },
+    {
+      "id": "RESEARCH-STALE-INVALID-A-FIRST",
+      "passed": true,
+      "checks": {
+        "only_latest_post": true,
+        "latest_display": true,
+        "no_stale_error": true
+      },
+      "posts": [
+        {
+          "title": "new-valid",
+          "submitted_sha256": "8e8a378278231e61e62b7731b25fdb31f193debc24e03daa6152d3570dea4b22",
+          "report_sha256": "8e8a378278231e61e62b7731b25fdb31f193debc24e03daa6152d3570dea4b22"
+        }
+      ],
+      "state": {
+        "id": "test",
+        "note": {
+          "anchor": "overview",
+          "revision": 0,
+          "known": "",
+          "intention": "",
+          "alternative": "",
+          "outcome": ""
+        },
+        "dirty": false,
+        "edit": 0,
+        "known": "",
+        "title": "new-valid",
+        "notice": "저장된 자료를 열었습니다."
+      }
+    },
+    {
+      "id": "RESEARCH-STALE-INVALID-B-FIRST",
+      "passed": true,
+      "checks": {
+        "only_latest_post": true,
+        "latest_display": true,
+        "no_stale_error": true
+      },
+      "posts": [
+        {
+          "title": "new-valid",
+          "submitted_sha256": "8e8a378278231e61e62b7731b25fdb31f193debc24e03daa6152d3570dea4b22",
+          "report_sha256": "8e8a378278231e61e62b7731b25fdb31f193debc24e03daa6152d3570dea4b22"
+        }
+      ],
+      "state": {
+        "id": "test",
+        "note": {
+          "anchor": "overview",
+          "revision": 0,
+          "known": "",
+          "intention": "",
+          "alternative": "",
+          "outcome": ""
+        },
+        "dirty": false,
+        "edit": 0,
+        "known": "",
+        "title": "new-valid",
+        "notice": "저장된 자료를 열었습니다."
+      }
+    },
+    {
+      "id": "RESEARCH-CLEARED-INVALID",
+      "passed": true,
+      "checks": {
+        "no_post": true,
+        "no_error": true,
+        "old_note": true
+      },
+      "after": {
+        "id": "old",
+        "note": {
+          "anchor": "overview",
+          "revision": 3
+        },
+        "dirty": true,
+        "edit": 2,
+        "known": "미저장 원본 노트",
+        "title": "old",
+        "notice": ""
+      }
+    },
+    {
+      "id": "R6-LATEST-FILE-A-FIRST",
+      "passed": true,
+      "checks": {
+        "posts_after_a_empty": true,
+        "only_b": true,
+        "display_b": true,
+        "no_error": true
+      },
+      "postsAfterA": [],
+      "posts": [
+        {
+          "title": "B.json",
+          "submitted_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "report_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+        }
+      ]
+    }
+  ],
+  "fixed_result": {
+    "passed": true,
+    "actual": {
+      "id": "R6-LATEST-FILE-A-FIRST",
+      "passed": true,
+      "checks": {
+        "posts_after_a_empty": true,
+        "only_b": true,
+        "display_b": true,
+        "no_error": true
+      },
+      "postsAfterA": [],
+      "posts": [
+        {
+          "title": "B.json",
+          "submitted_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "report_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+        }
+      ]
+    }
+  },
+  "process": {
+    "exit_code": 0,
+    "signal": null,
+    "stdout": "{\"scope\":\"Source UTF-8 byte preservation and stale-read guards; synthetic data only\",\"verifier\":\"Node VM DOM stub with native TextDecoder and unchanged Python adapters; not browser\",\"executed_at\":\"2026-10-05T09:29:18.315Z\",\"node_version\":\"v24.19.0\",\"source_sha256\":\"39ae97ef2e9623961f054e9c07e5460255dc4664d0387abda3f0bd56fe6e8978\",\"test_sha256\":\"10f48bfd934a183511d4cc13b3151d775223741964fcf370bdcb0ae4d9d08522\",\"fixture_sha256\":{\"bom_json\":\"df9d5a15e8c9505d361d2308d9897bfd8ee391fa832ed5d9b197d14c3d3dd70e\",\"bom_transcript\":\"4470a53f8d4d8f63a3fb593704bcd0cb27da6524614c85b4813cf070fbb3c6b8\",\"valid\":\"8e8a378278231e61e62b7731b25fdb31f193debc24e03daa6152d3570dea4b22\",\"invalid\":\"807ef83263d8eada53d6f1f8b250fb5f80408e84ec28f44042a379bd2940b3be\",\"truncated\":\"c0080e2df40e72b63b204092c62885b8b17efc5c016af4da7d049bd7be44602d\",\"empty\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"},\"passed\":9,\"total\":9,\"results\":[{\"id\":\"RESEARCH-BOM-JSON\",\"passed\":true,\"checks\":{\"single_post\":true,\"original_submission_hash\":true,\"original_adapter_hash\":true},\"original_sha256\":\"df9d5a15e8c9505d361d2308d9897bfd8ee391fa832ed5d9b197d14c3d3dd70e\",\"post\":{\"title\":\"bom_json\",\"submitted_sha256\":\"df9d5a15e8c9505d361d2308d9897bfd8ee391fa832ed5d9b197d14c3d3dd70e\",\"report_sha256\":\"df9d5a15e8c9505d361d2308d9897bfd8ee391fa832ed5d9b197d14c3d3dd70e\"}},{\"id\":\"RESEARCH-BOM-TRANSCRIPT\",\"passed\":true,\"checks\":{\"single_post\":true,\"original_submission_hash\":true,\"original_adapter_hash\":true},\"original_sha256\":\"4470a53f8d4d8f63a3fb593704bcd0cb27da6524614c85b4813cf070fbb3c6b8\",\"post\":{\"title\":\"bom_transcript\",\"submitted_sha256\":\"4470a53f8d4d8f63a3fb593704bcd0cb27da6524614c85b4813cf070fbb3c6b8\",\"report_sha256\":\"4470a53f8d4d8f63a3fb593704bcd0cb27da6524614c85b4813cf070fbb3c6b8\"}},{\"id\":\"RESEARCH-VALID-MULTIBYTE\",\"passed\":true,\"checks\":{\"single_post\":true,\"original_submission_hash\":true,\"original_adapter_hash\":true},\"original_sha256\":\"8e8a378278231e61e62b7731b25fdb31f193debc24e03daa6152d3570dea4b22\",\"post\":{\"title\":\"valid\",\"submitted_sha256\":\"8e8a378278231e61e62b7731b25fdb31f193debc24e03daa6152d3570dea4b22\",\"report_sha256\":\"8e8a378278231e61e62b7731b25fdb31f193debc24e03daa6152d3570dea4b22\"}},{\"id\":\"RESEARCH-REJECT-INVALID\",\"passed\":true,\"checks\":{\"no_post\":true,\"resource_preserved\":true,\"dirty_note_preserved\":true,\"explicit_error\":true},\"before\":{\"id\":\"old\",\"note\":{\"anchor\":\"overview\",\"revision\":3},\"dirty\":true,\"edit\":2,\"known\":\"미저장 원본 노트\",\"title\":\"old\",\"notice\":\"\"},\"after\":{\"id\":\"old\",\"note\":{\"anchor\":\"overview\",\"revision\":3},\"dirty\":true,\"edit\":2,\"known\":\"미저장 원본 노트\",\"title\":\"old\",\"notice\":\"처리하지 못했습니다: UTF-8 파일 형식이 올바르지 않습니다.\"}},{\"id\":\"RESEARCH-REJECT-TRUNCATED\",\"passed\":true,\"checks\":{\"no_post\":true,\"resource_preserved\":true,\"dirty_note_preserved\":true,\"explicit_error\":true},\"before\":{\"id\":\"old\",\"note\":{\"anchor\":\"overview\",\"revision\":3},\"dirty\":true,\"edit\":2,\"known\":\"미저장 원본 노트\",\"title\":\"old\",\"notice\":\"\"},\"after\":{\"id\":\"old\",\"note\":{\"anchor\":\"overview\",\"revision\":3},\"dirty\":true,\"edit\":2,\"known\":\"미저장 원본 노트\",\"title\":\"old\",\"notice\":\"처리하지 못했습니다: UTF-8 파일 형식이 올바르지 않습니다.\"}},{\"id\":\"RESEARCH-STALE-INVALID-A-FIRST\",\"passed\":true,\"checks\":{\"only_latest_post\":true,\"latest_display\":true,\"no_stale_error\":true},\"posts\":[{\"title\":\"new-valid\",\"submitted_sha256\":\"8e8a378278231e61e62b7731b25fdb31f193debc24e03daa6152d3570dea4b22\",\"report_sha256\":\"8e8a378278231e61e62b7731b25fdb31f193debc24e03daa6152d3570dea4b22\"}],\"state\":{\"id\":\"test\",\"note\":{\"anchor\":\"overview\",\"revision\":0,\"known\":\"\",\"intention\":\"\",\"alternative\":\"\",\"outcome\":\"\"},\"dirty\":false,\"edit\":0,\"known\":\"\",\"title\":\"new-valid\",\"notice\":\"저장된 자료를 열었습니다.\"}},{\"id\":\"RESEARCH-STALE-INVALID-B-FIRST\",\"passed\":true,\"checks\":{\"only_latest_post\":true,\"latest_display\":true,\"no_stale_error\":true},\"posts\":[{\"title\":\"new-valid\",\"submitted_sha256\":\"8e8a378278231e61e62b7731b25fdb31f193debc24e03daa6152d3570dea4b22\",\"report_sha256\":\"8e8a378278231e61e62b7731b25fdb31f193debc24e03daa6152d3570dea4b22\"}],\"state\":{\"id\":\"test\",\"note\":{\"anchor\":\"overview\",\"revision\":0,\"known\":\"\",\"intention\":\"\",\"alternative\":\"\",\"outcome\":\"\"},\"dirty\":false,\"edit\":0,\"known\":\"\",\"title\":\"new-valid\",\"notice\":\"저장된 자료를 열었습니다.\"}},{\"id\":\"RESEARCH-CLEARED-INVALID\",\"passed\":true,\"checks\":{\"no_post\":true,\"no_error\":true,\"old_note\":true},\"after\":{\"id\":\"old\",\"note\":{\"anchor\":\"overview\",\"revision\":3},\"dirty\":true,\"edit\":2,\"known\":\"미저장 원본 노트\",\"title\":\"old\",\"notice\":\"\"}},{\"id\":\"R6-LATEST-FILE-A-FIRST\",\"passed\":true,\"checks\":{\"posts_after_a_empty\":true,\"only_b\":true,\"display_b\":true,\"no_error\":true},\"postsAfterA\":[],\"posts\":[{\"title\":\"B.json\",\"submitted_sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"report_sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"}]}],\"fixed_result\":{\"passed\":true,\"actual\":{\"id\":\"R6-LATEST-FILE-A-FIRST\",\"passed\":true,\"checks\":{\"posts_after_a_empty\":true,\"only_b\":true,\"display_b\":true,\"no_error\":true},\"postsAfterA\":[],\"posts\":[{\"title\":\"B.json\",\"submitted_sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"report_sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"}]}}}\n",
+    "stderr": ""
+  }
+}

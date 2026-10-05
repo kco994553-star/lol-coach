@@ -42,3 +42,12 @@ TEAM_DRAFT 입력 수집과 개인 DB/HTTP/UI/백업이다. Read-only(읽기 전
 이력 보존 근거다. 동일 UNKNOWN 행 손실의 실제 Node 반례를 수리 중이며,
 새 실제 Chrome 결과는 완료된 Actions 근거로만 추가한다. 서비스 프로젝트·
 DB 서비스·디자인·배포·의존성·유료 지출을 만들지 않았다.
+
+2026-10-05 retry-safe save(안전한 재시도 저장)에서는 Superpowers의
+TDD(검사 주도 개발)와 verification(검증) 절차만 사용했다. 대상은 기존 수동
+기록 POST/PUT와 브라우저 저장 흐름이며
+Write(쓰기)는 이 저장소 코드·검사·additive evidence(이력 보존 근거)로 한정했다.
+실제 로컬 브라우저 첫 실행은 Playwright 실행 파일 부재로 실패했고 해당 receipt를
+보존했다. 무료 Chromium 다운로드나 외부 서비스는 만들지 않았으며, 실제 Chrome
+111개 검사는 GitHub Actions 결과 전에는 완료로 선언하지 않는다. Context7·Figma·
+MagicPath·Linear·Supabase·Vercel은 사용하지 않았고 외부 대상·비용도 생성하지 않았다.

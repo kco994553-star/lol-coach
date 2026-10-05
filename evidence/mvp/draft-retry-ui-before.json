@@ -1,0 +1,19 @@
+{
+  "scope": "Manual draft retry attempt ownership before repair",
+  "evidence_kind": "SYNTHETIC_NODE_VM_NOT_BROWSER_OR_GAME_EVIDENCE",
+  "executed_at": "2026-10-05T09:15:17.348Z",
+  "source_commit": "6f5c2c30db54f962ac5881a8d628336ca62cd7e5",
+  "source_sha256": "fe02bea5d16b80a00ccd9c77da39aa9d323a6500e29d7fa9068d21c9b5fdd658",
+  "test_sha256": "b1750aa5d3d44c9fd56e478defd92c84e0c58439d7495de6db78dfab47bbedf3",
+  "case_id": "DRAFT-RETRY-NETWORK-LOSS-REUSES-EXACT-REQUEST-THEN-ROTATES-KEY",
+  "passed": 0,
+  "total": 1,
+  "failed_checks": [
+    "first_key_is_nonempty",
+    "retry_reuses_exact_body",
+    "later_editor_survives_original_ack",
+    "next_save_rotates_key"
+  ],
+  "classification": "REPAIR_REQUIRED",
+  "note": "The original UI rebuilt a changed request after ambiguous response loss and had no save-attempt idempotency key. Full transient output was observed locally; this immutable summary preserves the failing case and exact source/test identities."
+}

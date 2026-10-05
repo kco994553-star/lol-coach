@@ -18,17 +18,21 @@ async function bounded(promise, label) {
 
 module.exports = async function checkManualDraftCapture({ page, check, baseUrl, token }) {
   const auth = { Authorization: 'Bearer ' + token }, held = [], writes = [], unique = crypto.randomUUID();
+  let apiKey = 0;
   const fields = ['title', 'patch', 'phase', 'observed', 'author', 'perspective', 'source'];
   const track = request => {
     const pathname = new URL(request.url()).pathname;
     if (pathname.startsWith('/dev/v1/draft-captures') && ['POST', 'PUT', 'DELETE'].includes(request.method())) {
-      writes.push({ method: request.method(), path: pathname, body: request.postDataJSON() });
+      writes.push({ method: request.method(), path: pathname, body: request.postDataJSON(),
+        idempotency_key: request.headers()['idempotency-key'] || null });
     }
   };
   page.on('request', track);
   async function api(route, method = 'GET', data) {
+    const headers = { ...auth };
+    if (method === 'POST' || method === 'PUT') headers['Idempotency-Key'] = 'browser-draft-fixture-' + (++apiKey) + '-' + unique;
     const response = await page.context().request.fetch(baseUrl + '/dev/v1' + route,
-      { method, headers: auth, ...(data === undefined ? {} : { data }) });
+      { method, headers, ...(data === undefined ? {} : { data }) });
     return { status: response.status(), body: await response.json() };
   }
   function fixture(title) {

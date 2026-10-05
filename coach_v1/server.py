@@ -250,7 +250,7 @@ class Handler(BaseHTTPRequestHandler):
             if self.command=='GET':return self.reply(200,ds.list_captures(max_bytes=limit))
             if self.command=='POST':
                 b=self.body();self.fields(b,('capture',))
-                return self.reply(201,ds.create_capture(b['capture'],max_bytes=limit))
+                return self.reply(201,ds.create_capture(b['capture'],max_bytes=limit,key=self.key()))
         draft=re.fullmatch(re.escape(prefix)+r'/draft-captures/([a-f0-9]{32})(?:/(history|revisions/([^/]+)))?',route)
         if draft:
             cid,action,revision=draft.groups();ds=self.server.store;limit=self.server.limits.body_bytes
@@ -262,7 +262,7 @@ class Handler(BaseHTTPRequestHandler):
                 if self.command=='GET':return self.reply(200,ds.get_capture(cid,max_bytes=limit))
                 if self.command=='PUT':
                     b=self.body();self.fields(b,('capture','expected_revision'))
-                    return self.reply(200,ds.put_capture(cid,b['capture'],self.revision(b['expected_revision']),max_bytes=limit))
+                    return self.reply(200,ds.put_capture(cid,b['capture'],self.revision(b['expected_revision']),max_bytes=limit,key=self.key()))
                 if self.command=='DELETE':
                     b=self.body();self.fields(b,('expected_revision',))
                     return self.reply(200,ds.delete_capture(cid,self.revision(b['expected_revision']),max_bytes=limit))
