@@ -184,6 +184,23 @@ def knowledge_browser_repair_binding() -> dict:
     return {'status': 'PASS' if all(checks.values()) else 'FAIL', 'checks': checks}
 
 
+def note_recovery_browser_repair_binding() -> dict:
+    repair = read_json(ROOT / 'evidence/mvp/note-recovery-browser-repair.json')
+    failed = read_json(ROOT / repair['failure_receipt'])
+    browser = failed['browser']['browser_receipt']
+    checks = {
+        'actual_first_failure_retained': failed['run']['id'] == repair['failed_run'] == 37270809307 and failed['run']['attempt'] == 1 and failed['run']['conclusion'] == 'failure' and failed['regression']['status'] == 'PASS' and browser['passed'] is False,
+        'exact_first_failure': [row['id'] for row in browser['checks'] if row['passed'] is False] == [repair['failure_id']],
+        'failed_test_bytes_archived': sha(ROOT / repair['archived_before']) == repair['browser_test_before_sha256'] == browser['source_sha256']['tests_mvp/browser_note_recovery.cjs'],
+        'current_repaired_test': sha(ROOT / 'tests_mvp/browser_note_recovery.cjs') == repair['browser_test_after_sha256'],
+        'production_unchanged': sha(ROOT / 'web_r4/research.js') == repair['production_research_sha256'] == browser['source_sha256']['web_r4/research.js'],
+        'tested_tree_and_parents': failed['tested_commit']['tree'] == repair['failed_tree'] and failed['tested_commit']['sha'] == repair['failed_tested_commit'] == failed['browser']['commit_sha'] and failed['tested_commit']['parents'] == [read_json(ROOT / 'evidence/mvp/note-recovery-baseline.json')['intake_main'], failed['run']['head']],
+        'required_count_preserved': repair['required_browser_checks'] == 89 and repair['recovery_cases'] == 10,
+        'independent_completion_reproduction': sha(ROOT / repair['independent_reproducer']) == repair['independent_reproducer_sha256'] == read_json(ROOT / repair['independent_reproduction'])['reproducer_sha256'] and read_json(ROOT / repair['independent_reproduction'])['source_sha256'] == repair['production_research_sha256'] and read_json(ROOT / repair['independent_reproduction'])['changedKeys'] == ['notice'] and all(read_json(ROOT / repair['independent_reproduction'])['checks'].values()),
+    }
+    return {'status': 'PASS' if all(checks.values()) else 'FAIL', 'checks': checks}
+
+
 def knowledge_deletion_binding() -> dict:
     names=('knowledge-ui-before.json','knowledge-ui-after.json','knowledge-ui-final.json')
     before,after,final=[read_json(ROOT / 'evidence/mvp' / name) for name in names]
@@ -627,6 +644,7 @@ def input_hashes() -> dict[str, str]:
     values.update({p.relative_to(ROOT).as_posix():sha(p) for p in sorted((ROOT / 'evidence/mvp/knowledge-ui-sources').glob('*.js')) if p.is_file()})
     values.update({p.relative_to(ROOT).as_posix():sha(p) for p in sorted((ROOT / 'evidence/mvp/knowledge-browser-sources').glob('*.cjs')) if p.is_file()})
     values.update({p.relative_to(ROOT).as_posix():sha(p) for p in sorted((ROOT / 'evidence/mvp/note-recovery-sources').glob('*.js')) if p.is_file()})
+    values.update({p.relative_to(ROOT).as_posix():sha(p) for p in sorted((ROOT / 'evidence/mvp/note-recovery-browser-sources').glob('*.cjs')) if p.is_file()})
     for name in ("FREEZE_MANIFEST.json", "requirements-r3.txt", R7_SOURCE_RECEIPT, R6_SOURCE_RECEIPT,
                  "evidence/r7/baseline-tree.json", "evidence/mvp/save-race-before.json",
                  "evidence/mvp/save-race-after.json", "evidence/mvp/ci-cost-basis.json",
@@ -648,6 +666,8 @@ def input_hashes() -> dict[str, str]:
                  "evidence/mvp/knowledge-browser-repair.json", "evidence/mvp/knowledge-ci-37268245767-failure.json",
                  "evidence/mvp/note-recovery-baseline.json", "evidence/mvp/note-recovery-source-version.json", "evidence/mvp/note-recovery-before.json", "evidence/mvp/note-recovery-after.json",
                  "evidence/mvp/note-recovery-final.json", "evidence/mvp/note-recovery-delete-before.json", "evidence/mvp/note-recovery-delete-after.json",
+                 "evidence/mvp/note-recovery-browser-repair.json", "evidence/mvp/note-recovery-ci-37270809307-failure.json",
+                 "evidence/mvp/note-recovery-delete-order-repro.cjs", "evidence/mvp/note-recovery-delete-order-repro.json",
                  "evidence/mvp/github-ci-visibility.json",
                  "docs/MVP_VALIDATION.md", "docs/MVP_BACKUP.md", "docs/MVP_KNOWLEDGE_PROPOSALS.md", "docs/MVP_NOTE_RECOVERY.md"):
         if (ROOT / name).is_file():
@@ -672,6 +692,8 @@ def main() -> int:
         save(out, "preservation.json", checks["preservation"])
         checks["knowledge_browser_repair_binding"] = knowledge_browser_repair_binding()
         save(out, "knowledge-browser-repair-binding.json", checks["knowledge_browser_repair_binding"])
+        checks["note_recovery_browser_repair_binding"] = note_recovery_browser_repair_binding()
+        save(out, "note-recovery-browser-repair-binding.json", checks["note_recovery_browser_repair_binding"])
         checks["ui_repair_receipt_binding"] = repair_binding()
         save(out, "ui-repair-receipt-binding.json", checks["ui_repair_receipt_binding"])
         if any(checks[name]["status"] != "PASS" for name in checks):

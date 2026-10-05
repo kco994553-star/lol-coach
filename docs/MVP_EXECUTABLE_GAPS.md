@@ -1,3 +1,14 @@
+# Latest delta — PR7 verifier completion-boundary repair
+
+Actual first run37270809307 browserFAIL retained, regressionPASS189inputs.
+Independent scheduling reproduction found only notice changed after cacheclear;
+existing completed-delete notice now binds before-state. Product39ae97 unchanged,
+89 required checks unchanged. Fresh local required061833/1db93441 PASS; actual
+repaired browser and gatedmerge/postmerge pending. Continue manual draft capture
+after PR7; only Player/preaction dependency parked, realCoachN0/null.
+
+---
+
 # Latest executable gap delta — PR6 verified / recovery deletion boundary
 
 2026-10-05 KST. Actual PR6 normal merge594ef3c, PR37268750816 and

@@ -1,3 +1,25 @@
+# CURRENT HANDOFF — PR7 actual browser completion-boundary repair
+
+2026-10-05 KST. Fresh exact main594ef3c / PR7b3bd758d and actual Actions
+37270809307 attempt1 FAILURE tested merge256b4ba2/treeae357a1 with parents
+594ef3c/b3bd758d. Required regression PASS, all189 inputs matched; browser
+84 executed with only current-delete snapshot equality failing. Original test
+bytes and full actual failure are preserved. Independent VM reproduction
+found only notice changing during normal DELETE->await list refresh->completed
+notice. Completed state plus late genuine pre-delete history GET/recovery stays
+unchanged. Verifier now waits existing completed-delete notice, retaining whole
+editor/history equality, actual404/source/CAS/Unicode/privacy gates and required
+89 count. Production Research39ae97ef unchanged. Risk CRITICAL retained.
+
+Fresh local required evidence/mvp/20261005T061833866467Z-1db93441/verification.json
+PASS, no actual repaired Chrome PASS before new Actions. Frozen27, old111,
+protected9, backup23 and current5+3/prior guards preserved. Existing PR7 only,
+common work/main-execution-claim token main-20261005T0613-note-recovery-ci-repair-root.
+Only independent Player/preaction dependency PARKED_EXTERNAL; realCoachN0/null.
+After actual retest/gatedmerge/postmerge, continue manual draft capture requirement.
+
+---
+
 # CURRENT HANDOFF — Note-history draft recovery / local gates verified
 
 2026-10-05 KST. Fresh actual main594ef3cf6138421de8a8c77c7ec1c390e7cfedea.
