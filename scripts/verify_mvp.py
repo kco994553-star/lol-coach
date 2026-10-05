@@ -47,6 +47,10 @@ RESEARCH_REQUEST_CASE_IDS = {
     "RESEARCH-CURRENT-RESOURCE-GET-ERROR", "RESEARCH-CURRENT-NOTE-GET-ERROR",
     "RESEARCH-STALE-GET-ERROR-AFTER-NEW-SELECTION", "RESEARCH-STALE-GET-ERROR-AFTER-LOGOUT",
 }
+NAVIGATION_CASE_IDS = {
+    "RESEARCH-NAV-DELETE-DISABLED-NO-REQUEST", "RESEARCH-NAV-LEGACY-DELETE-CANNOT-CLEAR-B-DRAFT",
+    "RESEARCH-NAV-CURRENT-DELETE-CLEARS", "RESEARCH-NAV-LATE-A-DELETE-ERROR-CANNOT-REPORT-ON-B",
+}
 
 
 def utc() -> str:
@@ -212,6 +216,10 @@ def node_check(out: Path, name: str, script: str, source: str,
         passed = receipt.get("passed") == count and receipt.get("total") == count
         passed = passed and {row.get("id") for row in receipt.get("results", [])} == RESEARCH_REQUEST_CASE_IDS
         passed = passed and all(row.get("passed") is True for row in receipt.get("results", []))
+    elif name == "ui-research-navigation":
+        passed = receipt.get("passed") == count and receipt.get("total") == count
+        passed = passed and {row.get("id") for row in receipt.get("results", [])} == NAVIGATION_CASE_IDS
+        passed = passed and all(row.get("passed") is True for row in receipt.get("results", []))
     elif name == "ui-import":
         passed = receipt.get("passed") == count and receipt.get("total") == count
         passed = passed and {row.get("id") for row in receipt.get("results", [])} == IMPORT_CASE_IDS
@@ -226,6 +234,26 @@ def node_check(out: Path, name: str, script: str, source: str,
             "source_path": source, "source_sha256": sha(ROOT / source),
             "required_cases": count, "process_exit_code": process["exit_code"],
             "scope": "Synthetic Node VM DOM stub; not browser E2E"}
+
+
+def navigation_binding() -> dict:
+    names = ("research-navigation-before.json", "research-navigation-after.json", "research-navigation-final.json")
+    before, first, final = [read_json(ROOT / "evidence/mvp" / n) for n in names]
+    rows = (before, first, final)
+    checks = {
+        "exact_same_four_cases": all(row.get("total") == 4 and {r["id"] for r in row["results"]}
+                                     == NAVIGATION_CASE_IDS for row in rows),
+        "same_current_test": all(row.get("test_sha256") == sha(ROOT / "tests_mvp/ui_research_navigation.cjs") for row in rows),
+        "actual_before_failures": before.get("passed") == 1 and {r["id"] for r in before["results"]
+            if r.get("passed") is False} == NAVIGATION_CASE_IDS - {"RESEARCH-NAV-CURRENT-DELETE-CLEARS"},
+        "repaired_all_pass": all(row.get("passed") == 4 and all(r.get("passed") is True
+            for r in row["results"]) for row in (first, final)),
+        "binds_previous_source": before.get("source_sha256") == read_json(ROOT / "evidence/mvp/research-request-after.json").get("source_sha256"),
+        "binds_current_source": final.get("source_sha256") == sha(ROOT / "web_r4/research.js"),
+        "separate_repair_versions": len({row.get("source_sha256") for row in rows}) == 3,
+    }
+    return {"status": "PASS" if all(checks.values()) else "FAIL", "checks": checks,
+            "receipt_sha256": {"evidence/mvp/" + n: sha(ROOT / "evidence/mvp" / n) for n in names}}
 
 
 def research_binding() -> dict:
@@ -248,7 +276,8 @@ def research_binding() -> dict:
                                     for r in row["results"]) for row in (first, final, current)),
         "before_binds_preserved_source": before.get("source_sha256") ==
             read_json(ROOT / R6_SOURCE_RECEIPT)["source_sha256"]["web_r4/research.js"],
-        "current_binds_source": current.get("source_sha256") == sha(ROOT / "web_r4/research.js"),
+        "current_binds_navigation_parent": current.get("source_sha256") == read_json(ROOT / "evidence/mvp/research-navigation-before.json").get("source_sha256"),
+        "navigation_repair_binding": navigation_binding()["status"] == "PASS",
         "separate_repair_versions": len({row.get("source_sha256") for row in rows}) == 4,
         "request_source_chain": req_before.get("source_sha256") == final.get("source_sha256")
             and req_after.get("source_sha256") == current.get("source_sha256"),
@@ -359,6 +388,8 @@ def input_hashes() -> dict[str, str]:
                  "evidence/mvp/research-bytes-final.json",
                  "evidence/mvp/research-bytes-request-repair.json",
                  "evidence/mvp/research-request-before.json", "evidence/mvp/research-request-after.json",
+                 "evidence/mvp/research-navigation-before.json", "evidence/mvp/research-navigation-after.json",
+                 "evidence/mvp/research-navigation-final.json",
                  "evidence/mvp/github-ci-visibility.json",
                  "docs/MVP_VALIDATION.md", "docs/MVP_BACKUP.md"):
         if (ROOT / name).is_file():
@@ -399,6 +430,7 @@ def main() -> int:
         checks["ui_delete_import"] = node_check(out, "ui-delete-import", "tests_r4/ui_races.cjs", "web_r4/app.js", 2)
         checks["ui_research_bytes"] = node_check(out, "ui-research-bytes", "tests_mvp/ui_research_bytes.cjs", "web_r4/research.js", 9)
         checks["ui_research_requests"] = node_check(out, "ui-research-requests", "tests_mvp/ui_research_requests.cjs", "web_r4/research.js", 4)
+        checks["ui_research_navigation"] = node_check(out, "ui-research-navigation", "tests_mvp/ui_research_navigation.cjs", "web_r4/research.js", 4)
         checks["ui_file_race"] = {"status": checks["ui_research_bytes"]["status"],
             "required_cases": 1, "case_id": "R6-LATEST-FILE-A-FIRST",
             "receipt_path": checks["ui_research_bytes"]["receipt_path"],

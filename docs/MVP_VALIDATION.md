@@ -35,6 +35,7 @@ The required scope is:
 | Latest synthetic import selection and stale errors | Seven new Node VM cases pass |
 | Research UTF-8 provenance | Nine synthetic codec/adapter/read-order cases pass; preserved 5/9→9/9→9/9 history binds old/current source |
 | Research current/stale API errors | Four separate Node cases pass; actual introduced 2/4 failure and repaired 4/4 preserved |
+| Research navigation/deletion | Four cases pass; first1/4 failure and first/final4/4 receipts preserve exact old/current source chain |
 | Postgame schema mechanics | Thirteen synthetic schema tests pass |
 
 The historical `scripts/verify_r7.py` hard gate still requires the original web
@@ -62,7 +63,7 @@ old save receipt to pretend that it tested the new app bytes.
 The actual browser suite retains the previous 32 checks and adds six import
 checks using native browser File objects with delayed `File.text()` completion.
 Both A/B read orders and clearing the newest selection are exercised. This is
-38 historical checks against a synthetic backend. Eight further actual Research file-byte, invalid-input, dirty-note and stale-read checks bring the current required count to46. Native File bytes must match the persisted adapter hash. These are never real-match coaching accuracy.
+38 historical checks against a synthetic backend. Eight further actual Research file-byte, invalid-input, dirty-note and stale-read checks bring the byte-repair count to46. Four current navigation/deletion checks extend the required browser count to50. Native File bytes must match the persisted adapter hash. These are never real-match coaching accuracy.
 
 ## Optional preserved-source integration
 
@@ -124,3 +125,5 @@ run is observed, the Actions result remains unverified; a passing local receipt
 does not substitute for an Actions run URL and conclusion.
 
 Research source-byte repair and preserved failure details: `docs/MVP_RESEARCH_BYTES_DECISION.md`. The old text-only Research test stub is preserved; `R6-LATEST-FILE-A-FIRST` reruns its unchanged ordering expectations in the ArrayBuffer-capable harness.
+
+Navigation response identity repair adds a further strict source-chain gate with unchanged previous byte/request repair receipts, then reruns all prior9+4 guards. Exact original expected4 navigation cases and first1/4 failures are preserved; no stale deletion result may clear a different resource and draft. Current gaps: `docs/MVP_EXECUTABLE_GAPS.md`.
