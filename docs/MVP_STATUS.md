@@ -1,3 +1,17 @@
+# Latest implementation delta — 2026-10-05 KST
+
+PR3 navigation/delete, PR4 saved-note history and PR5 current/stale errors are
+merged and remotelyverified through actual Chrome63 at d92ded9. Source-bound
+Knowledge proposal creation/version/CAS/download/source deletion and safe
+schema2 migration/backup now pass currentlocalmandatorygates; remoteCI/browser79
+pending. Current source-bound receipts and prior failures are preserved.
+
+Real PLAYER_DIRECT0/DERIVED0/complete0/truthpair0/DecisionN0/CoachN0/accuracy null.
+Product NOT_COMPLETE. Only this actual externaldependency is parked; the whole
+Main Work continues on existing documented note-recovery and manualdraft gaps.
+
+Previous status preserved below.
+
 # Latest delta — Research source integrity verified (2026-10-05 KST)
 
 PR2 merged at ed533fd980f47313014b7874e171ca4c5f1a2d6b. Research upload hashes now bind original valid UTF-8 bytes, including BOM. Invalid UTF-8 is rejected before resource creation; current lookup errors are shown; old notes and stale-read guards are preserved. Actual postmerge Actions37258742782 SUCCESS / Chrome46 of46 / old111 / protected9 / Frozen27 / backup23 / Research9+4 PASS. Preserved initial5/9 and introduced-error2/4 failure history with exact source/fixture/test bindings.

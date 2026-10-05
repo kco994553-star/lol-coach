@@ -1,3 +1,27 @@
+# Latest executable gap delta — source-bound Knowledge proposals
+
+2026-10-05 KST. PR5 merged d92ded9 with actual PR/postmerge Actions success and
+Chrome63. Local Knowledge proposal slice is verified at173 exactinput hashes,
+old111/protected9/Frozen27/backup23, new42+19+5 and currentNode8. Fresh actual
+browser79 and remotepublication stillrequired. Earlierfailure andintermediate
+source receipts preserved; no Frozen/core/expected changes or realCoachN gain.
+
+Remaining actual executable usability requirement: saved-note recovery into a
+new unsaved editor draft. Reuse existing immutable history and currentlatest
+CAS; explicit dirty confirmation, no automatic write, subsequent save appends
+latest+1. This was already listed below and is not a newproduct feature.
+
+Knowledge proposals are a bounded one-source EXPLORATORY subset, notreviewed
+knowledge or generalactivation. UI deletion-generation checks are scoped to
+this tab's actual successful source/proposal deletes; other tabs/directAPI edits
+require freshview/refresh before cacheddisplay is current. No globalcache
+invalidation is claimed. Operator-source/patch applicability and independent
+Player reference/pre-action validation remain their own dependencies.
+
+Earlier assessments and firstfailure observations preserved below.
+
+---
+
 # Latest executable gap delta — 2026-10-05 KST
 
 Stored note history PR4 is now remotely verified at mergedc1b777f: actual PR

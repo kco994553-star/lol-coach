@@ -1,0 +1,64 @@
+{
+  "scope": "Source-deletion reconciliation error ownership only",
+  "verifier": "Node VM synthetic DOM/service replies, explicitly synthetic 401; not actual browser/HTTP/auth-expiry evidence",
+  "executed_at": "2026-10-05T05:05:53.197Z",
+  "node_version": "v24.19.0",
+  "source_sha256": "7026b4c25a030f31aa8404a65febc248f20ba67f1a7863add0d50adf7067cd06",
+  "test_sha256": "dcc601111a1bd6706a800a071bada817f5beb4f9d7b62f1fbb09e0f3553bad93",
+  "fixture_sha256": "63e19b47fdccb309a0c090c5133950ae4b3e2eb2306dc4ee73403024e692f5c6",
+  "passed": 0,
+  "total": 1,
+  "results": [
+    {
+      "id": "KNOWLEDGE-STALE-DELETION-ERROR-CANNOT-CLEAR-NEW-DRAFT-AUTH",
+      "passed": false,
+      "checks": {
+        "late_old_error_cannot_clear_new_draft": false,
+        "late_old_error_cannot_reset_auth": false,
+        "late_old_error_cannot_replace_notice": false,
+        "fresh_current_401_still_clears_auth": false
+      },
+      "before": {
+        "record": "cccccccccccccccccccccccccccccccc",
+        "source": "source4",
+        "claim": "NEW-INDEPENDENT-DRAFT",
+        "dirty": true,
+        "notice": "저장하지 않은 탐색 제안 변경이 있습니다."
+      },
+      "after": {
+        "record": null,
+        "source": null,
+        "claim": "",
+        "dirty": false,
+        "notice": ""
+      },
+      "afterCurrent401": {
+        "record": null,
+        "source": null,
+        "claim": "",
+        "dirty": false,
+        "notice": ""
+      },
+      "staleAuthClears": 1,
+      "authClears": 2,
+      "calls": [
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111/versions/cccccccccccccccccccccccccccccccc",
+          "method": "GET"
+        },
+        {
+          "route": "/research/source3",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals",
+          "method": "GET"
+        }
+      ]
+    }
+  ]
+}

@@ -25,7 +25,7 @@ The required scope is:
 | Check | Required result |
 | --- | --- |
 | Frozen contract payload | All 27 manifest hashes match |
-| Historical R0–R6 protected bytes | Match the preserved baseline, except the evidence-bound UI repairs and the versioned read-only note-history UI/API addition, plus the baseline's handoff exemption |
+| Historical R0–R6 protected bytes | Match the preserved baseline, except the evidence-bound UI repairs, versioned read-only note-history addition and strictly bound source-proposal UI/API addition, plus the baseline's handoff exemption |
 | Preserved R7 sources and old test file sets | Match the preserved historical receipt and baseline |
 | Protected legacy validator | Nine checks pass in an isolated copy |
 | Unchanged `tests_r3` through `tests_r7` | Exactly 111 tests run, with zero skips, failures, errors, or expected failures |
@@ -38,6 +38,7 @@ The required scope is:
 | Research navigation/deletion | Four cases pass; first1/4 failure and first/final4/4 receipts preserve exact old/current source chain |
 | Stored note history | Exactly 19 storage and five real HTTP tests pass; explicit UTF-8 response cap, auth/Host/Origin, original rows/schema/CAS unchanged |
 | Research current/stale save and navigation errors | Four save +six actual-callback Node cases pass; preserved2/4→4/4→4/4 and3/6→6/6 source-bound failure history; current401 remains handled, stale401 remains explicitly synthetic |
+| Source-bound Knowledge proposal | New storage, authenticated HTTP and schema2 backup tests all pass with zero skips; actual source revision/hash, EXPLORATORY-only immutable versions/CAS, pre-migration recovery and rollback, physical PK/FK cascade and count-only deletion receipts |
 | Postgame schema mechanics | Thirteen synthetic schema tests pass |
 
 The historical `scripts/verify_r7.py` hard gate still requires the original web
@@ -133,3 +134,22 @@ Navigation response identity repair adds a further strict source-chain gate with
 Stored note history reuses existing immutable personal note rows. The web path is documented in `docs/MVP_NOTE_HISTORY.md`; prior versions are previewed/downloaded separately and never become the editable latest note or game evidence. No timestamp/author is inferred. The source-version record preserves exact pre-change and current hashes. Eleven actual browser history checks extend the prior50 to61, including exact download, preserved latest draft/CAS, genuine delayed success/error/index replies, navigation and deletion. Fresh Actions must establish this result before completion is claimed.
 
 Two genuine delayed/current HTTP409 browser checks retain all prior61 and bring the current required browser count to63. They prove current conflicts stay visible and old conflicts cannot alter another resource draft/notice/auth. They do not claim real401 credential expiry. The error repair extends exact source-chain binding through separate immutable before/intermediate/final receipts; history-version record bytes remain untouched.
+
+The source-bound proposal slice preserves all earlier source records and their
+failure history. `knowledge-baseline.json` binds the exact merged PR5 intake;
+`knowledge-source-version.json` binds the actual new server/index/research/backup
+and new Knowledge module bytes. Legacy ResearchStore code stays unchanged;
+current startup uses an additive schema2 store with physical source and version
+foreign keys. This is implementation of the Frozen persistence contract, not a
+contract change. Backup v1 archive format remains two databases, admits actual
+research schema1/2 and checks manifest/actual schema agreement before restore.
+
+Sixteen additional native-browser Knowledge lifecycle cases retain the preceding63,
+so the required current count is79. Eight fixed Node VM deletion/response cases
+are rerun separately, with the original failing and intermediate passing receipts
+preserved. Explicit Node401 inputs are not actual authentication-expiry evidence.
+They exercise real HTTP/SQLite data with held response delivery for race cases;
+they do not prove the operator claim, actual player state, patch applicability,
+decision validity or coaching accuracy. `EXPLORATORY` is fixed; coaching stays
+disabled, PLAYER and real Decision/Coaching N remain0, accuracy null. Unsupported
+multi-source rules and reviewed-rule activation remain outside this slice.

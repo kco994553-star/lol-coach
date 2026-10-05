@@ -22,7 +22,6 @@ import tempfile
 import time
 import zipfile
 
-
 FORMAT = 'lol-coach-personal-backup'
 VERSION = 1
 MAIN = 'workbench.sqlite'
@@ -230,16 +229,31 @@ def _validate_research_content(db):
 
 
 def _validate_database(path, member):
+    # Keep dependency loading inside the operation so the CLI can still report
+    # its existing DEPENDENCY_MISSING error instead of failing during import.
+    from .storage import ServiceError
+
     try:
         # Private complete SQLite snapshots have no WAL dependencies. Immutable
         # validation avoids creating bookkeeping files alongside restored DBs.
         with closing(_connect(path, readonly=True, immutable=True)) as db, closing(sqlite3.connect(':memory:')) as expected:
-            for sql in SCHEMAS[member]:
-                expected.execute(sql)
-            if db.execute('PRAGMA user_version').fetchone() != (1,):
+            version = db.execute('PRAGMA user_version').fetchone()[0]
+            supported = (1,) if member == MAIN else (1, 2)
+            if type(version) is not int or version not in supported:
                 raise BackupError('INCOMPATIBLE_SCHEMA', 'Unsupported database schema version: ' + member)
+            schemas = SCHEMAS[member]
+            if member == RESEARCH and version == 2:
+                from .knowledge import KNOWLEDGE_SCHEMAS, validate_schema, validate_knowledge_content
+                schemas += KNOWLEDGE_SCHEMAS
+            for sql in schemas:
+                expected.execute(sql)
             if _schema_signature(db) != _schema_signature(expected):
                 raise BackupError('INCOMPATIBLE_SCHEMA', 'Database schema, constraints or objects differ: ' + member)
+            if member == RESEARCH and version == 2:
+                try:
+                    validate_schema(db)
+                except ServiceError:
+                    raise BackupError('INCOMPATIBLE_SCHEMA', 'Knowledge schema, constraints or objects differ: ' + member) from None
             if db.execute('PRAGMA integrity_check').fetchall() != [('ok',)]:
                 raise BackupError('DATABASE_INVALID', 'SQLite integrity check failed: ' + member)
             if db.execute('PRAGMA foreign_key_check').fetchall():
@@ -251,9 +265,12 @@ def _validate_database(path, member):
                         raise ValueError('stored payload must be a JSON object')
             db.row_factory = sqlite3.Row
             (_validate_main_content if member == MAIN else _validate_research_content)(db)
+            if member == RESEARCH and version == 2:
+                validate_knowledge_content(db)
+            return version
     except BackupError:
         raise
-    except (sqlite3.DatabaseError, ValueError, TypeError, KeyError, AttributeError, UnicodeError, RecursionError):
+    except (sqlite3.DatabaseError, ServiceError, ValueError, TypeError, KeyError, AttributeError, UnicodeError, RecursionError):
         raise BackupError('DATABASE_INVALID', 'Database content validation failed: ' + member) from None
 
 
@@ -265,7 +282,11 @@ def _file_metadata(path):
             if size > MAX_DATABASE_BYTES:
                 raise BackupError('DATABASE_TOO_LARGE', 'Database exceeds the supported backup size limit.')
             digest.update(chunk)
-    return dict(schema_version=1, size=size, sha256=digest.hexdigest())
+    # Only inspect the completed private snapshot. A constructor could migrate
+    # schemas or recover jobs and would no longer describe the copied bytes.
+    with closing(_connect(path, readonly=True, immutable=True)) as db:
+        version = db.execute('PRAGMA user_version').fetchone()[0]
+    return dict(schema_version=version, size=size, sha256=digest.hexdigest())
 
 
 def _copy_database(reader, target):
@@ -390,7 +411,8 @@ def _read_manifest(archive):
         for member, metadata in manifest['files'].items():
             if not isinstance(metadata, dict) or set(metadata) != {'schema_version', 'size', 'sha256'}:
                 raise ValueError('file metadata')
-            if type(metadata['schema_version']) is not int or metadata['schema_version'] != 1 or type(metadata['size']) is not int or metadata['size'] != archive.getinfo(member).file_size:
+            supported = (1,) if member == MAIN else (1, 2)
+            if type(metadata['schema_version']) is not int or metadata['schema_version'] not in supported or type(metadata['size']) is not int or metadata['size'] != archive.getinfo(member).file_size:
                 raise ValueError('schema or size')
             if not isinstance(metadata['sha256'], str) or not re.fullmatch('[a-f0-9]{64}', metadata['sha256']):
                 raise ValueError('digest')
@@ -452,7 +474,9 @@ def restore(archive_path, destination):
                     os.fsync(outgoing.fileno())
                 if size != metadata['size'] or digest.hexdigest() != metadata['sha256']:
                     raise BackupError('HASH_MISMATCH', 'Database bytes do not match the manifest: ' + member)
-                _validate_database(stage / member, member)
+                actual_version = _validate_database(stage / member, member)
+                if actual_version != metadata['schema_version']:
+                    raise BackupError('SCHEMA_VERSION_MISMATCH', 'Database schema version does not match the manifest: ' + member)
         _safe_path(target, new=True)
         try:
             _publish_directory(stage, target)
