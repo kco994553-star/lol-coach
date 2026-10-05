@@ -1,5 +1,22 @@
 # MAIN EXECUTION CLAIM
 
+status: RUNNING
+run_token: main-20261005T0355-research-navigation-root
+writer_active: true
+owner: root Main Work
+owner_branch: fix/research-navigation-delete-2026-10-05
+intake_main: ccd3a3f23869966bdbbe8288a29e9f4b43d25687
+scope: Research navigation/delete draft-loss repair; recalculate executable acceptance gaps
+risk: DEEP
+acceptance: opening a resource disables delete; old delete response cannot clear a different resource/dirty note; existing deletion/byte/request/regression/browser guards preserved
+coordination_ref: work/main-execution-claim
+
+External Player reference remains parked only. Existing actual postmerge evidence reused for unchanged scope. Next independent product gap is evaluated after this concrete integrity issue.
+
+Prior claim history preserved below.
+
+# MAIN EXECUTION CLAIM
+
 status: PARKED_EXTERNAL
 run_token: main-20261005T0318-research-closeout-root
 writer_active: false
