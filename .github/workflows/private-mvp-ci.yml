@@ -49,6 +49,7 @@ jobs:
               print('MVP verifier did not produce a report for this workflow attempt.')
           else:
               report = json.loads(runs[-1].read_text())
+              print('MVP_REGRESSION_RECEIPT_JSON=' + json.dumps(report, ensure_ascii=False))
               print(json.dumps({
                   'scoped_mvp_status': report['status'],
                   'pinned_postgame': report['checks'].get('postgame', {}).get('pinned_source_integration'),

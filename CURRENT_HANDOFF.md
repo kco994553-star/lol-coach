@@ -1,3 +1,9 @@
+# Actual browser run continuation — 2026-10-05
+
+- Repaired workflow published at `fc81e06834cc67c75906054fd20c64c3c3611470`, fresh remote316blobs verified. Actions37250989049 created both jobs; regression SUCCESS, browser FAILURE. Actual Chrome154.0.8037.57 launched against isolated synthetic server. First browser receipt preserved `evidence/mvp/browser-first-failure.json` with source hashes, real backend versions and first failure.
+- Core affected path passed: savev1→actual PUT commitsv2 while response held→new textarea draft preserved→next PUT expected_revision2→savev3. Reload had version3/objective preserved and analyze enabled, but test compared ACK JSON key order to persisted sorted-key JSON. New test uses independent stored GET serialization and semantic deep equality; original draft byte checks/32 check count unchanged. Failure/repair classification is verifier serialization assumption, not a changed Golden Expected or claimed game error. Separate repair receipt to follow.
+- Production app/server/Core/Frozen/old tests unchanged sinceb30c9. Workflow now prints the fresh full scoped regression receipt to logs so test counts/input hashes are remotely reviewable. Root continues remote re-execution before any browser PASS claim.
+
 # Remote CI repair continuation — 2026-10-05
 
 - Main publication `b30c9c7a9b5aa265477b1337c220ecea721b9957` fresh-ref/commit/tree verified315/315blobs. Branch main only, open PR0.

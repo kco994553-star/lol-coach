@@ -5,6 +5,7 @@ const { chromium } = require('playwright');
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
+const assert = require('node:assert/strict');
 const root = path.resolve(__dirname, '..');
 const output = process.env.MVP_BROWSER_EVIDENCE_DIR;
 if (!output || !process.env.WORKBENCH_URL || !process.env.WORKBENCH_TOKEN_FILE) throw new Error('Run through scripts/browser_mvp.py with an isolated server');
@@ -177,8 +178,11 @@ async function run() {
     check('v3-save-canonical-editor', savedV3.editor === canonicalV3 && savedV3.analyze_disabled === false,
       { exact_canonical: savedV3.editor === canonicalV3, analyze_disabled: savedV3.analyze_disabled });
     const storedV3 = await serverCase(sid, 'backend-after-v3');
-    check('backend-v3-has-newer-draft', storedV3.revision === 3 && storedV3.case.objective === newer.objective,
-      { revision: storedV3.revision, objective: storedV3.case.objective });
+    let storedCaseMatchesAck = true;
+    try { assert.deepStrictEqual(storedV3.case, nextResult.case); } catch { storedCaseMatchesAck = false; }
+    check('backend-v3-has-newer-draft', storedV3.revision === 3 && storedV3.case.objective === newer.objective && storedCaseMatchesAck,
+      { revision: storedV3.revision, objective: storedV3.case.objective, stored_case_semantically_matches_ack: storedCaseMatchesAck });
+    const canonicalStoredV3 = JSON.stringify(storedV3.case, null, 2);
 
     stage = 'reload-persisted-v3';
     await page.reload();
@@ -186,9 +190,12 @@ async function run() {
     await page.waitForSelector('#sessions button');
     await page.locator('#sessions button').first().click();
     await page.waitForFunction(() => document.getElementById('current').textContent.includes('저장 버전 3'));
-    const reloaded = await uiSnapshot('reloaded-v3', canonicalV3);
-    check('reload-reopens-real-v3', reloaded.editor === canonicalV3 && !reloaded.analyze_disabled,
-      { exact_canonical: reloaded.editor === canonicalV3, current_label: reloaded.current_label, analyze_disabled: reloaded.analyze_disabled });
+    const reloaded = await uiSnapshot('reloaded-v3', canonicalStoredV3);
+    check('reload-reopens-real-v3', reloaded.editor === canonicalStoredV3 && !reloaded.analyze_disabled && storedCaseMatchesAck,
+      { exact_canonical_from_stored_get: reloaded.editor === canonicalStoredV3, current_label: reloaded.current_label,
+        analyze_disabled: reloaded.analyze_disabled, stored_case_semantically_matches_ack: storedCaseMatchesAck,
+        ack_editor_sha256: hash(canonicalV3), stored_get_editor_sha256: hash(canonicalStoredV3),
+        reloaded_editor_sha256: hash(reloaded.editor) });
 
     stage = 'one-real-synthetic-analysis';
     const reviewPostPromise = page.waitForResponse(response => response.request().method() === 'POST' && response.url().endsWith('/sessions/' + sid + '/reviews'));
@@ -210,7 +217,7 @@ async function run() {
 
     stage = 'dirty-native-cancel-checks';
     await page.locator('details').filter({ has: page.locator('#case-json') }).locator('summary').click();
-    const cancelCase = JSON.parse(canonicalV3);
+    const cancelCase = JSON.parse(canonicalStoredV3);
     cancelCase.objective = 'Browser dirty draft kept after native cancellation';
     const cancelDraft = JSON.stringify(cancelCase, null, 4) + '\n';
     await page.fill('#case-json', cancelDraft);
@@ -224,7 +231,7 @@ async function run() {
     await page.waitForSelector('#sessions button');
     await cancelNativeDialog('dirty-refreshed-reopen-cancel', () => page.locator('#sessions button').first().click(), cancelDraft, currentLabel);
     await cancelNativeDialog('dirty-load-example-cancel', () => page.click('#load-example'), cancelDraft, currentLabel);
-    const importCase = JSON.parse(canonicalV3);
+    const importCase = JSON.parse(canonicalStoredV3);
     importCase.objective = 'Imported replacement should be cancelled';
     await cancelNativeDialog('dirty-import-cancel', () => page.setInputFiles('#import-file', {
       name: 'synthetic-cancel.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(importCase))
