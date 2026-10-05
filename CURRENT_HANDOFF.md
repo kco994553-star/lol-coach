@@ -1,5 +1,22 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — RUNNING
+- run_token: `main-20261005T071452087-draft-ci-repair-root`
+- status: `RUNNING`
+- writer_active: true
+- task_scope: Exact existing PR8/head066f444/run37276347795 attempt1 actual browser failure repair; collapsed native picks/bans group workflow, no separate implementation.
+- owner_branch: `feat/manual-draft-capture-2026-10-05`
+- intake_main_head: `0f2b333e44c1918e7a2a9dd7d9f6fce67d1d76a2`
+- exact_pr: 8
+- exact_ci_run: 37276347795 FAILURE; regression PASS257 exactinputs, testedmerge9b5850e7/tree5edb656 parents0f2b333e/066f444.
+- failure: Actual page.fill timed out on hidden d-pick-ALLY-1 within collapsed native details, stage manual-draft-capture;87 prior checks executed PASS, no page errors. Current108 remains required.
+- terminal_previous_owner_evidence: CI_PENDING terminal at common3763665, exact matching PR/head/run verified. Reacquired from exact terminal parent; no time-based theft or sibling overwrite.
+- required_scope: retain full actual first failure/testbytes; native user clicks unfold groups before input, no expectation/count/protection relaxation. Freshrequired regression and actual Actions retest, gatedmerge/postmerge; then retry-safe save correctness task.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — CI_PENDING
 - run_token: `main-20261005T0630-manual-draft-capture-root`
 - status: `CI_PENDING`
