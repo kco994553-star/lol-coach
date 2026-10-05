@@ -1,5 +1,26 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — CI_PENDING
+- run_token: `main-20261005T0842-draft-retry-safety-root`
+- status: `CI_PENDING`
+- writer_active: false
+- task_scope: Bounded retry-safe manual draft POST/PUT save integrity implemented, locally verified and published as exact PR9; awaiting actual GitHub Actions before gated merge.
+- owner_branch: `feat/manual-draft-retry-safety-2026-10-05`
+- intake_main_head: `6f5c2c30db54f962ac5881a8d628336ca62cd7e5`
+- local_commit: `c628dc63e493e322117fb01b4d8d2ffa5fbaca59`
+- implementation_head: `ffe3b3d3c1ce0ee9c800cfb03395db2710e42999`
+- implementation_tree: `e36fa03b1e01ca68955dba3acebdb57961df5ddc`
+- exact_pr: 9; https://github.com/kco994553-star/lol-coach/pull/9
+- actual_ci: run `37292198759` attempt 1 IN_PROGRESS; required actual Chrome 111 checks plus regression job.
+- local_verification: final verifier PASS at `evidence/mvp/20261005T092851299783Z-65f066ea`; exact 269 semantic input hashes, old111/protected9/Frozen27/backup23, draft31+17+19, UI7+4+1, postgame schema13. Local Playwright executable absence and first routing-only verifier failure are retained as failure evidence.
+- risk: CRITICAL persistent-write correctness; Frozen/protected/history preserved, no schema or dependency change, records remain UNVERIFIED/NOT_GENERATED and excluded from coaching.
+- evidence_boundary: PLAYER_DIRECT=0, PLAYER_DERIVED=0, complete_player_reference=0, same_match_player_truth_pair=0, decision_N=0, coaching_N=0, accuracy=null. Independent Player reference/pre-action context remains PARKED_EXTERNAL dependency only.
+- next_owner_rule: Reacquire from this exact terminal claim only to continue exact PR9/head/run; do not create a separate writer or hold RUNNING while Actions executes.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — RUNNING
 - run_token: `main-20261005T0842-draft-retry-safety-root`
 - status: `RUNNING`
