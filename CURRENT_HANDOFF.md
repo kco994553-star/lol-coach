@@ -1,5 +1,21 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — RUNNING
+- run_token: `main-20261005T0630-manual-draft-capture-root`
+- status: `RUNNING`
+- writer_active: true
+- task_scope: Existing TEAM_DRAFT REC-REQ013/SC011 bounded structured manual draft capture, isolated records/main-schema2/backup/API/UI, no analysis session or engine activation.
+- owner_branch: `feat/manual-draft-capture-2026-10-05`
+- intake_main_head: `0f2b333e44c1918e7a2a9dd7d9f6fce67d1d76a2`
+- prior_terminal_evidence: PR7 normal merged0f2b333e/tree9a7d08b; actual PR37271933712/post37272079828 SUCCESS Chrome89/all194inputs/old111/protected9/Frozen27/backup23/new5+3 and all previousguards. FirstfailedCI37270809307 archived, verifier-onlycompletionboundaryrepair/product39ae97 unchanged.
+- risk: CRITICAL personal storage migration/backup and input provenance. Frozen files unchanged; additive versioned implementation with validated private pre-migration main-v1 recovery copy/rollback/nooverwrite, old TEST sessions/cases/jobs unchanged; capture IDs absent fromlegacy sessions.
+- acceptance: typed manual visiblepicks/bans/uncertainroles/patch/declaredobservedtime/source/author; incomplete remains UNKNOWN/null; immutable revision/parent/hash/currentCAS/latest/history/exactdownload/deletion. Serverreceivedtime separate, automaticUNAVAILABLE/gameplanNOT_GENERATED/coachingfalse/UNVERIFIED. ExistingtwoDBbackup supportsactualmain1/2. RealHTTP/SQLite andactualbrowserflow plusprotected/fullrequiredregression/sourceversion/independentreview/remoteSHA.
+- next: boundeddesign/plan and test-firststorage+API+backup+UI, ownindependentscopes only; no serviceproject/paiddependency/deploy/clientcredentials. Playerreference/preactiononlyPARKED_EXTERNAL, realCoachN0/null. Whole Workcontinues.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — CI_PENDING
 - run_token: `main-20261005T0625-note-recovery-gated-merge-root`
 - status: `CI_PENDING`
