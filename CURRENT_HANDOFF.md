@@ -1,5 +1,27 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — PARKED_EXTERNAL
+- run_token: `main-20261005T1008-pr9-closeout-root`
+- status: `PARKED_EXTERNAL`
+- writer_active: false
+- task_scope: PR9 exact post-merge verification and current repository gap closeout complete.
+- owner_branch: `chore/pr9-closeout-2026-10-05`
+- intake_main_head: `e006b3124f74604e257851c781fa1317e4c6936a`
+- final_main_head: `92c49522dc5eca3a091a991dddfee3f3d3d6aa92`
+- final_main_tree: `c0e91e8998549f8ab21efc2dcdf7127a5165b84a`
+- code_tree: `e36fa03b1e01ca68955dba3acebdb57961df5ddc` at merged main `e006b3124f74604e257851c781fa1317e4c6936a`
+- exact_pr: 9 merged; https://github.com/kco994553-star/lol-coach/pull/9
+- verification: PR Actions `37292198759` SUCCESS and post-merge Actions `37293206383` SUCCESS; regression/browser-regression jobs success; actual Chrome 111/111, source/run/head bound. Final local required PASS exact269 inputs; protected9/Frozen27/old111/backup23 and current suites pass.
+- closeout_publication: direct non-force main commit changed only CURRENT_HANDOFF.md, docs/MVP_STATUS.md and docs/MVP_EXECUTABLE_GAPS.md; semantic verification inputs overlap 0; message includes [skip ci], so no new code CI is claimed or required.
+- evidence_boundary: PLAYER_DIRECT=0, PLAYER_DERIVED=0, complete_player_reference=0, same_match_player_truth_pair=0, decision_N=0, coaching_N=0, accuracy=null.
+- parked_dependency: Independent source-backed Player reference, decision-preceding Player-visible context, and reviewed patch/applicability-bounded Knowledge required to activate real gameplan/Decision/Coach validation.
+- no_current_internal_gap: No evidenced independent regression, integrity, acceptance or private-Web usability gap remains after the verified internal sequence. Do not invent a framework/adapter/fixture or weaken evidence gates merely to keep writing.
+- resume_rule: Resume only on qualifying new evidence/input, fresh regression or CI failure, or material repository acceptance change. Reacquire this exact shared ref before any mutation.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — RUNNING
 - run_token: `main-20261005T1008-pr9-closeout-root`
 - status: `RUNNING`
