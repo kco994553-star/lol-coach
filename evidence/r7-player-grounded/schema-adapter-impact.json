@@ -1,0 +1,368 @@
+{
+  "schema_version": "r7.player-grounded.schema-adapter-impact.v1",
+  "recorded_at_utc": "2026-10-05T00:29:28.943528+00:00",
+  "scope": "D1_D2_ADDITIVE_SOURCE_DIAGNOSTIC",
+  "implementation_status": "IMPLEMENTED_ADDITIVE_ARCHIVE_ONLY",
+  "scope_of_support": "POST_GAME_DATASET",
+  "source_schema_status": "SUPPORTED_SOURCE_SCHEMA",
+  "source_authenticity": "PUBLISHER_ATTESTED_RIOT_COLLECTION_NOT_INDEPENDENTLY_AUTHENTICATED",
+  "source_pair_count": 1,
+  "new_source_pair_count": 0,
+  "new_player_reference_count": 0,
+  "new_source_field_reference_count": 0,
+  "raw_private_paths": {
+    "match": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/match.json",
+    "timeline": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/timeline.json"
+  },
+  "source_bindings": {
+    "match": {
+      "sha256": "767330c58d9f9168c5ea4a6f0827bde7b0890eeae2317ea19ae52812a3792b14",
+      "bytes": 113459,
+      "source_file": "match_v5.json",
+      "requested_range": "bytes=9334672-9448130",
+      "content_range": "bytes 9334672-9448130/1341990851",
+      "record_index_zero_based": 82,
+      "revision": "477404f532b1014b7fc61c3b1c024e988f883a26",
+      "response_status": 206,
+      "url": "https://huggingface.co/datasets/AngryBacteria/league_of_legends/resolve/477404f532b1014b7fc61c3b1c024e988f883a26/match_v5.json",
+      "receipt_path": "evidence/r7-continuation/source-range-receipts.json",
+      "raw_original_object_no_serialization": true,
+      "source_authenticity": "PUBLISHER_ATTESTED_RIOT_COLLECTION_NOT_INDEPENDENTLY_AUTHENTICATED",
+      "pinned_bytes_verified": true
+    },
+    "timeline": {
+      "sha256": "9fb74d4ce6cd16f3e04aa0953638e0e18cd80c5cce652eac83126ed55050d51a",
+      "bytes": 1199490,
+      "source_file": "timeline_v5.json",
+      "requested_range": "bytes=1-1199490",
+      "content_range": "bytes 1-1199490/14493943155",
+      "record_index_zero_based": 0,
+      "revision": "477404f532b1014b7fc61c3b1c024e988f883a26",
+      "response_status": 206,
+      "url": "https://huggingface.co/datasets/AngryBacteria/league_of_legends/resolve/477404f532b1014b7fc61c3b1c024e988f883a26/timeline_v5.json",
+      "receipt_path": "evidence/r7-continuation/source-range-receipts.json",
+      "raw_original_object_no_serialization": true,
+      "source_authenticity": "PUBLISHER_ATTESTED_RIOT_COLLECTION_NOT_INDEPENDENTLY_AUTHENTICATED",
+      "pinned_bytes_verified": true
+    }
+  },
+  "existing_reference_recheck": {
+    "source_field_matches": 26,
+    "source_field_checks": 26,
+    "scope": "POST_GAME_DATASET",
+    "verified_player_state_variables": 0
+  },
+  "existing_liveclient_extractor": {
+    "match": {
+      "selected_paths": 17,
+      "present": 0,
+      "status": "UNSUPPORTED_MATCH_TIMELINE_SCHEMA"
+    },
+    "timeline": {
+      "selected_paths": 17,
+      "present": 0,
+      "status": "UNSUPPORTED_MATCH_TIMELINE_SCHEMA"
+    }
+  },
+  "selected_archive_diagnostic": {
+    "match_id": "EUW1_7095952008",
+    "patch_version": "14.17.613.973",
+    "participant_id": 1,
+    "archive_cutoff_ms": 300153,
+    "selected_frame_index": 5,
+    "selected_frame_timestamp_ms": 300153,
+    "derived": [
+      {
+        "field": "health_fraction",
+        "layer": "L1",
+        "state": "DERIVED_DIAGNOSTIC",
+        "value": 0.221750212404418,
+        "missing_reason": null,
+        "formula": "health / health_max",
+        "formula_version": "r7.postgame.health_fraction.v1",
+        "lineage": [
+          {
+            "field": "health",
+            "pointer": "/info/frames/5/participantFrames/1/championStats/health",
+            "source_sha256": "9fb74d4ce6cd16f3e04aa0953638e0e18cd80c5cce652eac83126ed55050d51a",
+            "frame_timestamp_ms": 300153
+          },
+          {
+            "field": "health_max",
+            "pointer": "/info/frames/5/participantFrames/1/championStats/healthMax",
+            "source_sha256": "9fb74d4ce6cd16f3e04aa0953638e0e18cd80c5cce652eac83126ed55050d51a",
+            "frame_timestamp_ms": 300153
+          }
+        ],
+        "source_sha256": "9fb74d4ce6cd16f3e04aa0953638e0e18cd80c5cce652eac83126ed55050d51a",
+        "frame_timestamp_ms": 300153,
+        "participant_id": 1,
+        "scope": "POST_GAME_DATASET",
+        "knowledge_scope": "POST_GAME_ONLY",
+        "player_known": false,
+        "decision_eligible": false,
+        "coaching_eligible": false
+      },
+      {
+        "field": "cs",
+        "layer": "L1",
+        "state": "DERIVED_DIAGNOSTIC",
+        "value": 24,
+        "missing_reason": null,
+        "formula": "lane_cs + jungle_cs",
+        "formula_version": "r7.postgame.cs.v1",
+        "lineage": [
+          {
+            "field": "lane_cs",
+            "pointer": "/info/frames/5/participantFrames/1/minionsKilled",
+            "source_sha256": "9fb74d4ce6cd16f3e04aa0953638e0e18cd80c5cce652eac83126ed55050d51a",
+            "frame_timestamp_ms": 300153
+          },
+          {
+            "field": "jungle_cs",
+            "pointer": "/info/frames/5/participantFrames/1/jungleMinionsKilled",
+            "source_sha256": "9fb74d4ce6cd16f3e04aa0953638e0e18cd80c5cce652eac83126ed55050d51a",
+            "frame_timestamp_ms": 300153
+          }
+        ],
+        "source_sha256": "9fb74d4ce6cd16f3e04aa0953638e0e18cd80c5cce652eac83126ed55050d51a",
+        "frame_timestamp_ms": 300153,
+        "participant_id": 1,
+        "scope": "POST_GAME_DATASET",
+        "knowledge_scope": "POST_GAME_ONLY",
+        "player_known": false,
+        "decision_eligible": false,
+        "coaching_eligible": false
+      }
+    ],
+    "opponent_coordinate_rows": 5,
+    "knowledge_scope": "POST_GAME_ONLY",
+    "decision_eligible": false
+  },
+  "acceptance": {
+    "verified_player_state_variables": 0,
+    "player_information_state": null,
+    "ground_truth_state": null,
+    "engine_executed": false,
+    "coaching_enabled": false,
+    "coaching_validation_N": 0,
+    "coaching_accuracy": null,
+    "decision_candidate_fact_count": 0,
+    "state_decision_acceptance": "NOT_ESTABLISHED"
+  },
+  "protected_impact": {
+    "frozen_meaning_changes_required": false,
+    "d3_required_for_this_archive_diagnostic": false,
+    "new_real_engine_modes": false,
+    "new_evaluator": false,
+    "synthetic_relabeling": false,
+    "old111_expected_changed": false,
+    "historical_evidence_changed": false,
+    "liveclient_extractor_changed": false,
+    "core_guard_changed": false
+  },
+  "frozen27": {
+    "files_checked": 27,
+    "files_matched": 27,
+    "checks": [
+      {
+        "path": "README.md",
+        "equal": true
+      },
+      {
+        "path": "contracts/requirements.json",
+        "equal": true
+      },
+      {
+        "path": "contracts/reserved_history_ids.json",
+        "equal": true
+      },
+      {
+        "path": "contracts/scenarios.json",
+        "equal": true
+      },
+      {
+        "path": "docs/AUDIT.md",
+        "equal": true
+      },
+      {
+        "path": "docs/DESIGN.md",
+        "equal": true
+      },
+      {
+        "path": "docs/HANDOFF.md",
+        "equal": true
+      },
+      {
+        "path": "docs/MIGRATION.md",
+        "equal": true
+      },
+      {
+        "path": "docs/PROVENANCE.md",
+        "equal": true
+      },
+      {
+        "path": "evidence/lol-coach-v0.1-core.zip",
+        "equal": true
+      },
+      {
+        "path": "evidence/source_manifest.json",
+        "equal": true
+      },
+      {
+        "path": "legacy/README.md",
+        "equal": true
+      },
+      {
+        "path": "legacy/backend/__init__.py",
+        "equal": true
+      },
+      {
+        "path": "legacy/backend/decision/__init__.py",
+        "equal": true
+      },
+      {
+        "path": "legacy/backend/decision/actions.py",
+        "equal": true
+      },
+      {
+        "path": "legacy/backend/decision/engine.py",
+        "equal": true
+      },
+      {
+        "path": "legacy/backend/decision/evaluator.py",
+        "equal": true
+      },
+      {
+        "path": "legacy/backend/decision/models.py",
+        "equal": true
+      },
+      {
+        "path": "legacy/backend/decision/opportunity.py",
+        "equal": true
+      },
+      {
+        "path": "legacy/backend/decision/permission.py",
+        "equal": true
+      },
+      {
+        "path": "legacy/backend/decision/reason_codes.py",
+        "equal": true
+      },
+      {
+        "path": "legacy/backend/decision/selector.py",
+        "equal": true
+      },
+      {
+        "path": "legacy/backend/decision/trace.py",
+        "equal": true
+      },
+      {
+        "path": "legacy/backend/state/__init__.py",
+        "equal": true
+      },
+      {
+        "path": "legacy/backend/state/models.py",
+        "equal": true
+      },
+      {
+        "path": "validation/__init__.py",
+        "equal": true
+      },
+      {
+        "path": "validation/__main__.py",
+        "equal": true
+      }
+    ]
+  },
+  "preserved_current_input_sha256": {
+    "coach_audit/extraction.py": "d43ce27a4bb15dc1d73a7d6c13ef4b36554e654959539eeacc7f954e18a9471f",
+    "coach_v1/models.py": "20366f44a66b17fba2eaa9a5e6f3ae21c9a7898475bc1dcdfc63de4facfa7ae8",
+    "coach_v1/state.py": "b0624cd06abcada3df414a4d1cf8e5e116c1cab6d0e786051106bd64bd51d025",
+    "coach_v1/engine.py": "37bb801a02df3464707fdd2012678d4fd174d7261c2df3765610abe47db5128a",
+    "scripts/verify_r7_source_reference.py": "05e62596bd574c600fb83c807773dd882e4ffc97d17137457f28f9780654f7fa",
+    "fixtures/r7-continuation/structured-source-reference.json": "15dca7c4d9034ba6df5f6f192ae9b3bcfb738f6922c091880263875fb5bc4e0b",
+    "evidence/r7-continuation/source-range-receipts.json": "7cf7658a80243e4f23004e6c25679837668f807ecc9c8465d8679ff8b36d65b5"
+  },
+  "new_implementation_sha256": {
+    "coach_audit/postgame.py": "1041bd16e92c1bcd76c34421a141ce0c201ec937479ae11412f6530252aaba26",
+    "tests_r7_player_grounded/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests_r7_player_grounded/test_postgame.py": "6a6677990340774c72de849cb6b1d0483b79574efc216cc32fd4d2acb17f89e9",
+    "docs/r7-player-grounded/SCHEMA_ADAPTER.md": "313b63818f107510012b006e79c3ed547ac0a448fda29201ecf1b10e7d03a1da"
+  },
+  "checks": [
+    {
+      "suite": "tests_r7_player_grounded.test_postgame",
+      "tests_run": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": true,
+      "summary": "----------------------------------------------------------------------\nRan 17 tests in 0.059s\n\nOK"
+    },
+    {
+      "suite": "tests_r7.test_audit",
+      "tests_run": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": true,
+      "summary": "----------------------------------------------------------------------\nRan 15 tests in 0.009s\n\nOK"
+    }
+  ],
+  "commands": [
+    "R7_POSTGAME_RAW_DIR=/workspace/scratch/7240cfa27170/private-r7-player-grounded python3 -m unittest tests_r7_player_grounded.test_postgame -v",
+    "python3 -m unittest tests_r7.test_audit -q",
+    "scripts.verify_r7_source_reference.verify(private_match_path, private_timeline_path)"
+  ],
+  "failure_history": {
+    "existing_history_preserved": true,
+    "initial_targeted_run": {
+      "tests_run": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "final_targeted_run": {
+      "tests_run": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "historical_unsupported_schema_diagnostics_retained": true,
+    "preceding_verification_run": {
+      "recorded_at_utc": "2026-10-05T00:28:12.125730+00:00",
+      "checks": [
+        {
+          "suite": "tests_r7_player_grounded.test_postgame",
+          "tests_run": 17,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "passed": true,
+          "summary": "----------------------------------------------------------------------\nRan 17 tests in 0.060s\n\nOK"
+        },
+        {
+          "suite": "tests_r7.test_audit",
+          "tests_run": 15,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "passed": true,
+          "summary": "----------------------------------------------------------------------\nRan 15 tests in 0.010s\n\nOK"
+        }
+      ]
+    }
+  },
+  "remaining_gaps": [
+    "SAME_MATCH_SAME_TIME_PLAYER_POV_REFERENCE",
+    "PLAYER_VISIBILITY_AND_AVAILABLE_INFORMATION",
+    "ACTION_CONTEXT_AND_SEQUENCE",
+    "INDEPENDENT_RIOT_ORIGIN_AUTHENTICATION",
+    "REAL_STATE_DECISION_EVALUATION_CONTRACT"
+  ],
+  "note": "Pinned source archive schema support only; field equality and source-only derived values are not player state validation or coaching accuracy. Root full baseline gates remain separate.",
+  "source_byte_binding": "PINNED_SOURCE_BYTES_VERIFIED",
+  "private_helper_byte_binding": "UNPINNED_SCHEMA_DIAGNOSTIC",
+  "private_helper_test_origin": "SYNTHETIC_SCHEMA_TEST_ONLY"
+}

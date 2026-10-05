@@ -1,0 +1,609 @@
+{
+  "schema_version": "r7-public-pov-acquisition-audit-v1",
+  "generated_at_utc": "2026-10-05T00:24:59.247250+00:00",
+  "scope": "R7_D1_D2_BOUNDED_PUBLIC_POV_DISCOVERY_AND_ACQUISITION_ONLY; NO_R8; NO_RAW_REPUBLICATION",
+  "baseline_actual_main": "47a5ebc60dcdb7182cc1aef791c3c8814566ad61",
+  "prior_sources_checked": [
+    "docs/r7-continuation/CONTINUATION_REPORT.md",
+    "evidence/r7-continuation/visual-source-audit.json"
+  ],
+  "preserved_not_reacquired": [
+    "Existing original5 screenshots",
+    "GameStar gallery/assets",
+    "Known failed YouTube CejHqSces8Q",
+    "HF same pair EUW1_7095952008 version14.17.613.973"
+  ],
+  "fresh_search_rounds": [
+    {
+      "round": 1,
+      "routes": [
+        "Indexed Medal League clips",
+        "Primary Reddit player-POV upload"
+      ],
+      "engine": "system2",
+      "outcome": "New candidate URLs, no acquired qualifying media yet"
+    },
+    {
+      "round": 2,
+      "routes": [
+        "Specific Medal clip",
+        "Streamable author-linked clips",
+        "Original developer/research captures",
+        "Vimeo raw-capture titles"
+      ],
+      "engines": [
+        "system1",
+        "system2"
+      ],
+      "outcome": "Materially new direct Vimeo and original developer candidates"
+    },
+    {
+      "round": 3,
+      "routes": [
+        "Vimeo canonical page and page-advertised embed/HLS",
+        "GitHub original developer fixed revision asset"
+      ],
+      "outcome": "Player POV Vimeo651 sequence acquired and decodable; search stopped at success"
+    }
+  ],
+  "routes": [
+    {
+      "route": "MEDAL_SPECIFIC_PUBLIC_CLIP",
+      "source_url": "https://medal.tv/games/league-of-legends/clips/mwz2SxzQ6NiLSmR6E",
+      "web_index_result": "Indexed primary clip shell",
+      "direct_request": "HTTP403",
+      "retries": 0,
+      "usable_media_acquired": false,
+      "blocker": "This specific unauthenticated page request returned403; no claim about all Medal access"
+    },
+    {
+      "route": "MEDAL_SECOND_INDEXED_CANDIDATE",
+      "source_url": "https://medal.tv/ko/games/league-of-legends/clips/1Qb9Lxw9uWNfvn",
+      "web_open": "Public shell only; no usable media returned in text",
+      "direct_request": "NOT_RUN",
+      "usable_media_acquired": false
+    },
+    {
+      "route": "REDDIT_PRIMARY_POV",
+      "source_url": "https://www.reddit.com/r/leagueoflegends/comments/j9vtgb",
+      "web_index_claim": "Poster describes own POV of Urgot play",
+      "web_open": "DisabledError",
+      "direct_request": "NOT_RUN",
+      "retries": 0,
+      "usable_media_acquired": false,
+      "blocker": "Search-service source fetch was disabled; no direct HTTP or global Reddit claim"
+    },
+    {
+      "route": "AUTHOR_LINKED_STREAMABLE",
+      "source_page": "https://gamefaqs.gamespot.com/boards/954437-league-of-legends/79684457",
+      "media_page": "https://streamable.com/40677w",
+      "author_context": "Original forum poster describes this game as own comeback",
+      "web_open": "Not accessible via search tool",
+      "direct_request": "HTTP404",
+      "retries": 0,
+      "usable_media_acquired": false,
+      "blocker": "This clip no longer serves at its exact URL"
+    },
+    {
+      "route": "ORIGINAL_RESEARCH_DEVELOPER",
+      "source_url": "https://csci599-lol-team-pages.github.io/markdown/",
+      "public_source": "Primary project report describes own screenshots and Tournament API testing",
+      "result": "Research source chain checked; no qualifying continuous sequence acquired from this project",
+      "usable_media_acquired": false
+    },
+    {
+      "route": "GITHUB_ORIGINAL_DEVELOPER_DEMO",
+      "source_url": "https://github.com/Shinobu-Kazahana/lol-vision",
+      "fixed_asset_url": "https://raw.githubusercontent.com/Shinobu-Kazahana/lol-vision/65c6b7c135e8874de6453c1f2a2c99b58bbb1e35/video.mp4",
+      "tree_sha": "65c6b7c135e8874de6453c1f2a2c99b58bbb1e35",
+      "declared_video_blob_sha": "0b06f6a17bb4e09cdf22d08cb5a76ac60d8bb820",
+      "recomputed_git_blob_sha": "0b06f6a17bb4e09cdf22d08cb5a76ac60d8bb820",
+      "blob_hash_matches": true,
+      "direct_request": "HTTP200",
+      "asset": {
+        "filename": "github-lolvision-video.mp4",
+        "private_path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/github-lolvision-video.mp4",
+        "bytes": 15119287,
+        "sha256": "4ff02bee351b7851151faba42802a9aa43dc23feef3acffdd0e6317776b58ed6",
+        "filesystem_mtime_utc": "2026-10-05T00:20:38.922716+00:00"
+      },
+      "ffprobe": {
+        "codec": "h264",
+        "width": 3440,
+        "height": 1440,
+        "fps": "60/1",
+        "duration_seconds": 13.266667
+      },
+      "quality": "Actual practice-tool screen capture with debug detection overlay; sampled view lacks readable ordinary top clock",
+      "reference_status": "REJECTED_AS_PLAYER_SCENARIO_REFERENCE; RESERVE_ACQUISITION_ONLY",
+      "no_reference_from_model_labels": true
+    },
+    {
+      "route": "VIMEO_OBSERVER_CANDIDATE",
+      "source_url": "https://vimeo.com/660250960",
+      "public_page": "HTTP200",
+      "page_receipt": {
+        "filename": "public-660250960-147000.txt",
+        "private_path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/public-660250960-147000.txt",
+        "bytes": 147000,
+        "sha256": "c45d133c6f0dec8da9c636efaae15ff456405c971dca5d95fa23d4d4b9f941a5",
+        "filesystem_mtime_utc": "2026-10-05T00:18:56.155124+00:00"
+      },
+      "thumbnail_receipt": {
+        "filename": "vimeo-660-thumb.jpg",
+        "private_path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/vimeo-660-thumb.jpg",
+        "bytes": 369625,
+        "sha256": "e807acb91a9aa4b517efcc93d297f35a84907152913a8b0608de23d895ddca84",
+        "filesystem_mtime_utc": "2026-10-05T00:19:46.959839+00:00"
+      },
+      "quality": "Spectator/replay UI with both-team sidebars and replay timeline visible",
+      "reference_status": "REJECTED_OBSERVER_VIEW",
+      "full_clip_downloaded": false,
+      "bare_config_request": {
+        "url": "https://player.vimeo.com/video/660250960/config",
+        "status": 403,
+        "retries": 0,
+        "note": "Separate observer candidate bare-config request; standard page-advertised hashed embed subsequently worked without credentials"
+      }
+    }
+  ],
+  "new_usable_source": {
+    "id": "PUBLIC-VIMEO-651298214-POV",
+    "canonical_source_url": "https://vimeo.com/651298214",
+    "page_advertised_embed_url": "https://player.vimeo.com/video/651298214?h=c73584a754",
+    "primary_uploader_profile_url": "https://vimeo.com/user158549888",
+    "uploader_display_name_published_here": false,
+    "title": "League of Legends 2021.11.29 - 21.58.38.07.DVR_Trim.mp4",
+    "upload_date_from_primary_page": "2021-11-29T21:25:45+00:00",
+    "primary_page_http_status": 200,
+    "embed_http_status": 200,
+    "page_receipt": {
+      "filename": "public-651298214-146990.txt",
+      "private_path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/public-651298214-146990.txt",
+      "bytes": 146990,
+      "sha256": "3ad14a78a1983d690b85e03b2bbd6955239adf7c9054fdb6542b06de385d181d",
+      "filesystem_mtime_utc": "2026-10-05T00:18:56.184018+00:00"
+    },
+    "embed_receipt": {
+      "filename": "vimeo-651-player.txt",
+      "private_path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/vimeo-651-player.txt",
+      "bytes": 21423,
+      "sha256": "074087f64e2ea3c270cb3a2d64bb659393c7d6e1a1fb0104f7e2c9db60b1ce23",
+      "filesystem_mtime_utc": "2026-10-05T00:19:35.988402+00:00"
+    },
+    "thumbnail_receipt": {
+      "filename": "vimeo-651-thumb.jpg",
+      "private_path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/vimeo-651-thumb.jpg",
+      "bytes": 334881,
+      "sha256": "95049a513dd2a8f673c10a5a262aeae09ff0c4be6ba703cb91c162ca7669dd47",
+      "filesystem_mtime_utc": "2026-10-05T00:20:40.829063+00:00"
+    },
+    "source_provenance": "Canonical primary uploader page and its own advertised embed/HLS source; no mirror or compilation used",
+    "provenance_limits": [
+      "Uploader is the primary public posting account; uploader identity equals gameplay controller not independently authenticated",
+      "Exact match ID and patch absent from inspected primary metadata",
+      "Capture filename is not an independent patch or match authentication"
+    ],
+    "acquisition_route": "Primary canonical page -> advertised public embed -> advertised HLS master -> advertised1920x1080 variant -> native init+3 ordered video segments",
+    "media_bound_bytes": 16000000,
+    "hls_master_http_status": 200,
+    "hls_variant_http_status": 200,
+    "hls_master_receipt": {
+      "filename": "vimeo-651-hls-master.txt",
+      "private_path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/vimeo-651-hls-master.txt",
+      "bytes": 1739,
+      "sha256": "dfeb8377ad477b0b9419d77166314b547182f706ba1f92ff25ace14f63d79a47",
+      "filesystem_mtime_utc": "2026-10-05T00:20:55.167751+00:00"
+    },
+    "hls_variant_receipt": {
+      "filename": "vimeo-651-hls-1080.txt",
+      "private_path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/vimeo-651-hls-1080.txt",
+      "bytes": 820,
+      "sha256": "9cf82550b07f95473fc89aca6d8aa7908ef38ac28b2cf97d6b243f5d28502d02",
+      "filesystem_mtime_utc": "2026-10-05T00:21:41.640921+00:00"
+    },
+    "signed_ephemeral_media_urls_published_here": false,
+    "native_segments": [
+      {
+        "filename": "vimeo-651-init.mp4",
+        "status": 200,
+        "bytes": 841,
+        "sha256": "8bced04c0de0a4adbe3e96c24834b51a9addb0ba6dbb2d9f66ec76e4f10a567e"
+      },
+      {
+        "filename": "vimeo-651-segment-01.m4s",
+        "status": 200,
+        "bytes": 4470482,
+        "sha256": "30b15b69b2ecf96aa26e7e8556d7c26dbf6e269886bff94c21b7e43202abed5c"
+      },
+      {
+        "filename": "vimeo-651-segment-02.m4s",
+        "status": 200,
+        "bytes": 3957257,
+        "sha256": "5b580d97477eeeab982b31e820e8e613f2c4ee631f9833a95df15821247af7c7"
+      },
+      {
+        "filename": "vimeo-651-segment-03.m4s",
+        "status": 200,
+        "bytes": 2348959,
+        "sha256": "8d94773472d1112157f1f7c6ac7469c5be5c6741ed1e1c2661b65f022b398582"
+      }
+    ],
+    "sequence_asset": {
+      "filename": "vimeo-651-native-fragmented.mp4",
+      "private_path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/vimeo-651-native-fragmented.mp4",
+      "bytes": 10777539,
+      "sha256": "94ee285b5270ea0157170645d4a8d845b9e14205fbc55b0a11d393d7210f4372",
+      "filesystem_mtime_utc": "2026-10-05T00:22:27.063922+00:00"
+    },
+    "sequence_construction": "Exact native init fragment followed by three advertised video media fragments in playlist order; no pixel modification, re-encoding or audio fetched",
+    "ffprobe": {
+      "codec": "h264",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30/1",
+      "duration_seconds": 15.033333,
+      "video_streams": 1,
+      "audio_streams": 0
+    },
+    "decoded_frames": [
+      {
+        "offset_seconds": 0.1,
+        "path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/vimeo-651-frame-0p1.png",
+        "filename": "vimeo-651-frame-0p1.png",
+        "bytes": 2239924,
+        "sha256": "71e9768f9ec8ed8d8ed8cc2a8e12e70860195dcc8c91e48d85d25c9017c2b17a",
+        "transform": "FFmpeg single decoded frame; no crop/overlay/OCR"
+      },
+      {
+        "offset_seconds": 5,
+        "path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/vimeo-651-frame-5.png",
+        "filename": "vimeo-651-frame-5.png",
+        "bytes": 2703591,
+        "sha256": "f74344b10b81b77320fb960d554afd81eadc100f294bd322248430be92587840",
+        "transform": "FFmpeg single decoded frame; no crop/overlay/OCR"
+      },
+      {
+        "offset_seconds": 10,
+        "path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/vimeo-651-frame-10.png",
+        "filename": "vimeo-651-frame-10.png",
+        "bytes": 2380543,
+        "sha256": "eecd8883077add700182e918dbe00d486fad34d562b33817d68d27045ca3be9e",
+        "transform": "FFmpeg single decoded frame; no crop/overlay/OCR"
+      },
+      {
+        "offset_seconds": 14,
+        "path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/vimeo-651-frame-14.png",
+        "filename": "vimeo-651-frame-14.png",
+        "bytes": 2675050,
+        "sha256": "567d479521bd4cdd18807aa4a6d84b94dab48b3e2705d370d2b8e3d695e12c34",
+        "transform": "FFmpeg single decoded frame; no crop/overlay/OCR"
+      }
+    ],
+    "thumbnail_acquisition_quality": {
+      "main_game_view_visible": true,
+      "minimap_visible": true,
+      "clock_visible": true,
+      "own_champion_hud_visible": true,
+      "observer_timeline_visible": false,
+      "observed_thumbnail_clock": "16:49",
+      "overlay_note": "External stats overlay exists; do not source facts from it"
+    },
+    "game_clock_relationship": "Thumbnail shows16:49; decoded frame clocks and same-session gameplay continuity are deliberately left to operator Reference workflow",
+    "structural_temporal_relationship": "15.033333s single video track; ordered HLS fragments share one advertised source rendition, each frame tied to explicit clip offset",
+    "same_match_join_to_HF": {
+      "performed": false,
+      "eligible": false,
+      "reason": "No shared matchID; filename/upload2021 while preserved HF pair2024. Never join these sources"
+    },
+    "discovery_agent_reference_status": "CANDIDATE_ACQUIRED; ROOT_OPERATOR_REFERENCE_LOCK_REQUIRED",
+    "discovery_agent_state_extraction_runs": 0,
+    "discovery_agent_ocr_or_vision_runs": 0,
+    "decoded_frames_viewed_by_discovery_agent": false,
+    "new_full_state_or_decision_reference_count_claimed": 0,
+    "notices_sent_to_root_before_audit_complete": true
+  },
+  "stop_conditions": {
+    "stop_reason": "REQUIRED_MATERIALLY_DIFFERENT_ROUTE_COVERAGE_AND_PLAYABLE_NEW_PRIMARY_UPLOADER_SEQUENCE_SUCCESS",
+    "further_discovery_stopped": true,
+    "consecutive_no_new_material_rounds": 0,
+    "public_player_pov_globally_unavailable_claim": false,
+    "no_A_acceptance_completion_claim": true
+  },
+  "mutations": {
+    "only_new_paths": [
+      "evidence/r7-player-grounded/public-pov-audit.json",
+      "docs/r7-player-grounded/PUBLIC_POV_AUDIT.md"
+    ],
+    "core_or_historical_evidence_edits": 0,
+    "raw_assets_republished": 0
+  },
+  "constraints": {
+    "credentials_used": false,
+    "payments_used": false,
+    "bot_bypass_used": false,
+    "external_messages_sent": false,
+    "whole_large_dataset_downloads": false,
+    "own_subagents_spawned": false
+  },
+  "followup_primary_context_audit": {
+    "generated_at_utc": "2026-10-05T00:39:42.180253+00:00",
+    "purpose": "BOUNDED_PRIMARY_UPLOADER_CONTEXT_AND_IDENTITY_FOLLOWUP; INITIAL_FINDINGS_PRESERVED",
+    "initial_audit_sha256_before_additive_section": "3168fd74bd1bdbd38badb4920406ac95a9f6bbf0e0936e01d67ada27468657f3",
+    "initial_report_sha256_before_append": "f955a402512017c037b50e6cfe72ecedd298aa307de47c4b53c890a478dc2392",
+    "previous_source_and_reference_preservation": {
+      "original_clip_reacquired": false,
+      "HF_or_old5_reacquired": false,
+      "reference_files_modified": false,
+      "original_audit_fields_rewritten": false,
+      "raw_original_assets_republished": false
+    },
+    "fresh_exact_capture_search": {
+      "engines": [
+        "system2",
+        "system1"
+      ],
+      "queries": [
+        "site.vimeo.com \"651298214\"",
+        "site.vimeo.com \"user158549888\"",
+        "\"League of Legends 2021.11.29\" \"21.58.38.07\"",
+        "site:vimeo.com \"user158549888\" \"League\"",
+        "\"League of Legends 2021.11.29 - 21.58.38.07\"",
+        "site:vimeo.com \"sushi trash\" \"League of Legends\""
+      ],
+      "result": "Only original15s exact-filename video found; no directly linked full capture or pre/post extension",
+      "two_search_rounds_complete": true
+    },
+    "primary_route_receipts": [
+      {
+        "route": "extension-uploader-profile",
+        "url": "https://vimeo.com/user158549888",
+        "at_utc": "2026-10-05T00:33:28.506734+00:00",
+        "read_limit_bytes": 2000000,
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "bytes": 78520,
+        "sha256": "25e83de3591e7f9141a31c5653420ec10c2eba9e115764c8c90906170209c8db",
+        "private_path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/extension-uploader-profile.txt"
+      },
+      {
+        "route": "extension-uploader-videos",
+        "url": "https://vimeo.com/user158549888/videos",
+        "at_utc": "2026-10-05T00:33:28.507364+00:00",
+        "read_limit_bytes": 2000000,
+        "status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "bytes": 138499,
+        "sha256": "7911317ccd598fb4a92e7c32bb434f14428806a2497586a2b456c017617f5b31",
+        "private_path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/extension-uploader-videos.txt"
+      },
+      {
+        "route": "extension-public-v2-uploader-videos",
+        "url": "https://vimeo.com/api/v2/user158549888/videos.json",
+        "at_utc": "2026-10-05T00:33:28.507890+00:00",
+        "read_limit_bytes": 2000000,
+        "status": 200,
+        "content_type": "application/json",
+        "bytes": 8890,
+        "sha256": "44c0ce19e10b9f5afb5a9383f20c8a2a9fa577133335a6d6f31e4d42af0f77b5",
+        "private_path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/extension-public-v2-uploader-videos.txt"
+      },
+      {
+        "route": "extension-public-v2-video-metadata",
+        "url": "https://vimeo.com/api/v2/video/651298214.json",
+        "at_utc": "2026-10-05T00:33:28.508327+00:00",
+        "read_limit_bytes": 2000000,
+        "status": 200,
+        "content_type": "application/json",
+        "bytes": 1508,
+        "sha256": "31611d540c54b43fd6eaf839d5d922546263beef1e4814719a8fffc4bcf80b04",
+        "private_path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/extension-public-v2-video-metadata.txt"
+      },
+      {
+        "route": "extension-public-v2-uploader-videos-page2",
+        "url": "https://vimeo.com/api/v2/user158549888/videos.json?page=2",
+        "at_utc": "2026-10-05T00:34:55.132664+00:00",
+        "read_limit_bytes": 2000000,
+        "error_type": "HTTPError",
+        "error": "HTTP Error 400: Bad Request"
+      },
+      {
+        "route": "extension-uploader-advertised-rss",
+        "url": "https://vimeo.com/user158549888/videos/rss",
+        "at_utc": "2026-10-05T00:35:15.765855+00:00",
+        "read_limit_bytes": 1000000,
+        "status": 200,
+        "bytes": 6227,
+        "sha256": "0dc6eaa976284793d88ee8080e97383607a8a7d50961523a9f4ef82ca5da9c06",
+        "private_path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/extension-uploader-advertised-rss.txt",
+        "public_item_count": 6,
+        "public_items": [
+          {
+            "title": "League of Legends 2021.11.29 - 22.01.37.08.DVR_Trim.mp4",
+            "link": "https://vimeo.com/651298774"
+          },
+          {
+            "title": "League of Legends 2021.11.29 - 21.58.38.07.DVR_Trim.mp4",
+            "link": "https://vimeo.com/651298214"
+          },
+          {
+            "title": "League of Legends 2021.11.26 - 16.13.42.02.DVR_Trim.mp4",
+            "link": "https://vimeo.com/651297645"
+          },
+          {
+            "title": "League of Legends 20211124 - 19274104DVR_Trim",
+            "link": "https://vimeo.com/649713238"
+          },
+          {
+            "title": "League of Legends 20211124 - 19274104DVR_Trim (2)",
+            "link": "https://vimeo.com/649712949"
+          },
+          {
+            "title": "Counter-strike  Global Offensive 2021.11.23 - 22.08.59.17.DVR_Trim.mp4",
+            "link": "https://vimeo.com/649224668"
+          }
+        ]
+      }
+    ],
+    "public_uploader_inventory": {
+      "videos_html_http": 200,
+      "anonymous_v2_list_http": 200,
+      "advertised_rss_http": 200,
+      "listed_videos_each": 6,
+      "listed_video_ids": [
+        651298774,
+        651298214,
+        651297645,
+        649713238,
+        649712949,
+        649224668
+      ],
+      "LoL_capture_count": 5,
+      "other_game_capture_count": 1,
+      "only_exact_capture_filename_match": 651298214,
+      "same_capture_extension_found": false,
+      "additional_public_page_attempt": {
+        "status": 400,
+        "attempts": 1,
+        "retries": 0,
+        "claim": "Exact public v2 page2 request returned400; not proof of all account content absence"
+      }
+    },
+    "original_source_metadata_followup": {
+      "canonical_url": "https://vimeo.com/651298214",
+      "anonymous_v2_metadata_http": 200,
+      "duration_seconds": 15,
+      "description_empty": true,
+      "tags_empty": true,
+      "existing_public_embed_available_version_count": 1,
+      "available_version_is_current": true,
+      "matchId_or_gameId_or_patch_fields_found": false,
+      "explicit_full_original_or_longer_source_link_found": false,
+      "version_metadata_checked_from_preserved_embed_not_reacquired": true
+    },
+    "related_primary_capture_inspection": {
+      "id": 651298774,
+      "canonical_url": "https://vimeo.com/651298774",
+      "directly_linked_via": "Same uploader public videos list and its advertised RSS; no third-party mirror",
+      "title": "League of Legends 2021.11.29 - 22.01.37.08.DVR_Trim.mp4",
+      "advertised_duration_seconds": 34,
+      "upload_date_from_primary_JSONLD": "2021-11-29T21:27:29+00:00",
+      "source_page_receipt": {
+        "route": "extension-vimeo-651298774-page",
+        "url": "https://vimeo.com/651298774",
+        "at_utc": "2026-10-05T00:36:15.319555+00:00",
+        "read_limit_bytes": 2000000,
+        "attempts": 1,
+        "retries": 0,
+        "authentication": "NONE",
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "bytes": 146798,
+        "sha256": "e2ccab6c49fd3b31fddf6f113590cddb4c5e15e0b3c2ea922d61805007645797",
+        "private_path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/extension-vimeo-651298774-page.txt"
+      },
+      "original_page_advertised_thumbnail_receipt": {
+        "url": "https://i.vimeocdn.com/video/1313968292-82671e0c3a3b64565874e01d14227d4ad5bb530190ad5660e6a934beda31c16a-d_2400?region=us",
+        "at_utc": "2026-10-05T00:37:14.253163+00:00",
+        "status": 200,
+        "bytes": 295290,
+        "sha256": "07cc58d70502693c760dc12520e1dba15cfc3144d35cdb91c0df32beb7748b3d",
+        "private_path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/extension-vimeo-651298774-original-thumb.jpg"
+      },
+      "observed_view": {
+        "main_game_view": true,
+        "minimap": true,
+        "own_champion_HUD": "Tristana",
+        "clock": "19:00",
+        "external_stats_overlay_visible": true,
+        "patch_explicitly_visible": false
+      },
+      "relation_evidence": {
+        "uploader_profile_same": true,
+        "visible_own_champion_same": true,
+        "visible_controller_identifier_text_matches_original_thumbnail": true,
+        "identifier_text_republished": false,
+        "capture_filename_times_differ": true,
+        "overlapping_game_clock_with_original15s_proven": false,
+        "same_matchId_available": false,
+        "same_game_or_session_authenticated": false
+      },
+      "limits": "Same uploader and visible controller/champion are identity hints. Different filename/19:00 thumbnail without overlap or matchID cannot supply original15s decision pre-context, same-time truth or a validated session join.",
+      "full_media_downloaded": false,
+      "same_match_join_performed": false,
+      "original15s_pre_context_added_seconds": 0,
+      "new_reference_or_accuracy_denominator_contribution": 0
+    },
+    "initial_pending_candidate_direct_checks": {
+      "initial_NOT_RUN_entries_preserved_as_history": true,
+      "latest_resolution_by_initial_route": {
+        "MEDAL_SECOND_INDEXED_CANDIDATE": {
+          "status": "RESOLVED_HTTP403",
+          "receipt": {
+            "route": "extension-medal-second-direct",
+            "url": "https://medal.tv/ko/games/league-of-legends/clips/1Qb9Lxw9uWNfvn",
+            "at_utc": "2026-10-05T00:36:15.318403+00:00",
+            "read_limit_bytes": 2000000,
+            "attempts": 1,
+            "retries": 0,
+            "authentication": "NONE",
+            "status": 403,
+            "error_type": "HTTPError",
+            "error": "HTTP Error 403: Forbidden"
+          },
+          "attempts": 1,
+          "retries": 0,
+          "media_acquired": false,
+          "bounded_blocker": "This exact unauthenticated page returned403; no platform-wide claim"
+        },
+        "REDDIT_PRIMARY_POV": {
+          "status": "RESOLVED_HTTP200_JS_CHALLENGE_SHELL",
+          "receipt": {
+            "route": "extension-reddit-primary-direct",
+            "url": "https://www.reddit.com/r/leagueoflegends/comments/j9vtgb",
+            "at_utc": "2026-10-05T00:36:15.319120+00:00",
+            "read_limit_bytes": 2000000,
+            "attempts": 1,
+            "retries": 0,
+            "authentication": "NONE",
+            "status": 200,
+            "content_type": "text/html",
+            "bytes": 8431,
+            "sha256": "53dd3996c294bc96e62ffecbc7e14108a6a8d9b02bbbd65a258656182e08f3de",
+            "private_path": "/workspace/scratch/7240cfa27170/private-r7-player-grounded/extension-reddit-primary-direct.txt"
+          },
+          "attempts": 1,
+          "retries": 0,
+          "post_or_media_body_served": false,
+          "body_title": "Reddit",
+          "post_title_or_caption_or_media_URL_present": false,
+          "challenge_form_field_present": true,
+          "challenge_executed_or_submitted": false,
+          "challenge_token_republished": false,
+          "bounded_blocker": "HTTP200 returned an automatic JavaScript challenge form instead of primary post/media; stopped without executing/submitting it"
+        }
+      },
+      "remaining_unattempted_direct_candidate_routes_in_this_audit": 0
+    },
+    "exact_remaining_evidence": [
+      "Same651298214 capture original interval before clip start, especially5–10s of decision pre-context; no linked public full/earlier interval found",
+      "Exact match/game/session identity and patch directly linked to this capture; filename/date/uploader/visible controller hints do not authenticate them",
+      "Independent same-game same-clock truth or opponent visibility record; no overlapping independent primary source linked"
+    ],
+    "stop": {
+      "reason": "PRIMARY_UPLOADER_HTML_LIST_ANONYMOUS_METADATA_ADVERTISED_RSS_AND_TWO_EXACT_CAPTURE_SEARCH_ENGINES_CHECKED; NO_LINKED_EXTENSION_OR_TRUTH; PENDING_CANDIDATE_DIRECT_READS_RESOLVED",
+      "further_search_stopped": true,
+      "global_internet_exhausted_or_unavailable_claim": false,
+      "anonymous_nonpublic_access": false,
+      "credentials_or_payment_used": false,
+      "bot_challenge_bypass_used": false
+    },
+    "discovery_agent_downstream_work": {
+      "state_extraction_runs": 0,
+      "OCR_or_selective_Vision_runs": 0,
+      "operator_Reference_edits": 0,
+      "same_match_joins": 0,
+      "new_source_media_reference_recounts": 0
+    }
+  }
+}

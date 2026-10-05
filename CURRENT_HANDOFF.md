@@ -1,5 +1,23 @@
 # CURRENT HANDOFF — LoL Coach
 
+## 최신 R7 Player-grounded 추가 근거 — 2026-10-05 KST
+
+- 실제 시작 main HEAD `47a5ebc60dcdb7182cc1aef791c3c8814566ad61`를 GitHub fresh-read했다. 시작240/240blob 일치. 이번 Work 로컬은 materialized tree이며 Git checkout이 아니다. 종료HEAD는 이 section을 포함한 commit을 remote ref에서 확인한다.
+- 현재 보고: `docs/r7-player-grounded/PLAYER_GROUNDED_REPORT.md`; public audit/schema impact도 같은 경로. 새 evidence/fixtures는 `r7-player-grounded/`. 기존 R7/real/continuation/Frozen27/expected는 보존했다.
+- 새 원 업로더 Player-style native POV sequence1: Vimeo651298214,15.033333s/1080p/30fps,clock16:43→16:57,Tristana HUD. hash `94ee285b5270ea0157170645d4a8d845b9e14205fbc55b0a11d393d7210f4372`. patch/matchId 미인증, 외부 overlay 제외. HF2024pair와 join0. 전체 인터넷 Player POV 획득 불가라고 주장하지 않는다.
+- Operator Reference를 먼저 lock한 후 blind AI Vision1run/7frames. 고정4frames64/64 진단 일치(null6포함). Human0/AI일치≠gold accuracy. 원 Reference hash 보존. 새 exploratory sequenceReference1, completePlayerDecisionReference0.
+- PLAYER DIRECT0/DERIVED0, same-match 독립 같은시각 Player/Truthpair0, DecisionN0/CoachingN0/accuracy null. Primary acceptance 미충족. Source-level26direct/2derived 유지·재계수 없음. 29variable pending12/Vision12/inference3/manual2 유지, 부분 관찰 범위만 추가.
+- `scripts/audit_player_pov_r7.py` canonical 최신run: `evidence/r7-player-grounded/audit-20261005T093928987561KST.json`. future51제외, F1kills1/level9유지, 다른HFsessionjoin거절. MANUAL은 CONDITIONAL/UNKNOWN, derivedHPfractionCONDITIONAL, KNOWN0. REALschema는 evidence_kind에서 거절, SYNTHETIC재라벨/Engine실행0.
+- additive archive diagnostic `coach_audit/postgame.py`는 기존 exactHFpair만 지원한다. 13raw+2derived진단, cutoff/strictjoins/BSON/bytehash 검사, POST_GAME_ONLY/visibilityUNKNOWN. Player/TruthNone, emptydecisioncandidate, realcoachdisabled. 기존LiveClient의 pair0/17은 UNSUPPORTED_SOURCE_SCHEMA이며 데이터없음이 아니다.
+- fresh baseline111/111+protected9/9, 새 targeted17/17(skip0). Frozen27 integrity 최종 확인. R6 browser/mobile는 Historical. UI기능 추가0/기존guard완화0. mutable CURRENT_HANDOFF 외 기존240blob 보존.
+- Local 환경 blocker 재시도0; 다른 Evidence 경로는 진행했다. 원 capture의 결정 전5–10s/독립truth/patch·matchidentity는 이번 공개publisher 연결 감사에서 미발견. Bounded gap으로 기록했다. 남은 공개후보도 각각1회 요청했고 botchallenge 우회0.
+- 최소 자료 문서는 기존 `docs/r7-continuation/MINIMUM_INPUT_PACKAGE.md` 재사용. 한장면 Player POV15–30s(결정 전5–10s,clock/minimap/HP/level/skills)+sidecar, 또는 source-backed 독립 operatorreview부터 가능. Screenshot은 정적 검증만. credential/payment 불필요.
+- DEEP 유지/이번 새D3없음. 기존C3 proposal 미승인·미구현을 보존하며 D1/D2추가근거 작업을 막는 이유로 사용하지 않았다. realEngine계약변경은 하지 않았다. 자료 확보 후 Reference-first→State quality→No-hindsight→Knowledge→Decision/Coach gate 순서. 자동대기/백그라운드수집 없음.
+
+## 아래는47a5ebc handoff 원문(완전 보존)
+
+# CURRENT HANDOFF — LoL Coach
+
 ## 최신 R7 추가 근거 — 2026-10-04 UTC
 
 - 실제 시작 main HEAD는 `16adaf60753663c95d236e586c34b466fc929f43`였다. 보고된6951f5c보다 앞선 기존 R7-real을 먼저 읽고 이어서 진행했다. 작업은 실제 Git checkout이며, 변경 전201 tracked blobs 일치.

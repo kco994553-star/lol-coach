@@ -1,0 +1,157 @@
+"""One captured R7 POV audit; immutable reference, no real Engine activation."""
+from pathlib import Path
+from datetime import datetime
+from zoneinfo import ZoneInfo
+import hashlib
+import json
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from coach_audit.replay import compare_reference_values
+from coach_audit.sufficiency import assess_information
+from coach_audit.postgame import diagnose_postgame
+from coach_v1.models import Observation, SnapshotRequest, ReviewInput
+from coach_v1.state import reduce_snapshot
+from pydantic import ValidationError
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def read(path):
+    return json.loads((ROOT / path).read_text())
+
+
+def observations_for(reference):
+    result = []
+    for frame in reference['frames']:
+        base = dict(session_id=reference['session_id'], entity_id='capture',
+                    event_time_ms=frame['observed_fields']['game_time_seconds'] * 1000,
+                    received_at=datetime.fromisoformat(reference['locked_at_kst']),
+                    game_clock_basis='VISIBLE_HUD_SECONDS',
+                    source_id=reference['source'], source_version='PUBLIC_CAPTURE_PATCH_UNKNOWN',
+                    source_location=f"{reference['source']}#clip-offset={frame['frame_offset_seconds']}",
+                    source_hash=frame['frame_sha256'], lineage_ids=(),
+                    independent_group_id=reference['source_video_sha256'],
+                    perspective='PLAYER', visibility_at_event='KNOWN',
+                    patch='UNKNOWN_FROM_CAPTURE', validity='AT_EVENT',
+                    quality_state=dict(accuracy='UNVERIFIED', completeness='UNVERIFIED', freshness='UNVERIFIED'))
+        for key, value in frame['observed_fields'].items():
+            result.append(Observation(**base, observation_id=frame['frame_id'] + ':' + key,
+                                      field_key=key, value=value, kind='MANUAL', author=reference['author'],
+                                      missing_reason='NO_READABLE_NUMERIC_COOLDOWN_NOT_READINESS' if value is None else None))
+        result.append(Observation(**{**base, 'lineage_ids': (frame['frame_id'] + ':own_hp', frame['frame_id'] + ':own_max_hp')},
+                                  observation_id=frame['frame_id'] + ':health_fraction', field_key='health_fraction',
+                                  value=frame['observed_fields']['own_hp'] / frame['observed_fields']['own_max_hp'],
+                                  kind='DERIVED', formula='own_hp/own_max_hp', formula_version='r7.health_fraction.v1'))
+    return tuple(result)
+
+
+def real_gate(observations, request):
+    payload = dict(schema_version='r3.v1', evidence_kind='REAL', mode='POST_GAME',
+                   objective='Unverified real POV diagnostic', scope_reason='Offline captured evidence, no real coaching permission',
+                   snapshot_request=request.model_dump(mode='json'), observations=[o.model_dump(mode='json') for o in observations],
+                   scenarios=[dict(scenario_id='capture', description='Unknown prior context', support_refs=(), conditions=('Patch unknown',))],
+                   actions=[dict(action_id='audit-only', action_type='WAIT', feasibility='UNKNOWN', feasibility_refs=(),
+                                 required_keys=('capture:return_path',), target='Not selected', path='Not selected',
+                                 entry_condition='No action selected', resource_budget='Unknown', exit_condition='Unknown',
+                                 abort_conditions=('Evidence insufficient',), postcondition='Not assessed', deadline_event='Unknown')],
+                   assessments=[], comparisons=[])
+    try:
+        ReviewInput.model_validate(payload)
+    except ValidationError as error:
+        locations = [list(e['loc']) for e in error.errors()]
+        assert locations == [['evidence_kind']], locations
+        return dict(status='BLOCKED_AS_EXPECTED', rejection_locations=locations,
+                    submitted_evidence_kind='REAL', relabelled_synthetic=False, engine_executed=False)
+    raise AssertionError('REAL_GUARD_UNEXPECTEDLY_ACCEPTED')
+
+
+def audit(media_dir):
+    ref_path = 'fixtures/r7-player-grounded/player-reference-initial.json'
+    reference, lock = read(ref_path), read('evidence/r7-player-grounded/player-reference-lock.json')
+    assert lock['path'] == ref_path and sha(ROOT / ref_path) == lock['sha256'], 'REFERENCE_LOCK_CHANGED'
+    vision = read('evidence/r7-player-grounded/pov-vision-extraction.json')
+    assert datetime.fromisoformat(reference['locked_at_kst']) < datetime.fromisoformat(vision['extracted_at_kst']), 'REFERENCE_NOT_FIRST'
+    assert reference['source_video_sha256'] == vision['source_clip_sha256'] == sha(media_dir / 'vimeo-651-native-fragmented.mp4')
+    by_id = {frame['frame_id']: frame for frame in vision['frames']}
+    assert len(by_id) == len(vision['frames']), 'DUPLICATE_VISION_FRAME'
+    for frame in vision['frames']:
+        assert sha(media_dir / Path(frame['source_path']).name) == frame['source_sha256'], 'VISION_MEDIA_CHANGED'
+    comparisons = []
+    for frame in reference['frames']:
+        other = by_id[frame['frame_id']]
+        assert frame['frame_offset_seconds'] == other['offset_seconds']
+        assert frame['frame_sha256'] == other['source_sha256'] == sha(media_dir / frame['frame_file'])
+        comparisons.append(dict(frame_id=frame['frame_id'], **compare_reference_values(frame['observed_fields'], other['observed_fields'])))
+    observations = observations_for(reference)
+    request = SnapshotRequest(session_id=reference['session_id'], patch='UNKNOWN_FROM_CAPTURE',
+                              as_of_event_time_ms=reference['decision_point']['game_time_seconds'] * 1000,
+                              knowledge_cutoff=datetime.fromisoformat(vision['extracted_at_kst']),
+                              game_clock_basis='VISIBLE_HUD_SECONDS', view='PLAYER_REVIEW',
+                              required_keys=('capture:enemy_jungle_position', 'capture:return_path',
+                                             'capture:follow_up_access', 'capture:skill_readiness'))
+    snapshot = reduce_snapshot(observations, request)
+    initial_only = reduce_snapshot(tuple(o for o in observations if o.event_time_ms <= request.as_of_event_time_ms), request)
+    assert snapshot.fields == initial_only.fields, 'FUTURE_CAPTURE_CHANGED_INITIAL_STATE'
+    assert not snapshot.known_refs, 'AI_OR_MANUAL_BECAME_KNOWN'
+    assert snapshot.field('capture:health_fraction').state == 'CONDITIONAL', 'DERIVATION_LAUNDERED_MANUAL_PARENTS'
+    assert snapshot.field('capture:own_kills').value == 1, 'POST_HOC_KILL_LEAK'
+    assert snapshot.field('capture:own_level').value == 9, 'POST_HOC_LEVEL_LEAK'
+    future = [o for o in observations if o.event_time_ms > request.as_of_event_time_ms]
+    assert set(snapshot.excluded) == {(o.observation_id, 'FUTURE_EVENT') for o in future}, 'FUTURE_NOT_EXCLUDED'
+    for key in request.required_keys:
+        assert snapshot.field(key).state == 'UNKNOWN', 'MISSING_CONTEXT_INVENTED'
+    archive = diagnose_postgame((media_dir / 'match.json').read_bytes(), (media_dir / 'timeline.json').read_bytes(),
+                               expected_match_id='EUW1_7095952008', participant_id=1, archive_cutoff_ms=300153)
+    assert archive['player_information_state'] is None and not archive['decision_candidate']['facts']
+    raw = archive['raw'][0]
+    archive_observation = Observation(
+        observation_id='separate-archive-source', session_id=archive['match_id'], entity_id='participant1',
+        field_key=raw['field'], value=raw['value'], kind='OBSERVED', event_time_ms=raw['frame_timestamp_ms'],
+        received_at=request.knowledge_cutoff, game_clock_basis=archive['archive_clock_basis'],
+        source_id=archive['provenance']['timeline']['url'], source_version=archive['source_schema'],
+        source_location=raw['pointer'], source_hash=raw['source_sha256'], lineage_ids=(),
+        independent_group_id=raw['source_sha256'], perspective='UNKNOWN', visibility_at_event='UNKNOWN',
+        patch=archive['patch_version'], validity='AT_EVENT',
+        quality_state=dict(accuracy='UNVERIFIED', completeness='UNVERIFIED', freshness='UNVERIFIED'))
+    try:
+        reduce_snapshot((archive_observation,), request)
+    except ValueError as error:
+        assert str(error) == 'cross-session observation'
+    else:
+        raise AssertionError('UNRELATED_ARCHIVE_JOIN_ALLOWED')
+    return dict(schema_version='r7.player-pov-audit.v1', at_kst=datetime.now(ZoneInfo('Asia/Seoul')).isoformat(),
+                reference_sha256=lock['sha256'], reference_before_extraction=True, fresh_media_hashes_checked=8,
+                comparison_scope='Blind AI transcription vs locked AI operator subset; NOT human gold or State accuracy',
+                comparisons=comparisons, fields_compared=sum(x['fields_compared'] for x in comparisons),
+                values_equal=sum(x['values_equal'] for x in comparisons), supplemental_unreferenced_frames=3,
+                observations=[o.model_dump(mode='json') for o in observations], player_information_snapshot=snapshot.model_dump(mode='json'),
+                ground_truth_state=reference['ground_truth_state'], post_hoc_state=reference['post_hoc_observation_state'],
+                no_hindsight=dict(actual_future_capture_exclusion='PASS', future_observations_excluded=len(future),
+                                  initial_fields_unchanged='PASS', unrelated_HF_session_join='REJECTED',
+                                  external_overlay_used=False, post_hoc_result_used=False,
+                                  independent_same_time_truth_pairs=0, decision_quality_evaluated=False),
+                missing_information=assess_information({}), real_input_gate=real_gate(observations, request),
+                actual_clip_sequences=1, exploratory_player_sequence_references=1, selective_clip_vision_runs=1,
+                player_verified_direct=0, player_verified_derived=0, complete_player_decision_references=0,
+                actual_decision_N=0, actual_coaching_N=0, accuracy=None, engine_executions=0,
+                strategic_state_generated=False, frozen_design_changed=False,
+                rejected_archive_observation=archive_observation.model_dump(mode='json'),
+                source_input_sha256={p: sha(ROOT / p) for p in (ref_path, 'evidence/r7-player-grounded/pov-vision-extraction.json',
+                    'scripts/audit_player_pov_r7.py', 'coach_v1/models.py', 'coach_v1/state.py', 'coach_audit/replay.py', 'coach_audit/postgame.py')})
+
+
+if __name__ == '__main__':
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--media-dir', type=Path, required=True, help='Original native clip/frames plus preserved exact match/timeline bytes')
+    args = parser.parse_args()
+    result = audit(args.media_dir)
+    output = ROOT / 'evidence/r7-player-grounded' / datetime.now(ZoneInfo('Asia/Seoul')).strftime('audit-%Y%m%dT%H%M%S%fKST.json')
+    assert not output.exists()
+    output.write_text(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False) + '\n')
+    print(json.dumps(dict(output=str(output.relative_to(ROOT)), compared=result['fields_compared'], equal=result['values_equal'],
+                         no_hindsight=result['no_hindsight'], coaching_N=0), ensure_ascii=False))
