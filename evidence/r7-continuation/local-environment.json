@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "observed_at_utc": "2026-10-04T23:38:47.715642+00:00",
+  "diagnosis": "EXTERNAL_ENVIRONMENT_BLOCKER",
+  "scope": "Current managed cloud executor only; the operator's workstation and game session were not observed",
+  "platform": {
+    "system": "Linux",
+    "release": "6.18.44",
+    "machine": "x86_64"
+  },
+  "managed_environment": {
+    "environment_id": "ccarenv_b64_Y2NhcmVudl9hYmFkNWNlYzQ2OTA4MTkxYWI1MjRlZTc0ZjhiMjIzMQ",
+    "provider": "cloud",
+    "observed_phase": "running",
+    "observations_current": true,
+    "connectivity": "connected",
+    "network_policy": {
+      "mode": "unrestricted",
+      "state": "enforced"
+    },
+    "capability_count": 0,
+    "configured_secret_count": 0,
+    "configured_outbound_identity_count": 0
+  },
+  "executor_network_policy": {
+    "source": "/etc/codex/network-policy.json",
+    "version": 1,
+    "vpn_configured": false,
+    "http_proxy": "http://proxy:8080",
+    "http_network_policy": {
+      "type": "unrestricted"
+    },
+    "tcp_connect_proxy": "http://proxy:8088",
+    "tcp_network_access": {
+      "domains": [],
+      "ip_ranges": []
+    }
+  },
+  "process_scan": {
+    "source": "/proc/*/comm; command arguments were not read",
+    "matching_pattern": "league|riot|lolclient|lollauncher|wine (case insensitive)",
+    "scanned": 7,
+    "matches": [],
+    "permission_errors": []
+  },
+  "port_2999_listeners": {
+    "source": "/proc/net/tcp and /proc/net/tcp6; listener state 0A and local port 2999",
+    "matches": [],
+    "errors": []
+  },
+  "loopback_connect": [
+    {
+      "host": "127.0.0.1",
+      "port": 2999,
+      "result": "failed",
+      "errno": 111,
+      "error_type": "ConnectionRefusedError"
+    },
+    {
+      "host": "::1",
+      "port": 2999,
+      "result": "failed",
+      "errno": 111,
+      "error_type": "ConnectionRefusedError"
+    }
+  ],
+  "strict_tls_http_probe": {
+    "command": [
+      "curl",
+      "--silent",
+      "--show-error",
+      "--max-time",
+      "5",
+      "--connect-timeout",
+      "2",
+      "--output",
+      "/dev/null",
+      "--write-out",
+      "%{http_code}",
+      "https://127.0.0.1:2999/liveclientdata/allgamedata"
+    ],
+    "exit_code": 7,
+    "http_code": "000",
+    "stderr": "curl: (7) Failed to connect to 127.0.0.1 port 2999 after 0 ms: Could not connect to server",
+    "tls_verification_enabled": true,
+    "tls_handshake_reached": false,
+    "requests": 1
+  },
+  "session_discovery": {
+    "process_based_discovery": "No matching game/client process in observed namespace",
+    "candidate_lockfiles": [
+      {
+        "path": "/Applications/League of Legends.app/Contents/LoL/lockfile",
+        "exists": false
+      },
+      {
+        "path": "C:/Riot Games/League of Legends/lockfile",
+        "exists": false
+      },
+      {
+        "path": "/workspace/lockfile",
+        "exists": false
+      },
+      {
+        "path": "/tmp/lockfile",
+        "exists": false
+      }
+    ],
+    "lockfile_contents_read": false,
+    "limitation": "Candidate-path checks are bounded, not an exhaustive filesystem search. No client process was available to anchor dynamic LCU port discovery."
+  },
+  "layer_classification": {
+    "game_process": "ABSENT_IN_OBSERVED_EXECUTOR_NAMESPACE",
+    "endpoint": "UNAVAILABLE_CONNECTION_REFUSED",
+    "certificate_tls": "NOT_REACHED; neither a certificate defect nor certificate correctness is established",
+    "permission": "NO_PERMISSION_DENIAL_OBSERVED_IN_PROCESS_OR_SOCKET_CHECKS",
+    "port_session_discovery": "NO_2999_LISTENER_OR_CLIENT_PROCESS; dynamic LCU session unavailable",
+    "platform_environment": "REMOTE_CLOUD_EXECUTOR_WITH_NO_CONFIGURED_WORKSTATION_VPN_OR_TCP_GRANT",
+    "implementation_bug": "NOT_EVIDENCED; read-only collector inspection confirms fixed local URL, required CA, strict TLS defaults, no game proxy, and redirect refusal. Transport fails before these application steps."
+  },
+  "repair_replan_history": [
+    {
+      "step": 1,
+      "action": "Read cloud runtime, networking, and VPN skill instructions; inspect current environment and policy",
+      "result": "Current cloud executor and no configured workstation route confirmed"
+    },
+    {
+      "step": 2,
+      "action": "Inspect process names and IPv4/IPv6 listener tables without argv or secret content",
+      "result": "No client/game match and no 2999 listener"
+    },
+    {
+      "step": 3,
+      "action": "One bounded TCP connection per loopback address and one strict HTTPS request",
+      "result": "ECONNREFUSED and curl exit 7 before TLS"
+    },
+    {
+      "step": 4,
+      "action": "Stop network retry and continue archived/public/player-upload evidence routes",
+      "result": "EXTERNAL_ENVIRONMENT_BLOCKER; no credential requests or TLS bypass"
+    },
+    {
+      "step": 5,
+      "action": "Fresh repository source and prior R7-real diagnostics read after checkout became available",
+      "result": "Same external blocker corroborated; prior evidence retained and source untouched"
+    }
+  ],
+  "retry_count": 0,
+  "frozen_design_changes": 0,
+  "d3_required_for_diagnosis": false,
+  "next_action": "Acquire authorized real match/timeline metadata or preserved player-perspective screenshot/clip; run local collector on the game host only when such a host becomes accessible. Do not repeatedly retry cloud loopback.",
+  "repository_head_reviewed": "16adaf60753663c95d236e586c34b466fc929f43",
+  "implementation_review": {
+    "scope": "Read-only source inspection; no application code changes or further game endpoint requests",
+    "files": [
+      {
+        "path": "scripts/collect_local.py",
+        "sha256": "062e939aa0cf02d6a005983d188c36e9bd5ab782dd58f3132a8babd34c2a4ae8"
+      },
+      {
+        "path": "coach_intake/io.py",
+        "sha256": "7d5ec3f0ecadd9c2a7a1f3ceb6169b7e4648fabb833b28cf73f321c6e55f4049"
+      },
+      {
+        "path": "coach_intake/__main__.py",
+        "sha256": "f352dc6edb5486b48340611767fbb14f1b589c547243fe897bbc582046a6d83a"
+      }
+    ],
+    "facts": [
+      "scripts/collect_local.py calls acquire with local kind, 2 MB bound, and 10-second timeout.",
+      "coach_intake/io.py GAME_URL fixes the endpoint to HTTPS loopback 127.0.0.1:2999.",
+      "GAME_CA_REQUIRED is raised if local fetch has no CA; ssl.create_default_context keeps default certificate and hostname verification.",
+      "ProxyHandler({}) disables proxy for GAME_URL; NoRedirect refuses redirects.",
+      "acquire first downloads official riotgames.pem, then collects raw payload and receipt privately; local source is labeled UNVERIFIED_LOCAL_CAPTURE and coaching stays disabled.",
+      "Certificate download remains a separate potential failure path; this review does not certify remote certificate retrieval in the current run."
+    ],
+    "assessment": "No implementation defect accounts for the observed absence of process/listener and transport ECONNREFUSED; this is not full implementation certification."
+  },
+  "prior_corroboration": [
+    {
+      "path": "evidence/r7-real/local-environment.json",
+      "sha256": "d7b0021e9d31f4ccab026dc0a282378e19505a699308d78e90669be39aff304b",
+      "observation_at_utc": "2026-10-04T11:28:28.123244+00:00",
+      "result": "EXTERNAL_ENVIRONMENT_BLOCKER; no game process or 2999 listener"
+    },
+    {
+      "path": "docs/r7-real/LOCAL_ENVIRONMENT.md",
+      "sha256": "df96be3efacc0a081d62c6f9e698df5f61df8dbfde526cad2477fbf16351008c"
+    }
+  ]
+}

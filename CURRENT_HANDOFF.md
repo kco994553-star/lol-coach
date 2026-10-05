@@ -1,5 +1,20 @@
 # CURRENT HANDOFF — LoL Coach
 
+## 최신 R7 추가 근거 — 2026-10-04 UTC
+
+- 실제 시작 main HEAD는 `16adaf60753663c95d236e586c34b466fc929f43`였다. 보고된6951f5c보다 앞선 기존 R7-real을 먼저 읽고 이어서 진행했다. 작업은 실제 Git checkout이며, 변경 전201 tracked blobs 일치.
+- 현재 보고: `docs/r7-continuation/CONTINUATION_REPORT.md`; 최소 입력: `docs/r7-continuation/MINIMUM_INPUT_PACKAGE.md`; 실행 근거: `evidence/r7-continuation/`.
+- 신규 같은 경기 Match/Timeline pair1: `EUW1_7095952008`, version14.17.613.973, timeline31frames. pinned HF revision·exact HTTP206 ranges·hash·참가자10명 연결 확인. publisher BSON-JSON export이며 Riot 수집은 publisher assertion이다.
+- 선동결26개 source field26/26, source-only HP비율/CS 파생 기준2개. ESTABLISHED_SOURCE_FIELD_REFERENCE1은 POST_GAME_DATASET 범위이며 PLAYER reference가 아니다. 기존 LiveClient extractor는 각각0/17 PRESENT, schema 미지원. `scripts/verify_r7_source_reference.py`는 offline 재검사만 하고 importer/coach를 추가하지 않는다.
+- 기존 화면5hash fresh 복구와 감사 재실행. 새 GameStar 교전 후보1개를 선동결 후 blind Vision14/14 선택 전사 일치. Garen HUD12:26이나 own champion 주 화면 없음; camera center를 own position으로 바꾸지 않았다. Teamfight/소규모 교전 분류 contested, Bot 표기 관찰. AI 일치를 정확도/gold로 쓰지 않음.
+- 29개 PLAYER 변수 DIRECT0/DERIVED0, 완전한 player Replay reference0, 같은 경기 player/truth pair0, Coaching N0/accuracy null. 기존10slots와3partial 유지, C partial 후보1 추가. Source-level26direct/2derived 및7행 subfield 경로는 별도로 집계.
+- Frozen27·기존111expected·보호9·R6/R7/R7-real evidence 보존. fresh111/111 + 보호9/9 PASS. 새 source bytes 변조/기존evidence 덮어쓰기 거절2/2; 새 manual snapshot KNOWN0, derivedCONDITIONAL,4required UNKNOWN. R6 browser/mobile는 Historical.
+- Local EXTERNAL_ENVIRONMENT_BLOCKER fresh 재확인: game/client process0,2999listener0,TCP거절,TLS이전실패. retry0. 전체 공개 Source 획득 불가로 확대하지 않음.
+- A미충족/B전체미입증을 그대로 보고했다. 실제 State/Decision acceptance는 미완료. 동일 경기 player POV와 행동 문맥을 확보하면 Reference-first 비교부터 이어간다. source 경로/공개 링크를 optional로 요청했으며 자동 대기·백그라운드 수집은 없음.
+- 이번 D1/D2 범위에서 Frozen 의미 변경 필요 없음/D3불필요. 기존 C3 proposal은 미승인·미구현으로 보존하지만, 그것을 추가 evidence 검증의 일괄 중단 사유로 사용하지 않는다. 합성 guard를 완화하거나 REAL을 SYNTHETIC으로 바꾸지 않았다. 실제 평가 연결 전에 기존 계약 보존 여부를 영향분석한다.
+
+## 아래는16adaf6에 기록된 이전 인수인계
+
 2026-10-04 KST. Design v1.0 동결 유지. **R7 real-evidence 후속: 실제 공개 화면 진단 완료, Decision/Coach 엔진 연결은 D3/Core Contract 경계에서 중단. R8 아님.**
 
 - 시작 실제 GitHub main HEAD `6951f5cafbc360c4637107fe3a3fb4dc0eed0d25`: remote165/local165 blob 일치. 로컬은 materialized tree, Git checkout 아님.

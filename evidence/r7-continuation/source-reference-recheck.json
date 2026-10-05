@@ -1,0 +1,197 @@
+{
+  "schema_version": "r7.source-reference-recheck.v1",
+  "reference_status": "ESTABLISHED_SOURCE_FIELD_REFERENCE",
+  "scope": "POST_GAME_DATASET",
+  "source_origin": "PUBLISHER_ATTESTED_RIOT_COLLECTION_NOT_INDEPENDENTLY_AUTHENTICATED",
+  "source_field_checks": [
+    {
+      "source": "match",
+      "pointer": "/metadata/matchId",
+      "equal": true
+    },
+    {
+      "source": "match",
+      "pointer": "/info/gameVersion",
+      "equal": true
+    },
+    {
+      "source": "match",
+      "pointer": "/info/gameId/$numberLong",
+      "equal": true
+    },
+    {
+      "source": "match",
+      "pointer": "/info/gameStartTimestamp/$numberLong",
+      "equal": true
+    },
+    {
+      "source": "match",
+      "pointer": "/info/gameEndTimestamp/$numberLong",
+      "equal": true
+    },
+    {
+      "source": "match",
+      "pointer": "/info/gameDuration",
+      "equal": true
+    },
+    {
+      "source": "match",
+      "pointer": "/info/queueId",
+      "equal": true
+    },
+    {
+      "source": "match",
+      "pointer": "/info/participants/0/participantId",
+      "equal": true
+    },
+    {
+      "source": "match",
+      "pointer": "/info/participants/0/championName",
+      "equal": true
+    },
+    {
+      "source": "match",
+      "pointer": "/info/participants/0/teamId",
+      "equal": true
+    },
+    {
+      "source": "match",
+      "pointer": "/info/participants/0/teamPosition",
+      "equal": true
+    },
+    {
+      "source": "timeline",
+      "pointer": "/metadata/matchId",
+      "equal": true
+    },
+    {
+      "source": "timeline",
+      "pointer": "/info/gameId/$numberLong",
+      "equal": true
+    },
+    {
+      "source": "timeline",
+      "pointer": "/info/frameInterval",
+      "equal": true
+    },
+    {
+      "source": "timeline",
+      "pointer": "/info/frames/5/timestamp",
+      "equal": true
+    },
+    {
+      "source": "timeline",
+      "pointer": "/info/frames/5/participantFrames/1/participantId",
+      "equal": true
+    },
+    {
+      "source": "timeline",
+      "pointer": "/info/frames/5/participantFrames/1/championStats/health",
+      "equal": true
+    },
+    {
+      "source": "timeline",
+      "pointer": "/info/frames/5/participantFrames/1/championStats/healthMax",
+      "equal": true
+    },
+    {
+      "source": "timeline",
+      "pointer": "/info/frames/5/participantFrames/1/currentGold",
+      "equal": true
+    },
+    {
+      "source": "timeline",
+      "pointer": "/info/frames/5/participantFrames/1/level",
+      "equal": true
+    },
+    {
+      "source": "timeline",
+      "pointer": "/info/frames/5/participantFrames/1/minionsKilled",
+      "equal": true
+    },
+    {
+      "source": "timeline",
+      "pointer": "/info/frames/5/participantFrames/1/jungleMinionsKilled",
+      "equal": true
+    },
+    {
+      "source": "timeline",
+      "pointer": "/info/frames/5/participantFrames/1/championStats/power",
+      "equal": true
+    },
+    {
+      "source": "timeline",
+      "pointer": "/info/frames/5/participantFrames/1/championStats/powerMax",
+      "equal": true
+    },
+    {
+      "source": "timeline",
+      "pointer": "/info/frames/5/participantFrames/1/position/x",
+      "equal": true
+    },
+    {
+      "source": "timeline",
+      "pointer": "/info/frames/5/participantFrames/1/position/y",
+      "equal": true
+    }
+  ],
+  "source_field_matches": 26,
+  "current_extractor": {
+    "match": {
+      "selected_paths": 17,
+      "present": 0,
+      "status": "UNSUPPORTED_MATCH_TIMELINE_SCHEMA",
+      "derived": [
+        {
+          "field": "health_fraction",
+          "layer": "L1",
+          "value": null,
+          "state": "UNKNOWN",
+          "formula": "active_health / active_max_health",
+          "formula_version": "r7.health_fraction.v1",
+          "lineage": [
+            "active_health",
+            "active_max_health"
+          ],
+          "source_sha256": "767330c58d9f9168c5ea4a6f0827bde7b0890eeae2317ea19ae52812a3792b14",
+          "decision_eligible": false,
+          "missing_reason": "HEALTH_INPUT_MISSING_OR_SEMANTICALLY_INVALID"
+        }
+      ],
+      "player_state": null
+    },
+    "timeline": {
+      "selected_paths": 17,
+      "present": 0,
+      "status": "UNSUPPORTED_MATCH_TIMELINE_SCHEMA",
+      "derived": [
+        {
+          "field": "health_fraction",
+          "layer": "L1",
+          "value": null,
+          "state": "UNKNOWN",
+          "formula": "active_health / active_max_health",
+          "formula_version": "r7.health_fraction.v1",
+          "lineage": [
+            "active_health",
+            "active_max_health"
+          ],
+          "source_sha256": "9fb74d4ce6cd16f3e04aa0953638e0e18cd80c5cce652eac83126ed55050d51a",
+          "decision_eligible": false,
+          "missing_reason": "HEALTH_INPUT_MISSING_OR_SEMANTICALLY_INVALID"
+        }
+      ],
+      "player_state": null
+    }
+  },
+  "player_information_state_verified": false,
+  "verified_player_state_variables": 0,
+  "engine_executed": false,
+  "coaching_validation_N": 0,
+  "coaching_accuracy": null,
+  "input_sha256": {
+    "fixtures/r7-continuation/structured-source-reference.json": "15dca7c4d9034ba6df5f6f192ae9b3bcfb738f6922c091880263875fb5bc4e0b",
+    "evidence/r7-continuation/source-range-receipts.json": "7cf7658a80243e4f23004e6c25679837668f807ecc9c8465d8679ff8b36d65b5",
+    "scripts/verify_r7_source_reference.py": "05e62596bd574c600fb83c807773dd882e4ffc97d17137457f28f9780654f7fa"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "at_utc": "2026-10-04T23:45:40.615827+00:00",
+  "scope": "READ_ONLY_REPOSITORY_SOURCE_RECOVERY; NO_R8; NO_RAW_REPUBLICATION",
+  "historical_source_recovery": {
+    "receipts": "/workspace/scratch/source-recovery-images.json",
+    "original_assets_recovered": 5,
+    "pinned_hash_matches": 5,
+    "pdf_container_hash_matches": true,
+    "new_scenario_count_from_recovery": 0,
+    "new_original_sources_not_claimed_from_recovery": true
+  },
+  "fresh_source_discovery": {
+    "GameStar": {
+      "public_page_status": 200,
+      "page_path": "/workspace/scratch/r7-assets/gamestar-gallery.txt",
+      "page_sha256": "7d0c04aef77bb311c6b52c3c822c347b5746356f2311642d2fbd9ea60dc975cb",
+      "candidate_image_urls_parsed": 48,
+      "gallery_claimed_images": 134,
+      "original_jpeg_downloads": 18,
+      "images_downloaded_bytes": 3274976,
+      "downloads_stopped": true,
+      "selected_reference_count": 1,
+      "not_all_downloads_are_references": true,
+      "selected_source": {
+        "gallery_index_0_based": 13,
+        "url": "https://images.cgames.de/images/gamestar/287/league-of-legends_2664879.jpg",
+        "source_page": "https://www.gamestar.de/galerien/league_of_legends,80648.html",
+        "at_utc": "2026-10-04T23:42:20.832882+00:00",
+        "read_limit_bytes": 3000000,
+        "status": 200,
+        "response_content_length": null,
+        "content_type": "image/jpeg;charset=UTF-8",
+        "bytes": 195276,
+        "sha256": "e11f4fab2bd0edde229cde1f24210fcc31643a3b83a9321933cf5800a988ee89",
+        "local_path": "/workspace/scratch/r7-assets/gamestar-13.jpg"
+      }
+    },
+    "Medal": {
+      "url": "https://medal.tv/games/league-of-legends/clips",
+      "status": 404,
+      "retries": 0
+    },
+    "Reddit": {
+      "url": "https://www.reddit.com/r/leagueoflegends/top.json?limit=15&t=week",
+      "status": 403,
+      "retries": 0
+    },
+    "YouTube": {
+      "action": "NOT_RETRIED",
+      "reason": "Previously failed player frame path; no new evidence permitting useful retry"
+    }
+  },
+  "source_chain_correction_candidate": {
+    "source": "Published research PDF",
+    "findings": "PDF methods(p19) say in-game recordings/screenshots were collected by researchers, but bibliography(p52) also lists GameStar gallery. Fresh GameStar image index10 depicts the same Garen scene as PDF p9 image1 at different encoded hash. Therefore PDF publication cannot by itself attest photographer/capture origin or independent source.",
+    "classification": "EVIDENCE_GAP; SOURCE_PROVENANCE_LIMIT",
+    "promotion_allowed": false,
+    "same_scene_images": [
+      "thesis-p9-image1.jpeg",
+      "gamestar-10.jpg"
+    ],
+    "same_scene_evidence": "Manually observed same UI clock06:19, Garen/ChoGath/Diana arrangement and minion scene; publisher source chain not independently fully attributed."
+  },
+  "fresh_partial_reference": {
+    "id": "REAL-GS-C-01",
+    "path": "/workspace/scratch/source-recovery-c-reference-initial.json",
+    "lock_path": "/workspace/scratch/source-recovery-c-reference-lock.json",
+    "status": "PARTIAL_CANDIDATE_ONLY",
+    "scenario_classification": "C_MULTI_UNIT_COMBAT_GEOMETRY; TEAMFIGHT_CONTESTED_VS_LANE_SKIRMISH",
+    "source_authenticity": "GameStar publicly published pixels verified by fresh acquisition; match/mode/patch/capture operator unverified",
+    "mode_note": "Lux Bot nameplate observed; do not count this as authenticated human-only competitive match",
+    "same_match_joins_performed": 0,
+    "decision_eligible": false,
+    "coaching_N_contribution": 0,
+    "direct_state_variable_promotions": 0,
+    "vision": "RUN_FRESH",
+    "vision_publishable_path": "/workspace/scratch/source-recovery-c-vision-publishable.json",
+    "comparison_path": "/workspace/scratch/source-recovery-c-comparison.json",
+    "selected_ai_transcription_agreement": "14/14",
+    "human_gold": false,
+    "real_state_accuracy": null,
+    "real_coaching_accuracy": null,
+    "lock_unchanged_after_extraction": true
+  },
+  "repository_mutations": 0,
+  "credentials_used": false,
+  "payments_used": false,
+  "messages_to_external_users_sent": false,
+  "stop_conditions": {
+    "A_three_full_real_state_decision_references": "NOT_MET",
+    "B_player_pov_unobtainable_in_work": "NOT_PROVEN; public player-style screenshot acquisition succeeds",
+    "remaining": "Authenticated session/patch/player-information source and temporal interaction needed; static C geometry is incremental evidence only"
+  }
+}
