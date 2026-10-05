@@ -1,5 +1,19 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — RUNNING
+- run_token: `main-20261005T0410-note-history-root`
+- status: `RUNNING`
+- writer_active: true
+- task_scope: Read-only stored Research note revision index, exact preview and download. No DB/Frozen change; latest editable draft and save revision retained.
+- owner_branch: `feat/research-note-history-2026-10-05`
+- intake_main_head: `321ecbd9515fa50a3ef8bff67dd0cbdd322d9fe4`
+- prior_terminal_evidence: PR #3 merged; actual post-merge Actions37262029506 SUCCESS exact `321ecbd9515fa50a3ef8bff67dd0cbdd322d9fe4`; Chrome50, old111/protected9/Frozen27/backup23 PASS, receipts navigation-ci-37261674093.json and navigation-ci-37262029506.json.
+- Risk: DEEP; no paid services/dependencies; Player reference dependency only PARKED_EXTERNAL, coachN0/accuracy null.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — CI_PENDING
 - run_token: `main-20261005T0355-research-navigation-root`
 - status: `CI_PENDING`
