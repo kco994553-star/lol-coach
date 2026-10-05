@@ -1,3 +1,15 @@
+# CURRENT HANDOFF — Research error integrity execution / note history remotely verified
+
+## 2026-10-05 KST
+
+- Actual PR4 code d870874a3b34813c02d1cd779a327f81b7cf45b7 → mergedmain c1b777f52c1c90d611753264a767e96ef943aeed. PR Actions37262887752 SUCCESS at merge-ref5ebe258c3182bc3d14ee31d576831839ced3da1e, exactpublishedtree13fbb784 andexpectedparents; postmerge37263078939 SUCCESS exactc1b777f. All137input hashes bound. Actual Chrome61/61 including authentic saved-note download/Unicode/read-only draft/CAS/history/navigation/deletion tests, storage19/HTTP5/old111/protected9/Frozen27/backup23 PASS. Fullactualreceipts note-history-ci-*.json preserved; privatearchive4 NOT_RUN separately, notPASS. No Frozen/Core/DBschema change or realCoach Npromotion.
+- Next actual integrity gap reproduced and repaired: oldA save401 clearsdirtyB; old409 changesBnotice. Nodebefore2/4, intermediate4/4 source23a72 retained. Same unscopedUIcatch independently reproduced on resource/anchor/list callbacks: before3/6, stale401allFAIL. One tiny post-invocationepoch-bound UIcatch for directUIrequests, current rSave ownresource/anchor guard; rAdd/fileeligibility unchanged. Final4/4 and6/6 e14c5fbf PASS, exacttest/fixture/childexit/source binding; allinitialfailures preserved. 401onlyexplicitsynthetic Node inputs, not realtoken expiry. Two actualrealHTTP409 browser checks planned, prior61 retained→63 required; remoteCIpending.
+- DEEP; independent read-only repair review foundno materialissue in installed async-call ownership. Scope is epoch-changing resource/anchor/logout transitions; no claimof generalizedsame-epoch request scheduling. Currenterrors/auth remainhandled. Sourceversion history is additive; Frozen27/old111/Protected9/backup23 remainmandatory.
+- Whole Main Work continues under autonomousauthority. Next independentlyexecutable requirement aftererrorrepair: source-backed EXPLORATORY Knowledgeproposal creation/version/download andsource-deletion lifecycle; actual reviewedrules/playerdecision stillgated. ExistingpinnedpostgameCLI is specificarchiveonly andoutputsPlayerState/GroundTruth null; exposingprivateschemahelper wouldbypassgate. AduplicatearchiveWebexample wasnotchosen toinflatefeatures.
+- Rootsinglewriter tokenmain-20261005T0422-research-save-errors-root via commonref; branchfix/research-save-error-scope-2026-10-05 distinct. Playerreference/pre-action context dependency onlyPARKED_EXTERNAL; PLAYER0/DecisionN0/CoachN0/accuracynull, ProductNOT_COMPLETE. Payment0/newdeps0; no externalmessages.
+
+Prior handoff fully preserved below.
+
 # CURRENT HANDOFF — Note history implementation / PR3 remotely verified
 
 ## 2026-10-05 KST
