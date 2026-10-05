@@ -1,5 +1,24 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — CI_PENDING
+- run_token: `main-20261005T0630-manual-draft-capture-root`
+- status: `CI_PENDING`
+- writer_active: false
+- task_scope: bounded manual draft capture PR8 actual CI/browser108 verification, then gated merge/postmerge and next retry-safe save correctness gap.
+- owner_branch: `feat/manual-draft-capture-2026-10-05`
+- intake_main_head: `0f2b333e44c1918e7a2a9dd7d9f6fce67d1d76a2`
+- implementation_head: `066f4447f19d7d96214950fc439b9f790a476ed3`
+- implementation_tree: `5edb6560235ddc889646a34b1cd48aeec84617bd`
+- exact_pr: 8; https://github.com/kco994553-star/lol-coach/pull/8
+- exact_ci_run: 37276347795 attempt1, pull_request, observed in_progress. Current Chrome108 NOT_YET_VERIFIED.
+- terminal_evidence: Required local PASS evidence/mvp/20261005T070629748821Z-0f0b7f60/verification.json,257inputs/Frozen27/protected9/old111/backup23/new31+14+19/Node7+4/priorguards; independent review blocker0. First full verifier-routing failure070325 preserved and exact-case repair verified. API publication SHA/tree matches localgit; remote branch SHA readback verified.
+- remaining_dependency: Independent Player reference/preaction PARKED_EXTERNAL only, realCoachN0/null; internal retry-safe save gap reproduced and executable next. No whole Work STOP.
+- next_owner_rule: Reacquire this common ref from exact observed terminal HEAD for exact PR8/head/run continuation. Unknown RUNNING claims must not be stolen.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — RUNNING
 - run_token: `main-20261005T0630-manual-draft-capture-root`
 - status: `RUNNING`
