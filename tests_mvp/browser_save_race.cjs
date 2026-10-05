@@ -12,7 +12,7 @@ if (!output || !process.env.WORKBENCH_URL || !process.env.WORKBENCH_TOKEN_FILE) 
 const token = fs.readFileSync(process.env.WORKBENCH_TOKEN_FILE, 'utf8').trim();
 const redact = value => String(value).split(token).join('[REDACTED]');
 const hash = value => crypto.createHash('sha256').update(value).digest('hex');
-const sourcePaths = ['web_r4/app.js', 'web_r4/index.html', 'web_r4/styles.css', 'coach_v1/server.py', 'coach_v1/storage.py', 'examples/r3/compare-wait-retreat.json', 'tests_mvp/browser_save_race.cjs', 'scripts/browser_mvp.py'];
+const sourcePaths = ['web_r4/app.js', 'web_r4/index.html', 'web_r4/styles.css', 'coach_v1/server.py', 'coach_v1/storage.py', 'examples/r3/compare-wait-retreat.json', 'tests_mvp/browser_save_race.cjs', 'scripts/browser_mvp.py', 'web_r4/research.js', 'coach_v1/research.py', 'coach_intake/io.py', 'coach_intake/audit.py', 'coach_intake/video.py', 'tests_mvp/browser_research_bytes.cjs'];
 const sourceHashes = () => Object.fromEntries(sourcePaths.map(file => [file, hash(fs.readFileSync(path.join(root, file)))]));
 const checks = [], pageErrors = [], dialogs = [], writes = [], snapshots = [], backendSnapshots = [];
 const startedAt = new Date().toISOString();
@@ -351,6 +351,8 @@ async function run() {
     check('native-cancellations-leave-backend-v3', finalStored.revision === 3 && finalStored.case.objective === newer.objective,
       { revision: finalStored.revision, objective: finalStored.case.objective });
     await checkImportReadRaces(storedV3.case);
+    stage = 'research-source-byte-integrity';
+    await require('./browser_research_bytes.cjs')({page, check, baseUrl: process.env.WORKBENCH_URL, token});
     check('no-page-errors', pageErrors.length === 0, pageErrors);
     check('tested-source-unchanged-during-run', JSON.stringify(initialHashes) === JSON.stringify(sourceHashes()), sourceHashes());
   } catch (error) {

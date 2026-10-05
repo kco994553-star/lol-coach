@@ -25,21 +25,23 @@ The required scope is:
 | Check | Required result |
 | --- | --- |
 | Frozen contract payload | All 27 manifest hashes match |
-| Historical R0–R6 protected bytes | Match the preserved baseline, except the authorized `web_r4/app.js` repair and the baseline's handoff exemption |
+| Historical R0–R6 protected bytes | Match the preserved baseline, except the evidence-bound `web_r4/app.js` and `web_r4/research.js` repairs and the baseline's handoff exemption |
 | Preserved R7 sources and old test file sets | Match the preserved historical receipt and baseline |
 | Protected legacy validator | Nine checks pass in an isolated copy |
 | Unchanged `tests_r3` through `tests_r7` | Exactly 111 tests run, with zero skips, failures, errors, or expected failures |
 | Backup and restore | All current `tests_mvp/test_backup.py` tests pass, with zero skips |
 | Save acknowledgement and draft retention | Seven synthetic Node VM cases pass |
-| Existing delete/import and research-file races | Two and one synthetic Node VM cases pass |
+| Existing delete/import and research-file races | Two original cases plus the original Research A-first expectations in the current nine-case harness pass |
 | Latest synthetic import selection and stale errors | Seven new Node VM cases pass |
+| Research UTF-8 provenance | Nine synthetic codec/adapter/read-order cases pass; preserved 5/9→9/9→9/9 history binds old/current source |
+| Research current/stale API errors | Four separate Node cases pass; actual introduced 2/4 failure and repaired 4/4 preserved |
 | Postgame schema mechanics | Thirteen synthetic schema tests pass |
 
 The historical `scripts/verify_r7.py` hard gate still requires the original web
 app's exact bytes. The authorized repair changes that file, so its historical
 identity check is expected to fail. The new verifier explicitly records that
 identity difference; it does not modify the historical baseline or claim a
-fresh historical-verifier pass. Any other protected historical difference fails
+fresh historical-verifier pass. The Research byte repair additionally requires its strict before/first/final receipt binding. Any other protected historical difference fails
 the new verifier. Frozen design and legacy engine bytes remain protected.
 
 The before/after save receipts are preserved separately at
@@ -60,7 +62,7 @@ old save receipt to pretend that it tested the new app bytes.
 The actual browser suite retains the previous 32 checks and adds six import
 checks using native browser File objects with delayed `File.text()` completion.
 Both A/B read orders and clearing the newest selection are exercised. This is
-38 checks against a synthetic backend, never real-match coaching accuracy.
+38 historical checks against a synthetic backend. Eight further actual Research file-byte, invalid-input, dirty-note and stale-read checks bring the current required count to46. Native File bytes must match the persisted adapter hash. These are never real-match coaching accuracy.
 
 ## Optional preserved-source integration
 
@@ -120,3 +122,5 @@ is introduced here.
 A local run cannot prove that GitHub Actions executed. Until an actual workflow
 run is observed, the Actions result remains unverified; a passing local receipt
 does not substitute for an Actions run URL and conclusion.
+
+Research source-byte repair and preserved failure details: `docs/MVP_RESEARCH_BYTES_DECISION.md`. The old text-only Research test stub is preserved; `R6-LATEST-FILE-A-FIRST` reruns its unchanged ordering expectations in the ArrayBuffer-capable harness.

@@ -1,3 +1,15 @@
+# CURRENT HANDOFF — Research source-byte repair awaiting remote CI
+
+## 2026-10-05 KST
+
+- Intake actual main c30bb2ca553e1346e00aebd9871283101ca51950; root single writer acquired common work/main-execution-claim. Scope DEEP: Research File.text silently strips BOM/replaces invalid UTF-8 before original-source hash. Minimal ArrayBuffer/fatal UTF-8 decoder preserves valid bytes and rejects corruption before POST; current resource/dirty note retained, stale reads and requests suppressed.
+- Preserved same9 test/fixture initial5/9→first9/9→request-guard refinement9/9→final9/9. Independent verifier found introduced current resource/note GET errors hidden after own rOpen epoch; separate same4 cases initial2/4→final4/4. All original failures/receipts retained; final binding bridges old R6 research source to exact current bytes, no historical PASS rewritten.
+- Frozen27/core/old fixture/expected/test-file bytes unchanged. Historical R7 exact identity FAIL preserved. Original R6 text-only Node harness preserved; its exact A-first expectations are executed in the current ArrayBuffer-capable9case harness. No Evidence Gate loosened. Decision record docs/MVP_RESEARCH_BYTES_DECISION.md; current validation docs/MVP_VALIDATION.md.
+- Required actual browser suite extends38→46, including original file hashes/BOM JSON+transcript/multibyte literal U+FFFD, invalid UTF-8 noPOST/noresource/old dirty note, both stale invalid read orders/logout. Static syntax PASS. This entry records implementation and local checks only; fresh actual Actions/browser result is not yet established. Root continues publication→remote source/tree/SHA→CI→repair if needed→gated merge→postmerge checks→closeout.
+- Source26direct/2derived unchanged; PLAYER DIRECT0/DERIVED0/complete0/truthpair0, DecisionN0/CoachN0/accuracy null. Real reference/context PARKED_EXTERNAL. Independent intake audit rejected speculative new package software; existing source-backed reference protocol and minimum input path reused. No paid service/dependency/credentials/external messages.
+
+Prior handoff fully preserved below.
+
 # CURRENT HANDOFF — verified import repair / autonomous continuation configured
 
 ## 2026-10-05 11:15 KST closeout

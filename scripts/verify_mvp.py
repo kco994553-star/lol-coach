@@ -37,6 +37,16 @@ IMPORT_CASE_IDS = {
     "MVP-IMPORT-SESSION-SWITCH", "MVP-IMPORT-DIRTY-CANCEL",
     "MVP-IMPORT-STALE-PARSE-ERROR", "MVP-IMPORT-STALE-READ-ERROR",
 }
+RESEARCH_CASE_IDS = {
+    "RESEARCH-BOM-JSON", "RESEARCH-BOM-TRANSCRIPT", "RESEARCH-VALID-MULTIBYTE",
+    "RESEARCH-REJECT-INVALID", "RESEARCH-REJECT-TRUNCATED",
+    "RESEARCH-STALE-INVALID-A-FIRST", "RESEARCH-STALE-INVALID-B-FIRST",
+    "RESEARCH-CLEARED-INVALID", "R6-LATEST-FILE-A-FIRST",
+}
+RESEARCH_REQUEST_CASE_IDS = {
+    "RESEARCH-CURRENT-RESOURCE-GET-ERROR", "RESEARCH-CURRENT-NOTE-GET-ERROR",
+    "RESEARCH-STALE-GET-ERROR-AFTER-NEW-SELECTION", "RESEARCH-STALE-GET-ERROR-AFTER-LOGOUT",
+}
 
 
 def utc() -> str:
@@ -81,7 +91,11 @@ def preservation_gate() -> dict:
     differences = [row["path"] for row in historical
                    if not (ROOT / row["path"]).is_file()
                    or git_blob(ROOT / row["path"]) != row["sha"]]
-    protected_errors = [p for p in differences if p != "web_r4/app.js"]
+    research = research_binding()
+    authorized = {"web_r4/app.js"}
+    if research["status"] == "PASS":
+        authorized.add("web_r4/research.js")
+    protected_errors = [p for p in differences if p not in authorized]
     r7_sources = read_json(ROOT / R7_SOURCE_RECEIPT)["source_sha256"]
     r7_errors = [p for p, expected in r7_sources.items()
                  if not (ROOT / p).is_file() or sha(ROOT / p) != expected]
@@ -107,6 +121,8 @@ def preservation_gate() -> dict:
         "historical_identity_note": "The unchanged verify_r7.py gate binds the pre-repair app; "
             "an authorized UI repair causes its exact-byte identity gate to fail.",
         "mvp_authorized_changed_path": "web_r4/app.js",
+        "mvp_authorized_changed_paths": sorted(authorized),
+        "research_repair_binding": research,
         "other_historical_byte_errors": protected_errors,
         "historical_source_receipt": R7_SOURCE_RECEIPT,
         "historical_source_receipt_sha256": sha(ROOT / R7_SOURCE_RECEIPT),
@@ -187,8 +203,15 @@ def node_check(out: Path, name: str, script: str, source: str,
         result = receipt.get("fixed_results", {})
         passed = result.get("passed") == count and result.get("total") == count
         passed = passed and all(row.get("passed") is True for row in result.get("results", []))
-    elif name == "ui-file-race":
-        passed = receipt.get("fixed_result", {}).get("passed") is True
+    elif name == "ui-research-bytes":
+        passed = receipt.get("passed") == count and receipt.get("total") == count
+        passed = passed and {row.get("id") for row in receipt.get("results", [])} == RESEARCH_CASE_IDS
+        passed = passed and all(row.get("passed") is True for row in receipt.get("results", []))
+        passed = passed and receipt.get("fixed_result", {}).get("passed") is True
+    elif name == "ui-research-requests":
+        passed = receipt.get("passed") == count and receipt.get("total") == count
+        passed = passed and {row.get("id") for row in receipt.get("results", [])} == RESEARCH_REQUEST_CASE_IDS
+        passed = passed and all(row.get("passed") is True for row in receipt.get("results", []))
     elif name == "ui-import":
         passed = receipt.get("passed") == count and receipt.get("total") == count
         passed = passed and {row.get("id") for row in receipt.get("results", [])} == IMPORT_CASE_IDS
@@ -203,6 +226,46 @@ def node_check(out: Path, name: str, script: str, source: str,
             "source_path": source, "source_sha256": sha(ROOT / source),
             "required_cases": count, "process_exit_code": process["exit_code"],
             "scope": "Synthetic Node VM DOM stub; not browser E2E"}
+
+
+def research_binding() -> dict:
+    names = ("research-bytes-before.json", "research-bytes-after.json", "research-bytes-final.json", "research-bytes-request-repair.json")
+    before, first, final, current = [read_json(ROOT / "evidence/mvp" / n) for n in names]
+    test_sha = sha(ROOT / "tests_mvp/ui_research_bytes.cjs")
+    rows = (before, first, final, current)
+    request_names = ("research-request-before.json", "research-request-after.json")
+    req_before, req_after = [read_json(ROOT / "evidence/mvp" / n) for n in request_names]
+    failed_ids = {r["id"] for r in before["results"] if r.get("passed") is False}
+    checks = {
+        "same_nine_case_ids": all({r["id"] for r in row["results"]} == RESEARCH_CASE_IDS
+                                   and row.get("total") == 9 for row in rows),
+        "same_fixture": all(row.get("fixture_sha256") == before.get("fixture_sha256") for row in rows),
+        "same_current_test": all(row.get("test_sha256") == test_sha for row in rows),
+        "before_exact_failures": before.get("passed") == 5 and failed_ids == {
+            "RESEARCH-BOM-JSON", "RESEARCH-BOM-TRANSCRIPT", "RESEARCH-REJECT-INVALID", "RESEARCH-REJECT-TRUNCATED"},
+        "actual_exit_history": [row.get("process", {}).get("exit_code") for row in rows] == [1, 0, 0, 0],
+        "repaired_all_pass": all(row.get("passed") == 9 and all(r.get("passed") is True
+                                    for r in row["results"]) for row in (first, final, current)),
+        "before_binds_preserved_source": before.get("source_sha256") ==
+            read_json(ROOT / R6_SOURCE_RECEIPT)["source_sha256"]["web_r4/research.js"],
+        "current_binds_source": current.get("source_sha256") == sha(ROOT / "web_r4/research.js"),
+        "separate_repair_versions": len({row.get("source_sha256") for row in rows}) == 4,
+        "request_source_chain": req_before.get("source_sha256") == final.get("source_sha256")
+            and req_after.get("source_sha256") == current.get("source_sha256"),
+        "request_same_test_fixture": req_before.get("test_sha256") == req_after.get("test_sha256")
+            == sha(ROOT / "tests_mvp/ui_research_requests.cjs")
+            and req_before.get("fixture_sha256") == req_after.get("fixture_sha256"),
+        "request_exact_cases": all(row.get("total") == 4 and {r["id"] for r in row["results"]}
+                                   == RESEARCH_REQUEST_CASE_IDS for row in (req_before, req_after)),
+        "request_actual_failures": req_before.get("passed") == 2 and req_before.get("process", {}).get("exit_code") == 1
+            and {r["id"] for r in req_before["results"] if r.get("passed") is False} == {
+                "RESEARCH-CURRENT-RESOURCE-GET-ERROR", "RESEARCH-CURRENT-NOTE-GET-ERROR"},
+        "request_after_pass": req_after.get("passed") == 4 and req_after.get("process", {}).get("exit_code") == 0
+            and all(r.get("passed") is True for r in req_after["results"]),
+    }
+    return {"status": "PASS" if all(checks.values()) else "FAIL", "checks": checks,
+            "receipt_sha256": {"evidence/mvp/" + n: sha(ROOT / "evidence/mvp" / n) for n in (*names, *request_names)},
+            "historical_r6_harness": "Unchanged text-only File stub; its exact A-first expectations are rerun by R6-LATEST-FILE-A-FIRST with both native codec paths. No old expected value changed."}
 
 
 def repair_binding() -> dict:
@@ -292,6 +355,10 @@ def input_hashes() -> dict[str, str]:
                  "evidence/r7/baseline-tree.json", "evidence/mvp/save-race-before.json",
                  "evidence/mvp/save-race-after.json", "evidence/mvp/ci-cost-basis.json",
                  "evidence/mvp/import-race-before.json", "evidence/mvp/import-race-after.json",
+                 "evidence/mvp/research-bytes-before.json", "evidence/mvp/research-bytes-after.json",
+                 "evidence/mvp/research-bytes-final.json",
+                 "evidence/mvp/research-bytes-request-repair.json",
+                 "evidence/mvp/research-request-before.json", "evidence/mvp/research-request-after.json",
                  "evidence/mvp/github-ci-visibility.json",
                  "docs/MVP_VALIDATION.md", "docs/MVP_BACKUP.md"):
         if (ROOT / name).is_file():
@@ -330,7 +397,12 @@ def main() -> int:
             save(out, "backup.json", checks["backup"])
         checks["ui_save"] = node_check(out, "ui-save", "tests_mvp/ui_save_race.cjs", "web_r4/app.js", 7)
         checks["ui_delete_import"] = node_check(out, "ui-delete-import", "tests_r4/ui_races.cjs", "web_r4/app.js", 2)
-        checks["ui_file_race"] = node_check(out, "ui-file-race", "tests_r6/ui_file_race.cjs", "web_r4/research.js", 1)
+        checks["ui_research_bytes"] = node_check(out, "ui-research-bytes", "tests_mvp/ui_research_bytes.cjs", "web_r4/research.js", 9)
+        checks["ui_research_requests"] = node_check(out, "ui-research-requests", "tests_mvp/ui_research_requests.cjs", "web_r4/research.js", 4)
+        checks["ui_file_race"] = {"status": checks["ui_research_bytes"]["status"],
+            "required_cases": 1, "case_id": "R6-LATEST-FILE-A-FIRST",
+            "receipt_path": checks["ui_research_bytes"]["receipt_path"],
+            "scope": "Original R6 A-first ordering expectations in current ArrayBuffer-capable harness; old test file preserved"}
         checks["ui_import"] = node_check(out, "ui-import", "tests_mvp/ui_import_races.cjs", "web_r4/app.js", len(IMPORT_CASE_IDS))
         checks["postgame"] = postgame_checks(out, args.postgame_raw_dir)
     except Exception as error:
