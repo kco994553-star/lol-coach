@@ -1,5 +1,20 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — RUNNING
+- run_token: `main-20261005T0545-note-history-recovery-root`
+- status: `RUNNING`
+- writer_active: true
+- task_scope: Existing documented saved-note history recovery into unsaved draft; exact4strings/currentloadedCAS/no automaticPUT; no schema/API/corechange.
+- owner_branch: `feat/note-history-draft-recovery-2026-10-05`
+- intake_main_head: `594ef3cf6138421de8a8c77c7ec1c390e7cfedea`
+- prior_terminal_evidence: PR6 normalmerged594ef3c, exacttreea36cdda0; actualPR37268750816/postmerge37268897569 SUCCESS, Chrome79/old111/protected9/Frozen27/backup23/new42+19+5/history19+5/Node8/all176hashesmatch. FirstactualCI37268245767 browserFAIL serialization assumption retained, verifier-onlyrepair/rootcauseactualHTTP confirmed.
+- risk: DEEP (user draft preservation/CAS/source identity). Acceptance: explicit savedpreviewcopy, native dirtyconfirm/cancel, exactUnicode/currentlatestCAS, noautomaticwrite, genuineconflictdraftretained, history/Knowledge refsunchanged, navigation/view/logout/deletion/saving gates, actualbrowser+affectedrequiredregression/sourceversion+remoteSHA.
+- current_critical_path: Source-backed player/preaction reference onlyPARKED_EXTERNAL; CoachN0/null. Independently executable usability recovery continues. No paid dependency/auth/externalproject/deploy.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — CI_PENDING
 - run_token: `main-20261005T0541-knowledge-gated-merge-root`
 - status: `CI_PENDING`
