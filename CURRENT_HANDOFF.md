@@ -1,5 +1,23 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — CI_PENDING
+- run_token: `main-20261005T0613-note-recovery-ci-repair-root`
+- status: `CI_PENDING`
+- writer_active: false
+- task_scope: Exact PR7 repaired browser completion-boundary retest; actual first failure37270809307 preserved.
+- owner_branch: `feat/note-history-draft-recovery-2026-10-05`
+- intake_main_head: `594ef3cf6138421de8a8c77c7ec1c390e7cfedea`
+- implementation_head: `83b7718a4b09d1d79c741d38294b5f502b8c9f52`
+- implementation_tree: `9a7d08bd13a07c5c705bf2b782459d7fa866f4e4`
+- pr: https://github.com/kco994553-star/lol-coach/pull/7
+- evidence: Fresh localrequired061833/1db93441 PASS194inputs; Frozen27/old111/protected9/backup23/5+3. Independent VM confirms only legitimate notice update caused earlysnapshotfalsefailure. Product39ae97 unchanged, old/currenttestarchive+fullCI retained, wholeequality/actual404/noPUT/privacy andcount89 retained. New actualChrome pending, notPASSclaimed.
+- risk: CRITICAL retained.
+- next: Exacttestedtree/parents/hashes/actualActions, gatedmerge/postmerge/handoff; thenmanualdraftcapture requirement. Playerreferenceonlyparked; CoachN0/null.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — RUNNING
 - run_token: `main-20261005T0613-note-recovery-ci-repair-root`
 - status: `RUNNING`
