@@ -1,5 +1,20 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — RUNNING
+- run_token: `main-20261005T0422-research-save-errors-root`
+- status: `RUNNING`
+- writer_active: true
+- task_scope: Research save error selection/resource/anchor integrity; record successful PR4 closeout, preserve new before2/4 and repair current/stale errors.
+- owner_branch: `fix/research-save-error-scope-2026-10-05`
+- intake_main_head: `c1b777f52c1c90d611753264a767e96ef943aeed`
+- prior_terminal_evidence: PR4 mergedc1b777f; actual postmerge Actions37263078939 SUCCESS exact SHA; Chrome61/storage19/HTTP5/old111/protected9/Frozen27/backup23 source-bound PASS. Notes history read-only gate complete; no actualCoach Nchange.
+- risk: DEEP; local targeted4 then affected/full regression and narrow real409 HTTPbrowser checks; stale401 is explicitsynthetic input, no auth-expiryclaim.
+- external_dependency_only: Independent Player reference/pre-actioncontext PARKED_EXTERNAL. Knowledge proposal lifecycle remains independently assessable after integrity.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — CI_PENDING
 - run_token: `main-20261005T0419-note-history-ci-root`
 - status: `CI_PENDING`
