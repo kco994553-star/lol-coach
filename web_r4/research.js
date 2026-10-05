@@ -17,7 +17,15 @@ function rRender(){const p=rResource.report;$('r-diagnostic').replaceChildren();
 function rCandidates(){const box=$('r-candidates');box.replaceChildren();if(!rResource||rResource.kind!=='VIDEO')return;const p=rResource.report;const table=node('table');const head=node('tr');for(const h of ['영상 시점','주제','복기'])head.append(node('th',h));table.append(head);
  for(const c of p.candidates){if($('r-filter').value!=='ALL'&&!c.topics.includes($('r-filter').value))continue;const sec=c.video_time_ms/1000;const tr=node('tr'),time=node('td'),a=node('a',String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0')+' ↗');a.href='https://www.youtube.com/watch?v='+encodeURIComponent(p.video_id)+'&t='+sec+'s';a.target='_blank';a.rel='noopener noreferrer';time.append(a);tr.append(time,node('td',c.topics.map(t=>rLabels[t]||t).join(', ')));const cell=node('td'),b=node('button','노트 열기','secondary');b.dataset.anchor=String(c.cue_index);b.addEventListener('click',()=>rOpenNote(String(c.cue_index)).catch(rError));cell.append(b);tr.append(cell);table.append(tr);}box.append(table);}
 async function rOpenNote(anchor){if(!rResource||!rLeave())return;const mark=++rEpoch,id=rResource.id;rReading(true);try{const note=await api('/research/'+id+'/notes/'+anchor);if(mark!==rEpoch)return;rEdit=0;rApply(note);$('r-note-title').textContent=anchor==='overview'?'자료 전체 복기':'영상 자막 구간 #'+anchor+' 복기';}finally{if(mark===rEpoch)rReading(false);}}
-async function rAdd(body){if(!rLeave())return;const mark=++rEpoch;rReading(true);try{const resource=await api('/research','POST',body);if(mark!==rEpoch)return;rDirty=false;await rRefresh();if(mark!==rEpoch)return;await rOpen(resource.id);}finally{if(mark===rEpoch)rReading(false);}}
+async function rAdd(body,eligible=()=>true){
+ if(!rLeave())return;let mark=++rEpoch;rReading(true);
+ try{
+  const resource=await api('/research','POST',body);if(mark!==rEpoch||!eligible())return;
+  rDirty=false;await rRefresh();if(mark!==rEpoch||!eligible())return;
+  const opening=rOpen(resource.id);mark=rEpoch;await opening;
+ }catch(e){if(mark===rEpoch&&eligible())rError(e);}
+ finally{if(mark===rEpoch)rReading(false);}
+}
 async function rSave(){if(!rResource||!rNote)return;const mark=rEpoch,edit=rEdit,id=rResource.id,anchor=rNote.anchor;const note=Object.fromEntries(rFields.map(f=>[f,$('r-'+f).value]));$('r-save').disabled=true;
  try{const saved=await api('/research/'+id+'/notes/'+anchor,'PUT',{note,expected_revision:rNote.revision});if(mark!==rEpoch)return;rNote=saved;if(edit===rEdit)rApply(saved);else{$('r-note-state').textContent='버전 '+saved.revision+' 저장 완료 · 이후 수정은 아직 저장되지 않았습니다.';}rNotice('복기 노트를 저장했습니다.');}
  finally{if(mark===rEpoch)$('r-save').disabled=false;}}
@@ -30,7 +38,24 @@ $('r-filter').addEventListener('change',rCandidates);
 $('r-overview').addEventListener('click',()=>rOpenNote('overview').catch(rError));
 $('r-save').addEventListener('click',()=>rSave().catch(rError));
 for(const f of rFields)$('r-'+f).addEventListener('input',()=>{rEdit++;rDirty=true;$('r-note-state').textContent='저장하지 않은 변경이 있습니다.';});
-$('r-file').addEventListener('change',async()=>{const read=++rFileRead,mark=rEpoch,file=$('r-file').files[0],kind=$('r-kind').value,videoId=$('r-video-id').value;try{if(!file)return;if(!limits||file.size>limits.body_bytes/2)throw Error('파일 크기가 허용 범위를 초과했습니다.');const raw=await file.text();if(mark!==rEpoch||read!==rFileRead||$('r-file').files[0]!==file)return;const body={source_type:kind,title:file.name,raw_text:raw};if(kind==='transcript')body.video_id=videoId;await rAdd(body);}catch(e){rError(e);}finally{if($('r-file').files[0]===file)$('r-file').value='';}});
+$('r-file').addEventListener('change',async()=>{
+ const read=++rFileRead,mark=rEpoch,file=$('r-file').files[0],kind=$('r-kind').value,videoId=$('r-video-id').value;
+ const current=()=>mark===rEpoch&&read===rFileRead&&$('r-file').files[0]===file;
+ try{
+  if(!file)return;
+  if(!limits||file.size>limits.body_bytes/2)throw Error('파일 크기가 허용 범위를 초과했습니다.');
+  const bytes=await file.arrayBuffer();
+  if(!current())return;
+  let raw;
+  // Preserve the BOM in raw_text so UTF-8 re-encoding binds the original bytes.
+  // Fatal decoding rejects corruption instead of silently replacing characters.
+  try{raw=new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(bytes);}
+  catch{throw Error('UTF-8 파일 형식이 올바르지 않습니다.');}
+  const body={source_type:kind,title:file.name,raw_text:raw};if(kind==='transcript')body.video_id=videoId;
+  await rAdd(body,()=>read===rFileRead&&$('r-file').files[0]===file);
+ }catch(e){if(current())rError(e);}
+ finally{if($('r-file').files[0]===file)$('r-file').value='';}
+});
 $('r-delete').addEventListener('click',async()=>{if(!rResource||!confirm('이 자료와 모든 복기 노트를 삭제할까요?'))return;const mark=rEpoch,id=rResource.id;try{await api('/research/'+id,'DELETE');if(mark!==rEpoch)return;rClear();await rRefresh();rNotice('자료와 노트를 삭제했습니다.');}catch(e){rError(e);}});
 $('r-download').addEventListener('click',()=>{if(!rResource||!rNote)return;const data={resource:rResource,saved_note:rNote,unsaved_changes_not_included:rDirty};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=node('a');a.href=url;a.download='lol-coach-research-note.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
 $('logout').addEventListener('click',rClear);

@@ -1,0 +1,56 @@
+{
+  "scope": "Two independently reproduced asynchronous cross-session editor overwrite claims only",
+  "verifier": "Node VM DOM stub; not browser E2E",
+  "executed_at": "2026-10-05T03:12:16.965Z",
+  "node_version": "v24.19.0",
+  "source_sha256": "1d31505b1e88cbf5d68f163f8728f06138b421949c416961d19069af61fe79bb",
+  "initial_failures": {
+    "evidence_kind": "PRIOR_OBSERVED_EXECUTION",
+    "note": "Observed by independent reviewer before repair; pre-repair source hash was not captured. Preserved history, not a rerun against current source.",
+    "count": 2,
+    "results": [
+      {
+        "id": "R4-UI-RACE-DELETE",
+        "actual": {
+          "current": null,
+          "editor": ""
+        }
+      },
+      {
+        "id": "R4-UI-RACE-IMPORT",
+        "actual": {
+          "current": null,
+          "editor": {
+            "mode": "TEST",
+            "evidence_kind": "SYNTHETIC",
+            "payload": "OLD IMPORT"
+          }
+        }
+      }
+    ]
+  },
+  "fixed_results": {
+    "evidence_kind": "FRESH_EXECUTION",
+    "passed": 2,
+    "total": 2,
+    "results": [
+      {
+        "id": "R4-UI-RACE-DELETE",
+        "passed": true,
+        "actual": {
+          "session_id": "session-B",
+          "editor": "UNSAVED SESSION B EDIT"
+        }
+      },
+      {
+        "id": "R4-UI-RACE-IMPORT",
+        "passed": true,
+        "actual": {
+          "session_id": "session-B",
+          "editor": "UNSAVED SESSION B EDIT",
+          "selected_file": "new-selection.json"
+        }
+      }
+    ]
+  }
+}
