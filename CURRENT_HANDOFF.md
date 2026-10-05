@@ -1,5 +1,20 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — CI_PENDING
+- run_token: `main-20261005T0410-note-history-root`
+- status: `CI_PENDING`
+- writer_active: false
+- task_scope: Read-only stored note history PR #4, awaiting actual browser/CI before gated merge.
+- owner_branch: `feat/research-note-history-2026-10-05`
+- intake_main_head: `321ecbd9515fa50a3ef8bff67dd0cbdd322d9fe4`
+- code_head: `d870874a3b34813c02d1cd779a327f81b7cf45b7`
+- PR: #4; run_id: 37262887752; run_attempt: 1
+- terminal_evidence: local verification evidence/mvp/20261005T041631812360Z-d5407f42/verification.json PASS; exact publishedtree 13fbb784ba83a6592b492674996da6ce384eb640. Actual browser61 is pending. Next actual executablegap stale Research save error routing alreadyreproduced; Player reference only parked.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — RUNNING
 - run_token: `main-20261005T0410-note-history-root`
 - status: `RUNNING`
