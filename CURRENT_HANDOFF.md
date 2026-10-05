@@ -1,5 +1,21 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — CI_PENDING
+- run_token: `main-20261005T0422-research-save-errors-root`
+- status: `CI_PENDING`
+- writer_active: false
+- task_scope: Exact PR5 source-bound current/stale Research save+resource/anchor/list error integrity CI.
+- owner_branch: `fix/research-save-error-scope-2026-10-05`
+- intake_main_head: `c1b777f52c1c90d611753264a767e96ef943aeed`
+- code_head: `4ca365f6950b81894069ee8917693407c4559e68`
+- PR: #5; run_id: 37264041430; run_attempt:1
+- terminal_evidence: local verification evidence/mvp/20261005T043138225021Z-70f25ac4/verification.json PASS and exactlocal/remote tree 83750a8bea63f94203835de0168de04fd68e9d48. Remote browser63 pending. Initialsave2/4 andnavigation3/6 preserved, final4+6 allPASS; paiddeps0.
+- next_executable_requirement: source-bound EXPLORATORY Knowledgeproposal lifecycle, independentlyassessed; Playerreference onlyPARKED_EXTERNAL, coachN0.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — RUNNING
 - run_token: `main-20261005T0422-research-save-errors-root`
 - status: `RUNNING`
