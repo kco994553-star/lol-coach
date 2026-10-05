@@ -1,3 +1,11 @@
+# Latest delta — Research source integrity verified (2026-10-05 KST)
+
+PR2 merged at ed533fd980f47313014b7874e171ca4c5f1a2d6b. Research upload hashes now bind original valid UTF-8 bytes, including BOM. Invalid UTF-8 is rejected before resource creation; current lookup errors are shown; old notes and stale-read guards are preserved. Actual postmerge Actions37258742782 SUCCESS / Chrome46 of46 / old111 / protected9 / Frozen27 / backup23 / Research9+4 PASS. Preserved initial5/9 and introduced-error2/4 failure history with exact source/fixture/test bindings.
+
+Real Player reference and pre-action context remain PARKED_EXTERNAL; actual State/Decision/Coach validated N0, accuracy null. Product NOT_COMPLETE. New reference software is deferred until actual submitted input establishes an adapter need. Only observed receipts/handoff/status change in closeout; tested126 inputs remain byte-identical. The documentation-only closeout commit uses [skip ci] and is not a fresh CI execution.
+
+Previous status preserved below.
+
 # 2026-10-05 import repair and current remote verification
 
 Latest implementation: PR1 merged at377a1065. Actual push Actions37254286657

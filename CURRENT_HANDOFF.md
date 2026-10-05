@@ -1,3 +1,17 @@
+# CURRENT HANDOFF — Research integrity repair remotely verified
+
+## 2026-10-05 KST
+
+- Actual intake main c30bb2ca553e1346e00aebd9871283101ca51950 → implementation d07000255265e82e429ba6d184c43681921f8e44 → PR2 normal merge main ed533fd980f47313014b7874e171ca4c5f1a2d6b. No force/history rewrite. Local/remote tree a9e28ed33f377228cb01d6af70f2f32b2133a6ec matched; code sources preserved through merge. Root used shared common claim throughout, released while CI pending, reacquired closeout; no duplicate writer.
+- Research File upload now preserves original valid UTF-8 BOM/multibyte/literal U+FFFD bytes, explicitly rejects invalid encoding before POST, retains current resource/note/dirty draft and ignores superseded reads/requests. Current post-save resource/note lookup failures remain visible. Source integrity counterexamples5/9→9/9 and introduced own-epoch request routing2/4→4/4 are preserved, including intermediate byte receipts; final accepted source36a96452… binds both final suites. No later PASS deletes earlier failure.
+- PR Actions37258576190 SUCCESS: actual tested merge ref5a2c70ff2f5da9a0e5353184c07832a7d0b7f04f, identical owner tree/expected parents. Postmerge Actions37258742782 SUCCESS at exact ed533fd9. Fresh actual Chrome154.0.8037.57 browser46/46, regression111/111(skip0), protected9/9, Frozen27, backup23/23, save7/import7/delete2, Research9+4, synthetic postgame13 allPASS. CI private exact archive4 NOT_RUN, not countedPASS. Real Coaching N remains0.
+- Canonical remote receipts evidence/mvp/research-ci-37258576190.json and research-ci-37258742782.json include actual jobs/log receipts/commit/tree/source/run bindings. Local final run evidence/mvp/20261005T031207351928Z-0f4fc369/verification.json. All126 CI input hashes and14 browser inputs match tested/current sources. This final record commit only adds handoff/status/observed evidence, uses [skip ci], and does not claim its own fresh CI.
+- DEEP; minimal deterministic verifier + one independent correctness lens/independent actual-browser implementation. Frozen design semantics/core/old expected/test files/evidence unchanged. Historical R7 exact byte identity remains FAIL as recorded; new scoped exemptions require exact source/case/test/fixture/failure/exit history, no gate relaxation. Original R6 A-first expectations re-executed in ArrayBuffer-capable harness with original text-only test preserved.
+- Product NOT_COMPLETE. Source-only26direct/2derived are not Player denominator. PLAYER DIRECT0/DERIVED0/complete0/independent same-match same-time pair0; DecisionN0/CoachN0/accuracy null. Source-backed independent Player reference and pre-action context PARKED_EXTERNAL. Existing clip static HUD may be independently reviewed without new clip/known patch; actual decision requires its pre-action information and reviewed knowledge. Existing reference protocol/minimum input reused. New importer/package/OCR framework not justified by actual intake need; none added.
+- Final independent review found no remaining introduced defect after repair. No open blocking conflict/review. Next authorized work resumes only on real new input/blocker change/regression; same receipts/self-doc changes are deduplicated. One Main executor configuration remains enabled; old3 watches remain paused. No payment/new dependency/authentication/external message.
+
+Prior implementation and complete historical handoff preserved below.
+
 # CURRENT HANDOFF — Research source-byte repair awaiting remote CI
 
 ## 2026-10-05 KST
