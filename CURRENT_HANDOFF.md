@@ -4,6 +4,22 @@
 - run_token: `main-20261005T0422-research-save-errors-root`
 - status: `RUNNING`
 - writer_active: true
+- task_scope: Research current/stale save AND resource/anchor/list UI error integrity, same source and ownerbranch.
+- owner_branch: `fix/research-save-error-scope-2026-10-05`
+- intake_main_head: `c1b777f52c1c90d611753264a767e96ef943aeed`
+- observed_delta: Save explicitNode401/4092/4→4/4 firstsource23a72 preserved; identical unscopederrorclass independentlyreproduced onresource/anchor/list handlers (Node6before3/6, stale401allFAIL). Fold into current repair, no newPR perhandler.
+- plan: minimal post-invocation epoch-bound UIcatch wrapper for directasync UI calls, retainingrAdd internalfileeligibility; currenterrors stillhandled; preservebothinitialfailures/intermediate4/4; native409checks2 plus fullregression/browser63.
+- prior_evidence: PR4 actualpostmerge37263078939 SUCCESS exactc1b777f, browser61/store19/HTTP5/old111/protected9/Frozen27.
+- next_gap_assessment: reuse existing postgameCLIadapter throughWeb before fullKnowledgecatalog ifexistingactualinputsource/lifecycle justify. NoPlayer/Coachpromotion ornewsourceguessing.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
+## Latest common execution claim — RUNNING
+- run_token: `main-20261005T0422-research-save-errors-root`
+- status: `RUNNING`
+- writer_active: true
 - task_scope: Research save error selection/resource/anchor integrity; record successful PR4 closeout, preserve new before2/4 and repair current/stale errors.
 - owner_branch: `fix/research-save-error-scope-2026-10-05`
 - intake_main_head: `c1b777f52c1c90d611753264a767e96ef943aeed`
