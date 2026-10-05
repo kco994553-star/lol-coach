@@ -1,5 +1,21 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — CI_PENDING
+- run_token: `main-20261005T0541-knowledge-gated-merge-root`
+- status: `CI_PENDING`
+- writer_active: false
+- task_scope: PR6 postmerge verification at exact resulting main SHA; then note-history recovery.
+- owner_branch: `feat/source-bound-knowledge-proposals-2026-10-05`
+- pr: https://github.com/kco994553-star/lol-coach/pull/6
+- implementation_head: `25ff68b8cd01fc4d1bdbc1c190880b8fb5f81d59`
+- merged_main_head: `594ef3cf6138421de8a8c77c7ec1c390e7cfedea`
+- resulting_tree: `a36cdda0d19973f4bbaa8165f163e84a86921520`
+- evidence: PR37268750816SUCCESS Chrome79/all176hashes/protectedFrozenold gates; actualnormalmergeSHA/treeverified, publicstandardUbuntu/free basis, policy0rulesets, criticalreview/blockingconflict0. PostmergeActions stillpending; firstfailure retained. ActualCoachN0/null.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — RUNNING
 - run_token: `main-20261005T0541-knowledge-gated-merge-root`
 - status: `RUNNING`
