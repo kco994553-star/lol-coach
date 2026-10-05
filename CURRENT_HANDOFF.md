@@ -1,5 +1,24 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — RUNNING
+- run_token: `main-20261005T0942-pr9-gated-merge-root`
+- status: `RUNNING`
+- writer_active: true
+- task_scope: Exact existing PR9 head ffe3b3d3 Actions37292198759 SUCCESS gated merge, resulting SHA/tree verification and post-merge Actions.
+- owner_branch: `feat/manual-draft-retry-safety-2026-10-05`
+- intake_main_head: `6f5c2c30db54f962ac5881a8d628336ca62cd7e5`
+- exact_pr: 9
+- exact_ci_run: `37292198759` attempt1 completed SUCCESS; regression and browser-regression jobs SUCCESS, actual Chrome111 required by repository verifier.
+- implementation_head: `ffe3b3d3c1ce0ee9c800cfb03395db2710e42999`
+- implementation_tree: `e36fa03b1e01ca68955dba3acebdb57961df5ddc`
+- prior_terminal_evidence: Common parent 97281b49 CI_PENDING for this exact PR/head/run; no duplicate implementation.
+- risk: CRITICAL retained; Frozen/protected/history unchanged. Actual Player/Decision/Coach N0/null and external reference context remain PARKED_EXTERNAL dependency only.
+- next: Reconfirm common token, main and PR head, reviews/comments and mergeability immediately before expected-head normal merge; verify merge object then release for actual post-merge Actions.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — CI_PENDING
 - run_token: `main-20261005T0842-draft-retry-safety-root`
 - status: `CI_PENDING`
