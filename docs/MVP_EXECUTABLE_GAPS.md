@@ -1,3 +1,27 @@
+# Latest executable gap delta — 2026-10-05 KST
+
+Stored note history PR4 is now remotely verified at mergedc1b777f: actual PR
+37262887752/postmerge37263078939 SUCCESS, Chrome61/storage19/HTTP5 plus all
+mandatory old/protected/Frozen/backup gates. Reuse that exact evidence.
+
+The Research current/stale save error class is repaired locally: preserved
+Node2/4→4/4→4/4. Sameclass on source-created resource/anchor/list callbacks was
+independently reproduced3/6 and repaired6/6 in the same scope, rather than
+separate repeated implementations. Genuine browser409 checks2 bring expected
+count63; fresh remoteverification stillrequired beforecompletion.
+
+Next independent requirement: source-bound EXPLORATORY KnowledgeRule proposal
+creation, immutableversion/CAS, exactsource-noterevision anddeletionimpact,
+not engineactivation orautomaticREVIEWED. The existing postgamearchive entry
+accepts onlyexactpinnedbytes andreturnsPlayer andGroundTruth null; a Webexample
+would repeatpresentation andnotenablepersonalMatchTimelineuploads. That path
+is not selected, and its private schemahelper must not be exposed as a bypass.
+
+Only actualPlayerreference/pre-actionknowledge validation dependency is parked.
+Earlierassessments, exactintakes andpriorfailure observationsremainbelow.
+
+---
+
 # Executable gap delta — 2026-10-05 KST
 
 Navigation/delete integrity is now remotely verified: PR3 merged321ecbd,

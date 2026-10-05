@@ -37,6 +37,7 @@ The required scope is:
 | Research current/stale API errors | Four separate Node cases pass; actual introduced 2/4 failure and repaired 4/4 preserved |
 | Research navigation/deletion | Four cases pass; first1/4 failure and first/final4/4 receipts preserve exact old/current source chain |
 | Stored note history | Exactly 19 storage and five real HTTP tests pass; explicit UTF-8 response cap, auth/Host/Origin, original rows/schema/CAS unchanged |
+| Research current/stale save and navigation errors | Four save +six actual-callback Node cases pass; preserved2/4→4/4→4/4 and3/6→6/6 source-bound failure history; current401 remains handled, stale401 remains explicitly synthetic |
 | Postgame schema mechanics | Thirteen synthetic schema tests pass |
 
 The historical `scripts/verify_r7.py` hard gate still requires the original web
@@ -130,3 +131,5 @@ Research source-byte repair and preserved failure details: `docs/MVP_RESEARCH_BY
 Navigation response identity repair adds a further strict source-chain gate with unchanged previous byte/request repair receipts, then reruns all prior9+4 guards. Exact original expected4 navigation cases and first1/4 failures are preserved; no stale deletion result may clear a different resource and draft. Current gaps: `docs/MVP_EXECUTABLE_GAPS.md`.
 
 Stored note history reuses existing immutable personal note rows. The web path is documented in `docs/MVP_NOTE_HISTORY.md`; prior versions are previewed/downloaded separately and never become the editable latest note or game evidence. No timestamp/author is inferred. The source-version record preserves exact pre-change and current hashes. Eleven actual browser history checks extend the prior50 to61, including exact download, preserved latest draft/CAS, genuine delayed success/error/index replies, navigation and deletion. Fresh Actions must establish this result before completion is claimed.
+
+Two genuine delayed/current HTTP409 browser checks retain all prior61 and bring the current required browser count to63. They prove current conflicts stay visible and old conflicts cannot alter another resource draft/notice/auth. They do not claim real401 credential expiry. The error repair extends exact source-chain binding through separate immutable before/intermediate/final receipts; history-version record bytes remain untouched.
