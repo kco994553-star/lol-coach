@@ -1,5 +1,24 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — CI_PENDING
+- run_token: `main-20261005T0832-pr8-gated-merge-root`
+- status: `CI_PENDING`
+- writer_active: false
+- task_scope: Exact PR8 normal merge verified; resulting main 6f5c2c30 post-merge Actions verification, then separate retry-safe manual draft save integrity task.
+- owner_branch: `feat/manual-draft-capture-2026-10-05`
+- intake_main_head: `0f2b333e44c1918e7a2a9dd7d9f6fce67d1d76a2`
+- implementation_head: `e05efe2c170a8acbd6dd63da0c754f0e0b34df77`
+- merged_main_head: `6f5c2c30db54f962ac5881a8d628336ca62cd7e5`
+- resulting_tree: `23f490c9900bd1e75a116da2be133b8f8827ad37`
+- exact_pr: 8; https://github.com/kco994553-star/lol-coach/pull/8
+- evidence: Actual PR Actions37277401539 SUCCESS, regression/browser jobs SUCCESS; reviews/comments0, mergeable true, rulesets0. Normal merge SHA/tree/parents freshly verified. First failed run37276347795 and source/test bytes retained.
+- risk: CRITICAL retained; Frozen/protected/history unchanged. Actual Player/Decision/CoachN0/null; external reference context remains PARKED_EXTERNAL dependency only.
+- next_owner_rule: Reacquire from this exact terminal claim for post-merge SHA/tree/262-input/Chrome108 verification. Do not hold RUNNING while Actions executes; after success claim next retry-safe save integrity scope.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — RUNNING
 - run_token: `main-20261005T0832-pr8-gated-merge-root`
 - status: `RUNNING`
