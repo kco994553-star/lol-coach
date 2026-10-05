@@ -1,5 +1,21 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — RUNNING
+- run_token: `main-20261005T0541-knowledge-gated-merge-root`
+- status: `RUNNING`
+- writer_active: true
+- task_scope: Exact PR6 required gate verification/merge/postmerge, then handoff.
+- owner_branch: `feat/source-bound-knowledge-proposals-2026-10-05`
+- intake_main_head: `d92ded9743b591030a55e355e914ab238589e447`
+- implementation_head: `25ff68b8cd01fc4d1bdbc1c190880b8fb5f81d59`
+- implementation_tree: `a36cdda0d19973f4bbaa8165f163e84a86921520`
+- pr: https://github.com/kco994553-star/lol-coach/pull/6
+- evidence: actual PR Actions37268750816 attempt1 SUCCESS, regressionPASS/browserChrome79 allPASS; all176 hashes exact, testedmergeref `dc1a0097045773abb5ef416b45dadf07a7344dff` exacttree/parents. Actualreview0/blockingconflict0; firstCI37268245767failure retained. Protected9/Frozen27/old111 allPASS. Standard public Ubuntu/free basis unchanged. RealCoachN0/null.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — CI_PENDING
 - run_token: `main-20261005T0534-knowledge-ci-repair-root`
 - status: `CI_PENDING`
