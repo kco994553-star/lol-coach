@@ -1,5 +1,22 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — RUNNING
+- run_token: `main-20261005T0832-pr8-gated-merge-root`
+- status: `RUNNING`
+- writer_active: true
+- task_scope: Exact existing PR8 head e05efe2 actual Actions37277401539 SUCCESS gated merge, resulting SHA/tree verification and post-merge Actions; then separate retry-safe manual draft save integrity task.
+- owner_branch: `feat/manual-draft-capture-2026-10-05`
+- intake_main_head: `0f2b333e44c1918e7a2a9dd7d9f6fce67d1d76a2`
+- exact_pr: 8
+- exact_ci_run: 37277401539 attempt1 completed SUCCESS; browser-regression and regression jobs SUCCESS. Reviews/comments/open competing PRs 0; mergeable true; rulesets 0; expected head e05efe2c170a8acbd6dd63da0c754f0e0b34df77.
+- prior_terminal_evidence: Common parent 9148a3db CI_PENDING for exact PR/head/run; no RUNNING theft or duplicate implementation. Local PASS262 inputs and actual repaired Chrome108 source/tree binding retained.
+- risk: CRITICAL retained. Frozen/protected/history unchanged; first failed Actions37276347795 remains preserved. Actual Player/Decision/Coach N0/null and external reference context remain PARKED_EXTERNAL dependency only.
+- next: Reconfirm common token and main/PR head immediately before expected-head normal merge; verify merge object and actual post-merge Actions before advancing.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — CI_PENDING
 - run_token: `main-20261005T071452087-draft-ci-repair-root`
 - status: `CI_PENDING`
