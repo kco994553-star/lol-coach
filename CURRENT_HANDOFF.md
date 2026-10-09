@@ -1,5 +1,17 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — RUNNING
+- run_token: `main-20261009-knowledge-user-review-root`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `feat/knowledge-user-review-2026-10-09`
+- intake_main_head: `92c49522dc5eca3a091a991dddfee3f3d3d6aa92`
+- task_scope: User-authorized PRE_GAME pivot; web-only immutable knowledge decisions, bounded Frozen amendment, regression/browser and PR merge. Gameplan deferred.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — PARKED_EXTERNAL
 - run_token: `main-20261005T1008-pr9-closeout-root`
 - status: `PARKED_EXTERNAL`
