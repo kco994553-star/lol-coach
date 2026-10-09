@@ -1,5 +1,25 @@
 # CURRENT_HANDOFF — main executor claim
 
+## Latest common execution claim — COMPLETED
+- run_token: `main-20261009-knowledge-user-review-root`
+- status: `COMPLETED`
+- writer_active: false
+- task_scope: User-authorized immutable web knowledge approval/rejection flow complete; PR10 merged and exact PR/postmerge CI verified.
+- final_main_head: `0337d915633f6ad5719f55de1252f05e06621c9b`
+- merged_code_head: `9c0f18f03f9d3d17610c93470470a4d22474ca4a`
+- merged_code_tree: `f1ea8dc4c2372e4d2be67b01c58a6997f14b07a5`
+- exact_pr: 10; https://github.com/kco994553-star/lol-coach/pull/10
+- verification: PR run37883193561 and postmerge run37883365777 SUCCESS; both jobs SUCCESS; all285 regression inputs match; browser124/124 (old111+review13); Frozen27/protected9 and every required scoped suite PASS.
+- closeout: Status/remote receipt additions only; source input fingerprint unchanged; [skip ci]; no new code CI claimed for documentation closeout.
+- direction: PRE_GAME ADC Yunara/Ashe/Kaisa/Caitlyn is highest priority; POST_GAME lower priority. PARKED_EXTERNAL released for PRE_GAME, no Player video prerequisite.
+- next_task: GAMEPLAN_V0 preview only; pick-window records plus REVIEWED knowledge; unsupported cells 미확인; no AI free-form text/numbers. READY_FOR_NEXT_TASK, not an external-evidence stop.
+- evidence_boundary: Real Player/Decision/Coach N=0; accuracy=null. Browser/local server trust boundary is not cryptographic human attestation.
+- resume_rule: Reacquire this exact shared ref before mutation; preserve completed scope and user-authorized direction.
+
+---
+
+# CURRENT_HANDOFF — main executor claim
+
 ## Latest common execution claim — RUNNING
 - run_token: `main-20261009-knowledge-user-review-root`
 - status: `RUNNING`
