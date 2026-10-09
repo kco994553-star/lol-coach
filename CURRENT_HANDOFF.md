@@ -1,3 +1,35 @@
+된 것: 원딜 PRE_GAME 방향 전환을 반영하고 이 작업의 외부 영상 대기를 해제했습니다.
+된 것: 웹 사용자 승인·거절, 불변 버전과 출처 해시 보존, 자동 승격 차단을 구현했습니다.
+된 것: 기존 회귀·새 승인 검사·브라우저124개가 통과했고 PR10을 병합했습니다.
+안 된 것: 게임플랜 생성은 아직 제공하지 않으며 다음 작업입니다.
+내가 결정할 것: 이번 범위에서 추가 사용자 결정은 없습니다.
+
+2026-10-09 COMPLETE: PR10 https://github.com/kco994553-star/lol-coach/pull/10
+head deb0cf285ebf66e7c82ade6f0ffd3f2ed20cb260, normal merge main
+9c0f18f03f9d3d17610c93470470a4d22474ca4a; tested and merged tree
+f1ea8dc4c2372e4d2be67b01c58a6997f14b07a5 exactly equal.
+PR Actions37883193561 and postmerge Actions37883365777 completed SUCCESS,
+regression and browser-regression jobs SUCCESS. Exact285 regression inputs and
+all current browser source hashes matched local verification. Actual postmerge
+Chrome124/124 includes old111 and new13; new real HTTP/SQLite review13 PASS.
+Frozen27/protected9/old111/backup23 and every required existing scoped suite PASS.
+Remote receipts: evidence/mvp/knowledge-review-pr10-ci.json and
+knowledge-review-postmerge-ci.json. Local receipts and first failures remain
+preserved; no test IDs/expectations/timeouts were weakened.
+D3 amendment and bounded browser trust limits: docs/MVP_KNOWLEDGE_REVIEW.md.
+No outstanding material code-review finding. This closeout adds status/receipts
+only; verification input hashes are unchanged, so it uses [skip ci] and claims
+no fresh code CI for the closeout documentation commit itself.
+
+Disposition: COMPLETED for knowledge decision flow; READY_FOR_NEXT_TASK,
+not PARKED_EXTERNAL for PRE_GAME. Next scope preview: gameplan v0 from manual
+pick-window record plus REVIEWED knowledge only; unsupported cells “미확인”;
+AI free-form text and invented numbers prohibited. Do not activate gameplan
+within this completed approval-flow scope. Real Player/Decision/Coach evidence
+remains N=0, accuracy=null; POST_GAME real-match review remains lower priority.
+
+---
+
 된 것: 원딜 PRE_GAME을 최우선 목표로 전환하고 이 범위의 PARKED_EXTERNAL을 해제했습니다.
 된 것: 웹에서 정확한 후보 버전을 REVIEWED/REJECTED로 결정하고 새 불변 버전에 보존합니다.
 된 것: 전체 로컬 회귀와 실제 브라우저 124/124(기존111+신규13)가 통과했습니다.
