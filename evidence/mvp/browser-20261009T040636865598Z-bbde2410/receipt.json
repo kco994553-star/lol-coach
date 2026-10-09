@@ -1,0 +1,1324 @@
+{
+  "verifier": "Actual Playwright Chromium browser with isolated coach_v1.server and SQLite; not Node VM",
+  "scope": "Affected synthetic save race, revision acknowledgement, exact draft retention, reload, native cancellation, native File read ordering/clearing, one synthetic analysis, 390px overflow and page errors",
+  "evidence_kind": "FRESH_BROWSER_EXECUTION",
+  "started_at": "2026-10-09T04:06:37.288Z",
+  "finished_at": "2026-10-09T04:07:02.357Z",
+  "node_version": "v24.19.0",
+  "browser_version": "151.0.7922.173",
+  "source_sha256": {
+    "web_r4/app.js": "1d31505b1e88cbf5d68f163f8728f06138b421949c416961d19069af61fe79bb",
+    "web_r4/index.html": "c552583e5174416f2b525b1e3295be72fffc866447cbdf6bbfdf8b4070d037b4",
+    "web_r4/styles.css": "24fd8a7e75fa5bb26a053ad2117d49352f1396978c44b13f52e830d4473aec0d",
+    "coach_v1/server.py": "8e5c02d9bd1a589c53b961d82e00d1ca9c36854e32ac6a18ae0e731ee04323d2",
+    "coach_v1/storage.py": "45e4c4725fd516c66cf9348f1afe9aba8c8bebe8aae574939f8d47394f1ce6e0",
+    "examples/r3/compare-wait-retreat.json": "e74764c9151df568061c730fda8ada0fa9d45fc60325785a8423563d0113e391",
+    "tests_mvp/browser_save_race.cjs": "a770213568816b7dee24bc25f0b40c4b7473709ad4a4a8c32f9917c9fce94bdf",
+    "scripts/browser_mvp.py": "324ec52965b9b8f256156556a4f4d86331df210232af23d7b6163e2b267befba",
+    "web_r4/research.js": "39ae97ef2e9623961f054e9c07e5460255dc4664d0387abda3f0bd56fe6e8978",
+    "coach_v1/research.py": "42912d1e7ac660c67b00514d7aa76b6d10252e77c0a478db55bc37ad21d3eb27",
+    "coach_intake/io.py": "7d5ec3f0ecadd9c2a7a1f3ceb6169b7e4648fabb833b28cf73f321c6e55f4049",
+    "coach_intake/audit.py": "a37cf14e335adfa8115f93d4b4c2c3524004cd3b472b609a40b72b2e7b432186",
+    "coach_intake/video.py": "ce686e843cc17a3c0b3f3d3f6265c91ede7cb168b7209d0c5ceab1e3fc65173a",
+    "tests_mvp/browser_research_bytes.cjs": "14eb3fb461b76305bd0a032bb817c055b7a763419b9e96e116e05daca3a0aff5",
+    "tests_mvp/browser_research_navigation.cjs": "99415534b386a2f9db2b779542f0aae5cc4e388b3b5229cef5eb57c1d3d03eff",
+    "coach_v1/note_history.py": "ff288b07e185ac86c9b877fb07a977ff9b7b1b0a8677b8ba4011ca4579cfa579",
+    "tests_mvp/browser_note_history.cjs": "2627264b0c9c6056d3ba5e6f7e0d879e8023bd4e73db16de894a3b467b0c2e9f",
+    "tests_mvp/browser_research_save_errors.cjs": "2841215bd1f5d080b9d54b77d3b876a1079583ada4a18c094e0be5072e5ba239",
+    "coach_v1/knowledge.py": "90eea0df8590e58b3efa1cb9229268ca05f23198d110d596226ed175dc4d8ed2",
+    "web_r4/knowledge.js": "51611b3c906054eeadce9e2e2809d9f3931180ef5de1277e5cd9e3100b3b277c",
+    "tests_mvp/browser_knowledge.cjs": "b9f3e268a89fcd54194eaf9df41a0bd99ceeb404157e634144cdf8376054e39a",
+    "tests_mvp/browser_note_recovery.cjs": "0ede01ad631c8062f569096f415680cfa37afc525757b321cf4a9938a62d3c46",
+    "tests_mvp/browser_draft_capture.cjs": "093709e18e60a8d2cd75af4df28e76aaa1dfb382b3190e01f3dd08fd5af52e73",
+    "tests_mvp/browser_draft_retry.cjs": "2ea34580b7b89e50215eb37a4cac8463945d4b6d68ba85dc297a0ac5b331dc90",
+    "web_r4/draft.js": "f6ebc4a62fbf12113a7b46f58bf7c006d6028f00c1aa39881038135864ce80b1",
+    "coach_v1/draft.py": "f1c1df846bb56d8ad6c20882327e03ae69ca5f8abda1712b44ab08bf7f888595",
+    "coach_v1/backup.py": "e980269ebf7d5ab270ed0cde8d9277cae745ea83d5ee8d64f9ddf905b68b70eb",
+    "web_r4/knowledge_review.js": "3d5054f76e904757bf0cb553f8fccabcfe6dbe8d81fc7541618b037264486282",
+    "tests_mvp/browser_knowledge_review.cjs": "68aaccb104309c6bb115a4decd3c0a4409a4ed6191cc1a0292f1e297f5412e9e"
+  },
+  "passed": false,
+  "checks": [
+    {
+      "id": "initial-real-save-v1",
+      "passed": true,
+      "actual": {
+        "http_status": 200,
+        "session_id": "b7fd33a3-4866-454a-ba04-ddea2a526c8d",
+        "revision": 1,
+        "request_expected_revision": 0,
+        "snapshot_session_id": "b7fd33a3-4866-454a-ba04-ddea2a526c8d",
+        "all_observation_session_ids_match_actual_server_id": true
+      }
+    },
+    {
+      "id": "initial-v1-backend-200",
+      "passed": true,
+      "actual": {
+        "status": 200
+      }
+    },
+    {
+      "id": "initial-v1-independently-stored",
+      "passed": true,
+      "actual": {
+        "revision": 1
+      }
+    },
+    {
+      "id": "held-put-actually-commits-v2",
+      "passed": true,
+      "actual": {
+        "http_status": 200,
+        "committed_revision": 2,
+        "request_expected_revision": 1
+      }
+    },
+    {
+      "id": "backend-v2-before-browser-ack-backend-200",
+      "passed": true,
+      "actual": {
+        "status": 200
+      }
+    },
+    {
+      "id": "backend-v2-visible-before-response-release",
+      "passed": true,
+      "actual": {
+        "revision": 2,
+        "objective": "Browser submitted edit for v2"
+      }
+    },
+    {
+      "id": "draft-entered-before-v2-ack",
+      "passed": true,
+      "actual": {
+        "current_label": "MVP actual browser save race · 저장 버전 1",
+        "exact_draft": true,
+        "save_disabled": true
+      }
+    },
+    {
+      "id": "real-v2-ack-exact-draft-retained",
+      "passed": true,
+      "actual": {
+        "exact_draft": true
+      }
+    },
+    {
+      "id": "real-v2-ack-analysis-disabled",
+      "passed": true,
+      "actual": {
+        "analyze_disabled": true
+      }
+    },
+    {
+      "id": "next-real-put-expects-v2-and-saves-v3",
+      "passed": true,
+      "actual": {
+        "request_expected_revision": 2,
+        "http_status": 200,
+        "committed_revision": 3
+      }
+    },
+    {
+      "id": "v3-save-canonical-editor",
+      "passed": true,
+      "actual": {
+        "exact_canonical": true,
+        "analyze_disabled": false
+      }
+    },
+    {
+      "id": "backend-after-v3-backend-200",
+      "passed": true,
+      "actual": {
+        "status": 200
+      }
+    },
+    {
+      "id": "backend-v3-has-newer-draft",
+      "passed": true,
+      "actual": {
+        "revision": 3,
+        "objective": "Browser newer draft while v2 response held",
+        "stored_case_semantically_matches_ack": true
+      }
+    },
+    {
+      "id": "reload-reopens-real-v3",
+      "passed": true,
+      "actual": {
+        "exact_canonical_from_stored_get": true,
+        "current_label": "MVP actual browser save race · 저장 버전 3",
+        "analyze_disabled": false,
+        "stored_case_semantically_matches_ack": true,
+        "ack_editor_sha256": "29f6f310318595561438b660b9741dc214776ed53031aeffed3447eea9882aca",
+        "stored_get_editor_sha256": "50ce091301c63d33e73ce2ffe182098b64aeb13d69b1f2158ba59a8757665332",
+        "reloaded_editor_sha256": "50ce091301c63d33e73ce2ffe182098b64aeb13d69b1f2158ba59a8757665332"
+      }
+    },
+    {
+      "id": "real-synthetic-analysis-of-v3",
+      "passed": true,
+      "actual": {
+        "submission_status": 202,
+        "job_id": "0397bd34-a5b3-4549-8759-338ef18b6f4c",
+        "job_input_revision": 3,
+        "report_input_revision": 3,
+        "stale": false,
+        "objective": "Browser newer draft while v2 response held"
+      }
+    },
+    {
+      "id": "390px-no-horizontal-overflow",
+      "passed": true,
+      "actual": {
+        "scroll_width": 390,
+        "inner_width": 390
+      }
+    },
+    {
+      "id": "dirty-refreshed-reopen-cancel-native-confirm",
+      "passed": true,
+      "actual": {
+        "action": "dirty-refreshed-reopen-cancel",
+        "type": "confirm",
+        "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+        "response": "dismiss"
+      }
+    },
+    {
+      "id": "dirty-refreshed-reopen-cancel-exact-draft-retained",
+      "passed": true,
+      "actual": {
+        "editor_sha256": "4daeb84b3740112e4c2b3490b20e72ea63bb88335724fd47eafa072d41173a77",
+        "expected_sha256": "4daeb84b3740112e4c2b3490b20e72ea63bb88335724fd47eafa072d41173a77"
+      }
+    },
+    {
+      "id": "dirty-refreshed-reopen-cancel-current-session-retained",
+      "passed": true,
+      "actual": {
+        "current_label": "MVP actual browser save race · 저장 버전 3"
+      }
+    },
+    {
+      "id": "dirty-refreshed-reopen-cancel-analysis-disabled",
+      "passed": true,
+      "actual": {
+        "analyze_disabled": true
+      }
+    },
+    {
+      "id": "dirty-load-example-cancel-native-confirm",
+      "passed": true,
+      "actual": {
+        "action": "dirty-load-example-cancel",
+        "type": "confirm",
+        "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+        "response": "dismiss"
+      }
+    },
+    {
+      "id": "dirty-load-example-cancel-exact-draft-retained",
+      "passed": true,
+      "actual": {
+        "editor_sha256": "4daeb84b3740112e4c2b3490b20e72ea63bb88335724fd47eafa072d41173a77",
+        "expected_sha256": "4daeb84b3740112e4c2b3490b20e72ea63bb88335724fd47eafa072d41173a77"
+      }
+    },
+    {
+      "id": "dirty-load-example-cancel-current-session-retained",
+      "passed": true,
+      "actual": {
+        "current_label": "MVP actual browser save race · 저장 버전 3"
+      }
+    },
+    {
+      "id": "dirty-load-example-cancel-analysis-disabled",
+      "passed": true,
+      "actual": {
+        "analyze_disabled": true
+      }
+    },
+    {
+      "id": "dirty-import-cancel-native-confirm",
+      "passed": true,
+      "actual": {
+        "action": "dirty-import-cancel",
+        "type": "confirm",
+        "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+        "response": "dismiss"
+      }
+    },
+    {
+      "id": "dirty-import-cancel-exact-draft-retained",
+      "passed": true,
+      "actual": {
+        "editor_sha256": "4daeb84b3740112e4c2b3490b20e72ea63bb88335724fd47eafa072d41173a77",
+        "expected_sha256": "4daeb84b3740112e4c2b3490b20e72ea63bb88335724fd47eafa072d41173a77"
+      }
+    },
+    {
+      "id": "dirty-import-cancel-current-session-retained",
+      "passed": true,
+      "actual": {
+        "current_label": "MVP actual browser save race · 저장 버전 3"
+      }
+    },
+    {
+      "id": "dirty-import-cancel-analysis-disabled",
+      "passed": true,
+      "actual": {
+        "analyze_disabled": true
+      }
+    },
+    {
+      "id": "backend-after-native-cancellations-backend-200",
+      "passed": true,
+      "actual": {
+        "status": 200
+      }
+    },
+    {
+      "id": "native-cancellations-leave-backend-v3",
+      "passed": true,
+      "actual": {
+        "revision": 3,
+        "objective": "Browser newer draft while v2 response held"
+      }
+    },
+    {
+      "id": "import-a-first-keeps-newer-b-pending",
+      "passed": true,
+      "actual": {
+        "exact_initial_editor": true,
+        "selected_file": "b-second.json",
+        "unchanged_notice": true,
+        "notice_is_error": false,
+        "current_label": "아직 선택한 사례가 없습니다."
+      }
+    },
+    {
+      "id": "import-a-then-b-loads-exact-latest-b",
+      "passed": true,
+      "actual": {
+        "exact_latest_editor": true,
+        "selected_file": null,
+        "notice": "합성 입력 파일을 불러왔습니다.",
+        "notice_is_error": false,
+        "analyze_disabled": true,
+        "report_hidden": true
+      }
+    },
+    {
+      "id": "import-b-first-loads-exact-latest-b",
+      "passed": true,
+      "actual": {
+        "exact_latest_editor": true,
+        "selected_file": null,
+        "notice": "합성 입력 파일을 불러왔습니다.",
+        "notice_is_error": false
+      }
+    },
+    {
+      "id": "import-stale-a-after-b-cannot-replace-editor",
+      "passed": true,
+      "actual": {
+        "exact_latest_editor": true,
+        "selected_file": null,
+        "notice": "합성 입력 파일을 불러왔습니다.",
+        "notice_is_error": false,
+        "analyze_disabled": true,
+        "report_hidden": true
+      }
+    },
+    {
+      "id": "import-clear-selection-retains-initial-editor",
+      "passed": true,
+      "actual": {
+        "exact_initial_editor": true,
+        "selected_file": null,
+        "unchanged_notice": true,
+        "notice_is_error": false
+      }
+    },
+    {
+      "id": "import-cleared-stale-read-cannot-surface-error",
+      "passed": true,
+      "actual": {
+        "exact_initial_editor": true,
+        "selected_file": null,
+        "unchanged_notice": true,
+        "notice_is_error": false,
+        "current_label": "아직 선택한 사례가 없습니다.",
+        "analyze_disabled": true
+      }
+    },
+    {
+      "id": "research-valid-bom-raw-byte-hash",
+      "passed": true,
+      "actual": {
+        "http_status": 201,
+        "original_sha256": "77bc8ae89a5bb0100c7e4577b5b16e73cb8a38a3c5bfe2676f8d4dbd5b720c8a",
+        "reported_sha256": "77bc8ae89a5bb0100c7e4577b5b16e73cb8a38a3c5bfe2676f8d4dbd5b720c8a",
+        "persisted_sha256": "77bc8ae89a5bb0100c7e4577b5b16e73cb8a38a3c5bfe2676f8d4dbd5b720c8a"
+      }
+    },
+    {
+      "id": "research-valid-bom-transcript-byte-hash",
+      "passed": true,
+      "actual": {
+        "http_status": 201,
+        "original_sha256": "6b2b94759f54169abf69661cb408b9b49310c2f023f2eb6957850c9e53c6eca9",
+        "reported_sha256": "6b2b94759f54169abf69661cb408b9b49310c2f023f2eb6957850c9e53c6eca9",
+        "persisted_sha256": "6b2b94759f54169abf69661cb408b9b49310c2f023f2eb6957850c9e53c6eca9"
+      }
+    },
+    {
+      "id": "research-valid-multibyte-literal-replacement-byte-hash",
+      "passed": true,
+      "actual": {
+        "http_status": 201,
+        "original_sha256": "6cbdf000317a366297cdaa3902894b2aa9f300df7eccb43f2551339e527a8628",
+        "reported_sha256": "6cbdf000317a366297cdaa3902894b2aa9f300df7eccb43f2551339e527a8628"
+      }
+    },
+    {
+      "id": "research-malformed-utf8-no-post-or-resource",
+      "passed": true,
+      "actual": {
+        "posts_before": 3,
+        "posts_after": 3,
+        "resource_ids_unchanged": true
+      }
+    },
+    {
+      "id": "research-malformed-error-retains-old-dirty-note",
+      "passed": true,
+      "actual": {
+        "notice": "처리하지 못했습니다: UTF-8 파일 형식이 올바르지 않습니다.",
+        "old_resource_retained": true,
+        "exact_note_retained": true,
+        "note_revision_retained": true,
+        "dirty": true,
+        "note_editable": true,
+        "save_enabled": true
+      }
+    },
+    {
+      "id": "research-stale-invalid-a-before-b-keeps-newest-pending",
+      "passed": true,
+      "actual": {
+        "notice_unchanged": true,
+        "resource_unchanged": true,
+        "selected_file": "valid-b-pending.json",
+        "no_new_post": true,
+        "newest_b_still_held": true
+      }
+    },
+    {
+      "id": "research-stale-invalid-a-after-b-cannot-replace-or-error",
+      "passed": true,
+      "actual": {
+        "exact_ui_state_retained": true,
+        "no_stale_post": true,
+        "persisted_sha256": "99d28952d10c79c16d1bc4cff79db8cdb82ff8d20cc26e36cb39901bf1f6a390",
+        "original_b_sha256": "99d28952d10c79c16d1bc4cff79db8cdb82ff8d20cc26e36cb39901bf1f6a390"
+      }
+    },
+    {
+      "id": "research-logout-pending-malformed-read-no-stale-error",
+      "passed": true,
+      "actual": {
+        "exact_logged_out_state_retained_except_input_cleanup": true,
+        "workspace_hidden": true,
+        "cleared_resource": true,
+        "cleared_note": true,
+        "no_post_after_logout": true
+      }
+    },
+    {
+      "id": "research-loading-disables-delete-button",
+      "passed": true,
+      "actual": {
+        "actual_b_get_status": 200,
+        "old_resource_still_displayed": true,
+        "delete_disabled": true,
+        "note_disabled": true
+      }
+    },
+    {
+      "id": "research-real-held-delete-a-cannot-clear-new-b-draft",
+      "passed": true,
+      "actual": {
+        "actual_delete_status": 200,
+        "actual_deleted_id": "739880b681280caeb20b86c4d872d3df51237b07836fd870568a4fa5733224d8",
+        "native_confirmation": {
+          "type": "confirm",
+          "message": "이 자료와 모든 복기 노트, 연결된 지식 후보 및 후속 버전을 삭제할까요?",
+          "response": "accept"
+        },
+        "exact_b_state_retained": true,
+        "exact_b_draft_retained": true,
+        "b_dirty": true
+      }
+    },
+    {
+      "id": "research-real-backend-a-deleted-b-preserved",
+      "passed": true,
+      "actual": {
+        "deleted_a_get_status": 404,
+        "retained_b_get_status": 200,
+        "b_note_revision": 0,
+        "b_exists_in_actual_list": true
+      }
+    },
+    {
+      "id": "research-current-delete-clears-notes-backend-and-list",
+      "passed": true,
+      "actual": {
+        "actual_current_delete_status": 200,
+        "native_confirmation": {
+          "type": "confirm",
+          "message": "이 자료와 모든 복기 노트, 연결된 지식 후보 및 후속 버전을 삭제할까요?",
+          "response": "accept"
+        },
+        "selection_cleared": true,
+        "exact_note_cleared": true,
+        "dirty_cleared": true,
+        "deleted_b_get_status": 404,
+        "deleted_b_note_status": 404,
+        "actual_list_excludes_b": true
+      }
+    },
+    {
+      "id": "note-history-real-index-descending-versions",
+      "passed": true,
+      "actual": {
+        "http_status": 200,
+        "current_revision": 3,
+        "actual_revisions": [
+          3,
+          2,
+          1
+        ],
+        "visible_revision_options": [
+          "",
+          "3",
+          "2",
+          "1"
+        ],
+        "read_only": true
+      }
+    },
+    {
+      "id": "note-history-v1-exact-unicode-readonly-dirty-v3-retained",
+      "passed": true,
+      "actual": {
+        "exact_real_api_preview": true,
+        "exact_unicode_v1": true,
+        "readonly_pre": true,
+        "exact_dirty_v3_editor_retained": true
+      }
+    },
+    {
+      "id": "note-history-v2-authentic-download-exact-preview-bytes",
+      "passed": true,
+      "actual": {
+        "exact_real_api_v2": true,
+        "exact_unicode_v2": true,
+        "genuine_browser_download_filename": "lol-coach-note-v2.json",
+        "downloaded_sha256": "57d33a075e9301b691c9244866e3e9eb58944e17846abace2502b13ecefbd335",
+        "preview_utf8_sha256": "57d33a075e9301b691c9244866e3e9eb58944e17846abace2502b13ecefbd335",
+        "exact_downloaded_bytes": true,
+        "exact_dirty_v3_editor_retained": true
+      }
+    },
+    {
+      "id": "note-history-current-save-uses-v3-and-creates-v4",
+      "passed": true,
+      "actual": {
+        "actual_expected_revision": 3,
+        "actual_saved_revision": 4,
+        "backend_latest_revision": 4,
+        "exact_v4_note": true,
+        "old_preview_invalidated": true
+      }
+    },
+    {
+      "id": "note-history-delayed-preview-cannot-follow-new-anchor",
+      "passed": true,
+      "actual": {
+        "held_real_status": 200,
+        "new_anchor": "1",
+        "exact_new_anchor_state_retained": true,
+        "no_stale_preview": true
+      }
+    },
+    {
+      "id": "note-history-delayed-preview-cannot-follow-new-resource",
+      "passed": true,
+      "actual": {
+        "held_real_status": 200,
+        "alternate_resource_selected": true,
+        "exact_new_resource_state_retained": true,
+        "no_stale_preview": true
+      }
+    },
+    {
+      "id": "note-history-delayed-preview-cannot-follow-logout",
+      "passed": true,
+      "actual": {
+        "held_real_status": 200,
+        "logged_out": true,
+        "exact_logged_out_history_retained": true,
+        "no_stale_preview": true
+      }
+    },
+    {
+      "id": "note-history-current-real-404-visible-with-draft-intact",
+      "passed": true,
+      "actual": {
+        "adversarial_missing_revision": 999,
+        "actual_http_status": 404,
+        "actual_error_code": "NOTE_REVISION_NOT_FOUND",
+        "visible_history_error": "처리하지 못했습니다: NOTE_REVISION_NOT_FOUND",
+        "stale_download_disabled": true,
+        "exact_dirty_current_editor_retained": true
+      }
+    },
+    {
+      "id": "note-history-reads-preserve-all-saved-versions-and-anchors",
+      "passed": true,
+      "actual": {
+        "final_actual_revisions": [
+          4,
+          3,
+          2,
+          1
+        ],
+        "all_original_unicode_payloads_preserved": true,
+        "alternate_anchor_revision": 1,
+        "actual_browser_note_writes": 1,
+        "sole_write_expected_revision": 3
+      }
+    },
+    {
+      "id": "note-history-delayed-real-404-cannot-follow-synthetic-view-toggle",
+      "passed": true,
+      "actual": {
+        "held_actual_http_status": 404,
+        "held_actual_error_code": "NOTE_REVISION_NOT_FOUND",
+        "exact_cleared_history_retained": true,
+        "exact_dirty_editor_retained": true,
+        "authentication_and_view_retained": true,
+        "authenticated": true,
+        "stale_history_error_absent": true
+      }
+    },
+    {
+      "id": "note-history-delayed-real-index-cannot-follow-current-resource-deletion",
+      "passed": true,
+      "actual": {
+        "held_actual_history_status": 200,
+        "held_actual_revisions": [
+          4,
+          3,
+          2,
+          1
+        ],
+        "actual_deleted_resource_status": 200,
+        "native_confirmation": {
+          "type": "confirm",
+          "message": "이 자료와 모든 복기 노트, 연결된 지식 후보 및 후속 버전을 삭제할까요?",
+          "response": "accept"
+        },
+        "exact_cleared_history_retained": true,
+        "old_options_absent": true,
+        "current_selection_cleared": true,
+        "notes_cleared": true,
+        "actual_deleted_resource_get_status": 404,
+        "actual_cascaded_history_get_status": 404
+      }
+    },
+    {
+      "id": "research-save-old-real-409-cannot-overwrite-new-b-draft-notice-auth",
+      "passed": true,
+      "actual": {
+        "actual_http_status": 409,
+        "actual_error_code": "REVISION_CONFLICT",
+        "submitted_expected_revision": 1,
+        "native_navigation_confirmation": {
+          "type": "confirm",
+          "message": "저장하지 않은 노트 변경을 버리고 이동할까요?",
+          "response": "accept"
+        },
+        "exact_b_ui_note_history_notice_auth_retained": true,
+        "exact_b_draft_retained": true,
+        "backend_a_revision": 2,
+        "backend_b_revision": 0,
+        "actual_browser_put_count": 1,
+        "authenticated": true
+      }
+    },
+    {
+      "id": "research-save-current-real-409-visible-keeps-draft-and-save-enabled",
+      "passed": true,
+      "actual": {
+        "actual_http_status": 409,
+        "actual_error_code": "REVISION_CONFLICT",
+        "submitted_expected_revision": 2,
+        "native_navigation_confirmation": {
+          "type": "confirm",
+          "message": "저장하지 않은 노트 변경을 버리고 이동할까요?",
+          "response": "accept"
+        },
+        "visible_current_error": "처리하지 못했습니다: REVISION_CONFLICT",
+        "exact_current_draft_retained": true,
+        "exact_other_ui_state_retained": true,
+        "save_enabled": true,
+        "authenticated": true,
+        "backend_a_revision": 3,
+        "backend_b_revision": 0,
+        "actual_browser_put_count": 2
+      }
+    },
+    {
+      "id": "knowledge-unsaved-source-note-gate-no-browser-post",
+      "passed": true,
+      "actual": {
+        "actual_browser_post_delta": 0,
+        "unsaved_note_revision": 0,
+        "source_unset": true,
+        "visible_source_gate": "저장된 복기 노트를 출처로 연결한 후 저장하세요."
+      }
+    },
+    {
+      "id": "knowledge-real-create-exploratory-unicode-source-hashes-keeps-new-draft",
+      "passed": true,
+      "actual": {
+        "actual_status": 201,
+        "review_state": "EXPLORATORY",
+        "coaching_enabled": false,
+        "exact_unicode_payload": true,
+        "exact_saved_source_hashes": true,
+        "new_draft_and_source_retained": true,
+        "saved_note_text_not_copied": true,
+        "native_source_confirmation": {
+          "type": "confirm",
+          "message": "이 초안에 연결된 출처를 현재 저장 노트로 바꿀까요? 제안 내용은 유지됩니다.",
+          "response": "accept"
+        }
+      }
+    },
+    {
+      "id": "knowledge-next-save-uses-acknowledged-cas-and-preserves-prior-version",
+      "passed": true,
+      "actual": {
+        "actual_expected_version": "5a38f2e1bbdc4d828a544562ccfbd0fc",
+        "actual_supersedes": "5a38f2e1bbdc4d828a544562ccfbd0fc",
+        "old_version_immutable": true,
+        "new_draft_exactly_saved": true
+      }
+    },
+    {
+      "id": "knowledge-old-version-authentic-download-exact-saved-object",
+      "passed": true,
+      "actual": {
+        "latest_cas_for_old_view": "d559ad0b11774fd2afa5bf74482fcaf0",
+        "genuine_download_filename": "lol-coach-knowledge-5a38f2e1bbdc4d828a544562ccfbd0fc.json",
+        "expected_download_filename": "lol-coach-knowledge-5a38f2e1bbdc4d828a544562ccfbd0fc.json",
+        "exact_filename": true,
+        "downloaded_utf8_sha256": "1ca0c80d4358fa7008c051370c05960fd51bd309217e224c3135e2b53af508d3",
+        "viewed_get_pretty_utf8_sha256": "1ca0c80d4358fa7008c051370c05960fd51bd309217e224c3135e2b53af508d3",
+        "independent_get_pretty_utf8_sha256": "1ca0c80d4358fa7008c051370c05960fd51bd309217e224c3135e2b53af508d3",
+        "created_post_pretty_utf8_sha256": "7daee1afc7f778174a222de0762f841e93710daad2882c80bf0b1e0e8140261c",
+        "post_get_semantically_equal": true,
+        "post_get_pretty_bytes_equal": false,
+        "exact_saved_download_bytes": true,
+        "exact_unicode_content": true,
+        "dirty_editor_untouched": true
+      }
+    },
+    {
+      "id": "knowledge-current-real-conflict-keeps-draft-source-and-auth",
+      "passed": true,
+      "actual": {
+        "actual_status": 409,
+        "actual_error_code": "REVISION_CONFLICT",
+        "submitted_expected_version": "d559ad0b11774fd2afa5bf74482fcaf0",
+        "exact_current_draft_retained": true,
+        "source_retained": true,
+        "authenticated": true,
+        "backend_latest_version": "4def6fae8b3d4715bc9e1dc18b27a1aa"
+      }
+    },
+    {
+      "id": "knowledge-native-dirty-navigation-cancel-and-hidden-draft-preserved",
+      "passed": true,
+      "actual": {
+        "native_confirmations": [
+          {
+            "type": "confirm",
+            "message": "저장하지 않은 지식 제안 변경을 버리고 이동할까요?",
+            "response": "dismiss"
+          },
+          {
+            "type": "confirm",
+            "message": "저장하지 않은 지식 제안 변경을 버리고 이동할까요?",
+            "response": "dismiss"
+          },
+          {
+            "type": "confirm",
+            "message": "이 초안에 연결된 출처를 현재 저장 노트로 바꿀까요? 제안 내용은 유지됩니다.",
+            "response": "dismiss"
+          }
+        ],
+        "exact_hidden_and_cancelled_draft_retained": true
+      }
+    },
+    {
+      "id": "knowledge-source-delete-cascades-descendants-keeps-independent-nonidentifying-receipt",
+      "passed": true,
+      "actual": {
+        "actual_delete_status": 200,
+        "actual_deleted_versions": 3,
+        "receipt_keys": [
+          "deleted_versions",
+          "id",
+          "receipt_id",
+          "status"
+        ],
+        "dependent_get_statuses": [
+          404,
+          404,
+          404
+        ],
+        "independent_get_status": 200,
+        "deleted_display_cleared": true
+      }
+    },
+    {
+      "id": "knowledge-unrelated-source-deletion-keeps-independent-dirty-draft",
+      "passed": true,
+      "actual": {
+        "actual_delete_status": 200,
+        "deleted_knowledge_versions": 0,
+        "exact_independent_editor_source_notice_auth_retained": true
+      }
+    },
+    {
+      "id": "knowledge-old-real-conflict-cannot-follow-new-editor-context",
+      "passed": true,
+      "actual": {
+        "held_actual_status": 409,
+        "held_actual_error_code": "REVISION_CONFLICT",
+        "new_context_exactly_retained": true,
+        "authenticated": true
+      }
+    },
+    {
+      "id": "knowledge-middle-source-delete-clears-displayed-descendant-with-ancestor-surviving",
+      "passed": true,
+      "actual": {
+        "actual_deleted_versions": 2,
+        "held_exact_missing_status": 404,
+        "download_immediately_blocked_while_exact_validation_pending": true,
+        "ancestor_middle_descendant_source_statuses": [
+          200,
+          404,
+          404,
+          200
+        ],
+        "deleted_exact_display_and_download_cleared": true
+      }
+    }
+  ],
+  "backend_snapshots": [
+    {
+      "label": "initial-v1",
+      "observed_at": "2026-10-09T04:06:38.106Z",
+      "http_status": 200,
+      "session_id": "b7fd33a3-4866-454a-ba04-ddea2a526c8d",
+      "revision": 1,
+      "objective": "합성 사례: 경험치와 다음 선택권 보존",
+      "case_sha256": "23f357de0dc52e510f0736561784a37ad6fdfa528949218d7416302ee2be6fb6"
+    },
+    {
+      "label": "backend-v2-before-browser-ack",
+      "observed_at": "2026-10-09T04:06:38.170Z",
+      "http_status": 200,
+      "session_id": "b7fd33a3-4866-454a-ba04-ddea2a526c8d",
+      "revision": 2,
+      "objective": "Browser submitted edit for v2",
+      "case_sha256": "41c7bec18cfdb2c9043291c95b3a3b9ea0894cee6b8e92f3a9879f16104bbea4"
+    },
+    {
+      "label": "backend-after-v3",
+      "observed_at": "2026-10-09T04:06:38.556Z",
+      "http_status": 200,
+      "session_id": "b7fd33a3-4866-454a-ba04-ddea2a526c8d",
+      "revision": 3,
+      "objective": "Browser newer draft while v2 response held",
+      "case_sha256": "4c768d89ed17a2c75f3aa0f423b388af32f30e10954ba707408456b242f22c2a"
+    },
+    {
+      "label": "backend-after-native-cancellations",
+      "observed_at": "2026-10-09T04:06:39.514Z",
+      "http_status": 200,
+      "session_id": "b7fd33a3-4866-454a-ba04-ddea2a526c8d",
+      "revision": 3,
+      "objective": "Browser newer draft while v2 response held",
+      "case_sha256": "4c768d89ed17a2c75f3aa0f423b388af32f30e10954ba707408456b242f22c2a"
+    }
+  ],
+  "ui_snapshots": [
+    {
+      "label": "typed-draft-before-release",
+      "observed_at": "2026-10-09T04:06:38.477Z",
+      "current_label": "MVP actual browser save race · 저장 버전 1",
+      "editor_sha256": "6c8318a12631b520167c78789ff804f74be65866238a175941c642eae60035bf",
+      "exact_editor_match": true,
+      "editor_objective": "Browser newer draft while v2 response held",
+      "analyze_disabled": true,
+      "save_disabled": true,
+      "report_hidden": true,
+      "notice": "입력을 저장했습니다. 분석 실행으로 이어가세요."
+    },
+    {
+      "label": "after-real-v2-ack",
+      "observed_at": "2026-10-09T04:06:38.494Z",
+      "current_label": "MVP actual browser save race · 저장 버전 2",
+      "editor_sha256": "6c8318a12631b520167c78789ff804f74be65866238a175941c642eae60035bf",
+      "exact_editor_match": true,
+      "editor_objective": "Browser newer draft while v2 response held",
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "요청한 입력은 저장했습니다. 저장 중 수정한 초안은 그대로 남아 있으니 추가 저장하세요."
+    },
+    {
+      "label": "after-v3-save",
+      "observed_at": "2026-10-09T04:06:38.552Z",
+      "current_label": "MVP actual browser save race · 저장 버전 3",
+      "editor_sha256": "29f6f310318595561438b660b9741dc214776ed53031aeffed3447eea9882aca",
+      "exact_editor_match": true,
+      "editor_objective": "Browser newer draft while v2 response held",
+      "analyze_disabled": false,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "입력을 저장했습니다. 분석 실행으로 이어가세요."
+    },
+    {
+      "label": "reloaded-v3",
+      "observed_at": "2026-10-09T04:06:38.691Z",
+      "current_label": "MVP actual browser save race · 저장 버전 3",
+      "editor_sha256": "50ce091301c63d33e73ce2ffe182098b64aeb13d69b1f2158ba59a8757665332",
+      "exact_editor_match": true,
+      "editor_objective": "Browser newer draft while v2 response held",
+      "analyze_disabled": false,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "저장한 사례를 열었습니다."
+    },
+    {
+      "label": "dirty-refreshed-reopen-cancel-after-cancel",
+      "observed_at": "2026-10-09T04:06:39.442Z",
+      "current_label": "MVP actual browser save race · 저장 버전 3",
+      "editor_sha256": "4daeb84b3740112e4c2b3490b20e72ea63bb88335724fd47eafa072d41173a77",
+      "exact_editor_match": true,
+      "editor_objective": "Browser dirty draft kept after native cancellation",
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "복기 결과를 저장했습니다."
+    },
+    {
+      "label": "dirty-load-example-cancel-after-cancel",
+      "observed_at": "2026-10-09T04:06:39.486Z",
+      "current_label": "MVP actual browser save race · 저장 버전 3",
+      "editor_sha256": "4daeb84b3740112e4c2b3490b20e72ea63bb88335724fd47eafa072d41173a77",
+      "exact_editor_match": true,
+      "editor_objective": "Browser dirty draft kept after native cancellation",
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "복기 결과를 저장했습니다."
+    },
+    {
+      "label": "dirty-import-cancel-after-cancel",
+      "observed_at": "2026-10-09T04:06:39.504Z",
+      "current_label": "MVP actual browser save race · 저장 버전 3",
+      "editor_sha256": "4daeb84b3740112e4c2b3490b20e72ea63bb88335724fd47eafa072d41173a77",
+      "exact_editor_match": true,
+      "editor_objective": "Browser dirty draft kept after native cancellation",
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "복기 결과를 저장했습니다."
+    },
+    {
+      "label": "import-a-before-b-initial",
+      "observed_at": "2026-10-09T04:06:39.588Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "editor_objective": null,
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+    },
+    {
+      "label": "import-stale-a-while-b-pending",
+      "observed_at": "2026-10-09T04:06:39.627Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exact_editor_match": true,
+      "editor_objective": null,
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+    },
+    {
+      "label": "import-a-then-b-final",
+      "observed_at": "2026-10-09T04:06:39.631Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "198cdd9e54e2f64dbc2ee68d0b545d86d30245b549d00493cb1048691bc5fc45",
+      "exact_editor_match": true,
+      "editor_objective": "Newest native File B survives either completion order",
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "합성 입력 파일을 불러왔습니다."
+    },
+    {
+      "label": "import-b-before-a-initial",
+      "observed_at": "2026-10-09T04:06:39.703Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "editor_objective": null,
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+    },
+    {
+      "label": "import-b-before-stale-a",
+      "observed_at": "2026-10-09T04:06:39.740Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "198cdd9e54e2f64dbc2ee68d0b545d86d30245b549d00493cb1048691bc5fc45",
+      "exact_editor_match": true,
+      "editor_objective": "Newest native File B survives either completion order",
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "합성 입력 파일을 불러왔습니다."
+    },
+    {
+      "label": "import-b-then-stale-a-final",
+      "observed_at": "2026-10-09T04:06:39.743Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "198cdd9e54e2f64dbc2ee68d0b545d86d30245b549d00493cb1048691bc5fc45",
+      "exact_editor_match": true,
+      "editor_objective": "Newest native File B survives either completion order",
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "합성 입력 파일을 불러왔습니다."
+    },
+    {
+      "label": "import-cleared-selection-initial",
+      "observed_at": "2026-10-09T04:06:39.809Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "editor_objective": null,
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+    },
+    {
+      "label": "import-cleared-before-read-release",
+      "observed_at": "2026-10-09T04:06:39.868Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exact_editor_match": true,
+      "editor_objective": null,
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+    },
+    {
+      "label": "import-cleared-after-stale-read",
+      "observed_at": "2026-10-09T04:06:39.871Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exact_editor_match": true,
+      "editor_objective": null,
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+    },
+    {
+      "label": "first-failure-state",
+      "observed_at": "2026-10-09T04:07:02.236Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "editor_objective": null,
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+    }
+  ],
+  "native_dialogs": [
+    {
+      "action": "dirty-refreshed-reopen-cancel",
+      "type": "confirm",
+      "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+      "response": "dismiss"
+    },
+    {
+      "action": "dirty-load-example-cancel",
+      "type": "confirm",
+      "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+      "response": "dismiss"
+    },
+    {
+      "action": "dirty-import-cancel",
+      "type": "confirm",
+      "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+      "response": "dismiss"
+    }
+  ],
+  "actual_browser_write_requests": [
+    {
+      "at": "2026-10-09T04:06:38.072Z",
+      "route": "/dev/v1/sessions",
+      "method": "POST",
+      "title": "MVP actual browser save race"
+    },
+    {
+      "at": "2026-10-09T04:06:38.082Z",
+      "route": "/dev/v1/sessions/b7fd33a3-4866-454a-ba04-ddea2a526c8d/case",
+      "method": "PUT",
+      "expected_revision": 0,
+      "objective": "합성 사례: 경험치와 다음 선택권 보존"
+    },
+    {
+      "at": "2026-10-09T04:06:38.162Z",
+      "route": "/dev/v1/sessions/b7fd33a3-4866-454a-ba04-ddea2a526c8d/case",
+      "method": "PUT",
+      "expected_revision": 1,
+      "objective": "Browser submitted edit for v2"
+    },
+    {
+      "at": "2026-10-09T04:06:38.528Z",
+      "route": "/dev/v1/sessions/b7fd33a3-4866-454a-ba04-ddea2a526c8d/case",
+      "method": "PUT",
+      "expected_revision": 2,
+      "objective": "Browser newer draft while v2 response held"
+    },
+    {
+      "at": "2026-10-09T04:06:38.732Z",
+      "route": "/dev/v1/sessions/b7fd33a3-4866-454a-ba04-ddea2a526c8d/reviews",
+      "method": "POST",
+      "expected_revision": 3
+    },
+    {
+      "at": "2026-10-09T04:06:40.070Z",
+      "route": "/dev/v1/research",
+      "method": "POST",
+      "title": "browser-bytes-bom.json"
+    },
+    {
+      "at": "2026-10-09T04:06:40.122Z",
+      "route": "/dev/v1/research",
+      "method": "POST",
+      "title": "browser-bytes-bom.txt"
+    },
+    {
+      "at": "2026-10-09T04:06:40.171Z",
+      "route": "/dev/v1/research",
+      "method": "POST",
+      "title": "browser-bytes-multibyte.json"
+    },
+    {
+      "at": "2026-10-09T04:06:40.429Z",
+      "route": "/dev/v1/research",
+      "method": "POST",
+      "title": "valid-b-pending.json"
+    },
+    {
+      "at": "2026-10-09T04:06:40.638Z",
+      "route": "/dev/v1/research",
+      "method": "POST",
+      "title": "valid-b-first.json"
+    },
+    {
+      "at": "2026-10-09T04:06:41.301Z",
+      "route": "/dev/v1/research/739880b681280caeb20b86c4d872d3df51237b07836fd870568a4fa5733224d8",
+      "method": "DELETE",
+      "expected_revision": null,
+      "objective": null,
+      "title": null
+    },
+    {
+      "at": "2026-10-09T04:06:41.381Z",
+      "route": "/dev/v1/research/645e46ec1ec7094ce0d0168abb36b377f6bdf27cb860ebde3946dbf24f9b3e3d",
+      "method": "DELETE",
+      "expected_revision": null,
+      "objective": null,
+      "title": null
+    },
+    {
+      "at": "2026-10-09T04:06:41.928Z",
+      "route": "/dev/v1/research/162d49877ccbd23509b2ef060f741831e8534deeefa616e6ee66aedd94a6428a/notes/overview",
+      "method": "PUT",
+      "expected_revision": 3
+    },
+    {
+      "at": "2026-10-09T04:06:43.134Z",
+      "route": "/dev/v1/research/162d49877ccbd23509b2ef060f741831e8534deeefa616e6ee66aedd94a6428a",
+      "method": "DELETE",
+      "expected_revision": null,
+      "objective": null,
+      "title": null
+    },
+    {
+      "at": "2026-10-09T04:06:43.428Z",
+      "route": "/dev/v1/research/f01403979eed10564919a0cc403d82735ce4d8c3f9351a06b19fc67fac146703/notes/overview",
+      "method": "PUT",
+      "expected_revision": 1
+    },
+    {
+      "at": "2026-10-09T04:06:43.678Z",
+      "route": "/dev/v1/research/f01403979eed10564919a0cc403d82735ce4d8c3f9351a06b19fc67fac146703/notes/overview",
+      "method": "PUT",
+      "expected_revision": 2
+    },
+    {
+      "at": "2026-10-09T04:06:44.260Z",
+      "route": "/dev/v1/research/a3e35113a4f64ab1173c170c76122a694b289b9670a4c1d6216512ecfea0eb68/notes/overview",
+      "method": "PUT",
+      "expected_revision": 0
+    },
+    {
+      "at": "2026-10-09T04:06:44.395Z",
+      "route": "/dev/v1/knowledge/proposals",
+      "method": "POST"
+    },
+    {
+      "at": "2026-10-09T04:06:44.712Z",
+      "route": "/dev/v1/knowledge/proposals",
+      "method": "POST"
+    },
+    {
+      "at": "2026-10-09T04:06:44.998Z",
+      "route": "/dev/v1/knowledge/proposals",
+      "method": "POST"
+    },
+    {
+      "at": "2026-10-09T04:06:45.382Z",
+      "route": "/dev/v1/research/a3e35113a4f64ab1173c170c76122a694b289b9670a4c1d6216512ecfea0eb68",
+      "method": "DELETE",
+      "expected_revision": null,
+      "objective": null,
+      "title": null
+    },
+    {
+      "at": "2026-10-09T04:06:45.733Z",
+      "route": "/dev/v1/research/b124fbbd377274f93e5c9ecd9de07cc99087b481e1ff340717966fc0373f4da6",
+      "method": "DELETE",
+      "expected_revision": null,
+      "objective": null,
+      "title": null
+    },
+    {
+      "at": "2026-10-09T04:06:45.847Z",
+      "route": "/dev/v1/knowledge/proposals",
+      "method": "POST"
+    },
+    {
+      "at": "2026-10-09T04:06:46.415Z",
+      "route": "/dev/v1/research/86694fbff625465f664c1de841f5f3bdd901ccbac630f8e248066c6775c86f0d",
+      "method": "DELETE",
+      "expected_revision": null,
+      "objective": null,
+      "title": null
+    },
+    {
+      "at": "2026-10-09T04:06:46.950Z",
+      "route": "/dev/v1/research/4b88413c77e18008169578514a5ccb6f17075a42406adc6122c11468c69884c4",
+      "method": "DELETE",
+      "expected_revision": null,
+      "objective": null,
+      "title": null
+    }
+  ],
+  "page_errors": [],
+  "first_failure": {
+    "stage": "research-navigation-delete-integrity",
+    "observed_at": "2026-10-09T04:07:02.234Z",
+    "error": "page.waitForFunction: Timeout 15000ms exceeded.\n    at checkKnowledge (/workspace/lol-coach/tests_mvp/browser_knowledge.cjs:73:468)\n    at async run (/workspace/lol-coach/tests_mvp/browser_save_race.cjs:360:5)",
+    "knowledge_state": {
+      "record": {
+        "applicability": {
+          "champion": "UNKNOWN",
+          "context": "상황 미검증 α\n조건 😀",
+          "level": "UNKNOWN",
+          "matchup": "UNKNOWN",
+          "role": "UNKNOWN"
+        },
+        "author": "개인 작성 테스트",
+        "claim": "late-rebind DELETED-C-PRIVATE-SENTINEL",
+        "coaching_enabled": false,
+        "counterexamples": [
+          "UNKNOWN",
+          "반례는 아직 수집 전"
+        ],
+        "limitations": [
+          "PLAYER 검증 아님",
+          "코칭에 미적용"
+        ],
+        "mechanism": "미검증 작동 가설 β",
+        "patch_range": "UNKNOWN",
+        "required_fields": [
+          "UNKNOWN",
+          "실제 관찰 필요"
+        ],
+        "review_state": "EXPLORATORY",
+        "rule_id": "60828a0c4c454c5fad5b82874ce4d898",
+        "schema_version": "knowledge-proposal.v1",
+        "source_refs": [
+          {
+            "anchor": "overview",
+            "kind": "RAW_DIAGNOSTIC",
+            "note_revision": 1,
+            "note_sha256": "f8232efe7a8a9d178596e740d8eb84974f9632c5b2a29b40ccc33d64edfc4f89",
+            "report_sha256": "48a286c1c9bb51b92d4465b52c3ec566f9226302227fef3bd9468ac3d324bf14",
+            "resource_id": "9b0639090481829df526365cf3ec311ed77f473efa815ac0376e4c2d0651ecd4"
+          }
+        ],
+        "supersedes": "d83d9fa7cc8949259865b3b6204f07de",
+        "version": "84e1940180a54a6a8cc9e714049707df"
+      },
+      "source": {
+        "resource_id": "5666da1613eae8ecbc9e273515b8e90ec17c3a9d20cf1d9a5b45afe070022ad6",
+        "anchor": "overview",
+        "note_revision": 1
+      },
+      "dirty": true,
+      "latest": "84e1940180a54a6a8cc9e714049707df",
+      "epoch": 8,
+      "deletion": 4,
+      "notice": "저장하지 않은 탐색 제안 변경이 있습니다.",
+      "download_disabled": true
+    }
+  }
+}

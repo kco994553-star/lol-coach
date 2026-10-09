@@ -136,6 +136,50 @@ def manifest_hash(values: dict[str, str]) -> str:
     return hashlib.sha256(json.dumps(values, sort_keys=True).encode()).hexdigest()
 
 
+REVIEW_PARENT_PATHS = frozenset(('coach_v1/knowledge.py','coach_v1/server.py',
+    'web_r4/knowledge.js','web_r4/index.html','scripts/verify_mvp.py',
+    'scripts/browser_mvp.py','tests_mvp/browser_save_race.cjs',
+    'tests_mvp/browser_knowledge.cjs','tests_mvp/browser_note_recovery.cjs'))
+
+
+def review_parent_sha(path):
+    """Compare historical gates to archived parents only with exact current binding."""
+    current = sha(ROOT / path)
+    if path not in REVIEW_PARENT_PATHS:
+        return current
+    version = read_json(ROOT / 'evidence/mvp/knowledge-review-version.json')
+    parent = read_json(ROOT / 'evidence/mvp/knowledge-review-parent.json')
+    archive = ROOT / 'evidence/mvp/knowledge-review-parent' / path
+    if (current == version['current_sha256'].get(path)
+        and sha(archive) == parent['prior_sha256'].get(path)):
+        return parent['prior_sha256'][path]
+    return current
+
+
+def knowledge_review_binding():
+    parent = read_json(ROOT / 'evidence/mvp/knowledge-review-parent.json')
+    version = read_json(ROOT / 'evidence/mvp/knowledge-review-version.json')
+    amendment = read_json(ROOT / 'contracts/amendments/2026-10-09-knowledge-review.json')
+    expected = REVIEW_PARENT_PATHS | {'web_r4/knowledge_review.js',
+        'tests_mvp/test_knowledge_review.py','tests_mvp/browser_knowledge_review.cjs',
+        'docs/MVP_KNOWLEDGE_REVIEW.md','contracts/amendments/2026-10-09-knowledge-review.json'}
+    checks = {
+        'exact_intake': parent['intake_main'] == '92c49522dc5eca3a091a991dddfee3f3d3d6aa92',
+        'exact_parent_paths': set(parent['prior_sha256']) == REVIEW_PARENT_PATHS,
+        'archived_parent_bytes': all(sha(ROOT/'evidence/mvp/knowledge-review-parent'/p) == h
+            for p,h in parent['prior_sha256'].items()),
+        'exact_current_paths': set(version['current_sha256']) == expected,
+        'current_bytes_bound': all(sha(ROOT/p) == h for p,h in version['current_sha256'].items()),
+        'explicit_user_authority': amendment['authority'] == 'USER_DECISION_2026-10-09',
+        'frozen_parent_preserved': amendment['parent_freeze_sha256'] == sha(ROOT/'FREEZE_MANIFEST.json'),
+        'amendment_contract_bound': amendment['contract_sha256'] == sha(ROOT/amendment['contract']),
+        'ai_consensus_stays_forbidden': amendment['ai_consensus_promotion_allowed'] is False,
+        'browser_harness_only_cleanup_change': all((ROOT/'evidence/mvp/knowledge-review-parent'/p).read_text().replace('await page.unroute(pattern,handler);','') == (ROOT/p).read_text() for p in ('tests_mvp/browser_knowledge.cjs','tests_mvp/browser_note_recovery.cjs')),
+        'no_engine_or_sql_change': amendment['engine_activation'] is False and amendment['sql_schema_change'] is False,
+    }
+    return {'status':'PASS' if all(checks.values()) else 'FAIL','checks':checks}
+
+
 def knowledge_version_binding() -> dict:
     baseline=read_json(ROOT / 'evidence/mvp/knowledge-baseline.json')
     version=read_json(ROOT / 'evidence/mvp/knowledge-source-version.json')
@@ -146,7 +190,7 @@ def knowledge_version_binding() -> dict:
         'parent_research_errors': baseline.get('sha256', {}).get('web_r4/research.js') == read_json(ROOT / 'evidence/mvp/research-navigation-errors-after.json').get('source_sha256') == read_json(ROOT / 'evidence/mvp/research-save-errors-final.json').get('source_sha256'),
         'parent_history_sources': all(baseline.get('sha256', {}).get(p) == read_json(ROOT / 'evidence/mvp/note-history-source-version.json')['current_sha256'][p] for p in ('web_r4/index.html','coach_v1/server.py')),
         'exact_version_paths': set(current) == set(baseline.get('sha256', {})) | {'coach_v1/knowledge.py','web_r4/knowledge.js'},
-        'actual_current_hashes': all((ROOT / p).is_file() and (read_json(ROOT / 'evidence/mvp/note-recovery-baseline.json')['sha256'][p] if p in ('web_r4/research.js','web_r4/index.html') else read_json(ROOT / 'evidence/mvp/knowledge-ui-proposal-delete-before.json').get('source_sha256') if p == 'web_r4/knowledge.js' else read_json(ROOT / 'evidence/mvp/draft-baseline.json')['sha256'][p] if p in ('coach_v1/server.py','coach_v1/backup.py') else sha(ROOT / p)) == h for p,h in current.items()),
+        'actual_current_hashes': all((ROOT / p).is_file() and (read_json(ROOT / 'evidence/mvp/note-recovery-baseline.json')['sha256'][p] if p in ('web_r4/research.js','web_r4/index.html') else read_json(ROOT / 'evidence/mvp/knowledge-ui-proposal-delete-before.json').get('source_sha256') if p == 'web_r4/knowledge.js' else read_json(ROOT / 'evidence/mvp/draft-baseline.json')['sha256'][p] if p in ('coach_v1/server.py','coach_v1/backup.py') else review_parent_sha(p)) == h for p,h in current.items()),
         'later_recovery_source_chain': note_recovery_version_binding()['status'] == 'PASS',
         'legacy_store_unchanged': baseline.get('unchanged_research_store_sha256') == sha(ROOT / 'coach_v1/research.py') == '42912d1e7ac660c67b00514d7aa76b6d10252e77c0a478db55bc37ad21d3eb27',
         'independent_lifecycle_tests_present': all((ROOT / p).is_file() for p in ('tests_mvp/test_knowledge.py','tests_mvp/test_knowledge_backup.py','tests_mvp/test_knowledge_http.py','tests_mvp/browser_knowledge.cjs')),
@@ -170,7 +214,7 @@ def note_recovery_version_binding() -> dict:
         'exact_intake': baseline['intake_main'] == '594ef3cf6138421de8a8c77c7ec1c390e7cfedea',
         'exact_version_paths': set(baseline['sha256']) == set(current) == {'web_r4/research.js','web_r4/index.html'},
         'preserved_parent': all(baseline['sha256'][p] == read_json(ROOT / 'evidence/mvp/knowledge-source-version.json')['current_sha256'][p] for p in current),
-        'actual_current_source': all((read_json(ROOT / 'evidence/mvp/draft-baseline.json')['sha256'][p] if p == 'web_r4/index.html' else sha(ROOT / p)) == h for p,h in current.items()),
+        'actual_current_source': all((read_json(ROOT / 'evidence/mvp/draft-baseline.json')['sha256'][p] if p == 'web_r4/index.html' else review_parent_sha(p)) == h for p,h in current.items()),
         'later_manual_draft_source_chain': draft_version_binding()['status'] == 'PASS',
         'actual_parent_archive': sha(ROOT / version['archived_parent']) == baseline['sha256']['web_r4/research.js'] == before['source_sha256'],
         'fixed_cases': all(row['total'] == 5 and {r['id'] for r in row['results']} == NOTE_RECOVERY_CASE_IDS for row in (before,after,final)),
@@ -207,7 +251,7 @@ def draft_version_binding() -> dict:
         'parent_server_and_backup': all(baseline['sha256'][p] == read_json(ROOT / 'evidence/mvp/knowledge-source-version.json')['current_sha256'][p] for p in ('coach_v1/server.py','coach_v1/backup.py')),
         'parent_index': baseline['sha256']['web_r4/index.html'] == read_json(ROOT / 'evidence/mvp/note-recovery-source-version.json')['current_sha256']['web_r4/index.html'],
         'original_store_unchanged': sha(ROOT / 'coach_v1/storage.py') == baseline['sha256']['coach_v1/storage.py'] == '45e4c4725fd516c66cf9348f1afe9aba8c8bebe8aae574939f8d47394f1ce6e0',
-        'research_and_knowledge_unchanged': all(sha(ROOT / p) == baseline['sha256'][p] for p in ('web_r4/research.js','web_r4/knowledge.js')),
+        'research_and_knowledge_unchanged': all(review_parent_sha(p) == baseline['sha256'][p] for p in ('web_r4/research.js','web_r4/knowledge.js')),
         'legacy_main_validator_unchanged': hashlib.sha256(ast.get_source_segment(backup,main_validator).encode()).hexdigest() == '8aad8a6fed29b8305963486421877b2555283a65a5b02eb34864f73c732df690',
         'storage_native_suite_bound': stored['exit_code'] == 0 and stored['draft_tests'] == 31 and stored['legacy_storage_tests'] == 11 and stored['test_sha256'] == sha(ROOT / 'tests_mvp/test_draft_capture.py') and stored['draft_source_sha256'] == current['coach_v1/draft.py'],
         'fixed_ui_cases_bound': ui_before['total'] == ui_after['total'] == 7 and {row['id'] for row in ui_before['results']} == {row['id'] for row in ui_after['results']} and ui_before['test_sha256'] == ui_after['test_sha256'] == sha(original_ui_test) and ui_before['fixture_sha256'] == ui_after['fixture_sha256'],
@@ -273,7 +317,7 @@ def draft_retry_binding() -> dict:
         'exact_intake': version['intake_main'] == '6f5c2c30db54f962ac5881a8d628336ca62cd7e5',
         'prior_manual_sources_bound': all(version['prior_sha256'][p] == prior[p]
             for p in ('coach_v1/draft.py', 'coach_v1/server.py', 'web_r4/draft.js')),
-        'current_sources_bound': all(sha(ROOT / p) == h for p,h in version['current_sha256'].items()),
+        'current_sources_bound': all(review_parent_sha(p) == h for p,h in version['current_sha256'].items()),
         'no_schema_or_activation_change': version['main_schema'] == 2 and version['schema_change'] is False
             and version['coaching_activation'] is False and version['real_match_evidence_gain'] is False,
         'same_ui_case_red_green': before['case_id'] == after['case_id'] == case
@@ -305,8 +349,8 @@ def knowledge_browser_repair_binding() -> dict:
         'actual_first_run_failure_retained': failed['run']['id'] == repair['failed_run'] == 37268245767 and failed['run']['attempt'] == 1 and failed['run']['conclusion'] == 'failure' and failed['regression']['status'] == 'PASS' and browser['passed'] is False,
         'exact_first_failure': [r['id'] for r in browser['checks'] if r['passed'] is False] == [repair['failure_id']],
         'actual_failed_source_archived': sha(archive) == repair['browser_test_before_sha256'] == browser['source_sha256']['tests_mvp/browser_knowledge.cjs'],
-        'current_repaired_verifier': sha(ROOT / 'tests_mvp/browser_knowledge.cjs') == repair['browser_test_after_sha256'],
-        'production_unchanged_by_verifier_repair': sha(ROOT / 'web_r4/knowledge.js') == repair['production_knowledge_sha256'] == browser['source_sha256']['web_r4/knowledge.js'],
+        'current_repaired_verifier': review_parent_sha('tests_mvp/browser_knowledge.cjs') == repair['browser_test_after_sha256'],
+        'production_unchanged_by_verifier_repair': review_parent_sha('web_r4/knowledge.js') == repair['production_knowledge_sha256'] == browser['source_sha256']['web_r4/knowledge.js'],
         'tested_tree_bound': failed['tested_commit']['tree'] == repair['failed_tree'] and failed['tested_commit']['sha'] == repair['failed_tested_commit'] == failed['browser']['commit_sha'],
         'required_count_preserved': repair['required_browser_checks'] == 79 and repair['knowledge_cases'] == 16,
     }
@@ -321,7 +365,7 @@ def note_recovery_browser_repair_binding() -> dict:
         'actual_first_failure_retained': failed['run']['id'] == repair['failed_run'] == 37270809307 and failed['run']['attempt'] == 1 and failed['run']['conclusion'] == 'failure' and failed['regression']['status'] == 'PASS' and browser['passed'] is False,
         'exact_first_failure': [row['id'] for row in browser['checks'] if row['passed'] is False] == [repair['failure_id']],
         'failed_test_bytes_archived': sha(ROOT / repair['archived_before']) == repair['browser_test_before_sha256'] == browser['source_sha256']['tests_mvp/browser_note_recovery.cjs'],
-        'current_repaired_test': sha(ROOT / 'tests_mvp/browser_note_recovery.cjs') == repair['browser_test_after_sha256'],
+        'current_repaired_test': review_parent_sha('tests_mvp/browser_note_recovery.cjs') == repair['browser_test_after_sha256'],
         'production_unchanged': sha(ROOT / 'web_r4/research.js') == repair['production_research_sha256'] == browser['source_sha256']['web_r4/research.js'],
         'tested_tree_and_parents': failed['tested_commit']['tree'] == repair['failed_tree'] and failed['tested_commit']['sha'] == repair['failed_tested_commit'] == failed['browser']['commit_sha'] and failed['tested_commit']['parents'] == [read_json(ROOT / 'evidence/mvp/note-recovery-baseline.json')['intake_main'], failed['run']['head']],
         'required_count_preserved': repair['required_browser_checks'] == 89 and repair['recovery_cases'] == 10,
@@ -381,7 +425,7 @@ def knowledge_proposal_delete_binding() -> dict:
         'repaired_pass':after.get('passed') == 1 and after['results'][0].get('passed') is True,
         'original_version_bound':before.get('source_sha256') == read_json(ROOT / 'evidence/mvp/knowledge-source-version.json')['current_sha256']['web_r4/knowledge.js'] == read_json(ROOT / 'evidence/mvp/knowledge-ui-read-after.json').get('source_sha256'),
         'actual_parent_bytes':archived.is_file() and sha(archived) == before['source_sha256'],
-        'actual_current_source':after.get('source_sha256') == sha(ROOT / 'web_r4/knowledge.js'),
+        'actual_current_source':after.get('source_sha256') == review_parent_sha('web_r4/knowledge.js'),
         'distinct_sources':before.get('source_sha256') != after.get('source_sha256'),
     }
     return {'status':'PASS' if all(checks.values()) else 'FAIL','checks':checks,
@@ -783,7 +827,8 @@ def input_hashes() -> dict[str, str]:
     values.update({p.relative_to(ROOT).as_posix():sha(p) for p in sorted((ROOT / 'evidence/mvp').glob('draft-*')) if p.is_file()})
     for folder,pattern in (('draft-ui-test-sources','*.cjs'),('draft-storage-sources','*.py'),('draft-roundtrip-sources','*'),('draft-browser-sources','*.cjs')):
         values.update({p.relative_to(ROOT).as_posix():sha(p) for p in sorted((ROOT / 'evidence/mvp' / folder).glob(pattern)) if p.is_file()})
-    for name in ("FREEZE_MANIFEST.json", "requirements-r3.txt", R7_SOURCE_RECEIPT, R6_SOURCE_RECEIPT,
+    values.update({p.relative_to(ROOT).as_posix():sha(p) for p in sorted((ROOT / 'evidence/mvp/knowledge-review-parent').rglob('*')) if p.is_file()})
+    for name in ("evidence/mvp/knowledge-review-parent.json", "evidence/mvp/knowledge-review-version.json", "docs/MVP_KNOWLEDGE_REVIEW.md", "FREEZE_MANIFEST.json", "requirements-r3.txt", R7_SOURCE_RECEIPT, R6_SOURCE_RECEIPT,
                  "evidence/r7/baseline-tree.json", "evidence/mvp/save-race-before.json",
                  "evidence/mvp/save-race-after.json", "evidence/mvp/ci-cost-basis.json",
                  "evidence/mvp/import-race-before.json", "evidence/mvp/import-race-after.json",
@@ -826,6 +871,8 @@ def main() -> int:
     checks = {}
     errors = []
     try:
+        checks["knowledge_review_binding"] = knowledge_review_binding()
+        save(out, "knowledge-review-binding.json", checks["knowledge_review_binding"])
         checks["preservation"] = preservation_gate()
         save(out, "preservation.json", checks["preservation"])
         checks["draft_browser_repair_binding"] = draft_browser_repair_binding()
@@ -866,6 +913,8 @@ def main() -> int:
             str(ROOT / "tests_mvp"), pattern="test_note_history.py", top_level_dir=str(ROOT)), 19)
         checks["note_history_http"] = run_suite(out, "note-history-http", unittest.defaultTestLoader.discover(
             str(ROOT / "tests_mvp"), pattern="test_note_history_http.py", top_level_dir=str(ROOT)), 5)
+        checks["knowledge_review"] = run_suite(out, "knowledge-review", unittest.defaultTestLoader.discover(
+            str(ROOT / "tests_mvp"), pattern="test_knowledge_review.py", top_level_dir=str(ROOT)), 13)
         checks["knowledge_store"] = run_suite(out, "knowledge-store", unittest.defaultTestLoader.discover(
             str(ROOT / "tests_mvp"), pattern="test_knowledge.py", top_level_dir=str(ROOT)), 42)
         checks["knowledge_backup"] = run_suite(out, "knowledge-backup", unittest.defaultTestLoader.discover(

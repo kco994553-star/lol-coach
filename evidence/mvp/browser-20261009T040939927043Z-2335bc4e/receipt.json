@@ -1,0 +1,2171 @@
+{
+  "verifier": "Actual Playwright Chromium browser with isolated coach_v1.server and SQLite; not Node VM",
+  "scope": "Affected synthetic save race, revision acknowledgement, exact draft retention, reload, native cancellation, native File read ordering/clearing, one synthetic analysis, 390px overflow and page errors",
+  "evidence_kind": "FRESH_BROWSER_EXECUTION",
+  "started_at": "2026-10-09T04:09:40.327Z",
+  "finished_at": "2026-10-09T04:10:05.480Z",
+  "node_version": "v24.19.0",
+  "browser_version": "151.0.7922.173",
+  "source_sha256": {
+    "web_r4/app.js": "1d31505b1e88cbf5d68f163f8728f06138b421949c416961d19069af61fe79bb",
+    "web_r4/index.html": "c552583e5174416f2b525b1e3295be72fffc866447cbdf6bbfdf8b4070d037b4",
+    "web_r4/styles.css": "24fd8a7e75fa5bb26a053ad2117d49352f1396978c44b13f52e830d4473aec0d",
+    "coach_v1/server.py": "8e5c02d9bd1a589c53b961d82e00d1ca9c36854e32ac6a18ae0e731ee04323d2",
+    "coach_v1/storage.py": "45e4c4725fd516c66cf9348f1afe9aba8c8bebe8aae574939f8d47394f1ce6e0",
+    "examples/r3/compare-wait-retreat.json": "e74764c9151df568061c730fda8ada0fa9d45fc60325785a8423563d0113e391",
+    "tests_mvp/browser_save_race.cjs": "cdfee9a82fa1e89bdd06f6ca7f3fd18ef5775e88fa4cfa0d5d56f6b25782b469",
+    "scripts/browser_mvp.py": "324ec52965b9b8f256156556a4f4d86331df210232af23d7b6163e2b267befba",
+    "web_r4/research.js": "39ae97ef2e9623961f054e9c07e5460255dc4664d0387abda3f0bd56fe6e8978",
+    "coach_v1/research.py": "42912d1e7ac660c67b00514d7aa76b6d10252e77c0a478db55bc37ad21d3eb27",
+    "coach_intake/io.py": "7d5ec3f0ecadd9c2a7a1f3ceb6169b7e4648fabb833b28cf73f321c6e55f4049",
+    "coach_intake/audit.py": "a37cf14e335adfa8115f93d4b4c2c3524004cd3b472b609a40b72b2e7b432186",
+    "coach_intake/video.py": "ce686e843cc17a3c0b3f3d3f6265c91ede7cb168b7209d0c5ceab1e3fc65173a",
+    "tests_mvp/browser_research_bytes.cjs": "14eb3fb461b76305bd0a032bb817c055b7a763419b9e96e116e05daca3a0aff5",
+    "tests_mvp/browser_research_navigation.cjs": "99415534b386a2f9db2b779542f0aae5cc4e388b3b5229cef5eb57c1d3d03eff",
+    "coach_v1/note_history.py": "ff288b07e185ac86c9b877fb07a977ff9b7b1b0a8677b8ba4011ca4579cfa579",
+    "tests_mvp/browser_note_history.cjs": "2627264b0c9c6056d3ba5e6f7e0d879e8023bd4e73db16de894a3b467b0c2e9f",
+    "tests_mvp/browser_research_save_errors.cjs": "2841215bd1f5d080b9d54b77d3b876a1079583ada4a18c094e0be5072e5ba239",
+    "coach_v1/knowledge.py": "90eea0df8590e58b3efa1cb9229268ca05f23198d110d596226ed175dc4d8ed2",
+    "web_r4/knowledge.js": "51611b3c906054eeadce9e2e2809d9f3931180ef5de1277e5cd9e3100b3b277c",
+    "tests_mvp/browser_knowledge.cjs": "b9f3e268a89fcd54194eaf9df41a0bd99ceeb404157e634144cdf8376054e39a",
+    "tests_mvp/browser_note_recovery.cjs": "0ede01ad631c8062f569096f415680cfa37afc525757b321cf4a9938a62d3c46",
+    "tests_mvp/browser_draft_capture.cjs": "093709e18e60a8d2cd75af4df28e76aaa1dfb382b3190e01f3dd08fd5af52e73",
+    "tests_mvp/browser_draft_retry.cjs": "2ea34580b7b89e50215eb37a4cac8463945d4b6d68ba85dc297a0ac5b331dc90",
+    "web_r4/draft.js": "f6ebc4a62fbf12113a7b46f58bf7c006d6028f00c1aa39881038135864ce80b1",
+    "coach_v1/draft.py": "f1c1df846bb56d8ad6c20882327e03ae69ca5f8abda1712b44ab08bf7f888595",
+    "coach_v1/backup.py": "e980269ebf7d5ab270ed0cde8d9277cae745ea83d5ee8d64f9ddf905b68b70eb",
+    "web_r4/knowledge_review.js": "8c219cf25ef516f54a380bf5f9edaae7b6843d7fc7cd838106df5c7ab8f48af4",
+    "tests_mvp/browser_knowledge_review.cjs": "68aaccb104309c6bb115a4decd3c0a4409a4ed6191cc1a0292f1e297f5412e9e"
+  },
+  "passed": false,
+  "checks": [
+    {
+      "id": "initial-real-save-v1",
+      "passed": true,
+      "actual": {
+        "http_status": 200,
+        "session_id": "fb1803fd-3644-4cc3-9d70-ab892af64c42",
+        "revision": 1,
+        "request_expected_revision": 0,
+        "snapshot_session_id": "fb1803fd-3644-4cc3-9d70-ab892af64c42",
+        "all_observation_session_ids_match_actual_server_id": true
+      }
+    },
+    {
+      "id": "initial-v1-backend-200",
+      "passed": true,
+      "actual": {
+        "status": 200
+      }
+    },
+    {
+      "id": "initial-v1-independently-stored",
+      "passed": true,
+      "actual": {
+        "revision": 1
+      }
+    },
+    {
+      "id": "held-put-actually-commits-v2",
+      "passed": true,
+      "actual": {
+        "http_status": 200,
+        "committed_revision": 2,
+        "request_expected_revision": 1
+      }
+    },
+    {
+      "id": "backend-v2-before-browser-ack-backend-200",
+      "passed": true,
+      "actual": {
+        "status": 200
+      }
+    },
+    {
+      "id": "backend-v2-visible-before-response-release",
+      "passed": true,
+      "actual": {
+        "revision": 2,
+        "objective": "Browser submitted edit for v2"
+      }
+    },
+    {
+      "id": "draft-entered-before-v2-ack",
+      "passed": true,
+      "actual": {
+        "current_label": "MVP actual browser save race · 저장 버전 1",
+        "exact_draft": true,
+        "save_disabled": true
+      }
+    },
+    {
+      "id": "real-v2-ack-exact-draft-retained",
+      "passed": true,
+      "actual": {
+        "exact_draft": true
+      }
+    },
+    {
+      "id": "real-v2-ack-analysis-disabled",
+      "passed": true,
+      "actual": {
+        "analyze_disabled": true
+      }
+    },
+    {
+      "id": "next-real-put-expects-v2-and-saves-v3",
+      "passed": true,
+      "actual": {
+        "request_expected_revision": 2,
+        "http_status": 200,
+        "committed_revision": 3
+      }
+    },
+    {
+      "id": "v3-save-canonical-editor",
+      "passed": true,
+      "actual": {
+        "exact_canonical": true,
+        "analyze_disabled": false
+      }
+    },
+    {
+      "id": "backend-after-v3-backend-200",
+      "passed": true,
+      "actual": {
+        "status": 200
+      }
+    },
+    {
+      "id": "backend-v3-has-newer-draft",
+      "passed": true,
+      "actual": {
+        "revision": 3,
+        "objective": "Browser newer draft while v2 response held",
+        "stored_case_semantically_matches_ack": true
+      }
+    },
+    {
+      "id": "reload-reopens-real-v3",
+      "passed": true,
+      "actual": {
+        "exact_canonical_from_stored_get": true,
+        "current_label": "MVP actual browser save race · 저장 버전 3",
+        "analyze_disabled": false,
+        "stored_case_semantically_matches_ack": true,
+        "ack_editor_sha256": "93922d9e2461a34b04a799cd714f93ebace553c91b9e32a8e79437080b71deb2",
+        "stored_get_editor_sha256": "3de5f226b031d65a5d9f60ae3e52ef417c6de8c8798d0421b28668eefbe67c9f",
+        "reloaded_editor_sha256": "3de5f226b031d65a5d9f60ae3e52ef417c6de8c8798d0421b28668eefbe67c9f"
+      }
+    },
+    {
+      "id": "real-synthetic-analysis-of-v3",
+      "passed": true,
+      "actual": {
+        "submission_status": 202,
+        "job_id": "b9de72bd-4358-4506-b07d-c669de68b7d1",
+        "job_input_revision": 3,
+        "report_input_revision": 3,
+        "stale": false,
+        "objective": "Browser newer draft while v2 response held"
+      }
+    },
+    {
+      "id": "390px-no-horizontal-overflow",
+      "passed": true,
+      "actual": {
+        "scroll_width": 390,
+        "inner_width": 390
+      }
+    },
+    {
+      "id": "dirty-refreshed-reopen-cancel-native-confirm",
+      "passed": true,
+      "actual": {
+        "action": "dirty-refreshed-reopen-cancel",
+        "type": "confirm",
+        "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+        "response": "dismiss"
+      }
+    },
+    {
+      "id": "dirty-refreshed-reopen-cancel-exact-draft-retained",
+      "passed": true,
+      "actual": {
+        "editor_sha256": "21a9c68c24927c03989ecb3c957d51a2d62eb5ecd75f87f14ce5c58e18951de4",
+        "expected_sha256": "21a9c68c24927c03989ecb3c957d51a2d62eb5ecd75f87f14ce5c58e18951de4"
+      }
+    },
+    {
+      "id": "dirty-refreshed-reopen-cancel-current-session-retained",
+      "passed": true,
+      "actual": {
+        "current_label": "MVP actual browser save race · 저장 버전 3"
+      }
+    },
+    {
+      "id": "dirty-refreshed-reopen-cancel-analysis-disabled",
+      "passed": true,
+      "actual": {
+        "analyze_disabled": true
+      }
+    },
+    {
+      "id": "dirty-load-example-cancel-native-confirm",
+      "passed": true,
+      "actual": {
+        "action": "dirty-load-example-cancel",
+        "type": "confirm",
+        "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+        "response": "dismiss"
+      }
+    },
+    {
+      "id": "dirty-load-example-cancel-exact-draft-retained",
+      "passed": true,
+      "actual": {
+        "editor_sha256": "21a9c68c24927c03989ecb3c957d51a2d62eb5ecd75f87f14ce5c58e18951de4",
+        "expected_sha256": "21a9c68c24927c03989ecb3c957d51a2d62eb5ecd75f87f14ce5c58e18951de4"
+      }
+    },
+    {
+      "id": "dirty-load-example-cancel-current-session-retained",
+      "passed": true,
+      "actual": {
+        "current_label": "MVP actual browser save race · 저장 버전 3"
+      }
+    },
+    {
+      "id": "dirty-load-example-cancel-analysis-disabled",
+      "passed": true,
+      "actual": {
+        "analyze_disabled": true
+      }
+    },
+    {
+      "id": "dirty-import-cancel-native-confirm",
+      "passed": true,
+      "actual": {
+        "action": "dirty-import-cancel",
+        "type": "confirm",
+        "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+        "response": "dismiss"
+      }
+    },
+    {
+      "id": "dirty-import-cancel-exact-draft-retained",
+      "passed": true,
+      "actual": {
+        "editor_sha256": "21a9c68c24927c03989ecb3c957d51a2d62eb5ecd75f87f14ce5c58e18951de4",
+        "expected_sha256": "21a9c68c24927c03989ecb3c957d51a2d62eb5ecd75f87f14ce5c58e18951de4"
+      }
+    },
+    {
+      "id": "dirty-import-cancel-current-session-retained",
+      "passed": true,
+      "actual": {
+        "current_label": "MVP actual browser save race · 저장 버전 3"
+      }
+    },
+    {
+      "id": "dirty-import-cancel-analysis-disabled",
+      "passed": true,
+      "actual": {
+        "analyze_disabled": true
+      }
+    },
+    {
+      "id": "backend-after-native-cancellations-backend-200",
+      "passed": true,
+      "actual": {
+        "status": 200
+      }
+    },
+    {
+      "id": "native-cancellations-leave-backend-v3",
+      "passed": true,
+      "actual": {
+        "revision": 3,
+        "objective": "Browser newer draft while v2 response held"
+      }
+    },
+    {
+      "id": "import-a-first-keeps-newer-b-pending",
+      "passed": true,
+      "actual": {
+        "exact_initial_editor": true,
+        "selected_file": "b-second.json",
+        "unchanged_notice": true,
+        "notice_is_error": false,
+        "current_label": "아직 선택한 사례가 없습니다."
+      }
+    },
+    {
+      "id": "import-a-then-b-loads-exact-latest-b",
+      "passed": true,
+      "actual": {
+        "exact_latest_editor": true,
+        "selected_file": null,
+        "notice": "합성 입력 파일을 불러왔습니다.",
+        "notice_is_error": false,
+        "analyze_disabled": true,
+        "report_hidden": true
+      }
+    },
+    {
+      "id": "import-b-first-loads-exact-latest-b",
+      "passed": true,
+      "actual": {
+        "exact_latest_editor": true,
+        "selected_file": null,
+        "notice": "합성 입력 파일을 불러왔습니다.",
+        "notice_is_error": false
+      }
+    },
+    {
+      "id": "import-stale-a-after-b-cannot-replace-editor",
+      "passed": true,
+      "actual": {
+        "exact_latest_editor": true,
+        "selected_file": null,
+        "notice": "합성 입력 파일을 불러왔습니다.",
+        "notice_is_error": false,
+        "analyze_disabled": true,
+        "report_hidden": true
+      }
+    },
+    {
+      "id": "import-clear-selection-retains-initial-editor",
+      "passed": true,
+      "actual": {
+        "exact_initial_editor": true,
+        "selected_file": null,
+        "unchanged_notice": true,
+        "notice_is_error": false
+      }
+    },
+    {
+      "id": "import-cleared-stale-read-cannot-surface-error",
+      "passed": true,
+      "actual": {
+        "exact_initial_editor": true,
+        "selected_file": null,
+        "unchanged_notice": true,
+        "notice_is_error": false,
+        "current_label": "아직 선택한 사례가 없습니다.",
+        "analyze_disabled": true
+      }
+    },
+    {
+      "id": "research-valid-bom-raw-byte-hash",
+      "passed": true,
+      "actual": {
+        "http_status": 201,
+        "original_sha256": "77bc8ae89a5bb0100c7e4577b5b16e73cb8a38a3c5bfe2676f8d4dbd5b720c8a",
+        "reported_sha256": "77bc8ae89a5bb0100c7e4577b5b16e73cb8a38a3c5bfe2676f8d4dbd5b720c8a",
+        "persisted_sha256": "77bc8ae89a5bb0100c7e4577b5b16e73cb8a38a3c5bfe2676f8d4dbd5b720c8a"
+      }
+    },
+    {
+      "id": "research-valid-bom-transcript-byte-hash",
+      "passed": true,
+      "actual": {
+        "http_status": 201,
+        "original_sha256": "6b2b94759f54169abf69661cb408b9b49310c2f023f2eb6957850c9e53c6eca9",
+        "reported_sha256": "6b2b94759f54169abf69661cb408b9b49310c2f023f2eb6957850c9e53c6eca9",
+        "persisted_sha256": "6b2b94759f54169abf69661cb408b9b49310c2f023f2eb6957850c9e53c6eca9"
+      }
+    },
+    {
+      "id": "research-valid-multibyte-literal-replacement-byte-hash",
+      "passed": true,
+      "actual": {
+        "http_status": 201,
+        "original_sha256": "6cbdf000317a366297cdaa3902894b2aa9f300df7eccb43f2551339e527a8628",
+        "reported_sha256": "6cbdf000317a366297cdaa3902894b2aa9f300df7eccb43f2551339e527a8628"
+      }
+    },
+    {
+      "id": "research-malformed-utf8-no-post-or-resource",
+      "passed": true,
+      "actual": {
+        "posts_before": 3,
+        "posts_after": 3,
+        "resource_ids_unchanged": true
+      }
+    },
+    {
+      "id": "research-malformed-error-retains-old-dirty-note",
+      "passed": true,
+      "actual": {
+        "notice": "처리하지 못했습니다: UTF-8 파일 형식이 올바르지 않습니다.",
+        "old_resource_retained": true,
+        "exact_note_retained": true,
+        "note_revision_retained": true,
+        "dirty": true,
+        "note_editable": true,
+        "save_enabled": true
+      }
+    },
+    {
+      "id": "research-stale-invalid-a-before-b-keeps-newest-pending",
+      "passed": true,
+      "actual": {
+        "notice_unchanged": true,
+        "resource_unchanged": true,
+        "selected_file": "valid-b-pending.json",
+        "no_new_post": true,
+        "newest_b_still_held": true
+      }
+    },
+    {
+      "id": "research-stale-invalid-a-after-b-cannot-replace-or-error",
+      "passed": true,
+      "actual": {
+        "exact_ui_state_retained": true,
+        "no_stale_post": true,
+        "persisted_sha256": "99d28952d10c79c16d1bc4cff79db8cdb82ff8d20cc26e36cb39901bf1f6a390",
+        "original_b_sha256": "99d28952d10c79c16d1bc4cff79db8cdb82ff8d20cc26e36cb39901bf1f6a390"
+      }
+    },
+    {
+      "id": "research-logout-pending-malformed-read-no-stale-error",
+      "passed": true,
+      "actual": {
+        "exact_logged_out_state_retained_except_input_cleanup": true,
+        "workspace_hidden": true,
+        "cleared_resource": true,
+        "cleared_note": true,
+        "no_post_after_logout": true
+      }
+    },
+    {
+      "id": "research-loading-disables-delete-button",
+      "passed": true,
+      "actual": {
+        "actual_b_get_status": 200,
+        "old_resource_still_displayed": true,
+        "delete_disabled": true,
+        "note_disabled": true
+      }
+    },
+    {
+      "id": "research-real-held-delete-a-cannot-clear-new-b-draft",
+      "passed": true,
+      "actual": {
+        "actual_delete_status": 200,
+        "actual_deleted_id": "4124dd04c1e98491f61dcb8b924165a2372adb7f083351a4e515cc0367f9e1df",
+        "native_confirmation": {
+          "type": "confirm",
+          "message": "이 자료와 모든 복기 노트, 연결된 지식 후보 및 후속 버전을 삭제할까요?",
+          "response": "accept"
+        },
+        "exact_b_state_retained": true,
+        "exact_b_draft_retained": true,
+        "b_dirty": true
+      }
+    },
+    {
+      "id": "research-real-backend-a-deleted-b-preserved",
+      "passed": true,
+      "actual": {
+        "deleted_a_get_status": 404,
+        "retained_b_get_status": 200,
+        "b_note_revision": 0,
+        "b_exists_in_actual_list": true
+      }
+    },
+    {
+      "id": "research-current-delete-clears-notes-backend-and-list",
+      "passed": true,
+      "actual": {
+        "actual_current_delete_status": 200,
+        "native_confirmation": {
+          "type": "confirm",
+          "message": "이 자료와 모든 복기 노트, 연결된 지식 후보 및 후속 버전을 삭제할까요?",
+          "response": "accept"
+        },
+        "selection_cleared": true,
+        "exact_note_cleared": true,
+        "dirty_cleared": true,
+        "deleted_b_get_status": 404,
+        "deleted_b_note_status": 404,
+        "actual_list_excludes_b": true
+      }
+    },
+    {
+      "id": "note-history-real-index-descending-versions",
+      "passed": true,
+      "actual": {
+        "http_status": 200,
+        "current_revision": 3,
+        "actual_revisions": [
+          3,
+          2,
+          1
+        ],
+        "visible_revision_options": [
+          "",
+          "3",
+          "2",
+          "1"
+        ],
+        "read_only": true
+      }
+    },
+    {
+      "id": "note-history-v1-exact-unicode-readonly-dirty-v3-retained",
+      "passed": true,
+      "actual": {
+        "exact_real_api_preview": true,
+        "exact_unicode_v1": true,
+        "readonly_pre": true,
+        "exact_dirty_v3_editor_retained": true
+      }
+    },
+    {
+      "id": "note-history-v2-authentic-download-exact-preview-bytes",
+      "passed": true,
+      "actual": {
+        "exact_real_api_v2": true,
+        "exact_unicode_v2": true,
+        "genuine_browser_download_filename": "lol-coach-note-v2.json",
+        "downloaded_sha256": "d3339b0e9e856b03e1274a2436ed454ef198808fe822ef0477e4745528d1fddf",
+        "preview_utf8_sha256": "d3339b0e9e856b03e1274a2436ed454ef198808fe822ef0477e4745528d1fddf",
+        "exact_downloaded_bytes": true,
+        "exact_dirty_v3_editor_retained": true
+      }
+    },
+    {
+      "id": "note-history-current-save-uses-v3-and-creates-v4",
+      "passed": true,
+      "actual": {
+        "actual_expected_revision": 3,
+        "actual_saved_revision": 4,
+        "backend_latest_revision": 4,
+        "exact_v4_note": true,
+        "old_preview_invalidated": true
+      }
+    },
+    {
+      "id": "note-history-delayed-preview-cannot-follow-new-anchor",
+      "passed": true,
+      "actual": {
+        "held_real_status": 200,
+        "new_anchor": "1",
+        "exact_new_anchor_state_retained": true,
+        "no_stale_preview": true
+      }
+    },
+    {
+      "id": "note-history-delayed-preview-cannot-follow-new-resource",
+      "passed": true,
+      "actual": {
+        "held_real_status": 200,
+        "alternate_resource_selected": true,
+        "exact_new_resource_state_retained": true,
+        "no_stale_preview": true
+      }
+    },
+    {
+      "id": "note-history-delayed-preview-cannot-follow-logout",
+      "passed": true,
+      "actual": {
+        "held_real_status": 200,
+        "logged_out": true,
+        "exact_logged_out_history_retained": true,
+        "no_stale_preview": true
+      }
+    },
+    {
+      "id": "note-history-current-real-404-visible-with-draft-intact",
+      "passed": true,
+      "actual": {
+        "adversarial_missing_revision": 999,
+        "actual_http_status": 404,
+        "actual_error_code": "NOTE_REVISION_NOT_FOUND",
+        "visible_history_error": "처리하지 못했습니다: NOTE_REVISION_NOT_FOUND",
+        "stale_download_disabled": true,
+        "exact_dirty_current_editor_retained": true
+      }
+    },
+    {
+      "id": "note-history-reads-preserve-all-saved-versions-and-anchors",
+      "passed": true,
+      "actual": {
+        "final_actual_revisions": [
+          4,
+          3,
+          2,
+          1
+        ],
+        "all_original_unicode_payloads_preserved": true,
+        "alternate_anchor_revision": 1,
+        "actual_browser_note_writes": 1,
+        "sole_write_expected_revision": 3
+      }
+    },
+    {
+      "id": "note-history-delayed-real-404-cannot-follow-synthetic-view-toggle",
+      "passed": true,
+      "actual": {
+        "held_actual_http_status": 404,
+        "held_actual_error_code": "NOTE_REVISION_NOT_FOUND",
+        "exact_cleared_history_retained": true,
+        "exact_dirty_editor_retained": true,
+        "authentication_and_view_retained": true,
+        "authenticated": true,
+        "stale_history_error_absent": true
+      }
+    },
+    {
+      "id": "note-history-delayed-real-index-cannot-follow-current-resource-deletion",
+      "passed": true,
+      "actual": {
+        "held_actual_history_status": 200,
+        "held_actual_revisions": [
+          4,
+          3,
+          2,
+          1
+        ],
+        "actual_deleted_resource_status": 200,
+        "native_confirmation": {
+          "type": "confirm",
+          "message": "이 자료와 모든 복기 노트, 연결된 지식 후보 및 후속 버전을 삭제할까요?",
+          "response": "accept"
+        },
+        "exact_cleared_history_retained": true,
+        "old_options_absent": true,
+        "current_selection_cleared": true,
+        "notes_cleared": true,
+        "actual_deleted_resource_get_status": 404,
+        "actual_cascaded_history_get_status": 404
+      }
+    },
+    {
+      "id": "research-save-old-real-409-cannot-overwrite-new-b-draft-notice-auth",
+      "passed": true,
+      "actual": {
+        "actual_http_status": 409,
+        "actual_error_code": "REVISION_CONFLICT",
+        "submitted_expected_revision": 1,
+        "native_navigation_confirmation": {
+          "type": "confirm",
+          "message": "저장하지 않은 노트 변경을 버리고 이동할까요?",
+          "response": "accept"
+        },
+        "exact_b_ui_note_history_notice_auth_retained": true,
+        "exact_b_draft_retained": true,
+        "backend_a_revision": 2,
+        "backend_b_revision": 0,
+        "actual_browser_put_count": 1,
+        "authenticated": true
+      }
+    },
+    {
+      "id": "research-save-current-real-409-visible-keeps-draft-and-save-enabled",
+      "passed": true,
+      "actual": {
+        "actual_http_status": 409,
+        "actual_error_code": "REVISION_CONFLICT",
+        "submitted_expected_revision": 2,
+        "native_navigation_confirmation": {
+          "type": "confirm",
+          "message": "저장하지 않은 노트 변경을 버리고 이동할까요?",
+          "response": "accept"
+        },
+        "visible_current_error": "처리하지 못했습니다: REVISION_CONFLICT",
+        "exact_current_draft_retained": true,
+        "exact_other_ui_state_retained": true,
+        "save_enabled": true,
+        "authenticated": true,
+        "backend_a_revision": 3,
+        "backend_b_revision": 0,
+        "actual_browser_put_count": 2
+      }
+    },
+    {
+      "id": "knowledge-unsaved-source-note-gate-no-browser-post",
+      "passed": true,
+      "actual": {
+        "actual_browser_post_delta": 0,
+        "unsaved_note_revision": 0,
+        "source_unset": true,
+        "visible_source_gate": "저장된 복기 노트를 출처로 연결한 후 저장하세요."
+      }
+    },
+    {
+      "id": "knowledge-real-create-exploratory-unicode-source-hashes-keeps-new-draft",
+      "passed": true,
+      "actual": {
+        "actual_status": 201,
+        "review_state": "EXPLORATORY",
+        "coaching_enabled": false,
+        "exact_unicode_payload": true,
+        "exact_saved_source_hashes": true,
+        "new_draft_and_source_retained": true,
+        "saved_note_text_not_copied": true,
+        "native_source_confirmation": {
+          "type": "confirm",
+          "message": "이 초안에 연결된 출처를 현재 저장 노트로 바꿀까요? 제안 내용은 유지됩니다.",
+          "response": "accept"
+        }
+      }
+    },
+    {
+      "id": "knowledge-next-save-uses-acknowledged-cas-and-preserves-prior-version",
+      "passed": true,
+      "actual": {
+        "actual_expected_version": "14d44dd8248f4d6bac0b1e06bcd90879",
+        "actual_supersedes": "14d44dd8248f4d6bac0b1e06bcd90879",
+        "old_version_immutable": true,
+        "new_draft_exactly_saved": true
+      }
+    },
+    {
+      "id": "knowledge-old-version-authentic-download-exact-saved-object",
+      "passed": true,
+      "actual": {
+        "latest_cas_for_old_view": "be51209556144536a357b3b211d0fbec",
+        "genuine_download_filename": "lol-coach-knowledge-14d44dd8248f4d6bac0b1e06bcd90879.json",
+        "expected_download_filename": "lol-coach-knowledge-14d44dd8248f4d6bac0b1e06bcd90879.json",
+        "exact_filename": true,
+        "downloaded_utf8_sha256": "295c1a279b3c8d6796af62db66b1d7bb6f2aa6a256f37d89ebc438cc1017566b",
+        "viewed_get_pretty_utf8_sha256": "295c1a279b3c8d6796af62db66b1d7bb6f2aa6a256f37d89ebc438cc1017566b",
+        "independent_get_pretty_utf8_sha256": "295c1a279b3c8d6796af62db66b1d7bb6f2aa6a256f37d89ebc438cc1017566b",
+        "created_post_pretty_utf8_sha256": "c5c5564aada8b62443e180caa07bf073525603c48da1d819a71fdc4e5a022cfb",
+        "post_get_semantically_equal": true,
+        "post_get_pretty_bytes_equal": false,
+        "exact_saved_download_bytes": true,
+        "exact_unicode_content": true,
+        "dirty_editor_untouched": true
+      }
+    },
+    {
+      "id": "knowledge-current-real-conflict-keeps-draft-source-and-auth",
+      "passed": true,
+      "actual": {
+        "actual_status": 409,
+        "actual_error_code": "REVISION_CONFLICT",
+        "submitted_expected_version": "be51209556144536a357b3b211d0fbec",
+        "exact_current_draft_retained": true,
+        "source_retained": true,
+        "authenticated": true,
+        "backend_latest_version": "171949d5a74b40e684e59ae63c79d3d1"
+      }
+    },
+    {
+      "id": "knowledge-native-dirty-navigation-cancel-and-hidden-draft-preserved",
+      "passed": true,
+      "actual": {
+        "native_confirmations": [
+          {
+            "type": "confirm",
+            "message": "저장하지 않은 지식 제안 변경을 버리고 이동할까요?",
+            "response": "dismiss"
+          },
+          {
+            "type": "confirm",
+            "message": "저장하지 않은 지식 제안 변경을 버리고 이동할까요?",
+            "response": "dismiss"
+          },
+          {
+            "type": "confirm",
+            "message": "이 초안에 연결된 출처를 현재 저장 노트로 바꿀까요? 제안 내용은 유지됩니다.",
+            "response": "dismiss"
+          }
+        ],
+        "exact_hidden_and_cancelled_draft_retained": true
+      }
+    },
+    {
+      "id": "knowledge-source-delete-cascades-descendants-keeps-independent-nonidentifying-receipt",
+      "passed": true,
+      "actual": {
+        "actual_delete_status": 200,
+        "actual_deleted_versions": 3,
+        "receipt_keys": [
+          "deleted_versions",
+          "id",
+          "receipt_id",
+          "status"
+        ],
+        "dependent_get_statuses": [
+          404,
+          404,
+          404
+        ],
+        "independent_get_status": 200,
+        "deleted_display_cleared": true
+      }
+    },
+    {
+      "id": "knowledge-unrelated-source-deletion-keeps-independent-dirty-draft",
+      "passed": true,
+      "actual": {
+        "actual_delete_status": 200,
+        "deleted_knowledge_versions": 0,
+        "exact_independent_editor_source_notice_auth_retained": true
+      }
+    },
+    {
+      "id": "knowledge-old-real-conflict-cannot-follow-new-editor-context",
+      "passed": true,
+      "actual": {
+        "held_actual_status": 409,
+        "held_actual_error_code": "REVISION_CONFLICT",
+        "new_context_exactly_retained": true,
+        "authenticated": true
+      }
+    },
+    {
+      "id": "knowledge-middle-source-delete-clears-displayed-descendant-with-ancestor-surviving",
+      "passed": true,
+      "actual": {
+        "actual_deleted_versions": 2,
+        "held_exact_missing_status": 404,
+        "download_immediately_blocked_while_exact_validation_pending": true,
+        "ancestor_middle_descendant_source_statuses": [
+          200,
+          404,
+          404,
+          200
+        ],
+        "deleted_exact_display_and_download_cleared": true
+      }
+    }
+  ],
+  "backend_snapshots": [
+    {
+      "label": "initial-v1",
+      "observed_at": "2026-10-09T04:09:41.153Z",
+      "http_status": 200,
+      "session_id": "fb1803fd-3644-4cc3-9d70-ab892af64c42",
+      "revision": 1,
+      "objective": "합성 사례: 경험치와 다음 선택권 보존",
+      "case_sha256": "5891b5f72f86fd086489d5c138f40936e3789583f93811727abe7c65635f17eb"
+    },
+    {
+      "label": "backend-v2-before-browser-ack",
+      "observed_at": "2026-10-09T04:09:41.212Z",
+      "http_status": 200,
+      "session_id": "fb1803fd-3644-4cc3-9d70-ab892af64c42",
+      "revision": 2,
+      "objective": "Browser submitted edit for v2",
+      "case_sha256": "2fb6f6d88904e5a7fa0b755617999648c4d663d8d4b22098de0a62b4cba12e2e"
+    },
+    {
+      "label": "backend-after-v3",
+      "observed_at": "2026-10-09T04:09:41.567Z",
+      "http_status": 200,
+      "session_id": "fb1803fd-3644-4cc3-9d70-ab892af64c42",
+      "revision": 3,
+      "objective": "Browser newer draft while v2 response held",
+      "case_sha256": "1eafb93e5669e9766b6355ffb8b7e82892a3614d847d11a392b0ab10a1b7cbea"
+    },
+    {
+      "label": "backend-after-native-cancellations",
+      "observed_at": "2026-10-09T04:09:42.566Z",
+      "http_status": 200,
+      "session_id": "fb1803fd-3644-4cc3-9d70-ab892af64c42",
+      "revision": 3,
+      "objective": "Browser newer draft while v2 response held",
+      "case_sha256": "1eafb93e5669e9766b6355ffb8b7e82892a3614d847d11a392b0ab10a1b7cbea"
+    }
+  ],
+  "ui_snapshots": [
+    {
+      "label": "typed-draft-before-release",
+      "observed_at": "2026-10-09T04:09:41.483Z",
+      "current_label": "MVP actual browser save race · 저장 버전 1",
+      "editor_sha256": "d6c1b6961eadb7db7bced405e74f063e98323244e098860851bb25f4e17077d7",
+      "exact_editor_match": true,
+      "editor_objective": "Browser newer draft while v2 response held",
+      "analyze_disabled": true,
+      "save_disabled": true,
+      "report_hidden": true,
+      "notice": "입력을 저장했습니다. 분석 실행으로 이어가세요."
+    },
+    {
+      "label": "after-real-v2-ack",
+      "observed_at": "2026-10-09T04:09:41.513Z",
+      "current_label": "MVP actual browser save race · 저장 버전 2",
+      "editor_sha256": "d6c1b6961eadb7db7bced405e74f063e98323244e098860851bb25f4e17077d7",
+      "exact_editor_match": true,
+      "editor_objective": "Browser newer draft while v2 response held",
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "요청한 입력은 저장했습니다. 저장 중 수정한 초안은 그대로 남아 있으니 추가 저장하세요."
+    },
+    {
+      "label": "after-v3-save",
+      "observed_at": "2026-10-09T04:09:41.563Z",
+      "current_label": "MVP actual browser save race · 저장 버전 3",
+      "editor_sha256": "93922d9e2461a34b04a799cd714f93ebace553c91b9e32a8e79437080b71deb2",
+      "exact_editor_match": true,
+      "editor_objective": "Browser newer draft while v2 response held",
+      "analyze_disabled": false,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "입력을 저장했습니다. 분석 실행으로 이어가세요."
+    },
+    {
+      "label": "reloaded-v3",
+      "observed_at": "2026-10-09T04:09:41.719Z",
+      "current_label": "MVP actual browser save race · 저장 버전 3",
+      "editor_sha256": "3de5f226b031d65a5d9f60ae3e52ef417c6de8c8798d0421b28668eefbe67c9f",
+      "exact_editor_match": true,
+      "editor_objective": "Browser newer draft while v2 response held",
+      "analyze_disabled": false,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "저장한 사례를 열었습니다."
+    },
+    {
+      "label": "dirty-refreshed-reopen-cancel-after-cancel",
+      "observed_at": "2026-10-09T04:09:42.500Z",
+      "current_label": "MVP actual browser save race · 저장 버전 3",
+      "editor_sha256": "21a9c68c24927c03989ecb3c957d51a2d62eb5ecd75f87f14ce5c58e18951de4",
+      "exact_editor_match": true,
+      "editor_objective": "Browser dirty draft kept after native cancellation",
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "복기 결과를 저장했습니다."
+    },
+    {
+      "label": "dirty-load-example-cancel-after-cancel",
+      "observed_at": "2026-10-09T04:09:42.543Z",
+      "current_label": "MVP actual browser save race · 저장 버전 3",
+      "editor_sha256": "21a9c68c24927c03989ecb3c957d51a2d62eb5ecd75f87f14ce5c58e18951de4",
+      "exact_editor_match": true,
+      "editor_objective": "Browser dirty draft kept after native cancellation",
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "복기 결과를 저장했습니다."
+    },
+    {
+      "label": "dirty-import-cancel-after-cancel",
+      "observed_at": "2026-10-09T04:09:42.560Z",
+      "current_label": "MVP actual browser save race · 저장 버전 3",
+      "editor_sha256": "21a9c68c24927c03989ecb3c957d51a2d62eb5ecd75f87f14ce5c58e18951de4",
+      "exact_editor_match": true,
+      "editor_objective": "Browser dirty draft kept after native cancellation",
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "복기 결과를 저장했습니다."
+    },
+    {
+      "label": "import-a-before-b-initial",
+      "observed_at": "2026-10-09T04:09:42.630Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "editor_objective": null,
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+    },
+    {
+      "label": "import-stale-a-while-b-pending",
+      "observed_at": "2026-10-09T04:09:42.664Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exact_editor_match": true,
+      "editor_objective": null,
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+    },
+    {
+      "label": "import-a-then-b-final",
+      "observed_at": "2026-10-09T04:09:42.670Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "a5b095bc85531c672a691f2f4fc5c35c3f7b9819c7825ea0c23de0f530ab0618",
+      "exact_editor_match": true,
+      "editor_objective": "Newest native File B survives either completion order",
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "합성 입력 파일을 불러왔습니다."
+    },
+    {
+      "label": "import-b-before-a-initial",
+      "observed_at": "2026-10-09T04:09:42.733Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "editor_objective": null,
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+    },
+    {
+      "label": "import-b-before-stale-a",
+      "observed_at": "2026-10-09T04:09:42.767Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "a5b095bc85531c672a691f2f4fc5c35c3f7b9819c7825ea0c23de0f530ab0618",
+      "exact_editor_match": true,
+      "editor_objective": "Newest native File B survives either completion order",
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "합성 입력 파일을 불러왔습니다."
+    },
+    {
+      "label": "import-b-then-stale-a-final",
+      "observed_at": "2026-10-09T04:09:42.770Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "a5b095bc85531c672a691f2f4fc5c35c3f7b9819c7825ea0c23de0f530ab0618",
+      "exact_editor_match": true,
+      "editor_objective": "Newest native File B survives either completion order",
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "합성 입력 파일을 불러왔습니다."
+    },
+    {
+      "label": "import-cleared-selection-initial",
+      "observed_at": "2026-10-09T04:09:42.835Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "editor_objective": null,
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+    },
+    {
+      "label": "import-cleared-before-read-release",
+      "observed_at": "2026-10-09T04:09:42.885Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exact_editor_match": true,
+      "editor_objective": null,
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+    },
+    {
+      "label": "import-cleared-after-stale-read",
+      "observed_at": "2026-10-09T04:09:42.887Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exact_editor_match": true,
+      "editor_objective": null,
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+    },
+    {
+      "label": "first-failure-state",
+      "observed_at": "2026-10-09T04:10:05.373Z",
+      "current_label": "아직 선택한 사례가 없습니다.",
+      "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "editor_objective": null,
+      "analyze_disabled": true,
+      "save_disabled": false,
+      "report_hidden": true,
+      "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+    }
+  ],
+  "native_dialogs": [
+    {
+      "action": "dirty-refreshed-reopen-cancel",
+      "type": "confirm",
+      "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+      "response": "dismiss"
+    },
+    {
+      "action": "dirty-load-example-cancel",
+      "type": "confirm",
+      "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+      "response": "dismiss"
+    },
+    {
+      "action": "dirty-import-cancel",
+      "type": "confirm",
+      "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+      "response": "dismiss"
+    }
+  ],
+  "actual_browser_write_requests": [
+    {
+      "at": "2026-10-09T04:09:41.114Z",
+      "route": "/dev/v1/sessions",
+      "method": "POST",
+      "title": "MVP actual browser save race"
+    },
+    {
+      "at": "2026-10-09T04:09:41.121Z",
+      "route": "/dev/v1/sessions/fb1803fd-3644-4cc3-9d70-ab892af64c42/case",
+      "method": "PUT",
+      "expected_revision": 0,
+      "objective": "합성 사례: 경험치와 다음 선택권 보존"
+    },
+    {
+      "at": "2026-10-09T04:09:41.205Z",
+      "route": "/dev/v1/sessions/fb1803fd-3644-4cc3-9d70-ab892af64c42/case",
+      "method": "PUT",
+      "expected_revision": 1,
+      "objective": "Browser submitted edit for v2"
+    },
+    {
+      "at": "2026-10-09T04:09:41.537Z",
+      "route": "/dev/v1/sessions/fb1803fd-3644-4cc3-9d70-ab892af64c42/case",
+      "method": "PUT",
+      "expected_revision": 2,
+      "objective": "Browser newer draft while v2 response held"
+    },
+    {
+      "at": "2026-10-09T04:09:41.756Z",
+      "route": "/dev/v1/sessions/fb1803fd-3644-4cc3-9d70-ab892af64c42/reviews",
+      "method": "POST",
+      "expected_revision": 3
+    },
+    {
+      "at": "2026-10-09T04:09:43.074Z",
+      "route": "/dev/v1/research",
+      "method": "POST",
+      "title": "browser-bytes-bom.json"
+    },
+    {
+      "at": "2026-10-09T04:09:43.127Z",
+      "route": "/dev/v1/research",
+      "method": "POST",
+      "title": "browser-bytes-bom.txt"
+    },
+    {
+      "at": "2026-10-09T04:09:43.168Z",
+      "route": "/dev/v1/research",
+      "method": "POST",
+      "title": "browser-bytes-multibyte.json"
+    },
+    {
+      "at": "2026-10-09T04:09:43.398Z",
+      "route": "/dev/v1/research",
+      "method": "POST",
+      "title": "valid-b-pending.json"
+    },
+    {
+      "at": "2026-10-09T04:09:43.640Z",
+      "route": "/dev/v1/research",
+      "method": "POST",
+      "title": "valid-b-first.json"
+    },
+    {
+      "at": "2026-10-09T04:09:44.307Z",
+      "route": "/dev/v1/research/4124dd04c1e98491f61dcb8b924165a2372adb7f083351a4e515cc0367f9e1df",
+      "method": "DELETE",
+      "expected_revision": null,
+      "objective": null,
+      "title": null
+    },
+    {
+      "at": "2026-10-09T04:09:44.389Z",
+      "route": "/dev/v1/research/fc52a839952b164860f0c4beb971b460b3ef0b909b6411f01af694e0e6be3082",
+      "method": "DELETE",
+      "expected_revision": null,
+      "objective": null,
+      "title": null
+    },
+    {
+      "at": "2026-10-09T04:09:44.937Z",
+      "route": "/dev/v1/research/2a2c4e57168dd9e85239235925f5be8cbd7edb874d2b9dd2383a59addd7eb2da/notes/overview",
+      "method": "PUT",
+      "expected_revision": 3
+    },
+    {
+      "at": "2026-10-09T04:09:46.141Z",
+      "route": "/dev/v1/research/2a2c4e57168dd9e85239235925f5be8cbd7edb874d2b9dd2383a59addd7eb2da",
+      "method": "DELETE",
+      "expected_revision": null,
+      "objective": null,
+      "title": null
+    },
+    {
+      "at": "2026-10-09T04:09:46.490Z",
+      "route": "/dev/v1/research/7d7b16b834dec1dae441d0c88f12b2c8362c51e9ec83c280752e2134fefdd5d9/notes/overview",
+      "method": "PUT",
+      "expected_revision": 1
+    },
+    {
+      "at": "2026-10-09T04:09:46.756Z",
+      "route": "/dev/v1/research/7d7b16b834dec1dae441d0c88f12b2c8362c51e9ec83c280752e2134fefdd5d9/notes/overview",
+      "method": "PUT",
+      "expected_revision": 2
+    },
+    {
+      "at": "2026-10-09T04:09:47.372Z",
+      "route": "/dev/v1/research/620790602b734608870138c5d0dd64611635f6a1c71d05b697efd204e72186e6/notes/overview",
+      "method": "PUT",
+      "expected_revision": 0
+    },
+    {
+      "at": "2026-10-09T04:09:47.504Z",
+      "route": "/dev/v1/knowledge/proposals",
+      "method": "POST"
+    },
+    {
+      "at": "2026-10-09T04:09:47.807Z",
+      "route": "/dev/v1/knowledge/proposals",
+      "method": "POST"
+    },
+    {
+      "at": "2026-10-09T04:09:48.089Z",
+      "route": "/dev/v1/knowledge/proposals",
+      "method": "POST"
+    },
+    {
+      "at": "2026-10-09T04:09:48.508Z",
+      "route": "/dev/v1/research/620790602b734608870138c5d0dd64611635f6a1c71d05b697efd204e72186e6",
+      "method": "DELETE",
+      "expected_revision": null,
+      "objective": null,
+      "title": null
+    },
+    {
+      "at": "2026-10-09T04:09:48.874Z",
+      "route": "/dev/v1/research/1d7e29d9c5eb1f165c97e6d149ef35e328c74f9128b6049eccac66739614a2f7",
+      "method": "DELETE",
+      "expected_revision": null,
+      "objective": null,
+      "title": null
+    },
+    {
+      "at": "2026-10-09T04:09:49.006Z",
+      "route": "/dev/v1/knowledge/proposals",
+      "method": "POST"
+    },
+    {
+      "at": "2026-10-09T04:09:49.591Z",
+      "route": "/dev/v1/research/4feb9e29dbf17726cd76f02fedad1dcf95e2aabcec3be2d5d6913d6f0708c3d1",
+      "method": "DELETE",
+      "expected_revision": null,
+      "objective": null,
+      "title": null
+    },
+    {
+      "at": "2026-10-09T04:09:50.092Z",
+      "route": "/dev/v1/research/66cd002d83d6b90b272fa01e854a7eee25f839718db8496176fce66a0a24b90e",
+      "method": "DELETE",
+      "expected_revision": null,
+      "objective": null,
+      "title": null
+    }
+  ],
+  "page_errors": [],
+  "first_failure": {
+    "stage": "research-navigation-delete-integrity",
+    "observed_at": "2026-10-09T04:10:05.365Z",
+    "error": "page.waitForFunction: Timeout 15000ms exceeded.\n    at checkKnowledge (/workspace/lol-coach/tests_mvp/browser_knowledge.cjs:73:468)\n    at async run (/workspace/lol-coach/tests_mvp/browser_save_race.cjs:361:5)",
+    "knowledge_state": {
+      "apiTrace": [
+        {
+          "args": [
+            "/sessions"
+          ],
+          "start": 1791518986816,
+          "done": 1791518986835
+        },
+        {
+          "args": [
+            "/research"
+          ],
+          "start": 1791518986924,
+          "done": 1791518986932
+        },
+        {
+          "args": [
+            "/research/620790602b734608870138c5d0dd64611635f6a1c71d05b697efd204e72186e6"
+          ],
+          "start": 1791518986986,
+          "done": 1791518987000
+        },
+        {
+          "args": [
+            "/research/620790602b734608870138c5d0dd64611635f6a1c71d05b697efd204e72186e6/notes/overview"
+          ],
+          "start": 1791518987000,
+          "done": 1791518987006
+        },
+        {
+          "args": [
+            "/knowledge/proposals"
+          ],
+          "start": 1791518987055,
+          "done": 1791518987067
+        },
+        {
+          "args": [
+            "/research"
+          ],
+          "start": 1791518987285,
+          "done": 1791518987303
+        },
+        {
+          "args": [
+            "/research/620790602b734608870138c5d0dd64611635f6a1c71d05b697efd204e72186e6/notes/overview",
+            "PUT",
+            {
+              "note": {
+                "known": "PRIVATE-SAVED-NOTE-bd92214e-6bad-4bc6-9d7a-73feaffcf0ab 한글 😀\n당시 근거",
+                "intention": "직접 쓴 의도",
+                "alternative": "대안 UNKNOWN",
+                "outcome": "사후 결과는 분리"
+              },
+              "expected_revision": 0
+            }
+          ],
+          "start": 1791518987369,
+          "done": 1791518987383
+        },
+        {
+          "args": [
+            "/knowledge/proposals"
+          ],
+          "start": 1791518987435,
+          "done": 1791518987451
+        },
+        {
+          "args": [
+            "/knowledge/proposals",
+            "POST",
+            {
+              "rule": {
+                "patch_range": "UNKNOWN",
+                "applicability": {
+                  "champion": "UNKNOWN",
+                  "role": "UNKNOWN",
+                  "matchup": "UNKNOWN",
+                  "level": "UNKNOWN",
+                  "context": "상황 미검증 α\n조건 😀"
+                },
+                "claim": "탐색 주장 한글·日本語·😀\n\"인용\" <조건>",
+                "mechanism": "미검증 작동 가설 β",
+                "author": "개인 작성 테스트",
+                "required_fields": [
+                  "UNKNOWN",
+                  "실제 관찰 필요"
+                ],
+                "counterexamples": [
+                  "UNKNOWN",
+                  "반례는 아직 수집 전"
+                ],
+                "limitations": [
+                  "PLAYER 검증 아님",
+                  "코칭에 미적용"
+                ]
+              },
+              "source": {
+                "resource_id": "620790602b734608870138c5d0dd64611635f6a1c71d05b697efd204e72186e6",
+                "anchor": "overview",
+                "note_revision": 1
+              },
+              "rule_id": null,
+              "expected_version": null
+            }
+          ],
+          "start": 1791518987502,
+          "done": 1791518987735
+        },
+        {
+          "args": [
+            "/research"
+          ],
+          "start": 1791518987535,
+          "done": 1791518987552
+        },
+        {
+          "args": [
+            "/research/5c6fdd7a168c7c06740d906ef251151c19b1902e2ad9834972c9fcc10ba20600"
+          ],
+          "start": 1791518987585,
+          "done": 1791518987599
+        },
+        {
+          "args": [
+            "/research/5c6fdd7a168c7c06740d906ef251151c19b1902e2ad9834972c9fcc10ba20600/notes/overview"
+          ],
+          "start": 1791518987599,
+          "done": 1791518987604
+        },
+        {
+          "args": [
+            "/knowledge/proposals"
+          ],
+          "start": 1791518987655,
+          "done": 1791518987669
+        },
+        {
+          "args": [
+            "/knowledge/proposals/bb0f9d94c58a457c849d31537966b325/versions/14d44dd8248f4d6bac0b1e06bcd90879"
+          ],
+          "start": 1791518987735,
+          "done": 1791518987745
+        },
+        {
+          "args": [
+            "/knowledge/proposals"
+          ],
+          "start": 1791518987745,
+          "done": 1791518987753
+        },
+        {
+          "args": [
+            "/knowledge/proposals",
+            "POST",
+            {
+              "rule": {
+                "patch_range": "UNKNOWN",
+                "applicability": {
+                  "champion": "UNKNOWN",
+                  "role": "UNKNOWN",
+                  "matchup": "UNKNOWN",
+                  "level": "UNKNOWN",
+                  "context": "상황 미검증 α\n조건 😀"
+                },
+                "claim": "저장 대기 중 새 초안 👀\nB 출처 유지",
+                "mechanism": "미검증 작동 가설 β",
+                "author": "개인 작성 테스트",
+                "required_fields": [
+                  "UNKNOWN",
+                  "실제 관찰 필요"
+                ],
+                "counterexamples": [
+                  "UNKNOWN",
+                  "반례는 아직 수집 전"
+                ],
+                "limitations": [
+                  "PLAYER 검증 아님",
+                  "코칭에 미적용"
+                ]
+              },
+              "source": {
+                "resource_id": "5c6fdd7a168c7c06740d906ef251151c19b1902e2ad9834972c9fcc10ba20600",
+                "anchor": "overview",
+                "note_revision": 1
+              },
+              "rule_id": "bb0f9d94c58a457c849d31537966b325",
+              "expected_version": "14d44dd8248f4d6bac0b1e06bcd90879"
+            }
+          ],
+          "start": 1791518987804,
+          "done": 1791518987816
+        },
+        {
+          "args": [
+            "/knowledge/proposals/bb0f9d94c58a457c849d31537966b325/versions/be51209556144536a357b3b211d0fbec"
+          ],
+          "start": 1791518987816,
+          "done": 1791518987822
+        },
+        {
+          "args": [
+            "/knowledge/proposals"
+          ],
+          "start": 1791518987823,
+          "done": 1791518987826
+        },
+        {
+          "args": [
+            "/knowledge/proposals"
+          ],
+          "start": 1791518987869,
+          "done": 1791518987882
+        },
+        {
+          "args": [
+            "/knowledge/proposals/bb0f9d94c58a457c849d31537966b325/versions/14d44dd8248f4d6bac0b1e06bcd90879"
+          ],
+          "start": 1791518987956,
+          "done": 1791518987968
+        },
+        {
+          "args": [
+            "/knowledge/proposals/bb0f9d94c58a457c849d31537966b325"
+          ],
+          "start": 1791518987968,
+          "done": 1791518987973
+        },
+        {
+          "args": [
+            "/knowledge/proposals",
+            "POST",
+            {
+              "rule": {
+                "patch_range": "UNKNOWN",
+                "applicability": {
+                  "champion": "UNKNOWN",
+                  "role": "UNKNOWN",
+                  "matchup": "UNKNOWN",
+                  "level": "UNKNOWN",
+                  "context": "상황 미검증 α\n조건 😀"
+                },
+                "claim": "현재 충돌 후 보존할 초안 😀",
+                "mechanism": "미검증 작동 가설 β",
+                "author": "개인 작성 테스트",
+                "required_fields": [
+                  "UNKNOWN",
+                  "실제 관찰 필요"
+                ],
+                "counterexamples": [
+                  "UNKNOWN",
+                  "반례는 아직 수집 전"
+                ],
+                "limitations": [
+                  "PLAYER 검증 아님",
+                  "코칭에 미적용"
+                ]
+              },
+              "source": {
+                "resource_id": "620790602b734608870138c5d0dd64611635f6a1c71d05b697efd204e72186e6",
+                "anchor": "overview",
+                "note_revision": 1
+              },
+              "rule_id": "bb0f9d94c58a457c849d31537966b325",
+              "expected_version": "be51209556144536a357b3b211d0fbec"
+            }
+          ],
+          "start": 1791518988086,
+          "error": "REVISION_CONFLICT"
+        },
+        {
+          "args": [
+            "/research"
+          ],
+          "start": 1791518988287,
+          "done": 1791518988304
+        },
+        {
+          "args": [
+            "/knowledge/proposals"
+          ],
+          "start": 1791518988337,
+          "done": 1791518988353
+        },
+        {
+          "args": [
+            "/research"
+          ],
+          "start": 1791518988385,
+          "done": 1791518988400
+        },
+        {
+          "args": [
+            "/research/620790602b734608870138c5d0dd64611635f6a1c71d05b697efd204e72186e6"
+          ],
+          "start": 1791518988437,
+          "done": 1791518988449
+        },
+        {
+          "args": [
+            "/research/620790602b734608870138c5d0dd64611635f6a1c71d05b697efd204e72186e6/notes/overview"
+          ],
+          "start": 1791518988449,
+          "done": 1791518988453
+        },
+        {
+          "args": [
+            "/research/620790602b734608870138c5d0dd64611635f6a1c71d05b697efd204e72186e6",
+            "DELETE"
+          ],
+          "start": 1791518988506,
+          "done": 1791518988518
+        },
+        {
+          "args": [
+            "/knowledge/proposals/bb0f9d94c58a457c849d31537966b325"
+          ],
+          "start": 1791518988518,
+          "error": "KNOWLEDGE_RULE_NOT_FOUND"
+        },
+        {
+          "args": [
+            "/knowledge/proposals/bb0f9d94c58a457c849d31537966b325/versions/14d44dd8248f4d6bac0b1e06bcd90879"
+          ],
+          "start": 1791518988518,
+          "error": "KNOWLEDGE_RULE_NOT_FOUND"
+        },
+        {
+          "args": [
+            "/research/620790602b734608870138c5d0dd64611635f6a1c71d05b697efd204e72186e6"
+          ],
+          "start": 1791518988518,
+          "error": "RESOURCE_NOT_FOUND"
+        },
+        {
+          "args": [
+            "/research"
+          ],
+          "start": 1791518988519,
+          "done": 1791518988527
+        },
+        {
+          "args": [
+            "/knowledge/proposals"
+          ],
+          "start": 1791518988528,
+          "done": 1791518988530
+        },
+        {
+          "args": [
+            "/knowledge/proposals"
+          ],
+          "start": 1791518988569,
+          "done": 1791518988583
+        },
+        {
+          "args": [
+            "/knowledge/proposals/0c1460d9b672437b8d98985035d692f0/versions/ffc29b48c5264fd1af3678918f219df4"
+          ],
+          "start": 1791518988653,
+          "done": 1791518988666
+        },
+        {
+          "args": [
+            "/knowledge/proposals/0c1460d9b672437b8d98985035d692f0"
+          ],
+          "start": 1791518988666,
+          "done": 1791518988672
+        },
+        {
+          "args": [
+            "/research"
+          ],
+          "start": 1791518988740,
+          "done": 1791518988753
+        },
+        {
+          "args": [
+            "/research/1d7e29d9c5eb1f165c97e6d149ef35e328c74f9128b6049eccac66739614a2f7"
+          ],
+          "start": 1791518988806,
+          "done": 1791518988816
+        },
+        {
+          "args": [
+            "/research/1d7e29d9c5eb1f165c97e6d149ef35e328c74f9128b6049eccac66739614a2f7/notes/overview"
+          ],
+          "start": 1791518988816,
+          "done": 1791518988823
+        },
+        {
+          "args": [
+            "/research/1d7e29d9c5eb1f165c97e6d149ef35e328c74f9128b6049eccac66739614a2f7",
+            "DELETE"
+          ],
+          "start": 1791518988873,
+          "done": 1791518988883
+        },
+        {
+          "args": [
+            "/knowledge/proposals/0c1460d9b672437b8d98985035d692f0"
+          ],
+          "start": 1791518988883,
+          "done": 1791518988890
+        },
+        {
+          "args": [
+            "/knowledge/proposals/0c1460d9b672437b8d98985035d692f0/versions/ffc29b48c5264fd1af3678918f219df4"
+          ],
+          "start": 1791518988883,
+          "done": 1791518988890
+        },
+        {
+          "args": [
+            "/research/5c6fdd7a168c7c06740d906ef251151c19b1902e2ad9834972c9fcc10ba20600"
+          ],
+          "start": 1791518988883,
+          "done": 1791518988889
+        },
+        {
+          "args": [
+            "/research"
+          ],
+          "start": 1791518988884,
+          "done": 1791518988891
+        },
+        {
+          "args": [
+            "/knowledge/proposals"
+          ],
+          "start": 1791518988890,
+          "done": 1791518988893
+        },
+        {
+          "args": [
+            "/knowledge/proposals"
+          ],
+          "start": 1791518988935,
+          "done": 1791518988949
+        },
+        {
+          "args": [
+            "/knowledge/proposals",
+            "POST",
+            {
+              "rule": {
+                "patch_range": "UNKNOWN",
+                "applicability": {
+                  "champion": "UNKNOWN",
+                  "role": "UNKNOWN",
+                  "matchup": "UNKNOWN",
+                  "level": "UNKNOWN",
+                  "context": "상황 미검증 α\n조건 😀"
+                },
+                "claim": "독립 후보의 미저장 초안 보존",
+                "mechanism": "미검증 작동 가설 β",
+                "author": "개인 작성 테스트",
+                "required_fields": [
+                  "UNKNOWN",
+                  "실제 관찰 필요"
+                ],
+                "counterexamples": [
+                  "UNKNOWN",
+                  "반례는 아직 수집 전"
+                ],
+                "limitations": [
+                  "PLAYER 검증 아님",
+                  "코칭에 미적용"
+                ]
+              },
+              "source": {
+                "resource_id": "5c6fdd7a168c7c06740d906ef251151c19b1902e2ad9834972c9fcc10ba20600",
+                "anchor": "overview",
+                "note_revision": 1
+              },
+              "rule_id": "0c1460d9b672437b8d98985035d692f0",
+              "expected_version": "ffc29b48c5264fd1af3678918f219df4"
+            }
+          ],
+          "start": 1791518989004,
+          "error": "REVISION_CONFLICT"
+        },
+        {
+          "args": [
+            "/knowledge/proposals"
+          ],
+          "start": 1791518989055,
+          "done": 1791518989066
+        },
+        {
+          "args": [
+            "/knowledge/proposals"
+          ],
+          "start": 1791518989110,
+          "done": 1791518989120
+        },
+        {
+          "args": [
+            "/research"
+          ],
+          "start": 1791518989204,
+          "done": 1791518989223
+        },
+        {
+          "args": [
+            "/research/4feb9e29dbf17726cd76f02fedad1dcf95e2aabcec3be2d5d6913d6f0708c3d1"
+          ],
+          "start": 1791518989268,
+          "done": 1791518989283
+        },
+        {
+          "args": [
+            "/research/4feb9e29dbf17726cd76f02fedad1dcf95e2aabcec3be2d5d6913d6f0708c3d1/notes/overview"
+          ],
+          "start": 1791518989283,
+          "done": 1791518989288
+        },
+        {
+          "args": [
+            "/knowledge/proposals"
+          ],
+          "start": 1791518989335,
+          "done": 1791518989350
+        },
+        {
+          "args": [
+            "/knowledge/proposals/7480eff999d0493295b9fe623a5d3b75/versions/a06dafef19ca42378ebb7b4cdb9f551f"
+          ],
+          "start": 1791518989405,
+          "done": 1791518989416
+        },
+        {
+          "args": [
+            "/knowledge/proposals/7480eff999d0493295b9fe623a5d3b75"
+          ],
+          "start": 1791518989416,
+          "done": 1791518989421
+        },
+        {
+          "args": [
+            "/research"
+          ],
+          "start": 1791518989469,
+          "done": 1791518989483
+        },
+        {
+          "args": [
+            "/research/4feb9e29dbf17726cd76f02fedad1dcf95e2aabcec3be2d5d6913d6f0708c3d1"
+          ],
+          "start": 1791518989519,
+          "done": 1791518989532
+        },
+        {
+          "args": [
+            "/research/4feb9e29dbf17726cd76f02fedad1dcf95e2aabcec3be2d5d6913d6f0708c3d1/notes/overview"
+          ],
+          "start": 1791518989532,
+          "done": 1791518989538
+        },
+        {
+          "args": [
+            "/research/4feb9e29dbf17726cd76f02fedad1dcf95e2aabcec3be2d5d6913d6f0708c3d1",
+            "DELETE"
+          ],
+          "start": 1791518989589,
+          "done": 1791518989600
+        },
+        {
+          "args": [
+            "/knowledge/proposals/7480eff999d0493295b9fe623a5d3b75"
+          ],
+          "start": 1791518989601,
+          "done": 1791518989609
+        },
+        {
+          "args": [
+            "/knowledge/proposals/7480eff999d0493295b9fe623a5d3b75/versions/a06dafef19ca42378ebb7b4cdb9f551f"
+          ],
+          "start": 1791518989601,
+          "error": "KNOWLEDGE_RULE_NOT_FOUND"
+        },
+        {
+          "args": [
+            "/research/99e0d22a7adc56668306c8a9db8ae57f91088ebbcb1a96e14bbeb60a6b5124e8"
+          ],
+          "start": 1791518989601,
+          "done": 1791518989610
+        },
+        {
+          "args": [
+            "/research"
+          ],
+          "start": 1791518989601,
+          "done": 1791518989611
+        },
+        {
+          "args": [
+            "/knowledge/proposals"
+          ],
+          "start": 1791518989623,
+          "done": 1791518989630
+        },
+        {
+          "args": [
+            "/research"
+          ],
+          "start": 1791518989704,
+          "done": 1791518989716
+        },
+        {
+          "args": [
+            "/research/66cd002d83d6b90b272fa01e854a7eee25f839718db8496176fce66a0a24b90e"
+          ],
+          "start": 1791518989770,
+          "done": 1791518989783
+        },
+        {
+          "args": [
+            "/research/66cd002d83d6b90b272fa01e854a7eee25f839718db8496176fce66a0a24b90e/notes/overview"
+          ],
+          "start": 1791518989783,
+          "done": 1791518989787
+        },
+        {
+          "args": [
+            "/knowledge/proposals"
+          ],
+          "start": 1791518989836,
+          "done": 1791518989851
+        },
+        {
+          "args": [
+            "/knowledge/proposals/b118b69afd4b493eba3ff22cfd10901a/versions/57eabe16620b4f3da74c892f5509991a"
+          ],
+          "start": 1791518989902,
+          "done": 1791518989916
+        },
+        {
+          "args": [
+            "/knowledge/proposals/b118b69afd4b493eba3ff22cfd10901a"
+          ],
+          "start": 1791518989916,
+          "done": 1791518989921
+        },
+        {
+          "args": [
+            "/research"
+          ],
+          "start": 1791518989968,
+          "done": 1791518989984
+        },
+        {
+          "args": [
+            "/research/66cd002d83d6b90b272fa01e854a7eee25f839718db8496176fce66a0a24b90e"
+          ],
+          "start": 1791518990018,
+          "done": 1791518990032
+        },
+        {
+          "args": [
+            "/research/66cd002d83d6b90b272fa01e854a7eee25f839718db8496176fce66a0a24b90e/notes/overview"
+          ],
+          "start": 1791518990032,
+          "done": 1791518990037
+        },
+        {
+          "args": [
+            "/research/66cd002d83d6b90b272fa01e854a7eee25f839718db8496176fce66a0a24b90e",
+            "DELETE"
+          ],
+          "start": 1791518990089,
+          "done": 1791518990101
+        },
+        {
+          "args": [
+            "/knowledge/proposals/b118b69afd4b493eba3ff22cfd10901a"
+          ],
+          "start": 1791518990101,
+          "done": 1791518990114
+        },
+        {
+          "args": [
+            "/knowledge/proposals/b118b69afd4b493eba3ff22cfd10901a/versions/57eabe16620b4f3da74c892f5509991a"
+          ],
+          "start": 1791518990101,
+          "error": "KNOWLEDGE_RULE_NOT_FOUND"
+        },
+        {
+          "args": [
+            "/research/4d7406b88e7dd69281475df3d4a6c980115ac8e1d2883dccd759000980997a2a"
+          ],
+          "start": 1791518990102,
+          "done": 1791518990353
+        },
+        {
+          "args": [
+            "/research"
+          ],
+          "start": 1791518990102,
+          "done": 1791518990117
+        },
+        {
+          "args": [
+            "/research"
+          ],
+          "start": 1791518990169,
+          "done": 1791518990182
+        },
+        {
+          "args": [
+            "/research/8f4477140c4a7b48287d0ef0e3427a0d8e63f33f0cdc077a962931761f1d3b1f"
+          ],
+          "start": 1791518990223,
+          "done": 1791518990232
+        },
+        {
+          "args": [
+            "/research/8f4477140c4a7b48287d0ef0e3427a0d8e63f33f0cdc077a962931761f1d3b1f/notes/overview"
+          ],
+          "start": 1791518990232,
+          "done": 1791518990237
+        },
+        {
+          "args": [
+            "/knowledge/proposals"
+          ],
+          "start": 1791518990286,
+          "done": 1791518990301
+        },
+        {
+          "args": [
+            "/knowledge/proposals/b118b69afd4b493eba3ff22cfd10901a"
+          ],
+          "start": 1791518990353,
+          "done": 1791518990365
+        },
+        {
+          "args": [
+            "/knowledge/proposals/b118b69afd4b493eba3ff22cfd10901a/versions/57eabe16620b4f3da74c892f5509991a"
+          ],
+          "start": 1791518990353
+        },
+        {
+          "args": [
+            "/research/8f4477140c4a7b48287d0ef0e3427a0d8e63f33f0cdc077a962931761f1d3b1f"
+          ],
+          "start": 1791518990354
+        }
+      ],
+      "trace": [
+        {
+          "start": {
+            "epoch": 2,
+            "edit": 2,
+            "deletion": 1,
+            "version": "14d44dd8248f4d6bac0b1e06bcd90879",
+            "source": {
+              "resource_id": "620790602b734608870138c5d0dd64611635f6a1c71d05b697efd204e72186e6",
+              "anchor": "overview",
+              "note_revision": 1
+            }
+          }
+        },
+        {
+          "end": {
+            "epoch": 3,
+            "edit": 0,
+            "deletion": 1,
+            "version": null,
+            "source": null
+          }
+        },
+        {
+          "start": {
+            "epoch": 4,
+            "edit": 1,
+            "deletion": 2,
+            "version": "ffc29b48c5264fd1af3678918f219df4",
+            "source": {
+              "resource_id": "5c6fdd7a168c7c06740d906ef251151c19b1902e2ad9834972c9fcc10ba20600",
+              "anchor": "overview",
+              "note_revision": 1
+            }
+          }
+        },
+        {
+          "end": {
+            "epoch": 4,
+            "edit": 1,
+            "deletion": 2,
+            "version": "ffc29b48c5264fd1af3678918f219df4",
+            "source": {
+              "resource_id": "5c6fdd7a168c7c06740d906ef251151c19b1902e2ad9834972c9fcc10ba20600",
+              "anchor": "overview",
+              "note_revision": 1
+            }
+          }
+        },
+        {
+          "start": {
+            "epoch": 6,
+            "edit": 0,
+            "deletion": 3,
+            "version": "a06dafef19ca42378ebb7b4cdb9f551f",
+            "source": {
+              "resource_id": "99e0d22a7adc56668306c8a9db8ae57f91088ebbcb1a96e14bbeb60a6b5124e8",
+              "anchor": "overview",
+              "note_revision": 1
+            }
+          }
+        },
+        {
+          "end": {
+            "epoch": 7,
+            "edit": 0,
+            "deletion": 3,
+            "version": null,
+            "source": null
+          }
+        },
+        {
+          "start": {
+            "epoch": 8,
+            "edit": 0,
+            "deletion": 4,
+            "version": "57eabe16620b4f3da74c892f5509991a",
+            "source": {
+              "resource_id": "4d7406b88e7dd69281475df3d4a6c980115ac8e1d2883dccd759000980997a2a",
+              "anchor": "overview",
+              "note_revision": 1
+            }
+          }
+        },
+        {
+          "start": {
+            "epoch": 8,
+            "edit": 2,
+            "deletion": 4,
+            "version": "57eabe16620b4f3da74c892f5509991a",
+            "source": {
+              "resource_id": "8f4477140c4a7b48287d0ef0e3427a0d8e63f33f0cdc077a962931761f1d3b1f",
+              "anchor": "overview",
+              "note_revision": 1
+            }
+          }
+        }
+      ],
+      "record": {
+        "applicability": {
+          "champion": "UNKNOWN",
+          "context": "상황 미검증 α\n조건 😀",
+          "level": "UNKNOWN",
+          "matchup": "UNKNOWN",
+          "role": "UNKNOWN"
+        },
+        "author": "개인 작성 테스트",
+        "claim": "late-rebind DELETED-C-PRIVATE-SENTINEL",
+        "coaching_enabled": false,
+        "counterexamples": [
+          "UNKNOWN",
+          "반례는 아직 수집 전"
+        ],
+        "limitations": [
+          "PLAYER 검증 아님",
+          "코칭에 미적용"
+        ],
+        "mechanism": "미검증 작동 가설 β",
+        "patch_range": "UNKNOWN",
+        "required_fields": [
+          "UNKNOWN",
+          "실제 관찰 필요"
+        ],
+        "review_state": "EXPLORATORY",
+        "rule_id": "b118b69afd4b493eba3ff22cfd10901a",
+        "schema_version": "knowledge-proposal.v1",
+        "source_refs": [
+          {
+            "anchor": "overview",
+            "kind": "RAW_DIAGNOSTIC",
+            "note_revision": 1,
+            "note_sha256": "4beca32b0a0f6081b3949fe0184d9be4b26bcfc5b40c8d0117aa7e091be87fd7",
+            "report_sha256": "19154d903e3d5237ce9f597e561f61d2aa56bedf5f61441af600fad17617359b",
+            "resource_id": "4d7406b88e7dd69281475df3d4a6c980115ac8e1d2883dccd759000980997a2a"
+          }
+        ],
+        "supersedes": "ed634dcf09084d3d838580c295f7f2be",
+        "version": "57eabe16620b4f3da74c892f5509991a"
+      },
+      "source": {
+        "resource_id": "8f4477140c4a7b48287d0ef0e3427a0d8e63f33f0cdc077a962931761f1d3b1f",
+        "anchor": "overview",
+        "note_revision": 1
+      },
+      "dirty": true,
+      "latest": "57eabe16620b4f3da74c892f5509991a",
+      "epoch": 8,
+      "deletion": 4,
+      "notice": "저장하지 않은 탐색 제안 변경이 있습니다.",
+      "download_disabled": true
+    }
+  }
+}

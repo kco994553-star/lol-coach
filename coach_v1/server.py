@@ -15,7 +15,7 @@ from urllib.parse import urlsplit
 
 from .storage import ServiceError
 from .draft import DraftStore
-from .knowledge import KnowledgeStore
+from .knowledge import KnowledgeStore, _WEB_REVIEW_AUTHORITY
 from .note_history import note_history, note_revision
 from coach_intake.audit import inspect as inspect_raw
 from coach_intake.video import index_transcript
@@ -179,7 +179,7 @@ class Handler(BaseHTTPRequestHandler):
         path=urlsplit(self.path)
         if path.query or path.fragment:raise ServiceError(400,'QUERY_NOT_SUPPORTED')
         route=path.path
-        assets={'/':('index.html','text/html; charset=utf-8'),'/app.js':('app.js','text/javascript; charset=utf-8'),'/styles.css':('styles.css','text/css; charset=utf-8'),'/research.js':('research.js','text/javascript; charset=utf-8'),'/knowledge.js':('knowledge.js','text/javascript; charset=utf-8'),'/draft.js':('draft.js','text/javascript; charset=utf-8')}
+        assets={'/':('index.html','text/html; charset=utf-8'),'/app.js':('app.js','text/javascript; charset=utf-8'),'/styles.css':('styles.css','text/css; charset=utf-8'),'/research.js':('research.js','text/javascript; charset=utf-8'),'/knowledge.js':('knowledge.js','text/javascript; charset=utf-8'),'/knowledge_review.js':('knowledge_review.js','text/javascript; charset=utf-8'),'/draft.js':('draft.js','text/javascript; charset=utf-8')}
         if self.command=='GET' and route in assets:
             filename,ctype=assets[route]
             return self.reply(200,(ROOT/'web_r4'/filename).read_bytes(),ctype)
@@ -239,6 +239,18 @@ class Handler(BaseHTTPRequestHandler):
                 b=self.body();self.fields(b,('rule','source','rule_id','expected_version'))
                 return self.reply(201,ks.propose(b['rule'],b['source'],b['rule_id'],b['expected_version'],max_bytes=limit))
         knowledge=re.fullmatch(re.escape(prefix)+r'/knowledge/proposals/([a-f0-9]{32})(?:/versions/([a-f0-9]{32}))?',route)
+        review=re.fullmatch(re.escape(prefix)+r'/knowledge/proposals/([a-f0-9]{32})/decisions',route)
+        if review and self.command=='POST':
+            # Fetch Metadata is browser supplied. Ordinary automation/API paths
+            # have no review authority. This is not cryptographic human attestation.
+            expected={'Sec-Fetch-Site':'same-origin','Sec-Fetch-Mode':'same-origin','Sec-Fetch-Dest':'empty'}
+            if (len(self.headers.get_all('Origin',[]))!=1
+                or self.headers['Origin'] not in self.server.allowed_origins
+                or any(self.headers.get_all(key,[])!=[value] for key,value in expected.items())):
+                raise ServiceError(403,'USER_WEB_REVIEW_REQUIRED')
+            b=self.body();self.fields(b,('selected_version','expected_version','decision','patch_range','applicability'))
+            return self.reply(201,self.server.research.decide(review[1],**b,
+                max_bytes=self.server.limits.body_bytes,web_authority=_WEB_REVIEW_AUTHORITY))
         if knowledge:
             rule_id,version=knowledge.groups();ks=self.server.research;limit=self.server.limits.body_bytes
             if self.command=='GET':return self.reply(200,ks.get_proposal(rule_id,version,max_bytes=limit))

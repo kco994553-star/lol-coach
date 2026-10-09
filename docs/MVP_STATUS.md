@@ -1,3 +1,36 @@
+된 것: 원딜 PRE_GAME을 최우선 목표로 전환하고 이 범위의 PARKED_EXTERNAL을 해제했습니다.
+된 것: 웹에서 정확한 후보 버전을 REVIEWED/REJECTED로 결정하고 새 불변 버전에 보존합니다.
+된 것: 전체 로컬 회귀와 실제 브라우저 124/124(기존111+신규13)가 통과했습니다.
+안 된 것: 원격 PR/CI/병합은 아직 대기이며 게임플랜 생성은 다음 작업입니다.
+내가 결정할 것: 이번 흐름에 추가 사용자 결정은 없습니다.
+
+2026-10-09 user authority: PRE_GAME ADC Yunara/Ashe/Kaisa/Caitlyn;
+POST_GAME real-match review is lower priority. This work delivers knowledge review only.
+New actual HTTP/SQLite13 tests pass; existing Frozen27/protected9/old111 and all
+existing MVP suites pass. Final local full receipt:
+`evidence/mvp/20261009T041257197551Z-c7c24983/verification.json` (285 exact inputs).
+Final actual browser receipt:
+`evidence/mvp/browser-20261009T041255836347Z-80c30de7/runner.json` (Chromium151,124/124).
+Independent code review found and verified one save-controls defect, now fixed;
+no outstanding material findings. Source-bound v1.1 amendment:
+`contracts/amendments/2026-10-09-knowledge-review.json`; original Frozen bytes preserved.
+First failures, original parent sources and harness repair are preserved in
+`evidence/mvp/knowledge-review-*` and timestamped browser directories.
+The harness repair only defers route cleanup, retaining original case IDs,
+expectations, request/response bytes and timeouts. New review delayed-ACK test
+pauses an actual browser response through CDP; no redispatched spoofed metadata.
+Source/selected payload hashes, latest CAS, immutable chain, restart/backup and
+source deletion invariants are verified. Generic/AI propose cannot promote;
+UI requires trusted active gesture+native confirmation; server requires authorized
+same-origin browser metadata. This trusts browser/local server control, without
+claiming cryptographic human attestation.
+Gameplan v0 next: manual draft record + REVIEWED knowledge only; unsupported cells
+“미확인”; no AI free-form sentences/numbers. No Player video prerequisite for that
+PRE_GAME work. Real-match Player/Decision/Coach evidence stays N=0, accuracy=null.
+Remote publication/CI/merge currently PENDING; do not infer them from local PASS.
+
+---
+
 # Latest verified status(최신 검증 상태) — PR9 merged(병합 완료)
 
 PR9 retry-safe manual draft saves are merged at main
