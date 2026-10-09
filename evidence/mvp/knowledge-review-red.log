@@ -1,0 +1,114 @@
+FFFFFFFFFFF
+======================================================================
+FAIL: test_auth_origin_and_payload_override_denied (tests_mvp.test_knowledge_review.KnowledgeReviewTests.test_auth_origin_and_payload_override_denied)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_mvp/test_knowledge_review.py", line 141, in test_auth_origin_and_payload_override_denied
+    self.assertEqual(self.decide(dict(self.body, **{field:value}))[0],422)
+AssertionError: 404 != 422
+
+======================================================================
+FAIL: test_concurrent_decisions_do_not_fork (tests_mvp.test_knowledge_review.KnowledgeReviewTests.test_concurrent_decisions_do_not_fork)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_mvp/test_knowledge_review.py", line 123, in test_concurrent_decisions_do_not_fork
+    self.assertEqual(sorted(results), [201,409])
+AssertionError: Lists differ: [404, 404] != [201, 409]
+
+First differing element 0:
+404
+201
+
+- [404, 404]
++ [201, 409]
+
+======================================================================
+FAIL: test_editing_reviewed_version_returns_to_exploratory (tests_mvp.test_knowledge_review.KnowledgeReviewTests.test_editing_reviewed_version_returns_to_exploratory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_mvp/test_knowledge_review.py", line 128, in test_editing_reviewed_version_returns_to_exploratory
+    b = self.proposal(); b['source'] = {k:first['source_refs'][0][k]
+        ^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_mvp/test_knowledge_http.py", line 31, in proposal
+    source=source or self.source(),rule_id=None,expected_version=None)
+                     ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_mvp/test_knowledge_http.py", line 23, in source
+    self.assertEqual(self.call(path,'PUT',dict(note=note,expected_revision=0))[0],200)
+AssertionError: 409 != 200
+
+======================================================================
+FAIL: test_forged_stored_review_metadata_invalidates_store (tests_mvp.test_knowledge_review.KnowledgeReviewTests.test_forged_stored_review_metadata_invalidates_store)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_mvp/test_knowledge_review.py", line 145, in test_forged_stored_review_metadata_invalidates_store
+    self.fixture(); self.assertEqual(self.decide()[0],201)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 404 != 201
+
+======================================================================
+FAIL: test_generic_automated_and_ai_paths_cannot_promote (tests_mvp.test_knowledge_review.KnowledgeReviewTests.test_generic_automated_and_ai_paths_cannot_promote)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_mvp/test_knowledge_review.py", line 81, in test_generic_automated_and_ai_paths_cannot_promote
+    self.assertEqual(self.decide(headers={})[0], 403)
+AssertionError: 404 != 403
+
+======================================================================
+FAIL: test_historical_selected_version_is_exact_and_head_cas (tests_mvp.test_knowledge_review.KnowledgeReviewTests.test_historical_selected_version_is_exact_and_head_cas)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_mvp/test_knowledge_review.py", line 103, in test_historical_selected_version_is_exact_and_head_cas
+    self.assertEqual(self.decide()[0], 409)
+AssertionError: 404 != 409
+
+======================================================================
+FAIL: test_other_rule_or_absent_selected_version_denied (tests_mvp.test_knowledge_review.KnowledgeReviewTests.test_other_rule_or_absent_selected_version_denied)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_mvp/test_knowledge_review.py", line 114, in test_other_rule_or_absent_selected_version_denied
+    other = self.call(self.base, 'POST', self.proposal())[1]
+                                         ^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_mvp/test_knowledge_http.py", line 31, in proposal
+    source=source or self.source(),rule_id=None,expected_version=None)
+                     ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_mvp/test_knowledge_http.py", line 23, in source
+    self.assertEqual(self.call(path,'PUT',dict(note=note,expected_revision=0))[0],200)
+AssertionError: 409 != 200
+
+======================================================================
+FAIL: test_reject_preserves_unknown_conditions (tests_mvp.test_knowledge_review.KnowledgeReviewTests.test_reject_preserves_unknown_conditions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_mvp/test_knowledge_review.py", line 61, in test_reject_preserves_unknown_conditions
+    self.assertEqual(status, 201)
+AssertionError: 404 != 201
+
+======================================================================
+FAIL: test_review_immutable_exact_source_hashes_and_restart (tests_mvp.test_knowledge_review.KnowledgeReviewTests.test_review_immutable_exact_source_hashes_and_restart)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_mvp/test_knowledge_review.py", line 41, in test_review_immutable_exact_source_hashes_and_restart
+    self.assertEqual(status, 201)
+AssertionError: 404 != 201
+
+======================================================================
+FAIL: test_review_rejects_blank_unknown_missing_and_wrong_types_without_write (tests_mvp.test_knowledge_review.KnowledgeReviewTests.test_review_rejects_blank_unknown_missing_and_wrong_types_without_write)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_mvp/test_knowledge_review.py", line 70, in test_review_rejects_blank_unknown_missing_and_wrong_types_without_write
+    self.assertEqual(self.decide(b)[0], 422, repr(value))
+AssertionError: 404 != 422 : ''
+
+======================================================================
+FAIL: test_source_deletion_cascades_review_and_selected_versions (tests_mvp.test_knowledge_review.KnowledgeReviewTests.test_source_deletion_cascades_review_and_selected_versions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_mvp/test_knowledge_review.py", line 151, in test_source_deletion_cascades_review_and_selected_versions
+    first = self.fixture(); self.assertEqual(self.decide()[0],201)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 404 != 201
+
+----------------------------------------------------------------------
+Ran 11 tests in 5.606s
+
+FAILED (failures=11)

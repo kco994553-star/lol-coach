@@ -1,5 +1,5 @@
 'use strict';
-// Manual exploratory proposals only. A saved source note is a provenance link,
+// Manual proposals and explicit user review decisions. A saved source note is a provenance link,
 // never verified player state, accepted knowledge, or automatic coaching input.
 let kRecord=null,kLatest=null,kSource=null,kEpoch=0,kEdit=0,kDeletionEpoch=0,kValidatedDeletion=-1,kDirty=false,kSaving=false;
 const kText={patch_range:'patch',champion:'champion',role:'role',matchup:'matchup',level:'level',context:'context',claim:'claim',mechanism:'mechanism',author:'author'};
@@ -12,9 +12,12 @@ function kUi(action){const pending=action(),mark=kEpoch;return Promise.resolve(p
 function kSourceLabel(){
  $('k-source').textContent=kSource?'저장된 자료 '+kSource.resource_id+' · 구간 '+kSource.anchor+' · 노트 버전 '+kSource.note_revision:'연결된 저장 노트가 없습니다.';
 }
+function kReviewControls(){
+ for(const id of ['k-review','k-reject'])if($(id))$(id).disabled=!kRecord||kSaving||$('k-save').disabled||kValidatedDeletion!==kDeletionEpoch;
+}
 function kCurrentLabel(){
- $('k-current').textContent=kRecord?'EXPLORATORY(탐색 제안) · '+kRecord.rule_id+' · 조회 버전 '+kRecord.version+' · 다음 저장 기준 '+kLatest:'새 EXPLORATORY(탐색 제안) · 코칭 입력으로 사용하지 않습니다.';
- $('k-download').disabled=!kRecord||kValidatedDeletion!==kDeletionEpoch;$('k-delete').disabled=!kRecord;
+ $('k-current').textContent=kRecord?kRecord.review_state+' · '+kRecord.rule_id+' · 조회 버전 '+kRecord.version+' · 다음 저장 기준 '+kLatest:'새 EXPLORATORY(탐색 제안) · 코칭 입력으로 사용하지 않습니다.';
+ $('k-download').disabled=!kRecord||kValidatedDeletion!==kDeletionEpoch;$('k-delete').disabled=!kRecord;kReviewControls();
 }
 function kReadRule(){
  const rule={patch_range:$('k-patch').value,applicability:{}};
@@ -35,7 +38,7 @@ function kClear(){
  $('k-save').disabled=false;$('k-use-note').disabled=false;$('k-list').replaceChildren();
  kSourceLabel();kCurrentLabel();kNotice('');
 }
-function kReading(b){for(const id of kInputs)$('k-'+id).disabled=b;$('k-save').disabled=b;$('k-use-note').disabled=b;$('k-delete').disabled=b||!kRecord;}
+function kReading(b){for(const id of kInputs)$('k-'+id).disabled=b;$('k-save').disabled=b;$('k-use-note').disabled=b;$('k-delete').disabled=b||!kRecord;kReviewControls();}
 function kBoundSource(record){const ref=record.source_refs[0];return {resource_id:ref.resource_id,anchor:ref.anchor,note_revision:ref.note_revision};}
 async function kRefresh(){
  const mark=kEpoch;let rows,deletion;
@@ -48,6 +51,7 @@ async function kRefresh(){
  $('k-list').replaceChildren();if(!rows.length)$('k-list').append(node('p','저장된 탐색 제안이 없습니다.','small'));
  for(const row of rows){
   const button=node('button',row.claim+' · '+row.version);
+  button.textContent+=' · '+row.review_state;
   button.dataset.ruleId=row.rule_id;button.dataset.versionId=row.version;
   button.addEventListener('click',()=>kUi(()=>kOpen(row.rule_id,row.version)));$('k-list').append(button);
  }
@@ -84,7 +88,7 @@ async function kSave(){
  if(!kSource){kNotice('저장된 복기 노트를 출처로 연결한 후 저장하세요.');return;}
  const mark=kEpoch,edit=kEdit,rule=kReadRule(),source={...kSource};
  const body={rule,source,rule_id:kRecord?kRecord.rule_id:null,expected_version:kRecord?kLatest:null};
- kSaving=true;$('k-save').disabled=true;
+ kSaving=true;$('k-save').disabled=true;kReviewControls();
  try{
   const received=await api('/knowledge/proposals','POST',body);if(mark!==kEpoch)return;
   let saved,observedDeletion;
@@ -106,7 +110,7 @@ async function kSave(){
   kSourceLabel();kCurrentLabel();await kRefresh();if(mark!==kEpoch)return;
   kNotice(edit===kEdit?'탐색 제안을 새 버전으로 저장했습니다. 자동 코칭에는 사용되지 않습니다.':'요청한 버전은 저장했습니다. 저장 중 작성한 새 초안과 출처는 그대로 남아 있습니다.');
  }catch(e){if(mark===kEpoch)kError(e);}
- finally{if(mark===kEpoch){kSaving=false;$('k-save').disabled=false;}}
+ finally{if(mark===kEpoch){kSaving=false;$('k-save').disabled=false;kReviewControls();}}
 }
 async function kDelete(){
  if($('k-delete').disabled||!kRecord||!confirm('이 제안과 모든 버전·연결된 후속 제안을 삭제할까요?'))return;

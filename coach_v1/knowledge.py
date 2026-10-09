@@ -1,4 +1,4 @@
-"""Source-bound exploratory proposals; no engine activation or review promotion.
+"""Source-bound proposals and explicit web decisions; no engine activation.
 
 Research v1 remains independently readable by its original implementation. This
 store performs an atomic, additive v2 migration and keeps references as SQLite
@@ -39,6 +39,10 @@ _SOURCE_FIELDS = frozenset(('resource_id', 'anchor', 'note_revision'))
 _TOKEN = re.compile(r'[a-f0-9]{32}')
 _HASH = re.compile(r'[a-f0-9]{64}')
 _MAX_SQLITE_INTEGER = 9223372036854775807
+# Only the authenticated, browser-only server route supplies this capability.
+# Generic propose callers and client JSON cannot select a review state.
+_WEB_REVIEW_AUTHORITY = object()
+_DECISION_FIELDS = frozenset(('actor', 'selected_version', 'selected_payload_sha256'))
 
 
 def _schema(db, version):
@@ -170,6 +174,19 @@ def _token(value):
     return value
 
 
+def _review_scope(patch_range, applicability):
+    try:
+        _text(patch_range)
+        if not isinstance(applicability, dict) or set(applicability) != APPLICABILITY_FIELDS:
+            raise ValueError('applicability')
+        for value in [patch_range, *applicability.values()]:
+            _text(value)
+            if value.strip().upper() in ('UNKNOWN', '미확인'):
+                raise ValueError('unconfirmed')
+    except (ValueError, TypeError, UnicodeError):
+        raise ServiceError(422, 'REVIEW_SCOPE_REQUIRED') from None
+
+
 def _source_binding(db, source):
     if (not isinstance(source, dict) or set(source) != _SOURCE_FIELDS
         or not isinstance(source['resource_id'], str) or not _HASH.fullmatch(source['resource_id'])
@@ -220,10 +237,12 @@ def validate_knowledge_content(db):
             if row['parent_version'] is not None:
                 _token(row['parent_version'])
             report = strict_json(row['payload'])
-            if (not isinstance(report, dict) or set(report) != _REPORT_FIELDS
-                or report['schema_version'] != 'knowledge-proposal.v1'
+            decision = isinstance(report, dict) and report.get('schema_version') == 'knowledge-decision.v1'
+            if (not isinstance(report, dict) or set(report) != (_REPORT_FIELDS | {'review_decision'} if decision else _REPORT_FIELDS)
+                or report['schema_version'] not in ('knowledge-proposal.v1', 'knowledge-decision.v1')
                 or report['rule_id'] != row['id'] or report['version'] != row['version']
-                or row['status'] != 'EXPLORATORY' or report['review_state'] != 'EXPLORATORY'
+                or row['status'] != report['review_state']
+                or report['review_state'] not in (('REVIEWED', 'REJECTED') if decision else ('EXPLORATORY',))
                 or report['coaching_enabled'] is not False
                 or report['supersedes'] != row['parent_version']
                 or len(row['payload'].encode('utf-8')) > 2_000_000):
@@ -233,6 +252,33 @@ def validate_knowledge_content(db):
                                                note_revision=row['revision']))
             if report['source_refs'] != [binding]:
                 raise ValueError('source binding')
+            if decision:
+                audit = report['review_decision']
+                if (not isinstance(audit, dict) or set(audit) != _DECISION_FIELDS
+                    or audit['actor'] != 'USER_WEB' or row['parent_version'] is None):
+                    raise ValueError('decision provenance')
+                _token(audit['selected_version'])
+                target = db.execute('SELECT payload FROM knowledge_rules WHERE id=? AND version=?',
+                                    (row['id'], audit['selected_version'])).fetchone()
+                if target is None or hashlib.sha256(target[0].encode('utf-8')).hexdigest() != audit['selected_payload_sha256']:
+                    raise ValueError('selected hash')
+                selected = strict_json(target[0])
+                for key in (RULE_FIELDS - {'patch_range', 'applicability'}) | {'source_refs'}:
+                    if report[key] != selected[key]:
+                        raise ValueError('decision changed candidate')
+                # The selected snapshot must precede this decision on its chain.
+                ancestors, cursor = set(), row['parent_version']
+                while cursor is not None and cursor not in ancestors:
+                    ancestors.add(cursor)
+                    parent = db.execute('SELECT parent_version FROM knowledge_rules WHERE id=? AND version=?',
+                                        (row['id'], cursor)).fetchone()
+                    if parent is None:
+                        raise ValueError('missing ancestor')
+                    cursor = parent[0]
+                if audit['selected_version'] not in ancestors:
+                    raise ValueError('selected not ancestor')
+                if report['review_state'] == 'REVIEWED':
+                    _review_scope(report['patch_range'], report['applicability'])
             groups.setdefault(row['id'], {})[row['version']] = row['parent_version']
         for versions in groups.values():
             roots = [v for v, p in versions.items() if p is None]
@@ -341,6 +387,43 @@ class KnowledgeStore(ResearchStore):
                 result[-1]['current'] = row['version'] == heads[row['id']]
                 _bounded(result, max_bytes)
             return _bounded(result, max_bytes)
+
+    def decide(self, rule_id, selected_version, expected_version, decision,
+               patch_range, applicability, *, max_bytes, web_authority=None):
+        if web_authority is not _WEB_REVIEW_AUTHORITY:
+            raise ServiceError(403, 'USER_WEB_REVIEW_REQUIRED')
+        _budget(max_bytes)
+        _token(rule_id); _token(selected_version); _token(expected_version)
+        if decision not in ('REVIEWED', 'REJECTED'):
+            raise ServiceError(422, 'INVALID_REVIEW_DECISION')
+        with self._db() as db:
+            validate_knowledge_content(db)
+            if _head(db, rule_id) != expected_version:
+                raise ServiceError(409, 'REVISION_CONFLICT')
+            row = db.execute('SELECT payload FROM knowledge_rules WHERE id=? AND version=?',
+                             (rule_id, selected_version)).fetchone()
+            if row is None:
+                raise ServiceError(404, 'KNOWLEDGE_RULE_NOT_FOUND')
+            selected = strict_json(row[0])
+            rule = _rule(dict({key:selected[key] for key in RULE_FIELDS},
+                              patch_range=patch_range, applicability=applicability))
+            if decision == 'REVIEWED':
+                _review_scope(rule['patch_range'], rule['applicability'])
+            version = uuid.uuid4().hex
+            report = dict(rule, schema_version='knowledge-decision.v1', rule_id=rule_id,
+                          version=version, source_refs=selected['source_refs'], review_state=decision,
+                          supersedes=expected_version, coaching_enabled=False,
+                          review_decision=dict(actor='USER_WEB', selected_version=selected_version,
+                              selected_payload_sha256=hashlib.sha256(row[0].encode('utf-8')).hexdigest()))
+            payload = _json(report)
+            if len(payload.encode('utf-8')) > 2_000_000:
+                raise ServiceError(413, 'REPORT_TOO_LARGE')
+            _bounded(report, max_bytes)
+            binding = report['source_refs'][0]
+            db.execute('INSERT INTO knowledge_rules VALUES (?,?,?,?,?,?,?,?)',
+                       (rule_id, version, decision, payload, binding['resource_id'], binding['anchor'],
+                        binding['note_revision'], expected_version))
+            return report
 
     def get_proposal(self, rule_id, version=None, *, max_bytes):
         _budget(max_bytes)

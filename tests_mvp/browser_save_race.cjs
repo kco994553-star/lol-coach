@@ -12,7 +12,7 @@ if (!output || !process.env.WORKBENCH_URL || !process.env.WORKBENCH_TOKEN_FILE) 
 const token = fs.readFileSync(process.env.WORKBENCH_TOKEN_FILE, 'utf8').trim();
 const redact = value => String(value).split(token).join('[REDACTED]');
 const hash = value => crypto.createHash('sha256').update(value).digest('hex');
-const sourcePaths = ['web_r4/app.js', 'web_r4/index.html', 'web_r4/styles.css', 'coach_v1/server.py', 'coach_v1/storage.py', 'examples/r3/compare-wait-retreat.json', 'tests_mvp/browser_save_race.cjs', 'scripts/browser_mvp.py', 'web_r4/research.js', 'coach_v1/research.py', 'coach_intake/io.py', 'coach_intake/audit.py', 'coach_intake/video.py', 'tests_mvp/browser_research_bytes.cjs', 'tests_mvp/browser_research_navigation.cjs', 'coach_v1/note_history.py', 'tests_mvp/browser_note_history.cjs', 'tests_mvp/browser_research_save_errors.cjs', 'coach_v1/knowledge.py', 'web_r4/knowledge.js', 'tests_mvp/browser_knowledge.cjs', 'tests_mvp/browser_note_recovery.cjs', 'tests_mvp/browser_draft_capture.cjs', 'tests_mvp/browser_draft_retry.cjs', 'web_r4/draft.js', 'coach_v1/draft.py', 'coach_v1/backup.py'];
+const sourcePaths = ['web_r4/app.js', 'web_r4/index.html', 'web_r4/styles.css', 'coach_v1/server.py', 'coach_v1/storage.py', 'examples/r3/compare-wait-retreat.json', 'tests_mvp/browser_save_race.cjs', 'scripts/browser_mvp.py', 'web_r4/research.js', 'coach_v1/research.py', 'coach_intake/io.py', 'coach_intake/audit.py', 'coach_intake/video.py', 'tests_mvp/browser_research_bytes.cjs', 'tests_mvp/browser_research_navigation.cjs', 'coach_v1/note_history.py', 'tests_mvp/browser_note_history.cjs', 'tests_mvp/browser_research_save_errors.cjs', 'coach_v1/knowledge.py', 'web_r4/knowledge.js', 'tests_mvp/browser_knowledge.cjs', 'tests_mvp/browser_note_recovery.cjs', 'tests_mvp/browser_draft_capture.cjs', 'tests_mvp/browser_draft_retry.cjs', 'web_r4/draft.js', 'coach_v1/draft.py', 'coach_v1/backup.py', 'web_r4/knowledge_review.js', 'tests_mvp/browser_knowledge_review.cjs'];
 const sourceHashes = () => Object.fromEntries(sourcePaths.map(file => [file, hash(fs.readFileSync(path.join(root, file)))]));
 const checks = [], pageErrors = [], dialogs = [], writes = [], snapshots = [], backendSnapshots = [];
 const startedAt = new Date().toISOString();
@@ -364,11 +364,14 @@ async function run() {
     await require('./browser_draft_capture.cjs')({page, check, baseUrl: process.env.WORKBENCH_URL, token});
     stage = 'manual-draft-retry';
     await require('./browser_draft_retry.cjs')({page, check, baseUrl: process.env.WORKBENCH_URL, token});
+    stage = 'knowledge-user-review';
+    await require('./browser_knowledge_review.cjs')({page, check, baseUrl: process.env.WORKBENCH_URL, token});
     check('no-page-errors', pageErrors.length === 0, pageErrors);
     check('tested-source-unchanged-during-run', JSON.stringify(initialHashes) === JSON.stringify(sourceHashes()), sourceHashes());
   } catch (error) {
     firstFailure = { stage, observed_at: new Date().toISOString(), error: redact(error.stack || error.message) };
     if (page) {
+      firstFailure.knowledge_state = await page.evaluate(()=>({record:kRecord,source:kSource,dirty:kDirty,latest:kLatest,epoch:kEpoch,deletion:kDeletionEpoch,notice:document.getElementById('k-notice').textContent,download_disabled:document.getElementById('k-download').disabled})).catch(()=>null);
       await uiSnapshot('first-failure-state').catch(() => {});
       await page.screenshot({ path: path.join(output, 'first-failure.png'), fullPage: true }).catch(() => {});
     }

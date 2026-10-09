@@ -1,0 +1,171 @@
+{
+  "scope": "Knowledge deletion reconciliation/ack races only",
+  "verifier": "Node VM synthetic DOM/service replies; not actual browser/HTTP/SQLite/game evidence",
+  "executed_at": "2026-10-09T03:58:05.757Z",
+  "node_version": "v24.19.0",
+  "source_sha256": "2011b3f9d0fd2847cc2561c49d39e994f9eb2fe824c3022c64bf430bb6b47803",
+  "test_sha256": "3530e46234fb1dd9d8094b44aa65ab17a9f344ce0c47d18bad27007077d96b4c",
+  "fixture_sha256": "e1e057fbd269a88b45c170e0bcfaffb5db58255b7438a11896016efcf3158504",
+  "passed": 3,
+  "total": 3,
+  "results": [
+    {
+      "id": "KNOWLEDGE-DELETED-DISPLAYED-DESCENDANT-CLEARED-WITH-ANCESTOR-SURVIVING",
+      "passed": true,
+      "checks": {
+        "deleted_saved_state_cleared": true,
+        "deleted_content_cleared": true,
+        "deleted_download_blocked": true
+      },
+      "before": {
+        "record": "cccccccccccccccccccccccccccccccc",
+        "latest": "cccccccccccccccccccccccccccccccc",
+        "source": "source3",
+        "claim": "DELETED-C-SENTINEL",
+        "dirty": false,
+        "download_disabled": true,
+        "notice": ""
+      },
+      "after": {
+        "record": null,
+        "latest": null,
+        "source": null,
+        "claim": "",
+        "dirty": false,
+        "download_disabled": true,
+        "notice": "출처 삭제로 연결된 제안과 화면 내용을 지웠습니다."
+      },
+      "calls": [
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111/versions/cccccccccccccccccccccccccccccccc",
+          "method": "GET"
+        },
+        {
+          "route": "/research/source3",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "id": "KNOWLEDGE-LATE-DELETION-READ-CANNOT-CLEAR-NEW-INDEPENDENT-SOURCE-DRAFT",
+      "passed": true,
+      "checks": {
+        "independent_new_draft_retained": true,
+        "independent_source_retained": true,
+        "deleted_saved_record_detached": true
+      },
+      "before": {
+        "record": "cccccccccccccccccccccccccccccccc",
+        "latest": "cccccccccccccccccccccccccccccccc",
+        "source": "source4",
+        "claim": "NEW-INDEPENDENT-DRAFT",
+        "dirty": true,
+        "download_disabled": true,
+        "notice": ""
+      },
+      "after": {
+        "record": null,
+        "latest": null,
+        "source": "source4",
+        "claim": "NEW-INDEPENDENT-DRAFT",
+        "dirty": true,
+        "download_disabled": true,
+        "notice": "삭제된 저장 제안의 연결을 해제했습니다. 다른 자료에 연결된 미저장 초안은 유지됩니다."
+      },
+      "calls": [
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111/versions/cccccccccccccccccccccccccccccccc",
+          "method": "GET"
+        },
+        {
+          "route": "/research/source3",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111/versions/cccccccccccccccccccccccccccccccc",
+          "method": "GET"
+        },
+        {
+          "route": "/research/source4",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "id": "KNOWLEDGE-HELD-CREATED-ACK-CANNOT-RESURRECT-CASCADED-DESCENDANT",
+      "passed": true,
+      "checks": {
+        "removed_ack_not_displayed": true,
+        "removed_payload_not_rendered": true,
+        "removed_download_blocked": true
+      },
+      "after": {
+        "record": null,
+        "latest": null,
+        "source": null,
+        "claim": "",
+        "dirty": false,
+        "download_disabled": true,
+        "notice": "출처 삭제로 연결된 제안과 화면 내용을 지웠습니다."
+      },
+      "calls": [
+        {
+          "route": "/knowledge/proposals",
+          "method": "POST"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111/versions/cccccccccccccccccccccccccccccccc",
+          "method": "GET"
+        },
+        {
+          "route": "/research/source3",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111/versions/dddddddddddddddddddddddddddddddd",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111/versions/cccccccccccccccccccccccccccccccc",
+          "method": "GET"
+        },
+        {
+          "route": "/research/source3",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals",
+          "method": "GET"
+        }
+      ]
+    }
+  ]
+}
