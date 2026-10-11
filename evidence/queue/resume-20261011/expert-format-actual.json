@@ -1,0 +1,181 @@
+{
+  "evidence_kind": "ACTUAL_TEXT_ONLY_FORMAT_DIAGNOSIS",
+  "run": {
+    "id": 38132468093,
+    "html_url": "https://github.com/kco994553-star/lol-coach/actions/runs/38132468093",
+    "head_sha": "ef17003a44258bb5267a28bc6d05570e93fc3dc7",
+    "event": "workflow_dispatch",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "artifact_id": 11699990628,
+  "safe_entries": {
+    "expert-format/format-probe.json": {
+      "api_route": "INTERACTIONS",
+      "coaching_accuracy": null,
+      "new_video_reservations": 0,
+      "profile": "TEXT_ONLY_CLAIM_SCHEMA",
+      "request_count": 1,
+      "schema_version": "expert.format-probe.v1",
+      "text_probe": {
+        "checked_at": 1791714916,
+        "http_status": 503,
+        "input_kind": "TEXT_ONLY",
+        "model": "gemini-3.8-flash",
+        "reason": "PROVIDER_HTTP_FAILURE",
+        "schema_version": "expert.text-probe.v1",
+        "status": "BLOCKED_EXTERNAL",
+        "video_inputs": 0
+      },
+      "video_requests": 0
+    },
+    "expert-format/diagnostics.json": {
+      "api_route": "INTERACTIONS",
+      "events": [
+        {
+          "error_code": "service_unavailable",
+          "error_message": "gemini-3.8-flash is currently experiencing high demand, spikes in demand are usually temporary. Please try again later.",
+          "error_status": null,
+          "http_status": 503,
+          "phase": "TEXT_PROBE",
+          "provider": "GEMINI",
+          "reason": "PROVIDER_HTTP_FAILURE"
+        }
+      ],
+      "model": "gemini-3.8-flash",
+      "phase": "probe-format",
+      "request_counts": {
+        "METADATA": 0,
+        "TEXT_PROBE": 1,
+        "VIDEO_CLIP": 0
+      },
+      "schema_version": "expert.diagnostics.v1",
+      "text_probe": {
+        "checked_at": 1791714916,
+        "http_status": 503,
+        "input_kind": "TEXT_ONLY",
+        "model": "gemini-3.8-flash",
+        "reason": "PROVIDER_HTTP_FAILURE",
+        "schema_version": "expert.text-probe.v1",
+        "status": "BLOCKED_EXTERNAL",
+        "video_inputs": 0
+      },
+      "total_request_count": 1
+    },
+    "expert-format/entitlement.json": {
+      "checked_at": "2026-10-11",
+      "model": "gemini-3.8-flash",
+      "reasons": [
+        "DOCUMENTED_FREE_ENTITLEMENT"
+      ],
+      "sources": [
+        {
+          "sha256": "6a6ec1b16fbfe7633e259f0cef2a3aa84324c1336f2310de4017324e52a40a9a",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing"
+        },
+        {
+          "sha256": "177f32e986a0f86895127cb1a09918cc7eef2d5c0e3b780a21598db238c917a7",
+          "url": "https://ai.google.dev/gemini-api/docs/video-understanding"
+        },
+        {
+          "sha256": "874d0779fd0b260807f4ae1e85a8c78ed940f3eefd9fa4058c9227085310021d",
+          "url": "https://ai.google.dev/gemini-api/docs/models"
+        }
+      ],
+      "status": "VERIFIED_FREE"
+    },
+    "expert-recovery/recovery.json": {
+      "artifact_id": 11699780505,
+      "reason": null,
+      "run_id": 38131597343,
+      "status": "FOUND"
+    }
+  },
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Check out trusted default branch",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Set up Python",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Recover newest durable quota including failed and cancelled runs",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Isolate claim schema with text only without any video reservation",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify same-model text then discover public videos and reserve quota",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Persist quota before any Gemini request",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Process one first video clip only after durable reservation",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Persist final quota without releasing any reservation",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Retain bounded public-safe summaries and explicit receipt",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Record deferred publication",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Set up Python",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Check out trusted default branch",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "actual_text_requests": 1,
+  "actual_video_requests": 0,
+  "actual_metadata_requests": 0,
+  "new_video_reservations": 0,
+  "new_video_charges": 0,
+  "preserved_history": {
+    "prior_final_artifact_id": 11699780505,
+    "reservations": 6,
+    "charged_seconds": 7396,
+    "actual_user_pc_inputs": 0
+  },
+  "interpretation": "503 service_unavailable message explicitly reports model high demand. Output-format acceptance remains UNKNOWN, and earlier video400 invalid_request still lacks a specific field cause.",
+  "next_retry": "NOT_RUN; no repeated video/text request. Resume separate affected diagnostic after evidenced provider availability.",
+  "coaching_accuracy": null,
+  "real_match_coaching_n": 0
+}

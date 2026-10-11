@@ -1,3 +1,25 @@
+된 것: 진단 코드·텍스트 전용 원인 격리를 PR #21·#22로 병합했습니다.
+된 것: Riot 키 모양 정상과 Gemini 일반 텍스트 200을 실제로 확인했습니다.
+안 된 것: Riot 첫 403으로 실제 통계가 없고 status.message도 미확인입니다.
+안 된 것: 영상 400 뒤 별도 텍스트 진단 503으로 정확한 영상 인자를 특정하지 못했습니다.
+내가 검토할 것: Riot 접근 상태·Gemini 정상 응답과 웹 지식 후보의 근거입니다.
+
+# Diagnosis-first complete; affected features BLOCKED_EXTERNAL; final closure
+
+Freshmain ef17003a44258bb5267a28bc6d05570e93fc3dc7; PR22 merged from4435611274e8dc6a9cb7b955d484a5e19b41583f, exacttree515fe7c35d21d74c3ed651483938f3eb54554f18. PR21 merge/source/actualproof belowpreserved. RequiredPR22CI38132220761/38132220781all3PASS;13groups399sourcepaths matchpublishedhead/PRmergetesttree. Evidence ci-pr22.json. Main63scopedchecksPASS; independent18plusstaleREADY recheck5PASS. Dedicatedformatprobe removesoldREADY/proofafterfailednewdiagnostic. Source/publicschemas/Frozenhistoryunchanged; docs-onlyfinalclosure mainowned work/queue-diagnosis-final requiresnormalCI/merge beforeterminalclaim.
+
+Observed Riot38131594748: RGAPIprefixtrue/raw=normalized42/noouterwhitespace/nolinebreak/shapevalid; first403/request1/retry0/status.message unavailable(null). Shapealonecannotestablishkeyauthorization; noexpiry/unsupportedendpointguess, nofurtherRiotcall. Usablematches0; actualgraphbrowserNOT_RUN. Receipt riot-diagnosis-first.json.
+
+Observed expert38131597343: ordinarytext200READY, videofirstclip400/invalid_request/Request contains an invalid argument./error.statusnull. Exactbadfield remainsUNKNOWN despite source/API/SDK agreement. Onevideo/oneclip/752fullsecondsnewcharge; prior5rows6644exactlypreserved→6rows7396, finalledger==durableledger, processed[]. FreshfreeproofVERIFIED_FREE, acceptedclaims0. No earlier400totimeout/servicehighdemandrewrite. Receipt expert-diagnosis-first.json.
+
+Distincttext-only38132468093 onPR22main: oneTEXT withunchangedvideoJSONschema returns503/service_unavailable/error.statusnull, message explicitlygemini-3.8-flash highdemand. URI0/METADATA0/VIDEO0/newreservations0/newcharges0; reserve/durable/VIDEOstepsSKIPPED. RecoveryFOUND11699780505/38131597343; old6rows7396 retained. FreshfreeproofVERIFIED_FREE; nofinal/quotaartifactcreated. Receipt expert-format-actual.json. This establishescurrentproviderunavailability only; schemaacceptance and earlier400fieldcause remainUNKNOWN. No repeatedsame-text/video request, changedmodel/endpoint/offsettype, paidtransition/refund/charged-IDretry. No actualsourcebrowser withoutacceptedclaims.
+
+ProgressfullDONEQ01–Q09=9/19; originalinputblockersclosed3; newacquisitionblockersclosed0. Parallelrunning0. Q15statistics/graphs, Q19candidateintake, PRE_GAMEQ16/Q17/Q18 implementationconnected; realstatistics/expertsummaries/postgameextensions unfulfilled. Reviewedknowledge0/coachingN0/accuracy=null/paidservices0. AllindependentREADYworkexhausted. FeaturestatesBLOCKED_EXTERNAL areobserved. Publicationowner RUNNING/CI_PENDING atthisimmutablepresuccesssnapshot; finalverifiedmerge/HEAD/CI/terminalstate resideonthecommon work/main-execution-claim CURRENT_HANDOFF.md ref. FinalPARKED_EXTERNAL requiresclosureCI/normalmerge.
+
+ResumeQ15 withcurrentkey/projectauthorization thatallows trustedActionsKRLeagueV4; current403stop persists. ResumeQ19 separateone-textschema check onlyafterevidencedfreeprovideravailability; do notincreasevideoacquisition orrepeat chargedsource untilconfirmedcausefix orrecordedsource-groundedchangeddiagnostic. Preserve6rows7396 andrecoverallconclusions. Usercanmanualimportshorttimestampedsummary asEXPLORATORY immediately; AIcreatesnouserapproval. Q10needs ownPCofficialcapture/fieldreceipt, Q11actualoriginals, Q12matchingPOV+anchors, Q13then-knownevidence, Q14independentreference. PostgameQ16–Q18 followtheseinputs. Noautomaticexternalresume/successpromise; freshintake required. Sourcepatch/runtime gameplaypatch andapprovedknowledge remainunknown.
+
+---
+
 된 것: PR #21을 병합하고 Riot·Gemini 실제 진단을 각각 한 번 실행했습니다.
 된 것: Riot 키 모양은 정상이며 Gemini 텍스트 확인은 200으로 성공했습니다.
 안 된 것: Riot 첫 응답은 403이고 읽을 수 있는 status.message가 없었습니다.
