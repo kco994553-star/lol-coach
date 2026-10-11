@@ -62,7 +62,7 @@ five LANE/FIGHT views remain unfilled. The original common/profile sources still
 cover all ten golden champions and the three frequent picks. Missing personal
 cells must show 미확인; original role prose is not duplicated across sections to
 fill the UI. Further views require a compatible source-backed candidate or a
-separately authorized contract change, not a fabricated condition.
+versioned contract extension under the existing queue authorization, not a fabricated condition.
 
 ## Review binding and local verification
 

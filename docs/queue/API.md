@@ -19,6 +19,7 @@ All new route paths below start `/dev/v1/pregame`.
 | GET /plans/{plan_id} | — | stored plan with current validity and expiry_reasons |
 | GET /knowledge | — | list[{proposal:exact current PR10 report,spec:RuleSpec|null}] |
 | GET /candidates | — | list[RuleSpec] from executable candidate catalog, all EXPLORATORY |
+| GET /review-priority | — | list[10 recommended source candidates with reasons]; recommendations are not approvals |
 | POST /candidates | {spec:RuleSpec} | {proposal:EXPLORATORY report,spec:RuleSpec},201; only proposes, never approves |
 | GET /roster | — | {static_version:str|null,champions:list[{id,name,roles:list[Position]}]} |
 | GET /export | — | {schema_version:pregame.archive.v1,inputs:list[records],plans:list[stored records],operations:list[exact retry receipts],sha256:str} |

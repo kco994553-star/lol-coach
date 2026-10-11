@@ -1,0 +1,67 @@
+name: Pregame queue checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pregame-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pregame:
+    if: github.event.repository.private == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Install pinned runtime dependency
+        run: python -m pip install --disable-pip-version-check -r requirements-r3.txt
+      - name: Verify contract, missing inputs, conflicts and immutable storage
+        shell: bash
+        run: python scripts/verify_pregame.py | tee "$RUNNER_TEMP/pregame-tests.json"
+      - name: Install pinned browser automation
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+        run: npm install --prefix "$RUNNER_TEMP/pregame-playwright" --no-save --package-lock=false --no-audit --no-fund playwright@1.62.1
+      - name: Verify five positions in actual Chromium
+        shell: bash
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/pregame-playwright/node_modules"
+          CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
+          export CHROMIUM_EXECUTABLE
+          python scripts/browser_pregame.py | tee "$RUNNER_TEMP/pregame-browser.json"
+      - name: Print exact fresh receipts
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          receipts = {}
+          for name, filename, reportfile in [('tests', 'pregame-tests.json', 'verification.json'),
+                                             ('browser', 'pregame-browser.json', 'runner.json')]:
+              try:
+                  launch = json.loads((Path(os.environ['RUNNER_TEMP']) / filename).read_text())
+                  receipts[name] = json.loads((Path(launch['evidence_directory']) / reportfile).read_text())
+              except (OSError, ValueError, KeyError) as error:
+                  receipts[name] = {'status': 'NOT_PRODUCED', 'error': str(error)}
+          payload = {'commit_sha': os.environ['GITHUB_SHA'], 'run_id': os.environ['GITHUB_RUN_ID'],
+                     'run_attempt': os.environ['GITHUB_RUN_ATTEMPT'], 'receipts': receipts,
+                     'real_match_coaching_validation_passed': False, 'coaching_accuracy': None}
+          print('PREGAME_RECEIPT_JSON=' + json.dumps(payload, ensure_ascii=False))
+          with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a') as output:
+              output.write('## Five-position pregame verification\n\n```json\n' + json.dumps(payload, ensure_ascii=False, indent=2) + '\n```\n')
+          PY
