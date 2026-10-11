@@ -29,7 +29,7 @@ class V14Tests(unittest.TestCase):
     def test_stage_state_conditions_strict_and_no_minute_classifier(self):
         for mutate in [lambda r:r.update(minute=25),lambda r:r.update(stage_conditions=[]),
                        lambda r:r['stage_conditions'].append(dict(field='LONG_RESPAWN_RISK',value=False)),
-                       lambda r:r.update(exceptions=[]),lambda r:r.update(why=' '),
+                       lambda r:r.update(stage='EARLY'),lambda r:r.update(stage_conditions=[dict(field='LONG_RESPAWN_RISK',value=False)]),lambda r:r.update(exceptions=[]),lambda r:r.update(why=' '),
                        lambda r:r.update(statistics_ref=dict(dataset_sha256='bad',cohort_id='x'))]:
             s=v3_rule();mutate(s['output']['movement'][0])
             with self.assertRaises(ValueError):parse_rule(s)
@@ -47,6 +47,19 @@ class V14Tests(unittest.TestCase):
         self.assertEqual(p['movement']['status'],'UNKNOWN')
         self.assertIsNone(p['movement_statistics_fingerprint'])
         self.assertIsNone(p['coaching_accuracy'])
+
+    def test_unpicked_v3_profile_has_same_candidate_behavior_as_v2(self):
+        from tests_pregame.test_v13 import v2_profile
+        from tests_pregame.test_evaluator import approved
+        from coach_v1.pregame_v3 import evaluate_gameplan_v3
+        d=v2_input();d.update(my_pick_state='UNPICKED',my_champion=None,frequent_champions=['Ashe'])
+        d['slots'][3]['champion']=None
+        ops=v2_rule('OPERATIONS');ops['output']['operations']['win_condition_allies']=[]
+        ops['output']['operations']['pick_candidates']=[dict(champion='Ashe',reason='SYNTHETIC recommendation')]
+        profiles=[v2_profile(c,['PROTECTOR']) for c in ['Ornn','Sejuani','Ahri','Lux']]
+        candidate=v2_profile('Ashe',['INITIATOR']);candidate['schema_version']='pregame.rule.v3';candidate['output']['movement']=[]
+        p=evaluate_gameplan_v3(d,[approved(s) for s in [ops,candidate,*profiles]])
+        self.assertEqual(p['pick_warnings'][0]['champion'],'Ashe')
 
     def test_v3_store_restart_restore_exact_and_unknown_support(self):
         from coach_v1.pregame_v3 import evaluate_gameplan_v3

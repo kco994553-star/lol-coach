@@ -33,6 +33,10 @@ class StageRole(Strict):
     def check(self):
         for t in [self.role,self.why,*self.exceptions]:_text(t)
         if len({c.field for c in self.stage_conditions})!=len(self.stage_conditions):raise ValueError('duplicate stage condition')
+        values={c.field:c.value for c in self.stage_conditions}
+        if self.stage=='EARLY' and values.get('LANING_ACTIVE') is not True:raise ValueError('early requires explicit laning')
+        if self.stage=='MID' and not (values.get('FIRST_TURRET_DESTROYED') is True or values.get('MAJOR_OBJECTIVE_CONTEST') is True):raise ValueError('mid requires explicit transition')
+        if self.stage=='LATE' and values.get('LONG_RESPAWN_RISK') is not True:raise ValueError('late requires explicit respawn risk')
         if len(set(self.overrides))!=len(self.overrides) or any(not re.fullmatch(r'[a-zA-Z0-9][a-zA-Z0-9_.-]{0,127}',r) for r in self.overrides):raise ValueError('override rule id')
         return self
 
@@ -69,7 +73,8 @@ def evaluate_gameplan_v3(input,knowledge,movement_statistics=None,test_mode=Fals
     from .pregame_evaluator import _cell
     result=evaluate_gameplan_v2(input,knowledge)
     fingerprint=movement_fingerprint(movement_statistics,test_mode)
-    if movement_statistics is None:
+    if fingerprint is None:
+        # Unsupported synthetic statistics are identical to absent statistics.
         # No module-dependent interpretation or source inventing for empty input.
         movement=_cell('MOVEMENT','단계별 기본 움직임')
         candidates=[t for t in result['evaluations'] if t.get('output') and t['output']['section']=='MOVEMENT']

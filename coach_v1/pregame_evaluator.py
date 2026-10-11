@@ -129,7 +129,7 @@ def _evaluate(trace, facts):
         elif facts.draft['my_position'] not in spec['positions']:
             values.append('FALSE');reasons.append('POSITION_SCOPE_MISMATCH')
     if (spec['profile'] and not any(s['champion']==spec['profile']['champion'] for s in facts.draft['slots'])
-        and not (spec['schema_version']=='pregame.rule.v2' and facts.draft.get('my_pick_state')=='UNPICKED'
+        and not (spec['schema_version'] in ('pregame.rule.v2','pregame.rule.v3') and facts.draft.get('my_pick_state')=='UNPICKED'
                  and spec['profile']['champion'] in facts.draft.get('frequent_champions',[]))):
         values.append('FALSE');reasons.append('PROFILE_CHAMPION_NOT_PRESENT')
     operations=spec['output'].get('operations')

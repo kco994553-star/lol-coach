@@ -64,7 +64,7 @@ const unknown = (key) => ({key,title:key,status:'UNKNOWN',texts:[],reasons:['NO_
     assert.equal(await page.isDisabled('#pg-create-plan'),true);
     await page.fill('#pg-title',saved.input.title);
     await page.click('#pg-create-plan'); await page.waitForSelector('#pg-plan-panel:visible');
-    assert.equal(await page.locator('#pg-cards > article').count(),7);
+    assert.equal(await page.locator('#pg-cards > article').count(),9);
     assert.equal(await page.locator('#pg-card-map .pg-map-row').count(),5);
     assert.equal(await page.locator('#pg-card-map .selected').count(),1);
     assert.match(await page.textContent('#pg-cards'),/NO_REVIEWED_RULE/);

@@ -80,7 +80,8 @@ def main():
     out = ROOT/'evidence/queue'/('q09-verifier-'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')+'-'+uuid.uuid4().hex[:8])
     out.mkdir(parents=True,exist_ok=False)
     before = hashes(); errors = []; results = {}; semantic = []
-    expected_minimum = {'test_contract':9,'test_evaluator':22,'test_store':7,'test_http':7}
+    expected_minimum = {'test_contract':9,'test_evaluator':22,'test_store':7,'test_http':7,'test_initiative_candidates':4,'test_v13':12,'test_v14':5,
+        'test_v14_http':6,'test_power_stats':8,'test_riot_collector':7,'test_movement':6}
     for module, minimum in expected_minimum.items():
         stream = io.StringIO()
         suite = unittest.defaultTestLoader.loadTestsFromName('tests_pregame.'+module)

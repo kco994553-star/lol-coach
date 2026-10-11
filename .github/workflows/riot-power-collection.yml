@@ -1,0 +1,82 @@
+name: Riot power aggregate collection
+
+on:
+  workflow_dispatch:
+    inputs:
+      tier:
+        description: Current League-V4 seed tier (not historical match rank)
+        type: choice
+        default: GOLD
+        options: [IRON, BRONZE, SILVER, GOLD, PLATINUM, EMERALD, DIAMOND, MASTER, GRANDMASTER, CHALLENGER]
+      division:
+        type: choice
+        default: I
+        options: [I, II, III, IV]
+      patch:
+        description: Exact match patch; blank pins first eligible patch
+        type: string
+        default: ''
+  schedule:
+    - cron: '17 3 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: riot-power-collection-main
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    # Secrets are used only on trusted default-branch code; never fork/PR/ref code.
+    if: github.repository == 'kco994553-star/lol-coach' && github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'schedule')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out trusted default branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Collect official KR seed and ASIA matches with bounded requests
+        env:
+          RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
+          COLLECTION_TIER: ${{ inputs.tier || 'GOLD' }}
+          COLLECTION_DIVISION: ${{ inputs.division || 'I' }}
+          COLLECTION_PATCH: ${{ inputs.patch }}
+        shell: bash
+        run: |
+          args=(--output "$RUNNER_TEMP/power-output/power-data.json" --movement-output "$RUNNER_TEMP/power-output/movement-data.json" --tier "$COLLECTION_TIER" --division "$COLLECTION_DIVISION" --max-matches 50 --max-requests 250 --max-players 20 --max-pages 1 --max-retries 2 --deadline-seconds 600)
+          if [[ -n "$COLLECTION_PATCH" ]]; then args+=(--patch "$COLLECTION_PATCH"); fi
+          python scripts/collect_power_stats.py "${args[@]}"
+      - name: Print safe aggregate status only
+        if: always()
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          path = Path(os.environ['RUNNER_TEMP']) / 'power-output/power-data.json'
+          if not path.exists():
+              result = {'status': 'OUTPUT_NOT_PRODUCED', 'coaching_accuracy': None}
+          else:
+              data = json.loads(path.read_text())
+              result = {'status': data['status'], 'real_matches': data['samples']['real_matches'],
+                        'patch': data['source']['patch'], 'tier': data['source']['tier'],
+                        'collection': data['source']['collection'], 'coaching_accuracy': None}
+          print('RIOT_AGGREGATE_RECEIPT_JSON=' + json.dumps(result))
+          with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a') as output:
+              output.write('Public-safe aggregate only; raw payloads and player identifiers are never uploaded.\n\n```json\n' + json.dumps(result, indent=2) + '\n```\n')
+          PY
+      - name: Retain public-safe aggregate for seven days
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: riot-power-aggregate
+          path: ${{ runner.temp }}/power-output/*.json
+          retention-days: 7
+          if-no-files-found: warn

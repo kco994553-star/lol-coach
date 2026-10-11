@@ -14,7 +14,7 @@ FIELD_V2=re.compile(r'(?:'+FIELD.pattern.removesuffix(r'\Z')+r'|(ally|enemy)\.(?
 def _text(value):
     if not value.strip() or len(value)>2000:raise ValueError('bounded original text required')
     # Conservative known abusive formulations, never rewrite an approved quote.
-    if any(t in value.lower().replace(' ','') for t in ('정글차이','서폿차이','팀원탓','못하네','쓰레기','왜안하','너때문','junglediff','supportdiff')):
+    if any(t in re.sub(r'\s+','',value.lower()) for t in ('정글차이','서폿차이','팀원탓','못하네','쓰레기','왜안하','너때문','junglediff','supportdiff')):
         raise ValueError('blame language not allowed')
     return value
 

@@ -161,7 +161,7 @@ class V13Tests(unittest.TestCase):
 
     def test_prohibited_blame_templates_rejected(self):
         s=v2_rule('OPERATIONS');
-        for phrase in ['정글 차이 때문에 졌다','jungle diff','support diff']:
+        for phrase in ['정글 차이 때문에 졌다','jungle diff','support diff','정글\t차이 때문에 졌다','jungle\ndiff']:
             s['output']['operations']['request_templates']=[phrase]
             with self.assertRaises(ValueError):parse_rule(s)
 
