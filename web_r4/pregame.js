@@ -172,12 +172,13 @@
     }
   }
   function cellContent(parent,cell,p){
-    const head=node('div',undefined,'cell-head');head.append(node('h4',roleNames[cell.key] || cell.title || cell.key),node('span',labels[cell.status] || cell.status,'badge'));parent.append(head);
-    if(cell.outlook)parent.append(node('p',labels[cell.outlook] || cell.outlook,'outlook'));
-    if(cell.status==='UNKNOWN'){parent.append(node('p','미확인'));}
-    else for(const text of cell.texts || [])parent.append(node('p',text));
-    const reasons=node('ul');for(const reason of cell.reasons || [])reasons.append(node('li',reason));if(reasons.children.length)parent.append(reasons);
-    cooldowns(parent,cell.cooldowns);
+    const currentPlan=p.validity==='CURRENT',usable=currentPlan && cell.status==='KNOWN';
+    const names={ROLE:'내 역할',LANE:'라인·동선',FIGHT:'교전·생존',COMPOSITION:'조합',OPERATIONS:'운영·팀 의존',MOVEMENT:'이동 단계',CHANGES:'변화 조건'};
+    const title=currentPlan?(roleNames[cell.key] || cell.title || cell.key):(roleNames[cell.key] || names[cell.key] || '보존된 카드');
+    const head=node('div',undefined,'cell-head');head.append(node('h4',title),node('span',currentPlan?(labels[cell.status] || cell.status):'UNKNOWN · 만료된 이력','badge'));parent.append(head);
+    if(usable){if(cell.outlook)parent.append(node('p',labels[cell.outlook] || cell.outlook,'outlook'));for(const text of cell.texts || [])parent.append(node('p',text));cooldowns(parent,cell.cooldowns);}
+    else parent.append(node('p',currentPlan?'미확인 · 실행 내용은 보류합니다.':'만료된 이력 · 실행 내용과 수치는 보류합니다. 원본은 아래 이력에서 확인하세요.'));
+    if(currentPlan){const reasons=node('ul');for(const reason of cell.reasons || [])reasons.append(node('li',reason));if(reasons.children.length)parent.append(reasons);}
     renderGuards(parent,cell,p);
   }
   const signalNames={ALLY_MINIMAP:'아군 미니맵',WAVE:'웨이브',SELF_HEALTH:'내 체력',SELF_RESOURCE:'내 자원',GAME_TIME:'게임 시간'};
@@ -194,7 +195,7 @@
   }
   function renderOperations(parent,p,cell){
     const dependency=p.team_dependencies;
-    if(dependency){parent.append(node('p','팀 의존 정보 · '+(dependency.status || 'UNKNOWN'),'small'));
+    if(dependency){parent.append(node('p','팀 의존 정보 · '+(p.validity==='CURRENT'?(dependency.status || 'UNKNOWN'):'UNKNOWN'),'small'));
       if(p.validity==='CURRENT' && dependency.status==='KNOWN'){parent.append(node('p','시작 역할 의존 · '+(dependency.dependency_risk || 'UNKNOWN')+' · 시작 역할 수 '+(dependency.initiator_count ?? 'UNKNOWN'),'small'));
         for(const ally of dependency.allies || [])parent.append(node('p',(roleNames[ally.position] || ally.position)+' · '+ally.champion+' · '+((ally.initiative || []).join(', ') || 'UNKNOWN')+' · 필요 '+((ally.needs || []).join(', ') || 'UNKNOWN'),'small'));
       }
@@ -234,14 +235,26 @@
     if(!shown)parent.append(node('p','이동 단계 UNKNOWN · 검토된 근거와 검증된 위치 통계 연결이 필요합니다.'));
     parent.append(node('p','초반·중반·후반은 표시된 상황 조건으로 구분합니다. 현재 경기 상황을 감지하거나 분 단위로 확정하지 않습니다.','small'));
   }
+  function phaseBands(p,position){
+    const cell=p.movement;if(p.validity!=='CURRENT' || !cell || cell.status==='CONFLICTING')return [];
+    const bands=[];
+    for(const trace of cell.rules || []){if(trace.status!=='APPLIED' || !trace.spec?.plan_guard)continue;
+      const support=trace.movement_statistics;if(!support)continue;
+      for(const row of trace.output?.movement || []){if(row.position!==position || !(row.subject==='ALLY' || row.subject==='SELF' && p.input.my_position===position))continue;
+        if(row.statistics_ref?.dataset_sha256!==support.dataset_sha256 || row.statistics_ref?.cohort_id!==support.cohort_id)continue;
+        for(const point of support.points || [])if(point.visible===true && typeof point.minute==='number')bands.push({minute:point.minute,n:point.n,stage:row.stage,conditions:row.stage_conditions,dataset_digest:support.dataset_sha256,cohort_id:support.cohort_id});
+      }
+    }return bands;
+  }
   function powerSlot(parent,p,position,compact){
     const host=node('div',undefined,'pg-power'+(compact?' pg-power-mini':''));host.dataset.position=position;host.append(node('p','통계 UNKNOWN · 불러오는 중','small'));parent.append(host);
+    if(p.validity!=='CURRENT'){host.replaceChildren(node('p','통계 UNKNOWN · 현재 유효한 계획에서 확인하세요.','small'));return;}
     const own=p.input.slots.filter(s=>s.side==='ALLY' && s.position===position),enemy=p.input.slots.filter(s=>s.side==='ENEMY' && s.position===position);
     if(own.length!==1 || !own[0].champion || !p.input.patch){host.replaceChildren(node('p','통계 UNKNOWN · 챔피언·포지션·정확한 패치 필요','small'));return;}
     const champion=own[0].champion,opponent=enemy.length===1?enemy[0].champion:null,mark=context(),view=planViewEpoch;
     api('/power-view','POST',JSON.stringify({champion,position,patch:p.input.patch,tier:$('pg-power-tier').value || null,opponent_champion:opponent})).then(response=>{
       if(!alive(mark) || view!==planViewEpoch || plan!==p || !host.isConnected || dirty())return;
-      window.PregamePower.render(host,response,{testMode,compact,champion,opponent});
+      window.PregamePower.render(host,response,{testMode,compact,champion,opponent,phaseBands:phaseBands(p,position)});
     }).catch(e=>{if(!alive(mark)||view!==planViewEpoch||plan!==p||!host.isConnected)return;if(e.status===401){apiError(e,mark);return;}host.replaceChildren(node('p','통계 UNKNOWN · 조회하지 못했습니다.','small'));});
   }
   function detail(parent,p,cells){
