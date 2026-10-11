@@ -7,12 +7,12 @@ import urllib.error
 from unittest.mock import Mock,patch
 
 from coach_v1 import expert_collector as m
-from tests_expert.test_collector import NOW,VIDEO,Transport,config,policy
+from tests_expert.test_collector import NOW,VIDEO,Transport,config,policy,is_text_probe,generated
 from tests_expert.test_segments import Clips
 
 
 def completed(text='TEST_OK'):
-    return dict(status='completed',steps=[dict(type='model_output',content=[dict(type='text',text=text)])])
+    return generated(text)
 
 
 class ProbeHTTP(Clips):
@@ -21,7 +21,7 @@ class ProbeHTTP(Clips):
 
     def __call__(self,*args):
         body=args[3]
-        if args[0]=='POST' and all(item['type']=='text' for item in body['input']):
+        if args[0]=='POST' and is_text_probe(body):
             self.probe_calls+=1;self.probe_timeout=args[4];self.calls.append(copy.deepcopy(args[:4]))
             if isinstance(self.response,Exception):raise self.response
             return self.status,{},completed() if self.response is None else self.response
@@ -38,16 +38,16 @@ class DiagnosticTests(unittest.TestCase):
         ordinary=ProbeHTTP();plain=collector(ordinary);plain.probe_text()
         h=ProbeHTTP(response=completed('{"claims":[]}'));c=collector(h);receipt=c.probe_text(structured=True)
         body=h.calls[0][3];default=ordinary.calls[0][3]
-        expected=dict(type='text',mime_type='application/json',schema=m.RESPONSE_SCHEMA)
-        self.assertEqual(body['response_format'],expected)
-        self.assertEqual({k:v for k,v in body.items() if k not in ('input','response_format')},
-            {k:v for k,v in default.items() if k!='input'})
-        self.assertEqual([x['type'] for x in body['input']],['text'])
-        self.assertNotIn('uri',json.dumps(body));self.assertEqual(body['model'],m.MODEL)
+        expected=dict(responseMimeType='application/json',responseJsonSchema=m.RESPONSE_SCHEMA)
+        self.assertEqual(body['generationConfig'],dict(candidateCount=1,**expected))
+        self.assertEqual({k:v for k,v in body.items() if k not in ('contents','generationConfig')},
+            {k:v for k,v in default.items() if k not in ('contents','generationConfig')})
+        self.assertEqual([set(x) for x in body['contents'][0]['parts']],[{'text'}])
+        self.assertNotIn('uri',json.dumps(body));self.assertIn(m.MODEL,h.calls[0][1])
         self.assertEqual(receipt['status'],'READY');self.assertEqual(receipt['input_kind'],'TEXT_ONLY')
         self.assertEqual(receipt['video_inputs'],0);self.assertNotIn('claims',json.dumps(receipt))
         self.assertEqual(c.request_counts,dict(TEXT_PROBE=1,VIDEO_CLIP=0,METADATA=0));self.assertLessEqual(h.probe_timeout,60)
-        body['response_format']['schema']['required'].append('TEST_MUTATION')
+        body['generationConfig']['responseJsonSchema']['required'].append('TEST_MUTATION')
         self.assertEqual(m.RESPONSE_SCHEMA['required'],['claims'])
 
     def test_structured_probe_format_failure_retains_literal_safe_diagnostics_and_no_video(self):
@@ -78,10 +78,10 @@ class DiagnosticTests(unittest.TestCase):
     def test_probe_success_receipt_contains_no_returned_text_or_video_and_reused_by_process(self):
         h=ProbeHTTP(response=completed('PRIVATE_TEXT_NOT_RETAINED'));c=collector(h)
         plan=c.prepare(config(),collection_mode='DIAGNOSTIC_FIRST_CLIP')
-        self.assertEqual(plan['schema_version'],'expert.reservation-plan.v3')
+        self.assertEqual(plan['schema_version'],'expert.reservation-plan.v4')
         self.assertEqual(plan['collection_mode'],'DIAGNOSTIC_FIRST_CLIP')
-        self.assertEqual(plan['text_probe'],dict(schema_version='expert.text-probe.v1',status='READY',reason=None,
-            model=m.MODEL,checked_at=NOW,http_status=200,input_kind='TEXT_ONLY',video_inputs=0))
+        self.assertEqual(plan['text_probe'],dict(schema_version='expert.text-probe.v2',status='READY',reason=None,
+            model=m.MODEL,checked_at=NOW,http_status=200,input_kind='TEXT_ONLY',video_inputs=0,api_route='GENERATE_CONTENT',attempt_count=1,retry_count=0))
         self.assertNotIn('PRIVATE_TEXT_NOT_RETAINED',json.dumps(plan));self.assertLessEqual(h.probe_timeout,60)
         result=c.process(plan,reservation_persisted=True)
         self.assertEqual(h.probe_calls,1);self.assertEqual(h.model_calls,1)
@@ -120,10 +120,10 @@ class DiagnosticTests(unittest.TestCase):
 
     def test_http_error_transport_reads_only_bounded_transient_selected_body(self):
         body=json.dumps({'error':{'status':'INVALID_ARGUMENT','code':'invalid_argument','message':'TEST error'}}).encode()
-        error=urllib.error.HTTPError(m.INTERACTIONS_URL,400,'PRIVATE_REASON',{},io.BytesIO(body))
+        error=urllib.error.HTTPError(m.GENERATE_CONTENT_URL,400,'PRIVATE_REASON',{},io.BytesIO(body))
         with patch.object(m.urllib.request,'build_opener') as opener:
             opener.return_value.open.side_effect=error
-            code,_,raw=m._transport('POST',m.INTERACTIONS_URL,{}, {'model':m.MODEL},60,1000000)
+            code,_,raw=m._transport('POST',m.GENERATE_CONTENT_URL,{}, {'model':m.MODEL},60,1000000)
         self.assertEqual(code,400);self.assertEqual(raw,body)
 
     def test_network_has_null_status_and_malformed_clip_has_actual_200(self):
@@ -175,7 +175,7 @@ class DiagnosticTests(unittest.TestCase):
         self.assertEqual(c.diagnostics[0]['http_status'],200)
 
     def test_old_plans_rejected_and_short_diagnostic_can_complete(self):
-        for version in ('expert.reservation-plan.v1','expert.reservation-plan.v2'):
+        for version in ('expert.reservation-plan.v1','expert.reservation-plan.v2','expert.reservation-plan.v3'):
             h=ProbeHTTP();c=collector(h);plan=c.prepare(config());plan['schema_version']=version
             with self.assertRaises(ValueError):c.process(plan,reservation_persisted=True)
             self.assertEqual(h.model_calls,0)

@@ -3,36 +3,31 @@
 Internal schema expert.quota-ledger.v1 preserves ALL reservations (including
 unknown/failed attempts), with video_id/seconds/reserved_at/reservation_id, and
 processed_video_ids only after a nonempty validated artifact. Reserve produces
-expert.reservation-plan.v3. Archived v1/v2 plans are never reinterpreted. An external durable persistence ACK is mandatory
+expert.reservation-plan.v4. Archived v1/v2/v3 plans are never reinterpreted. An external durable persistence ACK is mandatory
 before process; Actions provides it only after upload-artifact succeeds.
-Rolling24h cap28800s is conservative; reset timezone is unknown. No retries:
+Rolling24h cap28800s is conservative; reset timezone is unknown. No video retries:
 another uncertain dispatch would require another full duration reservation.
 Publication is always deferred to Main's repository ownership protocol.
 The default request budget is50 (also its hard maximum):15 enabled channels
-can use3 metadata requests each plus2 model requests, totaling47. One video
+can use3 metadata requests each plus1 successful TEXT probe and2 video requests,
+totaling48. Any authorized TEXT retries consume the same fixed50-request budget. One video
 of at most1200 seconds uses contiguous static clips of at most600 seconds.
 Each clip reserves its FULL ORIGINAL video duration; clipping is not evidence
 that the provider's daily upload charge decreases. Provider transport timeout
 defaults to600 seconds (hard maximum); metadata waits are at most20 seconds. A detected
 TimeoutError (direct or wrapped in URLError) is NETWORK_TIMEOUT; other network
 failures remain NETWORK_FAILURE without inferring expired keys or paid access.
-These operational limits never authorize retries, quota refunds or reset.
+Only TEXT literal503 permits up to3 retries spaced15seconds. Video and metadata
+requests never retry; quotas are never refunded or reset.
 
-Official sources reviewed2026-10-11, actual service acquisitions0:
-https://ai.google.dev/gemini-api/docs/video-understanding#youtube
-SHA256 1e0a6ff5e8c46ef2cf6a7c43ed043535372f073c1d204069fe561ecf28a74697
-https://ai.google.dev/gemini-api/docs/pricing#gemini-3.8-flash
-SHA256 1075d42d74a4679046f9d397061acc07dff08c3740531a05e28f9ec4d5834b15
-https://ai.google.dev/gemini-api/docs/structured-output#json-schema-support
-SHA256 634e24c458ca8df3392bcfa23e1ab7dacb605bb661d3197b55f9f36fe255fbcf
-https://ai.google.dev/api/interactions-api#CreateInteraction-simple
-SHA256 052344af68443a8310ee1d63eb6a299e45ca74586922545647195720607906a3
-https://ai.google.dev/gemini-api/docs/billing#projects-api-keys
-SHA256 f0eda423aa236fdccec037147f9aa147d9c1023a1fc8e0e031d1ce112463f12b
-https://docs.cloud.google.com/apis/docs/system-parameters
-SHA256 ee1e59d7c6e8e5995510e657c7aec56a548618ad4dc26f449bc3c4b624429076
-Google's all-REST-APIs key/header rule supports X-Goog-Api-Key for YouTube;
-actual project/key acceptance remains untested, never inferred from docs.
+Official generateContent mapping is frozen in contracts/cause-diagnosis-v2.md:
+https://ai.google.dev/api/generate-content#GenerationConfig
+https://ai.google.dev/api/generate-content#Part
+https://ai.google.dev/api/generate-content#VideoMetadata
+https://ai.google.dev/api/generate-content#ResponseFormatConfig
+https://ai.google.dev/gemini-api/docs/troubleshooting
+Fresh source hashes are recorded by Main in Q19_GENERATECONTENT_SOURCES.md;
+historical acquisition receipts are never rewritten by this route migration.
 Preview URL pricing can change. Fresh official-document entitlement verification
 and operator free-project attestation remain independent mandatory gates.
 """
@@ -52,7 +47,7 @@ import urllib.request
 from .api_diagnostics import MAX_ERROR_BYTES,safe_http_error
 
 MODEL='gemini-3.8-flash'
-INTERACTIONS_URL='https://generativelanguage.googleapis.com/v1beta/interactions'
+GENERATE_CONTENT_URL='https://generativelanguage.googleapis.com/v1beta/models/'+MODEL+':generateContent'
 YOUTUBE_URL='https://www.googleapis.com/youtube/v3/'
 DAY=86400
 CAP=28800
@@ -61,7 +56,7 @@ MAX_CALL_TIMEOUT=600
 MAX_METADATA_TIMEOUT=20
 MAX_CLIP_SECONDS=600
 MAX_VIDEO_SECONDS=1200
-PLAN_SCHEMA='expert.reservation-plan.v3'
+PLAN_SCHEMA='expert.reservation-plan.v4'
 COLLECTION_MODES=('FULL_VIDEO','DIAGNOSTIC_FIRST_CLIP')
 SEGMENT_POLICY='FULL_ORIGINAL_DURATION_PER_STATIC_CLIP_V1'
 # Reserve through the latest permitted dispatch plus its bounded transport
@@ -132,10 +127,12 @@ def _reservation_payload(created_at,videos,prior,text_probe,collection_mode):
 
 
 def _valid_probe(receipt,now):
-    _keys(receipt,{'schema_version','status','reason','model','checked_at','http_status','input_kind','video_inputs'})
-    _require(receipt['schema_version']=='expert.text-probe.v1' and receipt['status']=='READY' and receipt['reason'] is None)
+    _keys(receipt,{'schema_version','status','reason','model','checked_at','http_status','input_kind','video_inputs','api_route','attempt_count','retry_count'})
+    _require(receipt['schema_version']=='expert.text-probe.v2' and receipt['status']=='READY' and receipt['reason'] is None)
     _require(receipt['model']==MODEL and receipt['input_kind']=='TEXT_ONLY' and type(receipt['video_inputs']) is int and receipt['video_inputs']==0)
     _require(type(receipt['http_status']) is int and receipt['http_status']==200)
+    _require(receipt['api_route']=='GENERATE_CONTENT' and _int(receipt['attempt_count'],1) and receipt['attempt_count']<=4)
+    _require(_int(receipt['retry_count']) and receipt['retry_count']<=3 and receipt['attempt_count']==receipt['retry_count']+1)
     _require(_int(receipt['checked_at']) and 0<=now-receipt['checked_at']<=MAX_DISPATCH_DELAY)
 
 
@@ -143,10 +140,31 @@ def _segment_body(video,start,end):
     instruction=(PROMPT+' Timestamps MUST be original-video absolute MM:SS, never clip-relative. '
         'Only retain statements at original seconds '+str(start)+' <= timestamp < '+str(end)+
         '. Do not add an offset or guess a missing original timestamp.')
-    return dict(model=MODEL,input=[dict(type='video',uri=video['url'],
-        processing=dict(type='static',start_offset=str(start)+'s',end_offset=str(end)+'s')),dict(type='text',text=instruction)],
-        response_format=dict(type='text',mime_type='application/json',schema=RESPONSE_SCHEMA),
-        store=False,stream=False,background=False)
+    return dict(contents=[dict(role='user',parts=[dict(file_data=dict(file_uri=video['url']),
+        video_metadata=dict(start_offset=str(start)+'s',end_offset=str(end)+'s')),dict(text=instruction)])],
+        generationConfig=_generation_config(True))
+
+
+def _generation_config(structured):
+    config=dict(candidateCount=1)
+    if structured:config.update(responseMimeType='application/json',responseJsonSchema=deepcopy(RESPONSE_SCHEMA))
+    return config
+
+
+def _generated_text(response):
+    candidates=response.get('candidates');_require(isinstance(candidates,list) and len(candidates)==1)
+    feedback=response.get('promptFeedback')
+    _require(feedback is None or isinstance(feedback,dict) and not feedback.get('blockReason'))
+    candidate=candidates[0];_require(isinstance(candidate,dict) and candidate.get('finishReason')=='STOP')
+    ratings=candidate.get('safetyRatings',[]);_require(isinstance(ratings,list))
+    _require(all(isinstance(r,dict) and r.get('blocked',False) is False for r in ratings))
+    content=candidate.get('content');_require(isinstance(content,dict) and content.get('role','model')=='model')
+    parts=content.get('parts');_require(isinstance(parts,list) and bool(parts))
+    texts=[]
+    for part in parts:
+        _keys(part,{'text'});_require(isinstance(part['text'],str));texts.append(part['text'])
+    text=''.join(texts);_require(bool(text.strip()) and len(text.encode())<=200000)
+    return text
 
 
 def _json(value):
@@ -299,7 +317,7 @@ def _transport(method,url,headers,body,timeout,max_bytes):
 
 class ExpertCollector:
     def __init__(self,*,youtube_api_key=None,gemini_api_key=None,transport=None,clock=None,policy=None,
-                 max_requests=50,timeout=600,max_bytes=1000000,on_diagnostic=None):
+                 max_requests=50,timeout=600,max_bytes=1000000,on_diagnostic=None,sleeper=None):
         self.youtube_key=youtube_api_key;self.gemini_key=gemini_api_key
         self.transport=transport or _transport;self.clock=clock or time.time
         self.policy=deepcopy(policy or dict(free_tier_confirmed=False,entitlement_confirmed=False,
@@ -310,6 +328,8 @@ class ExpertCollector:
         _require(_int(max_requests,1) and max_requests<=50 and _int(timeout,1) and timeout<=MAX_CALL_TIMEOUT and _int(max_bytes,1) and max_bytes<=2000000)
         self.max_requests=max_requests;self.timeout=timeout;self.max_bytes=max_bytes;self.request_count=0
         _require(on_diagnostic is None or callable(on_diagnostic))
+        _require(sleeper is None or callable(sleeper))
+        self.sleeper=sleeper or time.sleep
         self.on_diagnostic=on_diagnostic;self.diagnostics=[]
         self.request_counts=dict(TEXT_PROBE=0,VIDEO_CLIP=0,METADATA=0)
 
@@ -330,7 +350,7 @@ class ExpertCollector:
 
     def _request(self,method,url,body=None,*,phase=None,timeout_limit=None):
         youtube=url.startswith(YOUTUBE_URL) and method=='GET'
-        _require(youtube or url==INTERACTIONS_URL and method=='POST')
+        _require(youtube or url==GENERATE_CONTENT_URL and method=='POST')
         provider='YOUTUBE' if youtube else 'GEMINI';phase=phase or ('METADATA' if youtube else 'VIDEO_CLIP')
         _require(phase in self.request_counts)
         def fail(reason,status='BLOCKED_EXTERNAL',http_status=None,response=None):
@@ -359,33 +379,34 @@ class ExpertCollector:
 
     def probe_text(self,*,structured=False):
         _require(type(structured) is bool)
-        receipt=dict(schema_version='expert.text-probe.v1',status='BLOCKED_EXTERNAL',reason=None,model=MODEL,
-            checked_at=int(self.clock()),http_status=None,input_kind='TEXT_ONLY',video_inputs=0)
+        receipt=dict(schema_version='expert.text-probe.v2',status='BLOCKED_EXTERNAL',reason=None,model=MODEL,
+            checked_at=int(self.clock()),http_status=None,input_kind='TEXT_ONLY',video_inputs=0,
+            api_route='GENERATE_CONTENT',attempt_count=0,retry_count=0)
         before=len(self.diagnostics)
-        try:
-            self._gate()
-            body=dict(model=MODEL,input=[dict(type='text',text='Reply with OK.')],store=False,stream=False,background=False)
-            if structured:
-                body['input'][0]['text']='Return the JSON object {"claims":[]}.'
-                body['response_format']=dict(type='text',mime_type='application/json',schema=deepcopy(RESPONSE_SCHEMA))
-            response=self._request('POST',INTERACTIONS_URL,body,phase='TEXT_PROBE',timeout_limit=60)
-            receipt['http_status']=200
-            texts=[]
-            _require(response.get('status')=='completed' and isinstance(response.get('steps'),list))
-            for step in response['steps']:
-                _require(isinstance(step,dict))
-                if step.get('type')=='model_output':
-                    _require(isinstance(step.get('content'),list))
-                    for content in step['content']:
-                        _require(isinstance(content,dict) and content.get('type')=='text' and isinstance(content.get('text'),str))
-                        texts.append(content['text'])
-            _require(texts and any(text.strip() for text in texts))
-            receipt.update(status='READY',checked_at=int(self.clock()));return receipt
+        try:self._gate()
         except _External as error:
-            receipt.update(status=error.status,reason=error.reason,http_status=error.http_status)
-            if len(self.diagnostics)==before:self._diagnose('GEMINI','TEXT_PROBE',error.reason,error.http_status)
-        except (ValueError,TypeError,KeyError,UnicodeError,RecursionError,OverflowError):
-            receipt['reason']='MALFORMED_RESPONSE';self._diagnose('GEMINI','TEXT_PROBE','MALFORMED_RESPONSE',receipt['http_status'])
+            receipt.update(status=error.status,reason=error.reason);self._diagnose('GEMINI','TEXT_PROBE',error.reason)
+            return receipt
+        prompt='Return the JSON object {"claims":[]}.' if structured else 'Reply with OK.'
+        body=dict(contents=[dict(role='user',parts=[dict(text=prompt)])],generationConfig=_generation_config(structured))
+        for attempt in range(4):
+            count_before=self.request_counts['TEXT_PROBE']
+            try:
+                response=self._request('POST',GENERATE_CONTENT_URL,body,phase='TEXT_PROBE',timeout_limit=60)
+                receipt['http_status']=200
+                _generated_text(response)  # Retain only the receipt, never response text.
+                receipt.update(status='READY',reason=None,checked_at=int(self.clock()))
+            except _External as error:
+                receipt.update(status=error.status,reason=error.reason,http_status=error.http_status)
+            except (ValueError,TypeError,KeyError,UnicodeError,RecursionError,OverflowError):
+                receipt['reason']='MALFORMED_RESPONSE';self._diagnose('GEMINI','TEXT_PROBE','MALFORMED_RESPONSE',receipt['http_status'])
+            dispatched=self.request_counts['TEXT_PROBE']-count_before
+            receipt['attempt_count']+=dispatched
+            receipt['retry_count']=max(0,receipt['attempt_count']-1)
+            receipt['checked_at']=int(self.clock())
+            if receipt['status']=='READY':return receipt
+            if not (dispatched and receipt['http_status']==503 and receipt['reason']=='PROVIDER_HTTP_FAILURE' and attempt<3):return receipt
+            self.sleeper(15)
         return receipt
 
     def _youtube(self,endpoint,**params):
@@ -514,19 +535,10 @@ class ExpertCollector:
             for (start,end),body in zip(intervals,bodies):
                 try:
                     if not 0<=int(self.clock())-plan['created_at']<=MAX_DISPATCH_DELAY:raise _External('RESERVATION_DISPATCH_DEADLINE_EXPIRED')
-                    response=self._request('POST',INTERACTIONS_URL,body)
+                    response=self._request('POST',GENERATE_CONTENT_URL,body)
                     last_http_status=200
-                    texts=[]
-                    _require(response.get('status')=='completed' and isinstance(response.get('steps'),list))
-                    for step in response['steps']:
-                        _require(isinstance(step,dict))
-                        if step.get('type')=='model_output':
-                            _require(isinstance(step.get('content'),list))
-                            for content in step['content']:
-                                _require(isinstance(content,dict) and content.get('type')=='text' and isinstance(content.get('text'),str))
-                                texts.append(content['text'])
-                    _require(len(texts)==1 and len(texts[0].encode())<=200000)
-                    decoded=_json(texts[0]);accepted,rejected=normalize_gemini_claims(decoded,video['duration_seconds'])
+                    text=_generated_text(response)
+                    decoded=_json(text);accepted,rejected=normalize_gemini_claims(decoded,video['duration_seconds'])
                     # Empty valid clips are completed requests. Any malformed or
                     # invalid statement holds the whole-video processed marker.
                     invalid=any(x['reason'] not in ('NO_ACCEPTED_CLAIMS','DUPLICATE_CLAIM') for x in rejected)
