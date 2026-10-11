@@ -54,11 +54,12 @@ class V14HTTPTests(unittest.TestCase):
         self.assertEqual(status,201);self.assertEqual(p['schema_version'],'pregame.plan.v3')
         self.assertEqual(p['movement']['status'],'UNKNOWN');self.assertIsNone(p['movement_statistics_fingerprint'])
         archive=self.server.pregame.export_data()
+        from coach_v1.pregame_store import PregameStore
+        self.server.pregame=PregameStore(self.tmp.name+'/http-restored.sqlite')
         self.assertEqual(self.call('/dev/v1/pregame/restore','POST',dict(archive=archive))[0],200)
         self.assertEqual(self.call('/dev/v1/pregame/plans/'+p['id'])[1],p)
         archive=self.server.pregame.export_data()
         # Structural archives may be admissible data; replay never grants them authority.
-        from coach_v1.pregame_store import PregameStore
         restored=PregameStore(self.tmp.name+'/restored.sqlite');restored.import_data(archive)
         from coach_v1.pregame_store import plan_fields
         forged={k:copy.deepcopy(p[k]) for k in plan_fields(p)};forged['movement']['texts']=['forged advice']
