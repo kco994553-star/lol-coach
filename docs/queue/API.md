@@ -21,7 +21,7 @@ All new route paths below start `/dev/v1/pregame`.
 | GET /candidates | — | list[RuleSpec] from executable candidate catalog, all EXPLORATORY |
 | POST /candidates | {spec:RuleSpec} | {proposal:EXPLORATORY report,spec:RuleSpec},201; only proposes, never approves |
 | GET /roster | — | {static_version:str|null,champions:list[{id,name,roles:list[Position]}]} |
-| GET /export | — | {schema_version:pregame.archive.v1,inputs:list[records],plans:list[stored records],sha256:str} |
+| GET /export | — | {schema_version:pregame.archive.v1,inputs:list[records],plans:list[stored records],operations:list[exact retry receipts],sha256:str} |
 | POST /restore | {archive:exact export object} | {status:RESTORED}; only empty pregame DB, otherwise409 |
 
 Saved input record {schema_version:pregame.input.v1,id:32hex,session_id:32hex,revision:int,parent_id:32hex|null,created_at:UTC ISO,input:InputDraft,input_sha256:64hex}.
