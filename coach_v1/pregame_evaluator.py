@@ -238,21 +238,17 @@ def evaluate_gameplan(input, knowledge):
             if trace['spec'] and trace['spec']['profile']:trace['reasons'].append('PROFILE_DEPENDENCY_UNRESOLVED')
     common=dict(map=[_cell(position, '원딜' if position=='BOTTOM' else position) for position in POSITIONS],
                 jungle=_cell('JUNGLE','정글'),composition=_cell('COMPOSITION','조합'))
-    personal=dict(role=_cell('ROLE','내 역할'),lane=_cell('LANE','라인/동선'),fight=_cell('FIGHT','교전/생존'))
+    position=draft['my_position']
+    position_label={'TOP':'탑','JUNGLE':'정글','MID':'미드','BOTTOM':'원딜','SUPPORT':'서포터'}.get(position,'포지션 미확인')
+    personal=dict(role=_cell('ROLE',position_label+' · 내 역할'),
+                  lane=_cell('LANE',position_label+' · 라인/동선'),
+                  fight=_cell('FIGHT',position_label+' · 교전/생존'))
     changes=_cell('CHANGES','변경/미확인')
-    groups=defaultdict(list)
     for trace in traces:
         if trace['status']=='APPLIED' and trace['output']['section']!='PROFILE':
-            output=trace['output'];groups[(output['section'],output['target'])].append(trace)
             trace['cooldowns']=[_cooldown(c,draft) for c in trace['spec']['cooldowns']]
             if trace['spec']['scope']=='COMMON':
                 for cooldown in trace['cooldowns']:cooldown['priority']=False
-    for entries in groups.values():
-        outlooks={t['output']['outlook'] for t in entries if t['output']['outlook'] not in (None,'UNKNOWN')}
-        if len(outlooks)>1:
-            for trace in entries:
-                trace['status']='CONFLICTING';trace['reasons'].append('OUTPUT_OUTLOOK_CONFLICT')
-                trace['cooldowns']=[]
     cooldown_groups=defaultdict(list)
     for trace in traces:
         for cooldown in trace['cooldowns']:
@@ -272,23 +268,40 @@ def evaluate_gameplan(input, knowledge):
         if section in ('JUNGLE','COMPOSITION'):return [common[section.lower()]]
         if section in ('ROLE','LANE','FIGHT'):return [personal[section.lower()]]
         return [changes] if section=='CHANGES' else []
+    cell_trace_origins={}
     for trace in traces:
         if trace['output'] is None:continue
         for cell in cells_for(trace['output']):
             if trace['status'] in ('APPLIED','CONFLICTING'):
-                cell['rules'].append(trace)
+                # A GLOBAL rule can conflict in one row while remaining
+                # applicable in another; per-cell copies preserve that boundary.
+                local_trace=deepcopy(trace)
+                cell['rules'].append(local_trace)
+                cell_trace_origins[id(local_trace)]=trace
             else:
                 cell['reasons'].extend(trace['reasons'])
     for cell in [*common['map'],common['jungle'],common['composition'],*personal.values(),changes]:
         entries=cell['rules']
         if entries:
+            outlooks={t['output']['outlook'] for t in entries if t['output']['outlook'] not in (None,'UNKNOWN')}
+            if len(outlooks)>1:
+                for local_trace in entries:
+                    local_trace['status']='CONFLICTING'
+                    local_trace['reasons'].append('OUTPUT_OUTLOOK_CONFLICT')
+                    local_trace['cooldowns']=[]
+                    origin=cell_trace_origins[id(local_trace)]
+                    origin['status']='CONFLICTING';origin['cooldowns']=[]
+                    for reason in ('OUTPUT_OUTLOOK_CONFLICT','OUTPUT_OUTLOOK_CONFLICT_CELL:'+cell['key']):
+                        if reason not in origin['reasons']:origin['reasons'].append(reason)
             cell['status']='CONFLICTING' if any(t['status']=='CONFLICTING' for t in entries) else 'KNOWN'
             cell['texts']=list(dict.fromkeys(t['output']['text'] for t in entries))
             cell['reasons']=sorted({reason for t in entries for reason in t['reasons']})
-            outlooks={t['output']['outlook'] for t in entries if t['output']['outlook'] not in (None,'UNKNOWN')}
             cell['outlook']=next(iter(outlooks)) if len(outlooks)==1 and cell['status']=='KNOWN' else None
             cell['cooldowns']=[c for t in entries for c in t['cooldowns'] if c['priority']]
-        else:cell['reasons']=sorted(set(cell['reasons']))
+        else:
+            if cell['key'] in ('ROLE','LANE','FIGHT'):
+                cell['reasons'].append('NO_REVIEWED_POSITION_RULE:'+(position or 'UNKNOWN'))
+            cell['reasons']=sorted(set(cell['reasons']))
     return dict(schema_version='pregame.plan.v1',mode='PRE_GAME',input=draft,common=common,personal=personal,
         changes=changes,evaluations=traces,knowledge_fingerprint=knowledge_fingerprint(knowledge),
         coaching_accuracy=None,real_match_validation='NOT_EVALUATED')

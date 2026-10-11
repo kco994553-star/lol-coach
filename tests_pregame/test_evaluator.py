@@ -144,6 +144,36 @@ class EvaluatorTests(unittest.TestCase):
             self.assertEqual(t['status'],'CONFLICTING');self.assertEqual(t['spec_sha256'],digest(t['spec']))
             self.assertEqual(t['sources'],t['spec']['sources']);self.assertIn('review_decision',t['proposal'])
 
+    def test_global_map_outlook_conflicts_only_in_overlapping_position_cell(self):
+        a=rule('MAP');a['rule_id']='global';a['output'].update(target='GLOBAL',outlook='UNFAVORABLE')
+        a['cooldowns']=[cooldown(position='TOP')]
+        b=rule('MAP');b['rule_id']='top';b['output'].update(target='TOP',outlook='FAVORABLE',text='탑 원문')
+        result=self.evaluate([a,b]);top,*others=result['common']['map']
+        self.assertEqual(top['status'],'CONFLICTING');self.assertIsNone(top['outlook'])
+        self.assertEqual(top['texts'],[a['output']['text'],b['output']['text']])
+        self.assertEqual([t['spec']['rule_id'] for t in top['rules']],['global','top'])
+        for trace in top['rules']:
+            self.assertEqual(trace['status'],'CONFLICTING');self.assertIn('OUTPUT_OUTLOOK_CONFLICT',trace['reasons'])
+            self.assertEqual(trace['cooldowns'],[])
+        for cell in others:
+            self.assertEqual(cell['status'],'KNOWN');self.assertEqual(cell['outlook'],'UNFAVORABLE')
+            self.assertEqual(cell['texts'],[a['output']['text']]);self.assertEqual(cell['rules'][0]['status'],'APPLIED')
+            self.assertEqual(len(cell['rules'][0]['cooldowns']),1)
+        self.assertTrue(all(t['status']=='CONFLICTING' for t in result['evaluations']))
+
+    def test_unknown_golden_personal_labels_contextualize_each_selected_position(self):
+        labels=dict(TOP='탑',JUNGLE='정글',MID='미드',BOTTOM='원딜',SUPPORT='서포터')
+        results=[self.evaluate([],golden(position)) for position in POSITIONS]
+        self.assertTrue(all(r['common']==results[0]['common'] for r in results))
+        for position,result in zip(POSITIONS,results):
+            for cell in result['personal'].values():
+                self.assertIn(labels[position],cell['title'])
+                self.assertIn('NO_REVIEWED_POSITION_RULE:'+position,cell['reasons'])
+                self.assertEqual(cell['status'],'UNKNOWN');self.assertEqual(cell['texts'],[])
+        self.assertEqual(len({r['personal']['role']['title'] for r in results}),5)
+        missing=self.evaluate([],golden(None))
+        self.assertIn('포지션 미확인',missing['personal']['role']['title'])
+
     def test_cooldown_display_conditional_charge_and_priority(self):
         s=rule();s['cooldowns']=[cooldown(),cooldown('CHARGE','TOP')]
         r=self.evaluate([s]);trace=r['evaluations'][0]
