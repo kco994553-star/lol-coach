@@ -1,3 +1,22 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261011-queue-v11-root`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `feat/queue-knowledge-expansion-2026-10-11`
+- authority: USER_QUEUE_V1.1_2026-10-11; free, all five positions, no AI approvals.
+- completed_pr:11; PR+postmerge all three required jobs SUCCESS.
+- task_scope: Q05 completed177typed candidates/173roster; DONE9/14; Q10-Q14 BLOCKED_EXTERNAL.
+- published_pr:12 https://github.com/kco994553-star/lol-coach/pull/12
+- published_head: a96b3edbaae02a76d7352d7ba3fdd2d83116beec
+- published_tree: cf626cd242df615d2fad713cec1db00a719f1b95
+- base_main: e12fc5e05c49cd4af9d32f88b9b5c4394a7d2361
+- verified_local:50backend+12semantic+104browser;34sourcehashesmatched;160sourcekits+6adapterchecks; independentreviewNO_FINDINGS.
+- pending: GitHub PR12 pregame + MVP regression/browser jobs. Release writer during CI; reacquire via CAS before merge.
+- evidence_boundary: realgameN0/accuracy=null; patchnull/cooldownsunknown; allactualknowledgeEXPLORATORY.
+
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261011-queue-v11-root`
 - status: `RUNNING`
