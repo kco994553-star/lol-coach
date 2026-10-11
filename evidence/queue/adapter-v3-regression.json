@@ -1,0 +1,47 @@
+{
+  "schema_version": "queue.adapter-v3-regression.v1",
+  "verified_at_utc": "2026-10-11T05:31:19.516400+00:00",
+  "shared_schema_commits": [
+    "1ae331b",
+    "6c9623e"
+  ],
+  "source_validator": {
+    "command": "python evidence/queue/q05-expansion/validate.py",
+    "exit_code": 0,
+    "roster": 173,
+    "mechanic_refs": 800,
+    "exploratory_labels": 434,
+    "historical_validation_file_restored_after_runner_timestamp_write": true
+  },
+  "pregame_suite": {
+    "command": "PYTHONPATH=. python -m unittest discover -s tests_pregame -p 'test*.py' -q",
+    "tests_run": 71,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exit_code": 0
+  },
+  "full_suite": {
+    "command": "PYTHONPATH=. python -m unittest discover -q",
+    "tests_run": 388,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "skip": "tests_r7_player_grounded.test_postgame.PinnedPostGameSourceTests: R7_POSTGAME_RAW_DIR required for preserved exact-byte source integration",
+    "exit_code": 0
+  },
+  "workflow_validation": {
+    "yaml_parsed": true,
+    "steps": 10,
+    "explicit_bash_pipefail_for_lineage": true,
+    "fetch_depth": 0,
+    "retained_expanded_source_validator": true,
+    "retained_legacy_browser_and_races": true,
+    "fresh_browser_v13_step": true,
+    "browser_run_by_this_subtask": false
+  },
+  "historical_validator_manifest_unchanged": true,
+  "production_proposals": 0,
+  "user_web_approvals": 0,
+  "coaching_accuracy": null
+}

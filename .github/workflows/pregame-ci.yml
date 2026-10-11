@@ -23,6 +23,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
@@ -30,9 +31,10 @@ jobs:
       - name: Install pinned runtime dependency
         run: python -m pip install --disable-pip-version-check -r requirements-r3.txt
       - name: Verify expanded candidate source bindings
+        shell: bash
         run: |
           python evidence/queue/q05-expansion/validate.py
-          PYTHONPATH=. python evidence/queue/q05-expanded-adapter/validate.py
+          PYTHONPATH=. python scripts/verify_queue_extensions.py | tee "$RUNNER_TEMP/pregame-extensions.json"
       - name: Verify contract, missing inputs, conflicts and immutable storage
         shell: bash
         run: python scripts/verify_pregame.py | tee "$RUNNER_TEMP/pregame-tests.json"
@@ -47,6 +49,13 @@ jobs:
           CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
           export CHROMIUM_EXECUTABLE
           python scripts/browser_pregame.py | tee "$RUNNER_TEMP/pregame-browser.json"
+      - name: Verify guarded operations, movement and power views in Chromium
+        shell: bash
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/pregame-playwright/node_modules"
+          CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
+          export CHROMIUM_EXECUTABLE
+          python scripts/browser_v13.py | tee "$RUNNER_TEMP/pregame-browser-v13.json"
       - name: Verify pending save history races in Chromium
         shell: bash
         run: |
@@ -63,7 +72,9 @@ jobs:
           from pathlib import Path
           receipts = {}
           for name, filename, reportfile in [('tests', 'pregame-tests.json', 'verification.json'),
-                                             ('browser', 'pregame-browser.json', 'runner.json')]:
+                                             ('extensions', 'pregame-extensions.json', 'verification.json'),
+                                             ('browser', 'pregame-browser.json', 'runner.json'),
+                                             ('browser_v13', 'pregame-browser-v13.json', 'runner.json')]:
               try:
                   launch = json.loads((Path(os.environ['RUNNER_TEMP']) / filename).read_text())
                   receipts[name] = json.loads((Path(launch['evidence_directory']) / reportfile).read_text())

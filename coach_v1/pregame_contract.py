@@ -218,8 +218,19 @@ class RuleSpec(Strict):
         return self
 
 
-def parse_input(value):return InputDraft.model_validate(value)
-def parse_rule(value):return RuleSpec.model_validate(value)
+def parse_input(value):
+    if isinstance(value,dict) and value.get('schema_version')=='pregame.input-draft.v2':
+        from .pregame_v2 import InputDraftV2
+        return InputDraftV2.model_validate(value)
+    return InputDraft.model_validate(value)
+def parse_rule(value):
+    if isinstance(value,dict) and value.get('schema_version')=='pregame.rule.v3':
+        from .pregame_v3 import RuleSpecV3
+        return RuleSpecV3.model_validate(value)
+    if isinstance(value,dict) and value.get('schema_version')=='pregame.rule.v2':
+        from .pregame_v2 import RuleSpecV2
+        return RuleSpecV2.model_validate(value)
+    return RuleSpec.model_validate(value)
 
 
 def proposal_rule(spec):
@@ -227,7 +238,7 @@ def proposal_rule(spec):
     return dict(patch_range=','.join(spec.patches) or 'UNKNOWN',
         applicability=dict(champion='TYPE_BASED',role='ALL' if spec.scope=='COMMON' else ','.join(spec.positions),
             matchup='STRUCTURED_CONDITIONS',level='PRE_GAME_CONDITIONAL',context='PRE_GAME'),
-        required_fields=['EXECUTABLE_V1_SHA256:'+digest(spec.model_dump(mode='json')),*spec.required_fields],
+        required_fields=[('EXECUTABLE_V3_SHA256:' if spec.schema_version=='pregame.rule.v3' else 'EXECUTABLE_V2_SHA256:' if spec.schema_version=='pregame.rule.v2' else 'EXECUTABLE_V1_SHA256:')+digest(spec.model_dump(mode='json')),*spec.required_fields],
         claim=spec.output.text,mechanism='구조화 명세와 원본 출처를 확인하세요. 조건은 자유문에서 해석하지 않습니다.',
         counterexamples=spec.counterexamples,limitations=spec.limitations,author='AI_EXPLORATORY')
 

@@ -11,7 +11,7 @@ const token = fs.readFileSync(process.env.WORKBENCH_TOKEN_FILE, 'utf8').trim();
 const url = process.env.WORKBENCH_URL;
 const roles = ['TOP', 'JUNGLE', 'MID', 'BOTTOM', 'SUPPORT'];
 const champions = ['Ornn', 'Sejuani', 'Ahri', 'Caitlyn', 'Lux'];
-const roleChecks = ['exact-input', 'seven-cards', 'selected-map-row', 'common-invariant',
+const roleChecks = ['exact-input', 'nine-cards', 'selected-map-row', 'common-invariant',
   'personal-context', 'detail-input-binding', 'immutable-reopen', 'edit-hides-plan'];
 const finalChecks = ['source-preview', 'source-navigation', 'proposal-only-import',
   'untrusted-approval-blocked', 'empty-patch-approval-disabled', 'export-history',
@@ -79,7 +79,7 @@ async function reopen(plan) {
     const rosterCount = await page.locator('#pg-roster option').count();
     check('connected', await page.locator('#pg-workspace').isVisible() && initialKnowledgeResponse.ok() &&
       initialKnowledge.length === (mode === 'actual' ? 0 : 18) && priorities === 10 &&
-      candidates === 177 && rosterCount === 173,
+      candidates === 190 && rosterCount === 173,
       {mode,initial_knowledge_count:initialKnowledge.length,review_priority_count:priorities,
         candidate_count:candidates,roster_count:rosterCount});
     await page.locator('#pg-golden').click();
@@ -98,8 +98,8 @@ async function reopen(plan) {
           [...champions,'Fiora','LeeSin','Zed','Ezreal','Nautilus'][n]) &&
         plan.coaching_accuracy === null && plan.real_match_validation === 'NOT_EVALUATED',
         {patch:plan.input.patch, position:role, revision:plan.input_revision});
-      check(role+'-seven-cards', await page.locator('#pg-cards > article').count() === 7 &&
-        await page.locator('.pg-map-row').count() === 5, {cards:7,map_rows:5});
+      check(role+'-nine-cards', await page.locator('#pg-cards > article').count() === 9 &&
+        await page.locator('.pg-map-row').count() === 5, {cards:9,map_rows:5});
       check(role+'-selected-map-row', await page.locator('.pg-map-row.selected').count() === 1 &&
         await page.locator('.pg-map-row.selected').getAttribute('data-position') === role, {role});
       check(role+'-common-invariant', common === null || same(common, plan.common), {common_sha256:hash(JSON.stringify(plan.common))});

@@ -40,7 +40,11 @@ class _Facts:
         """Return (declared values, complete). Partial positive membership is known."""
         if field=='patch':return self.draft['patch'],self.draft['patch'] is not None
         if field.startswith('my.'):
-            value=self.draft['my_'+field.split('.')[1]]
+            name=field.split('.')[1]
+            if name in ('initiative','needs'):
+                value=self.profiles.get(self.draft['my_champion'],{}).get(name)
+                return value,value is not None
+            value=self.draft['my_'+name]
             return value,value is not None
         parts=field.split('.')
         if len(parts)==2:
@@ -124,8 +128,16 @@ def _evaluate(trace, facts):
             values.append('UNKNOWN');reasons.append('MY_POSITION_UNKNOWN')
         elif facts.draft['my_position'] not in spec['positions']:
             values.append('FALSE');reasons.append('POSITION_SCOPE_MISMATCH')
-    if spec['profile'] and not any(s['champion']==spec['profile']['champion'] for s in facts.draft['slots']):
+    if (spec['profile'] and not any(s['champion']==spec['profile']['champion'] for s in facts.draft['slots'])
+        and not (spec['schema_version'] in ('pregame.rule.v2','pregame.rule.v3') and facts.draft.get('my_pick_state')=='UNPICKED'
+                 and spec['profile']['champion'] in facts.draft.get('frequent_champions',[]))):
         values.append('FALSE');reasons.append('PROFILE_CHAMPION_NOT_PRESENT')
+    operations=spec['output'].get('operations')
+    if operations:
+        linked=set(operations['opening_allies']+operations['pressure_allies']+operations['win_condition_allies']
+                   +[d['position'] for d in operations['dependencies']]+[m['position'] for m in operations['minimum_plays']])
+        if any(not facts.get('ally.'+p+'.champion')[1] for p in linked):
+            values.append('UNKNOWN');reasons.append('OPERATING_ALLY_UNKNOWN')
     missing=[field for field in spec['required_fields'] if not facts.get(field)[1]]
     if missing:values.append('UNKNOWN');reasons.append('REQUIRED_FIELDS_UNKNOWN')
     result['missing_fields']=missing
@@ -153,8 +165,8 @@ def _profiles(traces):
         spec=trace['spec']
         if trace['status']=='APPLIED' and spec['profile']:
             profile=spec['profile']
-            for field in PROFILE_FIELDS:
-                if profile[field]:claims[profile['champion']][field].append((sorted(set(profile[field])),trace))
+            for field in (*PROFILE_FIELDS,'initiative','needs'):
+                if profile.get(field):claims[profile['champion']][field].append((sorted(set(profile[field])),trace))
     profiles={};conflicts=[]
     for champion,fields in claims.items():
         profiles[champion]={}

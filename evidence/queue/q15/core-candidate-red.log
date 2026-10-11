@@ -1,0 +1,38 @@
+======================================================================
+FAIL: test_item_markers_use_actual_joint_mode_never_unobserved_combination (tests_pregame.test_power_stats.PowerStatsTests.test_item_markers_use_actual_joint_mode_never_unobserved_combination)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-q15/tests_pregame/test_power_stats.py", line 231, in test_item_markers_use_actual_joint_mode_never_unobserved_combination
+    self.assertEqual([(m['item_id'],m['n']) for m in marks],[(3001,3),(3002,3)])
+AssertionError: Lists differ: [(3003, 4), (3002, 3)] != [(3001, 3), (3002, 3)]
+
+First differing element 0:
+(3003, 4)
+(3001, 3)
+
+- [(3003, 4), (3002, 3)]
+?       ---
+
++ [(3001, 3), (3002, 3)]
+?      +++
+
+
+======================================================================
+FAIL: test_complete_boots_and_support_gold_items_excluded_from_core_candidates (tests_pregame.test_riot_collector.RiotCollectorTests.test_complete_boots_and_support_gold_items_excluded_from_core_candidates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-q15/tests_pregame/test_riot_collector.py", line 122, in test_complete_boots_and_support_gold_items_excluded_from_core_candidates
+    self.assertEqual(self.module.complete_item_ids(catalog),[3001])
+AssertionError: Lists differ: [3001, 3006, 4000] != [3001]
+
+First list contains 2 additional elements.
+First extra element 1:
+3006
+
+- [3001, 3006, 4000]
++ [3001]
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.038s
+
+FAILED (failures=2)
