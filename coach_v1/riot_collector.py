@@ -55,7 +55,7 @@ def complete_item_ids(catalog):
         if not isinstance(item,dict) or not re.fullmatch(r'[0-9]+',item_id):continue
         if item.get('gold',{}).get('purchasable') is not True or item.get('maps',{}).get('11') is not True:continue
         if item.get('inStore') is False or not item.get('from'):continue
-        if set(item.get('tags',[])) & {'Consumable','Trinket','Jungle'}:continue
+        if set(item.get('tags',[])) & {'Boots','Consumable','Trinket','GoldPer','Jungle'}:continue
         if any(data.get(str(next_id),{}).get('gold',{}).get('purchasable') is True for next_id in item.get('into',[])):continue
         result.append(int(item_id))
     return sorted(result)
@@ -72,6 +72,7 @@ class RiotCollector:
         if any(type(v) is not int or v<(0 if k=='max_retries' else 1) for k,v in self.limits.items()):
             raise ValueError('positive bounded collection limits required')
         self.requests=0;self.retries=0;self.not_before={};self.started=self.clock()
+        self.movement_data=None;self.movement_status='NOT_REQUESTED'
 
     def _pause(self,seconds):
         remaining=self.started+self.limits['deadline_seconds']-self.clock()
@@ -157,9 +158,10 @@ class RiotCollector:
         if not isinstance(catalog,dict) or catalog.get('version')!=version:raise CollectionBlocked('ITEM_CATALOG_UNAVAILABLE')
         ids=complete_item_ids(catalog)
         return dict(version=version,url=url,sha256=hashlib.sha256(raw).hexdigest(),
-                    complete_item_ids=ids,classification='PINNED_COMPLETE_NONCONSUMABLE.v1')
+                    complete_item_ids=ids,classification='PINNED_COMPLETE_NONBOOT_NONCONSUMABLE.v2')
 
-    def collect(self,*,tier='GOLD',division='I',patch=None,start_time=None,end_time=None,collect_items=True,ci_width_limits=None):
+    def collect(self,*,tier='GOLD',division='I',patch=None,start_time=None,end_time=None,collect_items=True,ci_width_limits=None,
+                collect_movement=False):
         if tier not in TIERS or division not in ('I','II','III','IV'):raise ValueError('invalid league tier or division')
         if patch is not None and not re.fullmatch(r'[0-9]+\.[0-9]+',patch):raise ValueError('exact gameplay patch required')
         for value in (start_time,end_time):
@@ -167,6 +169,7 @@ class RiotCollector:
         if start_time is not None and end_time is not None and start_time>end_time:raise ValueError('invalid collection window')
         # A collector instance performs one bounded job, never cumulative reuse.
         self.started=self.clock();self.requests=0;self.retries=0;self.not_before={}
+        self.movement_data=None;self.movement_status='NOT_REQUESTED'
         endpoints=['LEAGUE_V4_'+tier if tier in ('MASTER','GRANDMASTER','CHALLENGER') else 'LEAGUE_V4_ENTRIES',
                    'MATCH_V5_IDS','MATCH_V5_MATCH','MATCH_V5_TIMELINE']
         source=dict(provider='RIOT_API',platform='KR',regional='ASIA',queue_id=420,map_id=11,tier=tier,
@@ -220,4 +223,13 @@ class RiotCollector:
         result=build_power_dataset(pairs,source=source,ci_width_limits=ci_width_limits,
             complete_item_ids=catalog['complete_item_ids'] if catalog else ())
         if error:result['status']='BLOCKED_EXTERNAL'
+        if collect_movement:
+            if error:self.movement_status='BLOCKED_EXTERNAL'
+            else:
+                from .movement import build_movement_dataset,validate_movement_dataset
+                keys=('provider','platform','regional','queue_id','map_id','tier','patch','window_start',
+                      'window_end','retrieved_at','sample_kind','endpoints')
+                base={key:source[key] for key in keys}
+                self.movement_data=validate_movement_dataset(build_movement_dataset(pairs,source=base))
+                self.movement_status=self.movement_data['status']
         return validate_power_dataset(result)

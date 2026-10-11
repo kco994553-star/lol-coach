@@ -25,6 +25,8 @@ LIMITATIONS = [
     'CONSTANT_SAMPLES_DO_NOT_PROVE_POPULATION_CERTAINTY',
     'LEVEL_MARKERS_FIRST_OBSERVED_FRAME_INTERVAL_CENSORED',
     'ITEM_MARKERS_BUILD_SELECTION_DESCRIPTIVE_NOT_CAUSAL',
+    'NONBOOT_COMPLETE_ITEMS_ARE_CORE_CANDIDATES_NOT_VERIFIED_CORE_BUILDS',
+    'ITEM_MARKERS_MODAL_ORDERED_PAIR_NOT_FULL_BUILD_STATISTICS',
     'ROLE_REFERENCE_IS_SAMPLED_POOLED_POSITION_POPULATION_NOT_ALL_PLAYERS',
     'ROLE_POPULATION_MATCH_INFLUENCE_LINEARIZATION_FIXED_EMPIRICAL_DENOMINATORS',
     'ROLE_POPULATION_RANDOM_CHAMPION_COVERAGE_AND_CI_CALIBRATION_UNVERIFIED',
@@ -33,10 +35,15 @@ REASONS = ('NO_ELIGIBLE_MATCHES','MISSING_API_KEY','UNAUTHORIZED_OR_EXPIRED_OR_U
            'RATE_LIMIT_EXHAUSTED','REQUEST_BUDGET_EXHAUSTED','DEADLINE_EXHAUSTED',
            'NETWORK_FAILURE','RIOT_SERVER_FAILURE','HTTP_FAILURE','MALFORMED_RESPONSE',
            'UNSUPPORTED_LEAGUE_IDENTITY','NO_LEAGUE_ENTRIES','NO_ELIGIBLE_MATCHES',
-           'ITEM_CATALOG_UNAVAILABLE','NOT_COLLECTED')
+           'ITEM_CATALOG_UNAVAILABLE','NOT_COLLECTED','UNSUPPORTED_FRAME_INTERVAL',
+           'FRAME_AFTER_REPORTED_END_EXCLUDED_DURATION_RESOLUTION_UNKNOWN')
+TIME_BIN_POLICY=dict(kind='ELAPSED_MINUTE_FLOOR',frame_interval_ms=60000,
+                     selection='LATEST_RECEIVED_FRAME_PER_MATCH_BIN')
+TIME_LIMITATIONS=['TIME_BIN_QUANTIZATION_LT_ONE_MINUTE_NO_INTERPOLATION',
+                 'MULTIPLE_FRAMES_PER_BIN_USE_LATEST_RECEIVED']
 SOURCE_KEYS = {'provider','platform','regional','queue_id','map_id','tier','patch','window_start',
                'window_end','retrieved_at','sample_kind','endpoints','formula_version',
-               'precision_policy','limitations','collection','item_catalog','population_reference'}
+               'precision_policy','limitations','collection','item_catalog','population_reference','time_bin_policy'}
 
 
 def _require(condition, reason='invalid power dataset'):
@@ -111,17 +118,18 @@ def _source(source, limits=None, complete_item_ids=()):
     s=deepcopy(source)
     s['formula_version']='PAIRED_ROLE_DELTA_STUDENT_T95.v1'
     s['precision_policy']=_policy(limits)
+    s['time_bin_policy']=deepcopy(TIME_BIN_POLICY)
     s['population_reference']=dict(kind='POOLED_SAME_POSITION_RATE_MEAN_CLUSTERED',
         formula_version='POOLED_ROLE_RATE_MATCH_INFLUENCE_T95.v1',position_participants_per_match=2,
         match_count=0,position_participant_count=0)
-    s['limitations']=list(dict.fromkeys(LIMITATIONS+s.get('limitations',[])))
+    s['limitations']=list(dict.fromkeys(LIMITATIONS+TIME_LIMITATIONS+s.get('limitations',[])))
     ids=list(complete_item_ids)
     _require(all(_integer(i,1) for i in ids) and len(ids)==len(set(ids)),'invalid complete item IDs')
     if ids:
         if s.get('sample_kind')=='SYNTHETIC' and 'item_catalog' not in s:
             s['item_catalog']=dict(version='SYNTHETIC',sha256=hashlib.sha256(str(sorted(ids)).encode()).hexdigest(),
                 url='https://example.org/synthetic-items',complete_item_ids=sorted(ids),
-                classification='PINNED_COMPLETE_NONCONSUMABLE.v1')
+                classification='PINNED_COMPLETE_NONBOOT_NONCONSUMABLE.v2')
         _require('item_catalog' in s and sorted(s['item_catalog']['complete_item_ids'])==sorted(ids),
                  'complete item IDs require pinned catalog lineage')
     return s
@@ -159,7 +167,15 @@ def _markers(observations):
     for level in (2,3,6,11,16):
         values=[o['levels'][level] for o in observations if level in o['levels']]
         if values:result.append(_marker(values,kind='LEVEL',level=level,item_id=None,item_order=None))
-    for order in (1,2):
+    pairs=[o['items'][:2] for o in observations if len(o['items'])>=2]
+    if pairs:
+        counts=Counter(tuple(item for item,_ in pair) for pair in pairs)
+        chosen=min(counts,key=lambda key:(-counts[key],key))
+        actual=[pair for pair in pairs if tuple(item for item,_ in pair)==chosen]
+        for index,item in enumerate(chosen):
+            result.append(_marker([pair[index][1] for pair in actual],kind='ITEM',level=None,item_id=item,item_order=index+1))
+        return result
+    for order in (1,):
         choices=[o['items'][order-1] for o in observations if len(o['items'])>=order]
         if choices:
             counts=Counter(item for item,_ in choices)
@@ -222,11 +238,22 @@ def build_power_dataset(pairs,*,source,ci_width_limits=None,complete_item_ids=()
         if s.get('window_start') is not None and started/1000<s['window_start']:continue
         if s.get('window_end') is not None and started/1000>s['window_end']:continue
         frames=timeline.get('info',{}).get('frames',[])
+        interval=timeline.get('info',{}).get('frameInterval')
+        if type(interval) is not int or interval!=60000:
+            if 'UNSUPPORTED_FRAME_INTERVAL' not in s['limitations']:s['limitations'].append('UNSUPPORTED_FRAME_INTERVAL')
+            continue
         if not isinstance(frames,list) or not frames:continue
         frame_times=[f.get('timestamp') for f in frames if isinstance(f,dict)]
         if len(frame_times)!=len(frames) or not all(_number(t) and t>=0 for t in frame_times):continue
         if frame_times!=sorted(set(frame_times)):continue
-        if _number(info.get('gameDuration')) and max(frame_times)>info['gameDuration']*1000:continue
+        if _number(info.get('gameDuration')) and max(frame_times)>info['gameDuration']*1000:
+            frames=[frame for frame in frames if frame['timestamp']<=info['gameDuration']*1000]
+            reason='FRAME_AFTER_REPORTED_END_EXCLUDED_DURATION_RESOLUTION_UNKNOWN'
+            if reason not in s['limitations']:s['limitations'].append(reason)
+            if not frames:continue
+        bins={}
+        for frame in frames:bins[math.floor(frame['timestamp']/60000)]=frame
+        selected_frames=list(bins.values())
         people=info.get('participants',[]);roles={};invalid=False
         for p in people:
             key=(p.get('teamId'),p.get('teamPosition'))
@@ -251,10 +278,10 @@ def build_power_dataset(pairs,*,source,ci_width_limits=None,complete_item_ids=()
                 # supplied, keep one marker record and cluster point estimates
                 # by match rather than pretending two players are two matches.
                 match_observations.setdefault(base,_observation(pid,frames,complete))
-                for frame in frames:
+                for frame in selected_frames:
                     own=frame.get('participantFrames',{}).get(str(pid),{})
                     opposing=frame.get('participantFrames',{}).get(str(enemy_id),{})
-                    minute=frame['timestamp']/60000
+                    elapsed=frame['timestamp']/60000;minute=math.floor(elapsed)
                     for metric,fields in (('gold_delta',('totalGold',)),('xp_delta',('xp',)),
                                           ('cs_delta',('minionsKilled','jungleMinionsKilled'))):
                         if all(_number(side.get(field)) for side in (own,opposing) for field in fields):
@@ -262,7 +289,7 @@ def build_power_dataset(pairs,*,source,ci_width_limits=None,complete_item_ids=()
                             if comparison=='ROLE_POPULATION':
                                 if minute>0 and team==100:
                                     populations[(position,patch,s['tier'],metric)][minute].append(
-                                        [(p['championName'],own_total/minute),(opponent['championName'],enemy_total/minute)])
+                                        [(p['championName'],own_total/elapsed),(opponent['championName'],enemy_total/elapsed)])
                             else:match_groups[base+(metric,)][minute].append(own_total-enemy_total)
         for key,minutes in match_groups.items():
             for minute,values in minutes.items():groups[key][minute].append(statistics.mean(values))
@@ -314,8 +341,8 @@ def _validate_power_dataset(dataset):
     _keys(d,{'schema_version','status','source','samples','cohorts','coaching_accuracy'})
     _require(d['schema_version']=='pregame.power-data.v1' and d['status'] in ('READY','INSUFFICIENT_DATA','BLOCKED_EXTERNAL'))
     _require(d['coaching_accuracy'] is None)
-    s=d['source'];_keys(s,SOURCE_KEYS-{'collection','item_catalog','population_reference'},
-                      {'collection','item_catalog','population_reference'})
+    optional={'collection','item_catalog','population_reference','time_bin_policy'}
+    s=d['source'];_keys(s,SOURCE_KEYS-optional,optional)
     _require(s['sample_kind'] in ('REAL','SYNTHETIC') and s['provider']==('RIOT_API' if s['sample_kind']=='REAL' else 'SYNTHETIC'))
     _require(s['platform']=='KR' and s['regional']=='ASIA' and s['queue_id']==420 and s['map_id']==11)
     _require(s['tier'] in TIERS and (s['patch'] is None or isinstance(s['patch'],str) and re.fullmatch(r'[0-9]+\.[0-9]+',s['patch'])))
@@ -327,7 +354,9 @@ def _validate_power_dataset(dataset):
     policy=s['precision_policy'];_keys(policy,{'version','ci_width_limits','units','rationale'})
     _require(policy==_policy(policy['ci_width_limits']))
     _require(isinstance(s['limitations'],list) and set(LIMITATIONS)<=set(s['limitations'])
-             and all(x in LIMITATIONS or x in REASONS for x in s['limitations']))
+             and all(x in LIMITATIONS or x in TIME_LIMITATIONS or x in REASONS for x in s['limitations']))
+    if 'time_bin_policy' in s:
+        _require(s['time_bin_policy']==TIME_BIN_POLICY and set(TIME_LIMITATIONS)<=set(s['limitations']))
     if 'collection' in s:
         c=s['collection'];_keys(c,{'key_kind','status_code','reason','request_count','retry_count','limits'},{'division'})
         _require(c['key_kind']=='UNKNOWN' and (c['status_code'] is None or _integer(c['status_code'],100) and c['status_code']<=599))
@@ -343,7 +372,7 @@ def _validate_power_dataset(dataset):
         expected='https://ddragon.leagueoflegends.com/cdn/'+cat['version']+'/data/en_US/item.json'
         _require(cat['url']==expected or s['sample_kind']=='SYNTHETIC' and cat['url']=='https://example.org/synthetic-items')
         _require(s['sample_kind']=='SYNTHETIC' or s['patch']=='.'.join(cat['version'].split('.')[:2]))
-        _require(cat['classification']=='PINNED_COMPLETE_NONCONSUMABLE.v1')
+        _require(cat['classification']=='PINNED_COMPLETE_NONBOOT_NONCONSUMABLE.v2')
         _require(isinstance(cat['complete_item_ids'],list) and all(_integer(i,1) for i in cat['complete_item_ids'])
                  and len(cat['complete_item_ids'])==len(set(cat['complete_item_ids'])))
     samples=d['samples'];_keys(samples,{'real_matches','synthetic_matches','hashed_match_ids'})
@@ -373,6 +402,7 @@ def _validate_power_dataset(dataset):
             extra={'reference_n','champion_n','champion_mean','reference_mean'}
             _keys(p,{'minute','n','mean','ci95','visible','omission_reason'},extra)
             _require(_number(p['minute']) and p['minute']>=0 and p['minute'] not in times);times.add(p['minute'])
+            if 'time_bin_policy' in s:_require(_integer(p['minute']))
             _require(_integer(p['n'],1) and p['n']<=count and _number(p['mean']) and type(p['visible']) is bool)
             if c['comparison']=='ROLE_POPULATION':
                 _require(extra<=set(p) and 'population_reference' in s and p['reference_n']==p['n']*2 and p['minute']>0)

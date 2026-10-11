@@ -116,6 +116,11 @@ class RiotCollectorTests(unittest.TestCase):
             '4001':dict(gold={'purchasable':True},maps={'11':True},tags=['Trinket'],**{'from':['1001']})}}
         self.assertEqual(self.module.complete_item_ids(catalog),[3001])
 
+    def test_complete_boots_and_support_gold_items_excluded_from_core_candidates(self):
+        catalog={'data':{str(item):dict(gold={'purchasable':True},maps={'11':True},
+            tags=[tag],**{'from':['1001']}) for item,tag in [(3006,'Boots'),(4000,'GoldPer'),(3001,'Damage')]}}
+        self.assertEqual(self.module.complete_item_ids(catalog),[3001])
+
     def test_transport_never_forwards_key_through_redirect(self):
         from http.server import BaseHTTPRequestHandler,HTTPServer
         import threading
@@ -146,6 +151,34 @@ class RiotCollectorTests(unittest.TestCase):
             self.assertEqual(result['samples']['real_matches'],0)
             self.assertIn('MISSING_API_KEY',result['source']['limitations'])
             self.assertNotIn('Traceback',r.stderr)
+
+    def test_movement_companion_unavailable_on_auth_failure_and_no_raw_return(self):
+        c=self.collector([(403,{},b'PRIVATE_PUUID')])
+        result=self.collect(c,collect_movement=True)
+        self.assertEqual(result['status'],'BLOCKED_EXTERNAL')
+        self.assertIsNone(c.movement_data)
+        self.assertEqual(c.movement_status,'BLOCKED_EXTERNAL')
+        self.assertNotIn('pairs',c.__dict__)
+
+    def test_movement_companion_uses_actual_coordinates_and_script_safe_output(self):
+        p=pair(0);p['match']['metadata']['matchId']='KR_100';p['timeline']['metadata']['matchId']='KR_100'
+        for frame in p['timeline']['info']['frames']:
+            for pid,pf in frame['participantFrames'].items():pf['position']={'x':100*int(pid),'y':50*int(pid)}
+        c=self.collector([okay([{'puuid':'private'}]),okay(['KR_100']),okay(p['match']),okay(p['timeline'])])
+        self.collect(c,collect_items=False,collect_movement=True)
+        self.assertEqual(c.movement_data['samples']['real_matches'],1)
+        self.assertTrue(c.movement_data['cohorts'])
+        self.assertNotIn('PRIVATE',json.dumps(c.movement_data))
+        self.assertNotIn('participantFrames',json.dumps(c.movement_data))
+        import os
+        with tempfile.TemporaryDirectory() as tmp:
+            power=Path(tmp)/'power.json';movement=Path(tmp)/'movement.json';env=dict(os.environ);env.pop('RIOT_API_KEY',None)
+            movement.write_text('stale prior aggregate')
+            result=subprocess.run([sys.executable,'scripts/collect_power_stats.py','--output',str(power),
+                '--movement-output',str(movement),'--tier','GOLD'],env=env,capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            self.assertFalse(movement.exists())
+            self.assertEqual(json.loads(result.stdout)['movement_status'],'BLOCKED_EXTERNAL')
 
 
 if __name__=='__main__':unittest.main()

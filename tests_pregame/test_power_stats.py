@@ -196,5 +196,46 @@ class PowerStatsTests(unittest.TestCase):
         self.assertEqual(p['champion_n'],1);self.assertFalse(p['visible'])
         self.assertEqual(p['omission_reason'],'CHAMPION_N_LT_2')
 
+    def test_frame_jitter_same_bin_latest_only_and_irregular_interval(self):
+        pairs=[]
+        for number,timestamp in enumerate((300000,300153,300321)):
+            p=pair(number,minutes=(5,));p['match']['info']['gameDuration']=360
+            p['timeline']['info']['frames'][0]['timestamp']=timestamp;pairs.append(p)
+        d=self.power.build_power_dataset(pairs,source=source())
+        point=self.cohort(d)['points'][0]
+        self.assertEqual(point['minute'],5);self.assertEqual(point['n'],3)
+        self.assertTrue(point['visible'])
+        self.assertEqual(d['source']['time_bin_policy'],dict(kind='ELAPSED_MINUTE_FLOOR',
+            frame_interval_ms=60000,selection='LATEST_RECEIVED_FRAME_PER_MATCH_BIN'))
+        latest=copy.deepcopy(pairs[0]['timeline']['info']['frames'][0]);latest['timestamp']=300900
+        latest['participantFrames']['1']['totalGold']=5000
+        pairs[0]['timeline']['info']['frames'].append(latest)
+        d=self.power.build_power_dataset([pairs[0]],source=source())
+        self.assertEqual(self.cohort(d)['points'][0]['mean'],4000)
+        self.assertEqual(self.cohort(d)['points'][0]['n'],1)
+        pairs[0]['timeline']['info']['frameInterval']=30000
+        d=self.power.build_power_dataset([pairs[0]],source=source())
+        self.assertEqual(d['samples']['synthetic_matches'],0)
+        self.assertEqual(d['status'],'INSUFFICIENT_DATA')
+        self.assertIn('UNSUPPORTED_FRAME_INTERVAL',d['source']['limitations'])
+
+    def test_item_markers_use_actual_joint_mode_never_unobserved_combination(self):
+        pairs=[]
+        for number,(first,second) in enumerate([(3001,3002)]*3+[(3003,3004)]*2+[(3003,3005)]*2):
+            p=pair(number)
+            p['timeline']['info']['frames'][1]['events'][1]['itemId']=first
+            p['timeline']['info']['frames'][2]['events'][0]['itemId']=second
+            pairs.append(p)
+        d=self.power.build_power_dataset(pairs,source=source(),complete_item_ids=(3001,3002,3003,3004,3005))
+        marks=[m for m in self.cohort(d)['markers'] if m['kind']=='ITEM']
+        self.assertEqual([(m['item_id'],m['n']) for m in marks],[(3001,3),(3002,3)])
+
+    def test_after_reported_end_drops_tail_preserving_earlier_observations(self):
+        p=pair(0,minutes=(1,5));p['timeline']['info']['frames'][-1]['timestamp']=300153
+        d=self.power.build_power_dataset([p],source=source())
+        self.assertEqual(d['samples']['synthetic_matches'],1)
+        self.assertEqual([point['minute'] for point in self.cohort(d)['points']],[1])
+        self.assertIn('FRAME_AFTER_REPORTED_END_EXCLUDED_DURATION_RESOLUTION_UNKNOWN',d['source']['limitations'])
+
 
 if __name__ == '__main__':unittest.main()

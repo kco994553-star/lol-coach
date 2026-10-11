@@ -43,8 +43,21 @@ role for MATCHUP: `gold_delta = own.totalGold − opponent.totalGold`,
 `cs_delta = (own.minionsKilled + own.jungleMinionsKilled) −
 (opponent.minionsKilled + opponent.jungleMinionsKilled)`. Missing numeric
 fields are withheld, including possibly omitted zero-valued Riot fields.
-There is no unknown-to-zero conversion. Frame time is the actual timeline
-timestamp divided by 60,000; fractional observed minutes are retained.
+There is no unknown-to-zero conversion. Nominal timeline frameInterval must
+be the integer 60,000 ms. Observed timestamp jitter is grouped by elapsed
+minute `floor(timestamp/60000)`. At most one frame per match/bin contributes:
+the latest received timestamp. No interpolation or missing-bin substitution.
+The label quantizes time by less than 60,000 ms; rates still divide by the
+actual received elapsed time, and marker events retain their actual timestamps.
+Irregular/missing nominal frame intervals are excluded with explicit
+UNSUPPORTED_FRAME_INTERVAL lineage. Source.time_bin_policy has exactly
+`{kind:ELAPSED_MINUTE_FLOOR,frame_interval_ms:60000,
+selection:LATEST_RECEIVED_FRAME_PER_MATCH_BIN}`. An independent jitter test
+groups 300000/300153/300321 ms into bin 5 with three match observations.
+Frames after the reported duration in seconds are excluded, preserving
+earlier valid frames. Source records
+FRAME_AFTER_REPORTED_END_EXCLUDED_DURATION_RESOLUTION_UNKNOWN; no invented
+end-time allowance or synthetic extension repairs a tail observation.
 
 Supplemental Main-approved correction before publication: ROLE_POPULATION
 compares the champion's mean per-minute gold/XP/CS rate with the pooled mean
@@ -118,27 +131,33 @@ the target; the true transition is interval-censored by frame cadence. Median
 and IQR use linearly interpolated order-statistic quantiles with index
 `(n−1)p`. Counts include only observed transitions; no extrapolation.
 
-Item classification `PINNED_COMPLETE_NONCONSUMABLE.v1` requires official
+Item classification `PINNED_COMPLETE_NONBOOT_NONCONSUMABLE.v2` requires official
 patch-matched Data Dragon metadata: map 11, purchasable, in-store, a nonempty
-recipe, and no purchasable successor. Consumable, Trinket and Jungle tags are
+recipe, and no purchasable successor. Boots, Consumable, Trinket, GoldPer and Jungle tags are
 excluded. A successor that only transforms into a non-purchasable item does
 not disqualify a completed item. Classification uses recipe/shop metadata,
 never a price cutoff. Non-purchasable transformations and recipe-free items
-are outside this definition; boots with recipes are included. The precise
+are outside this definition. Boots and gold-generation/support items are
+excluded. These are nonboot completed-item candidates; an independently
+verified definition of the champion's core build remains unknown. The precise
 ID allowlist, source version, URL and source byte hash are persisted.
 
 For each participant, completion purchases are ordered by actual event time,
 with ITEM_UNDO reversing the latest corresponding purchase and restoring the
 after-item when classified. Sales/destruction do not erase a past purchase
-milestone. For order one and two, select the most common item; ties choose
-the lower item ID deterministically. n and median/IQR include only matches
-with that selected item at that order. Other builds are excluded, not
-counterfactual comparisons. Every marker is `DESCRIPTIVE_NON_CAUSAL`.
+milestone. Select the most common actual ordered pair of first/second
+classified candidates; ties choose the lexicographically smaller ID pair.
+Both markers' n and median/IQR include only matches with that same actual pair.
+If no two-candidate completion is observed, the first-only modal candidate
+may be shown. Independent first/second modes never create an unseen pair.
+Other builds are excluded; full-build statistics and causal power spikes are
+unknown. Every marker is `DESCRIPTIVE_NON_CAUSAL`.
 
 ## Official collection and failures
 
 `RiotCollector.collect(tier='GOLD', division='I', patch=None,
-start_time=None, end_time=None, collect_items=True, ci_width_limits=None)`
+start_time=None, end_time=None, collect_items=True, ci_width_limits=None,
+collect_movement=False)`
 uses KR League-V4 entries (or elite-tier league entries), consumes provided
 PUUIDs transiently, requests ASIA Match-V5 ranked/queue-420 match IDs, then
 match and timeline. Missing PUUIDs block with UNSUPPORTED_LEAGUE_IDENTITY;
@@ -167,6 +186,7 @@ Example trusted job (Main owns workflow, secret binding and public upload):
 
 ```bash
 python scripts/collect_power_stats.py --output "$RUNNER_TEMP/power-data.json" \
+  --movement-output "$RUNNER_TEMP/movement-data.json" \
   --tier GOLD --division I --patch 16.19 --max-matches 50
 ```
 
@@ -175,6 +195,17 @@ anonymous sample count, fixed collection reason and null accuracy. Missing
 key writes a BLOCKED_EXTERNAL receipt, allowing CI to preserve the reason;
 exit 0 means the receipt was written, not collection success. Consumers must
 inspect `status`. The default bounded window is the previous seven days.
+
+Optional collect_movement runs the separately validated Q18 builder on the
+same private in-memory pairs, with only base source fields. It never returns
+or retains raw pairs. The public self.movement_data attribute contains only
+that anonymous aggregate. If power collection is BLOCKED_EXTERNAL, the
+attribute is null and movement_status is BLOCKED_EXTERNAL: no empty movement
+dataset claims successful acquisition. The script skips the companion file
+and removes an older file at the explicitly requested output path so a retry
+cannot upload stale statistics. Power and movement output paths must differ.
+Successful collection may still produce an honest INSUFFICIENT_DATA movement
+aggregate when coordinates are absent. Phase annotations are not invented.
 
 ## Public schema and retention
 
@@ -200,6 +231,8 @@ match_count and position_participant_count=2*match_count. Every
 ROLE_POPULATION point requires this source plus reference_n=2*n,
 champion_n, champion_mean and reference_mean. k<=1 is withheld with
 CHAMPION_N_LT_2 when an interval is otherwise estimable; n<2 remains N_LT_2.
+Optional time_bin_policy is the exact three-field object above; its presence
+requires integer point labels and the fixed quantization/latest-frame limits.
 
 Raw response pairs, PUUIDs, names, Riot IDs, participant IDs and match IDs are
 private ephemeral memory only. They are never written by this implementation.
@@ -211,6 +244,6 @@ against an attacker with a candidate ID set. No per-player records survive.
 Only the synthetic red/green receipts and public source metadata are committed
 under `evidence/queue/q15`; they are not real Riot acquisition receipts.
 
-Q18 movement/stage statistics use a separate future contract. This module
+Q18 movement/stage statistics use their separate contract and validator. This module
 does not infer stages from minutes, respawn risk, formation, vision, causal
 strength windows or tactical recommendations.
