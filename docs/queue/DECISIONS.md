@@ -1,3 +1,21 @@
+# 2026-10-11 — Gemini project quota attestation
+
+User explicitly confirms lol-coach is collector-exclusive and no Gemini YouTube processing occurred in the previous24hours. Main config/expert_runtime.json records this source assertion and UTC time; free-tier/no-Billing/no-upgrade decision remains. This enables a first absent-ledger initialization within the attested24h window, never resets missing expected/corrupt state or refunds failed reservations. Real dispatch still requires durable reservation upload and Secret presence. No Secret values read.
+
+---
+
+# 2026-10-11 — expert channel and free project decisions
+
+User text approves15channels afterexplicit클템exclusion. config/expert_channels.json contains exact suppliedIDs/roles/L-C-Pgrades; 블루리쉬Pdisabledpendingrecentactivity. Channel labels neververifyclipspeaker; RIOT_ID_LOOKUP_DISABLED_UNTIL_USER_CONFIRMATION. Userconfirms lol-coach GeminiBillingdisconnectedFreeTier andno paidupgrade. Detailed expert_channels.json attachment NOT_RECEIVED inaccessibleattachments; sourceisusertextonly. GitHubActionsvariables read returned403(Resource notaccessiblebyintegration); noSecretvalue accessed. Missingprojectquota/exclusiveuse proofandrepositoryvariablessettingaccess mayblockactualdispatch; independentpipelinecontinues.
+
+---
+
+# 2026-10-11 — v1.6 authority and provenance
+
+User v1.6 supersedesv1.0–v1.5; reuse PR11/12/14. Five positions supersede oldADC restriction; frequent champions remain preferences. AddQ19 public expert-video short summaries/timestamps→existingnotes→EXPLORATORY; approval only manualweb. Missingtimestamp nevercandidate, absent patch/speaker UNKNOWN, upload!=publication, uploader!=speech speaker. Free-only actual Gemini dispatch requires project/model entitlement and durable rolling24h reservation proof; no paid fallback. Frozen contracts preserved by additive expert-v1/amendment/provenance. Explicit numerical measurement criteria only, no prose-derived thresholds. Actual collection inputs feature blockers; independent implementation continues.
+
+---
+
 # Queue v1.1 결정 기록
 
 ## 2026-10-11 USER_QUEUE_V1.1

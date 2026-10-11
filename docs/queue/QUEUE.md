@@ -1,3 +1,9 @@
+# Queue v1.6 active delta — 2026-10-11
+
+DONE9/19 (Q01–Q09), closedblockers3 (Q19_CHANNEL_ALLOWLIST / Q19_FREE_PROJECT / Q19_EXCLUSIVE_INITIAL_USAGE). PR14 proof and actual Riot403 retained. Q15 auxiliary ending-duration table VERIFYING; Q19 Korean index DONE subpart, official sources/collector/validator/bridge/UI/measurement VERIFYING. OverallQ15/Q19 actual acquisition BLOCKED_EXTERNAL pending trusted run results (Riot403 unresolved). PRE_GAME Q16–Q18 implemented, postgame external. Current work/ownership/evidence: CURRENT_HANDOFF.md additivev1.6 top; contracts/expert-v1*.md. Previous noREADY statement below is superseded by this requirements audit and v1.6 additions. Do not count subparts as new full DONE IDs or synthetic tests as coaching accuracy.
+
+---
+
 # v1.4 publication and first actual collection outcome
 
 PR14 merged72718963ac10f5e78f638138c63828499276f546; local/published/merged trees match. Required PR and postmerge CI PASS with344 source paths checked (evidence/queue/v14/ci-pr14.json, ci-post14.json).

@@ -16,8 +16,9 @@ from scripts.browser_experts import hashes
 def main():
     out=ROOT/'evidence/queue'/('expert-verifier-'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')+'-'+uuid.uuid4().hex[:8])
     out.mkdir(parents=True,exist_ok=False);before=hashes();results={}
-    minimum={'tests_expert.test_contract':10,'tests_expert.test_bridge':13,'tests_expert.test_measurement':14,
-        'tests_expert.test_http':6,'tests_expert.test_collector':16,'tests_r5.test_video_korean':5}
+    minimum={'tests_expert.test_contract':10,'tests_expert.test_bridge':13,'tests_expert.test_measurement':15,
+        'tests_expert.test_http':7,'tests_expert.test_collector':24,'tests_expert.test_entitlement':13,
+        'tests_r5.test_video_korean':5}
     for name,count in minimum.items():
         stream=io.StringIO();suite=unittest.defaultTestLoader.loadTestsFromName(name)
         run=unittest.TextTestRunner(stream=stream,verbosity=2).run(suite)
