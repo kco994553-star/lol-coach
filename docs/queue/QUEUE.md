@@ -1,6 +1,7 @@
 # 실행 대기열 v1.1 — 2026-10-11
 
-Main branch feat/queue-gameplan-v1.1-2026-10-11; intake0337d915633f6ad5719f55de1252f05e06621c9b.
+Main follow-up branch feat/queue-knowledge-expansion-2026-10-11; intake main e12fc5e05c49cd4af9d32f88b9b5c4394a7d2361.
+Stage A PR11 merged; exact published/merged tree90335044d9cc2b71096eb5e12621d3ada6db55f9; PR/postmerge CI PASS.
 공통 claim work/main-execution-claim token main-20261011-queue-v11-root.
 모든 작업은 사용자 사전 승인 안에서 진행, 유료 비용만 별도 승인.
 
@@ -10,18 +11,18 @@ Main branch feat/queue-gameplan-v1.1-2026-10-11; intake0337d915633f6ad5719f55de1
 | Q02 | DONE | q02_audit / docs/queue/Q02_EXISTING_AUDIT.md, evidence/queue/q02 | 코드·승인 지식·합성·실행 연결 점검 |
 | Q03 | DONE | Main / contracts/pregame*, coach_v1/pregame_contract.py | Q01,Q02; typed 실행/쿨타임 계약 확정 |
 | Q04 | DONE | Main / coach_v1/pregame_store.py | Q01,Q03; 원본 픽창+10슬롯+내 역할+룬/주문 불변 저장 |
-| Q05 | RUNNING | q05_content / knowledge_candidates, docs/queue/Q05_KNOWLEDGE_CANDIDATES.md, evidence/queue/q05* | 초기13 상세·173명 목록·추천10 확보; 나머지160명 원문 확장, 승인 안 함 |
+| Q05 | DONE | q05_content / knowledge_candidates, docs/queue/Q05_KNOWLEDGE_CANDIDATES.md, evidence/queue/q05* | 공식173명·발췌800개 추가·후보177개·추천10; 미확인9명/강한 시점/정글 곡선/쿨타임 유지; 승인0 |
 | Q06 | DONE | q06_evaluator + Main / coach_v1/pregame_evaluator.py | Q03; 3값/반례/중단/충돌/이력; 독립 리뷰 수정 포함 |
 | Q07 | DONE | Main / coach_v1/pregame_store.py, pregame_server.py | Q04,Q06; REVIEWED만 계획 생성·만료·revision |
 | Q08 | DONE | q08_ui / web_r4/pregame* | Q07;7영역·입력/버전/출처/미확인 조회; 실제서버13/격리fixture17 검증 |
-| Q09 | DONE | q09_verification / tests_pregame, scripts/verify_pregame.py, browser_pregame.py | Q07,Q08;5포지션 실제 브라우저104/104 + 기능49/의미12 PASS |
+| Q09 | DONE | q09_verification / tests_pregame, scripts/verify_pregame.py, browser_pregame.py | Q07,Q08;5포지션 실제 브라우저104/104 + 기능50/의미12 PASS |
 | Q10 | BLOCKED_EXTERNAL | q01_data / docs/queue/Q10*, evidence/queue/q10 | Q01; 실제 PC 수집 절차·원본 결과 양식 준비 DONE; 실제 수집 미실행 |
 | Q11 | BLOCKED_EXTERNAL | Main | Q10 실제 원본 의존 |
 | Q12 | BLOCKED_EXTERNAL | Main | Q11+본인 시점 영상 의존 |
 | Q13 | BLOCKED_EXTERNAL | Main | Q09,Q12; 행동 전 근거 의존 |
 | Q14 | BLOCKED_EXTERNAL | Main | Q13+독립 검토 의존 |
 
-진척: DONE8/14; 종료 blocker0. 구현 검증을 코칭 정확도로 표현하지 않는다.
+진척: DONE9/14; 종료 blocker0. 구현 검증을 코칭 정확도로 표현하지 않는다.
 기존 검증 재사용: evidence/queue/intake.json 및 baseline PASS.
 
 ## 인수와 검증
@@ -50,3 +51,15 @@ Q06/Q08/Q09도 별도 worktree와 파일 범위에서 실행했고 Main이 커�
 단계 A 최종 증거: evidence/queue/q09-final.json;25출처 해시 Main과 일치.
 추가 화면 경합 발견은4d054cd에서 수정, 독립 브라우저3건 재검토 PASS.
 병합 전 CI는 기존 MVP2개 + 새 pregame1개를 실제 GitHub에서 확인한다.
+
+## Q05 후속 통합 완료
+
+초기13프로필/17후보 원문을 보존하고160개 공식 스킬 원문을 확장했다.
+151명에434메커니즘 해석 후보,9명은 완전히 미분류; 전체173프로필/177typed명세를 웹에 연결했다.
+강한 시점·정글 성장곡선·추가 포지션/라인 성향·패치·확정 쿨타임은 근거 부족으로 미확인이다.
+독립 검토의 Sylas자기 이동/상대 제어 오류를261e456에서 제거했고 원문과 RED/GREEN 이력을 보존했다.
+소비 구현은 확정된 기존Q03계약만 사용하고 공통 스키마를 변경하지 않았다.
+새 최종 증거 evidence/queue/q09-q05-final.json: 기능50/의미12/실제Chromium104 PASS,34출처 해시 Main일치.
+확장 source160/발췌800/434후보 보존 검사 및 adapter6검사 PASS. 승인·결정 요청0, 실제 성능 평가0.
+Q05후속 게시/원격 필수CI/병합은 아직 PENDING; PR11및병합 후CI증거는 ci-pr11.json/ci-post11.json.
+READY독립 작업은 남지 않았으며 외부 입력 없이 Q10–Q14실제 구현을 생성하지 않는다.

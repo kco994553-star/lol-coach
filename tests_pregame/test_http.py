@@ -66,6 +66,19 @@ class HTTPTests(unittest.TestCase):
         status,result=self.call('/dev/v1/pregame/inputs','POST',dict(input=d),'forged-auto')
         self.assertEqual(status,422);self.assertEqual(result['error_code'],'AUTOMATIC_ADAPTER_UNAVAILABLE')
 
+    def test_expanded_catalog_exposes_all_roster_profiles_without_approving(self):
+        status,rows=self.call('/dev/v1/pregame/candidates')
+        self.assertEqual(status,200);self.assertEqual(len(rows),177)
+        profiles={r['profile']['champion']:r for r in rows if r['profile']}
+        self.assertEqual(len(profiles),173);self.assertEqual(len({r['rule_id'] for r in rows}),177)
+        for r in profiles.values():
+            self.assertEqual(r['patches'],[]);self.assertEqual(r['cooldowns'],[])
+        self.assertNotIn('GRAB_PICK',profiles['Sylas']['profile']['threats'])
+        for champion in ['Gangplank','Hwei','Kalista','Karthus','Kindred','Quinn','Smolder','Teemo','Vladimir']:
+            self.assertEqual(profiles[champion]['profile']['threats'],[])
+            self.assertEqual(profiles[champion]['profile']['protection'],[])
+        self.assertEqual(self.call('/dev/v1/pregame/knowledge')[1],[])
+
     def test_saved_gameplan_and_exact_lost_response_replay_after_dependencies_change(self):
         first=self.call('/dev/v1/pregame/inputs','POST',dict(input=golden()),'create')[1]
         route='/dev/v1/pregame/inputs/'+first['session_id']

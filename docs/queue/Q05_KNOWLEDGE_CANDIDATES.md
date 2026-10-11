@@ -46,7 +46,7 @@ were acquired.
 
 | File | Contents |
 | --- | --- |
-| [q05-roster-profiles.json](../../knowledge_candidates/q05-roster-profiles.json) | One row per all 173 champions in the official snapshot; 13 detailed exploratory kit profiles |
+| [q05-roster-profiles.json](../../knowledge_candidates/q05-roster-profiles.json) | One row per all 173 champions; original 13 profiles preserved plus 160 source-audited mechanic profiles with sparse type candidates |
 | [q05-type-rules.json](../../knowledge_candidates/q05-type-rules.json) | 11 common①–④ rules plus five selected-position behavior candidates |
 | [q05-review-priority.json](../../knowledge_candidates/q05-review-priority.json) | Ten recommended review candidates with reasons, source URLs and limitations |
 
@@ -68,11 +68,14 @@ Protection vocabulary: protection / frontline / none.
 Lane vocabulary: lane-pressure / scaling / roam / split.
 Jungle vocabulary: early-gank / scaling.
 
-The 13 detailed profile labels are exploratory interpretations of their archived
-kits. `grab-pick` covers catch tools such as pull, root, charm or ranged stun;
+The original 13 profile labels are exploratory interpretations of their archived
+kits. Expansion labels below follow the same possibility/unknown boundary.
+`grab-pick` covers catch tools such as pull, root, charm, stun, knockup, fear or sleep;
 `dive` describes access tools, not a successful tower dive. `frontline` is a Tank /
-control interpretation and does not guarantee durability. `protection` has an
-ally shield mechanic as evidence. Labels are possibilities rather than an
+control interpretation and does not guarantee durability. The original `protection`
+candidates have ally shield mechanics as evidence; expansion also preserves
+explicit ally recovery, invulnerability, damage blocking and defensive-stat buffs.
+Labels are possibilities rather than an
 exhaustive ranking. In particular, absence of a label does not mean absence of
 the capability.
 
@@ -99,8 +102,10 @@ matchup strengths, clear speeds, intervention schedules or a phase power curve.
 Ability cooldown arrays are not promoted from one source. Numeric attack range
 can appear only as an exact official source excerpt, not a fabricated comparison.
 
-The other 160 roster rows contain official identity/classes only; every unsupported
-strategic field stays null. `null` means **미확인 / unknown**, never `none`, weak,
+The original delivery kept the other 160 roster rows at official identity/classes
+only. The subsequent source expansion below adds archived mechanic excerpts and
+sparse threat/protection candidates. Every unsupported strategic field stays null.
+`null` means **미확인 / unknown**, never `none`, weak,
 not applicable, or a wildcard. The `none` vocabulary exists for a future explicit
 review; this collection does not infer it by missing evidence.
 
@@ -143,18 +148,93 @@ what is needed to turn a general draft candidate into a concrete tactical
 recommendation; do not populate those observations from picks or type tags.
 Likewise, a known source patch does not populate the draft's unknown manual patch.
 
+## Remaining-roster source expansion
+
+All remaining **160 individual champion documents** were fetched from the exact
+official `16.20.1/data/en_US/champion/{id}.json` URLs. Each returned HTTP200,
+declared `version: 16.20.1`, contained its expected single champion ID, and had four
+basic/ultimate spell descriptions plus its passive. The bounded batch used six
+concurrent requests, a 45-second per-request cap, no retries and no paid service.
+Exact URL, request/retrieval UTC times, status, byte count and SHA-256 receipts are
+preserved in [source-receipts.json](../../evidence/queue/q05-expansion/source-receipts.json).
+All 160 pinned responses are archived separately from the original sources;
+there are no failed or remaining fetch IDs.
+
+The expansion records **800 exact mechanic excerpts** (passive + four spells per
+champion). AI audited the source text and added **434 mechanistic label candidates**
+across individual ability excerpts for **151** expanded profiles. A label is a
+possibility candidate with its own source URL/hash/excerpt/patch boundary and at
+least one limit. This is not 434 independent truths, approvals, match observations,
+or validated tactical predictions. All rows remain `EXPLORATORY`; actual USER_WEB
+reviews, gameplay validations and coaching accuracy remain zero/zero/null.
+
+Candidate evidence links are deliberately sparse. Literal self-rooting is not
+enemy catch control; charging a spell/weapon is not movement; pulling up a shield
+is not pulling an enemy; a grappling hook into terrain is not enemy capture; an
+ally's dash or a pet's jump is not attributed to the caster's own body. Reflecting
+or destroying enemy projectiles does not become caster poke. A named spell such
+as Grasping Roots without a stated control effect does not establish that effect.
+AI-reviewed exclusions and additional direct mechanic readings are recorded in
+[audit-decisions.json](../../evidence/queue/q05-expansion/audit-decisions.json),
+with the complete excerpt/label audit in
+[mechanic-audit.json](../../evidence/queue/q05-expansion/mechanic-audit.json).
+The text locator patterns are evidence discovery aids, not executable rule
+conditions, a game evaluator, or a USER_WEB review.
+
+Nine expanded profiles have all passive/spell descriptions archived but no
+sufficiently clear threat/protection label under this conservative interpretation:
+**Gangplank, Hwei, Kalista, Karthus, Kindred, Quinn, Smolder, Teemo, Vladimir**.
+Their labels stay null. This records uncertainty rather than declaring that these
+champions lack threats or protection. Other expanded rows also retain null
+categories where only one kind of mechanic is supported. `detailed_profile_ids`
+now records source-examined profiles, including these nine uncertain profiles;
+it is not a completeness or approval claim.
+
+Original 13 profile objects, all original source files/receipts, type rules,
+priority candidates and the separate 17-spec executable catalog are unchanged.
+The expansion does not automatically compile new profile labels into that
+catalog. Main owns any later adapter publication after source claims are inspected.
+All phase strengths/jungle power styles/cooldown arrays remain null for the full
+173-champion roster. For all expanded 160 rows, lane style and positions remain
+null too. Combat-class tags do not establish optimal lane positions, and static
+build16.20.1 does not fill the unknown gameplay patch.
+
 ## Verification and reproducibility
 
-Run these isolated content commands from the repository root:
+Current expansion verification is separate from the original historical validator:
+
+```sh
+python evidence/queue/q05-expansion/classify.py --apply
+python evidence/queue/q05-expansion/validate.py
+```
+
+The expansion classifier rebuilds solely from the pinned archived bytes plus
+the original roster at Main baseline `9f9d9b9`. It does not re-fetch, approve or
+activate anything. Running it without `--apply` produces an evidence preview only.
+The dedicated validator verifies all 173 unique roster IDs, unchanged original13
+profile objects, all160 official documents, all800 exact mechanic bindings,
+candidate limits/unknown boundaries, exact source versions, and unchanged
+original builds/validators/receipts/rules/executable catalog. Current receipt:
+[q05-expansion/validation.json](../../evidence/queue/q05-expansion/validation.json).
+
+The following original commands/receipt document the **initial13-profile delivery
+at commit501255d**. They are not the validator for the expanded roster. Do not run
+the original builder against the expanded worktree: it recreates that older catalog.
+
+In an isolated checkout of that original content commit:
 
 ```sh
 python evidence/queue/q05/build_candidates.py
 python evidence/queue/q05/validate_candidates.py
 ```
 
-The builder uses only archived official bytes and never changes product state.
-The validator checks source hashes, exact source locators/excerpts, all 173 unique
+The historical builder uses only archived official bytes and never changes product
+state. Its unchanged historical validator checks source hashes, exact source locators/excerpts, all 173 unique
 identities, 13 detailed profiles, 160 unknown-only profiles, ten priorities,
 all five role views, unknown unsupported numeric/power fields, and the universal
 EXPLORATORY/no-approval/no-coaching boundary. Receipt:
 [content-validation.json](../../evidence/queue/q05/content-validation.json).
+
+Source review correction: Sylas E self-pull does not establish enemy control; the
+unsupported grab-pick interpretation was removed. Original excerpt/HTTP bytes and
+first RED proof remain preserved, and no unarchived gameplay knowledge replaces it.

@@ -75,9 +75,13 @@ async function reopen(plan) {
       {headers:{Authorization:'Bearer '+token}});
     const initialKnowledge = await initialKnowledgeResponse.json();
     const priorities = await page.locator('#pg-review-priority > details').count();
+    const candidates = await page.locator('#pg-candidate-list button').count();
+    const rosterCount = await page.locator('#pg-roster option').count();
     check('connected', await page.locator('#pg-workspace').isVisible() && initialKnowledgeResponse.ok() &&
-      initialKnowledge.length === (mode === 'actual' ? 0 : 18) && priorities === 10,
-      {mode,initial_knowledge_count:initialKnowledge.length,review_priority_count:priorities});
+      initialKnowledge.length === (mode === 'actual' ? 0 : 18) && priorities === 10 &&
+      candidates === 177 && rosterCount === 173,
+      {mode,initial_knowledge_count:initialKnowledge.length,review_priority_count:priorities,
+        candidate_count:candidates,roster_count:rosterCount});
     await page.locator('#pg-golden').click();
     if (mode === 'synthetic') await page.locator('#pg-patch').fill('SYNTHETIC-1');
     let common = null, previousPersonal = null, lastPlan;
@@ -116,11 +120,20 @@ async function reopen(plan) {
       check(role+'-edit-hides-plan', !(await page.locator('#pg-plan-panel').isVisible()) &&
         await page.locator('#pg-create-plan').isDisabled(), {hidden:true});
     }
+    await page.locator('#pg-candidate-list button').filter({hasText:'Q05-P-Sylas ·'}).click();
+    const expandedSylas = JSON.parse(await page.locator('#pg-knowledge-json').textContent());
+    const expandedSylasOK = expandedSylas.proposal === null && expandedSylas.spec.rule_id === 'Q05-P-Sylas' &&
+      expandedSylas.spec.profile.champion === 'Sylas' && expandedSylas.spec.patches.length === 0 &&
+      same(expandedSylas.spec.profile.threats, ['ASSASSINATION','DIVE']) &&
+      !expandedSylas.spec.profile.threats.includes('GRAB_PICK') &&
+      expandedSylas.spec.sources.length === 3 && expandedSylas.spec.sources.every(s => s.kind === 'DATA_DRAGON' && /^[a-f0-9]{64}$/.test(s.sha256)) &&
+      await page.locator('#pg-knowledge-sources a').count() === 3 && await page.locator('#pg-approve').isDisabled();
     const spec = JSON.parse(fs.readFileSync(process.env.PREGAME_FIXTURE_FILE));
     await page.locator('#pg-spec-json').fill(JSON.stringify(spec)); await page.locator('#pg-preview-spec').click();
     const preview = JSON.parse(await page.locator('#pg-knowledge-json').textContent());
-    check('source-preview', same(preview.spec, spec) && await page.locator('#pg-knowledge-sources a').count() === 1,
-      {source_kind:spec.sources[0].kind, rule_id:spec.rule_id});
+    check('source-preview', expandedSylasOK && same(preview.spec, spec) && await page.locator('#pg-knowledge-sources a').count() === 1,
+      {source_kind:spec.sources[0].kind, rule_id:spec.rule_id,expanded_profile:expandedSylas.spec.profile,
+        expanded_patch_scope:expandedSylas.spec.patches,expanded_source_count:expandedSylas.spec.sources.length});
     const source = page.locator('#pg-knowledge-sources a').first();
     await context.route('https://example.org/**', route => route.fulfill({status:200, contentType:'text/html',body:'SYNTHETIC browser navigation fixture'}));
     const popupPromise = page.waitForEvent('popup'); await source.click(); const popup = await popupPromise;
