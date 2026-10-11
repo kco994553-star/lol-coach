@@ -17,6 +17,7 @@ COMPARISON_LIMITATION='NUMERICAL_COMPARISON_NOT_TACTICAL_VALIDATION_OR_APPROVAL'
 MAX_SOURCE_BYTES=32768
 HASH=re.compile(r'[a-f0-9]{64}\Z')
 PATCH=re.compile(r'[0-9]+\.[0-9]+\Z')
+PATCH_RANGE=re.compile(r'([0-9]+\.[0-9]+)(?:-([0-9]+\.[0-9]+))?\Z')
 CHAMPION=re.compile(r'[A-Za-z][A-Za-z0-9]{0,99}\Z')
 
 
@@ -29,7 +30,7 @@ def _criterion(value):
     c=deepcopy(value)
     if c['kind']!='MOVEMENT_MEAN_DISTANCE':return None
     if not isinstance(c['cohort_id'],str) or not HASH.fullmatch(c['cohort_id']):return None
-    if not isinstance(c['patch'],str) or not PATCH.fullmatch(c['patch']) or c['tier'] not in TIERS:return None
+    if not isinstance(c['patch'],str) or len(c['patch'])>40 or not PATCH.fullmatch(c['patch']) or c['tier'] not in TIERS:return None
     if type(c['minute']) is not int or c['minute']<0 or c['operator'] not in ('LE','GE'):return None
     if type(c['threshold']) not in (int,float):return None
     try:
@@ -48,6 +49,16 @@ def _criterion(value):
     return c
 
 
+def _claim_patch_contains(value,patch):
+    if not isinstance(value,str) or len(value)>40:return False
+    match=PATCH_RANGE.fullmatch(value)
+    if match is None:return False
+    start=tuple(int(v) for v in match[1].split('.'))
+    end=tuple(int(v) for v in (match[2] or match[1]).split('.'))
+    selected=tuple(int(v) for v in patch.split('.'))
+    return start<=selected<=end
+
+
 def compare_claim(claim,movement_data,test_mode=False):
     """Return {status,reasons,statistic}; caller criteria are never inferred.
 
@@ -60,6 +71,9 @@ def compare_claim(claim,movement_data,test_mode=False):
     if claim.get('measurement') is None:return _result('UNMEASURABLE','NO_EXPLICIT_NUMERICAL_CRITERION')
     criterion=_criterion(claim['measurement'])
     if criterion is None:return _result('UNMEASURABLE','INVALID_NUMERICAL_CRITERION')
+    unknown_patch=claim.get('patch_range')=='UNKNOWN'
+    if not unknown_patch and not _claim_patch_contains(claim.get('patch_range'),criterion['patch']):
+        return _result('INSUFFICIENT','CLAIM_PATCH_SCOPE_MISMATCH_OR_INVALID')
     champion=claim.get('champion');position=claim.get('position');stage=claim.get('stage')
     if not isinstance(champion,str) or champion=='UNKNOWN' or not CHAMPION.fullmatch(champion) or position not in POSITIONS or stage not in STAGES:
         return _result('INSUFFICIENT','CLAIM_SCOPE_UNKNOWN')
@@ -87,6 +101,7 @@ def compare_claim(claim,movement_data,test_mode=False):
         return _result('INSUFFICIENT','PRECISION_INSUFFICIENT')
     limitations=list(dict.fromkeys([*source['limitations'],COMPARISON_LIMITATION]))
     if synthetic:limitations.append('SYNTHETIC_TEST_NOT_REAL_EVIDENCE')
+    if unknown_patch:limitations.append('CLAIM_PATCH_UNKNOWN_COMPARISON_ONLY')
     statistic=dict(dataset_sha256=digest(data),cohort_id=cohort['id'],champion=champion,
         position=position,stage=stage,patch=cohort['patch'],tier=cohort['tier'],minute=point['minute'],
         condition_signature=deepcopy(cohort['condition_signature']),source=deepcopy(source),

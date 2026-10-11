@@ -125,4 +125,19 @@ class ExpertMeasurementTests(unittest.TestCase):
         self.assertEqual(r['status'],'INSUFFICIENT');self.assertIsNone(r['statistic'])
         self.assertIn('SOURCE_METADATA_TOO_LARGE',r['reasons'])
 
+    def test_known_patch_scope_contains_criterion_and_unknown_is_limited(self):
+        d=dataset();c=claim(d)
+        for patch in ('16.18','16.20-16.21','16.20-16.18','16.x','１６.１９','16.18 to 16.20','16.18–16.20',None):
+            q=copy.deepcopy(c);q['patch_range']=patch
+            with self.subTest(patch=patch):
+                r=self.compare(q,d);self.assertEqual(r['status'],'INSUFFICIENT');self.assertIsNone(r['statistic'])
+        for patch in ('16.19','16.18-16.19','16.19-16.20','16.9-16.20'):
+            q=copy.deepcopy(c);q['patch_range']=patch
+            with self.subTest(patch=patch):
+                r=self.compare(q,d);self.assertEqual(r['status'],'AGREES')
+                self.assertNotIn('CLAIM_PATCH_UNKNOWN_COMPARISON_ONLY',r['statistic']['limitations'])
+        r=self.compare(c,d)
+        self.assertEqual(r['status'],'AGREES')
+        self.assertIn('CLAIM_PATCH_UNKNOWN_COMPARISON_ONLY',r['statistic']['limitations'])
+
 if __name__=='__main__':unittest.main()
