@@ -45,10 +45,8 @@ class V14HTTPTests(unittest.TestCase):
         from coach_v1.pregame_v2 import evaluate_gameplan_v2
         created=self.call('/dev/v1/pregame/inputs','POST',dict(input=golden()),'v3-input')[1]
         sid=created['session_id']
-        old=[]
         for version,evaluator in [(1,evaluate_gameplan),(2,evaluate_gameplan_v2)]:
             p=self.server.pregame.save_plan(sid,1,evaluator(golden(),[]),'historical-'+str(version))
-            old.append(p)
             self.assertEqual(self.call('/dev/v1/pregame/plans/'+p['id'])[1]['validity'],'CURRENT')
         status,p=self.call('/dev/v1/pregame/inputs/'+sid+'/plans','POST',dict(expected_revision=1),'new-v3')
         self.assertEqual(status,201);self.assertEqual(p['schema_version'],'pregame.plan.v3')
@@ -130,6 +128,26 @@ class V14HTTPTests(unittest.TestCase):
         self.assertEqual(expired['movement_statistics_fingerprint'],plan['movement_statistics_fingerprint'])
         self.assertEqual(expired['movement'],plan['movement'])
         self.assertEqual(self.server.pregame.export_data()['plans'][-1]['movement_statistics_fingerprint'],digest(dataset))
+
+    def test_cli_rejects_synthetic_and_raw_aggregate_files_and_closes_server(self):
+        import json
+        from pathlib import Path
+        from unittest.mock import Mock,patch
+        from coach_v1.pregame_server import main
+        from coach_v1.power_stats import build_power_dataset
+        from tests_pregame.test_power_stats import source,pair
+        token_path=Path(self.tmp.name)/'cli-token';token_path.write_text(self.token)
+        data_path=Path(self.tmp.name)/'cli-data.json'
+        synthetic=build_power_dataset([pair(0),pair(1)],source=source())
+        for payload in [synthetic,dict(raw=dict(puuid='PRIVATE_TEST_FIXTURE'))]:
+            data_path.write_text(json.dumps(payload))
+            fake=Mock()
+            args=['pregame','--db',self.tmp.name+'/cli.sqlite','--token-file',str(token_path),'--power-data',str(data_path)]
+            for flag in ['body-bytes','observations','actions','scenarios','comparisons','pending-jobs']:
+                args.extend(['--max-'+flag,'1000000'])
+            with patch('sys.argv',args),patch('coach_v1.pregame_server.PregameWorkbench',return_value=fake):
+                with self.assertRaises(ValueError):main()
+            fake.server_close.assert_called_once();fake.serve_forever.assert_not_called()
 
 
 if __name__=='__main__':unittest.main()
