@@ -143,10 +143,13 @@ async function reopen(plan) {
     await popup.close();
     const importedPromise = page.waitForResponse(r => r.url().endsWith('/pregame/candidates') && r.request().method() === 'POST');
     await page.locator('#pg-import-candidate').click(); const imported = await importedPromise; const item = await imported.json();
-    await page.waitForLoadState('networkidle');
+    // HTTP completion can precede app JSON consumption and knowledge refresh.
+    await page.waitForFunction(() => document.getElementById('pg-notice').textContent.includes('EXPLORATORY 후보를 등록했습니다.') && !document.getElementById('pg-preview-spec').disabled);
     check('proposal-only-import', imported.status() === 201 && item.proposal.review_state === 'EXPLORATORY' && decisions === 0,
       {state:item.proposal.review_state});
+    // Synthetic knowledge is a fixed read-only view; the imported proposal stays EXPLORATORY in storage.
     await page.locator('#pg-knowledge-list button').first().click();
+    await page.waitForFunction(() => { const selected=JSON.parse(document.getElementById('pg-knowledge-json').textContent); return !!selected.proposal && !document.getElementById('pg-approve').disabled; });
     const beforeDialogs = dialogs;
     const approveEnabled = !(await page.locator('#pg-approve').isDisabled());
     await page.evaluate(() => document.getElementById('pg-approve').click());

@@ -38,6 +38,9 @@ jobs:
       - name: Verify contract, missing inputs, conflicts and immutable storage
         shell: bash
         run: python scripts/verify_pregame.py | tee "$RUNNER_TEMP/pregame-tests.json"
+      - name: Verify expert source, retry, quota and privacy boundaries
+        shell: bash
+        run: python scripts/verify_experts.py | tee "$RUNNER_TEMP/expert-tests.json"
       - name: Install pinned browser automation
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
@@ -56,6 +59,13 @@ jobs:
           CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
           export CHROMIUM_EXECUTABLE
           python scripts/browser_v13.py | tee "$RUNNER_TEMP/pregame-browser-v13.json"
+      - name: Verify manual expert intake and source review in Chromium
+        shell: bash
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/pregame-playwright/node_modules"
+          CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
+          export CHROMIUM_EXECUTABLE
+          python scripts/browser_experts.py | tee "$RUNNER_TEMP/expert-browser.json"
       - name: Verify pending save history races in Chromium
         shell: bash
         run: |
@@ -63,6 +73,13 @@ jobs:
           CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
           export CHROMIUM_EXECUTABLE
           node tests_pregame/ui_pregame_pending_save.cjs | tee "$RUNNER_TEMP/pregame-races.json"
+      - name: Verify auxiliary result table accessibility and source gates
+        shell: bash
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/pregame-playwright/node_modules"
+          CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
+          export CHROMIUM_EXECUTABLE
+          node tests_pregame/browser_outcome.cjs | tee "$RUNNER_TEMP/pregame-outcome-renderer.json"
       - name: Print exact fresh receipts
         if: always()
         run: |
@@ -72,6 +89,8 @@ jobs:
           from pathlib import Path
           receipts = {}
           for name, filename, reportfile in [('tests', 'pregame-tests.json', 'verification.json'),
+                                             ('expert_tests', 'expert-tests.json', 'verification.json'),
+                                             ('expert_browser', 'expert-browser.json', 'runner.json'),
                                              ('extensions', 'pregame-extensions.json', 'verification.json'),
                                              ('browser', 'pregame-browser.json', 'runner.json'),
                                              ('browser_v13', 'pregame-browser-v13.json', 'runner.json')]:
@@ -87,6 +106,10 @@ jobs:
               payload['ui_races'] = json.loads((Path(os.environ['RUNNER_TEMP']) / 'pregame-races.json').read_text())
           except (OSError, ValueError) as error:
               payload['ui_races'] = {'status': 'NOT_PRODUCED', 'error': str(error)}
+          try:
+              payload['outcome_renderer'] = json.loads((Path(os.environ['RUNNER_TEMP']) / 'pregame-outcome-renderer.json').read_text())
+          except (OSError, ValueError) as error:
+              payload['outcome_renderer'] = {'status': 'NOT_PRODUCED', 'error': str(error)}
           print('PREGAME_RECEIPT_JSON=' + json.dumps(payload, ensure_ascii=False))
           with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a') as output:
               output.write('## Five-position pregame verification\n\n```json\n' + json.dumps(payload, ensure_ascii=False, indent=2) + '\n```\n')

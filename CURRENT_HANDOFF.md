@@ -1,3 +1,49 @@
+된 것: 5개 포지션·9개 카드와 기존 병합 증거를 재사용하고 Q15 보조 결과 표를 추가했습니다.
+된 것: Q19 한국어 색인·수동 입력·출처 노트·후보·통계 대조·무료 수집기를 구현했습니다.
+진행 중: 마지막 결함 수정·통합 검증·GitHub 게시 후 실제 전문가 수집을 진행합니다.
+안 된 것: 실제 Riot 수집403과 PC·본인 영상이 필요한 복기·코칭 정확도는 대기입니다.
+내가 검토할 것: 웹 후보의 원문·조건·패치를 검토하며 Riot 접근 권한을 확인합니다.
+
+# Queue v1.6 — integrated expert pipeline VERIFYING
+
+Authority USER_QUEUE_V1.6_2026-10-11 replaces earlier directives; five chosen roles remain supported. Fresh remote main72718963ac10f5e78f638138c63828499276f546 (PR14), openPR15 head4439187874de6cb460baeb0c0a6d7116b069698b with first pregame failure preserved. Completed PR11/12/14 code and source-bound evidence reused. Main branch work/queue-v14-closeout, shared owner tokenmain-20261011-queue-v13-050952. Only Main writes shared contracts/schema/integration/GitHub; agents isolated disjoint files. No independent concurrent schema edits.
+
+DONE Q01–Q09=9/19 full IDs. Closed external input blockers3: Q19_CHANNEL_ALLOWLIST, Q19_FREE_PROJECT, Q19_EXCLUSIVE_INITIAL_USAGE. User approved15exactchannelIDs after클템exclusion;14enabled, 블루리쉬Pdisabledpendingactivity. User confirms lol-coach BillingdisconnectedFreeTier/no paidupgrade, exclusive collector project and no video processing in previous24h. Detailed JSON attachment NOT_RECEIVED; exact user text reconstructed, never claim file read. RiotIDs UNKNOWN and user confirmation required before use. Repository variables API403 does not imply absent Secrets; committed safe runtime attestation fallback exists. Secret values never read or logged.
+
+Q15 auxiliary ending-duration result companion: deduplicated whole matches, patch/tier separation, consistent official duration/result, Wilson95 CI, opponent complement validation and resource-private no-extra-call collection. Authenticated bounded endpoint plus collapsed table, REAL-only actual data and TEST-only synthetic fixture. Current actual Riot acquisition remains38116217243 / firstrequest403 / UNAUTHORIZED_OR_EXPIRED_OR_UNSUPPORTED_PATH / keykindUNKNOWN; usable real samples0. Failure never becomes empty usable statistics or known expiry.
+
+Q19 additive frozen expert contracts define strict bounded timestamped short paraphrases, automatic speakerUNKNOWN/video-specific identity, same-video independence group, explicit context, no upload-to-patch inference and no raw video/transcript/provider response. Manual friendly form and advanced JSON→immutable VIDEO source/first note→EXPLORATORY proposal; original SHA/count metadata, separate original fetch, source/head mismatch withheld. Private import journal is separate from unchanged schema2/backupformat1. Crash uncertainty withheld rather than resurrected; up to100claims within200KB, listing1MB preflight before writes.
+
+Comparison requires explicit source-backed numerical criterion plus verified phase/patch/tier/cohort/precision. No prose-derived near-body radius or tactical assertion. SYNTHETIC values require explicit TEST and never affect real prioritization. User L/C/Pgrades retained; C actual statistical AGREES prioritized after L. Statistics agreement never approves a rule. Current reviewed real knowledge0, expert claims fact-verified0, N0 coaching_accuracy=null.
+
+Trustedmain-only manual+daily collector uses allowlisted public uploads metadata and Gemini3.8-flash documented Interactions/store=false/short JSON. Every reservation/process checks fresh bounded official pricing/public-preview/stable-model proof. UNKNOWN blocks external; PAID_REQUIRED blocks payment. User free project assertion separate from documented entitlement. Durable rolling8h ledger persisted before model calls, retains failed/cancelled reservations, includes dispatch-delay allowance; lost expected history never reset by initialzero. Max2videos and operational length/API limits. Actions retains only safe summary/quota/proof artifacts7days; Main publishes verified summaries under common owner. Publication/real acquisition pending, never report workflow green as acquisition.
+
+Independent review found and fixed quota delayed-dispatch/uncertain-history defects, bridge100claim listing/restart/source races and legacy browser import synchronization. Stale collector output (including CLI exceptions) and known speech-patch mismatch corrected with RED/GREEN and independent recheck. Final MVP exposed missing authorized Korean source-version linkage; original verifier preserved, new exact baseline/current/Freeze hash amendment and delegated verifier admit only that path; old test file set restored. Latest Main expert90PASS (single JSON launcher), pregame151+semantic12PASS, Golden five-role104 and guarded extensions120 ChromiumPASS, friendly expert42PASS. Original source-preservation wrapper3+Korean5PASS; full MVP delegated run ongoing; exact published-head CI pending. Prior source-bound receipts retained; final authoritative remote CI will refresh all source bindings. Unauthenticated official free documentation verified; no provider call yet. These are implementation tests, no coaching performance claim.
+
+Q10–Q14/postgame Q16–Q18 remain BLOCKED_EXTERNAL on actual own-PC samples, matching POV and independent review. Q15 actual collection needs valid Riot access; Q18 verified stage annotations/review missing. Next: finish narrow fixes, fresh Main tests/Chromium/Frozen proof, update PR15/requiredCI/merge exact tree, then trusted expert collection and safe publication. No additional free-action permission required. Park only after independent READY exhausted; actual acquisition failures preserve explicit reasons and resume inputs.
+
+---
+
+된 것: 5개 포지션의 9개 카드·저장·근거 조회를 구현하고 PR #14를 병합했습니다.
+된 것: Q05 후보·Q15 수집/그래프·Q16 경기 전 신호·Q17 의존도·Q18 조건부 움직임을 연결했습니다.
+된 것: 필수 GitHub CI와 병합 후 검증을 통과했고 원문·승인 이력을 보존했습니다.
+안 된 것: Riot API 첫 요청이 403으로 막혔으며 개인 PC·영상이 필요한 복기는 대기입니다.
+내가 검토할 것: Riot 키/프로젝트 접근 권한, 실제 경기 패치, 웹 지식 후보를 확인합니다.
+
+# Queue v1.4 — implementation merged; real collection blocked
+
+PR14 https://github.com/kco994553-star/lol-coach/pull/14 merged2026-10-11T05:52:17Z as72718963ac10f5e78f638138c63828499276f546. Published headc4766775d2462119cad1358353fe6617edb041ed and main share exact tree799cca91b2a7463d61c6621c9aec9e7130887d51. Actual PR CI38116071036/38116070994 and postmerge CI38116191991/38116192017 passed all three jobs; exact344 source paths match. Additive receipts evidence/queue/v14/ci-pr14.json and ci-post14.json supplement immutable local evidence/queue/v13/final.json. Runtime bound code/contract/browser sources are unchanged by this closeout.
+
+Trusted main-only collection38116217243 completed, but first Riot request returned403 and acquisition is BLOCKED_EXTERNAL / UNAUTHORIZED_OR_EXPIRED_OR_UNSUPPORTED_PATH; request_count1, retry_count0, key_kindUNKNOWN, acquired matches0. This proves a failed acquisition, not usable empty statistics or known key expiry. No key value was read/logged/published. Safe status/source binding: evidence/queue/v14/riot-collection-first.json. The anonymous artifact was uploaded with seven-day retention; CLI blob download failedHTTP403; connector fallback succeeded and strict power-data validation confirmed a blocked receipt with no usable cohorts. No raw payload/artifact is published.
+
+Progress remains DONE Q01–Q09 =9/18 full IDs, closed external blockers0. Q15 actual acquisition now BLOCKED_EXTERNAL; collector/statistics/graph implementation and synthetic arithmetic/browser validation remain complete. PRE_GAME Q16/Q17/Q18 subparts are complete; postgame/recurrence/real dependency and phase support remain external. No coaching performance is calculated: N0, accuracy=null. User-approved current knowledge0; candidates190 remain EXPLORATORY. No AI approval/USER_WEB impersonation; no live coaching/cooldown tracking; paid services0.
+
+Resume Q15: check developer portal key/project access, register valid RIOT_API_KEY through GitHub Secrets UI, rerun Riot power aggregate collection on main; no further implementation approval required. Inspect real status and exact patch/tier before loading --power-data/--movement-data. Do not convert failure to zeros. Q10 needs own game-PC official capture receipt/fields/environment; Q11 follows actual originals, Q12 own matching POV, Q13 then-known evidence, Q14 independent evaluation. Q16 postgame suspected intervals, Q17 feedback and Q18 position comparison follow these dependencies. Actual phase annotations/review and gameplay patch remain unavailable.
+
+No independent READY implementation remains. Closeout branch work/queue-v14-closeout owns only this additive handoff/queue/run instructions and public-safe receipts, common claim tokenmain-20261011-queue-v13-050952. Existing intake/history retained below; the common coordination ref records CI_PENDING while remote checks run and PARKED_EXTERNAL after final publication.
+
+---
+
 된 것: 5개 포지션의 9개 카드·저장·근거 조회와 Q16 경기 전 전제·무효 신호를 구현했습니다.
 된 것: Q05 후보190개, Q15 통계·그래프·수집기, Q17 의존도, Q18 조건부 움직임을 연결했습니다.
 된 것: 기능124·의미12·브라우저208·기존 브라우저124·저장 경합3 검사 통과; AI 승인0입니다.

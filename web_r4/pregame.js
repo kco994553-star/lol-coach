@@ -257,6 +257,18 @@
       window.PregamePower.render(host,response,{testMode,compact,champion,opponent,phaseBands:phaseBands(p,position)});
     }).catch(e=>{if(!alive(mark)||view!==planViewEpoch||plan!==p||!host.isConnected)return;if(e.status===401){apiError(e,mark);return;}host.replaceChildren(node('p','통계 UNKNOWN · 조회하지 못했습니다.','small'));});
   }
+  function outcomeSlot(parent,p){
+    const detail=node('details',undefined,'pg-outcome');detail.append(node('summary','보조 결과 통계 · 경기 종료 시간별 승리 비율'));
+    const host=node('div',undefined,'pg-outcome-view');host.append(node('p','결과 통계 UNKNOWN · 불러오는 중','small'));detail.append(host);parent.append(detail);
+    if(p.validity!=='CURRENT'){host.replaceChildren(node('p','결과 통계 UNKNOWN · 현재 유효한 계획에서 확인하세요.','small'));return;}
+    const position=p.input.my_position,own=p.input.slots.filter(s=>s.side==='ALLY'&&s.position===position),enemy=p.input.slots.filter(s=>s.side==='ENEMY'&&s.position===position);
+    if(own.length!==1||!own[0].champion||!p.input.patch){host.replaceChildren(node('p','결과 통계 UNKNOWN · 챔피언·포지션·정확한 패치 필요','small'));return;}
+    const mark=context(),view=planViewEpoch;
+    api('/outcome-view','POST',JSON.stringify({champion:own[0].champion,position,patch:p.input.patch,tier:$('pg-power-tier').value||null,opponent_champion:enemy.length===1?enemy[0].champion:null})).then(response=>{
+      if(!alive(mark)||view!==planViewEpoch||plan!==p||!host.isConnected||dirty())return;
+      window.PregameOutcome.render(host,response,{testMode});
+    }).catch(e=>{if(!alive(mark)||view!==planViewEpoch||plan!==p||!host.isConnected||dirty())return;if(e.status===401){apiError(e,mark);return;}host.replaceChildren(node('p','결과 통계 UNKNOWN · 조회하지 못했습니다.','small'));});
+  }
   function detail(parent,p,cells){
     const d=node('details');d.append(node('summary','저장 입력·규칙·출처·적용/제외 이유'));
     const applied=cells.flatMap(c=>c.rules || []);d.append(node('p','이 카드의 적용 규칙과 전체 평가 이력을 함께 확인합니다.','small'));
@@ -268,7 +280,7 @@
     $('pg-plan-meta').textContent='입력 v'+p.input_revision+' · '+p.created_at+' · '+(p.input.my_position?roleNames[p.input.my_position]:'내 포지션 미확인')+(p.expiry_reasons?.length?' · 만료 근거: '+p.expiry_reasons.join(', '):'');$('pg-plan-json').textContent=json(p);$('pg-cards').replaceChildren();
     const unknownOperations={key:'OPERATIONS',title:'운영·의존',status:'UNKNOWN',texts:[],reasons:['LEGACY_OPERATIONS_UNAVAILABLE'],rules:[],cooldowns:[]};
     const sections=[['map','① 5개 포지션 지도',p.common.map],['jungle','② 정글 주도권',[p.common.jungle]],['composition','③ 조합 방향',[p.common.composition]],['role','④ 내 역할',[p.personal.role]],['lane','⑤ 라인·동선',[p.personal.lane]],['fight','⑥ 교전·생존',[p.personal.fight]],['operations','⑦ 운영·팀 의존',[p.operations || unknownOperations]],['movement','⑧ 이동 단계',[p.movement || {...unknownOperations,key:'MOVEMENT',title:'이동 단계',reasons:['MOVEMENT_UNAVAILABLE']}]],['changes','⑨ 변화 조건·미확인',[p.changes]]];
-    for(const [id,title,cells] of sections){const card=node('article',undefined,'card');card.id='pg-card-'+id;card.append(node('h3',title));for(const c of cells){if(id==='map'){const row=node('div',undefined,'pg-map-row'+(c.key===p.input.my_position?' selected':''));row.dataset.position=c.key;cellContent(row,c,p);if(c.key===p.input.my_position)row.append(node('span','내 포지션','badge'));card.append(row);powerSlot(row,p,c.key,true);}else cellContent(card,c,p);}if(id==='operations')renderOperations(card,p,cells[0]);if(id==='movement')renderMovement(card,p,cells[0]);if(id==='lane')powerSlot(card,p,p.input.my_position,false);detail(card,p,cells);$('pg-cards').append(card);}
+    for(const [id,title,cells] of sections){const card=node('article',undefined,'card');card.id='pg-card-'+id;card.append(node('h3',title));for(const c of cells){if(id==='map'){const row=node('div',undefined,'pg-map-row'+(c.key===p.input.my_position?' selected':''));row.dataset.position=c.key;cellContent(row,c,p);if(c.key===p.input.my_position)row.append(node('span','내 포지션','badge'));card.append(row);powerSlot(row,p,c.key,true);}else cellContent(card,c,p);}if(id==='operations')renderOperations(card,p,cells[0]);if(id==='movement')renderMovement(card,p,cells[0]);if(id==='lane'){powerSlot(card,p,p.input.my_position,false);outcomeSlot(card,p);}detail(card,p,cells);$('pg-cards').append(card);}
   }
 
   function knowledgeControls(){

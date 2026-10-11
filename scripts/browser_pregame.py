@@ -21,7 +21,9 @@ from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-SOURCE_FILES = ['contracts/pregame-v3-amendment.md','.github/workflows/riot-power-collection.yml','contracts/pregame-v2.md','contracts/pregame-v3.md',
+SOURCE_FILES = ['coach_v1/outcome_stats.py','tests_pregame/test_outcome_stats.py','tests_pregame/test_outcome_http.py',
+    'contracts/outcome-v1.md','web_r4/pregame_outcome.js','tests_pregame/browser_outcome.cjs',
+    'contracts/pregame-v3-amendment.md','.github/workflows/riot-power-collection.yml','contracts/pregame-v2.md','contracts/pregame-v3.md',
     'coach_v1/pregame_v2.py','coach_v1/pregame_v3.py','coach_v1/movement.py',
     'coach_v1/power_stats.py','coach_v1/riot_collector.py','web_r4/pregame_power.js',
     'knowledge_candidates/initiative-v2.json','scripts/browser_v13.py','tests_pregame/browser_v13.cjs',
@@ -199,6 +201,8 @@ def run_mode(mode, output):
         validation=validation, check_count=len(checks), expected_check_count=len(EXPECTED_BROWSER_IDS),
         checks_passed=sum(c.get('passed') is True for c in checks),
         checks_failed=sum(c.get('passed') is not True for c in checks),
+        failed_check_ids=[c.get('id') for c in checks if c.get('passed') is not True],
+        first_failure=browser.get('first_failure') if browser else None,
         checks_not_executed=max(0,len(EXPECTED_BROWSER_IDS)-len(checks)),
         source_sha256=current, store_review_audit=store_audit,
         git_head=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),

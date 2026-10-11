@@ -1,3 +1,40 @@
+# v1.6 실행: 9개 카드와 전문가 발언 후보
+
+현재 게임플랜은 선택한 5개 포지션을 모두 지원하며 카드 ①~⑨를 표시합니다. 이전 단계 A
+설명은 아래에 보존했습니다. 자료가 없는 칸은 미확인이고, 합성 그래프는 실제 계획에 표시하지 않습니다.
+
+기존 실행 명령으로 서버를 켠 뒤 `http://127.0.0.1:8765/experts`에서 같은 접속키를 사용합니다.
+**영상 요약 입력**에 공개 YouTube URL·제목·채널명·확인한 영상 길이·발언 시각·짧은 의역 요지를
+입력합니다. 챔피언·포지션·단계·발언자·날짜를 확인하지 못했다면 미확인으로 둡니다. 고급 JSON 입력도
+접힌 영역에 있습니다. 시각 링크로 원문을 열어 맥락·조건·반례를 확인한 뒤 사용자가 승인·거절합니다.
+입력과 가져오기는 자료 노트와 EXPLORATORY 후보만 만들고 승인하지 않습니다.
+
+자동 수집은 기본 브랜치의 **Free expert video collection** Actions에서 수동 또는 일정 실행합니다.
+`YOUTUBE_API_KEY`, `GEMINI_API_KEY`는 GitHub Secrets UI에 등록하고 값을 게시하지 않습니다.
+사용자가 승인한 15개 채널 중 활동 재확인 대상 1개는 비활성화하며 클템은 제외했습니다.
+공식 무료 조건·무료 전용 프로젝트·보존된 할당량 기록을 확인한 뒤 최대 2개 영상을 처리합니다.
+실패·취소 예약도 해제하지 않습니다. 입력 미확인은 BLOCKED_EXTERNAL, 비용 조건은 BLOCKED_PAYMENT입니다.
+전체 영상·자막·모델 원문 응답은 공개 저장소나 artifact에 보관하지 않습니다.
+
+Main이 `expert-public-safe` artifact의 상태와 짧은 요약을 검증한 뒤 `data/expert_claims/`에 게시합니다.
+로컬 앱은 기본적으로 이 폴더를 읽거나 `--expert-claims-dir private/expert-claims`로 명시한 폴더를 읽습니다.
+시작 알림은 새 후보 수만 표시합니다. 수집 성공은 발언 사실성·코칭 정확도 검증과 별개입니다.
+통계 대조에는 명시적 수치 기준과 맞는 실제 Q15 자료가 필요하며, 없으면 측정 불가 또는 표본 부족입니다.
+일치해도 규칙 승인이나 인과관계 증명이 아닙니다. Riot ID는 사용자 확인 전 사용하지 않습니다.
+
+Q15 보조 경기 결과 자료가 있으면 기존 명령에 `--outcome-data private/outcome-data.json`을 추가합니다.
+라인 상세의 접힌 표는 **그 시간에 끝난 경기의 결과**와 Wilson 95% 구간을 보여주며 그 시점의 강함으로
+해석하지 않습니다. 획득 실패를 0으로 바꾸지 않습니다.
+
+전문가 import journal은 `<기본 DB>.research.sqlite.expert.sqlite`에 저장됩니다. 앱을 종료한 뒤 기본·
+Research·expert journal DB를 함께 복사해 백업합니다. 기존 backupformat1에는 새 journal이 포함되지
+않습니다. 원문 자료와 journal을 각각 다른 시점으로 복원하면 안전하게 보류될 수 있습니다.
+
+검사: `python scripts/verify_experts.py` 및 `python scripts/browser_experts.py`.
+브라우저 환경은 아래 검사 설명을 따릅니다. API 실제 호출 없이 형식·누락·할당량·출처·승인 경계를 검사합니다.
+
+---
+
 # 경기 전 게임플랜 실행
 
 무료 로컬 실행이며 자동 게임 수집이나 경기 중 코칭을 시작하지 않는다.
@@ -50,4 +87,10 @@ After trusted main workflow collects anonymous files, download riot-power-aggreg
 
 Development keys expire24hours. For personal project key, register project at https://developer.riotgames.com/ and review Riot policy/product scope; no paid service required. Update GitHub repositorySecret RIOT_API_KEY through GitHub Secrets UI; never paste it into repository/issues/logs or command arguments. Secret enumeration permission failure does not imply missing key.401/403 cannot distinguish expiry/authorization/unsupportedpath; preserve collection reason and correct portal access/key before rerunning.
 
-Five-position9-card smoke test: python scripts/verify_pregame.py; python scripts/browser_pregame.py; python scripts/browser_v13.py. Run evidence-preservation verifier python scripts/verify_mvp.py alone after other evidence-producing jobs finish; concurrent new evidence intentionally triggers its conservation gate. Use CHROMIUM_EXECUTABLE=/usr/bin/chromium locally when Playwright's bundled binary is absent. Existing per-job CI environments avoid concurrent proof mutation.
+Five-position9-card smoke test: python scripts/verify_pregame.py; python scripts/browser_pregame.py; python scripts/browser_v13.py. Run evidence-preservation verifier python scripts/verify_mvp_experts.py alone after other evidence-producing jobs finish; concurrent new evidence intentionally triggers its conservation gate. Use CHROMIUM_EXECUTABLE=/usr/bin/chromium locally when Playwright's bundled binary is absent. Existing per-job CI environments avoid concurrent proof mutation.
+
+## First real collection — 2026-10-11
+
+PR14 is merged; actual main Actions run38116217243 failed acquisition with Riot403 on the first request. The workflow completed and kept a safe status artifact, but no usable statistics were acquired. Check developer portal key/project access and update GitHub SecretRIOT_API_KEY via the Secrets UI; rerun the main workflow. A403 response does not establish key expiry by itself. Do not load a blocked receipt as zero statistics. CLI artifact download returned403, then the GitHub connector fallback succeeded; the anonymous blocked receipt passed strict validation.
+
+Current product has nine cards; the earlier seven-card instructions above describe the preserved StageA version. Use the five-position nine-card smoke commands above for current acceptance. User approves knowledge in the web UI; AI cannot approve it. Real coaching accuracy remains unmeasured.

@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import re
 import secrets
+import stat
 from urllib.parse import urlsplit
 
 from .server import Workbench, Handler, Limits, ROOT
@@ -65,6 +66,7 @@ class PregameWorkbench(Workbench):
             self.pregame=PregameStore(str(db)+'.pregame.sqlite');self.RequestHandlerClass=PregameHandler
             # Internal fixture injection only. No HTTP operation can change these.
             self.test_mode=False;self.power_data=None;self.movement_statistics=None
+            self.outcome_data=None;self.expert_new_candidates=0
         except Exception:self.server_close();raise
 
     def validated_power_data(self):
@@ -77,6 +79,13 @@ class PregameWorkbench(Workbench):
     def power_tiers(self):
         data=self.validated_power_data()
         return sorted({c['tier'] for c in data['cohorts']}) if data is not None else []
+
+    def validated_outcome_data(self):
+        if self.outcome_data is None:return None
+        from .outcome_stats import validate_outcome_dataset
+        dataset=validate_outcome_dataset(self.outcome_data)
+        if dataset['source']['sample_kind']=='SYNTHETIC' and not self.test_mode:return None
+        return dataset
 
 
 def unknown_power_view(reason):
@@ -116,6 +125,64 @@ def power_response(server,request):
     return dict(view=select(request['champion'],request['opponent_champion']),
                 opponent_view=select(request['opponent_champion'],request['champion']) if request['opponent_champion'] else None,
                 test_mode=server.test_mode)
+
+
+def outcome_response(server,request):
+    data=server.validated_outcome_data()
+    reason='OUTCOME_DATA_NOT_AVAILABLE' if data is None else None
+    if request['patch'] is None:reason='PATCH_UNKNOWN'
+    tier=request['tier']
+    if data is not None and tier is None:
+        tiers={c['tier'] for c in data['cohorts'] if c['patch']==request['patch']}
+        if len(tiers)==1:tier=next(iter(tiers))
+        else:reason='TIER_UNKNOWN_OR_AMBIGUOUS'
+    if reason:
+        view=dict(status='UNKNOWN',points=[],reasons=[reason],source=None,samples=None,
+                  dataset_digest=None,schema_version='pregame.outcome-data.v1')
+    else:
+        from .outcome_stats import select_outcome_view
+        selected=select_outcome_view(data,request['champion'],request['position'],request['patch'],tier,request['opponent_champion'])
+        view=dict(selected,dataset_digest=digest(data),schema_version=data['schema_version'])
+    return dict(view=view,test_mode=server.test_mode)
+
+
+def load_expert_directory(server,directory,*,explicit=False):
+    """Validate the complete bounded local batch before the first import write."""
+    from .expert_contract import validate_expert_artifact,MAX_BYTES
+    from .server import strict_json
+    directory=Path(directory)
+    if directory.is_symlink():raise ValueError('INVALID_EXPERT_DIRECTORY')
+    if not directory.exists():
+        if explicit:raise ValueError('EXPERT_DIRECTORY_UNAVAILABLE')
+        return dict(new_candidates=0,claims=[])
+    if not directory.is_dir():raise ValueError('INVALID_EXPERT_DIRECTORY')
+    files=[]
+    for path in directory.glob('*.json'):
+        files.append(path)
+        if len(files)>100:raise ValueError('EXPERT_DIRECTORY_LIMIT')
+    artifacts=[];total=0
+    for path in sorted(files):
+        if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,99}\.json',path.name) or path.is_symlink() or path.resolve().parent!=directory.resolve():
+            raise ValueError('INVALID_EXPERT_FILE')
+        try:
+            if not stat.S_ISREG(path.lstat().st_mode):raise ValueError('INVALID_EXPERT_FILE')
+            fd=os.open(path,os.O_RDONLY|getattr(os,'O_NOFOLLOW',0)|getattr(os,'O_NONBLOCK',0))
+            with os.fdopen(fd,'rb') as stream:
+                info=os.fstat(stream.fileno())
+                if not stat.S_ISREG(info.st_mode) or info.st_size>MAX_BYTES:raise ValueError('INVALID_EXPERT_FILE')
+                raw=stream.read(MAX_BYTES+1)
+            total+=len(raw)
+            if len(raw)>MAX_BYTES or total>2_000_000:raise ValueError('EXPERT_DIRECTORY_LIMIT')
+            artifacts.append(validate_expert_artifact(strict_json(raw.decode('utf-8'))))
+        except (OSError,UnicodeError,ValueError,RecursionError):raise ValueError('INVALID_EXPERT_FILE') from None
+    if not artifacts:return dict(new_candidates=0,claims=[])
+    from .expert_bridge import import_expert_artifact
+    result=dict(new_candidates=0,claims=[])
+    for artifact in artifacts:
+        imported=import_expert_artifact(server.research,artifact,max_bytes=server.limits.body_bytes)
+        result['new_candidates']+=imported['new_candidates'];result['claims'].extend(imported['claims'])
+    server.expert_new_candidates+=result['new_candidates']
+    return result
 
 
 class PregameHandler(Handler):
@@ -166,13 +233,33 @@ class PregameHandler(Handler):
         self.preflight();path=urlsplit(self.path);route=path.path
         if path.query or path.fragment:raise ServiceError(400,'QUERY_NOT_SUPPORTED')
         assets={'/pregame':('pregame.html','text/html; charset=utf-8'),'/pregame/':('pregame.html','text/html; charset=utf-8'),
+            '/experts':('experts.html','text/html; charset=utf-8'),'/experts/':('experts.html','text/html; charset=utf-8'),
+            '/experts.js':('experts.js','text/javascript; charset=utf-8'),
+            '/experts_review.js':('experts_review.js','text/javascript; charset=utf-8'),
+            '/experts.css':('experts.css','text/css; charset=utf-8'),
             '/pregame.js':('pregame.js','text/javascript; charset=utf-8'),'/pregame.css':('pregame.css','text/css; charset=utf-8'),
             '/pregame_power.js':('pregame_power.js','text/javascript; charset=utf-8'),
+            '/pregame_outcome.js':('pregame_outcome.js','text/javascript; charset=utf-8'),
             '/pregame-icon.svg':('pregame-icon.svg','image/svg+xml')}
         if self.command=='GET' and route in assets:
             filename,ctype=assets[route];file=ROOT/'web_r4'/filename
             if not file.exists():raise ServiceError(404,'PREGAME_UI_NOT_INSTALLED')
             return self.reply(200,file.read_bytes(),ctype)
+        if route.startswith('/dev/v1/experts/'):
+            self.authorize()
+            if route=='/dev/v1/experts/claims' and self.command=='GET':
+                from .expert_bridge import list_expert_claims
+                result=list_expert_claims(self.server.research,max_bytes=self.server.limits.body_bytes,
+                    movement_data=self.server.movement_statistics,test_mode=self.server.test_mode)
+                result['new_candidates']=self.server.expert_new_candidates
+                return self.bounded_reply(200,result)
+            if route=='/dev/v1/experts/import' and self.command=='POST':
+                from .expert_contract import validate_expert_artifact
+                body=self.body();self.fields(body,('artifact',))
+                artifact=validate_expert_artifact(body['artifact'])
+                from .expert_bridge import import_expert_artifact
+                return self.bounded_reply(201,import_expert_artifact(self.server.research,artifact,max_bytes=self.server.limits.body_bytes))
+            raise ServiceError(404,'NOT_FOUND')
         prefix='/dev/v1/pregame'
         if not route.startswith(prefix+'/'):return super().dispatch()
         self.authorize();pg=self.server.pregame;limit=self.server.limits.body_bytes
@@ -182,6 +269,8 @@ class PregameHandler(Handler):
                 test_mode=self.server.test_mode,power_tiers=self.server.power_tiers()))
         if route==prefix+'/power-view' and self.command=='POST':
             return self.bounded_reply(200,power_response(self.server,power_request(self.body())))
+        if route==prefix+'/outcome-view' and self.command=='POST':
+            return self.bounded_reply(200,outcome_response(self.server,power_request(self.body())))
         if route==prefix+'/roster' and self.command=='GET':return self.bounded_reply(200,roster())
         if route==prefix+'/review-priority' and self.command=='GET':
             path=ROOT/'knowledge_candidates'/'q05-review-priority.json'
@@ -260,6 +349,8 @@ def main():
     parser.add_argument('--token-file',type=Path,required=True)
     parser.add_argument('--power-data',type=Path,help='Validated aggregate-only Q15 JSON')
     parser.add_argument('--movement-data',type=Path,help='Validated aggregate-only Q18 JSON')
+    parser.add_argument('--outcome-data',type=Path,help='Validated aggregate-only ending-duration outcome JSON')
+    parser.add_argument('--expert-claims-dir',type=Path,help='Validated local expert summaries; no raw videos or transcripts')
     for flag in ('body-bytes','observations','actions','scenarios','comparisons','pending-jobs'):
         parser.add_argument('--max-'+flag,type=int,required=True)
     args=parser.parse_args()
@@ -279,11 +370,17 @@ def main():
             from .movement import validate_movement_dataset
             server.movement_statistics=validate_movement_dataset(json.loads(args.movement_data.read_text()))
             if server.movement_statistics['source']['sample_kind']=='SYNTHETIC':raise ValueError('Synthetic movement data requires an isolated test fixture')
+        if args.outcome_data:
+            from .outcome_stats import validate_outcome_dataset
+            server.outcome_data=validate_outcome_dataset(json.loads(args.outcome_data.read_text()))
+            if server.outcome_data['source']['sample_kind']=='SYNTHETIC':raise ValueError('Synthetic outcome data requires an isolated test fixture')
+        expert_import=load_expert_directory(server,args.expert_claims_dir or ROOT/'data'/'expert_claims',explicit=args.expert_claims_dir is not None)
     except Exception:
         server.server_close();raise
     print(f'경기 전 준비: http://127.0.0.1:{server.server_port}/pregame',flush=True)
     print(f'기존 자료·지식 화면: http://127.0.0.1:{server.server_port}/ · 접속키 파일: {args.token_file}',flush=True)
     print('PRE_GAME 수동 진술·승인 지식 기반. 자동 수집·실제 경기 코칭 정확도 미검증.',flush=True)
+    if expert_import['new_candidates']:print('새 전문가 후보 '+str(expert_import['new_candidates'])+'개',flush=True)
     try:server.serve_forever()
     except KeyboardInterrupt:pass
     finally:server.server_close()

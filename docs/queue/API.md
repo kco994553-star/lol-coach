@@ -1,3 +1,22 @@
+# Additive v1.6 routes
+
+Existing routes and serialized v1 payloads below remain unchanged. Same bearer/Host/Origin protection,
+1MB bounded JSON requests/responses and user-only PR10 review apply.
+
+| Method/path | Request | Result |
+|---|---|---|
+| POST /dev/v1/pregame/outcome-view | Same five selector fields as power-view | Anonymous auxiliary ending-duration result table; never a strength graph |
+| GET /dev/v1/experts/claims | — | Bounded current source-bound claims, metadata-only artifact envelope, original SHA/count, current proposal, group counts, grade, comparison and startup new_candidates count |
+| POST /dev/v1/experts/claims | {artifact: expert.claims.v1} | Strict validation then immutable source/first note and EXPLORATORY proposal; safe idempotency receipt/new count |
+| GET /dev/v1/research/{research_id} | — | Existing full source report including immutable expert artifact; fetched explicitly rather than repeated per claim |
+
+Page `/experts` provides manual fields plus collapsed advanced JSON, canonical timestamp links,
+source viewing and explicit human review. No POST import sends a knowledge decision. Startup
+`--expert-claims-dir` validates all bounded files before importing. Original contracts plus
+expert-v1/amendment/provenance/recovery/entitlement define exact shapes; no prose executes as a rule.
+
+---
+
 # PRE_GAME API v1 — finalized consumers
 
 Server CLI: `python3 -m coach_v1.pregame_server --db private/workbench.sqlite --port 8765 --token-file private/token.txt --max-body-bytes 1000000 --max-observations 100 --max-actions 100 --max-scenarios 100 --max-comparisons 100 --max-pending-jobs 10`.
