@@ -34,6 +34,33 @@ def collector(http,clock=None,**kwargs):
 
 
 class DiagnosticTests(unittest.TestCase):
+    def test_structured_text_probe_matches_video_schema_without_video_or_response_retention(self):
+        ordinary=ProbeHTTP();plain=collector(ordinary);plain.probe_text()
+        h=ProbeHTTP(response=completed('{"claims":[]}'));c=collector(h);receipt=c.probe_text(structured=True)
+        body=h.calls[0][3];default=ordinary.calls[0][3]
+        expected=dict(type='text',mime_type='application/json',schema=m.RESPONSE_SCHEMA)
+        self.assertEqual(body['response_format'],expected)
+        self.assertEqual({k:v for k,v in body.items() if k not in ('input','response_format')},
+            {k:v for k,v in default.items() if k!='input'})
+        self.assertEqual([x['type'] for x in body['input']],['text'])
+        self.assertNotIn('uri',json.dumps(body));self.assertEqual(body['model'],m.MODEL)
+        self.assertEqual(receipt['status'],'READY');self.assertEqual(receipt['input_kind'],'TEXT_ONLY')
+        self.assertEqual(receipt['video_inputs'],0);self.assertNotIn('claims',json.dumps(receipt))
+        self.assertEqual(c.request_counts,dict(TEXT_PROBE=1,VIDEO_CLIP=0,METADATA=0));self.assertLessEqual(h.probe_timeout,60)
+        body['response_format']['schema']['required'].append('TEST_MUTATION')
+        self.assertEqual(m.RESPONSE_SCHEMA['required'],['claims'])
+
+    def test_structured_probe_format_failure_retains_literal_safe_diagnostics_and_no_video(self):
+        h=ProbeHTTP(400,dict(error=dict(code='invalid_request',message='TEST format TEST_GEMINI_KEY')))
+        c=collector(h);receipt=c.probe_text(structured=True)
+        self.assertEqual(receipt['status'],'BLOCKED_EXTERNAL');self.assertEqual(receipt['http_status'],400)
+        self.assertEqual(c.diagnostics[0]['error_code'],'invalid_request');self.assertIsNone(c.diagnostics[0]['error_status'])
+        self.assertEqual(c.diagnostics[0]['http_status'],400);self.assertNotIn('TEST_GEMINI_KEY',json.dumps(c.diagnostics))
+        self.assertEqual(c.request_counts,dict(TEXT_PROBE=1,VIDEO_CLIP=0,METADATA=0));self.assertEqual(h.model_calls,0)
+        before=c.request_count
+        with self.assertRaises(ValueError):c.probe_text(structured='true')
+        self.assertEqual(c.request_count,before)
+
     def test_text_probe_http_failures_never_discover_reserve_or_request_video(self):
         for status in (400,401,403,429):
             h=ProbeHTTP(status,dict(error=dict(status='PERMISSION_DENIED',code='invalid_argument',

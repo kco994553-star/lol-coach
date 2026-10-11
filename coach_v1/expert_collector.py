@@ -357,13 +357,17 @@ class ExpertCollector:
             result=_json(response);_require(isinstance(result,dict));return result
         except (TypeError,ValueError,UnicodeError,OverflowError,RecursionError):raise fail('MALFORMED_RESPONSE',http_status=code) from None
 
-    def probe_text(self):
+    def probe_text(self,*,structured=False):
+        _require(type(structured) is bool)
         receipt=dict(schema_version='expert.text-probe.v1',status='BLOCKED_EXTERNAL',reason=None,model=MODEL,
             checked_at=int(self.clock()),http_status=None,input_kind='TEXT_ONLY',video_inputs=0)
         before=len(self.diagnostics)
         try:
             self._gate()
             body=dict(model=MODEL,input=[dict(type='text',text='Reply with OK.')],store=False,stream=False,background=False)
+            if structured:
+                body['input'][0]['text']='Return the JSON object {"claims":[]}.'
+                body['response_format']=dict(type='text',mime_type='application/json',schema=deepcopy(RESPONSE_SCHEMA))
             response=self._request('POST',INTERACTIONS_URL,body,phase='TEXT_PROBE',timeout_limit=60)
             receipt['http_status']=200
             texts=[]
