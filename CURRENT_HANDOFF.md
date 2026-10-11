@@ -1,3 +1,27 @@
+# Latest common execution claim — PARKED_EXTERNAL
+- run_token: `main-20261011-queue-v13-050952`
+- status: `PARKED_EXTERNAL`
+- writer_active: false
+- owner_branch: `work/queue-diagnosis-final`
+- authority: USER_DIAGNOSIS_FIRST_RESUME_2026-10-11 and USER_QUEUE_V1.6_2026-10-11; explicit autonomous Main, free implementation/publication/CI/merge, all five roles.
+- intake_main_head: `1ea54c77a528ce941b51df674f7f803de69be903`
+- implementation_head: `725c439af6a31df98b73171fece6b9e2df9fc4ae`
+- task_scope: USER_DIAGNOSIS_FIRST_RESUME: Q15 key shape/trim and selected auth response; Q19 safe provider HTTP diagnostics, same-model text probe before one video clip; then confirmed-cause fixes and safe real acquisition integration.
+- scope_boundary: actual Q10–Q14 personal PC/video/review and postgame extensions unavailable; N0 coaching_accuracy=null; no live coaching or cooldown tracking.
+- updated_at: 2026-10-11T10:46:06.496707+00:00
+- prior history retained below; this token remains current; sibling non-force update required.
+
+- Final PR23 merged 1ea54c77a528ce941b51df674f7f803de69be903 from725c439af6a31df98b73171fece6b9e2df9fc4ae; exact local/published/main treefad41772e1c599d6c929a60e908a182b8e28fd7e; required CI38132866130/38132866123 all3PASS,13groups399sourcepaths verified against exact published source.
+- Implemented diagnostic fixes PR21/22 merged; plain text probe200, first video400 invalid_request, distinct schema-only text503 service_unavailable/model high demand. Specific prior video argument still UNKNOWN.
+- Riot key shape valid42/prefix/no whitespace/newline, first403/status.message unavailable, request1/retry0; no expiry attribution or further Riot call.
+- Last schema diagnostic VIDEO0/METADATA0/newcharge0; durable quota6rows7396seconds and prior5rows6644 exact. No retries/refunds/paid changes or accepted claims.
+- DONE Q01–Q09=9/19; original input blockers closed3, no acquisition blocker closed; parallelrunning0 and all independent READY work exhausted.
+- Resume Q15 after current key/project authorization works from trusted Actions; resume Q19 a separate schema-only text check after evidenced free provider availability, then confirmed-cause/source-grounded changed video diagnostic. No blind repeats.
+- Q10 own PC capture/field receipt; Q11 actual originals; Q12 matching POV/anchors; Q13 then-known evidence; Q14 independent reference. PRE_GAME Q16/Q17/Q18 implemented, postgame external. Reviewed0/coachingN0/accuracy=null.
+- Public handoff and safe outcomes: CURRENT_HANDOFF.md; evidence/queue/resume-20261011/diagnosis-final-summary.json, riot-diagnosis-first.json, expert-diagnosis-first.json, expert-format-actual.json.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261011-queue-v13-050952`
 - status: `RUNNING`
