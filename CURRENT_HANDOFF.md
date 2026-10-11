@@ -1,3 +1,19 @@
+된 것: 최신 main/PR17 병합 상태와 기존 검증을 재사용했습니다.
+된 것: Riot 첫 응답 코드 기록과 실제 역할명 변환 결함을 보완했습니다.
+진행 중: 갱신 키의 Q15 수집 1회와 Gemini600초·구간 처리 구현을 준비합니다.
+안 된 것: 새 키의 Actions 응답과 구간 모델 요청 성공은 아직 미측정입니다.
+내가 검토할 것: 새 실제 자료가 들어오면 웹 후보·출처·표본 한계를 검토합니다.
+
+# Q15/Q19 user-directed acquisition resume RUNNING
+
+Freshintake main dc355e6e8f63402d56f74f162bbd8e22eba6f208, PR17merged, noopenPR; latestpostmergeCI38121539621/38121539737success. User2026-10-11 16:40KST reports prior403 expired24hdevkey/newCHALLENGER portal200/GitHubRIOT_API_KEYupdated. NoSecretvalue read. NewfirstHTTPcode diagnostic andrawMIDDLE/UTILITY rolealiasfix independentlyverified: Main targeted suitesPASS (see riot-role-main-green.log for exactcount), noactualcalls yet. Raw/publicschema/Frozen preserved. PublishsmallRiotfix/requiredCI beforeONEtrustedCHALLENGERcollection; stop401403 andrecord userdecisionexpiry attribution withoriginalgenerictransportreason.
+
+Mainownscontracts/config/workflow/integration; Riotagentfinishedcollector/roles; sourceauditcompletedofficial8pages; expertcollectoragent implementssegmentedpolicy inisolatedbranch. Q19contractsupportsinputvideo.processing static/start_offset/end_offset stringseconds; timestamporiginUNKNOWN, originalabsoluteMM:SS +clipboundscheck/noautomaticoffset. Initial1video<=1200seconds/eachclip<=600/modelwait600/metadata20, workflow30minutes. Conservativefulloriginalduration prechargedPERclip becauseofficialclipquotadiscount unknown;old4charges4298seconds remain. Newplanv2 policy, legacyartifact/ledger shapes andsourcebytes unchanged. FirstNETWORK_FAILURE default20s, secondNETWORK_TIMEOUT60s preserved; userreported60srestrictioncause recordedseparatelyfromobserved2modelattempts/4reservedvideos.
+
+Progressremains9/19fullIDs/closedoriginalblockers3 until actualresults. Q10ownPC/Q12POV/Q14independentreview external. Oldstate below preserved; nextRiotactualgraphs andexpertonevideo actualrequest follows sourceboundmerge anddurablequota. NoUSER_WEB/noBilling/no realtimecoaching.
+
+---
+
 된 것: 이브를 원딜 전문가 채널로 추가했고 클템 제외를 유지했습니다.
 된 것: PR #16을 병합해 350개 후보와 5개 포지션·9개 카드 검증을 연결했습니다.
 된 것: 무료 수집의 기존 예약 복구와 실패 예약 보존을 실제 실행으로 확인했습니다.

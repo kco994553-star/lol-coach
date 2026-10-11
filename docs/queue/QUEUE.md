@@ -1,3 +1,9 @@
+# User-directed Q15/Q19 resume — 2026-10-11 16:40KST
+
+Q15READY onuserreportedfresh24hdevelopmentkey, firstHTTPdiagnostics/officialrolealiasfix VERIFYING beforeONE trustedCHALLENGERrun. Previous403wasexpiredkey perUSER_REPORT, newActionsstatus notyetmeasured.401403 stop/userdecisionexpiry attribution. Q19RUNNING officialstaticclip supported/600s modelwait/1video<=1200seconds/600secondclips; fullvideo-perclip conservativeprecharge andold4chargespreserved. Maincurrent work/q15-q19-acquisition ownscontracts/integration, isolatedexpertcollectoragent ownsdisjointcode/tests; source/Riotagentsfinished. Progress9/19fullIDs/closedoriginalblockers3, PC/POV independentvalidationexternal. Latest CURRENT_HANDOFF supersedes historical PARKED.
+
+---
+
 # v1.6 final implementation and acquisition outcome — 2026-10-11
 
 DONE9/19 fullIDs Q01–Q09; closedoriginalinputblockers3. PR16merged55de29d on2026-10-11T07:21:47Z, published831030c/exacttreecbc28331. Required3CIjobsPASS/389sourcepaths (ci-pr16.json), postmerge38121110537/38121110543 all3PASS/389sourcepaths recordedci-post16.json; finalcloseoutpublicationstatus incommonclaim. Q05source-ready expansion complete350candidates/173roster/119partialannotations/54UNKNOWN. Initial190preserved, no AIapproval. ADCexpert 이브 exactuserIDenabled/BOTTOM/UNKNOWNgrade,16channels15enabled;클템excluded/Pdisabled. Allagentscompleted,Mainownscloseoutbranch.

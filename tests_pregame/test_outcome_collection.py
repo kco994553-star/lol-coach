@@ -50,7 +50,7 @@ class OutcomeCollectionTests(unittest.TestCase):
             result=subprocess.run(base,env=env,capture_output=True,text=True)
             self.assertEqual(result.returncode,0,result.stderr);self.assertFalse(outcome.exists())
             self.assertEqual(json.loads(power.read_text())['status'],'BLOCKED_EXTERNAL')
-            self.assertEqual(json.loads(result.stdout)['outcome_status'],'BLOCKED_EXTERNAL')
+            self.assertEqual(json.loads(result.stdout.splitlines()[-1])['outcome_status'],'BLOCKED_EXTERNAL')
             result=subprocess.run([sys.executable,'scripts/collect_power_stats.py','--output',str(power),
                 '--outcome-output',str(power)],env=env,capture_output=True,text=True)
             self.assertNotEqual(result.returncode,0)

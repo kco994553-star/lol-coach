@@ -67,6 +67,26 @@ class MovementTests(unittest.TestCase):
         self.assertEqual(c['points'][0]['n'],2)
         self.assertNotIn('KR_PRIVATE',str(d));self.assertNotIn('participantId',str(d));self.assertNotIn('PRIVATE_ID',str(d))
         self.assertIn('KNOWN_ALLIES_MEDIAN_NOT_ACTUAL_MAIN_BODY',d['source']['limitations'])
+    def test_official_roles_canonicalize_without_mutation_or_inferred_phase(self):
+        canonical=[pair(0),pair(1)];official=copy.deepcopy(canonical)
+        for p in official:
+            for person in p['match']['info']['participants']:
+                person['teamPosition']={'MID':'MIDDLE','SUPPORT':'UTILITY'}.get(person['teamPosition'],person['teamPosition'])
+        before=copy.deepcopy(official)
+        expected=self.m.build_movement_dataset(canonical,source=source())
+        actual=self.m.build_movement_dataset(official,source=source())
+        self.assertEqual(actual['samples']['synthetic_matches'],2)
+        self.assertEqual({c['position'] for c in actual['cohorts']},set(POSITIONS))
+        self.assertTrue(all(c['stage'] is None and c['condition_signature'] is None for c in actual['cohorts']))
+        self.assertEqual(actual,expected);self.assertEqual(official,before)
+    def test_missing_unknown_or_duplicate_role_never_inferred(self):
+        for role in (None,'UNKNOWN','MIDDLE ',['MID']):
+            p=pair();p['match']['info']['participants'][2].update(teamPosition=role,lane='MIDDLE')
+            d=self.m.build_movement_dataset([p],source=source())
+            self.assertEqual(d['samples']['synthetic_matches'],0);self.assertEqual(d['cohorts'],[])
+        p=pair();p['match']['info']['participants'][3]['teamPosition']='MIDDLE'
+        d=self.m.build_movement_dataset([p],source=source())
+        self.assertEqual(d['samples']['synthetic_matches'],0)
     def test_missing_coordinates_not_zero_and_match_dedup(self):
         p=pair();del p['timeline']['info']['frames'][0]['participantFrames']['1']['position']
         d=self.m.build_movement_dataset([p,p],source=source())

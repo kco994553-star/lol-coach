@@ -10,6 +10,7 @@ import math
 import re
 import statistics as stats
 from .state import canonical, digest
+from .power_stats import ROLE_MAP
 
 POSITIONS=('TOP','JUNGLE','MID','BOTTOM','SUPPORT')
 STAGES=('EARLY','MID','LATE')
@@ -127,7 +128,12 @@ def build_movement_dataset(pairs,*,source,phase_annotations=None):
         if s.get('window_end') is not None and start/1000>s['window_end']:continue
         people=info.get('participants',[])
         if not isinstance(people,list):continue
-        teams={team:[p for p in people if isinstance(p,dict) and p.get('teamId')==team] for team in (100,200)}
+        # Official Match-V5 MIDDLE/UTILITY map to public MID/SUPPORT. Copy
+        # participants so private raw input is unchanged; unknown roles stay
+        # unknown and cannot be inferred from lane, champion or coordinates.
+        normalized=[dict(p,teamPosition=ROLE_MAP.get(p.get('teamPosition'))
+            if isinstance(p.get('teamPosition'),str) else None) for p in people if isinstance(p,dict)]
+        teams={team:[p for p in normalized if p.get('teamId')==team] for team in (100,200)}
         if any(len(ps)!=5 or {p.get('teamPosition') for p in ps}!=set(POSITIONS) for ps in teams.values()):continue
         if any(not _integer(p.get('participantId'),1) or not isinstance(p.get('championName'),str) or not CHAMPION.fullmatch(p['championName']) for ps in teams.values() for p in ps):continue
         if len({p['participantId'] for ps in teams.values() for p in ps})!=10:continue

@@ -38,14 +38,20 @@ def main():
     start=args.start_time if args.start_time is not None else max(0,end-args.lookback_days*86400)
     limits={name:getattr(args,name) for name in ('max_matches','max_requests','max_pages','max_players','max_retries','deadline_seconds')}
     overrides={metric:value for metric,value in [('gold_delta',args.max_gold_ci_width),('xp_delta',args.max_xp_ci_width),('cs_delta',args.max_cs_ci_width)] if value is not None}
+    first_receipt_emitted=False
+    def first_http_receipt(status_code):
+        nonlocal first_receipt_emitted
+        print('RIOT_FIRST_HTTP_RECEIPT_JSON='+json.dumps({'status_code':status_code}),flush=True)
+        first_receipt_emitted=True
     try:
-        collector=RiotCollector(**limits)
+        collector=RiotCollector(**limits,on_first_http_response=first_http_receipt)
         result=collector.collect(tier=args.tier,division=args.division,patch=args.patch,
             start_time=start,end_time=end,collect_items=not args.no_item_markers,ci_width_limits=overrides or None,
             collect_movement=bool(args.movement_output),collect_outcome=bool(args.outcome_output))
         result=validate_power_dataset(result)
     except ValueError:
         parser.error('invalid collection arguments or unsafe aggregate; no output written')
+    if not first_receipt_emitted:first_http_receipt(None)
     output=Path(args.output);output.parent.mkdir(parents=True,exist_ok=True)
     temporary=output.with_name(output.name+'.tmp')
     temporary.write_text(json.dumps(result,ensure_ascii=False,allow_nan=False,sort_keys=True,indent=2)+'\n')
