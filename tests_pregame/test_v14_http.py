@@ -78,8 +78,8 @@ class V14HTTPTests(unittest.TestCase):
 
     def test_catalog_additive_supplement_preserves_ids_and_no_approval(self):
         status,rows=self.call('/dev/v1/pregame/candidates')
-        self.assertEqual(status,200);self.assertEqual(len(rows),190)
-        self.assertEqual(sum(r['schema_version']=='pregame.rule.v2' for r in rows),13)
+        self.assertEqual(status,200);self.assertEqual(len(rows),350)
+        self.assertEqual(sum(r['schema_version']=='pregame.rule.v2' for r in rows),173)
         self.assertEqual(self.call('/dev/v1/pregame/knowledge')[1],[])
 
     def test_power_aggregate_digest_patch_tier_and_synthetic_gate(self):

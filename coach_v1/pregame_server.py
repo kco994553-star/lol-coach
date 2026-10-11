@@ -40,7 +40,7 @@ def current_knowledge(research):
 
 def candidate_specs():
     rows=[]
-    for name in ('executable-v1.json','executable-expanded-v1.json','initiative-v2.json'):
+    for name in ('executable-v1.json','executable-expanded-v1.json','initiative-v2.json','initiative-expansion-v2.json'):
         path=ROOT/'knowledge_candidates'/name
         if path.exists():
             data=json.loads(path.read_text())

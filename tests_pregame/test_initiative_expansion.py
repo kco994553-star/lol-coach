@@ -110,14 +110,19 @@ class InitiativeExpansionTests(unittest.TestCase):
         self.assertNotIn('FOLLOW_UP', rows['Yasuo']['profile']['initiative'])
         self.assertTrue(any('own maneuver and strike' in s for s in rows['Samira']['limitations']))
 
-    def test_combined_candidate_wire_budget_stays_below_unchanged_one_mib(self):
+    def test_zac_initiative_binds_explicit_enemy_control_not_movement_only(self):
+        row=next(r for r in self.rows() if r['profile']['champion']=='Zac')
+        self.assertIn('INITIATOR',row['profile']['initiative'])
+        self.assertTrue(any('knocking up enemies hit' in text for text in row['profile']['necessary_conditions']))
+
+    def test_combined_candidate_wire_budget_stays_below_default_one_megabyte(self):
         originals = []
         for name in ('executable-v1.json', 'executable-expanded-v1.json', 'initiative-v2.json'):
             originals.extend(json.loads((ROOT / 'knowledge_candidates' / name).read_text()))
         # Exact existing bounded_reply/reply encoding; no response-limit change.
         # The server returns a bare list. Retain a 32KiB safety margin.
         payload = json.dumps(originals + self.rows(), ensure_ascii=False, allow_nan=False).encode()
-        self.assertLess(len(payload), 1024 * 1024 - 32 * 1024)
+        self.assertLess(len(payload), 1_000_000 - 32 * 1024)
 
 
 if __name__ == '__main__':

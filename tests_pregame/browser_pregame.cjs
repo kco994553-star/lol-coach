@@ -79,7 +79,7 @@ async function reopen(plan) {
     const rosterCount = await page.locator('#pg-roster option').count();
     check('connected', await page.locator('#pg-workspace').isVisible() && initialKnowledgeResponse.ok() &&
       initialKnowledge.length === (mode === 'actual' ? 0 : 18) && priorities === 10 &&
-      candidates === 190 && rosterCount === 173,
+      candidates === 350 && rosterCount === 173,
       {mode,initial_knowledge_count:initialKnowledge.length,review_priority_count:priorities,
         candidate_count:candidates,roster_count:rosterCount});
     await page.locator('#pg-golden').click();

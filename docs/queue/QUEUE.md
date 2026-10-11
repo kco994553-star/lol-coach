@@ -1,3 +1,13 @@
+ADC expert addition 이브: requested2026-10-11; exact channelURL/ID BLOCKED_EXTERNAL, question pending. No guessedchannel enabled; 클템 remains excluded.
+
+# v1.6 remaining source expansion / operational collection VERIFYING
+
+DONE Q01–Q09=9/19 fullIDs, closedinputblockers3. PR15 and postmerge requiredCI PASS (386sourcepaths), exactpublished/main tree662319ae. Q05 supplements allremaining160SOURCE_VERIFIEDchampions;350candidateIDs/173roster;119partialinitiativeannotations/54UNKNOWN, phasechanges/actualpatch/unsupportedneedsUNKNOWN. Existing190sourcebytes preserved. Main350HTTP+actualdefault1,000,000bytebound+Goldenbrowser integration; IndependentZac source correction retainedRED/GREEN and finalreviewCLEARED;Main157functional+12semantic/104ChromiumPASS. PRE_GAME Q16–Q18 and Q15 outcome subparts remainimplemented; postgamePC/POVdependenciesunchanged.
+
+Q19 actualfirsttrustedrun38119795194 =BLOCKED_EXTERNAL/NETWORK_FAILURE;YTmetadata3requests/reserved2videos2152seconds;Gemini1request/noacceptedclaims;finalquotaexactreservation preserved. Freeproofverified andSecretpresencegatespassed; thisdoesnotproveexpiredkey orpaidtier. Operationalboundscorrected50requests(full14enabledchannels),60socketwait/typedtimeoutreason, stillno retry/refund. Currentbranchwork/queue-v16-evidence finishingrequiredCI/PR/merge, thenone subsequenttrustedcollection. Q15Riot403 remainsunresolved. Noactualcoachingaccuracycalculated.
+
+---
+
 # Queue v1.6 active delta — 2026-10-11
 
 DONE9/19 (Q01–Q09), closedblockers3 (Q19_CHANNEL_ALLOWLIST / Q19_FREE_PROJECT / Q19_EXCLUSIVE_INITIAL_USAGE). PR14 proof and actual Riot403 retained. Q15 auxiliary ending-duration table VERIFYING; Q19 Korean index DONE subpart, official sources/collector/validator/bridge/UI/measurement VERIFYING. OverallQ15/Q19 actual acquisition BLOCKED_EXTERNAL pending trusted run results (Riot403 unresolved). PRE_GAME Q16–Q18 implemented, postgame external. Current work/ownership/evidence: CURRENT_HANDOFF.md additivev1.6 top; contracts/expert-v1*.md. Previous noREADY statement below is superseded by this requirements audit and v1.6 additions. Do not count subparts as new full DONE IDs or synthetic tests as coaching accuracy.

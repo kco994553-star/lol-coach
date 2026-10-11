@@ -1,3 +1,5 @@
+Main integration correction: independent review found Zac E archive describes movement only. The initiative source now binds `data.Zac.spells.3.description`, which explicitly describes enemy knockup/slow; old candidate bytes remain in commitc78c03d. RED→GREEN semantic regression retained. Final catalog SHA256: `96a99b9c3acf66eaaa079d3e0cb505c531c7c1522ab61e109f3e89e33d75559e`. Current default HTTP cap is1,000,000bytes (not1MiB); integration uses actual encoded payload and32KiB margin.
+
 # Q05 initiative expansion: all remaining 160 champions
 
 [initiative-expansion-v2.json](../../knowledge_candidates/initiative-expansion-v2.json)

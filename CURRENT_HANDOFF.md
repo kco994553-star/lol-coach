@@ -1,3 +1,21 @@
+된 것: PR #15를 병합했고 5개 포지션·9개 카드와 전문가 발언 입력 흐름을 검증했습니다.
+된 것: Q19 무료 조건·할당량 보존·수동 입력·출처 조회·후보·통계 대조를 연결했습니다.
+된 것: 남은 160명 후보를 확장해 총 350개 후보의 저장·조회 흐름을 검증했습니다.
+안 된 것: 실제 Riot403, 전문가 첫 호출 네트워크 실패, PC·영상 복기는 대기입니다.
+내가 검토할 것: 웹 후보 원문·조건·패치와 Riot 접근 권한을 확인합니다.
+
+# v1.6 source expansion verified; publication RUNNING
+
+PR15 merged2026-10-11T06:58:08Z as7bf5f3ffdabcefd13a769475d9a89466e276fef5. Publisheda6e5a221d2410a9cc91310123be988b36752574d, actual PR merge-test495da1d2c628e589e729c4c51cabf51580bad633 and main sharetree662319ae7be467ee571787da15fe3be5db794a8f. Required PR jobs pregame/regression/browser-regressionPASS at38119465607/38119465598; all386sourcepaths verified, exactrun/head-parent/tree lineage checked, metadataCLI log fallback via connector. Source receipts evidence/queue/v16/ci-pr15.json. Existing Frozen27, originalMVPverifier, originaltestsets and all old source/approval history preserved; new Korean amendment bindsexactoriginal/currentsha and admits onlyauthorizedpath.
+
+Actual expert collection38119795194 ontrustedmain completedworkflow butacquisitionBLOCKED_EXTERNAL/NETWORK_FAILURE onfirstGemini request; metadata3requestsfound2publiceligiblevideos. Free documentationproofVERIFIED_FREE anddurablequotareservation succeeded. Safeartifacts downloaded/strictvalidated; quota final equalsreservation,2videos/2152secondsremaincharged, processedvideoIDs[]/usableclaims0. No rawproviderbody/transcript/video/Secretretained. This failure doesnotprovekeyexpiry, payment or timeout. Receipt evidence/queue/v16/expert-collection-first.json. Operational50-requestfullallowlist/60-secondsocketwait/typedtimeout safeguards independentlyreviewed beforeone subsequenttrustedrun; noautomaticretry/refund.
+
+Remaining Q05 source-ready work was completed and Mainverified: all160existingexpansionarchivesareSOURCE_VERIFIED withmatchinghashes; newinitiative-expansion-v2 catalog fromc78c03d preservesold190exactbytes; all160covered/174sourceexcerpts,119of173conditionalinitiativeannotated/54UNKNOWN. IndependentreviewcorrectedZac movement-onlyE basis toRexplicitenemycontrol; originaliterationretainedinGit/REDGREEN. Final functional157+semantic12PASS and freshChromium104PASS (actual52/synthetic52), five roles/ninecards with350candidates and noapproval. Combined350HTTP953KB underactual1,000,000bytecap withunchangedencoding. Staticabilityclauses supportconditionalEXPLORATORYinitiative/protection/ownaction; unsupportedclassification stays[]; phasechanges/currentgamepatch/needsunsupported UNKNOWN. Mainowns additivefourthloader/boundedHTTP/integration. No source-prose execution, no autoapproval or USER_WEBimpersonation. Current rootbranchwork/queue-v16-evidence, sharedtokenmain-20261011-queue-v13-050952. DONE9/19,closedinputblockers3 remain; actualcoachingN0/accuracy=null.
+
+User requests ADCexpert 이브 addition; exactchannelURL/ID pending, no guessedidentity or allowlistentry. 클템 stays excluded. Next: requiredCI/smallPR/merge, inspect subsequentactualcollection, persistlatestoutcome. Q15validRiotaccess/Q10ownPC/Q11–Q14POVandindependentreview remainexternal; postgameQ16–Q18 followdependencies. Do not stop whileindependentREADY remains.
+
+---
+
 된 것: 5개 포지션·9개 카드와 기존 병합 증거를 재사용하고 Q15 보조 결과 표를 추가했습니다.
 된 것: Q19 한국어 색인·수동 입력·출처 노트·후보·통계 대조·무료 수집기를 구현했습니다.
 진행 중: 마지막 결함 수정·통합 검증·GitHub 게시 후 실제 전문가 수집을 진행합니다.
