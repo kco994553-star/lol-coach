@@ -14,14 +14,14 @@ Main branch feat/queue-gameplan-v1.1-2026-10-11; intake0337d915633f6ad5719f55de1
 | Q06 | DONE | q06_evaluator + Main / coach_v1/pregame_evaluator.py | Q03; 3값/반례/중단/충돌/이력; 독립 리뷰 수정 포함 |
 | Q07 | DONE | Main / coach_v1/pregame_store.py, pregame_server.py | Q04,Q06; REVIEWED만 계획 생성·만료·revision |
 | Q08 | DONE | q08_ui / web_r4/pregame* | Q07;7영역·입력/버전/출처/미확인 조회; 실제서버13/격리fixture17 검증 |
-| Q09 | VERIFYING | q09_verification / tests_pregame, scripts/verify_pregame.py, browser_pregame.py | Q07,Q08;5포지션 실제 브라우저 실행 중 |
+| Q09 | DONE | q09_verification / tests_pregame, scripts/verify_pregame.py, browser_pregame.py | Q07,Q08;5포지션 실제 브라우저104/104 + 기능49/의미12 PASS |
 | Q10 | BLOCKED_EXTERNAL | q01_data / docs/queue/Q10*, evidence/queue/q10 | Q01; 실제 PC 수집 절차·원본 결과 양식 준비 DONE; 실제 수집 미실행 |
 | Q11 | BLOCKED_EXTERNAL | Main | Q10 실제 원본 의존 |
 | Q12 | BLOCKED_EXTERNAL | Main | Q11+본인 시점 영상 의존 |
 | Q13 | BLOCKED_EXTERNAL | Main | Q09,Q12; 행동 전 근거 의존 |
 | Q14 | BLOCKED_EXTERNAL | Main | Q13+독립 검토 의존 |
 
-진척: DONE7/14; 종료 blocker0. 구현 검증을 코칭 정확도로 표현하지 않는다.
+진척: DONE8/14; 종료 blocker0. 구현 검증을 코칭 정확도로 표현하지 않는다.
 기존 검증 재사용: evidence/queue/intake.json 및 baseline PASS.
 
 ## 인수와 검증
@@ -46,3 +46,7 @@ Q06/Q08/Q09도 별도 worktree와 파일 범위에서 실행했고 Main이 커�
 승인 지식·실제 경기 패치가 없다는 사실은 준비 흐름의 중단 이유가 아니다.
 웹에서 사용자가 출처·범위를 검토하면 새 지식 버전으로 생성한다. 합성 연결 검증은 실제 승인이 아니다.
 유료 서비스 사용0; BLOCKED_PAYMENT0. 실제 경기 표본0, 정확도 미산정.
+
+단계 A 최종 증거: evidence/queue/q09-final.json;25출처 해시 Main과 일치.
+추가 화면 경합 발견은4d054cd에서 수정, 독립 브라우저3건 재검토 PASS.
+병합 전 CI는 기존 MVP2개 + 새 pregame1개를 실제 GitHub에서 확인한다.
