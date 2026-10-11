@@ -52,7 +52,7 @@ jobs:
           COLLECTION_PATCH: ${{ inputs.patch }}
         shell: bash
         run: |
-          args=(--output "$RUNNER_TEMP/power-output/power-data.json" --movement-output "$RUNNER_TEMP/power-output/movement-data.json" --tier "$COLLECTION_TIER" --division "$COLLECTION_DIVISION" --max-matches 50 --max-requests 250 --max-players 20 --max-pages 1 --max-retries 2 --deadline-seconds 600)
+          args=(--output "$RUNNER_TEMP/power-output/power-data.json" --movement-output "$RUNNER_TEMP/power-output/movement-data.json" --outcome-output "$RUNNER_TEMP/power-output/outcome-data.json" --tier "$COLLECTION_TIER" --division "$COLLECTION_DIVISION" --max-matches 50 --max-requests 250 --max-players 20 --max-pages 1 --max-retries 2 --deadline-seconds 600)
           if [[ -n "$COLLECTION_PATCH" ]]; then args+=(--patch "$COLLECTION_PATCH"); fi
           python scripts/collect_power_stats.py "${args[@]}"
       - name: Print safe aggregate status only
@@ -71,6 +71,11 @@ jobs:
                         'patch': data['source']['patch'], 'tier': data['source']['tier'],
                         'collection': data['source']['collection'], 'coaching_accuracy': None}
           print('RIOT_AGGREGATE_RECEIPT_JSON=' + json.dumps(result))
+          outcome_path = path.with_name('outcome-data.json')
+          if outcome_path.exists():
+              from coach_v1.outcome_stats import validate_outcome_dataset
+              outcome = validate_outcome_dataset(json.loads(outcome_path.read_text()))
+              print('OUTCOME_AGGREGATE_RECEIPT_JSON=' + json.dumps({'status': outcome['status'], 'real_matches': outcome['samples']['real_matches'], 'coaching_accuracy': None}))
           with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a') as output:
               output.write('Public-safe aggregate only; raw payloads and player identifiers are never uploaded.\n\n```json\n' + json.dumps(result, indent=2) + '\n```\n')
           PY
