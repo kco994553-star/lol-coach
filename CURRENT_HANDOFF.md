@@ -1,3 +1,33 @@
+된 것: 5개 포지션의 9개 카드·저장·근거 조회와 Q16 경기 전 전제·무효 신호를 구현했습니다.
+된 것: Q05 후보190개, Q15 통계·그래프·수집기, Q17 의존도, Q18 조건부 움직임을 연결했습니다.
+된 것: 기능124·의미12·브라우저208·기존 브라우저124·저장 경합3 검사 통과; AI 승인0입니다.
+안 된 것: 실제 Riot 수집은 GitHub 병합 후 Secret으로 실행 예정이며 개인 PC·영상 복기는 대기입니다.
+내가 검토할 것: 실제 경기 패치와 웹 지식 후보를 확인합니다. 근거가 없는 칸은 미확인입니다.
+
+# Queue v1.4 integration verified — publication/CI/merge pending
+
+Authority USER_QUEUE_V1.4_2026-10-11 supersedes earlier queue directives. All five selected positions replace2026-10-09 ADC restriction. Frequent Yunara/Ashe/Kaisa/Caitlyn are preferences. Intake main708dc737ca4cd70eff86e6a4c6a2ceba039430f3; PR11StageA/PR12Q05 reused. Branch feat/queue-v1.3-2026-10-11 keeps its initial name after v1.4 steering. Common claim token main-20261011-queue-v13-050952 / work/main-execution-claim latest1ca6e2b2b72ff3a9f8cbd9782d3a6ccf1f596df4. No other open PR or source writer at latest intake.
+
+Progress: base DONE Q01–Q09 (9/18 stable IDs); closed external blockers0. Additive pregame subparts Q16/Q17/Q18 and Q15 code complete, full tasks retain external dependencies below. Paid services0; BLOCKED_PAYMENT0. No independent READY runtime implementation remains after verification/publication. Actual coaching N0,accuracy=null. Actual Riot acquired matches still0 before trusted collection; TEST matches only prove arithmetic/routes.
+
+Contracts: pregame-v2.md, pregame-v3.md, pregame-v3-amendment.md and pregame-history-v1.md preserve older serialized rules and immutable evidence. Source-aware REVIEWED exact bindings execute; unknown/conflicting fields withheld. Plan guards describe visible-category user checks, no real-time signal detector. Prose meaning is verified during source/knowledge review, never inferred as code by AI. No hidden-position availability, enemy cooldown tracker, manual timer or live instructions. Current gameplay patch remainsnull; static16.20.1 does not decide it.
+
+Implemented: supplemental13 EXPLORATORY profiles with28 exact source excerpts (173 roster/190 candidate specs overall); others' initiative/phase fields remainUNKNOWN. Q17 current reviewed templates drive opener/pressure/win-condition links, teammate plays/request originals, solo alternative and shortage warnings; missing initiatives notzero. Q18 independent stage role layers require reviewed sources+exact statistics digest/cohort/condition support; explicit override elseCONFLICTING. Actual phase statistics/knowledge absent meansUNKNOWN. Raw minute median-distance distributions are descriptive proxies, not observed main-body tactics.
+
+Q15: bounded official KR League-V4→ASIA Match-V5, patch/tier separation, Student-t95 precision, exact pooled same-role reference rate / independent match-cluster contributions, per-minute fallback, CI/zero/sign labels, both-side level and nonboot completed-item candidate pair median/IQR markers; unknown actual core/build disclosed. Jitter uses elapsed-minute floor/latest frame with explicit uncertainty. Trusted main-only manual+daily Actions binds RIOT_API_KEY; fork/PR code cannot use it. Public7-day artifacts contain only validated anonymous aggregates; raw players/responses remain ephemeral memory and are never uploaded.401/403 stops BLOCKED_EXTERNAL, keykindUNKNOWN; failure never an empty usable statistic. Auth/real collection awaits actual job result after merge.
+
+Fresh final receipts: evidence/queue/q09-verifier-20261011T054037235594Z-81c57cf1; browser-v13-20261011T054048339330Z-ac39b30e and browser-20261011T054048323297Z-0d02ab76 (104each); adapter-v3-20261011T054219514298Z-3fe4be72 (original6/currentamended6/version2); evidence/mvp/20261011T054330351015Z-52ec8e5a (preserved regression/Frozen27PASS); browser legacy evidence/mvp/browser-20261011T053531663742Z-3f477080 (124PASS). Source-bound source validator and all old raw/catalog/adapter bytes preserved. New browser actual knowledge rows0; synthetic28 EXPLORATORY rows with readonly fixture-reviewed view; decisions/USER_WEB actors0. No browser/page/console/HTTP errors in final runs. New history metadata avoids multi-plan413 under unchanged1MB cap, individual saved rows remain exact.
+
+Independent reviewer reproduced and then cleared framejitter/unitmixing/expiredforged-display/v3profile/Unicode-blame/phase/source/tier/CI defects via11Python+4Node checks; final Chromium confirms integration. First RED/failed-GREEN fixtures and observed harness/duration faults retained. MVP conservation failed twice due concurrent generation of new evidence, not changed prior source; subsequent isolated runPASS with historical/inputchanged=[]; original environment browser-launch failure retained followed by configured ChromiumPASS. Full repository final result recorded in aggregate receipt before publication.
+
+Owners/branches/file scopes: Main common contracts/schema/evaluator/store/workflow/integration; work/q05-v13 catalogs+source tests+adapter amendment/CI; work/q15-v13 collector/statistics; work/q18-v14 movement module; work/ui-v13 screen/newbrowser; work/server-v14 server/newHTTP; independent audit read-only. Main inspected every change/commit/receipt and ran final checks on integrated source.
+
+External tasks: Q10 actual own Windows PC capture; Q11 actual source-linked converter; Q12 matching own POV time alignment; Q13 then-known evidence review; Q14 independent reference evaluation. Q16 suspected intervals/recurrence, Q17 dependency behavior/result feedback, Q18 actual-position comparison need Q11–Q13 and remain BLOCKED_EXTERNAL. Q18 approved phase support needs verified source annotations/current game patch and user review. No unsupported tactical rule filled in to replace missing evidence.
+
+Next: verify full final source/receipts, publish PR, run required CI, merge exact reviewed tree, then dispatch trusted collection and persist real anonymous outcome/blocker. No further user approval needed for this free work. Terminal handoff will report actual commit/tree/CI/collection result; publication pending is not success.
+
+---
+
 된 것: 선택한5개 포지션의 입력→저장→7영역 계획→근거 조회를 구현하고 PR11을 병합했습니다.
 된 것: 공식173명 원문과 검토 후보177개를 연결했고 기능50·의미12·브라우저104 검사를 통과했습니다.
 된 것: Q01–Q09 완료9/14입니다. AI 승인0이며 근거·패치가 부족한 칸은 미확인입니다.

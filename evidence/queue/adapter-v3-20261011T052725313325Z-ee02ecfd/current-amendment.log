@@ -1,0 +1,22 @@
+test_every_label_has_exact_source_excerpt_hash_and_locator (coach_v1._queue_adapter_current.ExpandedAdapterTests.test_every_label_has_exact_source_excerpt_hash_and_locator) ... ok
+test_exact_contract_binding_and_unknown_execution_boundaries (coach_v1._queue_adapter_current.ExpandedAdapterTests.test_exact_contract_binding_and_unknown_execution_boundaries) ... ok
+test_exact_expanded_ids_and_combined_size (coach_v1._queue_adapter_current.ExpandedAdapterTests.test_exact_expanded_ids_and_combined_size) ... ok
+test_exploratory_manifest_never_claims_approval_or_actual_game_validation (coach_v1._queue_adapter_current.ExpandedAdapterTests.test_exploratory_manifest_never_claims_approval_or_actual_game_validation) ... ok
+test_labels_and_text_are_exact_source_candidates (coach_v1._queue_adapter_current.ExpandedAdapterTests.test_labels_and_text_are_exact_source_candidates) ... ok
+test_original_catalog_and_source_rows_remain_unchanged (coach_v1._queue_adapter_current.ExpandedAdapterTests.test_original_catalog_and_source_rows_remain_unchanged) ... FAIL
+
+======================================================================
+FAIL: test_original_catalog_and_source_rows_remain_unchanged (coach_v1._queue_adapter_current.ExpandedAdapterTests.test_original_catalog_and_source_rows_remain_unchanged)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-q05/evidence/queue/q05-expanded-adapter/validate.py", line 123, in test_original_catalog_and_source_rows_remain_unchanged
+    self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(),self.manifest['preserved_files_sha256'][name])
+AssertionError: 'f571f5e8dea70315464e5e1fa65e7dfa584b2a6db2cde5b236cf64a781de6e0f' != '23c9d0fd4a90f968c71d9e425bdd51ac56b8d0fdd9f7e7a9253aae4c1b9c9761'
+- f571f5e8dea70315464e5e1fa65e7dfa584b2a6db2cde5b236cf64a781de6e0f
++ 23c9d0fd4a90f968c71d9e425bdd51ac56b8d0fdd9f7e7a9253aae4c1b9c9761
+
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.458s
+
+FAILED (failures=1)

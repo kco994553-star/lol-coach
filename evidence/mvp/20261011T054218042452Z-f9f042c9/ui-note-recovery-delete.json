@@ -1,0 +1,345 @@
+{
+  "scope": "Resource deletion across same-resource anchor and pending resource reads",
+  "verifier": "Node VM actual production Research script with synthetic DOM/service reply scheduling; not actual browser/HTTP/SQLite/game evidence",
+  "executed_at": "2026-10-11T05:42:51.590Z",
+  "node_version": "v24.19.0",
+  "source_sha256": "39ae97ef2e9623961f054e9c07e5460255dc4664d0387abda3f0bd56fe6e8978",
+  "test_sha256": "48675f47e271df46cb425349ec793fd00c7dbcb7e8f4a14aa0f6823a3ee850a4",
+  "fixture_sha256": "078d51bd3e975efa4ac53c44b72ea7e25e40af525cc67cf7a4865ed0ee89202c",
+  "passed": 3,
+  "total": 3,
+  "results": [
+    {
+      "id": "NOTE-DELETE-READY-SAME-RESOURCE-OTHER-ANCHOR-PURGES-SAVED-EXPORT",
+      "passed": true,
+      "checks": {
+        "genuine_delete_event": true,
+        "other_anchor_loaded_before_delete": true,
+        "deleted_resource_and_note_purged": true,
+        "deleted_saved_note_not_exportable": true
+      },
+      "before": {
+        "resource": "A",
+        "note": {
+          "resource_id": "A",
+          "anchor": "1",
+          "revision": 2,
+          "known": "PRIVATE_DELETED_A_OTHER_ANCHOR 한글·😀",
+          "intention": "A 구간 의도",
+          "alternative": "A 구간 대안",
+          "outcome": "A 구간 결과"
+        },
+        "dirty": false,
+        "edit": 0,
+        "epoch": 2,
+        "values": {
+          "known": "PRIVATE_DELETED_A_OTHER_ANCHOR 한글·😀",
+          "intention": "A 구간 의도",
+          "alternative": "A 구간 대안",
+          "outcome": "A 구간 결과"
+        },
+        "detail_hidden": false,
+        "save_disabled": false,
+        "history_preview": null,
+        "history_owner": null,
+        "recover_disabled": true
+      },
+      "after": {
+        "resource": null,
+        "note": null,
+        "dirty": false,
+        "edit": 0,
+        "epoch": 3,
+        "values": {
+          "known": "",
+          "intention": "",
+          "alternative": "",
+          "outcome": ""
+        },
+        "detail_hidden": true,
+        "save_disabled": false,
+        "history_preview": null,
+        "history_owner": null,
+        "recover_disabled": true
+      },
+      "download": null,
+      "events": [
+        {
+          "type": "research-resource-deleted",
+          "detail": {
+            "id": "A",
+            "deleted_versions": 0
+          }
+        }
+      ],
+      "calls": [
+        {
+          "route": "/research/A",
+          "method": "GET"
+        },
+        {
+          "route": "/research/A/notes/overview",
+          "method": "GET"
+        },
+        {
+          "route": "/research/A",
+          "method": "DELETE"
+        },
+        {
+          "route": "/research/A/notes/1",
+          "method": "GET"
+        },
+        {
+          "route": "/research",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "id": "NOTE-DELETE-PENDING-SAME-RESOURCE-READ-CANNOT-REVIVE-DELETED-NOTE",
+      "passed": true,
+      "checks": {
+        "exact_same_resource_read_dispatched": true,
+        "cache_purged_at_delete": true,
+        "no_export_while_old_read_pending": true,
+        "late_predelete_reply_cannot_revive": true,
+        "no_export_after_late_reply": true
+      },
+      "before": {
+        "resource": "A",
+        "note": {
+          "resource_id": "A",
+          "anchor": "overview",
+          "revision": 1,
+          "known": "삭제할 A 전체 저장 메모",
+          "intention": "A 원래 의도",
+          "alternative": "A 원래 대안",
+          "outcome": "A 원래 결과"
+        },
+        "dirty": false,
+        "edit": 0,
+        "epoch": 2,
+        "values": {
+          "known": "삭제할 A 전체 저장 메모",
+          "intention": "A 원래 의도",
+          "alternative": "A 원래 대안",
+          "outcome": "A 원래 결과"
+        },
+        "detail_hidden": false,
+        "save_disabled": true,
+        "history_preview": null,
+        "history_owner": null,
+        "recover_disabled": true
+      },
+      "afterDelete": {
+        "resource": null,
+        "note": null,
+        "dirty": false,
+        "edit": 0,
+        "epoch": 3,
+        "values": {
+          "known": "",
+          "intention": "",
+          "alternative": "",
+          "outcome": ""
+        },
+        "detail_hidden": true,
+        "save_disabled": false,
+        "history_preview": null,
+        "history_owner": null,
+        "recover_disabled": true
+      },
+      "downloadAfterDelete": null,
+      "afterRead": {
+        "resource": null,
+        "note": null,
+        "dirty": false,
+        "edit": 0,
+        "epoch": 3,
+        "values": {
+          "known": "",
+          "intention": "",
+          "alternative": "",
+          "outcome": ""
+        },
+        "detail_hidden": true,
+        "save_disabled": false,
+        "history_preview": null,
+        "history_owner": null,
+        "recover_disabled": true
+      },
+      "downloadAfterRead": null,
+      "events": [
+        {
+          "type": "research-resource-deleted",
+          "detail": {
+            "id": "A",
+            "deleted_versions": 0
+          }
+        }
+      ],
+      "calls": [
+        {
+          "route": "/research/A",
+          "method": "GET"
+        },
+        {
+          "route": "/research/A/notes/overview",
+          "method": "GET"
+        },
+        {
+          "route": "/research/A",
+          "method": "DELETE"
+        },
+        {
+          "route": "/research/A/notes/1",
+          "method": "GET"
+        },
+        {
+          "route": "/research",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "id": "NOTE-DELETE-PENDING-DIFFERENT-RESOURCE-LOAD-SURVIVES-DELETED-CACHE-PURGE",
+      "passed": true,
+      "checks": {
+        "different_resource_read_dispatched": true,
+        "old_deleted_cache_purged": true,
+        "no_deleted_export_while_B_pending": true,
+        "pending_B_epoch_preserved": true,
+        "B_successful_load_preserved": true,
+        "B_export_only": true
+      },
+      "before": {
+        "resource": "A",
+        "note": {
+          "resource_id": "A",
+          "anchor": "overview",
+          "revision": 1,
+          "known": "삭제할 A 전체 저장 메모",
+          "intention": "A 원래 의도",
+          "alternative": "A 원래 대안",
+          "outcome": "A 원래 결과"
+        },
+        "dirty": false,
+        "edit": 0,
+        "epoch": 2,
+        "values": {
+          "known": "삭제할 A 전체 저장 메모",
+          "intention": "A 원래 의도",
+          "alternative": "A 원래 대안",
+          "outcome": "A 원래 결과"
+        },
+        "detail_hidden": false,
+        "save_disabled": true,
+        "history_preview": null,
+        "history_owner": null,
+        "recover_disabled": true
+      },
+      "afterDelete": {
+        "resource": null,
+        "note": null,
+        "dirty": false,
+        "edit": 0,
+        "epoch": 2,
+        "values": {
+          "known": "",
+          "intention": "",
+          "alternative": "",
+          "outcome": ""
+        },
+        "detail_hidden": true,
+        "save_disabled": true,
+        "history_preview": null,
+        "history_owner": null,
+        "recover_disabled": true
+      },
+      "downloadAfterDelete": null,
+      "afterRead": {
+        "resource": "B",
+        "note": {
+          "resource_id": "B",
+          "anchor": "overview",
+          "revision": 3,
+          "known": "보존할 B 저장 메모 日本語·👀",
+          "intention": "B 의도",
+          "alternative": "B 대안",
+          "outcome": "B 결과"
+        },
+        "dirty": false,
+        "edit": 0,
+        "epoch": 2,
+        "values": {
+          "known": "보존할 B 저장 메모 日本語·👀",
+          "intention": "B 의도",
+          "alternative": "B 대안",
+          "outcome": "B 결과"
+        },
+        "detail_hidden": false,
+        "save_disabled": false,
+        "history_preview": null,
+        "history_owner": null,
+        "recover_disabled": true
+      },
+      "downloadAfterRead": {
+        "resource": {
+          "id": "B",
+          "title": "Synthetic resource B",
+          "kind": "RAW_DIAGNOSTIC",
+          "report": {
+            "declared_source_kind": "UNVERIFIED_IMPORT",
+            "sections": {},
+            "issues": []
+          }
+        },
+        "saved_note": {
+          "resource_id": "B",
+          "anchor": "overview",
+          "revision": 3,
+          "known": "보존할 B 저장 메모 日本語·👀",
+          "intention": "B 의도",
+          "alternative": "B 대안",
+          "outcome": "B 결과"
+        },
+        "unsaved_changes_not_included": false
+      },
+      "events": [
+        {
+          "type": "research-resource-deleted",
+          "detail": {
+            "id": "A",
+            "deleted_versions": 0
+          }
+        }
+      ],
+      "calls": [
+        {
+          "route": "/research/A",
+          "method": "GET"
+        },
+        {
+          "route": "/research/A/notes/overview",
+          "method": "GET"
+        },
+        {
+          "route": "/research/A",
+          "method": "DELETE"
+        },
+        {
+          "route": "/research/B",
+          "method": "GET"
+        },
+        {
+          "route": "/research",
+          "method": "GET"
+        },
+        {
+          "route": "/research/B/notes/overview",
+          "method": "GET"
+        }
+      ]
+    }
+  ]
+}

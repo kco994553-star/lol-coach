@@ -21,7 +21,11 @@ from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-SOURCE_FILES = ['contracts/pregame-v1.md', 'docs/queue/API.md',
+SOURCE_FILES = ['contracts/pregame-v3-amendment.md','.github/workflows/riot-power-collection.yml','contracts/pregame-v2.md','contracts/pregame-v3.md',
+    'coach_v1/pregame_v2.py','coach_v1/pregame_v3.py','coach_v1/movement.py',
+    'coach_v1/power_stats.py','coach_v1/riot_collector.py','web_r4/pregame_power.js',
+    'knowledge_candidates/initiative-v2.json','scripts/browser_v13.py','tests_pregame/browser_v13.cjs',
+    'scripts/verify_queue_extensions.py','contracts/pregame-v1.md', 'docs/queue/API.md',
     'coach_v1/pregame_contract.py', 'coach_v1/pregame_evaluator.py',
     'coach_v1/pregame_store.py', 'coach_v1/pregame_server.py',
     'coach_v1/server.py', 'coach_v1/knowledge.py', 'coach_v1/research.py',
@@ -45,7 +49,7 @@ SOURCE_FILES = ['contracts/pregame-v1.md', 'docs/queue/API.md',
 
 EXPECTED_BROWSER_IDS = ['connected'] + [p + '-' + check for p in
     ['TOP', 'JUNGLE', 'MID', 'BOTTOM', 'SUPPORT'] for check in
-    ['exact-input', 'seven-cards', 'selected-map-row', 'common-invariant',
+    ['exact-input', 'nine-cards', 'selected-map-row', 'common-invariant',
      'personal-context', 'detail-input-binding', 'immutable-reopen', 'edit-hides-plan']] + [
     'source-preview', 'source-navigation', 'proposal-only-import', 'untrusted-approval-blocked',
     'empty-patch-approval-disabled', 'export-history', 'mobile-layout', 'logout-clears',

@@ -1,0 +1,142 @@
+{
+  "scope": "Cached exact open/list reads across middle-source deletion only",
+  "verifier": "Node VM synthetic DOM/service replies; not actual browser/HTTP/SQLite/game evidence",
+  "executed_at": "2026-10-11T05:42:51.307Z",
+  "node_version": "v24.19.0",
+  "source_sha256": "3a99fd604c8327fecaa296cf98523bf82d9d52c429d4d6836ae7e6d4608e89dc",
+  "test_sha256": "690ec24c7b42673496c95ebfaa729aa3e689e5e7da881db84bd2d5e9f45a081b",
+  "fixture_sha256": "7e2791d008e78f17055ad9e15f291c65099e9b9e1864d6efa5b136063f2ca9a7",
+  "passed": 2,
+  "total": 2,
+  "results": [
+    {
+      "id": "KNOWLEDGE-CACHED-OPEN-CANNOT-DISPLAY-DELETED-DESCENDANT",
+      "passed": true,
+      "checks": {
+        "surviving_ancestor_remains_displayed": true,
+        "latest_and_bound_source_remain_ancestor": true,
+        "deleted_descendant_never_downloadable": true,
+        "cached_exact_reply_revalidated": true
+      },
+      "exactCReads": 2,
+      "afterDeletion": {
+        "record": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "latest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source": "source1",
+        "claim": "preserved A",
+        "dirty": false,
+        "downloadDisabled": false,
+        "deleteDisabled": false,
+        "notice": "",
+        "listVersions": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        ]
+      },
+      "afterCachedRead": {
+        "record": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "latest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source": "source1",
+        "claim": "preserved A",
+        "dirty": false,
+        "downloadDisabled": false,
+        "deleteDisabled": false,
+        "notice": "처리하지 못했습니다: KNOWLEDGE_RULE_NOT_FOUND",
+        "listVersions": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        ]
+      },
+      "calls": [
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111/versions/cccccccccccccccccccccccccccccccc",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111/versions/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "method": "GET"
+        },
+        {
+          "route": "/research/source1",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111/versions/cccccccccccccccccccccccccccccccc",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "id": "KNOWLEDGE-CACHED-LIST-CANNOT-RESTORE-DELETED-DESCENDANT",
+      "passed": true,
+      "checks": {
+        "fresh_deletion_list_contains_only_ancestor": true,
+        "cached_list_does_not_restore_deleted_descendant": true,
+        "surviving_display_and_source_preserved": true
+      },
+      "listReads": 3,
+      "afterDeletion": {
+        "record": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "latest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source": "source1",
+        "claim": "preserved A",
+        "dirty": false,
+        "downloadDisabled": false,
+        "deleteDisabled": false,
+        "notice": "",
+        "listVersions": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        ]
+      },
+      "afterCachedRead": {
+        "record": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "latest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source": "source1",
+        "claim": "preserved A",
+        "dirty": false,
+        "downloadDisabled": false,
+        "deleteDisabled": false,
+        "notice": "",
+        "listVersions": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        ]
+      },
+      "calls": [
+        {
+          "route": "/knowledge/proposals",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals/11111111111111111111111111111111/versions/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "method": "GET"
+        },
+        {
+          "route": "/research/source1",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals",
+          "method": "GET"
+        },
+        {
+          "route": "/knowledge/proposals",
+          "method": "GET"
+        }
+      ]
+    }
+  ]
+}

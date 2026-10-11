@@ -1,3 +1,28 @@
+# 실행 대기열 v1.4 — 현재 인수/확장
+
+사용자 v1.4가 이전 대기열을 대체합니다. PR11/PR12 완료 증거 재사용; 모든5포지션 지원. 기존9개DONE/전체18개; 종료blocker0. 무료 구현·게시·병합 사전승인, 사용자 웹 승인 행위는 대리하지 않습니다.
+
+| ID | 현재 상태 | 완료 연결 / 남은 근거 |
+|---|---|---|
+| Q01–Q09 | DONE | 기존 단계A/후보 확장 재사용; 추가 v2/v3 계약과5포지션9카드 기능·저장·근거 검증 |
+| Q10 | BLOCKED_EXTERNAL | PC 수집 절차 준비 재사용; 본인 게임 PC 원본/receipt/환경·필드 제공 자료 필요 |
+| Q11 | BLOCKED_EXTERNAL | 실제 Q10원본, 시간·패치·시야·누락 연결된 변환기 재개 |
+| Q12 | BLOCKED_EXTERNAL | Q11+같은 경기 본인 POV영상·정렬 기준점 필요 |
+| Q13 | BLOCKED_EXTERNAL | Q12+행동 전 알 수 있던 근거 필요; 사후/관전자 정보 소급 금지 |
+| Q14 | BLOCKED_EXTERNAL | Q13 실제 사례+독립 참조/평가 자료; 정확도null |
+| Q15 | VERIFYING | collector/statistics/graphs/Actions/anonymousmovementcompanion 구현 및 검증; 실제 Secret수집은 병합 후 실행·결과로 상태갱신 |
+| Q16 | BLOCKED_EXTERNAL | PRE_GAME 전제·보이는 범주 무효 신호·대안 DONE; suspectedpostgame+recurrence Q11–Q13대기 |
+| Q17 | BLOCKED_EXTERNAL | PRE_GAME reviewed운영/의존도/팀원play원문/대안/선택경고 DONE; 행동복기·픽성과 근거 실제 자료/승인 필요 |
+| Q18 | BLOCKED_EXTERNAL | 조건부 단계/규칙층위/통계참조/단계띠/거리집계 DONE; 실제 verified단계표본·승인지식 및 Q11/Q13비교대기 |
+
+수정 범위·브랜치·HEAD·최종 실행 증거: CURRENT_HANDOFF.md, evidence/queue/v13/final.json. 완료판정은 코칭 성능 판정과 별개입니다. 첫 실제 수집의 인증 실패·표본 수·patch/tier는 실패를0으로 대체하지 않고 결과에 기록합니다.
+
+독립분업: Main공통계약/모델/저장/통합; Q05catalog/source/amendmentCI, Q15collector/stats, Q18movement, UIcards/browser, serverHTTP. 각 격리worktree소비 구현은 확정 계약 이후 착수; Main최종통합검증 및 독립review수정. 실제상황 실시간지시/타이머0, 사용자승인사칭0, 유료비용0.
+
+추가source/context가 필요한 칸은 UNKNOWN: 나머지160명 initiative, 모든 actualphase tactics, patchscope확정, coreitem 승인 정의, realdependencyperformance. 정책상 API에 없는 wave/vision/skillready를 추정하지 않습니다. 후보 원문 검토와 게임 패치 확인은 기능별 입력이며 전체 앱 준비 흐름을 막지 않습니다.
+
+---
+
 # 실행 대기열 v1.1 — 2026-10-11
 
 Main follow-up branch feat/queue-knowledge-expansion-2026-10-11; intake main e12fc5e05c49cd4af9d32f88b9b5c4394a7d2361.

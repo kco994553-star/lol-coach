@@ -1,0 +1,25 @@
+======================================================================
+ERROR: test_movement_companion_empty_on_auth_failure_and_no_raw_return (tests_pregame.test_riot_collector.RiotCollectorTests.test_movement_companion_empty_on_auth_failure_and_no_raw_return)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-q15/tests_pregame/test_riot_collector.py", line 152, in test_movement_companion_empty_on_auth_failure_and_no_raw_return
+    result=self.collect(c,collect_movement=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach-q15/tests_pregame/test_riot_collector.py", line 45, in collect
+    return collector.collect(tier='GOLD',division='I',patch='16.19',start_time=1,end_time=2000000000,**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: RiotCollector.collect() got an unexpected keyword argument 'collect_movement'
+
+======================================================================
+FAIL: test_frame_jitter_same_bin_latest_only_and_irregular_interval (tests_pregame.test_power_stats.PowerStatsTests.test_frame_jitter_same_bin_latest_only_and_irregular_interval)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-q15/tests_pregame/test_power_stats.py", line 206, in test_frame_jitter_same_bin_latest_only_and_irregular_interval
+    self.assertEqual(point['minute'],5);self.assertEqual(point['n'],3)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 3
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.026s
+
+FAILED (failures=1, errors=1)

@@ -44,3 +44,10 @@ NODE_PATH=/path/to/node_modules CHROMIUM_EXECUTABLE=/path/to/chromium python3 sc
 
 브라우저 검사는 실제 앱의 미승인/패치 미확인 흐름과 격리된 합성 REVIEWED 조회 fixture를
 구분한다. 합성 fixture는 실제 지식 승인을 저장하지 않으며 코칭 성능 검증이 아니다.
+
+## v1.4 graphs and conditional movement
+After trusted main workflow collects anonymous files, download riot-power-aggregate artifact (public-safe only, retention7days). Inspect power status; BLOCKED_EXTERNAL is not a dataset with usable zero statistics. Start existing server with --power-data private/power-data.json and, if produced, --movement-data private/movement-data.json. No raw match uploads, credentials or identifiers are required by the UI. Actual server refuses SYNTHETIC aggregate files; isolated browser runner labelsTEST. Match your manually verified game patch and collection tier. Minute-only movement statistics do not create phase roles without exact reviewed sources/verified stage annotations.
+
+Development keys expire24hours. For personal project key, register project at https://developer.riotgames.com/ and review Riot policy/product scope; no paid service required. Update GitHub repositorySecret RIOT_API_KEY through GitHub Secrets UI; never paste it into repository/issues/logs or command arguments. Secret enumeration permission failure does not imply missing key.401/403 cannot distinguish expiry/authorization/unsupportedpath; preserve collection reason and correct portal access/key before rerunning.
+
+Five-position9-card smoke test: python scripts/verify_pregame.py; python scripts/browser_pregame.py; python scripts/browser_v13.py. Run evidence-preservation verifier python scripts/verify_mvp.py alone after other evidence-producing jobs finish; concurrent new evidence intentionally triggers its conservation gate. Use CHROMIUM_EXECUTABLE=/usr/bin/chromium locally when Playwright's bundled binary is absent. Existing per-job CI environments avoid concurrent proof mutation.

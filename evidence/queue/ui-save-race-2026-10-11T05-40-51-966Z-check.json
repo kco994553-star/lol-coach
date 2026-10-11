@@ -1,0 +1,61 @@
+{
+  "executed_at": "2026-10-11T05:40:51.966Z",
+  "phase": "check",
+  "scope": "Production UI in Chromium with intercepted isolated API responses; three pending/ambiguous-save races; no server/database changes or approvals",
+  "source_sha256": "b7261de13a4561b8d5c6c71811f2a3a69e1fdb2c1b32c7312d800a030be173dd",
+  "test_sha256": "764087fc127e05d33b5c57cb8a59e4ec9c3ac1f3a880536aaf2300f3b37427fd",
+  "passed": true,
+  "results": [
+    {
+      "name": "unchanged input: history click during pending PUT",
+      "same_baseline": true,
+      "write_expected_revision": 1,
+      "write_position": "BOTTOM",
+      "history_outcome": "READ_BLOCKED",
+      "held_snapshot_before_ack": null,
+      "visible_before_ack": false,
+      "visible_after_ack": false,
+      "displayed_after_ack": null,
+      "history_requests": 0,
+      "acknowledged_revision": 2,
+      "ambiguous_save_retry_available": null,
+      "page_errors": [],
+      "decisions_sent": false,
+      "passed": true
+    },
+    {
+      "name": "role changes then returns to baseline: held history read released after PUT ACK",
+      "same_baseline": true,
+      "write_expected_revision": 1,
+      "write_position": "BOTTOM",
+      "history_outcome": "READ_BLOCKED",
+      "held_snapshot_before_ack": null,
+      "visible_before_ack": false,
+      "visible_after_ack": false,
+      "displayed_after_ack": null,
+      "history_requests": 0,
+      "acknowledged_revision": 2,
+      "ambiguous_save_retry_available": null,
+      "page_errors": [],
+      "decisions_sent": false,
+      "passed": true
+    },
+    {
+      "name": "unchanged input: ambiguous save still requires identical-operation retry",
+      "same_baseline": true,
+      "write_expected_revision": 1,
+      "write_position": "BOTTOM",
+      "history_outcome": "READ_BLOCKED",
+      "held_snapshot_before_ack": null,
+      "visible_before_ack": false,
+      "visible_after_ack": false,
+      "displayed_after_ack": null,
+      "history_requests": 0,
+      "acknowledged_revision": 1,
+      "ambiguous_save_retry_available": true,
+      "page_errors": [],
+      "decisions_sent": false,
+      "passed": true
+    }
+  ]
+}

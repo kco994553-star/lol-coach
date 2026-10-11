@@ -1,0 +1,77 @@
+======================================================================
+ERROR: test_pick_warnings_require_explicit_unpicked_preferences_and_reviewed_candidate (tests_pregame.test_v13.V13Tests.test_pick_warnings_require_explicit_unpicked_preferences_and_reviewed_candidate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-v13/tests_pregame/test_v13.py", line 138, in test_pick_warnings_require_explicit_unpicked_preferences_and_reviewed_candidate
+    self.assertEqual(self.evaluate(d,k)['pick_warnings'][0]['champion'],'Ashe')
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+======================================================================
+ERROR: test_nine_card_unknown_without_movement_data_and_accuracy_null (tests_pregame.test_v14.V14Tests.test_nine_card_unknown_without_movement_data_and_accuracy_null)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-v13/tests_pregame/test_v14.py", line 44, in test_nine_card_unknown_without_movement_data_and_accuracy_null
+    from coach_v1.pregame_v3 import evaluate_gameplan_v3
+ModuleNotFoundError: No module named 'coach_v1.pregame_v3'
+
+======================================================================
+ERROR: test_v3_exact_binding_and_v2_bytes_preserved (tests_pregame.test_v14.V14Tests.test_v3_exact_binding_and_v2_bytes_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-v13/tests_pregame/test_v14.py", line 26, in test_v3_exact_binding_and_v2_bytes_preserved
+    s=v3_rule();self.assertEqual(parse_rule(s).model_dump(mode='json'),s)
+                                 ^^^^^^^^^^^^^
+  File "/workspace/lol-coach-v13/coach_v1/pregame_contract.py", line 230, in parse_rule
+    return RuleSpec.model_validate(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/agent/.local/lib/python3.12/site-packages/pydantic/main.py", line 732, in model_validate
+    return cls.__pydantic_validator__.validate_python(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 5 validation errors for RuleSpec
+schema_version
+  Input should be 'pregame.rule.v1' [type=literal_error, input_value='pregame.rule.v3', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+output.section
+  Input should be 'PROFILE', 'MAP', 'JUNGLE', 'COMPOSITION', 'ROLE', 'LANE', 'FIGHT' or 'CHANGES' [type=literal_error, input_value='MOVEMENT', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+output.operations
+  Extra inputs are not permitted [type=extra_forbidden, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.13/v/extra_forbidden
+output.movement
+  Extra inputs are not permitted [type=extra_forbidden, input_value=[{'stage': 'LATE', 'layer...'statistics_ref': None}], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.13/v/extra_forbidden
+plan_guard
+  Extra inputs are not permitted [type=extra_forbidden, input_value={'preconditions': [{'fiel...'SYNTHETIC alternative'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.13/v/extra_forbidden
+
+======================================================================
+ERROR: test_v3_store_restart_restore_exact_and_unknown_support (tests_pregame.test_v14.V14Tests.test_v3_store_restart_restore_exact_and_unknown_support)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-v13/tests_pregame/test_v14.py", line 52, in test_v3_store_restart_restore_exact_and_unknown_support
+    from coach_v1.pregame_v3 import evaluate_gameplan_v3
+ModuleNotFoundError: No module named 'coach_v1.pregame_v3'
+
+======================================================================
+FAIL: test_explicit_unpicked_and_preferences_not_inferred (tests_pregame.test_v13.V13Tests.test_explicit_unpicked_and_preferences_not_inferred)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-v13/tests_pregame/test_v13.py", line 67, in test_explicit_unpicked_and_preferences_not_inferred
+    with self.assertRaises(ValueError):parse_input(d)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_prohibited_blame_templates_rejected (tests_pregame.test_v13.V13Tests.test_prohibited_blame_templates_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-v13/tests_pregame/test_v13.py", line 165, in test_prohibited_blame_templates_rejected
+    with self.assertRaises(ValueError):parse_rule(s)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.080s
+
+FAILED (failures=2, errors=4)
