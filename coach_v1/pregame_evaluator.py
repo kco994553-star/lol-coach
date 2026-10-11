@@ -207,6 +207,26 @@ def _cell(key,title):
     return dict(key=key,title=title,status='UNKNOWN',texts=[],reasons=['NO_APPLICABLE_REVIEWED_RULE'],rules=[],outlook=None,cooldowns=[])
 
 
+def _cooldown_conflicts(bases, draft):
+    """Audit static claims independently of the selected role and plan guards.
+
+    A claim can block inconsistent numeric displays without applying its rule.
+    Only current, exactly bound REVIEWED claims with this explicit patch and
+    confirmed numeric sources participate. Variant identity is not in v1, so
+    ambiguous variants are conservatively withheld rather than conflated.
+    """
+    groups=defaultdict(set)
+    for trace in bases:
+        spec=trace['spec']
+        if trace['reasons'] or spec is None or draft['patch'] not in spec['patches']:continue
+        for raw in spec['cooldowns']:
+            cooldown=_cooldown(raw,draft)
+            if cooldown['status']=='KNOWN':
+                key=(cooldown['side'],cooldown['position'],cooldown['name'],cooldown['spell_kind'])
+                groups[key].add(canonical((cooldown['base_values'],cooldown['category'])))
+    return {key for key,values in groups.items() if len(values)>1}
+
+
 def evaluate_gameplan(input, knowledge):
     """Evaluate declared facts without modifying inputs or archived reports."""
     draft=(input if isinstance(input,InputDraft) else parse_input(input)).model_dump(mode='json')
@@ -249,17 +269,11 @@ def evaluate_gameplan(input, knowledge):
             trace['cooldowns']=[_cooldown(c,draft) for c in trace['spec']['cooldowns']]
             if trace['spec']['scope']=='COMMON':
                 for cooldown in trace['cooldowns']:cooldown['priority']=False
-    cooldown_groups=defaultdict(list)
+    conflicts=_cooldown_conflicts(bases,draft)
     for trace in traces:
         for cooldown in trace['cooldowns']:
-            if cooldown['status']=='KNOWN':
-                key=(trace['spec']['scope'],cooldown['side'],cooldown['position'],cooldown['name'],cooldown['spell_kind'])
-                cooldown_groups[key].append(cooldown)
-    for entries in cooldown_groups.values():
-        # Preserve original sources/specs in the trace while withholding the
-        # display if independent applicable claims disagree about this spell.
-        if len({canonical((sorted(set(c['base_values'])),c['category'])) for c in entries})>1:
-            for cooldown in entries:
+            key=(cooldown['side'],cooldown['position'],cooldown['name'],cooldown['spell_kind'])
+            if cooldown['status']=='KNOWN' and key in conflicts:
                 cooldown.update(status='UNKNOWN',base_values=[],conditional_values=[])
                 cooldown['reasons'].append('COOLDOWN_VALUE_CONFLICT')
     def cells_for(output):

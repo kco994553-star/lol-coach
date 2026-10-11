@@ -223,6 +223,32 @@ class EvaluatorTests(unittest.TestCase):
         self.assertEqual(trace['conditions'][0]['predicate'],s['conditions'][0])
         self.assertEqual(trace['conditions'][0]['condition'],'UNKNOWN')
 
+    def test_static_cooldown_conflicts_across_scope_preserve_common_invariance(self):
+        common=rule('MAP');common['rule_id']='common-cooldown';common['cooldowns']=[cooldown()]
+        personal=rule(position='BOTTOM');personal['rule_id']='personal-cooldown'
+        personal['cooldowns']=[cooldown()];personal['cooldowns'][0]['base']['values']=[99.0]
+        results=[self.evaluate([common,personal],golden(p,patch='SYNTHETIC-1')) for p in POSITIONS]
+        self.assertTrue(all(r['common']==results[0]['common'] for r in results))
+        for result in results:
+            for trace in result['evaluations']:
+                for shown in trace['cooldowns']:
+                    self.assertEqual(shown['status'],'UNKNOWN');self.assertEqual(shown['base_values'],[])
+                    self.assertIn('COOLDOWN_VALUE_CONFLICT',shown['reasons'])
+        items=[approved(common),approved(personal,'REJECTED')]
+        shown=self.e.evaluate_gameplan(golden(patch='SYNTHETIC-1'),items)['evaluations'][0]['cooldowns'][0]
+        self.assertEqual(shown['status'],'KNOWN')
+        personal['patches']=['OTHER']
+        self.assertEqual(self.evaluate([common,personal])['evaluations'][0]['cooldowns'][0]['status'],'KNOWN')
+
+    def test_static_cooldown_conflict_preserves_rank_order_and_count(self):
+        for values in ([12.0,10.0],[10.0,10.0,12.0]):
+            a=rule();a['rule_id']='rank-a';a['cooldowns']=[cooldown()]
+            b=copy.deepcopy(a);b['rule_id']='rank-b';b['cooldowns'][0]['base']['values']=values
+            result=self.evaluate([a,b])
+            for trace in result['evaluations']:
+                self.assertEqual(trace['cooldowns'][0]['status'],'UNKNOWN')
+                self.assertIn('COOLDOWN_VALUE_CONFLICT',trace['cooldowns'][0]['reasons'])
+
     def test_reset_stack_transform_and_jungle_cooldown_priority(self):
         for category in ['RESET_REFUND','STACK','TRANSFORM']:
             s=rule(position='JUNGLE');s['cooldowns']=[cooldown(category,'TOP')]
