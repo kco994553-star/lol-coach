@@ -132,8 +132,10 @@ def serve_synthetic(database, token_file):
     from coach_v1.pregame_contract import proposal_rule
     from coach_v1.state import digest
     server = module.PregameWorkbench(Path(database), Path(token_file).read_text().strip(),
-                                     Limits(1_000_000, 1000, 100, 100, 100, 10))
+                                     Limits(10_000_000, 1000, 100, 100, 100, 10))
     power,movement=synthetic_statistics();specs = synthetic_specs(movement); view = []
+    # Expanded immutable v3 history contains full source-bound specs; this disposable fixture
+    # server uses a 10MB response cap. Production defaults are unchanged.
     server.test_mode=True;server.power_data=power;server.movement_statistics=movement
     for spec in specs:
         source = server.research.add('RAW_DIAGNOSTIC', 'SYNTHETIC V13/V14 fixture',
@@ -167,7 +169,7 @@ def run_mode(mode, output):
                 command = [sys.executable, str(Path(__file__).resolve()), '--serve-synthetic', str(database), str(token_path)]
             else:
                 command = [sys.executable, '-m', 'coach_v1.pregame_server', '--db', str(database),
-                    '--token-file', str(token_path), '--port', '0', '--max-body-bytes', '1000000',
+                    '--token-file', str(token_path), '--port', '0', '--max-body-bytes', '10000000',
                     '--max-observations', '1000', '--max-actions', '100', '--max-scenarios', '100',
                     '--max-comparisons', '100', '--max-pending-jobs', '10']
             with (output / 'server-stderr.log').open('w') as stderr:
