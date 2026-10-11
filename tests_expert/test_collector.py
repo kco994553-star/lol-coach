@@ -42,6 +42,10 @@ def entitlement(status='VERIFIED_FREE'):
         reasons=[{'VERIFIED_FREE':'DOCUMENTED_FREE_ENTITLEMENT','PAID_REQUIRED':'FREE_TIER_POSITIVE_PRICE','UNKNOWN':'PRICING_SOURCE_UNAVAILABLE'}[status]])
 
 
+def is_text_probe(body):
+    return isinstance(body,dict) and isinstance(body.get('input'),list) and all(item.get('type')=='text' for item in body['input'])
+
+
 class Transport:
     def __init__(self,gemini=None):
         self.calls=[];self.gemini=gemini or dict(object='interaction',status='completed',steps=[
@@ -49,6 +53,7 @@ class Transport:
 
     def __call__(self,method,url,headers,body,timeout,max_bytes):
         self.calls.append((method,url,copy.deepcopy(headers),copy.deepcopy(body)))
+        if is_text_probe(body):return 200,{},dict(status='completed',steps=[dict(type='model_output',content=[dict(type='text',text='TEST_OK')])])
         if '/playlistItems?' in url:
             return 200,{},dict(items=[dict(contentDetails=dict(videoId=VIDEO))])
         if '/channels?' in url:
@@ -106,14 +111,15 @@ class CollectorTests(unittest.TestCase):
                     return 200,{},dict(items=[dict(id=video,snippet=dict(title='TEST wave' if videos[video]==cfg['channels'][-1]['channel_id'] else 'TEST unrelated',
                         channelId=videos[video],channelTitle='TEST channel',publishedAt='2026-10-10T00:00:00Z',liveBroadcastContent='none'),
                         contentDetails=dict(duration='PT10M'),status=dict(privacyStatus='public',uploadStatus='processed')) for video in query['id'][0].split(',')])
+                if is_text_probe(body):return 200,{},dict(status='completed',steps=[dict(type='model_output',content=[dict(type='text',text='TEST_OK')])])
                 if '/interactions' in url:return 200,{},self.gemini
                 raise AssertionError('unexpected fixture URL')
         http=Tail();c=self.collector(http);plan=c.prepare(cfg)
         self.assertEqual(plan['status'],'RESERVED')
         self.assertEqual([video['id'] for video in plan['videos']],[str(14).zfill(11)])
-        self.assertEqual(c.request_count,45)
+        self.assertEqual(c.request_count,46)
         result=c.process(plan,reservation_persisted=True)
-        self.assertEqual(result['status'],'READY');self.assertEqual(c.request_count,46)
+        self.assertEqual(result['status'],'READY');self.assertEqual(c.request_count,47)
         self.assertEqual(len(result['artifacts']),1)
         self.assertTrue(all('/search?' not in call[1] for call in http.calls))
         with self.assertRaises(ValueError):self.collector(max_requests=51)
@@ -124,14 +130,14 @@ class CollectorTests(unittest.TestCase):
                 (urllib.error.URLError(OSError('PRIVATE')), 'NETWORK_FAILURE')]:
             class Failure(Transport):
                 def __call__(self,*args):
-                    if '/interactions' in args[1]:
+                    if '/interactions' in args[1] and not is_text_probe(args[3]):
                         self.calls.append(args);self.received_timeout=args[4];raise error
                     return super().__call__(*args)
             http=Failure();c=self.collector(http);plan=c.prepare(config())
             result=c.process(plan,reservation_persisted=True)
             self.assertEqual(http.received_timeout,600)
             self.assertEqual(result['status'],'BLOCKED_EXTERNAL');self.assertEqual(result['reason'],reason)
-            self.assertEqual(sum('/interactions' in call[1] for call in http.calls),1)
+            self.assertEqual(sum('/interactions' in call[1] and not is_text_probe(call[3]) for call in http.calls),1)
             self.assertEqual(result['ledger']['reservations'],plan['ledger']['reservations'])
             self.assertEqual(result['ledger']['processed_video_ids'],[])
             self.assertEqual(c.prepare(config(),result['ledger'])['status'],'NO_ELIGIBLE_VIDEOS')
@@ -150,10 +156,10 @@ class CollectorTests(unittest.TestCase):
     def test_reserve_precedes_gemini_and_failed_persistence_blocks(self):
         http=Transport();c=self.collector(http);plan=c.prepare(config())
         self.assertEqual(plan['status'],'RESERVED');self.assertEqual(plan['ledger']['reservations'][0]['seconds'],600)
-        self.assertFalse(any('/interactions' in call[1] for call in http.calls))
+        self.assertFalse(any('/interactions' in call[1] and not is_text_probe(call[3]) for call in http.calls))
         result=c.process(plan,reservation_persisted=False)
         self.assertEqual(result['status'],'BLOCKED_EXTERNAL')
-        self.assertFalse(any('/interactions' in call[1] for call in http.calls))
+        self.assertFalse(any('/interactions' in call[1] and not is_text_probe(call[3]) for call in http.calls))
 
     def test_valid_nonempty_artifact_source_unknown_speaker_and_pinned_wire(self):
         http=Transport();c=self.collector(http);plan=c.prepare(config());result=c.process(plan,reservation_persisted=True)
@@ -211,7 +217,7 @@ class CollectorTests(unittest.TestCase):
                        lambda p:p.update(created_at=NOW-901)):
             http=Transport();c=self.collector(http);plan=c.prepare(config());mutate(plan)
             with self.assertRaises(ValueError):c.process(plan,reservation_persisted=True)
-            self.assertFalse(any('/interactions' in x[1] for x in http.calls))
+            self.assertFalse(any('/interactions' in x[1] and not is_text_probe(x[3]) for x in http.calls))
 
     def test_blocked_plan_cannot_inject_private_reason_into_public_receipt(self):
         c=self.collector();cfg=config();cfg['channels']=[];plan=c.prepare(cfg)
@@ -221,12 +227,12 @@ class CollectorTests(unittest.TestCase):
     def test_http_client_failure_no_retry_no_body_or_key_leak(self):
         class Bad(Transport):
             def __call__(self,*args):
-                if '/interactions' in args[1]:
+                if '/interactions' in args[1] and not is_text_probe(args[3]):
                     self.calls.append(args);return 403,{},b'PRIVATE_BODY TEST_GEMINI_KEY'
                 return super().__call__(*args)
         http=Bad();c=self.collector(http);result=c.process(c.prepare(config()),reservation_persisted=True)
         self.assertEqual(result['status'],'BLOCKED_EXTERNAL')
-        self.assertEqual(sum('/interactions' in x[1] for x in http.calls),1)
+        self.assertEqual(sum('/interactions' in x[1] and not is_text_probe(x[3]) for x in http.calls),1)
         self.assertNotIn('PRIVATE_BODY',json.dumps(result));self.assertNotIn('TEST_GEMINI_KEY',json.dumps(result))
 
     def test_no_key_query_bounded_requests_and_canonical_metadata(self):
@@ -314,6 +320,7 @@ class CollectorTests(unittest.TestCase):
     def test_missing_metadata_items_is_failure_not_empty_acquisition(self):
         class Missing(Transport):
             def __call__(self,*args):
+                if is_text_probe(args[3]):return super().__call__(*args)
                 self.calls.append(args);return 200,{},dict(unexpected='not official items')
         result=self.collector(Missing()).prepare(config())
         self.assertEqual(result['status'],'BLOCKED_EXTERNAL')

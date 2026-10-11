@@ -9,13 +9,13 @@ import unittest
 
 from coach_v1.riot_collector import RiotCollector
 from tests_pregame.test_power_stats import pair
-from tests_pregame.test_riot_collector import Responses, Clock, okay
+from tests_pregame.test_riot_collector import Responses, Clock, okay, TEST_KEY
 
 
 class OutcomeCollectionTests(unittest.TestCase):
     def collector(self, responses):
         self.transport=Responses(responses);clock=Clock()
-        return RiotCollector('PRIVATE_TEST_KEY',transport=self.transport,
+        return RiotCollector(TEST_KEY,transport=self.transport,
             clock=clock.now,sleeper=clock.sleep)
 
     def collect(self,c,**kwargs):
@@ -49,7 +49,9 @@ class OutcomeCollectionTests(unittest.TestCase):
             base=[sys.executable,'scripts/collect_power_stats.py','--output',str(power),'--outcome-output',str(outcome)]
             result=subprocess.run(base,env=env,capture_output=True,text=True)
             self.assertEqual(result.returncode,0,result.stderr);self.assertFalse(outcome.exists())
-            self.assertEqual(json.loads(power.read_text())['status'],'BLOCKED_EXTERNAL')
+            self.assertFalse(power.exists())
+            self.assertEqual(json.loads(result.stdout.splitlines()[-1])['status'],'BLOCKED_EXTERNAL')
+            self.assertEqual(json.loads(result.stdout.splitlines()[-1])['request_count'],0)
             self.assertEqual(json.loads(result.stdout.splitlines()[-1])['outcome_status'],'BLOCKED_EXTERNAL')
             result=subprocess.run([sys.executable,'scripts/collect_power_stats.py','--output',str(power),
                 '--outcome-output',str(power)],env=env,capture_output=True,text=True)

@@ -4,7 +4,7 @@ import json
 import unittest
 
 from coach_v1 import expert_collector as m
-from tests_expert.test_collector import Transport, VIDEO, NOW, claim, config, policy
+from tests_expert.test_collector import Transport, VIDEO, NOW, claim, config, policy, is_text_probe
 
 
 class Clips(Transport):
@@ -13,6 +13,7 @@ class Clips(Transport):
 
     def __call__(self,method,url,headers,body,timeout,max_bytes):
         self.timeouts.append((method,timeout))
+        if is_text_probe(body):return super().__call__(method,url,headers,body,timeout,max_bytes)
         if '/interactions' not in url:
             code,h,data=super().__call__(method,url,headers,body,timeout,max_bytes)
             if '/videos?' in url:data['items'][0]['contentDetails']['duration']='PT'+str(self.duration)+'S'
@@ -36,11 +37,11 @@ class SegmentTests(unittest.TestCase):
         for duration,ends,charge in [(600,[600],600),(601,[600,601],1202),(1200,[600,1200],2400)]:
             with self.subTest(duration=duration):
                 h=Clips(duration);c=collector(h);plan=c.prepare(config())
-                self.assertEqual(plan['schema_version'],'expert.reservation-plan.v2')
+                self.assertEqual(plan['schema_version'],'expert.reservation-plan.v3')
                 self.assertEqual(plan['ledger']['reservations'][0]['seconds'],charge)
                 result=c.process(plan,reservation_persisted=True)
                 self.assertEqual(result['status'],'READY')
-                requests=[x[3] for x in h.calls if x[0]=='POST']
+                requests=[x[3] for x in h.calls if x[0]=='POST' and not is_text_probe(x[3])]
                 self.assertTrue(all(body['input'][0]['type']=='video' and body['input'][1]['type']=='text' for body in requests))
                 self.assertEqual([body['input'][0]['processing'] for body in requests],[dict(type='static',start_offset=str(start)+'s',end_offset=str(end)+'s') for start,end in zip([0,600],ends)])
                 self.assertEqual(result['artifacts'][0]['processing']['input_sha256'],m._digest(requests))
@@ -151,7 +152,7 @@ class SegmentTests(unittest.TestCase):
 
     def test_default_model_timeout_600_and_metadata_timeout_20(self):
         h=Clips(600);c=collector(h,timeout=600);c.process(c.prepare(config()),reservation_persisted=True)
-        self.assertEqual([timeout for method,timeout in h.timeouts if method=='POST'],[600])
+        self.assertEqual([timeout for method,timeout in h.timeouts if method=='POST'],[60,600])
         self.assertTrue(all(timeout<=20 for method,timeout in h.timeouts if method=='GET'))
         with self.assertRaises(ValueError):collector(h,timeout=601)
 

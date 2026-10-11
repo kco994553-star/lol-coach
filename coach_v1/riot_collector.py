@@ -2,8 +2,13 @@
 
 No raw responses, identifiers, URLs containing identifiers, or key values are
 logged or written. All externally visible failure reasons are fixed enums.
+Key-shape and HTTP-error callbacks receive safe dictionaries only. HTTP errors
+use shared bounded sanitization; their transient bodies never enter aggregate
+lineage or retained state. The original key remains private process memory;
+only the validated trimmed form is dispatched.
 """
 from datetime import datetime, timezone
+from copy import deepcopy
 from email.utils import parsedate_to_datetime
 import hashlib
 import json
@@ -16,6 +21,7 @@ from urllib.request import Request, HTTPRedirectHandler, build_opener
 
 from .power_stats import (TIERS, build_power_dataset, empty_power_dataset,
                           validate_power_dataset)
+from .api_diagnostics import MAX_ERROR_BYTES,inspect_riot_key,safe_http_error
 
 
 class CollectionBlocked(Exception):
@@ -38,8 +44,11 @@ def _transport(url,headers,timeout):
             if len(body)>16*1024*1024:raise CollectionBlocked('MALFORMED_RESPONSE',response.status)
             return response.status,dict(response.headers),body
     except HTTPError as error:
-        # Error bodies are neither dependable JSON nor safe public diagnostics.
-        return error.code,dict(error.headers),b''
+        # Transient bounded JSON is reduced to selected sanitized fields by
+        # the collector. No error body is persisted or sent to a callback.
+        try:body=error.read(MAX_ERROR_BYTES+1)
+        except (OSError,URLError,TimeoutError):body=b''
+        return error.code,dict(error.headers),body
 
 
 def complete_item_ids(catalog):
@@ -64,7 +73,8 @@ def complete_item_ids(catalog):
 class RiotCollector:
     def __init__(self,api_key=None,*,transport=None,clock=None,sleeper=None,
                  max_requests=250,max_matches=50,max_pages=1,max_players=20,
-                 max_retries=2,deadline_seconds=600,on_first_http_response=None):
+                 max_retries=2,deadline_seconds=600,on_first_http_response=None,
+                 on_key_shape=None,on_http_error=None):
         self.api_key=api_key if api_key is not None else os.environ.get('RIOT_API_KEY')
         self.transport=transport or _transport;self.clock=clock or time.monotonic;self.sleeper=sleeper or time.sleep
         self.limits=dict(max_requests=max_requests,max_matches=max_matches,max_pages=max_pages,
@@ -75,6 +85,10 @@ class RiotCollector:
         if on_first_http_response is not None and not callable(on_first_http_response):
             raise ValueError('first HTTP response callback must be callable')
         self.on_first_http_response=on_first_http_response
+        if any(callback is not None and not callable(callback) for callback in (on_key_shape,on_http_error)):
+            raise ValueError('diagnostic callbacks must be callable')
+        self.on_key_shape=on_key_shape;self.on_http_error=on_http_error
+        self.key_shape=None;self._normalized_api_key=None;self.http_errors=[]
         self.first_http_status=None;self._first_http_observed=False
         self.movement_data=None;self.movement_status='NOT_REQUESTED'
         self.outcome_data=None;self.outcome_status='NOT_REQUESTED'
@@ -113,6 +127,14 @@ class RiotCollector:
         self.first_http_status=status if type(status) is int and 100<=status<=599 else None
         if self.on_first_http_response is not None:self.on_first_http_response(self.first_http_status)
 
+    def _record_http_error(self,status,body,reason):
+        # Sanitize before retaining anything. The shared parser bounds selected
+        # messages and redacts raw/trimmed/encoded keys and credential URLs.
+        diagnostic=safe_http_error('RIOT',status,body,secrets=(self.api_key,self._normalized_api_key))
+        diagnostic['reason']=reason
+        self.http_errors.append(diagnostic)
+        if self.on_http_error is not None:self.on_http_error(deepcopy(diagnostic))
+
     def _get(self,url,method,*,api=True,allow_missing=False):
         host=urlsplit(url).netloc
         if host not in ('kr.api.riotgames.com','asia.api.riotgames.com','ddragon.leagueoflegends.com'):
@@ -123,30 +145,39 @@ class RiotCollector:
             wait=max(self.not_before.get(('app',host),0),self.not_before.get(('method',host,method),0))-self.clock()
             if wait>0:self._pause(wait)
             headers={'Accept':'application/json'}
-            if api:headers['X-Riot-Token']=self.api_key
+            if api:headers['X-Riot-Token']=self._normalized_api_key
             self.requests+=1
             try:status,response_headers,body=self.transport(url,headers,min(20,self.started+self.limits['deadline_seconds']-self.clock()))
             except CollectionBlocked as failure:
                 if type(failure.status_code) is int and 100<=failure.status_code<=599:
                     self._record_first_http_response(failure.status_code)
+                self._record_http_error(failure.status_code,None,failure.reason)
                 raise
             except (OSError,URLError,TimeoutError):
+                self._record_http_error(None,None,'NETWORK_FAILURE')
                 if attempt>=self.limits['max_retries']:raise CollectionBlocked('NETWORK_FAILURE') from None
                 self.retries+=1;self._pause(min(2**attempt,30));continue
             self._record_first_http_response(status)
             self._rate_headers(host,method,response_headers)
             if status==200:
                 try:return json.loads(body),body
-                except (ValueError,TypeError,UnicodeDecodeError):raise CollectionBlocked('MALFORMED_RESPONSE',status) from None
-            if status in (401,403):raise CollectionBlocked('UNAUTHORIZED_OR_EXPIRED_OR_UNSUPPORTED_PATH',status)
+                except (ValueError,TypeError,UnicodeDecodeError):
+                    self._record_http_error(status,None,'MALFORMED_RESPONSE')
+                    raise CollectionBlocked('MALFORMED_RESPONSE',status) from None
+            if status in (401,403):
+                self._record_http_error(status,body,'UNAUTHORIZED_OR_EXPIRED_OR_UNSUPPORTED_PATH')
+                raise CollectionBlocked('UNAUTHORIZED_OR_EXPIRED_OR_UNSUPPORTED_PATH',status)
             if status==404 and allow_missing:return None,b''
             if status==429:
+                self._record_http_error(status,body,'RATE_LIMIT_EXHAUSTED')
                 pause=self._retry_after(response_headers)
                 if attempt>=self.limits['max_retries'] or pause is None:raise CollectionBlocked('RATE_LIMIT_EXHAUSTED',status)
                 self.retries+=1;self._pause(pause);continue
             if status in (500,502,503,504):
+                self._record_http_error(status,body,'RIOT_SERVER_FAILURE')
                 if attempt>=self.limits['max_retries']:raise CollectionBlocked('RIOT_SERVER_FAILURE',status)
                 self.retries+=1;self._pause(min(2**attempt,30));continue
+            self._record_http_error(status,body,'HTTP_FAILURE')
             raise CollectionBlocked('HTTP_FAILURE',status)
         raise CollectionBlocked('RATE_LIMIT_EXHAUSTED')
 
@@ -187,6 +218,9 @@ class RiotCollector:
         # A collector instance performs one bounded job, never cumulative reuse.
         self.started=self.clock();self.requests=0;self.retries=0;self.not_before={}
         self.first_http_status=None;self._first_http_observed=False
+        self.http_errors=[]
+        self._normalized_api_key,self.key_shape=inspect_riot_key(self.api_key)
+        if self.on_key_shape is not None:self.on_key_shape(deepcopy(self.key_shape))
         self.movement_data=None;self.movement_status='NOT_REQUESTED'
         self.outcome_data=None;self.outcome_status='NOT_REQUESTED'
         endpoints=['LEAGUE_V4_'+tier if tier in ('MASTER','GRANDMASTER','CHALLENGER') else 'LEAGUE_V4_ENTRIES',
@@ -196,7 +230,8 @@ class RiotCollector:
             sample_kind='REAL',endpoints=endpoints)
         pairs=[];seen=set();error=None;catalog=None
         try:
-            if not self.api_key:raise CollectionBlocked('MISSING_API_KEY')
+            if self._normalized_api_key is None:
+                raise CollectionBlocked('MISSING_API_KEY' if self.api_key is None or self.api_key=='' else 'INVALID_API_KEY_SHAPE')
             entries=self._entries(tier,division)
             if not entries:source['limitations']=['NO_LEAGUE_ENTRIES']
             puuids=[]

@@ -17,7 +17,7 @@ import time
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from coach_v1.expert_collector import (ExpertCollector,atomic_json,recover_ledger_snapshot,
-    policy_from_runtime,validate_entitlement_proof,write_public_result,_json)
+    policy_from_runtime,validate_entitlement_proof,write_public_result,_json,MODEL,COLLECTION_MODES,PLAN_STATUSES,SAFE_REASONS)
 
 
 def read_json(path,maximum=2000000):
@@ -64,6 +64,20 @@ def recovery(directory):
     return receipt
 
 
+def safe_probe_receipt(plan):
+    """Retain typed metadata only, even when a supplied plan is malformed."""
+    if not isinstance(plan,dict) or plan.get('schema_version')!='expert.reservation-plan.v3':return None
+    probe=plan.get('text_probe')
+    fields={'schema_version','status','reason','model','checked_at','http_status','input_kind','video_inputs'}
+    if not isinstance(probe,dict) or set(probe)!=fields:return None
+    if probe['schema_version']!='expert.text-probe.v1' or probe['model']!=MODEL or probe['input_kind']!='TEXT_ONLY':return None
+    if not isinstance(probe['status'],str) or probe['status'] not in set(PLAN_STATUSES)|{'READY'}:return None
+    if probe['reason'] is not None and (not isinstance(probe['reason'],str) or probe['reason'] not in SAFE_REASONS):return None
+    if type(probe['video_inputs']) is not int or probe['video_inputs']!=0 or type(probe['checked_at']) is not int:return None
+    if probe['http_status'] is not None and (type(probe['http_status']) is not int or not 100<=probe['http_status']<=599):return None
+    return dict(probe)
+
+
 def main(argv=None,*,entitlement_verifier=None):
     parser=argparse.ArgumentParser()
     parser.add_argument('--phase',choices=('recover','reserve','process'),required=True)
@@ -72,7 +86,22 @@ def main(argv=None,*,entitlement_verifier=None):
     parser.add_argument('--output-dir',required=True)
     parser.add_argument('--ledger');parser.add_argument('--recovery-receipt');parser.add_argument('--plan')
     parser.add_argument('--reservation-artifact-id')
-    args=parser.parse_args(argv);directory=Path(args.output_dir);collector=None
+    parser.add_argument('--collection-mode',choices=COLLECTION_MODES,default='DIAGNOSTIC_FIRST_CLIP')
+    args=parser.parse_args(argv);directory=Path(args.output_dir);collector=None;plan=None
+    def emit_diagnostic(event):
+        print('EXPERT_PROVIDER_DIAGNOSTIC_JSON='+json.dumps(event,sort_keys=True),flush=True)
+    def retain_diagnostics(failure=False):
+        events=list(collector.diagnostics) if collector is not None else []
+        if failure:
+            event=dict(provider='GEMINI',phase='TEXT_PROBE' if args.phase=='reserve' else 'VIDEO_CLIP',
+                http_status=None,error_status=None,error_code=None,error_message=None,reason='INVALID_OR_UNAVAILABLE_PUBLIC_STATE')
+            events.append(event);emit_diagnostic(event)
+        receipt=dict(schema_version='expert.diagnostics.v1',phase=args.phase,api_route='INTERACTIONS',model=MODEL,
+            total_request_count=collector.request_count if collector is not None else 0,
+            request_counts=dict(collector.request_counts) if collector is not None else dict(TEXT_PROBE=0,VIDEO_CLIP=0,METADATA=0),
+            events=events,text_probe=None)
+        receipt['text_probe']=safe_probe_receipt(plan) if not failure else None
+        atomic_json(directory/'diagnostics.json',receipt)
     try:
         if args.phase=='recover':
             receipt=recovery(directory)
@@ -84,11 +113,12 @@ def main(argv=None,*,entitlement_verifier=None):
         proof=validate_entitlement_proof(entitlement_verifier())
         atomic_json(directory/'entitlement.json',proof)
         policy=policy_from_runtime(runtime,os.environ,now=int(time.time()),entitlement_proof=proof)
-        collector=ExpertCollector(youtube_api_key=os.environ.get('YOUTUBE_API_KEY'),gemini_api_key=os.environ.get('GEMINI_API_KEY'),policy=policy)
+        collector=ExpertCollector(youtube_api_key=os.environ.get('YOUTUBE_API_KEY'),gemini_api_key=os.environ.get('GEMINI_API_KEY'),policy=policy,on_diagnostic=emit_diagnostic)
         if args.phase=='reserve':
             receipt=read_json(args.recovery_receipt) if args.recovery_receipt else {'status':'ABSENT'}
             history=receipt.get('status');ledger=read_json(args.ledger) if args.ledger and Path(args.ledger).exists() else None
-            plan=collector.prepare(read_json(args.config,200000),ledger,ledger_history=history)
+            plan=collector.prepare(read_json(args.config,200000),ledger,ledger_history=history,collection_mode=args.collection_mode)
+            retain_diagnostics()
             atomic_json(directory/'plan.json',plan)
             if plan['ledger'] is not None:atomic_json(directory/'quota-ledger.json',plan['ledger'])
             safe=dict(status=plan['status'],reason=plan['reason'],request_count=collector.request_count,
@@ -97,7 +127,9 @@ def main(argv=None,*,entitlement_verifier=None):
             print('EXPERT_RESERVATION_JSON='+json.dumps(safe,sort_keys=True));return 0
         if not args.plan:raise ValueError('plan required')
         persisted=isinstance(args.reservation_artifact_id,str) and re.fullmatch(r'[1-9][0-9]*',args.reservation_artifact_id) is not None
-        result=collector.process(read_json(args.plan),reservation_persisted=persisted)
+        plan=read_json(args.plan)
+        result=collector.process(plan,reservation_persisted=persisted)
+        retain_diagnostics()
         write_public_result(directory,result)
         safe={key:result[key] for key in ('status','reason','request_count','publication_status','coaching_accuracy')}
         print('EXPERT_ACQUISITION_JSON='+json.dumps(safe,sort_keys=True));return 0
@@ -106,6 +138,7 @@ def main(argv=None,*,entitlement_verifier=None):
         receipt=dict(status='BLOCKED_EXTERNAL',reason='INVALID_OR_UNAVAILABLE_PUBLIC_STATE',publication_status='PUBLICATION_DEFERRED',coaching_accuracy=None)
         blocked=dict(receipt,artifacts=[],ledger=None,checked_at=int(time.time()),video_results=[],
             request_count=collector.request_count if collector is not None else 0)
+        retain_diagnostics(failure=True)
         write_public_result(directory,blocked)
         if args.phase=='recover':atomic_json(directory/'recovery.json',dict(status='UNKNOWN',run_id=None,artifact_id=None,reason='QUOTA_RECOVERY_FAILED'))
         print('EXPERT_ACQUISITION_JSON='+json.dumps(receipt,sort_keys=True));return 1

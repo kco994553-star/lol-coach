@@ -1,3 +1,11 @@
+# 2026-10-11 — user diagnosis-first resume
+
+User recopied RIOT_API_KEY through dashboardcopybutton and explicitlyreopensPARKED_EXTERNAL. Keyvalue/fingerprint mustneverbeemitted. Inspectprefix/length/outerwhitespace/linebreak only; trimouterwhitespace, rejectbadshape beforenetwork. Onfirst401403 retainliteralstatus.message withboundedcredentialredaction; immediate stop/noauthretry. Earlier user-directed expiry attribution stayshistorical; freshdiagnosisdoesnotassumeit.
+
+Allproviderfailures retainactualHTTPcode andselectedboundedredactederror.status/error.message plus Interactions documentederror.code; neverrawresponse/key/credentialURL. Samekey/model shorttextrequest oncebeforevideo; onlysuccessfulprobe permitsonefirst<=10minuteclip. OfficialYouTubeInteractions support mustbeverified; otherwiseuseofficialgenerateContent/file_datapath. Freshauditconfirms support, somaintain documentedroute. Diagnosefirst, reporteasyKorean, thenfixconfirmedcauses andcontinue freecollection. Five existingreservedvideos6644seconds neverrefunded/retriedblindly; noBillingupgrade/AIapproval. Contract api-diagnostics-v1.md.
+
+---
+
 # 2026-10-11 16:40 KST — user resumes Riot and changes Gemini policy
 
 User reports previousRiot403 was expired24hdevelopmentkey, newLeague-V4CHALLENGER portal200 and GitHubRIOT_API_KEYupdated. Source isUSER_REPORT, notMainSecretinspection. Dispatch Q15onejob, record actualfirstHTTPcode; repeated401403 attribute KEY_EXPIRED perthisuserdecision andstop noauthretry. Successful200 continues actualaggregates/REALgraphs subjectstrictprecision/patch/cohort gates.

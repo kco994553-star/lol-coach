@@ -82,7 +82,7 @@ def main():
     before = hashes(); errors = []; results = {}; semantic = []
     expected_minimum = {'test_contract':9,'test_evaluator':22,'test_store':7,'test_http':7,'test_initiative_candidates':4,'test_initiative_expansion':5,'test_v13':12,'test_v14':5,
         'test_v14_http':6,'test_power_stats':8,'test_riot_collector':7,'test_movement':6,
-        'test_outcome_stats':8,'test_outcome_collection':3,'test_outcome_http':4}
+        'test_outcome_stats':8,'test_outcome_collection':3,'test_outcome_http':4,'test_api_diagnostics':8,'test_riot_diagnostics':7}
     for module, minimum in expected_minimum.items():
         stream = io.StringIO()
         suite = unittest.defaultTestLoader.loadTestsFromName('tests_pregame.'+module)
