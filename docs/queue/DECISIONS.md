@@ -1,3 +1,13 @@
+# Actual cause diagnosis outcome — 2026-10-11
+
+User-directed explicit User-Agent and same-secret comparison produced curl200/Python200 on trusted main79c863d072190e088c889b132441edbd553bbee2, run38135582016. User success criterion met; continue Q15. Full collector132requests0retry acquired50REAL patch16.20 CHALLENGER-seed matches. Prior403 observations remain unchanged. This establishes restored access after the UA change, not exclusive causal attribution: no identical-key controlled old-UA comparison was performed and credentials/fingerprints are deliberately not retained. Anonymous snapshot data/riot/2026-10-11 is exact gzip of validated artifact11700808186; no raw identity data published.
+
+Ordinary generateContent TEXT run38135584145 timed out once at <=60s with no HTTP response. ReasonNETWORK_TIMEOUT; HTTP/error.status/error.message null; retry0/METADATA0/VIDEO0/newcharge0. Do not treat timeout as503 or repeat the same source. Existing6reservations7396seconds exactly equal recovered prior ledger. Source-supported generateContent/file_data/video_metadata implementation and bounded TEXT503-only retry remain; actual route/model success and the old Interactions400 argument cause remain UNKNOWN. User600-second wait applies VIDEO, not failed TEXT. Manual timestamped expert import remains available; no AI knowledge approval/payment transition.
+
+Main free implementation choices within existing authority: preserve exact aggregate JSON as deterministic gzip plus hashes/digest and launch through existing explicit flags; no new live collection/UI path. Actual browser fixture inputs remain manual, source statistics REAL, tactical REVIEWED knowledge absent. Full Q15 statistical pipeline is complete after strict validation, independent privacy/formula-boundary review, production browser and five-role acceptance; ordinary sample insufficiency and one seed-tier coverage are displayed limitations. Postgame inputs remain external, no synthetic result counts as coaching accuracy.
+
+---
+
 # 2026-10-11 — user directs cause diagnosis, explicit UA and generateContent
 
 User reopens prior PARKED_EXTERNAL. Riot403 without selected JSON message makes API-front blocking the prioritized HYPOTHESIS. Add explicit User-Agent to every request, inspect shape/trim before pair; same trusted job/Secret sends curl once and Python once. Retain only literal statuses and sanitized bounded403 fields. Both200 required before collection; no authentication retries. The authorized pair completes even if firstclient403, then stops all further collection. UA200 records access restored with UA; sole-cause attribution needs controlled evidence and remains separate from the user's conditional attribution.
