@@ -136,15 +136,18 @@ class V14HTTPTests(unittest.TestCase):
         from coach_v1.pregame_server import main
         from coach_v1.power_stats import build_power_dataset
         from tests_pregame.test_power_stats import source,pair
+        from coach_v1.movement import build_movement_dataset
+        from tests_pregame import test_movement
         token_path=Path(self.tmp.name)/'cli-token';token_path.write_text(self.token)
         data_path=Path(self.tmp.name)/'cli-data.json'
         synthetic=build_power_dataset([pair(0),pair(1)],source=source())
-        for payload in [synthetic,dict(raw=dict(puuid='PRIVATE_TEST_FIXTURE'))]:
+        movement=build_movement_dataset([test_movement.pair(0),test_movement.pair(1)],source=test_movement.source())
+        for flag,payload in [('--power-data',synthetic),('--movement-data',movement),('--power-data',dict(raw=dict(puuid='PRIVATE_TEST_FIXTURE')))]:
             data_path.write_text(json.dumps(payload))
             fake=Mock()
-            args=['pregame','--db',self.tmp.name+'/cli.sqlite','--token-file',str(token_path),'--power-data',str(data_path)]
-            for flag in ['body-bytes','observations','actions','scenarios','comparisons','pending-jobs']:
-                args.extend(['--max-'+flag,'1000000'])
+            args=['pregame','--db',self.tmp.name+'/cli.sqlite','--token-file',str(token_path),flag,str(data_path)]
+            for limit_flag in ['body-bytes','observations','actions','scenarios','comparisons','pending-jobs']:
+                args.extend(['--max-'+limit_flag,'1000000'])
             with patch('sys.argv',args),patch('coach_v1.pregame_server.PregameWorkbench',return_value=fake):
                 with self.assertRaises(ValueError):main()
             fake.server_close.assert_called_once();fake.serve_forever.assert_not_called()
