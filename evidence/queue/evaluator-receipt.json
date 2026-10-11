@@ -1,0 +1,39 @@
+{
+  "task": "Q06",
+  "created_at": "2026-10-11T04:01:02.613631+00:00",
+  "base": "627c77a02390b03a19c20cab67c4cd15b2b8c923",
+  "contract_dependency": "7224135",
+  "evaluator_tests": 20,
+  "contract_tests": 9,
+  "targeted": {
+    "command": "python3 -m unittest tests_pregame.test_evaluator tests_pregame.test_contract -v",
+    "run": 29,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "log": "evaluator-green.txt"
+  },
+  "repository": {
+    "command": "python3 -m unittest discover -v",
+    "run": 346,
+    "failures": 0,
+    "errors": 0,
+    "skips": 1,
+    "log": "evaluator-full-suite.txt",
+    "skip": "tests_r7_player_grounded.test_postgame.PinnedPostGameSourceTests: R7_POSTGAME_RAW_DIR required for preserved exact-byte source integration"
+  },
+  "red_receipts": [
+    "evaluator-red.txt",
+    "evaluator-red-boundaries.txt",
+    "evaluator-red-phase.txt",
+    "evaluator-red-priority.txt"
+  ],
+  "protected_sha256": {
+    "coach_v1/engine.py": "37bb801a02df3464707fdd2012678d4fd174d7261c2df3765610abe47db5128a",
+    "coach_v1/state.py": "b0624cd06abcada3df414a4d1cf8e5e116c1cab6d0e786051106bd64bd51d025",
+    "coach_v1/knowledge.py": "90eea0df8590e58b3efa1cb9229268ca05f23198d110d596226ed175dc4d8ed2"
+  },
+  "synthetic_fixture_scope": "Pure dictionaries in unit tests only; no actual PR10 decisions or knowledge DB writes.",
+  "cooldown_common_invariance": "COMMON rule cooldowns stay in details with priority=false. POSITION rules prioritize allied synergy and selected lane enemy, or jungle target lanes.",
+  "remote_writes": false
+}

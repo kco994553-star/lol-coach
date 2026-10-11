@@ -1,3 +1,57 @@
+된 것: 선택한 5개 포지션의 입력→저장→7영역 계획→근거 조회가 실제 브라우저에서 이어집니다.
+된 것: 기능49·합성 의미12·브라우저104·저장 경합3 검사를 통과했고 Frozen 원문을 보존했습니다.
+진행 중: Q05 공식 원문을 나머지160명으로 확장하며 지식은 모두 미승인 후보입니다.
+안 된 것: 실제 게임 PC 원본·본인 영상·독립 검토가 없어 Q10–Q14와 코칭 정확도는 대기입니다.
+내가 검토할 것: 실제 경기 패치와 추천 후보10개를 웹에서 확인합니다. AI가 대신 승인하지 않습니다.
+
+# Queue v1.1 Stage A verified — 2026-10-11
+
+Intake main0337d915633f6ad5719f55de1252f05e06621c9b; Main code3f3e3c8;
+branch feat/queue-gameplan-v1.1-2026-10-11; common claim work/main-execution-claim;
+run_token main-20261011-queue-v11-root. Remote application publication/CI/merge pending;
+local verification is not a claim of remote CI success.
+
+2026-10-11 user decision supersedes the old2026-10-09 ADC-only target.
+TOP/JUNGLE/MID/BOTTOM/SUPPORT selected position is authoritative; frequent champions
+are preferences only. No authoritative gameplay patch was found in the repository.
+The16.20.1 archived static build never fills runtime patch automatically.
+
+DONE Q01,Q02,Q03,Q04,Q06,Q07,Q08,Q09 (8/14); Q05 RUNNING, Q10–Q14 BLOCKED_EXTERNAL.
+Closed external blockers0; paid services0. Main inspected each isolated agent's
+commit/file scope and bound receipts before integration. Q05 currently has173identity
+rows/13detailed profiles,16raw type candidates/17typed executable candidates and
+10recommended reviews; approvals0. Expanded160kit sources are still being validated.
+
+Golden actual flow: all five selected positions save/reopen the declared10champions;
+common1–3 equal, personal4–6 carry selected-position context and unknown reasons.
+No reviewed knowledge/current patch means UNKNOWN with no tactical filler.
+Separate read-only SYNTHETIC fixture view verifies actual role-specific text dispatch;
+stored fixture proposals stay EXPLORATORY, decision/USER_WEB actor rows0.
+This does not establish real approval persistence or coaching accuracy.
+
+Final evidence: evidence/queue/q09-final.json, browser-20261011T042104738693Z-b56e75da
+and q09-verifier-20261011T042104776651Z-325fc589. All25bound source hashes match Main.
+Independent review repaired2cooldown conflicts, malformed history shape and pending-save
+stale CURRENT display; all correction checks PASS, no remaining blocking findings.
+First failures and their corrected receipts are preserved. Unchanged legacy MVP and
+Chrome124/124 receipts remain hash-applicable; Frozen27/protected source changes0.
+
+Run /pregame via coach_v1.pregame_server; docs/queue/RUNNING.md and API.md.
+Old server/UI/engine/knowledge/backupformat1 originals are unchanged. Separate
+pregame sidecar export must accompany existing two-DB backup. Typed exact source
+bindings execute only current REVIEWED knowledge, with 3value conditions and immutable
+input/plan revisions; input/knowledge changes expire old plans and exact retry stays stable.
+No live enemy/own/allied cooldown tracker or in-game action coaching is implemented.
+Base values require two sources, patch/type confirmation and reviewed condition binding;
+actual confirmed cooldown candidates0, remaining always NOT_AVAILABLE.
+
+External prerequisites and exact resumption: docs/queue/QUEUE.md and Q10_GAME_PC_CAPTURE.md.
+Q10 needs private genuine Windows game-PC capture package; Q11 actual samples;
+Q12 matching own POV video; Q13 aligned then-known observations; Q14 independent review.
+Real-match N0, accuracy=null. Next: publish/CI/gated merge Stage A, independently finishQ05.
+
+---
+
 된 것: 원딜 PRE_GAME 방향 전환을 반영하고 이 작업의 외부 영상 대기를 해제했습니다.
 된 것: 웹 사용자 승인·거절, 불변 버전과 출처 해시 보존, 자동 승격 차단을 구현했습니다.
 된 것: 기존 회귀·새 승인 검사·브라우저124개가 통과했고 PR10을 병합했습니다.

@@ -1,0 +1,165 @@
+{
+  "format": "q05-content-candidates.v1",
+  "review_state": "EXPLORATORY",
+  "approval_actor": null,
+  "coaching_enabled": false,
+  "repository_patch": null,
+  "runtime_patch": null,
+  "source_snapshot_version": "16.20.1",
+  "patch_policy": "16.20.1 is a dated official static source snapshot; no repository or match patch is inferred.",
+  "provenance": "Archived official HTTP responses; AI authored interpretations require real USER_WEB review.",
+  "recommended_review_order": [
+    {
+      "candidate_id": "Q05-C01",
+      "rank": 1,
+      "reason": "골든 아군 전방 역할과 한타 진입 조건을 가장 먼저 확인한다.",
+      "title": "전방 제어와 지형 의존 진입",
+      "source_urls": [
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ornn.json"
+      ],
+      "patch_range": "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN",
+      "counterexamples": [
+        "평지에서 지형 충돌이 없거나 상대가 제어를 막으면 진입이 성립하지 않을 수 있다."
+      ],
+      "review_state": "EXPLORATORY"
+    },
+    {
+      "candidate_id": "Q05-C02",
+      "rank": 2,
+      "reason": "골든 탑에서 핵심 제어를 무조건 성공으로 처리하는 오류를 막는다.",
+      "title": "응수형 결투사",
+      "source_urls": [
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Fiora.json"
+      ],
+      "patch_range": "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN",
+      "counterexamples": [
+        "응수가 가용하지 않거나 방향·타이밍이 맞지 않으면 제어 역전이 일어나지 않는다."
+      ],
+      "review_state": "EXPLORATORY"
+    },
+    {
+      "candidate_id": "Q05-C03",
+      "rank": 3,
+      "reason": "골든 미드와 원딜 보호 판단에 같은 위협 타입을 재사용한다.",
+      "title": "대상 접근과 지연 폭발 암살",
+      "source_urls": [
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Zed.json"
+      ],
+      "patch_range": "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN",
+      "counterexamples": [
+        "궁 가용성이 없거나 보호·방어 수단이 충분하면 실제 암살 위험이 달라진다."
+      ],
+      "review_state": "EXPLORATORY"
+    },
+    {
+      "candidate_id": "Q05-L01",
+      "rank": 4,
+      "reason": "첫 골든 탑 아웃룩을 타입 기반으로 연결한다.",
+      "title": "전방 제어 대 응수형 결투사 탑",
+      "source_urls": [
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Fiora.json",
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ornn.json"
+      ],
+      "patch_range": "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN",
+      "counterexamples": [
+        "아이템·레벨·웨이브·응수 상태가 다르면 같은 타입에서도 교환 결과가 달라진다."
+      ],
+      "review_state": "EXPLORATORY"
+    },
+    {
+      "candidate_id": "Q05-L02",
+      "rank": 5,
+      "reason": "골든 미드에 단정적 유불리 대신 확인할 메커니즘을 준다.",
+      "title": "픽 제어 대 대상 접근 암살 미드",
+      "source_urls": [
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ahri.json",
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Zed.json"
+      ],
+      "patch_range": "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN",
+      "counterexamples": [
+        "픽 제어가 빗나가거나 궁을 쓸 수 없으면 해석이 달라진다. 이동 기술만으로 로밍 우선권을 확정하지 않는다."
+      ],
+      "review_state": "EXPLORATORY"
+    },
+    {
+      "candidate_id": "Q05-L03",
+      "rank": 6,
+      "reason": "골든 봇 2대2를 사거리 수치만으로 자동 우세 처리하지 않는다.",
+      "title": "포킹·속박 봇 대 그랩·이동 원딜",
+      "source_urls": [
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Caitlyn.json",
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ezreal.json",
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Lux.json",
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json"
+      ],
+      "patch_range": "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN",
+      "counterexamples": [
+        "미니언 충돌·웨이브·시야·이동기 상태가 바뀌면 압박이 반격 노출로 바뀔 수 있다. 포킹 조합 승리를 보장하지 않는다."
+      ],
+      "review_state": "EXPLORATORY"
+    },
+    {
+      "candidate_id": "Q05-J01",
+      "rank": 7,
+      "reason": "골든 정글 개입을 챔피언 파워 곡선의 추측 없이 설명한다.",
+      "title": "제어 정글 대 조건부 대시 정글",
+      "source_urls": [
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/LeeSin.json",
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Sejuani.json"
+      ],
+      "patch_range": "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN",
+      "counterexamples": [
+        "정글 위치·체력·웨이브가 없으면 특정 라인 갱킹 추천이나 초반 우위를 제시할 수 없다."
+      ],
+      "review_state": "EXPLORATORY"
+    },
+    {
+      "candidate_id": "Q05-W01",
+      "rank": 8,
+      "reason": "골든 아군 전체의 공동 승리 조건을 한 번에 검토한다.",
+      "title": "전방 진입·보호·원거리 후속 조합",
+      "source_urls": [
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Caitlyn.json",
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Lux.json",
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ornn.json",
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Sejuani.json"
+      ],
+      "patch_range": "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN",
+      "counterexamples": [
+        "진입과 보호를 동시에 쓸 수 없거나 원딜 후속 사거리가 닿지 않으면 제어 적중만으로 좋은 한타가 되지 않는다."
+      ],
+      "review_state": "EXPLORATORY"
+    },
+    {
+      "candidate_id": "Q05-W02",
+      "rank": 9,
+      "reason": "모든 선택 포지션이 공유할 골든 원딜 보호 조건이다.",
+      "title": "암살·그랩·진입에 대한 핵심 딜러 보호",
+      "source_urls": [
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/LeeSin.json",
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Lux.json",
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+        "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Zed.json"
+      ],
+      "patch_range": "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN",
+      "counterexamples": [
+        "적 핵심 진입기가 이미 사용됐거나 다른 대상에 소모됐다면 전부를 현재 위협으로 취급하지 않는다."
+      ],
+      "review_state": "EXPLORATORY"
+    },
+    {
+      "candidate_id": "Q05-O01",
+      "rank": 10,
+      "reason": "골든 제어 조합이 킬 자체에서 끝나지 않도록 검토할 전환 후보이다.",
+      "title": "픽 이후 목표 전환은 목표 상태 확인 후",
+      "source_urls": [
+        "https://www.leagueoflegends.com/en-us/how-to-play/"
+      ],
+      "patch_range": "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN",
+      "counterexamples": [
+        "한 명을 잡았어도 남은 적·자원 부족·목표 미생성·밀리지 않은 웨이브 때문에 즉시 목표가 가능하지 않을 수 있다."
+      ],
+      "review_state": "EXPLORATORY"
+    }
+  ]
+}

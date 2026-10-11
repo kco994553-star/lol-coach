@@ -1,0 +1,73 @@
+{
+  "executed_at": "2026-10-11T04:18:50.204Z",
+  "phase": "red",
+  "scope": "Production UI in Chromium with intercepted isolated API responses; three pending/ambiguous-save races; no server/database changes or approvals",
+  "source_sha256": "e9969f7aff79b9394ed76c5994eac6865460ed4c1456ca94d90d9d235c31c2f5",
+  "test_sha256": "b2324ad25bebf8e0243c093e5fb28efa9b076356f872ab32d6a9befd30f74fa5",
+  "passed": false,
+  "results": [
+    {
+      "name": "unchanged input: history click during pending PUT",
+      "same_baseline": true,
+      "write_expected_revision": 1,
+      "write_position": "BOTTOM",
+      "history_outcome": "READ_STARTED",
+      "held_snapshot_before_ack": null,
+      "visible_before_ack": true,
+      "visible_after_ack": true,
+      "displayed_after_ack": {
+        "input_revision": 1,
+        "validity": "CURRENT"
+      },
+      "history_requests": 1,
+      "acknowledged_revision": 2,
+      "ambiguous_save_retry_available": null,
+      "page_errors": [],
+      "decisions_sent": false,
+      "passed": false
+    },
+    {
+      "name": "role changes then returns to baseline: held history read released after PUT ACK",
+      "same_baseline": true,
+      "write_expected_revision": 1,
+      "write_position": "BOTTOM",
+      "history_outcome": "READ_STARTED",
+      "held_snapshot_before_ack": {
+        "input_revision": 1,
+        "validity": "CURRENT"
+      },
+      "visible_before_ack": false,
+      "visible_after_ack": true,
+      "displayed_after_ack": {
+        "input_revision": 1,
+        "validity": "CURRENT"
+      },
+      "history_requests": 1,
+      "acknowledged_revision": 2,
+      "ambiguous_save_retry_available": null,
+      "page_errors": [],
+      "decisions_sent": false,
+      "passed": false
+    },
+    {
+      "name": "unchanged input: ambiguous save still requires identical-operation retry",
+      "same_baseline": true,
+      "write_expected_revision": 1,
+      "write_position": "BOTTOM",
+      "history_outcome": "READ_STARTED",
+      "held_snapshot_before_ack": null,
+      "visible_before_ack": true,
+      "visible_after_ack": true,
+      "displayed_after_ack": {
+        "input_revision": 1,
+        "validity": "CURRENT"
+      },
+      "history_requests": 1,
+      "acknowledged_revision": 1,
+      "ambiguous_save_retry_available": true,
+      "page_errors": [],
+      "decisions_sent": false,
+      "passed": false
+    }
+  ]
+}
