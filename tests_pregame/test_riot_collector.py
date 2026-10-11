@@ -7,6 +7,9 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from contextlib import redirect_stdout
+from io import StringIO
+from unittest.mock import patch
 from pathlib import Path
 
 from tests_pregame.test_power_stats import pair
@@ -72,6 +75,26 @@ class RiotCollectorTests(unittest.TestCase):
         self.collect(c);self.assertEqual(c.first_http_status,403)
         c.api_key=None;self.collect(c);self.assertIsNone(c.first_http_status)
         self.assertEqual(c.requests,0)
+
+    def test_oversized_first_http_response_preserves_safe_200_receipt(self):
+        output=StringIO();observed=[]
+        def receipt(status_code):
+            observed.append(status_code)
+            print('RIOT_FIRST_HTTP_RECEIPT_JSON='+json.dumps({'status_code':status_code}))
+        clock=Clock()
+        c=self.module.RiotCollector('PRIVATE_TEST_KEY',clock=clock.now,sleeper=clock.sleep,
+            on_first_http_response=receipt)
+        with patch.object(self.module,'build_opener') as opener,redirect_stdout(output):
+            response=opener.return_value.open.return_value.__enter__.return_value
+            response.status=200;response.headers={};response.read.return_value=b'x'*(16*1024*1024+1)
+            result=self.collect(c)
+        self.assertEqual(c.first_http_status,200);self.assertEqual(observed,[200])
+        self.assertEqual(output.getvalue().strip(),'RIOT_FIRST_HTTP_RECEIPT_JSON={"status_code": 200}')
+        self.assertEqual(result['status'],'BLOCKED_EXTERNAL')
+        self.assertEqual(result['source']['collection']['reason'],'MALFORMED_RESPONSE')
+        self.assertEqual(result['source']['collection']['status_code'],200)
+        self.assertEqual(c.requests,1);self.assertEqual(c.retries,0)
+        self.assertNotIn('PRIVATE',output.getvalue()+json.dumps(result))
 
     def test_retry_after_and_application_method_limits_wait(self):
         c=self.collector([(429,{'Retry-After':'3'},b'private'),okay([{'puuid':'private-puuid'}]),

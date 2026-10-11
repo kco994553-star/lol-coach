@@ -35,7 +35,7 @@ def _transport(url,headers,timeout):
         # to a redirect destination, even if the original host was official.
         with build_opener(_RejectRedirect()).open(Request(url,headers=headers),timeout=timeout) as response:
             body=response.read(16*1024*1024+1)
-            if len(body)>16*1024*1024:raise CollectionBlocked('MALFORMED_RESPONSE')
+            if len(body)>16*1024*1024:raise CollectionBlocked('MALFORMED_RESPONSE',response.status)
             return response.status,dict(response.headers),body
     except HTTPError as error:
         # Error bodies are neither dependable JSON nor safe public diagnostics.
@@ -105,6 +105,14 @@ class RiotCollector:
             except (ValueError,TypeError,OverflowError):return None
         return max(seconds,0) if seconds==seconds and seconds!=float('inf') else None
 
+    def _record_first_http_response(self,status):
+        if self._first_http_observed:return
+        # A diagnostic is independent of aggregate lineage. Never send the
+        # request URL, headers, response body or credential to it.
+        self._first_http_observed=True
+        self.first_http_status=status if type(status) is int and 100<=status<=599 else None
+        if self.on_first_http_response is not None:self.on_first_http_response(self.first_http_status)
+
     def _get(self,url,method,*,api=True,allow_missing=False):
         host=urlsplit(url).netloc
         if host not in ('kr.api.riotgames.com','asia.api.riotgames.com','ddragon.leagueoflegends.com'):
@@ -118,16 +126,14 @@ class RiotCollector:
             if api:headers['X-Riot-Token']=self.api_key
             self.requests+=1
             try:status,response_headers,body=self.transport(url,headers,min(20,self.started+self.limits['deadline_seconds']-self.clock()))
-            except CollectionBlocked:raise
+            except CollectionBlocked as failure:
+                if type(failure.status_code) is int and 100<=failure.status_code<=599:
+                    self._record_first_http_response(failure.status_code)
+                raise
             except (OSError,URLError,TimeoutError):
                 if attempt>=self.limits['max_retries']:raise CollectionBlocked('NETWORK_FAILURE') from None
                 self.retries+=1;self._pause(min(2**attempt,30));continue
-            if not self._first_http_observed:
-                # A diagnostic is independent of aggregate lineage. Never send
-                # the request URL, headers, response body or credential to it.
-                self._first_http_observed=True
-                self.first_http_status=status if type(status) is int and 100<=status<=599 else None
-                if self.on_first_http_response is not None:self.on_first_http_response(self.first_http_status)
+            self._record_first_http_response(status)
             self._rate_headers(host,method,response_headers)
             if status==200:
                 try:return json.loads(body),body
