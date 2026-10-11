@@ -88,8 +88,11 @@ class ExpertContractTests(unittest.TestCase):
 
     def test_automatic_uploader_never_attests_segment_speaker(self):
         automatic=artifact();automatic['processing'].update(method='GEMINI_YOUTUBE',model='gemini-3.8-flash')
+        automatic['video']['channel_id']='UC'+'a'*22
         self.module.validate_expert_artifact(automatic)
         automatic['video'].update(speaker='TEST uploader',speaker_verified=True)
+        with self.assertRaises(ValueError):self.module.validate_expert_artifact(automatic)
+        automatic['video'].update(speaker='UNKNOWN',speaker_verified=False,channel_id=None)
         with self.assertRaises(ValueError):self.module.validate_expert_artifact(automatic)
 
     def test_normalizer_nonfinite_utf8_unknown_fields_and_oversize_fail_safely(self):

@@ -121,7 +121,7 @@ def validate_expert_artifact(value):
         _require(processing['method'] in ('MANUAL_SUMMARY','GEMINI_YOUTUBE'))
         _text(processing['model'],100);_require(re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.:/-]{0,99}',processing['model']) is not None)
         if processing['method']=='MANUAL_SUMMARY':_require(processing['model']=='UNKNOWN')
-        else:_require(video['speaker']=='UNKNOWN' and video['speaker_verified'] is False)
+        else:_require(video['speaker']=='UNKNOWN' and video['speaker_verified'] is False and video['channel_id'] is not None)
         _utc(processing['processed_at'])
         _require(type(processing['input_sha256']) is str and re.fullmatch('[a-f0-9]{64}',processing['input_sha256']) is not None)
         _require(type(value['claims']) is list and 1<=len(value['claims'])<=MAX_CLAIMS)
