@@ -19,3 +19,5 @@ Q05가 확보한16.20.1은 날짜·출처가 있는 정적 데이터 버전이�
 실제 사용자는 자신의 경기 패치를 확인하여 입력해야 한다. 패치 미확인은 규칙 적용을 보류한다.
 
 완료 주장은 Q01~Q14 상태와 실제 검증 증거로 한다. 실제 코칭 N=0/accuracy=null을 유지한다.
+
+Phase correction: original null/arbitrary phase maps UNKNOWN, never confirms PRE_GAME. Input phase supports UNKNOWN and explicitly user-confirmed PRE_GAME; UNKNOWN holds all tactical rules. RED→GREEN import-phase receipts preserved.

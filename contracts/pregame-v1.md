@@ -5,7 +5,7 @@ Implementation: coach_v1/pregame_contract.py; strict Pydantic, extra fields reje
 Canonical digest: existing coach_v1.state.digest / sorted compact UTF-8 JSON.
 
 ## Input
-InputDraft: title:str; patch:str|null; phase:PRE_GAME; observed_at:ISO offset|null;
+InputDraft: title:str; patch:str|null; phase:PRE_GAME|UNKNOWN; observed_at:ISO offset|null;
 my_position:TOP|JUNGLE|MID|BOTTOM|SUPPORT|null; my_champion:str|null; my_slot:int1..5|null;
 slots:list[Slot] exactly10 unique (side ALLY/ENEMY,slot1..5);
 source:Provenance; original_capture:original immutable draft record|null.
@@ -19,7 +19,7 @@ UNKNOWN values empty; PARTIAL values nonempty; FULL values nonempty; the declara
 Position candidates cannot be silently resolved. Definite position cannot coexist with candidates.
 No duplicate definite position per side. A selected champion must match a definite allied selected position when both known.
 my_position is independent of slot numbering. my_slot is explicit own allied slot, never inferred from the first row. Alias ADC is displayed as 원딜 but canonical enum is existing BOTTOM.
-Legacy imports normalize all10 slots, preserve original_capture and null/missing values.
+Legacy imports normalize all10 slots, preserve original_capture and null/missing values. Only exact original PRE_GAME retains confirmed phase; all other original phase values map UNKNOWN until explicit user confirmation. Unknown phase holds all rule outputs.
 Input schema never accepts live enemy cooldown/status/timer values.
 
 ## RuleSpec

@@ -63,6 +63,11 @@ class ContractTests(unittest.TestCase):
         d=golden();d['source']['verification']='SOURCE_VERIFIED'
         with self.assertRaises(ValueError):self.c.parse_input(d)
 
+    def test_import_does_not_confirm_missing_phase(self):
+        record=dict(capture=dict(title='original',phase=None,patch=None,observed_at=None,
+            visible_picks=[],visible_bans=[],role_assignments=[],source=dict(author='manual',perspective='UNKNOWN',description='unknown')))
+        self.assertEqual(self.c.import_capture(record)['phase'],'UNKNOWN')
+
     def test_common_cannot_depend_on_me_and_prose_is_not_predicate(self):
         for pred in [dict(field='my.position',op='EQ',value='BOTTOM'),'아군이면 진입']:
             d=rule('COMPOSITION');d['conditions']=[pred]

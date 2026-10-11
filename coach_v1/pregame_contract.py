@@ -72,7 +72,7 @@ class Slot(Strict):
 class InputDraft(Strict):
     title: str = Field(min_length=1,max_length=200)
     patch: str | None = Field(max_length=100)
-    phase: Literal['PRE_GAME']
+    phase: Literal['PRE_GAME','UNKNOWN']
     observed_at: str | None
     my_position: Position | None
     my_champion: str | None = Field(max_length=100)
@@ -251,5 +251,5 @@ def import_capture(record):
             slots.append(dict(side=side,slot=i,champion=picks.get((side,i)),position=role.get('role'),position_candidates=[],
                 uncertainty=role.get('uncertainty','UNKNOWN'),champion_source=source,position_source=source,
                 runes=dict(status='UNKNOWN',values=[],source=source),summoners=dict(status='UNKNOWN',values=[],source=source)))
-    return parse_input(dict(title=cap['title'],patch=cap['patch'],phase='PRE_GAME',observed_at=cap['observed_at'],
+    return parse_input(dict(title=cap['title'],patch=cap['patch'],phase='PRE_GAME' if cap['phase']=='PRE_GAME' else 'UNKNOWN',observed_at=cap['observed_at'],
         my_position=None,my_champion=None,my_slot=None,slots=slots,source=source,original_capture=record)).model_dump(mode='json')
