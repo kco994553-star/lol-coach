@@ -75,6 +75,45 @@ class SegmentTests(unittest.TestCase):
         self.assertEqual(result['ledger']['reservations'],plan['ledger']['reservations'])
         self.assertNotIn('PRIVATE_PROVIDER_BODY',json.dumps(result))
 
+    def test_deep_model_text_keeps_first_clip_as_partial(self):
+        class DeepModel(Clips):
+            def __call__(self,*args):
+                if '/interactions' in args[1] and self.model_calls==1:
+                    self.model_calls+=1
+                    text='{"claims":'+('['*20000)+'0'+(']'*20000)+'}'
+                    return 200,{},dict(status='completed',steps=[dict(type='model_output',content=[dict(type='text',text=text)])])
+                return super().__call__(*args)
+        h=DeepModel();c=collector(h);plan=c.prepare(config());result=c.process(plan,reservation_persisted=True)
+        self.assertEqual(result['status'],'PARTIAL');self.assertEqual(len(result['artifacts']),1)
+        self.assertEqual(result['artifacts'][0]['claims'][0]['timestamp_seconds'],60)
+        self.assertEqual(result['ledger']['reservations'],plan['ledger']['reservations'])
+        self.assertEqual(result['ledger']['processed_video_ids'],[])
+        self.assertIn('FAILED_FORMAT',[x['reason'] for x in result['artifacts'][0]['rejections']])
+
+    def test_deep_raw_http_json_keeps_first_clip_as_partial(self):
+        class DeepRaw(Clips):
+            def __call__(self,*args):
+                if '/interactions' in args[1] and self.model_calls==1:
+                    self.model_calls+=1;return 200,{},b'{"unused":'+(b'['*20000)+b'0'+(b']'*20000)+b'}'
+                return super().__call__(*args)
+        h=DeepRaw();c=collector(h);plan=c.prepare(config());result=c.process(plan,reservation_persisted=True)
+        self.assertEqual(result['status'],'PARTIAL');self.assertEqual(result['reason'],'MALFORMED_RESPONSE')
+        self.assertEqual(len(result['artifacts']),1);self.assertEqual(h.model_calls,2)
+        self.assertEqual(result['ledger']['reservations'],plan['ledger']['reservations'])
+        self.assertEqual(result['ledger']['processed_video_ids'],[])
+
+    def test_public_metadata_credential_pattern_blocks_final_artifact_safely(self):
+        class FakePattern(Clips):
+            def __call__(self,*args):
+                code,headers,data=super().__call__(*args)
+                if '/videos?' in args[1]:data['items'][0]['snippet']['title']='TEST wave AIza'+'x'*24
+                return code,headers,data
+        h=FakePattern(600);c=collector(h);plan=c.prepare(config());result=c.process(plan,reservation_persisted=True)
+        self.assertEqual(result['status'],'FAILED_FORMAT');self.assertEqual(result['artifacts'],[])
+        self.assertEqual(result['ledger']['reservations'],plan['ledger']['reservations'])
+        self.assertEqual(result['ledger']['processed_video_ids'],[])
+        self.assertNotIn('AIza',json.dumps(result))
+
     def test_second_clip_local_timestamp_rejected_without_offset_guess(self):
         h=Clips(outputs=[{'claims':[claim()]},{'claims':[claim('01:30')]}]);c=collector(h)
         result=c.process(c.prepare(config()),reservation_persisted=True)

@@ -321,7 +321,7 @@ class ExpertCollector:
                 _require(len(_canonical(response).encode())<=self.max_bytes);return deepcopy(response)
             _require(isinstance(response,(str,bytes)) and len(response)<=self.max_bytes)
             result=_json(response);_require(isinstance(result,dict));return result
-        except (TypeError,ValueError,UnicodeError,OverflowError):raise _External('MALFORMED_RESPONSE') from None
+        except (TypeError,ValueError,UnicodeError,OverflowError,RecursionError):raise _External('MALFORMED_RESPONSE') from None
 
     def _youtube(self,endpoint,**params):
         return self._request('GET',YOUTUBE_URL+endpoint+'?'+urllib.parse.urlencode(params))
@@ -462,7 +462,7 @@ class ExpertCollector:
                 except _External as error:
                     complete=False;failure_status=error.status;result['reason']=error.reason
                     break  # No retry or further request after a transport failure.
-                except (TypeError,ValueError,KeyError,UnicodeError,OverflowError):
+                except (TypeError,ValueError,KeyError,UnicodeError,OverflowError,RecursionError):
                     complete=False;rejections.append(dict(index=0,reason='FAILED_FORMAT'))
             if len(rejections)>100:
                 rejections=rejections[:99]+[dict(index=0,reason='FAILED_FORMAT')];complete=False
@@ -478,7 +478,10 @@ class ExpertCollector:
                     for claim in claims:claim['limitations'].append('SEGMENTED_EXTRACTION_INCOMPLETE')
                 while claims and len(_canonical(artifact).encode())>200000:claims.pop();complete=False
                 if claims:
-                    artifact=validate_expert_artifact(artifact);result['artifacts'].append(artifact)
+                    try:artifact=validate_expert_artifact(artifact)
+                    except (TypeError,ValueError,KeyError,UnicodeError,OverflowError,RecursionError):
+                        result['video_results'].append(dict(video_id=video['id'],status='FAILED_FORMAT'));continue
+                    result['artifacts'].append(artifact)
                     if complete:ledger['processed_video_ids'].append(video['id'])
                     status='READY' if complete else 'BLOCKED_PAYMENT' if failure_status=='BLOCKED_PAYMENT' else 'PARTIAL'
                     result['video_results'].append(dict(video_id=video['id'],status=status))
