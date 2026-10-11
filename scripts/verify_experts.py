@@ -1,5 +1,6 @@
 """Fresh source-bound expert plumbing checks; no source truth or API acquisition."""
 import io
+from contextlib import redirect_stdout, redirect_stderr
 import json
 import os
 from pathlib import Path
@@ -21,7 +22,10 @@ def main():
         'tests_r5.test_video_korean':5}
     for name,count in minimum.items():
         stream=io.StringIO();suite=unittest.defaultTestLoader.loadTestsFromName(name)
-        run=unittest.TextTestRunner(stream=stream,verbosity=2).run(suite)
+        # CLI fixtures print safe status receipts; keep them in the suite log so
+        # the launcher emits exactly one JSON object for required CI consumers.
+        with redirect_stdout(stream), redirect_stderr(stream):
+            run=unittest.TextTestRunner(stream=stream,verbosity=2).run(suite)
         (out/(name+'.log')).write_text(stream.getvalue())
         results[name]=dict(tests_run=run.testsRun,failures=len(run.failures),errors=len(run.errors),skipped=len(run.skipped),
             passed=run.wasSuccessful() and run.testsRun>=count and not run.skipped)
