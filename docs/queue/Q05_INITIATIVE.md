@@ -60,6 +60,13 @@ outputs require separately source-bound REVIEWED templates and exact current
 approval binding. Existing golden review order remains untouched; the ten
 golden champions plus Yunara, Ashe and Kai'Sa are the source-audit priority.
 
+Q18 stage roles remain UNKNOWN. These unchanged v2 payloads do not add an early,
+middle or late-game role, validated movement pattern, role transition or
+grouping instruction. A kit description does not establish such behavior; in
+particular, Nocturne's vision reduction and dash text cannot substantiate a
+late-game grouping role. Stage-specific claims require a separately versioned,
+source-bound candidate and actual review.
+
 Verification from the repository root:
 
 ```sh
