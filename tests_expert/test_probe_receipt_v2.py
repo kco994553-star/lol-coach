@@ -17,7 +17,7 @@ class ProbeReceiptV2Tests(unittest.TestCase):
         self.assertIsNone(safe_probe_receipt(plan))
     def test_invalid_or_credential_echoing_route_and_counters_are_withheld(self):
         for field,value in [('api_route','TEST_SECRET'),('attempt_count',True),('attempt_count',5),
-                ('retry_count',4),('retry_count',0),('schema_version','expert.text-probe.v1')]:
+                ('retry_count',4),('retry_count',0),('checked_at',-1),('schema_version','expert.text-probe.v1')]:
             plan=deepcopy(self.plan());plan['text_probe'][field]=value
             self.assertIsNone(safe_probe_receipt(plan),field)
     def test_preflight_blocked_zero_dispatch_is_typed(self):

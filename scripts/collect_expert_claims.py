@@ -73,7 +73,7 @@ def safe_probe_receipt(plan):
     if probe['schema_version']!='expert.text-probe.v2' or probe['model']!=MODEL or probe['input_kind']!='TEXT_ONLY':return None
     if not isinstance(probe['status'],str) or probe['status'] not in set(PLAN_STATUSES)|{'READY'}:return None
     if probe['reason'] is not None and (not isinstance(probe['reason'],str) or probe['reason'] not in SAFE_REASONS):return None
-    if type(probe['video_inputs']) is not int or probe['video_inputs']!=0 or type(probe['checked_at']) is not int:return None
+    if type(probe['video_inputs']) is not int or probe['video_inputs']!=0 or (type(probe['checked_at']) is not int or probe['checked_at']<0):return None
     if probe['http_status'] is not None and (type(probe['http_status']) is not int or not 100<=probe['http_status']<=599):return None
     if probe['api_route']!='GENERATE_CONTENT':return None
     attempts=probe['attempt_count'];retries=probe['retry_count']
