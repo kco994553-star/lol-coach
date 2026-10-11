@@ -30,6 +30,7 @@ Files: coach_v1/expert_collector.py and affected tests_expert collector tests. O
 ## Task 3 Main integration and publication
 Files: workflow pair gate, expert CLI route-safe receipts, launcher test minimums, decision/handoff/evidence.
 - [x] Verify both source audits/commits and add integration tests where contract changes.
-- [ ] Run affected suites and required source-bound CI; independent review; normal merge exact verified head.
-- [ ] Dispatch one trusted Riot pair and one trusted generateContent acquisition, inspect safe outcomes; use actual-data browser runner only when accepted real data exists.
-- [ ] Preserve actual outcomes/history and exact CI/source proof, publish final handoff and release claim.
+- [x] Run affected suites and required source-bound CI; independent review; normal merge exact verified head.
+- [x] Dispatch one trusted Riot pair and one trusted generateContent acquisition, inspect safe outcomes; use actual-data browser runner only when accepted real data exists.
+- [x] Preserve actual outcomes/history and exact PR24 CI/source proof; actual detail14/five-role36 PASS, exact anonymous archives prepared.
+- [ ] Fresh archivepublication CI/normalmerge and exact final common-claim terminal release.

@@ -1,0 +1,115 @@
+{
+  "evidence_kind": "ACTUAL_GENERATECONTENT_TEXT_PREFLIGHT_TIMEOUT",
+  "run": {
+    "id": 38135584145,
+    "head_sha": "79c863d072190e088c889b132441edbd553bbee2",
+    "event": "workflow_dispatch",
+    "status": "completed",
+    "conclusion": "success",
+    "html_url": "https://github.com/kco994553-star/lol-coach/actions/runs/38135584145",
+    "created_at": "2026-10-11T11:26:48Z",
+    "updated_at": "2026-10-11T11:28:10Z"
+  },
+  "public_safe_artifact_id": 11700463884,
+  "durable_quota_artifact_id": 11700818021,
+  "safe_entries": {
+    "expert-reservation/diagnostics.json": {
+      "api_route": "GENERATE_CONTENT",
+      "events": [
+        {
+          "error_code": null,
+          "error_message": null,
+          "error_status": null,
+          "http_status": null,
+          "phase": "TEXT_PROBE",
+          "provider": "GEMINI",
+          "reason": "NETWORK_TIMEOUT"
+        }
+      ],
+      "model": "gemini-3.8-flash",
+      "phase": "reserve",
+      "request_counts": {
+        "METADATA": 0,
+        "TEXT_PROBE": 1,
+        "VIDEO_CLIP": 0
+      },
+      "schema_version": "expert.diagnostics.v2",
+      "text_probe": {
+        "api_route": "GENERATE_CONTENT",
+        "attempt_count": 1,
+        "checked_at": 1791718084,
+        "http_status": null,
+        "input_kind": "TEXT_ONLY",
+        "model": "gemini-3.8-flash",
+        "reason": "NETWORK_TIMEOUT",
+        "retry_count": 0,
+        "schema_version": "expert.text-probe.v2",
+        "status": "BLOCKED_EXTERNAL",
+        "video_inputs": 0
+      },
+      "total_request_count": 1
+    },
+    "expert-reservation/receipt.json": {
+      "coaching_accuracy": null,
+      "publication_status": "PUBLICATION_DEFERRED",
+      "reason": "NETWORK_TIMEOUT",
+      "request_count": 1,
+      "status": "BLOCKED_EXTERNAL",
+      "videos_reserved": 0
+    },
+    "expert-reservation/entitlement.json": {
+      "checked_at": "2026-10-11",
+      "model": "gemini-3.8-flash",
+      "reasons": [
+        "DOCUMENTED_FREE_ENTITLEMENT"
+      ],
+      "sources": [
+        {
+          "sha256": "6585808da74dd4beaf9db02ee5e4cebedacdf022fe42460898dd9b91dd6d3522",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing"
+        },
+        {
+          "sha256": "58fe857ba32d718d15141111d04f9f0981736de20e066ff5086daea385802bb1",
+          "url": "https://ai.google.dev/gemini-api/docs/video-understanding"
+        },
+        {
+          "sha256": "ca8114a409d5717469be1a6f94f2d47f80d5cd4095ad7dac3b8b1c8dcc14c3ce",
+          "url": "https://ai.google.dev/gemini-api/docs/models"
+        }
+      ],
+      "status": "VERIFIED_FREE"
+    },
+    "expert-recovery/recovery.json": {
+      "artifact_id": 11699780505,
+      "reason": null,
+      "run_id": 38131597343,
+      "status": "FOUND"
+    }
+  },
+  "ledger_conservation": {
+    "prior_final_artifact_id": 11699780505,
+    "prior_final_run_id": 38131597343,
+    "prior_ledger_equal_to_current": true,
+    "reserved_videos": 6,
+    "charged_seconds": 7396,
+    "new_reservations": 0,
+    "new_charged_seconds": 0,
+    "processed_video_ids": [],
+    "ledger_digest": "91cc33fafdf9c0b05b4d2038268bf86436c01caeddbd828bc13cc66ed5ff015c"
+  },
+  "observed_status": "BLOCKED_EXTERNAL",
+  "observed_reason": "NETWORK_TIMEOUT",
+  "http_status": null,
+  "error_status": null,
+  "error_message": null,
+  "request_counts": {
+    "TEXT_PROBE": 1,
+    "METADATA": 0,
+    "VIDEO_CLIP": 0
+  },
+  "retry_count": 0,
+  "cause_interpretation": "No HTTP response within the <=60s ordinary TEXT bound. Neither 400/503 nor key/model/route correctness established. Only literal TEXT503 retries are authorized; no video or identical timeout retry. Prior Interactions video400 remains distinct, exact bad argument UNKNOWN.",
+  "actual_expert_source_browser": "NOT_RUN_NO_ACCEPTED_CLAIMS",
+  "accepted_claims": 0,
+  "coaching_accuracy": null
+}
