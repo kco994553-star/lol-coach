@@ -10,7 +10,7 @@ from urllib.parse import urlsplit
 from .server import Workbench, Handler, Limits, ROOT
 from .storage import ServiceError
 from .pregame_contract import parse_input, parse_rule, proposal_rule, import_capture
-from .pregame_store import PregameStore, PLAN_FIELDS
+from .pregame_store import PregameStore, plan_fields
 from .knowledge import validate_knowledge_content, _records, _head
 from .state import digest
 
@@ -27,8 +27,11 @@ def current_knowledge(research):
             source=db.execute('SELECT report FROM resources WHERE id=?',(row['resource_id'],)).fetchone()
             if source:
                 report=json.loads(source[0])
-                if report.get('schema_version')=='pregame.rule-source.v1':
-                    try:spec=parse_rule(report['spec']).model_dump(mode='json')
+                if report.get('schema_version') in ('pregame.rule-source.v1','pregame.rule-source.v2','pregame.rule-source.v3'):
+                    try:
+                        parsed=parse_rule(report['spec']).model_dump(mode='json')
+                        if report['schema_version']==parsed['schema_version'].replace('.rule.','.rule-source.'):
+                            spec=parsed
                     except (ValueError,TypeError,KeyError):pass
             result.append(dict(proposal=proposal,spec=spec))
         return sorted(result,key=lambda r:r['proposal']['rule_id'])
@@ -36,7 +39,7 @@ def current_knowledge(research):
 
 def candidate_specs():
     rows=[]
-    for name in ('executable-v1.json','executable-expanded-v1.json'):
+    for name in ('executable-v1.json','executable-expanded-v1.json','initiative-v2.json'):
         path=ROOT/'knowledge_candidates'/name
         if path.exists():
             data=json.loads(path.read_text())
@@ -58,8 +61,61 @@ class PregameWorkbench(Workbench):
     def __init__(self,db,token,limits,port=0):
         # The parent acquires the same cross-process database owner lock first.
         super().__init__(db,token,limits,port)
-        try:self.pregame=PregameStore(str(db)+'.pregame.sqlite');self.RequestHandlerClass=PregameHandler
+        try:
+            self.pregame=PregameStore(str(db)+'.pregame.sqlite');self.RequestHandlerClass=PregameHandler
+            # Internal fixture injection only. No HTTP operation can change these.
+            self.test_mode=False;self.power_data=None;self.movement_statistics=None
         except Exception:self.server_close();raise
+
+    def validated_power_data(self):
+        if self.power_data is None:return None
+        from .power_stats import validate_power_dataset
+        dataset=validate_power_dataset(self.power_data)
+        if dataset['source']['sample_kind']=='SYNTHETIC' and not self.test_mode:return None
+        return dataset
+
+    def power_tiers(self):
+        data=self.validated_power_data()
+        return sorted({c['tier'] for c in data['cohorts']}) if data is not None else []
+
+
+def unknown_power_view(reason):
+    return dict(status='UNKNOWN',points=[],markers=[],reasons=[reason],source=None,samples=None,
+                dataset_digest=None,schema_version='pregame.power-data.v1')
+
+
+def power_request(body):
+    fields={'champion','position','patch','tier','opponent_champion'}
+    if not isinstance(body,dict) or set(body)!=fields:raise ServiceError(422,'INVALID_POWER_REQUEST')
+    def champion(value,nullable=False):
+        return nullable and value is None or isinstance(value,str) and re.fullmatch('[A-Za-z][A-Za-z0-9]{0,99}',value) is not None
+    if not champion(body['champion']) or not champion(body['opponent_champion'],True):raise ServiceError(422,'INVALID_POWER_REQUEST')
+    if body['position'] not in ('TOP','JUNGLE','MID','BOTTOM','SUPPORT'):raise ServiceError(422,'INVALID_POWER_REQUEST')
+    if body['patch'] is not None and (not isinstance(body['patch'],str) or not re.fullmatch('[A-Za-z0-9][A-Za-z0-9_.-]{0,99}',body['patch'])):
+        raise ServiceError(422,'INVALID_POWER_REQUEST')
+    if body['tier'] is not None and body['tier'] not in ('IRON','BRONZE','SILVER','GOLD','PLATINUM','EMERALD','DIAMOND','MASTER','GRANDMASTER','CHALLENGER'):
+        raise ServiceError(422,'INVALID_POWER_REQUEST')
+    return body
+
+
+def power_response(server,request):
+    data=server.validated_power_data()
+    reason='POWER_DATA_NOT_AVAILABLE' if data is None else None
+    if request['patch'] is None:reason='PATCH_UNKNOWN'
+    tier=request['tier']
+    if data is not None and tier is None:
+        tiers={c['tier'] for c in data['cohorts'] if c['patch']==request['patch']}
+        if len(tiers)==1:tier=next(iter(tiers))
+        else:reason='TIER_UNKNOWN_OR_AMBIGUOUS'
+    if reason:return dict(view=unknown_power_view(reason),opponent_view=None,test_mode=server.test_mode)
+    from .power_stats import select_power_view
+    fingerprint=digest(data)
+    def select(champion,opponent):
+        result=select_power_view(data,champion,request['position'],request['patch'],tier,opponent)
+        return dict(result,dataset_digest=fingerprint,schema_version=data['schema_version'])
+    return dict(view=select(request['champion'],request['opponent_champion']),
+                opponent_view=select(request['opponent_champion'],request['champion']) if request['opponent_champion'] else None,
+                test_mode=server.test_mode)
 
 
 class PregameHandler(Handler):
@@ -92,8 +148,17 @@ class PregameHandler(Handler):
         # declared fingerprint matches, its generated content must match the
         # current source-bound deterministic evaluator before becoming CURRENT.
         if result['validity']=='CURRENT':
-            expected=evaluate_gameplan(parse_input(result['input']),knowledge)
-            if {k:result[k] for k in PLAN_FIELDS}!=expected:
+            draft=parse_input(result['input'])
+            if result['schema_version']=='pregame.plan.v3':
+                from .pregame_v3 import evaluate_gameplan_v3
+                expected=evaluate_gameplan_v3(draft,knowledge,self.server.movement_statistics,self.server.test_mode)
+                if result['movement_statistics_fingerprint']!=expected['movement_statistics_fingerprint']:
+                    return dict(result,validity='EXPIRED',expiry_reasons=['MOVEMENT_STATISTICS_CHANGED'])
+            elif result['schema_version']=='pregame.plan.v2':
+                from .pregame_v2 import evaluate_gameplan_v2
+                expected=evaluate_gameplan_v2(draft,knowledge)
+            else:expected=evaluate_gameplan(draft,knowledge)
+            if {k:result[k] for k in plan_fields(result)}!=expected:
                 result=dict(result,validity='EXPIRED',expiry_reasons=['PLAN_RESULT_MISMATCH'])
         return result
 
@@ -102,6 +167,7 @@ class PregameHandler(Handler):
         if path.query or path.fragment:raise ServiceError(400,'QUERY_NOT_SUPPORTED')
         assets={'/pregame':('pregame.html','text/html; charset=utf-8'),'/pregame/':('pregame.html','text/html; charset=utf-8'),
             '/pregame.js':('pregame.js','text/javascript; charset=utf-8'),'/pregame.css':('pregame.css','text/css; charset=utf-8'),
+            '/pregame_power.js':('pregame_power.js','text/javascript; charset=utf-8'),
             '/pregame-icon.svg':('pregame-icon.svg','image/svg+xml')}
         if self.command=='GET' and route in assets:
             filename,ctype=assets[route];file=ROOT/'web_r4'/filename
@@ -112,7 +178,10 @@ class PregameHandler(Handler):
         self.authorize();pg=self.server.pregame;limit=self.server.limits.body_bytes
         if route==prefix+'/status' and self.command=='GET':
             return self.bounded_reply(200,dict(mode='PRE_GAME',automatic_collection='UNAVAILABLE',current_patch=None,
-                knowledge_count=len(current_knowledge(self.server.research)),accuracy=None))
+                knowledge_count=len(current_knowledge(self.server.research)),accuracy=None,
+                test_mode=self.server.test_mode,power_tiers=self.server.power_tiers()))
+        if route==prefix+'/power-view' and self.command=='POST':
+            return self.bounded_reply(200,power_response(self.server,power_request(self.body())))
         if route==prefix+'/roster' and self.command=='GET':return self.bounded_reply(200,roster())
         if route==prefix+'/review-priority' and self.command=='GET':
             path=ROOT/'knowledge_candidates'/'q05-review-priority.json'
@@ -123,7 +192,7 @@ class PregameHandler(Handler):
             if self.command=='POST':
                 b=self.body();self.fields(b,('spec',));spec=parse_rule(b['spec'])
                 source=self.server.research.add('RAW_DIAGNOSTIC',spec.rule_id[:200],
-                    dict(schema_version='pregame.rule-source.v1',spec=spec.model_dump(mode='json')))
+                    dict(schema_version=spec.schema_version.replace('.rule.','.rule-source.'),spec=spec.model_dump(mode='json')))
                 note=self.server.research.get_note(source['id'],'overview')
                 if note['revision']==0:
                     note=self.server.research.put_note(source['id'],'overview',dict(known='AI 구조화 후보 명세 sha256:'+digest(spec.model_dump(mode='json')),
@@ -151,7 +220,7 @@ class PregameHandler(Handler):
             sid,action=input_route.groups()
             if action=='history' and self.command=='GET':return self.bounded_reply(200,pg.history(sid))
             if action=='plans':
-                from .pregame_evaluator import evaluate_gameplan
+                from .pregame_v3 import evaluate_gameplan_v3
                 knowledge=current_knowledge(self.server.research)
                 if self.command=='GET':
                     plans=pg.list_plans(sid,self.fingerprint(knowledge))
@@ -162,7 +231,7 @@ class PregameHandler(Handler):
                     if replay:return self.bounded_reply(201,self.checked_plan(replay['id'],knowledge))
                     record=pg.get_input(sid)
                     if record['revision']!=self.revision(b['expected_revision']):raise ServiceError(409,'REVISION_CONFLICT')
-                    result=evaluate_gameplan(parse_input(record['input']),knowledge)
+                    result=evaluate_gameplan_v3(parse_input(record['input']),knowledge,self.server.movement_statistics,self.server.test_mode)
                     if self.fingerprint(current_knowledge(self.server.research))!=result['knowledge_fingerprint']:
                         raise ServiceError(409,'KNOWLEDGE_CHANGED')
                     saved=pg.save_plan(sid,b['expected_revision'],result,key)
@@ -181,6 +250,8 @@ def main():
     parser=argparse.ArgumentParser(description='Local pregame plans and source review; no in-game coaching')
     parser.add_argument('--db',type=Path,required=True);parser.add_argument('--port',type=int,default=8765)
     parser.add_argument('--token-file',type=Path,required=True)
+    parser.add_argument('--power-data',type=Path,help='Validated aggregate-only Q15 JSON')
+    parser.add_argument('--movement-data',type=Path,help='Validated aggregate-only Q18 JSON')
     for flag in ('body-bytes','observations','actions','scenarios','comparisons','pending-jobs'):
         parser.add_argument('--max-'+flag,type=int,required=True)
     args=parser.parse_args()
@@ -191,6 +262,17 @@ def main():
         with os.fdopen(fd,'w') as stream:stream.write(token+'\n')
     limits=Limits(args.max_body_bytes,args.max_observations,args.max_actions,args.max_scenarios,args.max_comparisons,args.max_pending_jobs)
     server=PregameWorkbench(args.db,token,limits,args.port)
+    try:
+        if args.power_data:
+            from .power_stats import validate_power_dataset
+            server.power_data=validate_power_dataset(json.loads(args.power_data.read_text()))
+            if server.power_data['source']['sample_kind']=='SYNTHETIC':raise ValueError('Synthetic power data requires an isolated test fixture')
+        if args.movement_data:
+            from .movement import validate_movement_dataset
+            server.movement_statistics=validate_movement_dataset(json.loads(args.movement_data.read_text()))
+            if server.movement_statistics['source']['sample_kind']=='SYNTHETIC':raise ValueError('Synthetic movement data requires an isolated test fixture')
+    except Exception:
+        server.server_close();raise
     print(f'경기 전 준비: http://127.0.0.1:{server.server_port}/pregame',flush=True)
     print(f'기존 자료·지식 화면: http://127.0.0.1:{server.server_port}/ · 접속키 파일: {args.token_file}',flush=True)
     print('PRE_GAME 수동 진술·승인 지식 기반. 자동 수집·실제 경기 코칭 정확도 미검증.',flush=True)
