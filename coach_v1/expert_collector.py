@@ -3,7 +3,7 @@
 Internal schema expert.quota-ledger.v1 preserves ALL reservations (including
 unknown/failed attempts), with video_id/seconds/reserved_at/reservation_id, and
 processed_video_ids only after a nonempty validated artifact. Reserve produces
-expert.reservation-plan.v2. Archived v1 plans are never reinterpreted. An external durable persistence ACK is mandatory
+expert.reservation-plan.v3. Archived v1/v2 plans are never reinterpreted. An external durable persistence ACK is mandatory
 before process; Actions provides it only after upload-artifact succeeds.
 Rolling24h cap28800s is conservative; reset timezone is unknown. No retries:
 another uncertain dispatch would require another full duration reservation.
@@ -49,6 +49,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from .api_diagnostics import MAX_ERROR_BYTES,safe_http_error
 
 MODEL='gemini-3.8-flash'
 INTERACTIONS_URL='https://generativelanguage.googleapis.com/v1beta/interactions'
@@ -60,7 +61,8 @@ MAX_CALL_TIMEOUT=600
 MAX_METADATA_TIMEOUT=20
 MAX_CLIP_SECONDS=600
 MAX_VIDEO_SECONDS=1200
-PLAN_SCHEMA='expert.reservation-plan.v2'
+PLAN_SCHEMA='expert.reservation-plan.v3'
+COLLECTION_MODES=('FULL_VIDEO','DIAGNOSTIC_FIRST_CLIP')
 SEGMENT_POLICY='FULL_ORIGINAL_DURATION_PER_STATIC_CLIP_V1'
 # Reserve through the latest permitted dispatch plus its bounded transport
 # timeout. This is a conservative budget policy, never a gameplay threshold.
@@ -116,15 +118,25 @@ def _digest(value):return hashlib.sha256(_canonical(value).encode()).hexdigest()
 def _utc(epoch):return datetime.fromtimestamp(epoch,timezone.utc).isoformat().replace('+00:00','Z')
 
 
-def _segments(video):
+def _segments(video,collection_mode='FULL_VIDEO'):
+    if collection_mode=='DIAGNOSTIC_FIRST_CLIP':return [(0,min(MAX_CLIP_SECONDS,video['duration_seconds']))]
     return [(start,min(start+MAX_CLIP_SECONDS,video['duration_seconds']))
             for start in range(0,video['duration_seconds'],MAX_CLIP_SECONDS)]
 
 
-def _reservation_payload(created_at,videos,prior):
+def _reservation_payload(created_at,videos,prior,text_probe,collection_mode):
     return dict(schema_version=PLAN_SCHEMA,segment_policy=SEGMENT_POLICY,
         max_clip_seconds=MAX_CLIP_SECONDS,max_video_seconds=MAX_VIDEO_SECONDS,max_videos_per_run=1,
-        created_at=created_at,videos=videos,prior_ledger_sha256=_digest(prior))
+        created_at=created_at,videos=videos,prior_ledger_sha256=_digest(prior),text_probe=text_probe,
+        collection_mode=collection_mode,planned_intervals=[_segments(v,collection_mode) for v in videos])
+
+
+def _valid_probe(receipt,now):
+    _keys(receipt,{'schema_version','status','reason','model','checked_at','http_status','input_kind','video_inputs'})
+    _require(receipt['schema_version']=='expert.text-probe.v1' and receipt['status']=='READY' and receipt['reason'] is None)
+    _require(receipt['model']==MODEL and receipt['input_kind']=='TEXT_ONLY' and type(receipt['video_inputs']) is int and receipt['video_inputs']==0)
+    _require(type(receipt['http_status']) is int and receipt['http_status']==200)
+    _require(_int(receipt['checked_at']) and 0<=now-receipt['checked_at']<=MAX_DISPATCH_DELAY)
 
 
 def _segment_body(video,start,end):
@@ -264,7 +276,7 @@ def _video(value):
 
 
 class _External(Exception):
-    def __init__(self,reason,status='BLOCKED_EXTERNAL'):self.reason=reason;self.status=status
+    def __init__(self,reason,status='BLOCKED_EXTERNAL',http_status=None):self.reason=reason;self.status=status;self.http_status=http_status
 
 
 class _NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -279,12 +291,15 @@ def _transport(method,url,headers,body,timeout,max_bytes):
             raw=response.read(max_bytes+1)
             if len(raw)>max_bytes:raise _External('RESPONSE_TOO_LARGE')
             return response.status,{},raw
-    except urllib.error.HTTPError as error:return error.code,{},b''
+    except urllib.error.HTTPError as error:
+        try:raw=error.read(MAX_ERROR_BYTES+1)
+        except Exception:raw=b''
+        return error.code,{},raw
 
 
 class ExpertCollector:
     def __init__(self,*,youtube_api_key=None,gemini_api_key=None,transport=None,clock=None,policy=None,
-                 max_requests=50,timeout=600,max_bytes=1000000):
+                 max_requests=50,timeout=600,max_bytes=1000000,on_diagnostic=None):
         self.youtube_key=youtube_api_key;self.gemini_key=gemini_api_key
         self.transport=transport or _transport;self.clock=clock or time.time
         self.policy=deepcopy(policy or dict(free_tier_confirmed=False,entitlement_confirmed=False,
@@ -294,6 +309,17 @@ class ExpertCollector:
         _require(self.policy['billing_tier'] in ('FREE_TIER','PAID','UNKNOWN','PAID_REQUIRED'))
         _require(_int(max_requests,1) and max_requests<=50 and _int(timeout,1) and timeout<=MAX_CALL_TIMEOUT and _int(max_bytes,1) and max_bytes<=2000000)
         self.max_requests=max_requests;self.timeout=timeout;self.max_bytes=max_bytes;self.request_count=0
+        _require(on_diagnostic is None or callable(on_diagnostic))
+        self.on_diagnostic=on_diagnostic;self.diagnostics=[]
+        self.request_counts=dict(TEXT_PROBE=0,VIDEO_CLIP=0,METADATA=0)
+
+    def _diagnose(self,provider,phase,reason,http_status=None,body=None):
+        record=dict(provider=provider,phase=phase,reason=reason,
+            **safe_http_error(provider,http_status,body,secrets=(self.youtube_key,self.gemini_key)))
+        self.diagnostics.append(record)
+        if self.on_diagnostic is not None:
+            try:self.on_diagnostic(deepcopy(record))
+            except Exception:pass  # Observability cannot discard accepted claims/quota.
 
     def _gate(self):
         if self.policy['billing_tier']=='PAID_REQUIRED':raise _External('DOCUMENTED_PAID_ENTITLEMENT_REQUIRED','BLOCKED_PAYMENT')
@@ -302,26 +328,60 @@ class ExpertCollector:
             ('free_tier_confirmed','entitlement_confirmed','quota_exclusive_confirmed')):raise _External('FREE_PROJECT_OR_ENTITLEMENT_UNVERIFIED')
         if not all(isinstance(k,str) and k.strip() for k in (self.youtube_key,self.gemini_key)):raise _External('MISSING_API_KEYS')
 
-    def _request(self,method,url,body=None):
-        if self.request_count>=self.max_requests:raise _External('REQUEST_BUDGET_EXHAUSTED')
+    def _request(self,method,url,body=None,*,phase=None,timeout_limit=None):
         youtube=url.startswith(YOUTUBE_URL) and method=='GET'
         _require(youtube or url==INTERACTIONS_URL and method=='POST')
+        provider='YOUTUBE' if youtube else 'GEMINI';phase=phase or ('METADATA' if youtube else 'VIDEO_CLIP')
+        _require(phase in self.request_counts)
+        def fail(reason,status='BLOCKED_EXTERNAL',http_status=None,response=None):
+            self._diagnose(provider,phase,reason,http_status,response)
+            return _External(reason,status,http_status)
+        if self.request_count>=self.max_requests:raise fail('REQUEST_BUDGET_EXHAUSTED')
         headers={'x-goog-api-key':self.youtube_key if youtube else self.gemini_key,'Content-Type':'application/json'}
         self.request_count+=1
+        self.request_counts[phase]+=1
         timeout=min(self.timeout,MAX_METADATA_TIMEOUT) if youtube else self.timeout
+        if timeout_limit is not None:timeout=min(timeout,timeout_limit)
         try:code,_,response=self.transport(method,url,headers,body,timeout,self.max_bytes)
-        except (TimeoutError,socket.timeout):raise _External('NETWORK_TIMEOUT') from None
+        except (TimeoutError,socket.timeout):raise fail('NETWORK_TIMEOUT') from None
         except urllib.error.URLError as error:
             reason='NETWORK_TIMEOUT' if isinstance(error.reason,(TimeoutError,socket.timeout)) else 'NETWORK_FAILURE'
-            raise _External(reason) from None
-        except Exception:raise _External('NETWORK_FAILURE') from None
-        if code!=200:raise _External('PROVIDER_HTTP_FAILURE','BLOCKED_PAYMENT' if code==402 else 'BLOCKED_EXTERNAL')
+            raise fail(reason) from None
+        except Exception:raise fail('NETWORK_FAILURE') from None
+        if code!=200:raise fail('PROVIDER_HTTP_FAILURE','BLOCKED_PAYMENT' if code==402 else 'BLOCKED_EXTERNAL',code,response)
         try:
             if isinstance(response,dict):
                 _require(len(_canonical(response).encode())<=self.max_bytes);return deepcopy(response)
             _require(isinstance(response,(str,bytes)) and len(response)<=self.max_bytes)
             result=_json(response);_require(isinstance(result,dict));return result
-        except (TypeError,ValueError,UnicodeError,OverflowError,RecursionError):raise _External('MALFORMED_RESPONSE') from None
+        except (TypeError,ValueError,UnicodeError,OverflowError,RecursionError):raise fail('MALFORMED_RESPONSE',http_status=code) from None
+
+    def probe_text(self):
+        receipt=dict(schema_version='expert.text-probe.v1',status='BLOCKED_EXTERNAL',reason=None,model=MODEL,
+            checked_at=int(self.clock()),http_status=None,input_kind='TEXT_ONLY',video_inputs=0)
+        before=len(self.diagnostics)
+        try:
+            self._gate()
+            body=dict(model=MODEL,input=[dict(type='text',text='Reply with OK.')],store=False,stream=False,background=False)
+            response=self._request('POST',INTERACTIONS_URL,body,phase='TEXT_PROBE',timeout_limit=60)
+            receipt['http_status']=200
+            texts=[]
+            _require(response.get('status')=='completed' and isinstance(response.get('steps'),list))
+            for step in response['steps']:
+                _require(isinstance(step,dict))
+                if step.get('type')=='model_output':
+                    _require(isinstance(step.get('content'),list))
+                    for content in step['content']:
+                        _require(isinstance(content,dict) and content.get('type')=='text' and isinstance(content.get('text'),str))
+                        texts.append(content['text'])
+            _require(texts and any(text.strip() for text in texts))
+            receipt.update(status='READY',checked_at=int(self.clock()));return receipt
+        except _External as error:
+            receipt.update(status=error.status,reason=error.reason,http_status=error.http_status)
+            if len(self.diagnostics)==before:self._diagnose('GEMINI','TEXT_PROBE',error.reason,error.http_status)
+        except (ValueError,TypeError,KeyError,UnicodeError,RecursionError,OverflowError):
+            receipt['reason']='MALFORMED_RESPONSE';self._diagnose('GEMINI','TEXT_PROBE','MALFORMED_RESPONSE',receipt['http_status'])
+        return receipt
 
     def _youtube(self,endpoint,**params):
         return self._request('GET',YOUTUBE_URL+endpoint+'?'+urllib.parse.urlencode(params))
@@ -372,36 +432,48 @@ class ExpertCollector:
                 except (ValueError,KeyError,TypeError,OverflowError):continue
         return candidates
 
-    def prepare(self,config,ledger=None,*,ledger_history='ABSENT'):
+    def prepare(self,config,ledger=None,*,ledger_history='ABSENT',collection_mode='FULL_VIDEO'):
         c=validate_config(config);now=int(self.clock())
         # Active operational policy remains bounded even for a legacy config.
         c['max_videos_per_run']=1;c['max_duration_seconds']=min(c['max_duration_seconds'],MAX_VIDEO_SECONDS)
         _require(ledger_history in ('ABSENT','FOUND','UNKNOWN'))
+        _require(collection_mode in COLLECTION_MODES)
         if ledger is not None:ledger=validate_ledger(ledger,now)
         plan=dict(schema_version=PLAN_SCHEMA,status='BLOCKED_EXTERNAL',reason=None,
-                  ledger=None,videos=[],reservation_id=None,ledger_sha256=None,created_at=now)
+                  ledger=None,videos=[],reservation_id=None,ledger_sha256=None,created_at=now,
+                  text_probe=None,collection_mode=collection_mode)
+        before=len(self.diagnostics)
         try:
-            if not c['channels']:raise _External('EMPTY_CHANNEL_ALLOWLIST')
+            if not any(channel['enabled'] for channel in c['channels']):raise _External('EMPTY_CHANNEL_ALLOWLIST')
             self._gate()
             if ledger_history=='UNKNOWN':raise _External('QUOTA_HISTORY_UNKNOWN')
             if ledger is None:
                 if ledger_history=='FOUND' or not self.policy['initial_zero_usage_confirmed']:raise _External('INITIAL_QUOTA_NOT_ATTESTED')
                 ledger=dict(schema_version='expert.quota-ledger.v1',initialized_at=now,reservations=[],processed_video_ids=[])
+            if sum(row['seconds'] for row in ledger['reservations'] if row['reserved_at']>now-CHARGE_WINDOW)>=CAP:raise _External('ROLLING_VIDEO_BUDGET_EXHAUSTED')
+            plan['text_probe']=self.probe_text()
+            if plan['text_probe']['status']!='READY':
+                plan.update(status=plan['text_probe']['status'],reason=plan['text_probe']['reason'],ledger=ledger);return plan
+            now=int(self.clock());plan['created_at']=now
             videos=self._discover(c,ledger,now)
             if not videos:plan.update(status='NO_ELIGIBLE_VIDEOS',reason='NO_UNPROCESSED_PUBLIC_MATCHING_VIDEOS',ledger=ledger);return plan
             used=sum(row['seconds'] for row in ledger['reservations'] if row['reserved_at']>now-CHARGE_WINDOW)
-            if used+sum(video['duration_seconds']*len(_segments(video)) for video in videos)>CAP:raise _External('ROLLING_VIDEO_BUDGET_EXHAUSTED')
-            reservation_id=_digest(_reservation_payload(now,videos,ledger))
-            for video in videos:ledger['reservations'].append(dict(video_id=video['id'],seconds=video['duration_seconds']*len(_segments(video)),reserved_at=now,reservation_id=reservation_id))
+            if used+sum(video['duration_seconds']*len(_segments(video,collection_mode)) for video in videos)>CAP:raise _External('ROLLING_VIDEO_BUDGET_EXHAUSTED')
+            reservation_id=_digest(_reservation_payload(now,videos,ledger,plan['text_probe'],collection_mode))
+            for video in videos:ledger['reservations'].append(dict(video_id=video['id'],seconds=video['duration_seconds']*len(_segments(video,collection_mode)),reserved_at=now,reservation_id=reservation_id))
             ledger=validate_ledger(ledger,now)
             plan.update(status='RESERVED',ledger=ledger,videos=videos,reservation_id=reservation_id,ledger_sha256=_digest(ledger))
             return plan
         except _External as error:
+            if len(self.diagnostics)==before:
+                metadata=error.reason in ('MALFORMED_CHANNEL_METADATA','MALFORMED_VIDEO_METADATA')
+                self._diagnose('YOUTUBE' if metadata else 'GEMINI','METADATA' if metadata else 'TEXT_PROBE',error.reason,200 if metadata else None)
             plan.update(status=error.status,reason=error.reason,ledger=ledger);return plan
 
     def process(self,plan,*,reservation_persisted=False):
-        _keys(plan,{'schema_version','status','reason','ledger','videos','reservation_id','ledger_sha256','created_at'})
+        _keys(plan,{'schema_version','status','reason','ledger','videos','reservation_id','ledger_sha256','created_at','text_probe','collection_mode'})
         _require(plan['schema_version']==PLAN_SCHEMA)
+        _require(plan['collection_mode'] in COLLECTION_MODES)
         _require(plan['status'] in PLAN_STATUSES and (plan['reason'] is None or isinstance(plan['reason'],str) and plan['reason'] in SAFE_REASONS))
         now=int(self.clock());result=dict(status='BLOCKED_EXTERNAL',reason=plan['reason'],artifacts=[],
             ledger=deepcopy(plan['ledger']),request_count=self.request_count,video_results=[],
@@ -413,26 +485,32 @@ class ExpertCollector:
         ledger=validate_ledger(plan['ledger'],now)
         _require(_sha(plan['reservation_id']) and _digest(ledger)==plan['ledger_sha256'])
         _require(_int(plan['created_at']) and 0<=now-plan['created_at']<=MAX_DISPATCH_DELAY)
+        _valid_probe(plan['text_probe'],now);_require(plan['text_probe']['checked_at']<=plan['created_at'])
         _require(isinstance(plan['videos'],list) and len(plan['videos'])==1)
         prior=deepcopy(ledger)
         prior['reservations']=[row for row in prior['reservations'] if row['reservation_id']!=plan['reservation_id']]
-        _require(_digest(_reservation_payload(plan['created_at'],plan['videos'],prior))==plan['reservation_id'])
+        _require(_digest(_reservation_payload(plan['created_at'],plan['videos'],prior,plan['text_probe'],plan['collection_mode']))==plan['reservation_id'])
         seen=set()
         for video in plan['videos']:
             _video(video);_require(video['duration_seconds']<=MAX_VIDEO_SECONDS and video['id'] not in seen and video['id'] not in ledger['processed_video_ids']);seen.add(video['id'])
             rows=[row for row in ledger['reservations'] if row['video_id']==video['id'] and row['reservation_id']==plan['reservation_id']]
-            _require(len(rows)==1 and rows[0]['seconds']==video['duration_seconds']*len(_segments(video)) and rows[0]['reserved_at']==plan['created_at'])
+            _require(len(rows)==1 and rows[0]['seconds']==video['duration_seconds']*len(_segments(video,plan['collection_mode'])) and rows[0]['reserved_at']==plan['created_at'])
         try:self._gate()
-        except _External as error:result.update(status=error.status,reason=error.reason);return result
-        if reservation_persisted is not True:result['reason']='RESERVATION_PERSISTENCE_NOT_CONFIRMED';return result
+        except _External as error:
+            self._diagnose('GEMINI','VIDEO_CLIP',error.reason)
+            result.update(status=error.status,reason=error.reason);return result
+        if reservation_persisted is not True:
+            result['reason']='RESERVATION_PERSISTENCE_NOT_CONFIRMED'
+            self._diagnose('GEMINI','VIDEO_CLIP',result['reason']);return result
         from .expert_contract import normalize_gemini_claims,validate_expert_artifact
         for video in plan['videos']:
-            intervals=_segments(video);bodies=[_segment_body(video,start,end) for start,end in intervals]
-            claims=[];rejections=[];identities=set();complete=True;failure_status='FAILED_FORMAT'
+            intervals=_segments(video,plan['collection_mode']);bodies=[_segment_body(video,start,end) for start,end in intervals]
+            claims=[];rejections=[];identities=set();complete=intervals[-1][1]==video['duration_seconds'];failure_status='FAILED_FORMAT';last_http_status=None
             for (start,end),body in zip(intervals,bodies):
                 try:
                     if not 0<=int(self.clock())-plan['created_at']<=MAX_DISPATCH_DELAY:raise _External('RESERVATION_DISPATCH_DEADLINE_EXPIRED')
                     response=self._request('POST',INTERACTIONS_URL,body)
+                    last_http_status=200
                     texts=[]
                     _require(response.get('status')=='completed' and isinstance(response.get('steps'),list))
                     for step in response['steps']:
@@ -446,23 +524,28 @@ class ExpertCollector:
                     decoded=_json(texts[0]);accepted,rejected=normalize_gemini_claims(decoded,video['duration_seconds'])
                     # Empty valid clips are completed requests. Any malformed or
                     # invalid statement holds the whole-video processed marker.
-                    if any(x['reason'] not in ('NO_ACCEPTED_CLAIMS','DUPLICATE_CLAIM') for x in rejected):complete=False
+                    invalid=any(x['reason'] not in ('NO_ACCEPTED_CLAIMS','DUPLICATE_CLAIM') for x in rejected)
+                    if invalid:complete=False
                     rejections.extend(rejected)
                     for claim in accepted:
                         source_index=next(i for i,item in enumerate(decoded['claims'])
                             if _canonical(item)==_canonical({k:claim[k] for k in CLAIM_PROPERTIES}))
                         if not start<=claim['timestamp_seconds']<end:
-                            rejections.append(dict(index=source_index,reason='OUT_OF_RANGE_TIMESTAMP'));complete=False;continue
+                            rejections.append(dict(index=source_index,reason='OUT_OF_RANGE_TIMESTAMP'));complete=False;invalid=True;continue
                         identity=_canonical(claim)
                         if identity in identities:
                             rejections.append(dict(index=source_index,reason='DUPLICATE_CLAIM'));continue
                         if len(claims)>=100:
-                            rejections.append(dict(index=source_index,reason='FAILED_FORMAT'));complete=False;continue
+                            rejections.append(dict(index=source_index,reason='FAILED_FORMAT'));complete=False;invalid=True;continue
                         identities.add(identity);claim['independent_group_id']='YOUTUBE:'+video['id'];claims.append(claim)
+                    if invalid:self._diagnose('GEMINI','VIDEO_CLIP','MALFORMED_RESPONSE',200)
                 except _External as error:
+                    last_http_status=error.http_status
+                    if error.reason=='RESERVATION_DISPATCH_DEADLINE_EXPIRED':self._diagnose('GEMINI','VIDEO_CLIP',error.reason)
                     complete=False;failure_status=error.status;result['reason']=error.reason
                     break  # No retry or further request after a transport failure.
                 except (TypeError,ValueError,KeyError,UnicodeError,OverflowError,RecursionError):
+                    self._diagnose('GEMINI','VIDEO_CLIP','MALFORMED_RESPONSE',200)
                     complete=False;rejections.append(dict(index=0,reason='FAILED_FORMAT'))
             if len(rejections)>100:
                 rejections=rejections[:99]+[dict(index=0,reason='FAILED_FORMAT')];complete=False
@@ -480,6 +563,7 @@ class ExpertCollector:
                 if claims:
                     try:artifact=validate_expert_artifact(artifact)
                     except (TypeError,ValueError,KeyError,UnicodeError,OverflowError,RecursionError):
+                        self._diagnose('GEMINI','VIDEO_CLIP','MALFORMED_RESPONSE',last_http_status)
                         status='BLOCKED_PAYMENT' if failure_status=='BLOCKED_PAYMENT' else 'FAILED_FORMAT'
                         result['video_results'].append(dict(video_id=video['id'],status=status));continue
                     result['artifacts'].append(artifact)
