@@ -87,7 +87,7 @@ After trusted main workflow collects anonymous files, download riot-power-aggreg
 
 Development keys expire24hours. For personal project key, register project at https://developer.riotgames.com/ and review Riot policy/product scope; no paid service required. Update GitHub repositorySecret RIOT_API_KEY through GitHub Secrets UI; never paste it into repository/issues/logs or command arguments. Secret enumeration permission failure does not imply missing key.401/403 cannot distinguish expiry/authorization/unsupportedpath; preserve collection reason and correct portal access/key before rerunning.
 
-Five-position9-card smoke test: python scripts/verify_pregame.py; python scripts/browser_pregame.py; python scripts/browser_v13.py. Run evidence-preservation verifier python scripts/verify_mvp.py alone after other evidence-producing jobs finish; concurrent new evidence intentionally triggers its conservation gate. Use CHROMIUM_EXECUTABLE=/usr/bin/chromium locally when Playwright's bundled binary is absent. Existing per-job CI environments avoid concurrent proof mutation.
+Five-position9-card smoke test: python scripts/verify_pregame.py; python scripts/browser_pregame.py; python scripts/browser_v13.py. Run evidence-preservation verifier python scripts/verify_mvp_experts.py alone after other evidence-producing jobs finish; concurrent new evidence intentionally triggers its conservation gate. Use CHROMIUM_EXECUTABLE=/usr/bin/chromium locally when Playwright's bundled binary is absent. Existing per-job CI environments avoid concurrent proof mutation.
 
 ## First real collection — 2026-10-11
 
