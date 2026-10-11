@@ -31,7 +31,8 @@ SOURCE_FILES = ['contracts/pregame-v1.md', 'docs/queue/API.md',
     'tests_pregame/test_evaluator.py', 'tests_pregame/test_store.py',
     'tests_pregame/test_http.py', 'knowledge_candidates/executable-v1.json',
     'knowledge_candidates/q05-review-priority.json', 'knowledge_candidates/q05-roster-profiles.json',
-    '.github/workflows/pregame-ci.yml', 'web_r4/pregame-icon.svg']
+    '.github/workflows/pregame-ci.yml', 'web_r4/pregame-icon.svg',
+    'tests_pregame/ui_pregame_pending_save.cjs']
 
 EXPECTED_BROWSER_IDS = ['connected'] + [p + '-' + check for p in
     ['TOP', 'JUNGLE', 'MID', 'BOTTOM', 'SUPPORT'] for check in
