@@ -41,9 +41,10 @@ class SegmentTests(unittest.TestCase):
                 result=c.process(plan,reservation_persisted=True)
                 self.assertEqual(result['status'],'READY')
                 requests=[x[3] for x in h.calls if x[0]=='POST']
-                self.assertEqual([body['input'][1]['processing'] for body in requests],[dict(type='static',start_offset=str(start)+'s',end_offset=str(end)+'s') for start,end in zip([0,600],ends)])
+                self.assertTrue(all(body['input'][0]['type']=='video' and body['input'][1]['type']=='text' for body in requests))
+                self.assertEqual([body['input'][0]['processing'] for body in requests],[dict(type='static',start_offset=str(start)+'s',end_offset=str(end)+'s') for start,end in zip([0,600],ends)])
                 self.assertEqual(result['artifacts'][0]['processing']['input_sha256'],m._digest(requests))
-                self.assertTrue(all('absolute' in body['input'][0]['text'].lower() for body in requests))
+                self.assertTrue(all('absolute' in body['input'][1]['text'].lower() for body in requests))
                 self.assertEqual(result['ledger']['processed_video_ids'],[VIDEO])
 
     def test_legacy_config_cannot_select_1210_second_video(self):

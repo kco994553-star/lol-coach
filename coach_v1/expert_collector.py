@@ -131,8 +131,8 @@ def _segment_body(video,start,end):
     instruction=(PROMPT+' Timestamps MUST be original-video absolute MM:SS, never clip-relative. '
         'Only retain statements at original seconds '+str(start)+' <= timestamp < '+str(end)+
         '. Do not add an offset or guess a missing original timestamp.')
-    return dict(model=MODEL,input=[dict(type='text',text=instruction),dict(type='video',uri=video['url'],
-        processing=dict(type='static',start_offset=str(start)+'s',end_offset=str(end)+'s'))],
+    return dict(model=MODEL,input=[dict(type='video',uri=video['url'],
+        processing=dict(type='static',start_offset=str(start)+'s',end_offset=str(end)+'s')),dict(type='text',text=instruction)],
         response_format=dict(type='text',mime_type='application/json',schema=RESPONSE_SCHEMA),
         store=False,stream=False,background=False)
 
