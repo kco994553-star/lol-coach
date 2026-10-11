@@ -19,7 +19,7 @@ def main():
     out.mkdir(parents=True,exist_ok=False);before=hashes();results={}
     minimum={'tests_expert.test_contract':10,'tests_expert.test_bridge':13,'tests_expert.test_measurement':15,
         'tests_expert.test_http':7,'tests_expert.test_collector':24,'tests_expert.test_entitlement':13,
-        'tests_expert.test_video_korean':5,'tests_expert.test_preservation':3,'tests_expert.test_segments':17,'tests_expert.test_diagnostics':14,'tests_expert.test_diagnostic_cli':5,'tests_expert.test_probe_receipt_v2':3,'tests_expert.test_generatecontent':1}
+        'tests_expert.test_video_korean':5,'tests_expert.test_preservation':3,'tests_expert.test_segments':17,'tests_expert.test_diagnostics':14,'tests_expert.test_diagnostic_cli':6,'tests_expert.test_probe_receipt_v2':3,'tests_expert.test_generatecontent':7}
     for name,count in minimum.items():
         stream=io.StringIO();suite=unittest.defaultTestLoader.loadTestsFromName(name)
         # CLI fixtures print safe status receipts; keep them in the suite log so
