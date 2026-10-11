@@ -4,7 +4,7 @@ import io
 import json
 import unittest
 import urllib.error
-from unittest.mock import patch
+from unittest.mock import Mock,patch
 
 from coach_v1 import expert_collector as m
 from tests_expert.test_collector import NOW,VIDEO,Transport,config,policy
@@ -122,6 +122,30 @@ class DiagnosticTests(unittest.TestCase):
             self.assertEqual(c.diagnostics[0]['http_status'],403)
             for key in ('error_message','error_code','error_status'):self.assertIsNone(c.diagnostics[0][key])
             self.assertNotIn('PRIVATE',json.dumps(c.diagnostics));self.assertEqual(h.model_calls,0)
+
+    def test_transport_oversized_http_200_retains_actual_status(self):
+        response=Mock(status=200);response.read.return_value=b'x'*9
+        with patch.object(m.urllib.request,'build_opener') as opener:
+            opener.return_value.open.return_value.__enter__.return_value=response
+            c=m.ExpertCollector(youtube_api_key='TEST_YOUTUBE_KEY',gemini_api_key='TEST_GEMINI_KEY',
+                clock=lambda:NOW,policy=policy(),max_bytes=8)
+            plan=c.prepare(config())
+        self.assertEqual(plan['status'],'BLOCKED_EXTERNAL')
+        self.assertEqual(plan['text_probe']['http_status'],200)
+        self.assertEqual(c.diagnostics[0]['http_status'],200)
+        self.assertEqual(c.diagnostics[0]['reason'],'RESPONSE_TOO_LARGE')
+        self.assertEqual(c.request_counts,dict(TEXT_PROBE=1,VIDEO_CLIP=0,METADATA=0))
+        self.assertEqual(plan['ledger']['reservations'],[])
+        response.read.assert_called_once_with(9)
+
+    def test_selected_transport_external_failure_preserves_response_status(self):
+        def transport(*args):raise m._External('MALFORMED_RESPONSE',http_status=200)
+        c=m.ExpertCollector(youtube_api_key='TEST_YOUTUBE_KEY',gemini_api_key='TEST_GEMINI_KEY',
+            transport=transport,clock=lambda:NOW,policy=policy())
+        receipt=c.probe_text()
+        self.assertEqual(receipt['http_status'],200)
+        self.assertEqual(c.diagnostics[0]['reason'],'MALFORMED_RESPONSE')
+        self.assertEqual(c.diagnostics[0]['http_status'],200)
 
     def test_old_plans_rejected_and_short_diagnostic_can_complete(self):
         for version in ('expert.reservation-plan.v1','expert.reservation-plan.v2'):

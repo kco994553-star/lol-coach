@@ -71,7 +71,7 @@ POLICY_KEYS={'free_tier_confirmed','entitlement_confirmed','quota_exclusive_conf
              'initial_zero_usage_confirmed','billing_tier'}
 SAFE_REASONS={'EMPTY_CHANNEL_ALLOWLIST','KNOWN_PAID_PROJECT','FREE_PROJECT_OR_ENTITLEMENT_UNVERIFIED',
     'DOCUMENTED_PAID_ENTITLEMENT_REQUIRED',
-    'MISSING_API_KEYS','REQUEST_BUDGET_EXHAUSTED','NETWORK_FAILURE','NETWORK_TIMEOUT','PROVIDER_HTTP_FAILURE',
+    'MISSING_API_KEYS','REQUEST_BUDGET_EXHAUSTED','NETWORK_FAILURE','NETWORK_TIMEOUT','PROVIDER_HTTP_FAILURE','RESPONSE_TOO_LARGE',
     'MALFORMED_RESPONSE','MALFORMED_CHANNEL_METADATA','MALFORMED_VIDEO_METADATA',
     'QUOTA_HISTORY_UNKNOWN','INITIAL_QUOTA_NOT_ATTESTED','NO_UNPROCESSED_PUBLIC_MATCHING_VIDEOS',
     'ROLLING_VIDEO_BUDGET_EXHAUSTED','RESERVATION_PERSISTENCE_NOT_CONFIRMED','RESERVATION_DISPATCH_DEADLINE_EXPIRED'}
@@ -289,7 +289,7 @@ def _transport(method,url,headers,body,timeout,max_bytes):
     try:
         with urllib.request.build_opener(_NoRedirect()).open(request,timeout=timeout) as response:
             raw=response.read(max_bytes+1)
-            if len(raw)>max_bytes:raise _External('RESPONSE_TOO_LARGE')
+            if len(raw)>max_bytes:raise _External('RESPONSE_TOO_LARGE',http_status=response.status)
             return response.status,{},raw
     except urllib.error.HTTPError as error:
         try:raw=error.read(MAX_ERROR_BYTES+1)
@@ -343,6 +343,7 @@ class ExpertCollector:
         timeout=min(self.timeout,MAX_METADATA_TIMEOUT) if youtube else self.timeout
         if timeout_limit is not None:timeout=min(timeout,timeout_limit)
         try:code,_,response=self.transport(method,url,headers,body,timeout,self.max_bytes)
+        except _External as error:raise fail(error.reason,error.status,error.http_status) from None
         except (TimeoutError,socket.timeout):raise fail('NETWORK_TIMEOUT') from None
         except urllib.error.URLError as error:
             reason='NETWORK_TIMEOUT' if isinstance(error.reason,(TimeoutError,socket.timeout)) else 'NETWORK_FAILURE'
