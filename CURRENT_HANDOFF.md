@@ -1,3 +1,27 @@
+된 것: 이브를 원딜 전문가 채널로 추가했고 클템 제외를 유지했습니다.
+된 것: PR #16을 병합해 350개 후보와 5개 포지션·9개 카드 검증을 연결했습니다.
+된 것: 무료 수집의 기존 예약 복구와 실패 예약 보존을 실제 실행으로 확인했습니다.
+안 된 것: Gemini 응답 시간 초과·Riot403·본인 PC/영상 부족으로 실제 자료는 대기입니다.
+내가 검토할 것: 웹 지식 후보, Riot 접근 권한, Gemini 응답 가능 상태와 본인 경기 자료입니다.
+
+# v1.6 source/channel implementation merged; actual acquisition BLOCKED_EXTERNAL
+
+Fresh main55de29d6b3d96376ae0387fb857c88875da5a7a3 merged PR16 on2026-10-11T07:21:47Z. Published831030ca3332e6106cb6bcd9c1605a50f3f148a1, main treecbc28331a2b7c5fbc483452e9b9a2fb4dfdcdfe6 equals exacttested/publishedtree. Required PR CI38120908999/38120908989 all3jobsPASS,13receiptgroups/389sourcepaths matched exacthead orPRmergetest lineage; evidence/queue/v16/ci-pr16.json. PR15source/CI/actualfirstattempt proofs preserved. Closeout work/queue-v16-closeout owns additive receipts/handoff only; root tokenmain-20261011-queue-v13-050952. Postmerge CI38121110537/38121110543 all3PASS with389sourcepaths; evidence/queue/v16/ci-post16.json. This additivecloseoutchanges no runtime source. Exactcloseoutpublicationstatus and ownerstate are recorded in commonclaim; finalPARKED_EXTERNAL followsrequiredCI/normalmerge.
+
+User ADCexpert 이브 URL canonically UCerhqgFd8dnypewC3yjAlbg is enabled/BOTTOM.16authorizedchannels/15enabled; 클템 remains excluded, 블루리쉬(P)disabled. GradeUNKNOWN because user supplies no L/Cclassification; landing title alone cannot establish grade, clipspeaker, RiotID or patch. Additivechannelcontract preserves initial15-channeldecision. Independent4cases clear; Main40collector/bridge and93expertchecksPASS, finalCI binds exactaddition. Unknowngrade doesnotpromoteL/Ccontent. Existing50requestcap covers45metadata+2model calls, noquota increase.
+
+Q05 all173 roster champions have source-linked supplemental records; initial190candidatebytes preserved +160new =350unique EXPLORATORYcandidates.119partialinitiativeannotations/54UNKNOWN. All174newexactexcerpts/hashes/locators independently reviewed, ZaccontrolbasisR correction retains priorGit/REDGREEN. Unsupportedactualpatch/phasechanges/mandatoryallyneeds remainunknown. Main157functional+12semantic and104freshChromiumPASS; exactfinalCI included guarded120browser/expert42/legacy124 suites. No userdecisioncreated; actualreviewedknowledge0; graph/dataabsence staysunknown.
+
+Second trusted expert run38121117903 onmain55de29d completedworkflow, acquisitionBLOCKED_EXTERNAL/NETWORK_TIMEOUT onfirstGemini request. Metadata3requests;2neweligiblevideos reserved. OfficialfreshfreeproofVERIFIED_FREE; recoveryFOUND priorfinalartifact11695440018/run38119795194. Finalledger exactly equals durable reservation; allpreviousreservations preserved,4videos/4298secondscharged, usableclaims0. Safeartifacts strictvalidated, no rawvideo/transcript/providerresponse/Secretretained. Receipt evidence/queue/v16/expert-collection-second.json; first NETWORK_FAILURE receipt retained. No further blind retry, reservationreset/refund or inference of expiredkey/paidstatus.
+
+Progress DONE Q01–Q09 =9/19 fullIDs, closedoriginalinputblockers3 (channels/freeproject/exclusiveinitialusage); 이브 identity clarification resolved separately, not counted as another fullqueuecompletion. Q15collector/statistics/graph/outcome implementation and PRE_GAME Q16/Q17/Q18 are implemented; actualdata/postgameextensions and Q19actualsummaries remainblocked. CoachingN0/accuracy=null; automatedexpertacceptedclaims0; paidservices0. No active subagents after independent recheck.
+
+Resume Q19 when freeproject provider transport can return a response within the bounded request, while durable rollingquota history is available. Use trustedmainActions and inspect acquisitionreceipt beforepublishing onlystrictvalidsafe summaries; never reset missingexpectedhistory, guesskeyexpiry orenableBilling. Manualshorttimestampedsummary remainsavailable immediately and staysEXPLORATORY. Resume Q15 with valid Riotkey/projectaccess throughSecretUI; priorrun38116217243 firstrequest403/keykindUNKNOWN remainsauthoritative. Q10needs actualowngamePCofficialcapture+fieldreceipt; Q11 followsactualoriginals; Q12matchingPOVandanchors; Q13 then-knownreview; Q14independentreference. Postgame Q16suspectedinterval/recurrence, Q17dependencyfeedback, Q18verifiedstagepositioncomparison follow thoseinputs. Actualgamepatch andstatisticalstageannotations absent; user approval staysmanualwebonly.
+
+Next: when provider/Riot/PCinputs arrive, re-intakefreshGitHub and resume corresponding feature. Main publishes thesecloseoutreceipts viarequiredCI/normalmerge then markscommonclaim PARKED_EXTERNAL. No independentREADY implementation remains after publication. Old history below is retained and superseded only by this latest outcome.
+
+---
+
 된 것: PR #15를 병합했고 5개 포지션·9개 카드와 전문가 발언 입력 흐름을 검증했습니다.
 된 것: Q19 무료 조건·할당량 보존·수동 입력·출처 조회·후보·통계 대조를 연결했습니다.
 된 것: 남은 160명 후보를 확장해 총 350개 후보의 저장·조회 흐름을 검증했습니다.
