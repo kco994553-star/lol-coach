@@ -35,7 +35,7 @@ async function scenario(browser,name,{heldRead=false,revertRole=false,ambiguous=
       }
       if(pathname.endsWith('/history'))data=saved?[saved]:[];
       if(pathname.endsWith('/plans')&&method==='POST')data=storedPlan={schema_version:'pregame.plan.v1',mode:'PRE_GAME',id:'d'.repeat(32),session_id:saved.session_id,revision:1,input_revision:1,input_sha256:saved.input_sha256,created_at:'2026-10-11T00:00:00Z',validity:'CURRENT',expiry_reasons:[],input:copy(saved.input),common:{map:roles.map(cell),jungle:cell('JUNGLE'),composition:cell('COMPOSITION')},personal:{role:cell('ROLE'),lane:cell('LANE'),fight:cell('FIGHT')},changes:cell('CHANGES'),evaluations:[],knowledge_fingerprint:'e'.repeat(64),coaching_accuracy:null,real_match_validation:'NOT_EVALUATED'};
-      else if(pathname.endsWith('/plans'))data=storedPlan?[{...storedPlan,validity:saved.revision===1?'CURRENT':'EXPIRED',expiry_reasons:saved.revision===1?[]:['INPUT_REVISION_CHANGED']}]:[];
+      else if(pathname.endsWith('/plans')||pathname.endsWith('/plan-history'))data=storedPlan?[{...storedPlan,validity:saved.revision===1?'CURRENT':'EXPIRED',expiry_reasons:saved.revision===1?[]:['INPUT_REVISION_CHANGED']}]:[];
       if(pathname==='/dev/v1/pregame/plans/'+'d'.repeat(32)){
         const snapshot=copy(storedPlan);
         readReceived.resolve('READ_STARTED');
