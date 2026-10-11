@@ -127,7 +127,11 @@ class PregameHandler(Handler):
                 return self.bounded_reply(201,dict(proposal=proposal,spec=spec.model_dump(mode='json')))
         if route==prefix+'/export' and self.command=='GET':return self.bounded_reply(200,pg.export_data())
         if route==prefix+'/restore' and self.command=='POST':
-            b=self.body();self.fields(b,('archive',));return self.bounded_reply(200,pg.import_data(b['archive']))
+            b=self.body();self.fields(b,('archive',))
+            archive=b['archive']
+            if not isinstance(archive,dict) or not isinstance(archive.get('inputs'),list):raise ServiceError(422,'INVALID_PREGAME_ARCHIVE')
+            for record in archive['inputs']:self.check_input(record['input'])
+            return self.bounded_reply(200,pg.import_data(archive))
         if route==prefix+'/inputs':
             if self.command=='GET':return self.bounded_reply(200,pg.list_inputs())
             if self.command=='POST':

@@ -98,5 +98,14 @@ class HTTPTests(unittest.TestCase):
         plan=self.call('/dev/v1/pregame/inputs/'+record['session_id']+'/plans','POST',dict(expected_revision=1),'plan')[1]
         self.assertEqual(plan['personal']['role']['status'],'UNKNOWN')
 
+    def test_restore_cannot_bypass_manual_admission(self):
+        from coach_v1.pregame_store import PregameStore
+        d=golden();d['source'].update(kind='AUTOMATIC',verification='SOURCE_VERIFIED')
+        unrelated=PregameStore(Path(self.tmp.name)/'fixture.sqlite')
+        unrelated.save(d,None,0,'archive')
+        status,result=self.call('/dev/v1/pregame/restore','POST',dict(archive=unrelated.export_data()))
+        self.assertEqual(status,422);self.assertEqual(result['error_code'],'AUTOMATIC_ADAPTER_UNAVAILABLE')
+        self.assertEqual(self.call('/dev/v1/pregame/inputs')[1],[])
+
 
 if __name__=='__main__':unittest.main()
