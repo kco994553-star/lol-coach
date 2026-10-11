@@ -35,11 +35,15 @@ def current_knowledge(research):
 
 
 def candidate_specs():
-    path=ROOT/'knowledge_candidates'/'executable-v1.json'
-    if not path.exists():return []
-    data=json.loads(path.read_text())
-    rows=data if isinstance(data,list) else data['specs']
-    return [parse_rule(r).model_dump(mode='json') for r in rows]
+    rows=[]
+    for name in ('executable-v1.json','executable-expanded-v1.json'):
+        path=ROOT/'knowledge_candidates'/name
+        if path.exists():
+            data=json.loads(path.read_text())
+            rows.extend(data if isinstance(data,list) else data['specs'])
+    specs=[parse_rule(r).model_dump(mode='json') for r in rows]
+    if len({s['rule_id'] for s in specs})!=len(specs):raise ServiceError(409,'CANDIDATE_ID_CONFLICT')
+    return specs
 
 
 def roster():
