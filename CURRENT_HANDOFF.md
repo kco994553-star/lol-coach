@@ -1,3 +1,16 @@
+된 것: 최신 main0337d915·PR10·공통 소유권과 기존 회귀 PASS를 확인했습니다.
+된 것: 2026-10-11 사용자 결정으로 게임플랜 대상은 선택한 5개 포지션 모두입니다.
+진행 중: Q01·Q02·Q05는 분리 브랜치 병렬 작업, 공통 계약·통합은 Main 소유입니다.
+안 된 것: 경기 전 게임플랜 및 5개 포지션 브라우저 검증은 아직 구현 전입니다.
+내가 검토할 것: 후보 지식은 웹에서 직접 승인하며 AI가 대신 승인하지 않습니다.
+
+# Queue v1.1 execution — 2026-10-11
+Intake HEAD0337d915633f6ad5719f55de1252f05e06621c9b; run_token main-20261011-queue-v11-root; branch feat/queue-gameplan-v1.1-2026-10-11.
+2026-10-09 ADC-only target is superseded: TOP/JUNGLE/MID/BOTTOM/SUPPORT selected position; frequent champions are preferences only. Frozen originals and historical handoff remain below.
+Queue: docs/queue/QUEUE.md. No authoritative current gameplay patch is stored; historical and synthetic patches are not promoted. Real coaching N=0/accuracy=null.
+
+---
+
 된 것: 원딜 PRE_GAME 방향 전환을 반영하고 이 작업의 외부 영상 대기를 해제했습니다.
 된 것: 웹 사용자 승인·거절, 불변 버전과 출처 해시 보존, 자동 승격 차단을 구현했습니다.
 된 것: 기존 회귀·새 승인 검사·브라우저124개가 통과했고 PR10을 병합했습니다.
