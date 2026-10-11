@@ -162,7 +162,11 @@ def _generated_text(response):
     parts=content.get('parts');_require(isinstance(parts,list) and bool(parts))
     texts=[]
     for part in parts:
-        _keys(part,{'text'});_require(isinstance(part['text'],str));texts.append(part['text'])
+        _require(isinstance(part,dict) and 'text' in part and set(part)<={'text','thought','thoughtSignature'})
+        _require(isinstance(part['text'],str) and type(part.get('thought',False)) is bool)
+        if 'thoughtSignature' in part:_require(isinstance(part['thoughtSignature'],str))
+        if part.get('thought',False):continue  # Neither thoughts nor signatures enter public summaries.
+        texts.append(part['text'])
     text=''.join(texts);_require(bool(text.strip()) and len(text.encode())<=200000)
     return text
 

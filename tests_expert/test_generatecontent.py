@@ -104,5 +104,20 @@ class GenerateContentTests(unittest.TestCase):
         self.assertEqual(plan['status'],'BLOCKED_EXTERNAL');self.assertEqual(plan['ledger']['reservations'],[])
         self.assertEqual(c.request_counts,dict(TEXT_PROBE=1,VIDEO_CLIP=0,METADATA=1));self.assertEqual(waits,[])
 
+    def test_documented_thought_metadata_is_skipped_and_signature_never_retained(self):
+        response=answer()
+        response['candidates'][0]['content']['parts']=[dict(text='PRIVATE_THOUGHT',thought=True,thoughtSignature='PRIVATE_SIGNATURE'),
+            dict(text=json.dumps({'claims':[claim()]}),thought=False,thoughtSignature='PRIVATE_FINAL_SIGNATURE')]
+        h=HTTP(response=response);c=collector(h);result=c.process(c.prepare(config()),reservation_persisted=True)
+        self.assertEqual(result['status'],'READY');self.assertEqual(len(result['artifacts']),1)
+        for private in ('PRIVATE_THOUGHT','PRIVATE_SIGNATURE','PRIVATE_FINAL_SIGNATURE','thoughtSignature'):
+            self.assertNotIn(private,json.dumps(result))
+        for parts in ([dict(text='TEST thought only',thought=True)],
+            [dict(text='TEST',thought='true')],[dict(text='TEST',thoughtSignature=123)],
+            [dict(text='TEST',unknown=True)],[dict(text='TEST',functionCall={})]):
+            invalid=answer();invalid['candidates'][0]['content']['parts']=parts
+            h=HTTP(response=invalid);c=collector(h);result=c.process(c.prepare(config()),reservation_persisted=True)
+            self.assertEqual(result['artifacts'],[]);self.assertEqual(result['ledger']['processed_video_ids'],[])
+
 
 if __name__=='__main__':unittest.main()
