@@ -58,6 +58,7 @@ DENY = {
  'Rammus': [('passive.description','frontline')],
  'Rumble': [('spells.1.description','grab-pick')],
  'Samira': [('spells.1.description','poke'),('passive.description','grab-pick')],
+ 'Sylas': [('spells.2.description','grab-pick')],
  'Teemo': [('spells.3.description','poke')],
  'Tristana': [('spells.1.description','poke'),('spells.2.description','poke')],
  'TwistedFate': [('spells.3.description','dive')],

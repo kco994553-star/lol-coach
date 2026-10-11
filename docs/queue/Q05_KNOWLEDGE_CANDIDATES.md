@@ -161,10 +161,10 @@ All 160 pinned responses are archived separately from the original sources;
 there are no failed or remaining fetch IDs.
 
 The expansion records **800 exact mechanic excerpts** (passive + four spells per
-champion). AI audited the source text and added **435 mechanistic label candidates**
+champion). AI audited the source text and added **434 mechanistic label candidates**
 across individual ability excerpts for **151** expanded profiles. A label is a
 possibility candidate with its own source URL/hash/excerpt/patch boundary and at
-least one limit. This is not 435 independent truths, approvals, match observations,
+least one limit. This is not 434 independent truths, approvals, match observations,
 or validated tactical predictions. All rows remain `EXPLORATORY`; actual USER_WEB
 reviews, gameplay validations and coaching accuracy remain zero/zero/null.
 
@@ -234,3 +234,7 @@ identities, 13 detailed profiles, 160 unknown-only profiles, ten priorities,
 all five role views, unknown unsupported numeric/power fields, and the universal
 EXPLORATORY/no-approval/no-coaching boundary. Receipt:
 [content-validation.json](../../evidence/queue/q05/content-validation.json).
+
+Source review correction: Sylas E self-pull does not establish enemy control; the
+unsupported grab-pick interpretation was removed. Original excerpt/HTTP bytes and
+first RED proof remain preserved, and no unarchived gameplay knowledge replaces it.

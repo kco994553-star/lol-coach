@@ -2,7 +2,7 @@
   "review_state": "EXPLORATORY",
   "actor": "AI_CONTENT_AUDIT_NOT_USER_WEB",
   "approval_actor": null,
-  "exclusion_count": 35,
+  "exclusion_count": 36,
   "addition_count": 49,
   "exclusions": {
     "Akshan": [
@@ -140,6 +140,12 @@
       ],
       [
         "passive.description",
+        "grab-pick"
+      ]
+    ],
+    "Sylas": [
+      [
+        "spells.2.description",
         "grab-pick"
       ]
     ],
@@ -470,5 +476,14 @@
       ]
     ]
   },
-  "rationale": "Patterns locate excerpts only. AI source reading excludes self/ally-only motion, self-control, energy/spell charging, enemy shield/projectile removal, names without asserted effects, and basic-attack/stack descriptions without clear poke. Explicit additional mechanics are source readings, not user approval or outcome validation."
+  "rationale": "Patterns locate excerpts only. AI source reading excludes self/ally-only motion, self-control, energy/spell charging, enemy shield/projectile removal, names without asserted effects, and basic-attack/stack descriptions without clear poke. Explicit additional mechanics are source readings, not user approval or outcome validation.",
+  "review_corrections": [
+    {
+      "champion": "Sylas",
+      "locator": "spells.2.description",
+      "removed_label": "grab-pick",
+      "reason": "Archived excerpt describes pulling himself; it does not establish enemy control.",
+      "review_actor": "AI_CONTENT_AUDIT_NOT_USER_WEB"
+    }
+  ]
 }
