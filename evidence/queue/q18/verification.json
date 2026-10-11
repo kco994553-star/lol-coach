@@ -9,7 +9,8 @@
   "dependency": {
     "module": "coach_v1.power_stats.student_t_critical",
     "test_loading": "importlib from sibling Q15 worktree, no copied file",
-    "tested_file_sha256": "77c7902b5a5267f698675dbe191f31621399f748a7ffe0dad944da460925a823"
+    "tested_file_sha256": "77c7902b5a5267f698675dbe191f31621399f748a7ffe0dad944da460925a823",
+    "integrated_commit": "8f97668a80ed27cab2a24042a405f66bf33001ea"
   },
   "checks": [
     "red: absent module six assertions",
@@ -17,11 +18,13 @@
     "green: full 73 pregame tests",
     "python -m validation: PASS, 27 frozen payload files",
     "compileall: PASS",
-    "git diff --check: PASS"
+    "git diff --check: PASS",
+    "ordinary python -m unittest discover -s tests_pregame -q: 93 PASS with committed Q15 dependency"
   ],
   "notes": [
     "expanded-first failure was an assertion using an unchanged mutation; mutation corrected before green",
     "validation generated evidence/validation.json/history changes restored; preserved core untouched",
     "real role tactics unavailable; default no movement statistics; actual review remains Q11/Q13 blocked"
-  ]
+  ],
+  "integrated_pregame_tests": 93
 }
