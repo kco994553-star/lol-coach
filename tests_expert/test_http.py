@@ -1,5 +1,7 @@
 import copy
 import json
+import http.client
+import os
 from pathlib import Path
 import threading
 import unittest
@@ -49,7 +51,29 @@ class ExpertHTTPTests(unittest.TestCase):
             malformed['claims'].append(c)
         self.assertEqual(self.call('/dev/v1/experts/import','POST',dict(artifact=malformed))[0],422)
         self.assertEqual(self.server.research.list(),[])
-        self.assertEqual(self.call('/dev/v1/experts/import','POST',dict(artifact=artifact(),raw='x'*1000001))[0],413)
+        # The server rejects advertised oversized bodies before consuming them.
+        # Send only headers to avoid a client-side broken-pipe race.
+        con=http.client.HTTPConnection('127.0.0.1',self.server.server_port,timeout=10)
+        try:
+            con.putrequest('POST','/dev/v1/experts/import')
+            con.putheader('Authorization','Bearer '+self.token);con.putheader('Content-Type','application/json')
+            con.putheader('Content-Length','1000001');con.endheaders()
+            response=con.getresponse();response.read();self.assertEqual(response.status,413)
+        finally:con.close()
+        self.assertEqual(self.server.research.list(),[])
+
+    def test_startup_file_count_bytes_and_nonregular_files_rejected(self):
+        from coach_v1.pregame_server import load_expert_directory
+        directory=Path(self.tmp.name)/'limited-files';directory.mkdir()
+        large=directory/'large.json';large.write_bytes(b' '*200001)
+        with self.assertRaises(ValueError):load_expert_directory(self.server,directory,explicit=True)
+        large.unlink()
+        if hasattr(os,'mkfifo'):
+            fifo=directory/'fifo.json';os.mkfifo(fifo)
+            with self.assertRaises(ValueError):load_expert_directory(self.server,directory,explicit=True)
+            fifo.unlink()
+        for i in range(101):(directory/f'file-{i}.json').write_text(json.dumps(artifact()))
+        with self.assertRaises(ValueError):load_expert_directory(self.server,directory,explicit=True)
         self.assertEqual(self.server.research.list(),[])
 
     def test_startup_batch_rejects_malformed_before_any_import(self):
