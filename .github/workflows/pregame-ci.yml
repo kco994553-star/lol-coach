@@ -43,6 +43,13 @@ jobs:
           CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
           export CHROMIUM_EXECUTABLE
           python scripts/browser_pregame.py | tee "$RUNNER_TEMP/pregame-browser.json"
+      - name: Verify pending save history races in Chromium
+        shell: bash
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/pregame-playwright/node_modules"
+          CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
+          export CHROMIUM_EXECUTABLE
+          node tests_pregame/ui_pregame_pending_save.cjs | tee "$RUNNER_TEMP/pregame-races.json"
       - name: Print exact fresh receipts
         if: always()
         run: |
@@ -61,6 +68,10 @@ jobs:
           payload = {'commit_sha': os.environ['GITHUB_SHA'], 'run_id': os.environ['GITHUB_RUN_ID'],
                      'run_attempt': os.environ['GITHUB_RUN_ATTEMPT'], 'receipts': receipts,
                      'real_match_coaching_validation_passed': False, 'coaching_accuracy': None}
+          try:
+              payload['ui_races'] = json.loads((Path(os.environ['RUNNER_TEMP']) / 'pregame-races.json').read_text())
+          except (OSError, ValueError) as error:
+              payload['ui_races'] = {'status': 'NOT_PRODUCED', 'error': str(error)}
           print('PREGAME_RECEIPT_JSON=' + json.dumps(payload, ensure_ascii=False))
           with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a') as output:
               output.write('## Five-position pregame verification\n\n```json\n' + json.dumps(payload, ensure_ascii=False, indent=2) + '\n```\n')
