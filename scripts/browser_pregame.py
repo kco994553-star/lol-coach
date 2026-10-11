@@ -21,7 +21,9 @@ from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-SOURCE_FILES = ['contracts/pregame-v3-amendment.md','.github/workflows/riot-power-collection.yml','contracts/pregame-v2.md','contracts/pregame-v3.md',
+SOURCE_FILES = ['coach_v1/outcome_stats.py','tests_pregame/test_outcome_stats.py','tests_pregame/test_outcome_http.py',
+    'contracts/outcome-v1.md','web_r4/pregame_outcome.js','tests_pregame/browser_outcome.cjs',
+    'contracts/pregame-v3-amendment.md','.github/workflows/riot-power-collection.yml','contracts/pregame-v2.md','contracts/pregame-v3.md',
     'coach_v1/pregame_v2.py','coach_v1/pregame_v3.py','coach_v1/movement.py',
     'coach_v1/power_stats.py','coach_v1/riot_collector.py','web_r4/pregame_power.js',
     'knowledge_candidates/initiative-v2.json','scripts/browser_v13.py','tests_pregame/browser_v13.cjs',

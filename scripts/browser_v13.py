@@ -31,9 +31,10 @@ ENEMY = ['Fiora', 'LeeSin', 'Zed', 'Ezreal', 'Nautilus']
 PATCH = '16.19'
 EXPECTED_BROWSER_IDS = ['connected', 'legacy-input-shape'] + [r + '-' + c for r in ROLES for c in
     ['nine-cards', 'common-identity', 'guard-state', 'operations-state', 'movement-state',
-     'five-mini-graphs', 'lane-graph', 'dirty-hides']] + [
+     'five-mini-graphs', 'lane-graph', 'outcome-table', 'dirty-hides']] + [
     'explicit-pick-metadata', 'metadata-reopen', 'power-renderer-ci-gaps', 'power-markers',
-    'power-synthetic-gates', 'power-fallback-labels', 'power-late-dirty', 'power-late-logout',
+    'power-synthetic-gates', 'power-fallback-labels', 'outcome-late-navigation',
+    'outcome-late-dirty', 'power-late-dirty', 'outcome-late-logout', 'power-late-logout',
     'no-decisions', 'no-browser-errors']
 
 
@@ -51,7 +52,7 @@ def synthetic_pairs():
     pairs = []
     for match_index in range(30):
         participants = [dict(participantId=offset+i+1,teamId=team,teamPosition=position,
-            championName=champions[i]) for team, offset, champions in [(100,0,ALLY),(200,5,ENEMY)]
+            championName=champions[i],win=(match_index%2==0)==(team==100)) for team, offset, champions in [(100,0,ALLY),(200,5,ENEMY)]
             for i, position in enumerate(ROLES)]
         frames = []
         for minute in range(1,6):
@@ -68,12 +69,13 @@ def synthetic_pairs():
         metadata=dict(matchId='KR_SYNTHETIC_BROWSER_'+str(match_index))
         pairs.append(dict(match=dict(metadata=metadata,info=dict(queueId=420,mapId=11,
             gameMode='CLASSIC',gameVersion=PATCH+'.1',gameStartTimestamp=100000,
-            gameDuration=300,participants=participants)),timeline=dict(metadata=metadata,
+            gameDuration=1800+60*(match_index%3),gameEndTimestamp=1900000+60000*(match_index%3),participants=participants,teams=[dict(teamId=team,win=(match_index%2==0)==(team==100)) for team in (100,200)])),timeline=dict(metadata=metadata,
             info=dict(frames=frames,frameInterval=60000))))
     return pairs
 
 
 def synthetic_statistics():
+    from coach_v1.outcome_stats import build_outcome_dataset
     from coach_v1.power_stats import build_power_dataset
     from coach_v1.movement import build_movement_dataset
     source=dict(provider='SYNTHETIC',platform='KR',regional='ASIA',queue_id=420,map_id=11,
@@ -87,7 +89,8 @@ def synthetic_statistics():
         for p in pairs for minute,stage,field in [(1,'EARLY','LANING_ACTIVE'),
             (2,'MID','FIRST_TURRET_DESTROYED'),(3,'LATE','LONG_RESPAWN_RISK')]]
     return (build_power_dataset(pairs,source=source,complete_item_ids=(3001,3002)),
-            build_movement_dataset(pairs,source=source,phase_annotations=annotations))
+            build_movement_dataset(pairs,source=source,phase_annotations=annotations),
+            build_outcome_dataset(pairs,source=source))
 
 
 def synthetic_specs(movement):
@@ -133,8 +136,8 @@ def serve_synthetic(database, token_file):
     from coach_v1.state import digest
     server = module.PregameWorkbench(Path(database), Path(token_file).read_text().strip(),
                                      Limits(1_000_000, 1000, 100, 100, 100, 10))
-    power,movement=synthetic_statistics();specs = synthetic_specs(movement); view = []
-    server.test_mode=True;server.power_data=power;server.movement_statistics=movement
+    power,movement,outcome=synthetic_statistics();specs = synthetic_specs(movement); view = []
+    server.test_mode=True;server.power_data=power;server.movement_statistics=movement;server.outcome_data=outcome
     for spec in specs:
         source = server.research.add('RAW_DIAGNOSTIC', 'SYNTHETIC V13/V14 fixture',
             dict(schema_version=spec['schema_version'].replace('pregame.rule.', 'pregame.rule-source.'), spec=spec))
