@@ -199,6 +199,8 @@ def run_mode(mode, output):
         validation=validation, check_count=len(checks), expected_check_count=len(EXPECTED_BROWSER_IDS),
         checks_passed=sum(c.get('passed') is True for c in checks),
         checks_failed=sum(c.get('passed') is not True for c in checks),
+        failed_check_ids=[c.get('id') for c in checks if c.get('passed') is not True],
+        first_failure=browser.get('first_failure') if browser else None,
         checks_not_executed=max(0,len(EXPECTED_BROWSER_IDS)-len(checks)),
         source_sha256=current, store_review_audit=store_audit,
         git_head=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
