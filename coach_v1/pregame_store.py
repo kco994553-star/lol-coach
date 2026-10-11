@@ -23,6 +23,11 @@ PLAN_META={'id','session_id','revision','input_revision','input_sha256','created
 PLAN_FIELDS={'schema_version','mode','input','common','personal','changes','evaluations','knowledge_fingerprint','coaching_accuracy','real_match_validation'}
 
 
+PLAN_FIELDS_V2=PLAN_FIELDS|{'operations','team_dependencies','pick_warnings'}
+
+def plan_fields(r):
+    return PLAN_FIELDS_V2 if r.get('schema_version')=='pregame.plan.v2' else PLAN_FIELDS
+
 def _id(value):
     if not isinstance(value,str) or not TOKEN.fullmatch(value):raise ServiceError(422,'INVALID_PREGAME_ID')
 
@@ -52,7 +57,7 @@ def _input_record(r):
 
 
 def _plan_record(r):
-    if not isinstance(r,dict) or set(r)!=PLAN_META|PLAN_FIELDS or r['schema_version']!='pregame.plan.v1' or r['mode']!='PRE_GAME':
+    if not isinstance(r,dict) or set(r)!=PLAN_META|plan_fields(r) or r['schema_version'] not in ('pregame.plan.v1','pregame.plan.v2') or r['mode']!='PRE_GAME':
         raise ValueError('plan record')
     _id(r['id']);_id(r['session_id']);_revision(r['revision']);_revision(r['input_revision'])
     parse_input(r['input'])
@@ -95,6 +100,13 @@ def _plan_structure(r):
     for key in ('jungle','composition'):cell(r['common'][key],key.upper())
     for key in ('role','lane','fight'):cell(r['personal'][key],key.upper())
     cell(r['changes'],'CHANGES');traces(r['evaluations'])
+    if r['schema_version']=='pregame.plan.v2':
+        cell(r['operations'],'OPERATIONS')
+        summary=r['team_dependencies']
+        if not isinstance(summary,dict) or set(summary)!={'status','dependency_risk','initiator_count','allies','reasons'}:raise ValueError('team summary')
+        if summary['status'] not in ('KNOWN','UNKNOWN','CONFLICTING') or summary['dependency_risk'] not in (None,'NONE','NO_INITIATOR','SINGLE_INITIATOR'):raise ValueError('team summary status')
+        if summary['initiator_count'] is not None and (type(summary['initiator_count']) is not int or not 0<=summary['initiator_count']<=5):raise ValueError('initiator count')
+        array(summary['allies'],dict);array(summary['reasons'],str);array(r['pick_warnings'],dict)
 
 
 class PregameStore:
@@ -212,7 +224,7 @@ class PregameStore:
 
     def save_plan(self,sid,expected_revision,base,key):
         _id(sid);_revision(expected_revision)
-        if not isinstance(base,dict) or set(base)!=PLAN_FIELDS:raise ServiceError(422,'INVALID_PLAN')
+        if not isinstance(base,dict) or set(base)!=plan_fields(base):raise ServiceError(422,'INVALID_PLAN')
         operation='plan:'+sid;fingerprint=digest(dict(expected_revision=expected_revision))
         with self._db() as db:
             self._validate(db)
