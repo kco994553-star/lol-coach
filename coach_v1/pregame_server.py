@@ -97,7 +97,8 @@ class PregameHandler(Handler):
         self.preflight();path=urlsplit(self.path);route=path.path
         if path.query or path.fragment:raise ServiceError(400,'QUERY_NOT_SUPPORTED')
         assets={'/pregame':('pregame.html','text/html; charset=utf-8'),'/pregame/':('pregame.html','text/html; charset=utf-8'),
-            '/pregame.js':('pregame.js','text/javascript; charset=utf-8'),'/pregame.css':('pregame.css','text/css; charset=utf-8')}
+            '/pregame.js':('pregame.js','text/javascript; charset=utf-8'),'/pregame.css':('pregame.css','text/css; charset=utf-8'),
+            '/pregame-icon.svg':('pregame-icon.svg','image/svg+xml')}
         if self.command=='GET' and route in assets:
             filename,ctype=assets[route];file=ROOT/'web_r4'/filename
             if not file.exists():raise ServiceError(404,'PREGAME_UI_NOT_INSTALLED')

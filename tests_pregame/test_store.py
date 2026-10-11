@@ -34,8 +34,8 @@ class StoreTests(unittest.TestCase):
         with self.assertRaises(ServiceError):self.s.save(d,first['session_id'],1,'old-key')
 
     def plan(self,record):
-        return dict(schema_version='pregame.plan.v1',mode='PRE_GAME',input=record['input'],
-            common={},personal={},changes={},evaluations=[],knowledge_fingerprint=digest([]),coaching_accuracy=None,real_match_validation='NOT_EVALUATED')
+        from coach_v1.pregame_evaluator import evaluate_gameplan
+        return evaluate_gameplan(record['input'],[])
 
     def test_plan_retry_saved_reopen_and_input_expiry(self):
         first=self.save();p=self.s.save_plan(first['session_id'],1,self.plan(first),'plan-key')
@@ -74,6 +74,20 @@ class StoreTests(unittest.TestCase):
         target=self.cls(Path(self.tmp.name)/'changed.sqlite')
         with self.assertRaises(ServiceError):target.import_data(archive)
         self.assertEqual(target.list_inputs(),[])
+
+    def test_restore_rejects_malformed_nested_plan_even_with_consistent_archive_hash(self):
+        from coach_v1.state import canonical
+        first=self.save();self.s.save_plan(first['session_id'],1,self.plan(first),'plan')
+        for mutation in [lambda r:r.update(common=None),lambda r:r['common'].update(map=[]),
+                         lambda r:r['personal']['role'].update(reasons='invalid'),
+                         lambda r:r.update(evaluations=[None])]:
+            archive=copy.deepcopy(self.s.export_data());mutation(archive['plans'][0])
+            for op in archive['operations']:
+                if op['operation'].startswith('plan:'):op['response']=canonical(archive['plans'][0])
+            archive['sha256']=digest({k:v for k,v in archive.items() if k!='sha256'})
+            target=self.cls(Path(self.tmp.name)/('malformed-'+str(len(archive['plans'][0].get('evaluations',[])))+'-'+__import__('uuid').uuid4().hex+'.sqlite'))
+            with self.assertRaises(ServiceError):target.import_data(archive)
+            self.assertEqual(target.list_inputs(),[])
 
 
 if __name__=='__main__':unittest.main()

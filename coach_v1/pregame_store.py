@@ -7,7 +7,7 @@ import re
 import sqlite3
 import uuid
 
-from .pregame_contract import parse_input
+from .pregame_contract import POSITIONS, parse_input
 from .state import canonical, digest
 from .storage import ServiceError
 
@@ -59,8 +59,42 @@ def _plan_record(r):
     if digest(r['input'])!=r['input_sha256'] or not re.fullmatch('[a-f0-9]{64}',r['knowledge_fingerprint']):raise ValueError('plan identity')
     if r['coaching_accuracy'] is not None or r['real_match_validation']!='NOT_EVALUATED':raise ValueError('accuracy claim')
     if datetime.fromisoformat(r['created_at']).utcoffset().total_seconds()!=0:raise ValueError('plan time')
+    _plan_structure(r)
     _bounded(r)
     return r
+
+
+def _plan_structure(r):
+    """Reject malformed history before it can reach the plan renderer."""
+    def array(value, kind):
+        if not isinstance(value,list) or any(not isinstance(item,kind) for item in value):raise ValueError('plan array')
+    def cooldowns(values):
+        array(values,dict)
+        for c in values:
+            for key in ('base_values','conditional_values'):
+                array(c.get(key),(int,float))
+            for key in ('reasons','conditional_reasons'):array(c.get(key),str)
+            array(c.get('sources'),dict)
+            if not isinstance(c.get('conditional'),dict):raise ValueError('cooldown conditional')
+    def traces(values):
+        array(values,dict)
+        for t in values:
+            array(t.get('sources'),dict);cooldowns(t.get('cooldowns'))
+    def cell(c,key):
+        if not isinstance(c,dict) or set(c)!={'key','title','status','texts','reasons','rules','outlook','cooldowns'}:
+            raise ValueError('plan cell')
+        if c['key']!=key or not isinstance(c['title'],str) or c['status'] not in ('UNKNOWN','KNOWN','CONFLICTING'):
+            raise ValueError('plan cell identity')
+        for field in ('texts','reasons'):array(c[field],str)
+        traces(c['rules']);cooldowns(c['cooldowns'])
+    if not isinstance(r['common'],dict) or set(r['common'])!={'map','jungle','composition'}:raise ValueError('common plan')
+    if not isinstance(r['personal'],dict) or set(r['personal'])!={'role','lane','fight'}:raise ValueError('personal plan')
+    array(r['common']['map'],dict)
+    if len(r['common']['map'])!=len(POSITIONS):raise ValueError('map positions')
+    for c,key in zip(r['common']['map'],POSITIONS):cell(c,key)
+    for key in ('jungle','composition'):cell(r['common'][key],key.upper())
+    for key in ('role','lane','fight'):cell(r['personal'][key],key.upper())
+    cell(r['changes'],'CHANGES');traces(r['evaluations'])
 
 
 class PregameStore:
