@@ -12,7 +12,7 @@
   function provenance(parent,view,source){
     const details=element('details',undefined,'pg-power-source');details.append(element('summary','통계 출처·정밀도·표본 한계'));
     details.append(element('p','데이터 버전 '+(view.schema_version || view.dataset_version || 'UNKNOWN')+' · digest '+(view.dataset_digest || 'UNKNOWN'),'small'));
-    for(const [field,label] of [['provider','제공자'],['sample_kind','자료 종류'],['patch','패치'],['tier','티어'],['retrieved_at','수집 시각'],['formula_version','계산식 버전'],['precision_policy','정밀도 정책'],['population_reference','모집단 참조']]){
+    for(const [field,label] of [['provider','제공자'],['sample_kind','자료 종류'],['patch','패치'],['tier','티어'],['retrieved_at','수집 시각'],['formula_version','계산식 버전'],['precision_policy','정밀도 정책'],['population_reference','모집단 참조'],['time_bin_policy','시간 구간 정책']]){
       const value=source[field];details.append(element('p',label+' · '+(value===undefined?'UNKNOWN':typeof value==='object'?JSON.stringify(value):value),'small'));
     }
     details.append(element('p','집계 표본 · 실제 경기 '+(view.samples?.real_matches ?? 'UNKNOWN')+' · 합성 경기 '+(view.samples?.synthetic_matches ?? 'UNKNOWN'),'small'));
@@ -50,7 +50,7 @@
       }}
       for(const [owner,data] of [['own',view],['opponent',opponent]])for(const m of data?.markers || []){
         if(![m.q1_minute,m.median_minute,m.q3_minute].every(finite))continue;
-        const yy=height-(owner==='own'?42:22),name=m.kind==='LEVEL'?'레벨 '+(m.level ?? 'UNKNOWN'):'완성 아이템 '+(m.item_order ?? 'UNKNOWN')+' · '+(m.item_id ?? 'UNKNOWN');
+        const yy=height-(owner==='own'?42:22),name=m.kind==='LEVEL'?'레벨 '+(m.level ?? 'UNKNOWN'):'완성 비신발 아이템 후보 '+(m.item_order ?? 'UNKNOWN')+' · '+(m.item_id ?? 'UNKNOWN');
         const label=(owner==='own'?'내 챔피언':'상대 챔피언')+' · '+name+' · 중앙값 '+number(m.median_minute)+'분 · IQR '+number(m.q1_minute)+'–'+number(m.q3_minute)+'분 · n='+m.n+' · 비인과 기술 통계';
         const group=svgElement('g',{'data-owner':owner,tabindex:0,role:'img','aria-label':label,class:'pg-power-marker '+owner});group.append(svgElement('title',{},label),svgElement('line',{x1:x(m.q1_minute),x2:x(m.q3_minute),y1:yy,y2:yy,class:'pg-power-iqr'}),svgElement('line',{x1:x(m.median_minute),x2:x(m.median_minute),y1:yy-6,y2:yy+6}));svg.append(group);
       }
@@ -67,8 +67,8 @@
     }
     const data=element('details',undefined,'pg-power-points');data.append(element('summary','분별 표본·비교 집단·누락 구간'));
     for(const p of points){const good=shown.includes(p);data.append(element('p',number(p.minute)+'분 · n='+p.n+' · '+comparison(p.comparison)+(p.reference_n!==undefined && p.reference_n!==null?' · 독립 경기 n='+p.n+' · 챔피언 관측 n='+(p.champion_n ?? 'UNKNOWN')+' · 참조 관측 n='+p.reference_n:'')+' · '+(good?'평균 '+number(p.mean)+' · 95% CI ['+number(p.ci95.low)+', '+number(p.ci95.high)+'] · '+state(p)+' '+unit+(p.raw_cumulative?' · 원래 누적값 평균 '+number(p.raw_cumulative.mean)+' · CI ['+number(p.raw_cumulative.ci95.low)+', '+number(p.raw_cumulative.ci95.high)+'] '+rawUnits[metric]:''):'UNKNOWN · '+(p.omission_reason || '정밀도 미충족')),'small'));}parent.append(data);
-    for(const [owner,value] of [['own',view],['opponent',opponent]])for(const m of value?.markers || [])parent.append(element('p',(owner==='own'?'내 챔피언':'상대 챔피언')+' · '+(m.kind==='LEVEL'?'레벨 '+(m.level ?? 'UNKNOWN'):'완성 아이템 '+(m.item_order ?? 'UNKNOWN')+' · '+(m.item_id ?? 'UNKNOWN'))+' · 중앙값 '+number(m.median_minute)+'분 · IQR '+number(m.q1_minute)+'–'+number(m.q3_minute)+'분 · n='+m.n+' · 비인과 기술 통계','small pg-power-marker-label'));
-    parent.append(element('p','골드·경험치·CS 차이는 전투력 전체가 아닙니다. 레벨·아이템 시점은 비인과 기술 통계이며 서로 다른 빌드를 비교할 수 있습니다. 관측 프레임 사이의 실제 발생 시점은 확정할 수 없습니다.','small'));
+    for(const [owner,value] of [['own',view],['opponent',opponent]])for(const m of value?.markers || [])parent.append(element('p',(owner==='own'?'내 챔피언':'상대 챔피언')+' · '+(m.kind==='LEVEL'?'레벨 '+(m.level ?? 'UNKNOWN'):'완성 비신발 아이템 후보 '+(m.item_order ?? 'UNKNOWN')+' · '+(m.item_id ?? 'UNKNOWN'))+' · 중앙값 '+number(m.median_minute)+'분 · IQR '+number(m.q1_minute)+'–'+number(m.q3_minute)+'분 · n='+m.n+' · 비인과 기술 통계','small pg-power-marker-label'));
+    parent.append(element('p','골드·경험치·CS 차이는 전투력 전체가 아닙니다. 레벨·아이템 시점은 비인과 기술 통계이며 서로 다른 빌드를 비교할 수 있습니다. 관측 프레임 사이의 실제 발생 시점은 확정할 수 없습니다. 아이템 표시는 가장 흔한 순서 쌍의 후보이며 핵심 아이템과 전체 빌드는 미확인입니다.','small'));
   }
   function render(parent,response,options={}){
     parent.replaceChildren();const view=response?.view,source=view?.source || {},kind=source.sample_kind;

@@ -113,7 +113,7 @@
   }
   async function refreshInputs(){const mark=context(),seq=++listEpoch;const rows=await api('/inputs');if(!alive(mark)||seq!==listEpoch)return;$('pg-input-list').replaceChildren();if(!rows.length)$('pg-input-list').append(node('p','저장한 입력이 없습니다.','small'));for(const r of rows){const b=node('button',r.title+' · v'+r.revision,current&&r.session_id===current.session_id?'active':'');b.addEventListener('click',()=>openInput(r.session_id).catch(e=>apiError(e,context())));$('pg-input-list').append(b);}}
   async function loadHistory(mark,sid){
-    const results=await Promise.allSettled([api('/inputs/'+sid+'/history'),api('/inputs/'+sid+'/plans')]);if(!alive(mark)||!current||current.session_id!==sid)return;
+    const results=await Promise.allSettled([api('/inputs/'+sid+'/history'),api('/inputs/'+sid+'/plan-history')]);if(!alive(mark)||!current||current.session_id!==sid)return;
     $('pg-history').replaceChildren();$('pg-plan-list').replaceChildren();
     if(results[0].status==='fulfilled')for(const record of results[0].value){const d=node('details');d.append(node('summary','입력 v'+record.revision+' · '+record.created_at),node('pre',json(record)));$('pg-history').append(d);}else $('pg-history').append(node('p','입력 이력 조회 실패: '+results[0].reason.message,'small'));
     if(results[1].status==='fulfilled')for(const p of results[1].value){const b=node('button','계획 · 입력 v'+p.input_revision+' · '+(labels[p.validity]||p.validity));b.addEventListener('click',()=>openPlan(p.id).catch(e=>apiError(e,context())));$('pg-plan-list').append(b);}else $('pg-plan-list').append(node('p','계획 이력 조회 실패: '+results[1].reason.message,'small'));
