@@ -57,7 +57,7 @@ The fresh video guide explicitly permits public YouTube URLs (not private/unlist
 
 Gemini troubleshooting recommends exponential backoff for transient 503 UNAVAILABLE. It does not require a particular delay/retry count and its SDK retries other conditions automatically, so do not inherit those defaults.
 
-User policy: TEXT-only, literal HTTP503, at most 3 retries after initial call (4 attempts maximum, make this count explicit), separated by bounded increasing waits (e.g. 1/2/4 seconds are product choices derived from the official example). Every attempt must retain its literal HTTP status and safe selected error fields. Do not retry VIDEO, 400/401/402/403/429, timeout/network exceptions, malformed HTTP200, or schema failures under this instruction. No quota refund; no silent retry. Check free/payment gates before each actual attempt; preserve max total request accounting. A 503 is a transient service failure, not proof that the video/schema/key/project works.
+User policy: TEXT-only, literal HTTP503, at most 3 retries after initial call (4 attempts maximum, make this count explicit), separated by fixed15second waits (the spacing is a bounded product choice; official backoff guidance does not prescribe this exact value). Every attempt must retain its literal HTTP status and safe selected error fields. Do not retry VIDEO, 400/401/402/403/429, timeout/network exceptions, malformed HTTP200, or schema failures under this instruction. No quota refund; no silent retry. Check free/payment gates before each actual attempt; preserve max total request accounting. A 503 is a transient service failure, not proof that the video/schema/key/project works.
 
 ## Evidence locators and short excerpts
 

@@ -19,17 +19,17 @@ Free only; no credentials/raw responses/player identifiers published; archived/F
 
 ## Task 1 Riot — q15_stats
 Files: coach_v1/riot_collector.py, new coach_v1/riot_front_diagnostics.py, scripts/diagnose_riot_front.py, tests_pregame/test_riot_front_diagnostics.py and affected Riot tests. Public pair JSON produces statuses and safe403 fields; Main workflow consumes READY.
-- [ ] Add meaningful failing UA/pair/echo/mixed-status/invalid-shape tests; save RED.
-- [ ] Implement bounded pair and all-request UA; save GREEN and commit isolated scope.
+- [x] Add meaningful failing UA/pair/echo/mixed-status/invalid-shape tests; save RED.
+- [x] Implement bounded pair and all-request UA; save GREEN and commit isolated scope.
 
 ## Task 2 Gemini — v14_server
 Files: coach_v1/expert_collector.py and affected tests_expert collector tests. Official source audit freezes exact generateContent field/parser mapping before implementation. CLI consumes existing probe/plan interfaces with additive route/retry receipt fields.
-- [ ] Add failing generateContent payload/parser/TEXT503-only retry/legacyplan/quota tests; save RED.
-- [ ] Implement v4, official request/response and bounded retry; save GREEN and commit isolated scope.
+- [x] Add failing generateContent payload/parser/TEXT503-only retry/legacyplan/quota tests; save RED.
+- [x] Implement v4, official request/response and bounded retry; save GREEN and commit isolated scope.
 
 ## Task 3 Main integration and publication
 Files: workflow pair gate, expert CLI route-safe receipts, launcher test minimums, decision/handoff/evidence.
-- [ ] Verify both source audits/commits and add integration tests where contract changes.
+- [x] Verify both source audits/commits and add integration tests where contract changes.
 - [ ] Run affected suites and required source-bound CI; independent review; normal merge exact verified head.
 - [ ] Dispatch one trusted Riot pair and one trusted generateContent acquisition, inspect safe outcomes; use actual-data browser runner only when accepted real data exists.
 - [ ] Preserve actual outcomes/history and exact CI/source proof, publish final handoff and release claim.

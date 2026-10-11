@@ -48,9 +48,11 @@ def main(argv=None):
         print('RIOT_KEY_SHAPE_RECEIPT_JSON='+json.dumps(shape),flush=True)
     def http_error_receipt(diagnostic):
         print('RIOT_HTTP_ERROR_RECEIPT_JSON='+json.dumps(diagnostic),flush=True)
+    def front_error_receipt(observation):
+        print('RIOT_FRONT_HTTP_ERROR_RECEIPT_JSON='+json.dumps(observation),flush=True)
     try:
         collector=RiotCollector(**limits,on_first_http_response=first_http_receipt,
-            on_key_shape=key_shape_receipt,on_http_error=http_error_receipt)
+            on_key_shape=key_shape_receipt,on_http_error=http_error_receipt,on_front_error=front_error_receipt)
         result=collector.collect(tier=args.tier,division=args.division,patch=args.patch,
             start_time=start,end_time=end,collect_items=not args.no_item_markers,ci_width_limits=overrides or None,
             collect_movement=bool(args.movement_output),collect_outcome=bool(args.outcome_output))
@@ -59,8 +61,8 @@ def main(argv=None):
         parser.error('invalid collection arguments or unsafe aggregate; no output written')
     if not first_receipt_emitted:first_http_receipt(None)
     if args.diagnostics_output:
-        diagnostics=dict(schema_version='riot.diagnostics.v1',key_shape=collector.key_shape,
-            first_http_status=collector.first_http_status,http_errors=collector.http_errors,
+        diagnostics=dict(schema_version='riot.diagnostics.v2',key_shape=collector.key_shape,
+            first_http_status=collector.first_http_status,http_errors=collector.http_errors,front_errors=collector.front_errors,
             collection_status=result['status'],collection_reason=result['source']['collection']['reason'],
             request_count=collector.requests,retry_count=collector.retries,coaching_accuracy=None)
         path=Path(args.diagnostics_output);path.parent.mkdir(parents=True,exist_ok=True)
