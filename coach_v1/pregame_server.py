@@ -66,7 +66,7 @@ class PregameWorkbench(Workbench):
             self.pregame=PregameStore(str(db)+'.pregame.sqlite');self.RequestHandlerClass=PregameHandler
             # Internal fixture injection only. No HTTP operation can change these.
             self.test_mode=False;self.power_data=None;self.movement_statistics=None
-            self.outcome_data=None
+            self.outcome_data=None;self.expert_new_candidates=0
         except Exception:self.server_close();raise
 
     def validated_power_data(self):
@@ -181,6 +181,7 @@ def load_expert_directory(server,directory,*,explicit=False):
     for artifact in artifacts:
         imported=import_expert_artifact(server.research,artifact,max_bytes=server.limits.body_bytes)
         result['new_candidates']+=imported['new_candidates'];result['claims'].extend(imported['claims'])
+    server.expert_new_candidates+=result['new_candidates']
     return result
 
 
@@ -248,8 +249,10 @@ class PregameHandler(Handler):
             self.authorize()
             if route=='/dev/v1/experts/claims' and self.command=='GET':
                 from .expert_bridge import list_expert_claims
-                return self.bounded_reply(200,list_expert_claims(self.server.research,max_bytes=self.server.limits.body_bytes,
-                    movement_data=self.server.movement_statistics,test_mode=self.server.test_mode))
+                result=list_expert_claims(self.server.research,max_bytes=self.server.limits.body_bytes,
+                    movement_data=self.server.movement_statistics,test_mode=self.server.test_mode)
+                result['new_candidates']=self.server.expert_new_candidates
+                return self.bounded_reply(200,result)
             if route=='/dev/v1/experts/import' and self.command=='POST':
                 from .expert_contract import validate_expert_artifact
                 body=self.body();self.fields(body,('artifact',))

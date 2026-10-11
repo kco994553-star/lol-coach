@@ -14,6 +14,15 @@ class ExpertHTTPTests(unittest.TestCase):
     cleanup=test_http.HTTPTests.cleanup
     call=test_http.HTTPTests.call
 
+    def test_startup_import_count_available_without_approval(self):
+        from coach_v1.pregame_server import load_expert_directory
+        directory=Path(self.tmp.name)/'new-expert-files';directory.mkdir()
+        (directory/'manual-test.json').write_text(json.dumps(artifact()))
+        load_expert_directory(self.server,directory,explicit=True)
+        self.assertEqual(self.call('/dev/v1/experts/claims')[1]['new_candidates'],1)
+        self.assertEqual(load_expert_directory(self.server,directory,explicit=True)['new_candidates'],0)
+        self.assertEqual(self.server.research.list_proposals(1000000)[0]['review_state'],'EXPLORATORY')
+
     def test_auth_exact_shape_and_no_write_on_invalid_artifact(self):
         self.assertEqual(self.call('/dev/v1/experts/claims',auth=False)[0],401)
         self.assertEqual(self.call('/dev/v1/experts/import','POST',dict(artifact=artifact()),auth=False)[0],401)
