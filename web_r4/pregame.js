@@ -128,6 +128,7 @@
     if(!saveAttempt)return;
     const op=saveAttempt;writeBusy=true;hidePlan();updateEditor();
     try{const record=await api(op.path,op.method,op.body,op.key);if(!alive(mark)||saveAttempt!==op)return;
+      hidePlan();
       const editorNow=fingerprint(readInput());current=record;saveAttempt=null;planAttempt=null;baseline=fingerprint(record.input);
       if(editorNow===op.editor){putInput(record.input);baseline=fingerprint(readInput());}
       updateEditor();await refreshInputs();await loadHistory(mark,record.session_id);
@@ -145,6 +146,7 @@
     finally{if(alive(mark)){planBusy=false;updateEditor();}}
   }
   async function openPlan(id){
+    if(writeBusy||readBusy||planBusy||saveAttempt){notice('진행 중인 요청 또는 응답 미확인 저장이 있습니다. 저장·조회가 끝난 뒤 계획 이력을 확인하세요.',true);return;}
     if(dirty()){notice('수정본을 저장하거나 저장 입력을 다시 연 뒤 계획 이력을 확인하세요.',true);return;}
     const mark=context(),edit=editEpoch;hidePlan();const view=planViewEpoch,p=await api('/plans/'+id);if(!alive(mark)||edit!==editEpoch||view!==planViewEpoch)return;renderPlan(p);
   }
