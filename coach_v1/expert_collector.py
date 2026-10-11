@@ -487,6 +487,8 @@ class ExpertCollector:
             now=int(self.clock());plan['created_at']=now
             videos=self._discover(c,ledger,now)
             if not videos:plan.update(status='NO_ELIGIBLE_VIDEOS',reason='NO_UNPROCESSED_PUBLIC_MATCHING_VIDEOS',ledger=ledger);return plan
+            # Preparation and processing share one run budget, including a fresh processor.
+            if self.request_count+sum(len(_segments(video,collection_mode)) for video in videos)>self.max_requests:raise _External('REQUEST_BUDGET_EXHAUSTED')
             used=sum(row['seconds'] for row in ledger['reservations'] if row['reserved_at']>now-CHARGE_WINDOW)
             if used+sum(video['duration_seconds']*len(_segments(video,collection_mode)) for video in videos)>CAP:raise _External('ROLLING_VIDEO_BUDGET_EXHAUSTED')
             reservation_id=_digest(_reservation_payload(now,videos,ledger,plan['text_probe'],collection_mode))

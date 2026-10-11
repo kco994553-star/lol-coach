@@ -2,6 +2,7 @@
 import copy
 import json
 import unittest
+import urllib.parse
 
 from coach_v1 import expert_collector as m
 from tests_expert.test_collector import NOW,config,policy,claim
@@ -31,6 +32,43 @@ def collector(http,sleeper=None,clock=None):
 
 
 class GenerateContentTests(unittest.TestCase):
+    def test_remaining_request_budget_covers_clips_before_any_new_quota_reservation(self):
+        cfg=config();cfg['channels']=[]
+        for i in range(15):
+            channel=copy.deepcopy(config()['channels'][0])
+            channel.update(channel_id='UC'+str(i).zfill(22),uploads_playlist_id=None)
+            cfg['channels'].append(channel)
+        class Tail(HTTP):
+            def __init__(self):super().__init__([503,503,503,200])
+            def __call__(self,method,url,headers,body,timeout,max_bytes):
+                if method=='POST':return super().__call__(method,url,headers,body,timeout,max_bytes)
+                self.calls.append(copy.deepcopy((method,url,headers,body,timeout)))
+                query=urllib.parse.parse_qs(urllib.parse.urlsplit(url).query)
+                if '/channels?' in url:
+                    cid=query['id'][0]
+                    return 200,{},dict(items=[dict(id=cid,contentDetails=dict(relatedPlaylists=dict(uploads='UU'+cid[2:])))])
+                if '/playlistItems?' in url:
+                    return 200,{},dict(items=[dict(contentDetails=dict(videoId=query['playlistId'][0][-11:]))])
+                vid=query['id'][0];i=int(vid)
+                return 200,{},dict(items=[dict(id=vid,snippet=dict(title='TEST wave' if i==14 else 'TEST unrelated',
+                    channelId='UC'+str(i).zfill(22),channelTitle='TEST channel',publishedAt='2026-10-10T00:00:00Z',liveBroadcastContent='none'),
+                    contentDetails=dict(duration='PT20M'),status=dict(privacyStatus='public',uploadStatus='processed'))])
+        old=dict(schema_version='expert.quota-ledger.v1',initialized_at=NOW-20,
+            reservations=[dict(video_id='zyxwvutsrqp',seconds=6644,reserved_at=NOW-10,reservation_id='0'*64)],processed_video_ids=[])
+        h=Tail();c=collector(h);plan=c.prepare(cfg,old,ledger_history='FOUND')
+        self.assertEqual(c.request_count,49)
+        self.assertEqual(c.request_counts,dict(TEXT_PROBE=4,VIDEO_CLIP=0,METADATA=45))
+        self.assertEqual(plan['status'],'BLOCKED_EXTERNAL');self.assertEqual(plan['reason'],'REQUEST_BUDGET_EXHAUSTED')
+        self.assertEqual(plan['ledger'],old);self.assertIsNone(plan['reservation_id']);self.assertEqual(plan['videos'],[])
+        result=collector(h).process(plan,reservation_persisted=True)
+        self.assertEqual(result['ledger'],old);self.assertEqual(len(h.calls),49)
+        # The same discovery fits exactly when only the authorized first clip is planned.
+        h=Tail();c=collector(h);plan=c.prepare(cfg,old,ledger_history='FOUND',collection_mode='DIAGNOSTIC_FIRST_CLIP')
+        self.assertEqual(plan['status'],'RESERVED');self.assertEqual(plan['ledger']['reservations'][:-1],old['reservations'])
+        self.assertEqual(plan['ledger']['reservations'][-1]['seconds'],1200)
+        result=collector(h).process(plan,reservation_persisted=True)
+        self.assertEqual(len(h.calls),50);self.assertEqual(result['status'],'PARTIAL');self.assertEqual(result['ledger']['processed_video_ids'],[])
+
     def test_exact_official_video_body_and_new_route_bound_plan(self):
         h=HTTP();c=collector(h);plan=c.prepare(config(),collection_mode='DIAGNOSTIC_FIRST_CLIP')
         self.assertEqual(plan['schema_version'],'expert.reservation-plan.v4')
