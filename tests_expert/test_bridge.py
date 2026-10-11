@@ -78,5 +78,40 @@ class ExpertBridgeTests(unittest.TestCase):
     def test_http_budget_preflight_no_writes(self):
         with self.assertRaises(ServiceError):import_expert_artifact(self.store,artifact(),max_bytes=100)
         self.assertEqual(self.store.list(),[])
+    def test_large_conditions_and_hundred_claims_fit_without_postwrite_failure(self):
+        a=artifact();a['claims'][0]['conditions']=['x'*200]*10
+        self.assertEqual(self.import_(a)['new_candidates'],1)
+        a=artifact('TESTVideo02');base=copy.deepcopy(a['claims'][0]);a['claims']=[]
+        for i in range(100):
+            c=copy.deepcopy(base);c.update(timestamp=f'{i//60:02d}:{i%60:02d}',timestamp_seconds=i)
+            a['claims'].append(c)
+        self.assertEqual(self.import_(a)['new_candidates'],100)
+        self.assertEqual(len(self.rows()),101)
+    def test_partial_retry_binds_original_note_despite_later_edit(self):
+        with patch.object(self.store,'propose',side_effect=RuntimeError('TEST failure')):
+            with self.assertRaises(RuntimeError):self.import_()
+        rid=self.store.list()[0]['id']
+        self.store.put_note(rid,'1',dict(known='TEST later manual edit',intention='',alternative='',outcome=''),1)
+        self.import_();self.assertEqual(self.rows()[0]['proposal']['source_refs'][0]['note_revision'],1)
+    def test_changed_head_source_withheld_from_original_video(self):
+        self.import_();old=self.rows()[0];self.import_(artifact('TESTVideo02',text='TEST other speech'))
+        other=self.rows()[1];p=old['proposal']
+        rule={k:p[k] for k in ('patch_range','applicability','required_fields','claim','mechanism','counterexamples','author','limitations')}
+        self.store.propose(rule,dict(resource_id=other['resource_id'],anchor=other['anchor'],note_revision=1),
+            p['rule_id'],p['version'],max_bytes=self.limit)
+        result=list_expert_claims(self.store,max_bytes=self.limit)
+        self.assertEqual(len(result['claims']),1)
+        self.assertEqual(result['withheld'][0]['reason'],'PROPOSAL_SOURCE_CHANGED')
+    def test_crash_after_proposal_and_user_deletion_never_resurrects(self):
+        class SimulatedCrash(BaseException):pass
+        real=self.store.propose
+        def crash(*args,**kwargs):
+            real(*args,**kwargs);raise SimulatedCrash()
+        with patch.object(self.store,'propose',side_effect=crash):
+            with self.assertRaises(SimulatedCrash):self.import_()
+        p=self.store.list_proposals(self.limit)[0]
+        self.store.delete_proposal(p['rule_id'],p['version'],self.limit)
+        self.assertEqual(self.import_()['new_candidates'],0)
+        self.assertEqual(self.store.list_proposals(self.limit),[])
 
 if __name__=='__main__':unittest.main()

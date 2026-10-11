@@ -26,7 +26,8 @@ class ExpertHTTPTests(unittest.TestCase):
         status,result=self.call('/dev/v1/experts/import','POST',dict(artifact=artifact()))
         self.assertEqual(status,201);self.assertEqual(result['new_candidates'],1)
         rows=self.call('/dev/v1/experts/claims')[1]['claims'];self.assertEqual(len(rows),1)
-        row=rows[0];self.assertEqual(row['artifact'],artifact())
+        row=rows[0];self.assertEqual(row['artifact'],{k:v for k,v in artifact().items() if k not in ('claims','rejections')})
+        self.assertEqual(self.server.research.get(row['resource_id'])['report']['artifact'],artifact())
         self.assertEqual(row['claim'],artifact()['claims'][0]);self.assertEqual(row['proposal']['review_state'],'EXPLORATORY')
         self.assertEqual(row['comparison']['status'],'UNMEASURABLE')
         proposal=row['proposal'];path='/dev/v1/knowledge/proposals/'+proposal['rule_id']
