@@ -1,3 +1,15 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261011-queue-v11-root`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `feat/queue-gameplan-v1.1-2026-10-11`
+- intake_main_head: `0337d915633f6ad5719f55de1252f05e06621c9b`
+- authority: USER_QUEUE_V1.1_2026-10-11; all five selected positions supersede ADC-only scope; no paid services.
+- task_scope: Q01-Q14 dependency queue; Stage A five-position PRE_GAME golden browser flow first. Main owns common contracts, integration and publication; isolated agents Q01/Q02/Q05.
+- evidence_boundary: AI never approves knowledge or impersonates USER_WEB; actual coaching N=0/accuracy=null; no live cooldown tracking.
+
+---
+
 # CURRENT_HANDOFF — main executor claim
 
 ## Latest common execution claim — COMPLETED
