@@ -72,7 +72,7 @@ def main(argv=None,*,entitlement_verifier=None):
     parser.add_argument('--output-dir',required=True)
     parser.add_argument('--ledger');parser.add_argument('--recovery-receipt');parser.add_argument('--plan')
     parser.add_argument('--reservation-artifact-id')
-    args=parser.parse_args(argv);directory=Path(args.output_dir)
+    args=parser.parse_args(argv);directory=Path(args.output_dir);collector=None
     try:
         if args.phase=='recover':
             receipt=recovery(directory)
@@ -104,7 +104,9 @@ def main(argv=None,*,entitlement_verifier=None):
     except Exception:
         # Never echo exception strings, provider bodies, subprocess stderr or keys.
         receipt=dict(status='BLOCKED_EXTERNAL',reason='INVALID_OR_UNAVAILABLE_PUBLIC_STATE',publication_status='PUBLICATION_DEFERRED',coaching_accuracy=None)
-        atomic_json(directory/'receipt.json',receipt)
+        blocked=dict(receipt,artifacts=[],ledger=None,checked_at=int(time.time()),video_results=[],
+            request_count=collector.request_count if collector is not None else 0)
+        write_public_result(directory,blocked)
         if args.phase=='recover':atomic_json(directory/'recovery.json',dict(status='UNKNOWN',run_id=None,artifact_id=None,reason='QUOTA_RECOVERY_FAILED'))
         print('EXPERT_ACQUISITION_JSON='+json.dumps(receipt,sort_keys=True));return 1
 

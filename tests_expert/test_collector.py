@@ -205,6 +205,25 @@ class CollectorTests(unittest.TestCase):
             self.assertFalse((Path(d)/'quota-ledger.json').exists())
             self.assertEqual(json.loads((Path(d)/'receipt.json').read_text())['status'],'BLOCKED_EXTERNAL')
 
+    def test_cli_malformed_plan_clears_previous_ready_claims_without_http(self):
+        c=self.collector();result=c.process(c.prepare(config()),reservation_persisted=True)
+        spec=importlib.util.spec_from_file_location('q19_stale_cli','scripts/collect_expert_claims.py')
+        cli=importlib.util.module_from_spec(spec);spec.loader.exec_module(cli)
+        with tempfile.TemporaryDirectory() as d:
+            directory=Path(d)/'output'
+            malformed=Path(d)/'bad-plan.json';malformed.write_text('{}')
+            for extra,verifier in [([],lambda:entitlement()),(['--runtime-config',str(malformed)],lambda:entitlement()),
+                                   ([],lambda:{'INVALID_PROOF':'TEST'})]:
+                self.module.write_public_result(directory,result)
+                with patch.dict(os.environ,{},clear=True),patch.object(cli.time,'time',return_value=NOW),\
+                        patch.object(self.module.ExpertCollector,'_request',side_effect=AssertionError('HTTP forbidden')) as http:
+                    code=cli.main(['--phase','process','--plan',str(malformed),'--output-dir',str(directory)]+extra,
+                        entitlement_verifier=verifier)
+                self.assertEqual(code,1);http.assert_not_called()
+                self.assertEqual(json.loads((directory/'receipt.json').read_text())['status'],'BLOCKED_EXTERNAL')
+                self.assertEqual(list((directory/'artifacts').glob('*.json')),[])
+                self.assertFalse((directory/'quota-ledger.json').exists())
+
     def test_recover_failed_run_reservation_and_reject_refunded_final_snapshot(self):
         c=self.collector();ledger=c.prepare(config())['ledger']
         runs=[dict(id=3,conclusion='failure'),dict(id=2,conclusion='success')]
