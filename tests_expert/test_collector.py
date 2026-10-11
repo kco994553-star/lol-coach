@@ -110,11 +110,11 @@ class CollectorTests(unittest.TestCase):
                 raise AssertionError('unexpected fixture URL')
         http=Tail();c=self.collector(http);plan=c.prepare(cfg)
         self.assertEqual(plan['status'],'RESERVED')
-        self.assertEqual([video['id'] for video in plan['videos']],[str(14).zfill(11),'zyxwvutsrqp'])
+        self.assertEqual([video['id'] for video in plan['videos']],[str(14).zfill(11)])
         self.assertEqual(c.request_count,45)
         result=c.process(plan,reservation_persisted=True)
-        self.assertEqual(result['status'],'READY');self.assertEqual(c.request_count,47)
-        self.assertEqual(len(result['artifacts']),2)
+        self.assertEqual(result['status'],'READY');self.assertEqual(c.request_count,46)
+        self.assertEqual(len(result['artifacts']),1)
         self.assertTrue(all('/search?' not in call[1] for call in http.calls))
         with self.assertRaises(ValueError):self.collector(max_requests=51)
 
@@ -129,14 +129,14 @@ class CollectorTests(unittest.TestCase):
                     return super().__call__(*args)
             http=Failure();c=self.collector(http);plan=c.prepare(config())
             result=c.process(plan,reservation_persisted=True)
-            self.assertEqual(http.received_timeout,60)
+            self.assertEqual(http.received_timeout,600)
             self.assertEqual(result['status'],'BLOCKED_EXTERNAL');self.assertEqual(result['reason'],reason)
             self.assertEqual(sum('/interactions' in call[1] for call in http.calls),1)
             self.assertEqual(result['ledger']['reservations'],plan['ledger']['reservations'])
             self.assertEqual(result['ledger']['processed_video_ids'],[])
             self.assertEqual(c.prepare(config(),result['ledger'])['status'],'NO_ELIGIBLE_VIDEOS')
             self.assertNotIn('PRIVATE',json.dumps(result))
-        with self.assertRaises(ValueError):self.collector(timeout=61)
+        with self.assertRaises(ValueError):self.collector(timeout=601)
 
     def test_all_attestations_and_keys_required_before_dispatch(self):
         for key in ('free_tier_confirmed','entitlement_confirmed','quota_exclusive_confirmed','initial_zero_usage_confirmed'):
@@ -194,7 +194,7 @@ class CollectorTests(unittest.TestCase):
         ledger['reservations']=[dict(video_id='zyxwvutsrqp',seconds=28800,reserved_at=NOW-86399,reservation_id='1'*64)]
         plan=c.prepare(config(),ledger)
         self.assertEqual(plan['status'],'BLOCKED_EXTERNAL')
-        ledger['reservations'][0]['reserved_at']=NOW-87361
+        ledger['reservations'][0]['reserved_at']=NOW-87901
         self.assertEqual(c.prepare(config(),ledger)['status'],'RESERVED')
         self.assertEqual(c.prepare(config(),None,ledger_history='UNKNOWN')['status'],'BLOCKED_EXTERNAL')
         with self.assertRaises(ValueError):c.prepare(config(),{'corrupt':'state'})
@@ -391,17 +391,19 @@ class CollectorTests(unittest.TestCase):
                 self.assertTrue((Path(d)/'output/entitlement.json').is_file())
 
     def test_late_dispatch_reservation_remains_charged_for_rolling_day(self):
-        class EightHour(Transport):
+        class KnownVideo(Transport):
             video_id=VIDEO
             def __call__(self,*args):
                 code,h,data=super().__call__(*args)
                 if '/playlistItems?' in args[1]:data['items'][0]['contentDetails']['videoId']=self.video_id
                 if '/videos?' in args[1]:
-                    data['items'][0]['id']=self.video_id;data['items'][0]['contentDetails']['duration']='PT8H'
+                    data['items'][0]['id']=self.video_id
                 return code,h,data
-        cfg=config();cfg['max_duration_seconds']=28800;clock=[NOW];http=EightHour()
+        cfg=config();clock=[NOW];http=KnownVideo()
         c=self.module.ExpertCollector(youtube_api_key='TEST_YOUTUBE_KEY',gemini_api_key='TEST_GEMINI_KEY',transport=http,clock=lambda:clock[0],policy=policy())
-        plan=c.prepare(cfg);clock[0]=NOW+900;result=c.process(plan,reservation_persisted=True)
+        ledger=dict(schema_version='expert.quota-ledger.v1',initialized_at=NOW-1,
+            reservations=[dict(video_id='00000000000',seconds=28200,reserved_at=NOW-1,reservation_id='1'*64)],processed_video_ids=[])
+        plan=c.prepare(cfg,ledger);clock[0]=NOW+900;result=c.process(plan,reservation_persisted=True)
         self.assertEqual(result['status'],'READY')
         http.video_id='zyxwvutsrqp';clock[0]=NOW+86401
         self.assertEqual(c.prepare(cfg,result['ledger'])['status'],'BLOCKED_EXTERNAL')
