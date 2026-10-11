@@ -81,6 +81,27 @@ class PowerStatsTests(unittest.TestCase):
         self.assertIsNone(d['coaching_accuracy'])
         self.power.validate_power_dataset(d)
 
+    def test_official_middle_utility_roles_match_canonical_all_five_roles(self):
+        canonical=[pair(0),pair(1)];official=copy.deepcopy(canonical)
+        for p in official:
+            for person in p['match']['info']['participants']:
+                person['teamPosition']={'MID':'MIDDLE','SUPPORT':'UTILITY'}.get(person['teamPosition'],person['teamPosition'])
+        before=copy.deepcopy(official)
+        expected=self.power.build_power_dataset(canonical,source=source())
+        actual=self.power.build_power_dataset(official,source=source())
+        self.assertEqual(actual['samples']['synthetic_matches'],2)
+        self.assertEqual({c['position'] for c in actual['cohorts']},set(POSITIONS))
+        self.assertEqual(actual,expected);self.assertEqual(official,before)
+
+    def test_missing_unknown_or_duplicate_role_never_inferred(self):
+        for role in (None,'UNKNOWN','MIDDLE ',['MID']):
+            p=pair();p['match']['info']['participants'][2].update(teamPosition=role,lane='MIDDLE')
+            d=self.power.build_power_dataset([p],source=source())
+            self.assertEqual(d['samples']['synthetic_matches'],0);self.assertEqual(d['cohorts'],[])
+        p=pair();p['match']['info']['participants'][3]['teamPosition']='MIDDLE'
+        d=self.power.build_power_dataset([p],source=source())
+        self.assertEqual(d['samples']['synthetic_matches'],0)
+
     def test_adaptive_precision_variable_spread_and_constant_sample(self):
         d=self.power.build_power_dataset([pair(i,i*100) for i in range(4)],source=source())
         p=self.cohort(d)['points'][0]

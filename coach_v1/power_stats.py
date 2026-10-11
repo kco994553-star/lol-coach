@@ -12,6 +12,8 @@ import re
 import statistics
 
 POSITIONS = ('TOP', 'JUNGLE', 'MID', 'BOTTOM', 'SUPPORT')
+ROLE_MAP = {'TOP':'TOP','JUNGLE':'JUNGLE','MID':'MID','MIDDLE':'MID',
+            'BOTTOM':'BOTTOM','SUPPORT':'SUPPORT','UTILITY':'SUPPORT'}
 METRICS = ('gold_delta', 'xp_delta', 'cs_delta')
 TIERS = ('IRON','BRONZE','SILVER','GOLD','PLATINUM','EMERALD','DIAMOND','MASTER','GRANDMASTER','CHALLENGER')
 ENDPOINTS = ('LEAGUE_V4_ENTRIES','LEAGUE_V4_MASTER','LEAGUE_V4_GRANDMASTER','LEAGUE_V4_CHALLENGER',
@@ -256,7 +258,10 @@ def build_power_dataset(pairs,*,source,ci_width_limits=None,complete_item_ids=()
         selected_frames=list(bins.values())
         people=info.get('participants',[]);roles={};invalid=False
         for p in people:
-            key=(p.get('teamId'),p.get('teamPosition'))
+            if not isinstance(p,dict):invalid=True;break
+            raw_role=p.get('teamPosition')
+            position=ROLE_MAP.get(raw_role) if isinstance(raw_role,str) else None
+            key=(p.get('teamId'),position)
             if key[0] not in (100,200) or key[1] not in POSITIONS:continue
             if key in roles:invalid=True;break
             name=p.get('championName')
