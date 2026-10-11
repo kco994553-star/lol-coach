@@ -109,6 +109,9 @@ class PregameHandler(Handler):
             return self.bounded_reply(200,dict(mode='PRE_GAME',automatic_collection='UNAVAILABLE',current_patch=None,
                 knowledge_count=len(current_knowledge(self.server.research)),accuracy=None))
         if route==prefix+'/roster' and self.command=='GET':return self.bounded_reply(200,roster())
+        if route==prefix+'/review-priority' and self.command=='GET':
+            path=ROOT/'knowledge_candidates'/'q05-review-priority.json'
+            return self.bounded_reply(200,json.loads(path.read_text())['recommended_review_order'] if path.exists() else [])
         if route==prefix+'/knowledge' and self.command=='GET':return self.bounded_reply(200,current_knowledge(self.server.research))
         if route==prefix+'/candidates':
             if self.command=='GET':return self.bounded_reply(200,candidate_specs())

@@ -35,6 +35,7 @@ class HTTPTests(unittest.TestCase):
         self.assertEqual(self.call('/dev/v1/pregame/status',auth=False)[0],401)
         self.assertEqual(self.call('/dev/v1/status')[0],200)
         self.assertEqual(self.call('/dev/v1/pregame/status')[1]['current_patch'],None)
+        self.assertEqual(len(self.call('/dev/v1/pregame/review-priority')[1]),10)
         self.assertEqual(self.call('/')[0],200)
 
     def test_input_http_cas_retry_and_original_import(self):
