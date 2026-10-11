@@ -4,13 +4,15 @@ import ast
 import datetime
 import hashlib
 import json
-import subprocess
 
 ROOT = Path(__file__).resolve().parents[3]
 HERE = ROOT / 'evidence/queue/q05-expansion'
 BASE = '9f9d9b9'
 roster = json.loads((ROOT / 'knowledge_candidates/q05-roster-profiles.json').read_text())
-baseline = json.loads(subprocess.check_output(['git','show',BASE+':knowledge_candidates/q05-roster-profiles.json'],text=True))
+baseline_manifest = json.loads((HERE / 'initial-source-manifest.json').read_text())
+initial_bytes = (HERE / 'initial-roster.json').read_bytes()
+assert hashlib.sha256(initial_bytes).hexdigest() == baseline_manifest['initial_roster_sha256']
+baseline = json.loads(initial_bytes)
 receipts = json.loads((HERE / 'source-receipts.json').read_text())
 audit = json.loads((HERE / 'mechanic-audit.json').read_text())
 official = json.loads((ROOT / 'evidence/queue/q05/sources/champion-roster-16.20.1.json').read_text())['data']
@@ -93,7 +95,7 @@ for p in roster['profiles']:
 for unchanged in ['knowledge_candidates/executable-v1.json','knowledge_candidates/q05-type-rules.json',
                   'knowledge_candidates/q05-review-priority.json','evidence/queue/q05/build_candidates.py',
                   'evidence/queue/q05/validate_candidates.py','evidence/queue/q05/source-receipts.json']:
-    assert (ROOT / unchanged).read_bytes() == subprocess.check_output(['git','show',BASE+':'+unchanged])
+    assert hashlib.sha256((ROOT / unchanged).read_bytes()).hexdigest() == baseline_manifest['unchanged_source_sha256'][unchanged]
 unknown_ids = [cid for cid in roster['expanded_profile_ids'] if profiles[cid]['threat_types'] is None and profiles[cid]['protection_types'] is None]
 assert unknown_ids == roster['expanded_profiles_without_type_labels']
 report = dict(status='PASS',baseline_commit=BASE,roster_rows=173,initial_profiles_unchanged=13,
