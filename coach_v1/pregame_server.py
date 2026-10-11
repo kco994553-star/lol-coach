@@ -146,6 +146,8 @@ class PregameHandler(Handler):
                     return self.bounded_reply(200,[self.checked_plan(p['id'],knowledge) for p in plans])
                 if self.command=='POST':
                     b=self.body();self.fields(b,('expected_revision',));key=self.key()
+                    replay=pg.replay_plan(sid,b['expected_revision'],key)
+                    if replay:return self.bounded_reply(201,self.checked_plan(replay['id'],knowledge))
                     record=pg.get_input(sid)
                     if record['revision']!=self.revision(b['expected_revision']):raise ServiceError(409,'REVISION_CONFLICT')
                     result=evaluate_gameplan(parse_input(record['input']),knowledge)

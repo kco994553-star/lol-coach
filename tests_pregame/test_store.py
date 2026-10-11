@@ -68,5 +68,12 @@ class StoreTests(unittest.TestCase):
             db.execute('UPDATE inputs SET payload=?',(json.dumps(bad),))
         with self.assertRaises(ServiceError):self.cls(self.path)
 
+    def test_restore_rejects_changed_retry_identity_even_with_new_archive_hash(self):
+        self.save();archive=self.s.export_data();archive['operations'][0]['fingerprint']='0'*64
+        archive['sha256']=digest({k:v for k,v in archive.items() if k!='sha256'})
+        target=self.cls(Path(self.tmp.name)/'changed.sqlite')
+        with self.assertRaises(ServiceError):target.import_data(archive)
+        self.assertEqual(target.list_inputs(),[])
+
 
 if __name__=='__main__':unittest.main()

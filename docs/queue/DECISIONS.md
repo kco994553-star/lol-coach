@@ -21,3 +21,5 @@ Q05가 확보한16.20.1은 날짜·출처가 있는 정적 데이터 버전이�
 완료 주장은 Q01~Q14 상태와 실제 검증 증거로 한다. 실제 코칭 N=0/accuracy=null을 유지한다.
 
 Phase correction: original null/arbitrary phase maps UNKNOWN, never confirms PRE_GAME. Input phase supports UNKNOWN and explicitly user-confirmed PRE_GAME; UNKNOWN holds all tactical rules. RED→GREEN import-phase receipts preserved.
+
+Plan retry correction: idempotency binds original HTTP expected_revision request, not later evaluator content. Replay after input/knowledge changes returns original saved plan with current EXPIRED state; source loss/rejection never regenerates old output as new. Archive validates retry fingerprint and rolls back hostile rows. RED/GREEN receipts preserved.

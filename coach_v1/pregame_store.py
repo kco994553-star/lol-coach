@@ -110,6 +110,16 @@ class PregameStore:
                 response=json.loads(raw)
                 (_plan_record if operation.startswith('plan:') else _input_record)(response)
                 table='plans' if operation.startswith('plan:') else 'inputs'
+                if operation=='create':
+                    if response['revision']!=1:raise ValueError('create response')
+                    expected_fingerprint=digest(dict(input=response['input'],expected_revision=0))
+                elif operation=='input:'+response['session_id'] and table=='inputs':
+                    if response['revision']<=1:raise ValueError('update response')
+                    expected_fingerprint=digest(dict(input=response['input'],expected_revision=response['revision']-1))
+                elif operation=='plan:'+response['session_id'] and table=='plans':
+                    expected_fingerprint=digest(dict(expected_revision=response['input_revision']))
+                else:raise ValueError('operation scope')
+                if expected_fingerprint!=fingerprint:raise ValueError('operation fingerprint')
                 row=db.execute('SELECT payload FROM '+table+' WHERE id=?',(response['id'],)).fetchone()
                 if not row or row[0]!=raw:raise ValueError('operation response')
         except (ValueError,TypeError,KeyError,AttributeError,sqlite3.DatabaseError,ServiceError,OverflowError):
@@ -143,6 +153,7 @@ class PregameStore:
             if prior and prior['revision']!=expected_revision:raise ServiceError(409,'REVISION_CONFLICT')
             result=dict(schema_version='pregame.input.v1',id=uuid.uuid4().hex,session_id=session_id or uuid.uuid4().hex,
                 revision=expected_revision+1,parent_id=prior['id'] if prior else None,created_at=_time(),input=value,input_sha256=digest(value))
+            _revision(result['revision'])
             raw=canonical(_bounded(result))
             db.execute('INSERT INTO inputs VALUES (?,?,?,?,?)',(result['session_id'],result['revision'],result['id'],result['parent_id'],raw))
             db.execute('INSERT INTO operations VALUES (?,?,?,?)',(operation,key,fingerprint,raw))
@@ -168,7 +179,7 @@ class PregameStore:
     def save_plan(self,sid,expected_revision,base,key):
         _id(sid);_revision(expected_revision)
         if not isinstance(base,dict) or set(base)!=PLAN_FIELDS:raise ServiceError(422,'INVALID_PLAN')
-        operation='plan:'+sid;fingerprint=digest(dict(expected_revision=expected_revision,plan=base))
+        operation='plan:'+sid;fingerprint=digest(dict(expected_revision=expected_revision))
         with self._db() as db:
             self._validate(db)
             replay=self._replay(db,operation,key,fingerprint)
@@ -185,6 +196,13 @@ class PregameStore:
             db.execute('INSERT INTO plans VALUES (?,?,?,?,?)',(sid,revision,result['id'],expected_revision,raw))
             db.execute('INSERT INTO operations VALUES (?,?,?,?)',(operation,key,fingerprint,raw))
             return result
+
+    def replay_plan(self,sid,expected_revision,key):
+        """Retry identity is the HTTP request, independent of later knowledge."""
+        _id(sid);_revision(expected_revision)
+        with self._db() as db:
+            self._validate(db)
+            return self._replay(db,'plan:'+sid,key,digest(dict(expected_revision=expected_revision)))
 
     @staticmethod
     def _validity(db,r,fingerprint):

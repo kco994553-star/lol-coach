@@ -65,5 +65,37 @@ class HTTPTests(unittest.TestCase):
         status,result=self.call('/dev/v1/pregame/inputs','POST',dict(input=d),'forged-auto')
         self.assertEqual(status,422);self.assertEqual(result['error_code'],'AUTOMATIC_ADAPTER_UNAVAILABLE')
 
+    def test_saved_gameplan_and_exact_lost_response_replay_after_dependencies_change(self):
+        first=self.call('/dev/v1/pregame/inputs','POST',dict(input=golden()),'create')[1]
+        route='/dev/v1/pregame/inputs/'+first['session_id']
+        status,plan=self.call(route+'/plans','POST',dict(expected_revision=1),'plan-retry')
+        self.assertEqual(status,201);self.assertEqual(plan['validity'],'CURRENT')
+        self.assertEqual(len(plan['common']['map']),5)
+        self.assertEqual(self.call('/dev/v1/pregame/plans/'+plan['id'])[1],plan)
+        self.call('/dev/v1/pregame/candidates','POST',dict(spec=rule()))
+        self.assertIn('KNOWLEDGE_CHANGED',self.call('/dev/v1/pregame/plans/'+plan['id'])[1]['expiry_reasons'])
+        self.call(route,'PUT',dict(input=golden('TOP'),expected_revision=1),'role-change')
+        status,replay=self.call(route+'/plans','POST',dict(expected_revision=1),'plan-retry')
+        self.assertEqual(status,201)
+        self.assertEqual(replay['id'],plan['id']);self.assertEqual(replay['validity'],'EXPIRED')
+        self.assertEqual(len(self.call(route+'/plans')[1]),1)
+        self.assertEqual(self.call(route+'/plans','POST',dict(expected_revision=2),'plan-retry')[0],409)
+
+    def test_plan_source_deletion_expires_and_archive_cannot_invent_coaching(self):
+        first=self.call('/dev/v1/pregame/inputs','POST',dict(input=golden()),'create')[1]
+        proposal=self.call('/dev/v1/pregame/candidates','POST',dict(spec=rule()))[1]['proposal']
+        route='/dev/v1/pregame/inputs/'+first['session_id']+'/plans'
+        plan=self.call(route,'POST',dict(expected_revision=1),'plan')[1]
+        source=proposal['source_refs'][0]['resource_id']
+        self.call('/dev/v1/research/'+source,'DELETE')
+        self.assertEqual(self.call('/dev/v1/pregame/plans/'+plan['id'])[1]['validity'],'EXPIRED')
+
+    def test_invalid_fields_and_phase_unknown(self):
+        self.assertEqual(self.call('/dev/v1/pregame/inputs','POST',dict(input=golden(),extra=True),'extra')[0],422)
+        d=golden();d['phase']='UNKNOWN'
+        record=self.call('/dev/v1/pregame/inputs','POST',dict(input=d),'unknown')[1]
+        plan=self.call('/dev/v1/pregame/inputs/'+record['session_id']+'/plans','POST',dict(expected_revision=1),'plan')[1]
+        self.assertEqual(plan['personal']['role']['status'],'UNKNOWN')
+
 
 if __name__=='__main__':unittest.main()
