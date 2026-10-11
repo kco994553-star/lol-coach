@@ -26,7 +26,7 @@ SOURCE_FILES = sorted(str(p.relative_to(ROOT)) for folder in
     for p in (ROOT / folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts
     and p.suffix in {'.py', '.cjs', '.js', '.html', '.css', '.svg', '.json', '.md', '.yml', '.yaml'})
 
-EXPECTED_BROWSER_IDS = ['connected', 'empty-claims', 'manual-import', 'count-only-notification', 'safe-timestamp-link', 'speaker-context-patch', 'measurement-status', 'independent-source-counts', 'nonexecutable-review-state', 'selected-version-source-binding', 'incomplete-scope-disabled', 'complete-scope-enabled', 'scripted-approval-blocked', 'immutable-proposal-guard', 'idempotent-import', 'mobile-keyboard', 'late-auth-navigation', 'no-decisions-errors-source-change']
+EXPECTED_BROWSER_IDS = ['connected', 'empty-claims', 'manual-import', 'count-only-notification', 'safe-timestamp-link', 'speaker-context-patch', 'measurement-status', 'independent-source-counts', 'nonexecutable-review-state', 'selected-version-source-binding', 'incomplete-scope-disabled', 'complete-scope-enabled', 'scripted-approval-blocked', 'immutable-proposal-guard', 'idempotent-import', 'mobile-keyboard', 'friendly-manual-form', 'invalid-manual-timestamp-no-write', 'manual-builder-original-binding', 'late-auth-navigation', 'no-decisions-errors-source-change']
 
 def now():return datetime.now(timezone.utc).isoformat()
 def hashes():return {name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in SOURCE_FILES}
@@ -132,7 +132,7 @@ def run_mode(mode, output):
         browser_version_present=bool(browser and browser.get('browser_version')),
         source_binding=bool(browser and browser.get('source_sha256') == current == initial),
         all_sources_present=len(current) == len(SOURCE_FILES),
-        no_user_reviews_persisted=bool(store_audit and store_audit['decision_rows'] == 0 and
+        no_user_reviews_persisted=bool(store_audit and store_audit['proposal_rows'] == 2 and store_audit['decision_rows'] == 0 and
             store_audit['review_actor_rows'] == 0 and store_audit['states'] == ['EXPLORATORY']))
     passed = code == 0 and error is None and all(validation.values())
     result = dict(passed=passed, mode=mode, process_exit_code=code,
