@@ -1,54 +1,70 @@
-된 것: 선택한 5개 포지션의 입력→저장→7영역 계획→근거 조회가 실제 브라우저에서 이어집니다.
-된 것: 기능49·합성 의미12·브라우저104·저장 경합3 검사를 통과했고 Frozen 원문을 보존했습니다.
-진행 중: Q05 공식 원문을 나머지160명으로 확장하며 지식은 모두 미승인 후보입니다.
+된 것: 선택한5개 포지션의 입력→저장→7영역 계획→근거 조회를 구현하고 PR11을 병합했습니다.
+된 것: 공식173명 원문과 검토 후보177개를 연결했고 기능50·의미12·브라우저104 검사를 통과했습니다.
+된 것: Q01–Q09 완료9/14입니다. AI 승인0이며 근거·패치가 부족한 칸은 미확인입니다.
 안 된 것: 실제 게임 PC 원본·본인 영상·독립 검토가 없어 Q10–Q14와 코칭 정확도는 대기입니다.
-내가 검토할 것: 실제 경기 패치와 추천 후보10개를 웹에서 확인합니다. AI가 대신 승인하지 않습니다.
+내가 검토할 것: 실제 경기 패치와 추천 후보10개를 웹에서 확인합니다. 수집 재개에는 게임 PC 자료가 필요합니다.
 
-# Queue v1.1 Stage A verified — 2026-10-11
+# Queue v1.1 Stage A merged; Q05 expansion verified — 2026-10-11
 
-Intake main0337d915633f6ad5719f55de1252f05e06621c9b; Main code3f3e3c8;
-branch feat/queue-gameplan-v1.1-2026-10-11; common claim work/main-execution-claim;
-run_token main-20261011-queue-v11-root. Remote application publication/CI/merge pending;
-local verification is not a claim of remote CI success.
+Authority: USER_QUEUE_V1.1_2026-10-11; all five selected positions supersede the old
+2026-10-09 ADC-only scope. Frequent champions are preferences, not scope restrictions.
+No authoritative gameplay patch was found. Archived static build16.20.1 never fills
+runtime patch automatically. Real-match N0, accuracy=null; paid services0.
 
-2026-10-11 user decision supersedes the old2026-10-09 ADC-only target.
-TOP/JUNGLE/MID/BOTTOM/SUPPORT selected position is authoritative; frequent champions
-are preferences only. No authoritative gameplay patch was found in the repository.
-The16.20.1 archived static build never fills runtime patch automatically.
+DONE Q01,Q02,Q03,Q04,Q05,Q06,Q07,Q08,Q09 (9/14); Q10–Q14 BLOCKED_EXTERNAL.
+Closed external blockers0. No independent READY implementation remains. Source/adapter,
+UI/evaluator and verification agents used isolated branches/file scopes; Main inspected
+commits, corrections, source hashes and receipts before accepting their work.
 
-DONE Q01,Q02,Q03,Q04,Q06,Q07,Q08,Q09 (8/14); Q05 RUNNING, Q10–Q14 BLOCKED_EXTERNAL.
-Closed external blockers0; paid services0. Main inspected each isolated agent's
-commit/file scope and bound receipts before integration. Q05 currently has173identity
-rows/13detailed profiles,16raw type candidates/17typed executable candidates and
-10recommended reviews; approvals0. Expanded160kit sources are still being validated.
+Stage A PR11 https://github.com/kco994553-star/lol-coach/pull/11 merged as
+main e12fc5e05c49cd4af9d32f88b9b5c4394a7d2361. Published head
+96d497e3e3d5b403fc1aba0fd556039a9aa50b05 and actual merged checkout share tree
+90335044d9cc2b71096eb5e12621d3ada6db55f9. Actual PR Actions38111430829/38111430739
+and postmerge38111562459/38111562501 all SUCCESS: pregame, regression and
+browser-regression. Receipts evidence/queue/ci-pr11.json and ci-post11.json bind exact
+25pregame/298MVP/29legacy-browser source hashes, not merely job labels.
 
-Golden actual flow: all five selected positions save/reopen the declared10champions;
-common1–3 equal, personal4–6 carry selected-position context and unknown reasons.
-No reviewed knowledge/current patch means UNKNOWN with no tactical filler.
-Separate read-only SYNTHETIC fixture view verifies actual role-specific text dispatch;
-stored fixture proposals stay EXPLORATORY, decision/USER_WEB actor rows0.
-This does not establish real approval persistence or coaching accuracy.
+Q05 expansion branch feat/queue-knowledge-expansion-2026-10-11; intake main e12fc5e.
+Common claim work/main-execution-claim, run_token main-20261011-queue-v11-root.
+Q05 follow-up publication/remote CI/merge PENDING; local PASS is not remote CI success.
+Original13 profiles and17typed candidates preserved. Remaining160official skill kits,
+800exact excerpts and434mechanism interpretations are archived with URL/hash/locator;
+173roster profiles and177typed candidate specs are now exposed in /pregame.
+All actual candidates remain EXPLORATORY; AI/user-impersonated approvals0. Nine expanded
+champions have no supported mechanism classifications. Strong timing, jungle growth,
+new role/lane assumptions and confirmed cooldowns remain unknown; patch scopes=[];
+actual reviewed current knowledge0. The Sylas self-pull/control misclassification was
+removed; raw source and first RED/corrected GREEN audit evidence are preserved.
 
-Final evidence: evidence/queue/q09-final.json, browser-20261011T042104738693Z-b56e75da
-and q09-verifier-20261011T042104776651Z-325fc589. All25bound source hashes match Main.
-Independent review repaired2cooldown conflicts, malformed history shape and pending-save
-stale CURRENT display; all correction checks PASS, no remaining blocking findings.
-First failures and their corrected receipts are preserved. Unchanged legacy MVP and
-Chrome124/124 receipts remain hash-applicable; Frozen27/protected source changes0.
+Final Q05 evidence: evidence/queue/q09-q05-final.json;
+browser-20261011T043349191111Z-21756889 and
+q09-verifier-20261011T043349232080Z-2836d088. Main matched all34bound source hashes.
+50backend/12semantic/104Chromium PASS, no browser/HTTP/console errors or review requests;
+expanded list177/roster173 and corrected Sylas preview checked in both modes.
+Source validator confirms160documents/800excerpts/434features and unchanged initial13;
+typed adapter6checks PASS. Independent content review: q05-independent-review.json.
+Unchanged legacy124browser and pending-save races3 have source-bound prior evidence;
+required GitHub checks will run again on publication. Frozen27/protected core unchanged.
+
+Golden actual flow: five positions save/reopen declared10champions; common1–3 equal,
+personal4–6 carry role context with unknown reasons. Actual patch=null and no reviewed
+knowledge means UNKNOWN with no tactical filler. Separate read-only SYNTHETIC fixture
+view checks role-specific dispatch; persisted proposals remain EXPLORATORY and decision/
+USER_WEB actor rows0. This verifies routing, not actual approval persistence or coaching.
 
 Run /pregame via coach_v1.pregame_server; docs/queue/RUNNING.md and API.md.
-Old server/UI/engine/knowledge/backupformat1 originals are unchanged. Separate
-pregame sidecar export must accompany existing two-DB backup. Typed exact source
-bindings execute only current REVIEWED knowledge, with 3value conditions and immutable
-input/plan revisions; input/knowledge changes expire old plans and exact retry stays stable.
-No live enemy/own/allied cooldown tracker or in-game action coaching is implemented.
-Base values require two sources, patch/type confirmation and reviewed condition binding;
-actual confirmed cooldown candidates0, remaining always NOT_AVAILABLE.
+Original engine/server/web/PR10 approval/backupformat1 remain unchanged. Pregame sidecar
+export must accompany the existing two-DB backup. Typed exact bindings execute only
+current REVIEWED knowledge with three-valued conditions and immutable revisions;
+input/knowledge changes expire old plans, exact retry stays stable.
+No live enemy/own/allied cooldown trackers or in-game action coaching. Pregame base
+values require two sources, patch/type confirmation and reviewed condition binding;
+confirmed actual cooldown candidates0; remaining always NOT_AVAILABLE.
 
-External prerequisites and exact resumption: docs/queue/QUEUE.md and Q10_GAME_PC_CAPTURE.md.
-Q10 needs private genuine Windows game-PC capture package; Q11 actual samples;
-Q12 matching own POV video; Q13 aligned then-known observations; Q14 independent review.
-Real-match N0, accuracy=null. Next: publish/CI/gated merge Stage A, independently finishQ05.
+Next: publish and verify Q05 follow-up, then park without holding a writer lock.
+External prerequisites: docs/queue/Q10_GAME_PC_CAPTURE.md and QUEUE.md.
+Q10 genuine Windows game-PC capture package→Q11 source-linked observations→Q12 matching
+own POV alignment→Q13 review using then-known evidence→Q14 independent evaluation.
 
 ---
 
