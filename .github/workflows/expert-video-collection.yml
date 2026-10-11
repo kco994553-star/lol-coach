@@ -19,7 +19,7 @@ jobs:
   collect:
     if: github.repository == 'kco994553-star/lol-coach' && github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'schedule')
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     env:
       GEMINI_FREE_TIER_CONFIRMED: ${{ vars.GEMINI_FREE_TIER_CONFIRMED }}
       GEMINI_DOCUMENTED_FREE_ENTITLEMENT_CONFIRMED: ${{ vars.GEMINI_DOCUMENTED_FREE_ENTITLEMENT_CONFIRMED }}
@@ -68,7 +68,7 @@ jobs:
           path: ${{ runner.temp }}/expert-reservation/quota-ledger.json
           retention-days: 7
           if-no-files-found: error
-      - name: Process at most two videos only after durable reservation
+      - name: Process one video in bounded clips only after durable reservation
         if: steps.reserve.outputs.reserved == 'true' && steps.durable_reservation.outcome == 'success' && steps.durable_reservation.outputs.artifact-id != ''
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}

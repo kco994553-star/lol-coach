@@ -1,3 +1,21 @@
+된 것: PR #18을 병합했고 새 키로 Riot 수집을 한 번 실행했습니다.
+된 것: 첫 응답 403을 기록했고 요청 1회·재시도 0회로 멈췄습니다.
+된 것: Gemini 구간 지원을 확인하고 600초 대기·한 편 처리로 수정했습니다.
+안 된 것: 실제 Riot 통계·그래프와 새 Gemini 구간 요청 결과는 아직 없습니다.
+내가 검토할 것: Riot 키/프로젝트 접근과 웹 지식 후보의 출처·조건입니다.
+
+# Q15 actual repeat403; Q19 segmented implementation VERIFYING
+
+PR18 merged as4e1836e7722719c7da6db0dbfe963fc4caf37570; published62bdd394e9d260d3231a833e87ff79c4da1d8507 and merge share tree397d5db908c7174a4070771e07aa99ef32f65c45. Required three jobs PASS, exact390 source paths/13groups validated in evidence/queue/resume-20261011/ci-pr18.json. Main Riot target52PASS and independent official-role/first-status boundary review reused.
+
+Exactly ONE trusted CHALLENGER run38123211940 firstHTTP403 at2026-10-11T07:59:18.7969919Z. request_count1/retry_count0, no real matches/cohorts. STOP/BLOCKED_EXTERNAL; KEY_EXPIRED attributed to user's repeat401/403 decision, original UNAUTHORIZED_OR_EXPIRED_OR_UNSUPPORTED_PATH and key_kindUNKNOWN preserved. Portal200 remains user report, not this Actions result. Strict blocked aggregate passed validation; no actual graph browser run. Receipt: evidence/queue/resume-20261011/riot-renewed-key-first.json. No key values inspected; no more Riot dispatches.
+
+Main branchwork/q19-static-segments owns config/contracts/workflow/integration. Isolated collector fixes accepted, official8-source audit completed. Static strings start_offset/end_offset; video before text, original absolute timestamps independently interval-checked. Initialone video<=1200seconds, clips<=600seconds, modeltimeout600/metadatamax20, workflow30minutes. Full ORIGINAL duration precharged per clip; old4charges4298seconds preserved and never refunded. Public artifact/ledger schemas and Frozen history unchanged; internal planv2 rejects archivedv1 dispatch. Incomplete/invalid clips retain bounded partial source without processed marker; known payment status remains explicit. Main source-bound expert functional110PASS (17 new segment tests); independent final f71d798 boundary review clear. RequiredCI and one actual expert run pending.
+
+Progress still DONE Q01–Q09=9/19 fullIDs/closedoriginalblockers3. PRE_GAME Q16–Q18 implemented; postgame PC/POV/independent reference external. Actual reviewed knowledge0, expert factual verification0, coachingN0/accuracy=null, paidservices0. Next: source-bound expertCI/normalmerge, one trusted run, validate only safe summaries and preserve all charges. All old outcomes below remain unchanged.
+
+---
+
 된 것: 최신 main/PR17 병합 상태와 기존 검증을 재사용했습니다.
 된 것: Riot 첫 응답 코드 기록과 실제 역할명 변환 결함을 보완했습니다.
 진행 중: 갱신 키의 Q15 수집 1회와 Gemini600초·구간 처리 구현을 준비합니다.
