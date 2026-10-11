@@ -54,6 +54,25 @@ class RiotCollectorTests(unittest.TestCase):
             self.assertEqual(result['source']['collection']['request_count'],1)
             self.assertNotIn('PRIVATE',json.dumps(result))
 
+    def test_first_http_status_is_first_response_not_later_failure_or_retry(self):
+        for responses,expected,last in [([okay([{'puuid':'private'}]),(403,{},b'PRIVATE_BODY')],200,403),
+                                       ([(503,{},b'PRIVATE_BODY'),okay([])],503,None)]:
+            observed=[];c=self.collector(responses,on_first_http_response=observed.append)
+            result=self.collect(c)
+            self.assertEqual(c.first_http_status,expected);self.assertEqual(observed,[expected])
+            self.assertEqual(result['source']['collection']['status_code'],last)
+            self.assertNotIn('PRIVATE',json.dumps(observed))
+
+    def test_first_http_status_missing_network_and_per_collect_reset(self):
+        c=self.collector([OSError('PRIVATE_NETWORK')],max_retries=0)
+        self.collect(c);self.assertIsNone(c.first_http_status)
+        self.assertEqual(c.requests,1)
+        c=self.collector([okay([]),(403,{},b'PRIVATE_BODY')])
+        self.collect(c);self.assertEqual(c.first_http_status,200)
+        self.collect(c);self.assertEqual(c.first_http_status,403)
+        c.api_key=None;self.collect(c);self.assertIsNone(c.first_http_status)
+        self.assertEqual(c.requests,0)
+
     def test_retry_after_and_application_method_limits_wait(self):
         c=self.collector([(429,{'Retry-After':'3'},b'private'),okay([{'puuid':'private-puuid'}]),
             okay(['KR_100'],{'X-App-Rate-Limit':'1:5','X-App-Rate-Limit-Count':'1:5'}),
@@ -151,6 +170,9 @@ class RiotCollectorTests(unittest.TestCase):
             self.assertEqual(result['samples']['real_matches'],0)
             self.assertIn('MISSING_API_KEY',result['source']['limitations'])
             self.assertNotIn('Traceback',r.stderr)
+            lines=[line for line in r.stdout.splitlines() if line.startswith('RIOT_FIRST_HTTP_RECEIPT_JSON=')]
+            self.assertEqual(len(lines),1)
+            self.assertEqual(json.loads(lines[0].split('=',1)[1]),{'status_code':None})
 
     def test_movement_companion_unavailable_on_auth_failure_and_no_raw_return(self):
         c=self.collector([(403,{},b'PRIVATE_PUUID')])
@@ -178,7 +200,7 @@ class RiotCollectorTests(unittest.TestCase):
                 '--movement-output',str(movement),'--tier','GOLD'],env=env,capture_output=True,text=True)
             self.assertEqual(result.returncode,0,result.stderr)
             self.assertFalse(movement.exists())
-            self.assertEqual(json.loads(result.stdout)['movement_status'],'BLOCKED_EXTERNAL')
+            self.assertEqual(json.loads(result.stdout.splitlines()[-1])['movement_status'],'BLOCKED_EXTERNAL')
 
 
 if __name__=='__main__':unittest.main()

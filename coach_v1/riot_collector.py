@@ -64,7 +64,7 @@ def complete_item_ids(catalog):
 class RiotCollector:
     def __init__(self,api_key=None,*,transport=None,clock=None,sleeper=None,
                  max_requests=250,max_matches=50,max_pages=1,max_players=20,
-                 max_retries=2,deadline_seconds=600):
+                 max_retries=2,deadline_seconds=600,on_first_http_response=None):
         self.api_key=api_key if api_key is not None else os.environ.get('RIOT_API_KEY')
         self.transport=transport or _transport;self.clock=clock or time.monotonic;self.sleeper=sleeper or time.sleep
         self.limits=dict(max_requests=max_requests,max_matches=max_matches,max_pages=max_pages,
@@ -72,6 +72,10 @@ class RiotCollector:
         if any(type(v) is not int or v<(0 if k=='max_retries' else 1) for k,v in self.limits.items()):
             raise ValueError('positive bounded collection limits required')
         self.requests=0;self.retries=0;self.not_before={};self.started=self.clock()
+        if on_first_http_response is not None and not callable(on_first_http_response):
+            raise ValueError('first HTTP response callback must be callable')
+        self.on_first_http_response=on_first_http_response
+        self.first_http_status=None;self._first_http_observed=False
         self.movement_data=None;self.movement_status='NOT_REQUESTED'
         self.outcome_data=None;self.outcome_status='NOT_REQUESTED'
 
@@ -118,6 +122,12 @@ class RiotCollector:
             except (OSError,URLError,TimeoutError):
                 if attempt>=self.limits['max_retries']:raise CollectionBlocked('NETWORK_FAILURE') from None
                 self.retries+=1;self._pause(min(2**attempt,30));continue
+            if not self._first_http_observed:
+                # A diagnostic is independent of aggregate lineage. Never send
+                # the request URL, headers, response body or credential to it.
+                self._first_http_observed=True
+                self.first_http_status=status if type(status) is int and 100<=status<=599 else None
+                if self.on_first_http_response is not None:self.on_first_http_response(self.first_http_status)
             self._rate_headers(host,method,response_headers)
             if status==200:
                 try:return json.loads(body),body
@@ -170,6 +180,7 @@ class RiotCollector:
         if start_time is not None and end_time is not None and start_time>end_time:raise ValueError('invalid collection window')
         # A collector instance performs one bounded job, never cumulative reuse.
         self.started=self.clock();self.requests=0;self.retries=0;self.not_before={}
+        self.first_http_status=None;self._first_http_observed=False
         self.movement_data=None;self.movement_status='NOT_REQUESTED'
         self.outcome_data=None;self.outcome_status='NOT_REQUESTED'
         endpoints=['LEAGUE_V4_'+tier if tier in ('MASTER','GRANDMASTER','CHALLENGER') else 'LEAGUE_V4_ENTRIES',
