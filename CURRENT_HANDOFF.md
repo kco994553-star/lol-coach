@@ -1,3 +1,18 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261011-queue-v13-050952`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `work/queue-segments-closeout`
+- authority: USER_QUEUE_V1.6_2026-10-11; explicit autonomous Main, free implementation/publication/CI/merge, all five roles.
+- intake_main_head: `298cf739fa5f91190418fb96583776df1d528f4a`
+- implementation_head: `a7b10e19c468f6af9f64b556d7c22d5def7b246a`
+- task_scope: Q05 initiative candidates; Q15 trusted collector/statistics/graphs; Q16 visible PRE_GAME guards; Q17 dependencies; Q18 conditional stage roles; nine-card five-position validation; Q19 Korean expert-video source intake and free-only automation.
+- scope_boundary: actual Q10–Q14 personal PC/video/review and postgame extensions unavailable; N0 coaching_accuracy=null; no live coaching or cooldown tracking.
+- updated_at: 2026-10-11T08:15:01.416302+00:00
+- prior history retained below; this token remains current; sibling non-force update required.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261011-queue-v13-050952`
 - status: `RUNNING`
