@@ -1,3 +1,13 @@
+# v1.6 final implementation and acquisition outcome — 2026-10-11
+
+DONE9/19 fullIDs Q01–Q09; closedoriginalinputblockers3. PR16merged55de29d on2026-10-11T07:21:47Z, published831030c/exacttreecbc28331. Required3CIjobsPASS/389sourcepaths (ci-pr16.json), postmerge38121110537/38121110543 all3PASS/389sourcepaths recordedci-post16.json; finalcloseoutpublicationstatus incommonclaim. Q05source-ready expansion complete350candidates/173roster/119partialannotations/54UNKNOWN. Initial190preserved, no AIapproval. ADCexpert 이브 exactuserIDenabled/BOTTOM/UNKNOWNgrade,16channels15enabled;클템excluded/Pdisabled. Allagentscompleted,Mainownscloseoutbranch.
+
+Q19actualsecond38121117903: BLOCKED_EXTERNAL/NETWORK_TIMEOUT, Gemini1request/YTmetadata3requests/usableclaims0, freeproofVERIFIED_FREE, priorledgerFOUND,4chargedvideos4298seconds/final==reservation/norefund. First38119795194 NETWORK_FAILURE retained. Nextrealrunrequiresproviderrespondingwithinbound anddurablequotaavailable; manualtimestampedsourceinputavailable. Do not inferkeyexpiry/paidtier orfillblankclaims.
+
+Q15actual BLOCKED_EXTERNAL (Riot403), Q10–Q14actualPC/POV/independentreview external; postgame Q16–Q18external. PRE_GAME Q16–Q18/Q15graph+outcome areimplemented and tested; runtimeapprovedknowledge0,realstats0,coachingN0/accuracy=null. No independentREADY remains after Main completescloseoutCI/publication. Details/resumeinputs/HEAD/evidence: CURRENT_HANDOFF.md top. Historicalstatus retained below.
+
+---
+
 ADC expert 이브 exact user channelID UCerhqgFd8dnypewC3yjAlbg added;16authorized/15enabled. GradeUNKNOWN, clipspeakerunverified; 클템 remains excluded.
 
 # v1.6 remaining source expansion / operational collection VERIFYING
