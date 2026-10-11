@@ -2,6 +2,21 @@
 - run_token: `main-20261011-queue-v13-050952`
 - status: `RUNNING`
 - writer_active: true
+- owner_branch: `work/ua-generatecontent-20261011`
+- authority: USER_CAUSE_DIAGNOSIS_UA_GENERATECONTENT_2026-10-11 and USER_QUEUE_V1.6_2026-10-11; explicit autonomous Main, free implementation/publication/CI/merge, all five roles.
+- intake_main_head: `1ea54c77a528ce941b51df674f7f803de69be903`
+- implementation_head: `6f6bcf77aa750583861680651d9a35936c71f103`
+- task_scope: USER_CAUSE_DIAGNOSIS: Q15 explicit User-Agent and same-secret curl/Python pair plus bounded safe403 headers/body; Q19 user-directed generateContent YouTube clipping and up to3 spaced TEXT503 retries before one video clip; preserve all charges and integrate only validated real data.
+- scope_boundary: actual Q10–Q14 personal PC/video/review and postgame extensions unavailable; N0 coaching_accuracy=null; no live coaching or cooldown tracking.
+- updated_at: 2026-10-11T11:03:47.144461+00:00
+- prior history retained below; this token remains current; sibling non-force update required.
+
+---
+
+# Latest common execution claim — RUNNING
+- run_token: `main-20261011-queue-v13-050952`
+- status: `RUNNING`
+- writer_active: true
 - owner_branch: `work/queue-diagnosis-final`
 - authority: USER_CAUSE_DIAGNOSIS_UA_GENERATECONTENT_2026-10-11 and USER_QUEUE_V1.6_2026-10-11; explicit autonomous Main, free implementation/publication/CI/merge, all five roles.
 - intake_main_head: `1ea54c77a528ce941b51df674f7f803de69be903`
