@@ -8,6 +8,12 @@ before process; Actions provides it only after upload-artifact succeeds.
 Rolling24h cap28800s is conservative; reset timezone is unknown. No retries:
 another uncertain dispatch would require another full duration reservation.
 Publication is always deferred to Main's repository ownership protocol.
+The default request budget is50 (also its hard maximum):15 enabled channels
+can use3 metadata requests each plus2 model requests, totaling47. Provider
+transport timeout defaults to the existing60-second hard maximum. A detected
+TimeoutError (direct or wrapped in URLError) is NETWORK_TIMEOUT; other network
+failures remain NETWORK_FAILURE without inferring expired keys or paid access.
+These operational limits never authorize retries, quota refunds or reset.
 
 Official sources reviewed2026-10-11, actual service acquisitions0:
 https://ai.google.dev/gemini-api/docs/video-understanding#youtube
@@ -35,6 +41,7 @@ import os
 from pathlib import Path
 import re
 import shutil
+import socket
 import time
 import urllib.error
 import urllib.parse
@@ -54,7 +61,7 @@ POLICY_KEYS={'free_tier_confirmed','entitlement_confirmed','quota_exclusive_conf
              'initial_zero_usage_confirmed','billing_tier'}
 SAFE_REASONS={'EMPTY_CHANNEL_ALLOWLIST','KNOWN_PAID_PROJECT','FREE_PROJECT_OR_ENTITLEMENT_UNVERIFIED',
     'DOCUMENTED_PAID_ENTITLEMENT_REQUIRED',
-    'MISSING_API_KEYS','REQUEST_BUDGET_EXHAUSTED','NETWORK_FAILURE','PROVIDER_HTTP_FAILURE',
+    'MISSING_API_KEYS','REQUEST_BUDGET_EXHAUSTED','NETWORK_FAILURE','NETWORK_TIMEOUT','PROVIDER_HTTP_FAILURE',
     'MALFORMED_RESPONSE','MALFORMED_CHANNEL_METADATA','MALFORMED_VIDEO_METADATA',
     'QUOTA_HISTORY_UNKNOWN','INITIAL_QUOTA_NOT_ATTESTED','NO_UNPROCESSED_PUBLIC_MATCHING_VIDEOS',
     'ROLLING_VIDEO_BUDGET_EXHAUSTED','RESERVATION_PERSISTENCE_NOT_CONFIRMED','RESERVATION_DISPATCH_DEADLINE_EXPIRED'}
@@ -123,7 +130,7 @@ def validate_config(value):
         _require(isinstance(cid,str) and re.fullmatch(r'UC[A-Za-z0-9_-]{22}',cid) is not None and cid not in seen);seen.add(cid)
         _require(all(_text(channel[k],200) for k in ('name','speaker')) and type(channel['speaker_verified']) is bool)
         _require(channel['main_position'] in ('TOP','JUNGLE','MID','BOTTOM','SUPPORT','UNKNOWN'))
-        _require(channel['content_grade'] in ('L','C','P') and type(channel['enabled']) is bool)
+        _require(channel['content_grade'] in ('L','C','P','UNKNOWN') and type(channel['enabled']) is bool)
         _require(channel['content_grade']!='P' or channel['enabled'] is False)
         _require(channel['language']=='UNKNOWN' or isinstance(channel['language'],str) and re.fullmatch(r'[a-zA-Z]{2,8}(?:-[a-zA-Z0-9]{1,8})*',channel['language']) is not None)
         _require(playlist is None or isinstance(playlist,str) and re.fullmatch(r'UU[A-Za-z0-9_-]{22}',playlist) is not None)
@@ -248,7 +255,7 @@ def _transport(method,url,headers,body,timeout,max_bytes):
 
 class ExpertCollector:
     def __init__(self,*,youtube_api_key=None,gemini_api_key=None,transport=None,clock=None,policy=None,
-                 max_requests=12,timeout=20,max_bytes=1000000):
+                 max_requests=50,timeout=60,max_bytes=1000000):
         self.youtube_key=youtube_api_key;self.gemini_key=gemini_api_key
         self.transport=transport or _transport;self.clock=clock or time.time
         self.policy=deepcopy(policy or dict(free_tier_confirmed=False,entitlement_confirmed=False,
@@ -273,6 +280,10 @@ class ExpertCollector:
         headers={'x-goog-api-key':self.youtube_key if youtube else self.gemini_key,'Content-Type':'application/json'}
         self.request_count+=1
         try:code,_,response=self.transport(method,url,headers,body,self.timeout,self.max_bytes)
+        except (TimeoutError,socket.timeout):raise _External('NETWORK_TIMEOUT') from None
+        except urllib.error.URLError as error:
+            reason='NETWORK_TIMEOUT' if isinstance(error.reason,(TimeoutError,socket.timeout)) else 'NETWORK_FAILURE'
+            raise _External(reason) from None
         except Exception:raise _External('NETWORK_FAILURE') from None
         if code!=200:raise _External('PROVIDER_HTTP_FAILURE','BLOCKED_PAYMENT' if code==402 else 'BLOCKED_EXTERNAL')
         try:
@@ -288,7 +299,7 @@ class ExpertCollector:
     def _discover(self,config,ledger,now):
         known=set(ledger['processed_video_ids'])|{row['video_id'] for row in ledger['reservations'] if row['reserved_at']>now-CHARGE_WINDOW}
         candidates=[];seen=set()
-        for channel in sorted(config['channels'],key=lambda c:('L','C','P').index(c['content_grade'])):
+        for channel in sorted(config['channels'],key=lambda c:('L','C','UNKNOWN','P').index(c['content_grade'])):
             if not channel['enabled']:continue
             if len(candidates)>=config['max_videos_per_run']:break
             playlist=channel['uploads_playlist_id']

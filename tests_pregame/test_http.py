@@ -68,9 +68,10 @@ class HTTPTests(unittest.TestCase):
 
     def test_expanded_catalog_exposes_all_roster_profiles_without_approving(self):
         status,rows=self.call('/dev/v1/pregame/candidates')
-        self.assertEqual(status,200);self.assertEqual(len(rows),190)
+        self.assertEqual(status,200);self.assertEqual(len(rows),350)
+        self.assertLess(len(json.dumps(rows,ensure_ascii=False,allow_nan=False).encode()),1_000_000)
         profiles={r['profile']['champion']:r for r in rows if r['profile']}
-        self.assertEqual(len(profiles),173);self.assertEqual(len({r['rule_id'] for r in rows}),190)
+        self.assertEqual(len(profiles),173);self.assertEqual(len({r['rule_id'] for r in rows}),350)
         for r in profiles.values():
             self.assertEqual(r['patches'],[]);self.assertEqual(r['cooldowns'],[])
         self.assertNotIn('GRAB_PICK',profiles['Sylas']['profile']['threats'])

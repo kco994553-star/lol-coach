@@ -1,0 +1,22 @@
+E
+======================================================================
+ERROR: test_unknown_channel_grade_does_not_invent_teaching_grade_or_clip_speaker (tests_expert.test_collector.CollectorTests.test_unknown_channel_grade_does_not_invent_teaching_grade_or_clip_speaker)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-v13/tests_expert/test_collector.py", line 76, in test_unknown_channel_grade_does_not_invent_teaching_grade_or_clip_speaker
+    plan=c.prepare(cfg)
+         ^^^^^^^^^^^^^^
+  File "/workspace/lol-coach-v13/coach_v1/expert_collector.py", line 346, in prepare
+    c=validate_config(config);now=int(self.clock())
+      ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach-v13/coach_v1/expert_collector.py", line 133, in validate_config
+    _require(channel['content_grade'] in ('L','C','P') and type(channel['enabled']) is bool)
+  File "/workspace/lol-coach-v13/coach_v1/expert_collector.py", line 95, in _require
+    if not condition:raise ValueError('invalid expert collector state')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid expert collector state
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+FAILED (errors=1)
