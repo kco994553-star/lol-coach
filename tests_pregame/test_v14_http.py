@@ -84,5 +84,52 @@ class V14HTTPTests(unittest.TestCase):
         self.assertEqual(sum(r['schema_version']=='pregame.rule.v2' for r in rows),13)
         self.assertEqual(self.call('/dev/v1/pregame/knowledge')[1],[])
 
+    def test_power_aggregate_digest_patch_tier_and_synthetic_gate(self):
+        from coach_v1.power_stats import build_power_dataset
+        from tests_pregame.test_power_stats import source,pair
+        from coach_v1.state import digest
+        dataset=build_power_dataset([pair(0),pair(1)],source=source())
+        self.server.power_data=dataset
+        request=dict(champion='Champion',position='TOP',patch='16.19',tier=None,opponent_champion='Opponent')
+        path='/dev/v1/pregame/power-view'
+        self.assertEqual(self.call(path,'POST',request)[1]['view']['status'],'UNKNOWN')
+        self.assertEqual(self.call('/dev/v1/pregame/status')[1]['power_tiers'],[])
+        self.server.test_mode=True
+        response=self.call(path,'POST',request)[1]
+        self.assertTrue(response['test_mode']);self.assertEqual(response['view']['status'],'KNOWN')
+        self.assertEqual(response['view']['dataset_digest'],digest(dataset))
+        self.assertEqual(response['opponent_view']['status'],'KNOWN')
+        self.assertEqual(self.call('/dev/v1/pregame/status')[1]['power_tiers'],['GOLD'])
+        for request in [dict(request,patch=None),dict(request,patch='16.18'),dict(request,tier='PLATINUM')]:
+            response=self.call(path,'POST',request)[1]
+            self.assertEqual(response['view']['status'],'UNKNOWN');self.assertEqual(response['view']['points'],[])
+        import json
+        serialized=json.dumps(self.call(path,'POST',dict(champion='Champion',position='TOP',patch='16.19',tier='GOLD',opponent_champion='Opponent'))[1])
+        for raw in ['PRIVATE_SYNTHETIC','participantId','puuid','KR_SYNTHETIC']:self.assertNotIn(raw,serialized)
+
+    def test_movement_digest_expires_without_rewriting_and_synthetic_ignored_normally(self):
+        from coach_v1.movement import build_movement_dataset
+        from tests_pregame.test_movement import pair,source,annotation
+        from coach_v1.state import digest
+        pairs=[pair(0),pair(1)]
+        dataset=build_movement_dataset(pairs,source=source(),phase_annotations=[annotation(p) for p in pairs])
+        record=self.call('/dev/v1/pregame/inputs','POST',dict(input=golden()),'movement-input')[1]
+        path='/dev/v1/pregame/inputs/'+record['session_id']+'/plans'
+        original=self.call(path,'POST',dict(expected_revision=1),'no-stats')[1]
+        self.server.movement_statistics=dataset
+        self.assertEqual(self.call('/dev/v1/pregame/plans/'+original['id'])[1]['validity'],'CURRENT')
+        self.server.test_mode=True
+        self.assertIn('MOVEMENT_STATISTICS_CHANGED',self.call('/dev/v1/pregame/plans/'+original['id'])[1]['expiry_reasons'])
+        plan=self.call(path,'POST',dict(expected_revision=1),'with-stats')[1]
+        self.assertEqual(plan['movement_statistics_fingerprint'],digest(dataset))
+        self.assertEqual(plan['validity'],'CURRENT')
+        changed=copy.deepcopy(dataset);changed['source']['retrieved_at']='2026-10-11T01:00:00Z'
+        self.server.movement_statistics=changed
+        expired=self.call('/dev/v1/pregame/plans/'+plan['id'])[1]
+        self.assertEqual(expired['validity'],'EXPIRED');self.assertIn('MOVEMENT_STATISTICS_CHANGED',expired['expiry_reasons'])
+        self.assertEqual(expired['movement_statistics_fingerprint'],plan['movement_statistics_fingerprint'])
+        self.assertEqual(expired['movement'],plan['movement'])
+        self.assertEqual(self.server.pregame.export_data()['plans'][-1]['movement_statistics_fingerprint'],digest(dataset))
+
 
 if __name__=='__main__':unittest.main()
