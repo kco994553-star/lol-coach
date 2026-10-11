@@ -58,6 +58,27 @@ class RiotCollectorTests(unittest.TestCase):
             self.assertEqual(result['source']['collection']['request_count'],1)
             self.assertNotIn('PRIVATE',json.dumps(result))
 
+    def test_explicit_user_agent_all_api_and_data_dragon_requests(self):
+        c=self.collector([okay([]),okay(['16.19.1'])])
+        self.collect(c)
+        c._get('https://ddragon.leagueoflegends.com/api/versions.json','DD_VERSIONS',api=False)
+        self.assertTrue(all(h['User-Agent']=='lol-coach/1.0 (+https://github.com/kco994553-star/lol-coach)' for h in self.transport.headers))
+        self.assertEqual(self.transport.headers[0]['X-Riot-Token'],TEST_KEY)
+        self.assertNotIn('X-Riot-Token',self.transport.headers[1])
+
+    def test_later_403_front_observation_sanitized_and_reset(self):
+        observed=[];c=self.collector([okay([{'puuid':'PRIVATE_PLAYER'}]),
+            (403,{'CF-Ray':'PRIVATE_MARKER'},{'status':{'message':'Forbidden puuid=PRIVATE_PLAYER '+TEST_KEY}}),okay([])],
+            on_front_error=observed.append)
+        result=self.collect(c)
+        self.assertEqual(c.first_http_status,200);self.assertEqual(result['status'],'BLOCKED_EXTERNAL')
+        self.assertEqual(c.requests,2);self.assertEqual(c.retries,0)
+        self.assertEqual(observed,c.front_errors);self.assertTrue(c.front_errors[0]['markers']['cf-ray'])
+        self.assertEqual(c.front_errors[0]['http_status'],403)
+        for forbidden in ('PRIVATE_PLAYER','PRIVATE_MARKER',TEST_KEY):
+            self.assertNotIn(forbidden,json.dumps(c.front_errors)+json.dumps(c.http_errors))
+        self.collect(c);self.assertEqual(c.front_errors,[])
+
     def test_first_http_status_is_first_response_not_later_failure_or_retry(self):
         for responses,expected,last in [([okay([{'puuid':'private'}]),(403,{},b'PRIVATE_BODY')],200,403),
                                        ([(503,{},b'PRIVATE_BODY'),okay([])],503,None)]:

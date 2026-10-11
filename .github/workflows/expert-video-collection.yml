@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       text_schema_only:
-        description: Isolate documented claim schema with one text request; no video/quota change
+        description: Isolate claim schema; TEXT503 only up to3 retries, no video/quota change
         type: boolean
         default: false
   schedule:
@@ -54,6 +54,7 @@ jobs:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python scripts/collect_expert_claims.py --phase probe-format --runtime-config config/expert_runtime.json --output-dir "$RUNNER_TEMP/expert-format"
+      # generateContent same-key/model TEXT: only503 gets <=3 spaced retries. VIDEO never retries.
       - name: Verify same-model text then discover public videos and reserve quota
         id: reserve
         if: inputs.text_schema_only != true

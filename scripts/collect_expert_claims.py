@@ -66,15 +66,20 @@ def recovery(directory):
 
 def safe_probe_receipt(plan):
     """Retain typed metadata only, even when a supplied plan is malformed."""
-    if not isinstance(plan,dict) or plan.get('schema_version')!='expert.reservation-plan.v3':return None
+    if not isinstance(plan,dict) or plan.get('schema_version')!='expert.reservation-plan.v4':return None
     probe=plan.get('text_probe')
-    fields={'schema_version','status','reason','model','checked_at','http_status','input_kind','video_inputs'}
+    fields={'schema_version','status','reason','model','checked_at','http_status','input_kind','video_inputs','api_route','attempt_count','retry_count'}
     if not isinstance(probe,dict) or set(probe)!=fields:return None
-    if probe['schema_version']!='expert.text-probe.v1' or probe['model']!=MODEL or probe['input_kind']!='TEXT_ONLY':return None
+    if probe['schema_version']!='expert.text-probe.v2' or probe['model']!=MODEL or probe['input_kind']!='TEXT_ONLY':return None
     if not isinstance(probe['status'],str) or probe['status'] not in set(PLAN_STATUSES)|{'READY'}:return None
     if probe['reason'] is not None and (not isinstance(probe['reason'],str) or probe['reason'] not in SAFE_REASONS):return None
-    if type(probe['video_inputs']) is not int or probe['video_inputs']!=0 or type(probe['checked_at']) is not int:return None
+    if type(probe['video_inputs']) is not int or probe['video_inputs']!=0 or (type(probe['checked_at']) is not int or probe['checked_at']<0):return None
     if probe['http_status'] is not None and (type(probe['http_status']) is not int or not 100<=probe['http_status']<=599):return None
+    if probe['api_route']!='GENERATE_CONTENT':return None
+    attempts=probe['attempt_count'];retries=probe['retry_count']
+    if type(attempts) is not int or not 0<=attempts<=4 or type(retries) is not int or not 0<=retries<=3:return None
+    if attempts and attempts!=retries+1 or not attempts and retries:return None
+    if probe['status']=='READY' and (not attempts or probe['http_status']!=200 or probe['reason'] is not None):return None
     return dict(probe)
 
 
@@ -96,11 +101,11 @@ def main(argv=None,*,entitlement_verifier=None):
             event=dict(provider='GEMINI',phase='TEXT_PROBE' if args.phase in ('reserve','probe-format') else 'VIDEO_CLIP',
                 http_status=None,error_status=None,error_code=None,error_message=None,reason='INVALID_OR_UNAVAILABLE_PUBLIC_STATE')
             events.append(event);emit_diagnostic(event)
-        receipt=dict(schema_version='expert.diagnostics.v1',phase=args.phase,api_route='INTERACTIONS',model=MODEL,
+        receipt=dict(schema_version='expert.diagnostics.v2',phase=args.phase,api_route='GENERATE_CONTENT',model=MODEL,
             total_request_count=collector.request_count if collector is not None else 0,
             request_counts=dict(collector.request_counts) if collector is not None else dict(TEXT_PROBE=0,VIDEO_CLIP=0,METADATA=0),
             events=events,text_probe=None)
-        receipt['text_probe']=safe_probe_receipt(dict(schema_version='expert.reservation-plan.v3',text_probe=probe) if probe is not None else plan) if not failure else None
+        receipt['text_probe']=safe_probe_receipt(dict(schema_version='expert.reservation-plan.v4',text_probe=probe) if probe is not None else plan) if not failure else None
         atomic_json(directory/'diagnostics.json',receipt)
     try:
         if args.phase=='recover':
@@ -117,8 +122,8 @@ def main(argv=None,*,entitlement_verifier=None):
         if args.phase=='probe-format':
             probe=collector.probe_text(structured=True)
             retain_diagnostics(probe=probe)
-            receipt=dict(schema_version='expert.format-probe.v1',profile='TEXT_ONLY_CLAIM_SCHEMA',
-                api_route='INTERACTIONS',text_probe=probe,request_count=collector.request_count,
+            receipt=dict(schema_version='expert.format-probe.v2',profile='TEXT_ONLY_CLAIM_SCHEMA',
+                api_route='GENERATE_CONTENT',text_probe=probe,request_count=collector.request_count,
                 video_requests=0,new_video_reservations=0,coaching_accuracy=None)
             atomic_json(directory/'format-probe.json',receipt)
             print('EXPERT_FORMAT_PROBE_JSON='+json.dumps(receipt,sort_keys=True));return 0

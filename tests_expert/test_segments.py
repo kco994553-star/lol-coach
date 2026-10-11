@@ -4,7 +4,7 @@ import json
 import unittest
 
 from coach_v1 import expert_collector as m
-from tests_expert.test_collector import Transport, VIDEO, NOW, claim, config, policy, is_text_probe
+from tests_expert.test_collector import Transport, VIDEO, NOW, claim, config, policy, is_text_probe, generated
 
 
 class Clips(Transport):
@@ -14,7 +14,7 @@ class Clips(Transport):
     def __call__(self,method,url,headers,body,timeout,max_bytes):
         self.timeouts.append((method,timeout))
         if is_text_probe(body):return super().__call__(method,url,headers,body,timeout,max_bytes)
-        if '/interactions' not in url:
+        if ':generateContent' not in url:
             code,h,data=super().__call__(method,url,headers,body,timeout,max_bytes)
             if '/videos?' in url:data['items'][0]['contentDetails']['duration']='PT'+str(self.duration)+'S'
             return code,h,data
@@ -24,7 +24,7 @@ class Clips(Transport):
         if self.clock is not None:self.clock[0]+=600
         if isinstance(output,Exception):raise output
         text=json.dumps(output)
-        return 200,{},dict(status='completed',steps=[dict(type='model_output',content=[dict(type='text',text=text)])])
+        return 200,{},generated(text)
 
 
 def collector(http,clock=None,**kwargs):
@@ -37,15 +37,15 @@ class SegmentTests(unittest.TestCase):
         for duration,ends,charge in [(600,[600],600),(601,[600,601],1202),(1200,[600,1200],2400)]:
             with self.subTest(duration=duration):
                 h=Clips(duration);c=collector(h);plan=c.prepare(config())
-                self.assertEqual(plan['schema_version'],'expert.reservation-plan.v3')
+                self.assertEqual(plan['schema_version'],'expert.reservation-plan.v4')
                 self.assertEqual(plan['ledger']['reservations'][0]['seconds'],charge)
                 result=c.process(plan,reservation_persisted=True)
                 self.assertEqual(result['status'],'READY')
                 requests=[x[3] for x in h.calls if x[0]=='POST' and not is_text_probe(x[3])]
-                self.assertTrue(all(body['input'][0]['type']=='video' and body['input'][1]['type']=='text' for body in requests))
-                self.assertEqual([body['input'][0]['processing'] for body in requests],[dict(type='static',start_offset=str(start)+'s',end_offset=str(end)+'s') for start,end in zip([0,600],ends)])
+                self.assertTrue(all('file_data' in body['contents'][0]['parts'][0] and 'text' in body['contents'][0]['parts'][1] for body in requests))
+                self.assertEqual([body['contents'][0]['parts'][0]['video_metadata'] for body in requests],[dict(start_offset=str(start)+'s',end_offset=str(end)+'s') for start,end in zip([0,600],ends)])
                 self.assertEqual(result['artifacts'][0]['processing']['input_sha256'],m._digest(requests))
-                self.assertTrue(all('absolute' in body['input'][1]['text'].lower() for body in requests))
+                self.assertTrue(all('absolute' in body['contents'][0]['parts'][1]['text'].lower() for body in requests))
                 self.assertEqual(result['ledger']['processed_video_ids'],[VIDEO])
 
     def test_legacy_config_cannot_select_1210_second_video(self):
@@ -65,7 +65,7 @@ class SegmentTests(unittest.TestCase):
     def test_second_clip_payment_block_is_explicit_while_partial_claims_survive(self):
         class Payment(Clips):
             def __call__(self,*args):
-                if '/interactions' in args[1] and self.model_calls==1:
+                if ':generateContent' in args[1] and self.model_calls==1:
                     self.model_calls+=1;return 402,{},b'PRIVATE_PROVIDER_BODY'
                 return super().__call__(*args)
         h=Payment();c=collector(h);plan=c.prepare(config());result=c.process(plan,reservation_persisted=True)
@@ -79,10 +79,10 @@ class SegmentTests(unittest.TestCase):
     def test_deep_model_text_keeps_first_clip_as_partial(self):
         class DeepModel(Clips):
             def __call__(self,*args):
-                if '/interactions' in args[1] and self.model_calls==1:
+                if ':generateContent' in args[1] and self.model_calls==1:
                     self.model_calls+=1
                     text='{"claims":'+('['*20000)+'0'+(']'*20000)+'}'
-                    return 200,{},dict(status='completed',steps=[dict(type='model_output',content=[dict(type='text',text=text)])])
+                    return 200,{},generated(text)
                 return super().__call__(*args)
         h=DeepModel();c=collector(h);plan=c.prepare(config());result=c.process(plan,reservation_persisted=True)
         self.assertEqual(result['status'],'PARTIAL');self.assertEqual(len(result['artifacts']),1)
@@ -94,7 +94,7 @@ class SegmentTests(unittest.TestCase):
     def test_deep_raw_http_json_keeps_first_clip_as_partial(self):
         class DeepRaw(Clips):
             def __call__(self,*args):
-                if '/interactions' in args[1] and self.model_calls==1:
+                if ':generateContent' in args[1] and self.model_calls==1:
                     self.model_calls+=1;return 200,{},b'{"unused":'+(b'['*20000)+b'0'+(b']'*20000)+b'}'
                 return super().__call__(*args)
         h=DeepRaw();c=collector(h);plan=c.prepare(config());result=c.process(plan,reservation_persisted=True)
@@ -120,7 +120,7 @@ class SegmentTests(unittest.TestCase):
             with self.subTest(accepted=accepted,invalid_title=invalid_title):
                 class Payment(Clips):
                     def __call__(self,*args):
-                        if '/interactions' in args[1] and self.model_calls==1:
+                        if ':generateContent' in args[1] and self.model_calls==1:
                             self.model_calls+=1;return 402,{},b'PRIVATE_PROVIDER_BODY'
                         code,headers,data=super().__call__(*args)
                         if invalid_title and '/videos?' in args[1]:data['items'][0]['snippet']['title']='TEST wave AIza'+'x'*24

@@ -20,7 +20,7 @@ class DiagnosticCliTests(unittest.TestCase):
     def invoke(self,args,http):
         log=io.StringIO()
         with patch.dict(os.environ,ENV,clear=True),patch.object(core,'_transport',http),\
-             patch.object(cli.time,'time',return_value=NOW),contextlib.redirect_stdout(log):
+             patch.object(cli.time,'time',return_value=NOW),patch.object(core.time,'sleep'),contextlib.redirect_stdout(log):
             code=cli.main(args,entitlement_verifier=entitlement)
         return code,log.getvalue()
 
@@ -57,7 +57,7 @@ class DiagnosticCliTests(unittest.TestCase):
             self.assertEqual(code,0);self.assertEqual(http.probe_calls,1);self.assertEqual(http.model_calls,1)
             diag=json.loads((final/'diagnostics.json').read_text())
             self.assertEqual(diag['request_counts'],dict(TEXT_PROBE=0,VIDEO_CLIP=1,METADATA=0))
-            self.assertEqual(diag['text_probe'],plan['text_probe']);self.assertEqual(diag['api_route'],'INTERACTIONS')
+            self.assertEqual(diag['text_probe'],plan['text_probe']);self.assertEqual(diag['api_route'],'GENERATE_CONTENT')
             self.assertEqual(json.loads((final/'receipt.json').read_text())['status'],'PARTIAL')
             self.assertEqual(json.loads((final/'quota-ledger.json').read_text())['processed_video_ids'],[])
 
@@ -74,7 +74,7 @@ class DiagnosticCliTests(unittest.TestCase):
                 self.assertIn('EXPERT_FORMAT_PROBE_JSON=',log);self.assertNotIn('TEST_GEMINI_KEY',log)
                 diag=json.loads((out/'diagnostics.json').read_text())
                 self.assertEqual(diag['request_counts'],dict(TEXT_PROBE=1,VIDEO_CLIP=0,METADATA=0))
-                self.assertEqual(http.calls[0][3]['response_format']['schema'],core.RESPONSE_SCHEMA)
+                self.assertEqual(http.calls[0][3]['generationConfig']['responseJsonSchema'],core.RESPONSE_SCHEMA)
 
     def test_failed_format_phase_removes_prior_ready_receipt(self):
         http=ProbeHTTP()
@@ -89,6 +89,24 @@ class DiagnosticCliTests(unittest.TestCase):
             self.assertFalse((out/'format-probe.json').exists());self.assertFalse((out/'entitlement.json').exists())
             self.assertIsNone(json.loads((out/'diagnostics.json').read_text())['text_probe'])
             self.assertNotIn('TEST_BAD_PROOF',log)
+
+    def test_exhausted_text503_retries_preserve_six_old_reservations_without_video(self):
+        rows=[dict(video_id=str(i).zfill(11),seconds=seconds,reserved_at=NOW-10,reservation_id=str(i)*64)
+            for i,seconds in enumerate([1000,1000,1000,1298,2346,752],1)]
+        ledger=dict(schema_version='expert.quota-ledger.v1',initialized_at=NOW-20,reservations=rows,processed_video_ids=[])
+        http=ProbeHTTP(503,dict(error=dict(code=503,status='UNAVAILABLE',message='Busy TEST_GEMINI_KEY')))
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);prior=root/'prior.json';prior.write_text(json.dumps(ledger))
+            recovery=root/'recovery.json';recovery.write_text(json.dumps(dict(status='FOUND')))
+            cfg=root/'config.json';cfg.write_text(json.dumps(config()));out=root/'out'
+            code,log=self.invoke(['--phase','reserve','--config',str(cfg),'--ledger',str(prior),
+                '--recovery-receipt',str(recovery),'--output-dir',str(out)],http)
+            self.assertEqual(code,0);self.assertEqual(http.probe_calls,4);self.assertEqual(http.model_calls,0)
+            self.assertEqual(json.loads((out/'quota-ledger.json').read_text()),ledger)
+            diag=json.loads((out/'diagnostics.json').read_text())
+            self.assertEqual(diag['text_probe']['retry_count'],3)
+            self.assertEqual(diag['request_counts'],dict(TEXT_PROBE=4,VIDEO_CLIP=0,METADATA=0))
+            self.assertEqual(len(diag['events']),4);self.assertNotIn('TEST_GEMINI_KEY',log+json.dumps(diag))
 
     def test_invalid_plan_has_null_http_safe_reason_and_zero_dispatch(self):
         http=ProbeHTTP()
