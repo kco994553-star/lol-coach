@@ -13,6 +13,7 @@ from unittest.mock import patch
 from pathlib import Path
 
 from tests_pregame.test_power_stats import pair
+TEST_KEY='RGAPI-00000000-0000-4000-8000-000000000000'
 
 
 class Clock:
@@ -41,7 +42,7 @@ class RiotCollectorTests(unittest.TestCase):
 
     def collector(self,responses,**limits):
         self.clock=Clock();self.transport=Responses(responses)
-        return self.module.RiotCollector('PRIVATE_TEST_KEY',transport=self.transport,
+        return self.module.RiotCollector(TEST_KEY,transport=self.transport,
             clock=self.clock.now,sleeper=self.clock.sleep,**limits)
 
     def collect(self,collector,**kwargs):
@@ -82,7 +83,7 @@ class RiotCollectorTests(unittest.TestCase):
             observed.append(status_code)
             print('RIOT_FIRST_HTTP_RECEIPT_JSON='+json.dumps({'status_code':status_code}))
         clock=Clock()
-        c=self.module.RiotCollector('PRIVATE_TEST_KEY',clock=clock.now,sleeper=clock.sleep,
+        c=self.module.RiotCollector(TEST_KEY,clock=clock.now,sleeper=clock.sleep,
             on_first_http_response=receipt)
         with patch.object(self.module,'build_opener') as opener,redirect_stdout(output):
             response=opener.return_value.open.return_value.__enter__.return_value
@@ -104,7 +105,7 @@ class RiotCollectorTests(unittest.TestCase):
         self.assertEqual(self.clock.waits,[3,5])
         self.assertEqual(result['source']['collection']['retry_count'],1)
         self.assertEqual(result['status'],'INSUFFICIENT_DATA')
-        self.assertTrue(all('api_key' not in url and 'PRIVATE_TEST_KEY' not in url for url in self.transport.urls))
+        self.assertTrue(all('api_key' not in url and TEST_KEY not in url and 'PRIVATE_TEST_KEY' not in url for url in self.transport.urls))
         c=self.collector([(429,{'Retry-After':'300'},b'private')],deadline_seconds=10)
         result=self.collect(c);self.assertEqual(result['status'],'BLOCKED_EXTERNAL')
         self.assertEqual(self.clock.waits,[])
@@ -185,13 +186,17 @@ class RiotCollectorTests(unittest.TestCase):
     def test_missing_env_key_script_writes_safe_block_receipt(self):
         import os
         with tempfile.TemporaryDirectory() as tmp:
-            output=Path(tmp)/'safe.json';env=dict(os.environ);env.pop('RIOT_API_KEY',None)
-            r=subprocess.run([sys.executable,'scripts/collect_power_stats.py','--output',str(output),'--tier','GOLD'],
+            output=Path(tmp)/'safe.json';diagnostics=Path(tmp)/'diagnostics.json';env=dict(os.environ);env.pop('RIOT_API_KEY',None)
+            output.write_text('stale previous aggregate')
+            r=subprocess.run([sys.executable,'scripts/collect_power_stats.py','--output',str(output),'--tier','GOLD',
+                '--diagnostics-output',str(diagnostics)],
                 env=env,capture_output=True,text=True)
             self.assertEqual(r.returncode,0,r.stderr)
-            result=json.loads(output.read_text());self.assertEqual(result['status'],'BLOCKED_EXTERNAL')
-            self.assertEqual(result['samples']['real_matches'],0)
-            self.assertIn('MISSING_API_KEY',result['source']['limitations'])
+            self.assertFalse(output.exists())
+            result=json.loads(diagnostics.read_text());self.assertEqual(result['collection_status'],'BLOCKED_EXTERNAL')
+            self.assertEqual(result['request_count'],0)
+            self.assertEqual(result['collection_reason'],'MISSING_API_KEY')
+            self.assertFalse(result['key_shape']['valid_shape'])
             self.assertNotIn('Traceback',r.stderr)
             lines=[line for line in r.stdout.splitlines() if line.startswith('RIOT_FIRST_HTTP_RECEIPT_JSON=')]
             self.assertEqual(len(lines),1)

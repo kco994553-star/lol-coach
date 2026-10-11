@@ -12,11 +12,12 @@ from coach_v1.power_stats import TIERS, validate_power_dataset
 from coach_v1.riot_collector import RiotCollector
 
 
-def main():
+def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output',required=True)
     parser.add_argument('--movement-output',help='optional anonymous movement companion; absent on blocked collection')
     parser.add_argument('--outcome-output',help='optional anonymous ending-duration outcome companion; absent on blocked collection')
+    parser.add_argument('--diagnostics-output',help='safe key-shape and selected HTTP error metadata only')
     parser.add_argument('--tier',choices=TIERS,default='GOLD')
     parser.add_argument('--division',choices=('I','II','III','IV'),default='I')
     parser.add_argument('--patch',help='exact gameplay patch; omitted pins first eligible match patch')
@@ -29,10 +30,10 @@ def main():
     parser.add_argument('--max-gold-ci-width',type=float)
     parser.add_argument('--max-xp-ci-width',type=float)
     parser.add_argument('--max-cs-ci-width',type=float)
-    args=parser.parse_args()
-    paths=[Path(p).resolve() for p in (args.output,args.movement_output,args.outcome_output) if p]
+    args=parser.parse_args(argv)
+    paths=[Path(p).resolve() for p in (args.output,args.movement_output,args.outcome_output,args.diagnostics_output) if p]
     if len(paths)!=len(set(paths)):
-        parser.error('power, movement and outcome outputs must be different paths')
+        parser.error('aggregate and diagnostics outputs must be different paths')
     if args.lookback_days<1:parser.error('lookback-days must be positive')
     end=args.end_time if args.end_time is not None else int(datetime.now(timezone.utc).timestamp())
     start=args.start_time if args.start_time is not None else max(0,end-args.lookback_days*86400)
@@ -43,8 +44,13 @@ def main():
         nonlocal first_receipt_emitted
         print('RIOT_FIRST_HTTP_RECEIPT_JSON='+json.dumps({'status_code':status_code}),flush=True)
         first_receipt_emitted=True
+    def key_shape_receipt(shape):
+        print('RIOT_KEY_SHAPE_RECEIPT_JSON='+json.dumps(shape),flush=True)
+    def http_error_receipt(diagnostic):
+        print('RIOT_HTTP_ERROR_RECEIPT_JSON='+json.dumps(diagnostic),flush=True)
     try:
-        collector=RiotCollector(**limits,on_first_http_response=first_http_receipt)
+        collector=RiotCollector(**limits,on_first_http_response=first_http_receipt,
+            on_key_shape=key_shape_receipt,on_http_error=http_error_receipt)
         result=collector.collect(tier=args.tier,division=args.division,patch=args.patch,
             start_time=start,end_time=end,collect_items=not args.no_item_markers,ci_width_limits=overrides or None,
             collect_movement=bool(args.movement_output),collect_outcome=bool(args.outcome_output))
@@ -52,6 +58,23 @@ def main():
     except ValueError:
         parser.error('invalid collection arguments or unsafe aggregate; no output written')
     if not first_receipt_emitted:first_http_receipt(None)
+    if args.diagnostics_output:
+        diagnostics=dict(schema_version='riot.diagnostics.v1',key_shape=collector.key_shape,
+            first_http_status=collector.first_http_status,http_errors=collector.http_errors,
+            collection_status=result['status'],collection_reason=result['source']['collection']['reason'],
+            request_count=collector.requests,retry_count=collector.retries,coaching_accuracy=None)
+        path=Path(args.diagnostics_output);path.parent.mkdir(parents=True,exist_ok=True)
+        temporary=path.with_name(path.name+'.tmp')
+        temporary.write_text(json.dumps(diagnostics,ensure_ascii=False,allow_nan=False,sort_keys=True,indent=2)+'\n')
+        os.replace(temporary,path)
+    if not collector.key_shape['valid_shape']:
+        # A malformed or missing credential creates only a diagnostic receipt.
+        # Remove requested stale aggregates so old values cannot be uploaded.
+        for value in (args.output,args.movement_output,args.outcome_output):
+            if value:Path(value).unlink(missing_ok=True)
+        print(json.dumps(dict(status='BLOCKED_EXTERNAL',collection_reason=result['source']['collection']['reason'],
+            request_count=0,coaching_accuracy=None,movement_status=collector.movement_status,outcome_status=collector.outcome_status)))
+        return 0
     output=Path(args.output);output.parent.mkdir(parents=True,exist_ok=True)
     temporary=output.with_name(output.name+'.tmp')
     temporary.write_text(json.dumps(result,ensure_ascii=False,allow_nan=False,sort_keys=True,indent=2)+'\n')
