@@ -1,3 +1,9 @@
+# Observed diagnosis outcome — additive, no retrospective cause substitution
+
+Riot keyshapevalid42/prefix/noouterspace/no linebreak, first403/no readable selectedstatus.message. Expiry notestablished. Gemini ordinarytext200 thenvideo400invalid_request; dedicatedsame-schema text503service_unavailable withmodelhighdemandmessage. The503 appliesonlyto thatlaterTEXT request and cannot explainpriorvideo400 orproveformatacceptance. No newvideo/charge fromschema diagnosis. Preserve6rows7396, noblindrepeat/paidchange. Exhaustedindependentwork awaitsaffectedexternalinput/provideravailability; finalstatefollowsrequiredclosureCI/merge.
+
+---
+
 # Main diagnosis decision — separate schema text isolation
 
 Afteractualsame-key/modelTEXT200+VIDEO400invalid_request, Main uses the user's free diagnosis-first authorization for a distinct one-text schema-only profile. No newvideo request/reservation/retry; ordinary1plainprobe/1firstclip pipeline unchanged. Freshofficial/OpenAPI/pinnedSDK review findsnoincorrectwirefield, so Maindoesnotinventafix orswitchendpoint/model/offsettypes. Result narrowspossiblefailurebranches withoutprovingindividualschemakeyfault. Riot403aftervalidshape remainsliteralexternalrejection, noexpiryinference. Originalobservationsbelowpreserved.
