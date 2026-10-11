@@ -9,6 +9,9 @@ import os
 import subprocess
 import tempfile
 import unittest
+import socket
+import urllib.error
+import urllib.parse
 from pathlib import Path
 
 VIDEO='abcdefghijk'
@@ -71,6 +74,60 @@ class CollectorTests(unittest.TestCase):
         http=Transport();c=self.collector(http);cfg=config();cfg['channels']=[]
         plan=c.prepare(cfg)
         self.assertEqual(plan['status'],'BLOCKED_EXTERNAL');self.assertEqual(http.calls,[])
+
+    def test_default_budget_reaches_tail_of_fourteen_authorized_channels(self):
+        cfg=config();cfg['channels']=[];videos={}
+        for index in range(14):
+            channel=copy.deepcopy(config()['channels'][0])
+            channel.update(channel_id='UC'+str(index).zfill(22),uploads_playlist_id=None)
+            cfg['channels'].append(channel)
+            ids=[str(index).zfill(11)] if index<13 else [str(index).zfill(11),'zyxwvutsrqp']
+            for video in ids:videos[video]=channel['channel_id']
+        class Tail(Transport):
+            def __call__(self,method,url,headers,body,timeout,max_bytes):
+                self.calls.append((method,url,copy.deepcopy(headers),copy.deepcopy(body)))
+                query=urllib.parse.parse_qs(urllib.parse.urlsplit(url).query)
+                if '/channels?' in url:
+                    channel=query['id'][0]
+                    return 200,{},dict(items=[dict(id=channel,contentDetails=dict(relatedPlaylists=dict(uploads='UU'+channel[2:])))])
+                if '/playlistItems?' in url:
+                    channel='UC'+query['playlistId'][0][2:]
+                    return 200,{},dict(items=[dict(contentDetails=dict(videoId=video)) for video,owner in videos.items() if owner==channel])
+                if '/videos?' in url:
+                    return 200,{},dict(items=[dict(id=video,snippet=dict(title='TEST wave' if videos[video]==cfg['channels'][-1]['channel_id'] else 'TEST unrelated',
+                        channelId=videos[video],channelTitle='TEST channel',publishedAt='2026-10-10T00:00:00Z',liveBroadcastContent='none'),
+                        contentDetails=dict(duration='PT10M'),status=dict(privacyStatus='public',uploadStatus='processed')) for video in query['id'][0].split(',')])
+                if '/interactions' in url:return 200,{},self.gemini
+                raise AssertionError('unexpected fixture URL')
+        http=Tail();c=self.collector(http);plan=c.prepare(cfg)
+        self.assertEqual(plan['status'],'RESERVED')
+        self.assertEqual([video['id'] for video in plan['videos']],[str(13).zfill(11),'zyxwvutsrqp'])
+        self.assertEqual(c.request_count,42)
+        result=c.process(plan,reservation_persisted=True)
+        self.assertEqual(result['status'],'READY');self.assertEqual(c.request_count,44)
+        self.assertEqual(len(result['artifacts']),2)
+        self.assertTrue(all('/search?' not in call[1] for call in http.calls))
+        with self.assertRaises(ValueError):self.collector(max_requests=51)
+
+    def test_bounded_default_timeout_classification_no_retry_or_refund(self):
+        for error,reason in [(TimeoutError('PRIVATE'), 'NETWORK_TIMEOUT'),(socket.timeout('PRIVATE'), 'NETWORK_TIMEOUT'),
+                (urllib.error.URLError(socket.timeout('PRIVATE')), 'NETWORK_TIMEOUT'),
+                (urllib.error.URLError(OSError('PRIVATE')), 'NETWORK_FAILURE')]:
+            class Failure(Transport):
+                def __call__(self,*args):
+                    if '/interactions' in args[1]:
+                        self.calls.append(args);self.received_timeout=args[4];raise error
+                    return super().__call__(*args)
+            http=Failure();c=self.collector(http);plan=c.prepare(config())
+            result=c.process(plan,reservation_persisted=True)
+            self.assertEqual(http.received_timeout,60)
+            self.assertEqual(result['status'],'BLOCKED_EXTERNAL');self.assertEqual(result['reason'],reason)
+            self.assertEqual(sum('/interactions' in call[1] for call in http.calls),1)
+            self.assertEqual(result['ledger']['reservations'],plan['ledger']['reservations'])
+            self.assertEqual(result['ledger']['processed_video_ids'],[])
+            self.assertEqual(c.prepare(config(),result['ledger'])['status'],'NO_ELIGIBLE_VIDEOS')
+            self.assertNotIn('PRIVATE',json.dumps(result))
+        with self.assertRaises(ValueError):self.collector(timeout=61)
 
     def test_all_attestations_and_keys_required_before_dispatch(self):
         for key in ('free_tier_confirmed','entitlement_confirmed','quota_exclusive_confirmed','initial_zero_usage_confirmed'):
