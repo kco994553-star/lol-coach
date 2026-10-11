@@ -11,9 +11,10 @@
   function provenance(parent,view,source){
     const details=element('details',undefined,'pg-power-source');details.append(element('summary','통계 출처·정밀도·표본 한계'));
     details.append(element('p','데이터 버전 '+(view.schema_version || view.dataset_version || 'UNKNOWN')+' · digest '+(view.dataset_digest || 'UNKNOWN'),'small'));
-    for(const [field,label] of [['provider','제공자'],['patch','패치'],['tier','티어'],['retrieved_at','수집 시각'],['formula_version','계산식 버전'],['precision_policy','정밀도 정책']]){
+    for(const [field,label] of [['provider','제공자'],['sample_kind','자료 종류'],['patch','패치'],['tier','티어'],['retrieved_at','수집 시각'],['formula_version','계산식 버전'],['precision_policy','정밀도 정책']]){
       const value=source[field];details.append(element('p',label+' · '+(value===undefined?'UNKNOWN':typeof value==='object'?JSON.stringify(value):value),'small'));
     }
+    details.append(element('p','집계 표본 · 실제 경기 '+(view.samples?.real_matches ?? 'UNKNOWN')+' · 합성 경기 '+(view.samples?.synthetic_matches ?? 'UNKNOWN'),'small'));
     details.append(element('p','정밀도 기준은 추정 불확실성을 제한하기 위한 운영 정책입니다. 검증된 전술 판단 기준이 아닙니다.','small'));
     for(const limitation of source.limitations || [])details.append(element('p',limitation,'small'));
     details.append(element('p','표본 선택·지역·시간 범위 편향과 경기 간 독립성은 검증되지 않았습니다.','small'));parent.append(details);
@@ -57,7 +58,7 @@
     const data=element('details',undefined,'pg-power-points');data.append(element('summary','분별 표본·비교 집단·누락 구간'));
     for(const p of points){const good=shown.includes(p);data.append(element('p',number(p.minute)+'분 · n='+p.n+' · '+comparison(p.comparison)+' · '+(good?'평균 '+number(p.mean)+' · 95% CI ['+number(p.ci95.low)+', '+number(p.ci95.high)+'] · '+state(p):'UNKNOWN · '+(p.omission_reason || '정밀도 미충족')),'small'));}parent.append(data);
     for(const [owner,value] of [['own',view],['opponent',opponent]])for(const m of value?.markers || [])parent.append(element('p',(owner==='own'?'내 챔피언':'상대 챔피언')+' · '+(m.kind==='LEVEL'?'레벨 '+(m.level ?? 'UNKNOWN'):'완성 아이템 '+(m.item_order ?? 'UNKNOWN')+' · '+(m.item_id ?? 'UNKNOWN'))+' · 중앙값 '+number(m.median_minute)+'분 · IQR '+number(m.q1_minute)+'–'+number(m.q3_minute)+'분 · n='+m.n+' · 비인과 기술 통계','small pg-power-marker-label'));
-    parent.append(element('p','골드·경험치·CS 차이는 전투력 전체가 아닙니다. 레벨·아이템 시점은 비인과 기술 통계이며 서로 다른 빌드를 비교할 수 있습니다.','small'));
+    parent.append(element('p','골드·경험치·CS 차이는 전투력 전체가 아닙니다. 레벨·아이템 시점은 비인과 기술 통계이며 서로 다른 빌드를 비교할 수 있습니다. 관측 프레임 사이의 실제 발생 시점은 확정할 수 없습니다.','small'));
   }
   function render(parent,response,options={}){
     parent.replaceChildren();const view=response?.view,source=view?.source || {},kind=source.sample_kind;
