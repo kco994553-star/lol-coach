@@ -43,13 +43,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python scripts/collect_expert_claims.py --phase recover --output-dir "$RUNNER_TEMP/expert-recovery"
-      - name: Discover public allowlisted videos and reserve rolling quota
+      - name: Verify same-model text then discover public videos and reserve quota
         id: reserve
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          python scripts/collect_expert_claims.py --phase reserve --runtime-config config/expert_runtime.json --output-dir "$RUNNER_TEMP/expert-reservation" --ledger "$RUNNER_TEMP/expert-recovery/quota-ledger.json" --recovery-receipt "$RUNNER_TEMP/expert-recovery/recovery.json"
+          python scripts/collect_expert_claims.py --phase reserve --collection-mode DIAGNOSTIC_FIRST_CLIP --runtime-config config/expert_runtime.json --output-dir "$RUNNER_TEMP/expert-reservation" --ledger "$RUNNER_TEMP/expert-recovery/quota-ledger.json" --recovery-receipt "$RUNNER_TEMP/expert-recovery/recovery.json"
           python - <<'PY'
           import json, os
           from pathlib import Path
@@ -59,6 +59,8 @@ jobs:
               output.write('reserved='+str(plan['status']=='RESERVED').lower()+'\n')
               output.write('has_ledger='+str((directory/'quota-ledger.json').is_file()).lower()+'\n')
           PY
+      # Legacy step name is bound by recovery; quota is durable before any VIDEO request.
+      # The prior text-only probe consumes no video budget.
       - name: Persist quota before any Gemini request
         id: durable_reservation
         if: steps.reserve.outputs.has_ledger == 'true'
@@ -68,7 +70,7 @@ jobs:
           path: ${{ runner.temp }}/expert-reservation/quota-ledger.json
           retention-days: 7
           if-no-files-found: error
-      - name: Process one video in bounded clips only after durable reservation
+      - name: Process one first video clip only after durable reservation
         if: steps.reserve.outputs.reserved == 'true' && steps.durable_reservation.outcome == 'success' && steps.durable_reservation.outputs.artifact-id != ''
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
@@ -90,6 +92,8 @@ jobs:
           name: expert-public-safe-${{ github.run_id }}
           path: |
             ${{ runner.temp }}/expert-final/artifacts/*.json
+            ${{ runner.temp }}/expert-final/diagnostics.json
+            ${{ runner.temp }}/expert-reservation/diagnostics.json
             ${{ runner.temp }}/expert-final/receipt.json
             ${{ runner.temp }}/expert-final/entitlement.json
             ${{ runner.temp }}/expert-reservation/receipt.json

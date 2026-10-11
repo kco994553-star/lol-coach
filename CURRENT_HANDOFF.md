@@ -1,3 +1,21 @@
+된 것: 최신 main·필수 CI·수집 실패와 예약 이력을 다시 확인했습니다.
+된 것: Interactions의 YouTube URL·구간 지원을 공식 문서에서 재확인했습니다.
+진행 중: Riot 키 모양·401/403 메시지와 Gemini 오류 코드를 안전하게 기록합니다.
+진행 중: 같은 키·모델의 텍스트 확인 후 영상 한 구간만 요청하도록 바꿉니다.
+내가 검토할 것: 실제 진단 결과가 나온 뒤 원인에 맞는 대응을 확인합니다.
+
+# User diagnosis-first resume RUNNING
+
+Fresh mainbb543a52b0edd5f24834aae748142298358fbd9b, PR20merged, noopenPR; postmerge38124345608/38124345604all3metadataSUCCESS. Prior failures and5durablevideoreservations6644seconds preserved. User reports RIOT_API_KEY recopied via dashboardbutton; noSecretvalue read. PARKED_EXTERNAL reopened by explicituserdecision, diagnosticbeforeanotheracquisition. Mainwork/api-diagnostics-20261011 owns sharedsafe diagnostic helper/contracts/CLIexpert/workflows/schema reason/integration. Riotwork/riot-diagnostics and expertwork/expert-diagnostics own isolatedcollector/tests; officialsourceauditcompletedwithoutprovidercalls.
+
+Safehelper inspects raw/trimmedlength/prefix/outerwhitespace/linebreak booleans, uses trimmed42-charactercurrentRGAPIUUID, rejectsbadshapezeroHTTPcalls. Authstatus.message andGoogleerror.status/error.code/error.message are bounded/redactedbeforepublication; no rawresponse/key/hashfingerprint/credentialURL. This is separate diagnosticartifact, publicdata/source/ledger shapes unchanged. New INVALID_API_KEY_SHAPE aggregateenum explicit, no invalidkeyacquisition. Diagnosis doesnotinferexpiryfromgeneric403.
+
+FreshofficialYouTube section explicitlysupportsInteractionsURI/gemini3.8flash/staticstringoffsets; nofallbackconditionmet. API-errorsdocumentusesstringerror.code/message, preserveerror.statusseparatelyifpresent. Samekey/model text-only probeonce beforemetadata/reservation; failurecannotrequestorchargevideo. Newinternalplanv3bindsfreshprobe/mode; actualdiagnostic first[0,min600,D]only/fullorigdurationprecharge; partialvideo neverfullyprocessed. SixofficialsourceURL/hashrecords in q19-diagnosis-sources.json and Q19_DIAGNOSIS_SOURCES.md. Main targeted92checksPASS, independent86corechecks/23integrationchecksPASS; authschemeprivacyP2 andHTTP200oversizeclassification fixed withRED/GREEN. CLI default/Actions explicitDIAGNOSTIC_FIRST_CLIP, separate typeddiagnostics artifacts, samejobSecret and legacy recoveryname preserved. No newactualdispatchyet; requiredCI/normalmergebeforetrusteddiagnosticrun. No paidfallback, userapprovalimpersonation or livecoaching.
+
+Progress9/19fullIDs, closedoriginalinputblockers3; actualcoachingN0/accuracy=null. Next: scopedRED/GREEN/Mainreview/requiredCI/merge, oneRiotdiagnostic withvalidshape, oneexperttextcheckthenoneclip onlyiftextsuccess; reportliteraldiagnosisinKorean thenfixconfirmedcausesautonomously. Old observationsbelowunchanged.
+
+---
+
 된 것: Riot 첫 응답 기록·포지션 변환과 Gemini 구간 처리를 병합했습니다.
 된 것: 5개 포지션·9개 카드와 필수 CI를 통과했습니다.
 안 된 것: Riot 첫 응답 403으로 실제 통계·그래프 연결은 대기입니다.

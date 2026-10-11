@@ -52,7 +52,7 @@ jobs:
           COLLECTION_PATCH: ${{ inputs.patch }}
         shell: bash
         run: |
-          args=(--output "$RUNNER_TEMP/power-output/power-data.json" --movement-output "$RUNNER_TEMP/power-output/movement-data.json" --outcome-output "$RUNNER_TEMP/power-output/outcome-data.json" --tier "$COLLECTION_TIER" --division "$COLLECTION_DIVISION" --max-matches 50 --max-requests 250 --max-players 20 --max-pages 1 --max-retries 2 --deadline-seconds 600)
+          args=(--diagnostics-output "$RUNNER_TEMP/power-output/riot-diagnostics.json" --output "$RUNNER_TEMP/power-output/power-data.json" --movement-output "$RUNNER_TEMP/power-output/movement-data.json" --outcome-output "$RUNNER_TEMP/power-output/outcome-data.json" --tier "$COLLECTION_TIER" --division "$COLLECTION_DIVISION" --max-matches 50 --max-requests 250 --max-players 20 --max-pages 1 --max-retries 2 --deadline-seconds 600)
           if [[ -n "$COLLECTION_PATCH" ]]; then args+=(--patch "$COLLECTION_PATCH"); fi
           python scripts/collect_power_stats.py "${args[@]}"
       - name: Print safe aggregate status only
@@ -64,7 +64,10 @@ jobs:
           from pathlib import Path
           path = Path(os.environ['RUNNER_TEMP']) / 'power-output/power-data.json'
           if not path.exists():
-              result = {'status': 'OUTPUT_NOT_PRODUCED', 'coaching_accuracy': None}
+              diagnostic_path = path.with_name('riot-diagnostics.json')
+              diagnostic = json.loads(diagnostic_path.read_text()) if diagnostic_path.exists() else None
+              result = {'status': diagnostic['collection_status'] if diagnostic else 'OUTPUT_NOT_PRODUCED',
+                        'reason': diagnostic['collection_reason'] if diagnostic else None, 'coaching_accuracy': None}
           else:
               data = json.loads(path.read_text())
               result = {'status': data['status'], 'real_matches': data['samples']['real_matches'],

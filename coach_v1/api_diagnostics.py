@@ -28,6 +28,8 @@ def _message(value,secrets):
     for secret in sorted(variants,key=len,reverse=True):value=value.replace(secret,'[REDACTED_KEY]')
     value=re.sub(r'https?://[^\s<>"\']+','[REDACTED_URL]',value,flags=re.I)
     value=re.sub(r'RGAPI-[A-Za-z0-9_-]+|AIza[A-Za-z0-9_-]+','[REDACTED_KEY]',value)
+    value=re.sub(r'(?i)\bauthorization\s*[:=]\s*["\']?(?:Bearer|Basic)\s+[^\s,"\';]+',
+                 '[REDACTED_CREDENTIAL]',value)
     value=re.sub(r'(?i)\b(?:api[_ -]?key|x-goog-api-key|x-riot-token|authorization|key)\s*[:=]\s*["\']?[^\s,"\';]+',
                  '[REDACTED_CREDENTIAL]',value)
     value=re.sub(r'[\x00-\x1f\x7f]', ' ', value)

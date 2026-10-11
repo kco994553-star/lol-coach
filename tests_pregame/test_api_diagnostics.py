@@ -39,6 +39,12 @@ class ApiDiagnosticTests(unittest.TestCase):
         self.assertIn('REDACTED',raw);self.assertIn('PRIVATE_LAST',raw)
         result=safe_http_error('RIOT',403,{'status':{'message':'x'*600+TEST_KEY}},secrets=[TEST_KEY]);self.assertLessEqual(len(result['error_message']),512);self.assertNotIn(TEST_KEY,json.dumps(result))
 
+    def test_authorization_schemes_redact_entire_unknown_credential(self):
+        for scheme in ('Bearer','Basic'):
+            result=safe_http_error('GEMINI',403,{'error':{'message':'Authorization: '+scheme+' PRIVATE_OTHER_TOKEN; safe detail'}})
+            self.assertNotIn('PRIVATE_OTHER_TOKEN',result['error_message'])
+            self.assertIn('safe detail',result['error_message'])
+
     def test_error_symbols_cannot_echo_credentials(self):
         key='AIza'+'Z'*35
         for field in ['status','code']:
