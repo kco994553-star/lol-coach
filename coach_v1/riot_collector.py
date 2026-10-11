@@ -22,6 +22,7 @@ from urllib.request import Request, HTTPRedirectHandler, build_opener
 from .power_stats import (TIERS, build_power_dataset, empty_power_dataset,
                           validate_power_dataset)
 from .api_diagnostics import MAX_ERROR_BYTES,inspect_riot_key,safe_http_error
+RIOT_USER_AGENT='lol-coach/1.0 (+https://github.com/kco994553-star/lol-coach)'
 
 
 class CollectionBlocked(Exception):
@@ -74,7 +75,7 @@ class RiotCollector:
     def __init__(self,api_key=None,*,transport=None,clock=None,sleeper=None,
                  max_requests=250,max_matches=50,max_pages=1,max_players=20,
                  max_retries=2,deadline_seconds=600,on_first_http_response=None,
-                 on_key_shape=None,on_http_error=None):
+                 on_key_shape=None,on_http_error=None,on_front_error=None):
         self.api_key=api_key if api_key is not None else os.environ.get('RIOT_API_KEY')
         self.transport=transport or _transport;self.clock=clock or time.monotonic;self.sleeper=sleeper or time.sleep
         self.limits=dict(max_requests=max_requests,max_matches=max_matches,max_pages=max_pages,
@@ -85,9 +86,10 @@ class RiotCollector:
         if on_first_http_response is not None and not callable(on_first_http_response):
             raise ValueError('first HTTP response callback must be callable')
         self.on_first_http_response=on_first_http_response
-        if any(callback is not None and not callable(callback) for callback in (on_key_shape,on_http_error)):
+        if any(callback is not None and not callable(callback) for callback in (on_key_shape,on_http_error,on_front_error)):
             raise ValueError('diagnostic callbacks must be callable')
         self.on_key_shape=on_key_shape;self.on_http_error=on_http_error
+        self.on_front_error=on_front_error;self.front_errors=[]
         self.key_shape=None;self._normalized_api_key=None;self.http_errors=[]
         self.first_http_status=None;self._first_http_observed=False
         self.movement_data=None;self.movement_status='NOT_REQUESTED'
@@ -144,7 +146,7 @@ class RiotCollector:
             if self.requests>=self.limits['max_requests']:raise CollectionBlocked('REQUEST_BUDGET_EXHAUSTED')
             wait=max(self.not_before.get(('app',host),0),self.not_before.get(('method',host,method),0))-self.clock()
             if wait>0:self._pause(wait)
-            headers={'Accept':'application/json'}
+            headers={'Accept':'application/json','User-Agent':RIOT_USER_AGENT}
             if api:headers['X-Riot-Token']=self._normalized_api_key
             self.requests+=1
             try:status,response_headers,body=self.transport(url,headers,min(20,self.started+self.limits['deadline_seconds']-self.clock()))
@@ -165,6 +167,12 @@ class RiotCollector:
                     self._record_http_error(status,None,'MALFORMED_RESPONSE')
                     raise CollectionBlocked('MALFORMED_RESPONSE',status) from None
             if status in (401,403):
+                if status==403:
+                    from .riot_front_diagnostics import safe_403_observation
+                    observation=safe_403_observation(response_headers,body,status,secrets=(self.api_key,self._normalized_api_key))
+                    self.front_errors.append(observation)
+                    if self.on_front_error is not None:self.on_front_error(deepcopy(observation))
+                    body={'status':{'message':observation['error_message']}}
                 self._record_http_error(status,body,'UNAUTHORIZED_OR_EXPIRED_OR_UNSUPPORTED_PATH')
                 raise CollectionBlocked('UNAUTHORIZED_OR_EXPIRED_OR_UNSUPPORTED_PATH',status)
             if status==404 and allow_missing:return None,b''
@@ -219,6 +227,7 @@ class RiotCollector:
         self.started=self.clock();self.requests=0;self.retries=0;self.not_before={}
         self.first_http_status=None;self._first_http_observed=False
         self.http_errors=[]
+        self.front_errors=[]
         self._normalized_api_key,self.key_shape=inspect_riot_key(self.api_key)
         if self.on_key_shape is not None:self.on_key_shape(deepcopy(self.key_shape))
         self.movement_data=None;self.movement_status='NOT_REQUESTED'
