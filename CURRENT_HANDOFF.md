@@ -1,3 +1,25 @@
+# Latest common execution claim — PARKED_EXTERNAL
+- run_token: `main-20261011-queue-v13-050952`
+- status: `PARKED_EXTERNAL`
+- writer_active: false
+- owner_branch: `work/queue-segments-closeout`
+- authority: USER_QUEUE_V1.6_2026-10-11; explicit autonomous Main, free implementation/publication/CI/merge, all five roles.
+- intake_main_head: `bb543a52b0edd5f24834aae748142298358fbd9b`
+- implementation_head: `bb543a52b0edd5f24834aae748142298358fbd9b`
+- task_scope: Q05 initiative candidates; Q15 trusted collector/statistics/graphs; Q16 visible PRE_GAME guards; Q17 dependencies; Q18 conditional stage roles; nine-card five-position validation; Q19 Korean expert-video source intake and free-only automation.
+- scope_boundary: actual Q10–Q14 personal PC/video/review and postgame extensions unavailable; N0 coaching_accuracy=null; no live coaching or cooldown tracking.
+- updated_at: 2026-10-11T08:18:49.727699+00:00
+- prior history retained below; this token remains current; sibling non-force update required.
+
+- completed_publication: PR18 Riot diagnostics/role aliases, PR19 bounded expert clips, PR20 actual outcome closeout; normal merges and required three-job CI verified at exact heads.
+- actual_acquisition: Riot run38123211940 first403/request1/retry0 STOP, user-attributedKEY_EXPIRED with originalgenerictransportreason; expert run38123631101 BLOCKED_EXTERNAL/PROVIDER_HTTP_FAILURE, one modelrequest/no usableclaims, actualHTTPcodeunknown.
+- quota_preservation: prior4rows4298seconds retained; addedone1173secondvideo/two plannedclips2346seconds, total5rows6644seconds; finalledger equals durableprecall reservation, no refund/retry/Billing.
+- progress: DONE Q01–Q09 9/19, closedoriginalinputblockers3, no independent READY or active subagents; real coaching N0/accuracy=null; real graph/expertbrowser NOT_RUN without usabledata.
+- resume: workingRiotSecret/projectaccess and freeGeminiacceptance/durablequota; Q10ownPC/Q12POV/Q14independentreference external. No paid fallback or USER_WEB impersonation.
+- user_channel: ADC 이브 UCerhqgFd8dnypewC3yjAlbg enabled/UNKNOWNgrade; 클템excluded.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261011-queue-v13-050952`
 - status: `RUNNING`
