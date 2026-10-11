@@ -128,6 +128,7 @@ class V13Tests(unittest.TestCase):
     def test_pick_warnings_require_explicit_unpicked_preferences_and_reviewed_candidate(self):
         ops=v2_rule('OPERATIONS');ops['output']['operations']['pick_candidates']=[dict(champion='Ashe',reason='SYNTHETIC recommendation')]
         candidate=v2_profile('Ashe',['INITIATOR'])
+        ops['output']['operations']['win_condition_allies']=[]
         d=golden(patch='SYNTHETIC-1');d['my_champion']=None;d['slots'][3]['champion']=None
         self.assertEqual(self.evaluate(d,[approved(ops),approved(candidate)])['pick_warnings'],[])
         d=dict(d,schema_version='pregame.input-draft.v2',my_pick_state='UNPICKED',frequent_champions=['Ashe'])
