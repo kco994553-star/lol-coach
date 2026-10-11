@@ -1,3 +1,25 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261011-queue-v11-root`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `feat/queue-gameplan-v1.1-2026-10-11`
+- authority: USER_QUEUE_V1.1_2026-10-11; no paid services; all five positions.
+- exact_pr: 11; https://github.com/kco994553-star/lol-coach/pull/11
+- published_head: `96d497e3e3d5b403fc1aba0fd556039a9aa50b05`
+- published_tree: `90335044d9cc2b71096eb5e12621d3ada6db55f9`
+- intake_main_head: `0337d915633f6ad5719f55de1252f05e06621c9b`
+- task_scope: Stage A DONE Q01/Q02/Q03/Q04/Q06/Q07/Q08/Q09; Q05 source expansion still in isolated local worktree. Main awaits actual required CI without holding a RUNNING remote writer claim.
+- local_verification: functionality49+semantic12; actual Chromium104 normal52/synthetic52; pending-save races3+independent final review PASS;25 exact hashes; oldbrowser124/Frozen27 preserved.
+- merge_gate: freshly re-read this shared ref/token, exactPR11 head/base, current main, reviews, all3 required jobs in2 workflows; compare remote receipts/source hashes; reacquire RUNNING via non-force CAS before mutation.
+- external_scope: Q10-Q14 blocked on genuine gamePC samples/ownvideo/independentreview; actual coaching N0 accuracy=null; AI approvals0; no live cooldown tracking.
+
+- fresh_merge_readiness: PR11 clean/MERGEABLE, exacthead/base unchanged, no blocking reviews; both workflows38111430829/38111430739 SUCCESS, all3 jobs SUCCESS. Remote25pregame+298MVP source hashes match local; newbrowser104/old124/races3 PASS. Test merge1afc97a39684d3bfe938ea493d137c2cab19ccf2 tree matches90335044d9cc2b71096eb5e12621d3ada6db55f9.
+
+- actual_merge: PR11 merged2026-10-11T04:25:57Z; main e12fc5e05c49cd4af9d32f88b9b5c4394a7d2361; tree90335044d9cc2b71096eb5e12621d3ada6db55f9 exactly matches published/tested tree. Postmerge workflows38111562501/38111562459 in_progress. Q05source expansionlocalvalidationcomplete, Mainwillreacquirebeforeadditionalpublication.
+
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261011-queue-v11-root`
 - status: `RUNNING`
