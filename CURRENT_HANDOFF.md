@@ -1,3 +1,21 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261011-queue-v11-root`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `feat/queue-gameplan-v1.1-2026-10-11`
+- authority: USER_QUEUE_V1.1_2026-10-11; no paid services; all five positions.
+- exact_pr: 11; https://github.com/kco994553-star/lol-coach/pull/11
+- published_head: `96d497e3e3d5b403fc1aba0fd556039a9aa50b05`
+- published_tree: `90335044d9cc2b71096eb5e12621d3ada6db55f9`
+- intake_main_head: `0337d915633f6ad5719f55de1252f05e06621c9b`
+- task_scope: Stage A DONE Q01/Q02/Q03/Q04/Q06/Q07/Q08/Q09; Q05 source expansion still in isolated local worktree. Main awaits actual required CI without holding a RUNNING remote writer claim.
+- local_verification: functionality49+semantic12; actual Chromium104 normal52/synthetic52; pending-save races3+independent final review PASS;25 exact hashes; oldbrowser124/Frozen27 preserved.
+- merge_gate: freshly re-read this shared ref/token, exactPR11 head/base, current main, reviews, all3 required jobs in2 workflows; compare remote receipts/source hashes; reacquire RUNNING via non-force CAS before mutation.
+- external_scope: Q10-Q14 blocked on genuine gamePC samples/ownvideo/independentreview; actual coaching N0 accuracy=null; AI approvals0; no live cooldown tracking.
+
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261011-queue-v11-root`
 - status: `RUNNING`
