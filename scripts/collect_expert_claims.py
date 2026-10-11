@@ -17,7 +17,7 @@ import time
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from coach_v1.expert_collector import (ExpertCollector,atomic_json,recover_ledger_snapshot,
-    policy_from_runtime,write_public_result,_json)
+    policy_from_runtime,validate_entitlement_proof,write_public_result,_json)
 
 
 def read_json(path,maximum=2000000):
@@ -64,7 +64,7 @@ def recovery(directory):
     return receipt
 
 
-def main(argv=None):
+def main(argv=None,*,entitlement_verifier=None):
     parser=argparse.ArgumentParser()
     parser.add_argument('--phase',choices=('recover','reserve','process'),required=True)
     parser.add_argument('--config',default='config/expert_channels.json')
@@ -78,7 +78,12 @@ def main(argv=None):
             receipt=recovery(directory)
             print('EXPERT_RECOVERY_JSON='+json.dumps(receipt,sort_keys=True));return 0
         runtime=read_json(args.runtime_config,200000) if args.runtime_config else None
-        policy=policy_from_runtime(runtime,os.environ,now=int(time.time()))
+        if entitlement_verifier is None:
+            from coach_v1.expert_entitlement import verify_free_entitlement
+            entitlement_verifier=verify_free_entitlement
+        proof=validate_entitlement_proof(entitlement_verifier())
+        atomic_json(directory/'entitlement.json',proof)
+        policy=policy_from_runtime(runtime,os.environ,now=int(time.time()),entitlement_proof=proof)
         collector=ExpertCollector(youtube_api_key=os.environ.get('YOUTUBE_API_KEY'),gemini_api_key=os.environ.get('GEMINI_API_KEY'),policy=policy)
         if args.phase=='reserve':
             receipt=read_json(args.recovery_receipt) if args.recovery_receipt else {'status':'ABSENT'}

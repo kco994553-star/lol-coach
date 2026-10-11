@@ -27,7 +27,6 @@ jobs:
       INITIAL_ZERO_USAGE_CONFIRMED: ${{ vars.INITIAL_ZERO_USAGE_CONFIRMED }}
       INITIAL_ZERO_USAGE_CONFIRMED_AT: ${{ vars.INITIAL_ZERO_USAGE_CONFIRMED_AT }}
       GEMINI_PROJECT_BILLING_TIER: ${{ vars.GEMINI_PROJECT_BILLING_TIER }}
-      GEMINI_FREE_ENTITLEMENT_CHECKED_AT: ${{ vars.GEMINI_FREE_ENTITLEMENT_CHECKED_AT }}
     steps:
       - name: Check out trusted default branch
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -92,7 +91,9 @@ jobs:
           path: |
             ${{ runner.temp }}/expert-final/artifacts/*.json
             ${{ runner.temp }}/expert-final/receipt.json
+            ${{ runner.temp }}/expert-final/entitlement.json
             ${{ runner.temp }}/expert-reservation/receipt.json
+            ${{ runner.temp }}/expert-reservation/entitlement.json
             ${{ runner.temp }}/expert-recovery/recovery.json
           retention-days: 7
           if-no-files-found: warn

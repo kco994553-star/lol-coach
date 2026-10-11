@@ -24,8 +24,8 @@ https://docs.cloud.google.com/apis/docs/system-parameters
 SHA256 ee1e59d7c6e8e5995510e657c7aec56a548618ad4dc26f449bc3c4b624429076
 Google's all-REST-APIs key/header rule supports X-Goog-Api-Key for YouTube;
 actual project/key acceptance remains untested, never inferred from docs.
-Preview URL pricing can change. Fresh operator entitlement attestation remains
-mandatory; a documentation pin is not evidence of configured-project billing.
+Preview URL pricing can change. Fresh official-document entitlement verification
+and operator free-project attestation remain independent mandatory gates.
 """
 from copy import deepcopy
 from datetime import date,datetime,timezone
@@ -34,6 +34,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import time
 import urllib.error
 import urllib.parse
@@ -52,11 +53,17 @@ CHARGE_WINDOW=DAY+MAX_DISPATCH_DELAY+MAX_CALL_TIMEOUT
 POLICY_KEYS={'free_tier_confirmed','entitlement_confirmed','quota_exclusive_confirmed',
              'initial_zero_usage_confirmed','billing_tier'}
 SAFE_REASONS={'EMPTY_CHANNEL_ALLOWLIST','KNOWN_PAID_PROJECT','FREE_PROJECT_OR_ENTITLEMENT_UNVERIFIED',
+    'DOCUMENTED_PAID_ENTITLEMENT_REQUIRED',
     'MISSING_API_KEYS','REQUEST_BUDGET_EXHAUSTED','NETWORK_FAILURE','PROVIDER_HTTP_FAILURE',
     'MALFORMED_RESPONSE','MALFORMED_CHANNEL_METADATA','MALFORMED_VIDEO_METADATA',
     'QUOTA_HISTORY_UNKNOWN','INITIAL_QUOTA_NOT_ATTESTED','NO_UNPROCESSED_PUBLIC_MATCHING_VIDEOS',
     'ROLLING_VIDEO_BUDGET_EXHAUSTED','RESERVATION_PERSISTENCE_NOT_CONFIRMED','RESERVATION_DISPATCH_DEADLINE_EXPIRED'}
 PLAN_STATUSES=('RESERVED','BLOCKED_EXTERNAL','BLOCKED_PAYMENT','NO_ELIGIBLE_VIDEOS')
+ENTITLEMENT_URLS=('https://ai.google.dev/gemini-api/docs/pricing','https://ai.google.dev/gemini-api/docs/video-understanding',
+                  'https://ai.google.dev/gemini-api/docs/models')
+ENTITLEMENT_REASONS={'DOCUMENTED_FREE_ENTITLEMENT','FREE_TIER_POSITIVE_PRICE',
+    'PRICING_SOURCE_UNAVAILABLE','YOUTUBE_SOURCE_UNAVAILABLE','MODEL_SOURCE_UNAVAILABLE',
+    'PRICING_SCOPE_UNVERIFIED','YOUTUBE_SCOPE_UNVERIFIED','MODEL_SCOPE_UNVERIFIED'}
 VIDEO_KEYS={'id','url','title','channel_id','channel_name','speaker','speaker_verified',
             'published_at','upload_date','duration_seconds','language'}
 PROMPT=('Extract at most100 distinct teaching statements from this public League of Legends video. '
@@ -126,10 +133,29 @@ def validate_config(value):
     return c
 
 
-def policy_from_runtime(runtime,environ,*,now):
-    """Main's dated USER proof fallback; explicit false never becomes true.
+def validate_entitlement_proof(proof):
+    p=deepcopy(proof);_keys(p,{'status','checked_at','model','sources','reasons'})
+    _require(p['status'] in ('VERIFIED_FREE','UNKNOWN','PAID_REQUIRED') and p['model']==MODEL)
+    _require(isinstance(p['checked_at'],str) and re.fullmatch(r'\d{4}-\d{2}-\d{2}',p['checked_at']) is not None)
+    try:date.fromisoformat(p['checked_at'])
+    except (ValueError,TypeError):raise ValueError('invalid expert collector state') from None
+    _require(isinstance(p['sources'],list) and len(p['sources'])<=3)
+    urls=[]
+    for source in p['sources']:
+        _keys(source,{'url','sha256'});_require(source['url'] in ENTITLEMENT_URLS and _sha(source['sha256']));urls.append(source['url'])
+    _require(len(urls)==len(set(urls)))
+    if p['status']!='UNKNOWN':_require(set(urls)==set(ENTITLEMENT_URLS))
+    _require(isinstance(p['reasons'],list) and 1<=len(p['reasons'])<=3 and all(isinstance(x,str) and x in ENTITLEMENT_REASONS for x in p['reasons']))
+    if p['status']=='VERIFIED_FREE':_require(p['reasons']==['DOCUMENTED_FREE_ENTITLEMENT'])
+    elif p['status']=='PAID_REQUIRED':_require(p['reasons']==['FREE_TIER_POSITIVE_PRICE'])
+    else:_require(all(x not in ('DOCUMENTED_FREE_ENTITLEMENT','FREE_TIER_POSITIVE_PRICE') for x in p['reasons']))
+    return p
 
-    Entitlement dates expire after their reviewed UTC day. Model is hard pinned;
+
+def policy_from_runtime(runtime,environ,*,now,entitlement_proof=None):
+    """Main's USER billing proof plus fresh public-source entitlement proof.
+
+    Documentation proof dates expire after their verified UTC day. Model is hard pinned;
     callers cannot select a paid fallback. Project name remains an assertion,
     never a claim that the collector authenticated secret-to-project linkage.
     """
@@ -149,16 +175,14 @@ def policy_from_runtime(runtime,environ,*,now):
         values.update({key:runtime[key] for key in values})
     names=dict(free_tier_confirmed='GEMINI_FREE_TIER_CONFIRMED',quota_exclusive_confirmed='GEMINI_QUOTA_EXCLUSIVE_CONFIRMED',
         initial_zero_usage_confirmed='INITIAL_ZERO_USAGE_CONFIRMED',entitlement_confirmed='GEMINI_DOCUMENTED_FREE_ENTITLEMENT_CONFIRMED')
-    values['entitlement_confirmed']=checked==datetime.fromtimestamp(now,timezone.utc).date()
+    proof=validate_entitlement_proof(entitlement_proof) if entitlement_proof is not None else None
+    current_free=proof is not None and proof['status']=='VERIFIED_FREE' and proof['checked_at']==datetime.fromtimestamp(now,timezone.utc).date().isoformat()
+    values['entitlement_confirmed']=current_free
     for key,variable in names.items():
         value=environ.get(variable)
         if value is not None and value!='':
             _require(value in ('true','false'));values[key]=value=='true'
-    date_value=environ.get('GEMINI_FREE_ENTITLEMENT_CHECKED_AT')
-    if date_value:
-        try:checked=date.fromisoformat(date_value)
-        except (ValueError,TypeError):raise ValueError('invalid expert collector state') from None
-    values['entitlement_confirmed']=values['entitlement_confirmed'] and checked==datetime.fromtimestamp(now,timezone.utc).date()
+    values['entitlement_confirmed']=values['entitlement_confirmed'] and current_free
     zero_date=environ.get('INITIAL_ZERO_USAGE_CONFIRMED_AT')
     if zero_date:
         try:zero_confirmed=datetime.fromisoformat(zero_date.replace('Z','+00:00'))
@@ -169,6 +193,7 @@ def policy_from_runtime(runtime,environ,*,now):
     tier=environ.get('GEMINI_PROJECT_BILLING_TIER')
     values['billing_tier']=tier if tier else ('FREE_TIER' if values['free_tier_confirmed'] else 'UNKNOWN')
     _require(values['billing_tier'] in ('FREE_TIER','PAID','UNKNOWN'))
+    if proof is not None and proof['status']=='PAID_REQUIRED':values['billing_tier']='PAID_REQUIRED'
     return values
 
 
@@ -230,11 +255,12 @@ class ExpertCollector:
             quota_exclusive_confirmed=False,initial_zero_usage_confirmed=False,billing_tier='UNKNOWN'))
         _keys(self.policy,POLICY_KEYS)
         _require(all(type(self.policy[k]) is bool for k in POLICY_KEYS-{'billing_tier'}))
-        _require(self.policy['billing_tier'] in ('FREE_TIER','PAID','UNKNOWN'))
+        _require(self.policy['billing_tier'] in ('FREE_TIER','PAID','UNKNOWN','PAID_REQUIRED'))
         _require(_int(max_requests,1) and max_requests<=50 and _int(timeout,1) and timeout<=60 and _int(max_bytes,1) and max_bytes<=2000000)
         self.max_requests=max_requests;self.timeout=timeout;self.max_bytes=max_bytes;self.request_count=0
 
     def _gate(self):
+        if self.policy['billing_tier']=='PAID_REQUIRED':raise _External('DOCUMENTED_PAID_ENTITLEMENT_REQUIRED','BLOCKED_PAYMENT')
         if self.policy['billing_tier']=='PAID':raise _External('KNOWN_PAID_PROJECT','BLOCKED_PAYMENT')
         if self.policy['billing_tier']!='FREE_TIER' or not all(self.policy[x] for x in
             ('free_tier_confirmed','entitlement_confirmed','quota_exclusive_confirmed')):raise _External('FREE_PROJECT_OR_ENTITLEMENT_UNVERIFIED')
@@ -409,14 +435,40 @@ def atomic_json(path,value):
 
 
 def write_public_result(directory,result):
-    directory=Path(directory);_require(len(result['artifacts'])<=2)
+    """Replace the artifact set; a smaller/blocked result never retains claims.
+
+    Only this writer's bounded artifact directory is replaced. Entitlement
+    receipts remain independent. Unknown files/symlinks or interrupted staging
+    are rejected rather than recursively deleting arbitrary output content.
+    """
+    directory=Path(directory);_require(not directory.is_symlink() and len(result['artifacts'])<=2)
     if result['artifacts']:
         from .expert_contract import validate_expert_artifact
         artifacts=[validate_expert_artifact(x) for x in result['artifacts']]
     else:artifacts=[]
-    if result['ledger'] is not None:atomic_json(directory/'quota-ledger.json',validate_ledger(result['ledger'],result['checked_at']))
-    for artifact in artifacts:atomic_json(directory/'artifacts'/(artifact['video']['id']+'.json'),artifact)
+    ledger=validate_ledger(result['ledger'],result['checked_at']) if result['ledger'] is not None else None
     receipt={key:deepcopy(result[key]) for key in ('status','reason','request_count','video_results','publication_status','coaching_accuracy')}
+    destination=directory/'artifacts';staged=directory/'.artifacts-next';previous=directory/'.artifacts-previous'
+    _require(not destination.is_symlink() and not staged.exists() and not staged.is_symlink()
+             and not previous.exists() and not previous.is_symlink())
+    if destination.exists():
+        _require(destination.is_dir())
+        files=list(destination.iterdir());_require(len(files)<=2)
+        _require(all(not path.is_symlink() and path.is_file() and path.suffix=='.json' and _id(path.stem) for path in files))
+    ledger_path=directory/'quota-ledger.json';_require(not ledger_path.is_symlink())
+    directory.mkdir(parents=True,exist_ok=True);staged.mkdir()
+    try:
+        for artifact in artifacts:atomic_json(staged/(artifact['video']['id']+'.json'),artifact)
+        if destination.exists():os.replace(destination,previous)
+        try:os.replace(staged,destination)
+        except Exception:
+            if previous.exists():os.replace(previous,destination)
+            raise
+        if previous.exists():shutil.rmtree(previous)
+    finally:
+        if staged.exists():shutil.rmtree(staged)
+    if ledger is not None:atomic_json(ledger_path,ledger)
+    elif ledger_path.exists():ledger_path.unlink()
     atomic_json(directory/'receipt.json',receipt)
 
 

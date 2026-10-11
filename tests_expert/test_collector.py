@@ -2,7 +2,8 @@
 import copy
 import importlib
 import importlib.util
-from datetime import datetime,timezone
+import inspect
+from unittest.mock import patch
 import json
 import os
 import subprocess
@@ -30,6 +31,12 @@ def policy():
 def claim(timestamp='01:00'):
     return dict(timestamp=timestamp,paraphrase='TEST synthetic wave explanation',champion='UNKNOWN',position='MID',
         stage='UNKNOWN',conditions=[],context='EXPLANATION',measurable=False)
+
+
+def entitlement(status='VERIFIED_FREE'):
+    return dict(status=status,checked_at='2026-10-11',model='gemini-3.8-flash',sources=[dict(url=url,sha256='0'*64) for url in (
+        'https://ai.google.dev/gemini-api/docs/pricing','https://ai.google.dev/gemini-api/docs/video-understanding','https://ai.google.dev/gemini-api/docs/models')],
+        reasons=[{'VERIFIED_FREE':'DOCUMENTED_FREE_ENTITLEMENT','PAID_REQUIRED':'FREE_TIER_POSITIVE_PRICE','UNKNOWN':'PRICING_SOURCE_UNAVAILABLE'}[status]])
 
 
 class Transport:
@@ -180,6 +187,24 @@ class CollectorTests(unittest.TestCase):
             for path in paths:
                 self.assertNotIn('TEST_GEMINI_KEY',path.read_text());json.loads(path.read_text())
 
+    def test_reused_output_replaces_smaller_and_blocked_artifact_sets(self):
+        c=self.collector();result=c.process(c.prepare(config()),reservation_persisted=True)
+        second=copy.deepcopy(result['artifacts'][0]);second['video']['id']='zyxwvutsrqp'
+        second['video']['url']='https://www.youtube.com/watch?v=zyxwvutsrqp'
+        second['claims'][0]['independent_group_id']='YOUTUBE:zyxwvutsrqp'
+        larger=copy.deepcopy(result);larger['artifacts'].append(second)
+        with tempfile.TemporaryDirectory() as d:
+            self.module.write_public_result(d,larger)
+            self.assertEqual(len(list((Path(d)/'artifacts').glob('*.json'))),2)
+            self.module.write_public_result(d,result)
+            self.assertEqual([p.name for p in (Path(d)/'artifacts').glob('*.json')],[VIDEO+'.json'])
+            blocked=copy.deepcopy(result);blocked.update(status='BLOCKED_EXTERNAL',artifacts=[],ledger=None,
+                video_results=[],reason='MISSING_API_KEYS')
+            self.module.write_public_result(d,blocked)
+            self.assertEqual(list((Path(d)/'artifacts').glob('*.json')),[])
+            self.assertFalse((Path(d)/'quota-ledger.json').exists())
+            self.assertEqual(json.loads((Path(d)/'receipt.json').read_text())['status'],'BLOCKED_EXTERNAL')
+
     def test_recover_failed_run_reservation_and_reject_refunded_final_snapshot(self):
         c=self.collector();ledger=c.prepare(config())['ledger']
         runs=[dict(id=3,conclusion='failure'),dict(id=2,conclusion='success')]
@@ -224,9 +249,12 @@ class CollectorTests(unittest.TestCase):
         http=Transport();self.collector(http).prepare(cfg);self.assertEqual(http.calls,[])
         with tempfile.TemporaryDirectory() as d:
             path=Path(d)/'config.json';path.write_text(json.dumps(config()))
-            result=subprocess.run(['python','scripts/collect_expert_claims.py','--phase','reserve','--config',str(path),
-                '--output-dir',str(Path(d)/'output')],env={'PATH':os.environ['PATH']},capture_output=True,text=True,check=False)
-            self.assertEqual(result.returncode,0)
+            spec=importlib.util.spec_from_file_location('q19_cli','scripts/collect_expert_claims.py')
+            cli=importlib.util.module_from_spec(spec);spec.loader.exec_module(cli)
+            with patch.dict(os.environ,{},clear=True):
+                code=cli.main(['--phase','reserve','--config',str(path),'--output-dir',str(Path(d)/'output')],
+                    entitlement_verifier=lambda:entitlement('UNKNOWN'))
+            self.assertEqual(code,0)
             receipt=json.loads((Path(d)/'output/receipt.json').read_text())
             self.assertEqual(receipt['status'],'BLOCKED_EXTERNAL');self.assertEqual(receipt['request_count'],0)
             self.assertEqual(list((Path(d)/'output').glob('artifacts/*.json')),[])
@@ -236,9 +264,9 @@ class CollectorTests(unittest.TestCase):
             confirmed_at='2026-10-11T00:00:00Z',free_tier_confirmed=True,entitlement_checked_at='2026-10-11',
             quota_exclusive_confirmed=True,initial_zero_usage_confirmed=True)
         self.assertTrue(hasattr(self.module,'policy_from_runtime'),'runtime source adapter missing')
-        p=self.module.policy_from_runtime(runtime,{},now=NOW)
+        p=self.module.policy_from_runtime(runtime,{},now=NOW,entitlement_proof=entitlement())
         self.assertEqual(p,policy())
-        p=self.module.policy_from_runtime(runtime,{'GEMINI_FREE_TIER_CONFIRMED':'false'},now=NOW)
+        p=self.module.policy_from_runtime(runtime,{'GEMINI_FREE_TIER_CONFIRMED':'false'},now=NOW,entitlement_proof=entitlement())
         self.assertFalse(p['free_tier_confirmed'])
         p=self.module.policy_from_runtime(runtime,{},now=NOW+86400)
         self.assertFalse(p['entitlement_confirmed'])
@@ -246,6 +274,36 @@ class CollectorTests(unittest.TestCase):
         self.assertFalse(p['initial_zero_usage_confirmed'])
         bad=copy.deepcopy(runtime);bad['raw_key']='PRIVATE'
         with self.assertRaises(ValueError):self.module.policy_from_runtime(bad,{},now=NOW)
+
+    def test_current_document_proof_required_and_paid_proof_cannot_be_overridden(self):
+        self.assertIn('entitlement_proof',inspect.signature(self.module.policy_from_runtime).parameters)
+        env=dict(GEMINI_FREE_TIER_CONFIRMED='true',GEMINI_DOCUMENTED_FREE_ENTITLEMENT_CONFIRMED='true',
+            GEMINI_FREE_ENTITLEMENT_CHECKED_AT='2026-10-11',GEMINI_PROJECT_BILLING_TIER='FREE_TIER')
+        self.assertFalse(self.module.policy_from_runtime(None,env,now=NOW,entitlement_proof=entitlement('UNKNOWN'))['entitlement_confirmed'])
+        self.assertEqual(self.module.policy_from_runtime(None,env,now=NOW,entitlement_proof=entitlement('PAID_REQUIRED'))['billing_tier'],'PAID_REQUIRED')
+        p=self.module.policy_from_runtime(None,dict(env,GEMINI_DOCUMENTED_FREE_ENTITLEMENT_CONFIRMED='false'),now=NOW,entitlement_proof=entitlement())
+        self.assertFalse(p['entitlement_confirmed'])
+        contradictory=entitlement();contradictory['reasons']=['PRICING_SOURCE_UNAVAILABLE']
+        with self.assertRaises(ValueError):self.module.validate_entitlement_proof(contradictory)
+
+    def test_cli_entitlement_unknown_or_paid_never_dispatches_with_present_keys(self):
+        spec=importlib.util.spec_from_file_location('q19_proof_cli','scripts/collect_expert_claims.py')
+        cli=importlib.util.module_from_spec(spec);spec.loader.exec_module(cli)
+        environment=dict(YOUTUBE_API_KEY='TEST_YOUTUBE_KEY',GEMINI_API_KEY='TEST_GEMINI_KEY',
+            GEMINI_FREE_TIER_CONFIRMED='true',GEMINI_QUOTA_EXCLUSIVE_CONFIRMED='true',INITIAL_ZERO_USAGE_CONFIRMED='true',
+            INITIAL_ZERO_USAGE_CONFIRMED_AT='2026-10-11T00:00:00Z')
+        for status,expected in [('UNKNOWN','BLOCKED_EXTERNAL'),('PAID_REQUIRED','BLOCKED_PAYMENT')]:
+            http=Transport()
+            with tempfile.TemporaryDirectory() as d:
+                path=Path(d)/'config.json';path.write_text(json.dumps(config()))
+                with patch.dict(os.environ,environment,clear=True),patch.object(self.module,'_transport',http):
+                    code=cli.main(['--phase','reserve','--config',str(path),'--output-dir',str(Path(d)/'output')],
+                        entitlement_verifier=lambda:entitlement(status))
+                self.assertEqual(code,0);self.assertEqual(http.calls,[])
+                receipt=json.loads((Path(d)/'output/receipt.json').read_text())
+                self.assertEqual(receipt['status'],expected);self.assertEqual(receipt['request_count'],0)
+                if status=='PAID_REQUIRED':self.assertEqual(receipt['reason'],'DOCUMENTED_PAID_ENTITLEMENT_REQUIRED')
+                self.assertTrue((Path(d)/'output/entitlement.json').is_file())
 
     def test_late_dispatch_reservation_remains_charged_for_rolling_day(self):
         class EightHour(Transport):
