@@ -1,4 +1,18 @@
 # Latest common execution claim — RUNNING
+- run_token: `main-20261011-queue-v13-050952`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `feat/queue-v1.3-2026-10-11`
+- authority: USER_QUEUE_V1.3_2026-10-11; user explicitly designates this Codex as Main and directs latest GitHub takeover and Q05/Q15/Q16/Q17 execution, superseding v1.2.
+- intake_main_head: `708dc737ca4cd70eff86e6a4c6a2ceba039430f3`
+- prior_claim_parent: `011d92e95b1e992caa23c61ab8490f70915b887a`; prior RUNNING record retained below. This is user-directed Main reassignment, not an assertion that the old process terminated.
+- task_scope: Q05 initiative/requirements candidates; Q15 collector/statistics/graphs; Q16 PRE_GAME guards; Q17 dependency card; eight-card five-position verification.
+- integration_owner: Main; contract/schema first, consumers wait; independent worker file/branch scopes recorded before dispatch.
+- constraints: no paid services; no approval impersonation; no live coaching/cooldown tracking; no raw identities or API keys in public repository; real coaching N=0/accuracy=null.
+
+---
+
+# Latest common execution claim — RUNNING
 - run_token: `main-20261011-queue-v11-root`
 - status: `RUNNING`
 - writer_active: true
