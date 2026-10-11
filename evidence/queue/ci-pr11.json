@@ -1,0 +1,3535 @@
+{
+  "scope": "Fresh actual remote CI; Golden actual mode + SYNTHETIC reviewed-view mode separated; legacy tests use isolated synthetic fixtures",
+  "source_reference_commit": "e12fc5e05c49cd4af9d32f88b9b5c4394a7d2361",
+  "source_reference_tree": "90335044d9cc2b71096eb5e12621d3ada6db55f9",
+  "checkout_commit": "1afc97a39684d3bfe938ea493d137c2cab19ccf2",
+  "head_sha": "96d497e3e3d5b403fc1aba0fd556039a9aa50b05",
+  "source_counts": {
+    "mvp": 298,
+    "pregame": 25,
+    "old_browser": 29
+  },
+  "all_source_hashes_match": true,
+  "runs": [
+    {
+      "id": 38111430829,
+      "url": "https://github.com/kco994553-star/lol-coach/actions/runs/38111430829",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "96d497e3e3d5b403fc1aba0fd556039a9aa50b05"
+    },
+    {
+      "id": 38111430739,
+      "url": "https://github.com/kco994553-star/lol-coach/actions/runs/38111430739",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "96d497e3e3d5b403fc1aba0fd556039a9aa50b05"
+    }
+  ],
+  "jobs": [
+    [
+      {
+        "id": 114387644887,
+        "name": "pregame",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    [
+      {
+        "id": 114387644980,
+        "name": "browser-regression",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 114387645109,
+        "name": "regression",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  ],
+  "pregame": {
+    "commit_sha": "1afc97a39684d3bfe938ea493d137c2cab19ccf2",
+    "run_id": "38111430829",
+    "run_attempt": "1",
+    "receipts": {
+      "tests": {
+        "passed": true,
+        "evidence_kind": "FRESH_SCOPED_PREGAME_VERIFICATION",
+        "suites": {
+          "test_contract": {
+            "tests_run": 9,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "passed": true
+          },
+          "test_evaluator": {
+            "tests_run": 24,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "passed": true
+          },
+          "test_store": {
+            "tests_run": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "passed": true
+          },
+          "test_http": {
+            "tests_run": 8,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0,
+            "passed": true
+          }
+        },
+        "semantic_checks": [
+          {
+            "id": "actual-unknown-patch-common-equality",
+            "passed": true,
+            "details": null
+          },
+          {
+            "id": "actual-personal-context-differs",
+            "passed": true,
+            "details": null
+          },
+          {
+            "id": "actual-personal-unknown-reasons",
+            "passed": true,
+            "details": null
+          },
+          {
+            "id": "synthetic-common-equality",
+            "passed": true,
+            "details": null
+          },
+          {
+            "id": "synthetic-personal-role-lane-fight-differ",
+            "passed": true,
+            "details": null
+          },
+          {
+            "id": "missing-required-runes-unknown",
+            "passed": true,
+            "details": null
+          },
+          {
+            "id": "partial-required-runes-unknown",
+            "passed": true,
+            "details": null
+          },
+          {
+            "id": "patch-mismatch-excluded",
+            "passed": true,
+            "details": null
+          },
+          {
+            "id": "current-review-change-withholds",
+            "passed": true,
+            "details": null
+          },
+          {
+            "id": "stored-plan-exact-reopen",
+            "passed": true,
+            "details": null
+          },
+          {
+            "id": "review-changes-expire-plan",
+            "passed": true,
+            "details": null
+          },
+          {
+            "id": "position-update-expires-immutable-plan",
+            "passed": true,
+            "details": null
+          }
+        ],
+        "expected_semantic_ids": [
+          "actual-unknown-patch-common-equality",
+          "actual-personal-context-differs",
+          "actual-personal-unknown-reasons",
+          "synthetic-common-equality",
+          "synthetic-personal-role-lane-fight-differ",
+          "missing-required-runes-unknown",
+          "partial-required-runes-unknown",
+          "patch-mismatch-excluded",
+          "current-review-change-withholds",
+          "stored-plan-exact-reopen",
+          "review-changes-expire-plan",
+          "position-update-expires-immutable-plan"
+        ],
+        "tests_run": 49,
+        "runner_errors": [],
+        "source_sha256": {
+          "contracts/pregame-v1.md": "7be83d86efab2088c7675bbfe740381a5c6e687d16e2e2d325121b30d2d16b6c",
+          "docs/queue/API.md": "31f7295480788456e14dd58016c3bb6956fbba6c41f8f5300a93de0965523621",
+          "coach_v1/pregame_contract.py": "23c9d0fd4a90f968c71d9e425bdd51ac56b8d0fdd9f7e7a9253aae4c1b9c9761",
+          "coach_v1/pregame_evaluator.py": "85b02e3cf41709712fe0eb68e7c64564c40a54e9bea9b53e90ad65e53b778886",
+          "coach_v1/pregame_store.py": "31b12899de04edc419457c4d8e59d3afd9396ebf26ebbe3f5e2b13bf2c1a262a",
+          "coach_v1/pregame_server.py": "ce9cad5c3cf9a808d482e29bad5abed31e60374001814f4f577371f734049506",
+          "coach_v1/server.py": "8e5c02d9bd1a589c53b961d82e00d1ca9c36854e32ac6a18ae0e731ee04323d2",
+          "coach_v1/knowledge.py": "90eea0df8590e58b3efa1cb9229268ca05f23198d110d596226ed175dc4d8ed2",
+          "coach_v1/research.py": "42912d1e7ac660c67b00514d7aa76b6d10252e77c0a478db55bc37ad21d3eb27",
+          "web_r4/pregame.html": "fb3f68eddabb3dde444d2af92590bffecc877fdaa7e0bebd6a3d4216a118872f",
+          "web_r4/pregame.js": "6fec71c634ef082e4ca47078c6279b5a1f01764a5c7f87146f25c8c39f0c90b7",
+          "web_r4/pregame.css": "b357844dc87a98d706ef609dfde3ab130312c83d7f8cd629d037b26b3f741127",
+          "tests_pregame/browser_pregame.cjs": "d57e380cab3a5867b5c9ae3912123114bc3f83582af3ff38031b78554b84ebcf",
+          "scripts/browser_pregame.py": "0dde347681d4e74454fccb851609fc9c10ccb0044f99f237db89ac16601c9570",
+          "scripts/verify_pregame.py": "0bc59f46814977a58cb929852053c1c0c883a7d69dac902f1919fb8875b51808",
+          "tests_pregame/test_contract.py": "8e1c17b61f46c768f39daf99559ae8c2a2942e428493fc735a94cca94643d626",
+          "tests_pregame/test_evaluator.py": "9179124f55d162d8d4dd28873d21612def4dbc62a7605cb5011ba167f0efc38c",
+          "tests_pregame/test_store.py": "243cd3a182d1f6518da8bfa383769e3e5a25e878e82b6d0709dfb6d6e6905abe",
+          "tests_pregame/test_http.py": "b81f301d5b5dbd80c0f45bc66cd03fad0faf19d0962348338d2a9f53374ec107",
+          "knowledge_candidates/executable-v1.json": "01be0ca8047ad1dc555067c6a5edb7545e7b317a5e6291ee4fe9d637e8a0942c",
+          "knowledge_candidates/q05-review-priority.json": "3578a7a20a1d8125d5670302e00dc450d44b93bcdfe6357d00eb64b0ecda56e8",
+          "knowledge_candidates/q05-roster-profiles.json": "4d823ccbef2dfced1cf02adf6091a2b5f51306089e2df9f9f517fc3fa06aabf2",
+          ".github/workflows/pregame-ci.yml": "2be8139bcce75f167013f0d5d754ea9e94d376f6d977f06910e59109553042c9",
+          "web_r4/pregame-icon.svg": "d8aea4fa9c1d4325dccfcc48955dbad992cdec3b7dc5392ae529b0638121cc49",
+          "tests_pregame/ui_pregame_pending_save.cjs": "b2324ad25bebf8e0243c093e5fb28efa9b076356f872ab32d6a9befd30f74fa5"
+        },
+        "sources_unchanged": true,
+        "git_head": "1afc97a39684d3bfe938ea493d137c2cab19ccf2",
+        "github_binding": {
+          "GITHUB_SHA": "1afc97a39684d3bfe938ea493d137c2cab19ccf2",
+          "GITHUB_RUN_ID": "38111430829",
+          "GITHUB_RUN_ATTEMPT": "1",
+          "GITHUB_REPOSITORY": "kco994553-star/lol-coach"
+        },
+        "synthetic_scope": "Pure read-only REVIEWED test dicts; no USER_WEB authority or decisions, no approval persistence claim",
+        "real_match_validation": "NOT_EVALUATED",
+        "coaching_accuracy": null,
+        "browser_e2e_executed": false
+      },
+      "browser": {
+        "passed": true,
+        "finished_at": "2026-10-11T04:24:17.578387+00:00",
+        "evidence_directory": "/home/runner/work/lol-coach/lol-coach/evidence/queue/browser-20261011T042346472802Z-fafe777b",
+        "expected_total_checks": 104,
+        "actual_total_checks": 104,
+        "modes": {
+          "actual": {
+            "passed": true,
+            "mode": "actual",
+            "process_exit_code": 0,
+            "runner_error": null,
+            "validation": {
+              "receipt_present": true,
+              "fresh_execution": true,
+              "exact_checks": true,
+              "unique_checks": true,
+              "checks_passed": true,
+              "browser_passed": true,
+              "console_clean": true,
+              "browser_version_present": true,
+              "source_binding": true,
+              "all_sources_present": true,
+              "no_user_reviews_persisted": true
+            },
+            "check_count": 52,
+            "expected_check_count": 52,
+            "checks_passed": 52,
+            "checks_failed": 0,
+            "checks_not_executed": 0,
+            "source_sha256": {
+              "contracts/pregame-v1.md": "7be83d86efab2088c7675bbfe740381a5c6e687d16e2e2d325121b30d2d16b6c",
+              "docs/queue/API.md": "31f7295480788456e14dd58016c3bb6956fbba6c41f8f5300a93de0965523621",
+              "coach_v1/pregame_contract.py": "23c9d0fd4a90f968c71d9e425bdd51ac56b8d0fdd9f7e7a9253aae4c1b9c9761",
+              "coach_v1/pregame_evaluator.py": "85b02e3cf41709712fe0eb68e7c64564c40a54e9bea9b53e90ad65e53b778886",
+              "coach_v1/pregame_store.py": "31b12899de04edc419457c4d8e59d3afd9396ebf26ebbe3f5e2b13bf2c1a262a",
+              "coach_v1/pregame_server.py": "ce9cad5c3cf9a808d482e29bad5abed31e60374001814f4f577371f734049506",
+              "coach_v1/server.py": "8e5c02d9bd1a589c53b961d82e00d1ca9c36854e32ac6a18ae0e731ee04323d2",
+              "coach_v1/knowledge.py": "90eea0df8590e58b3efa1cb9229268ca05f23198d110d596226ed175dc4d8ed2",
+              "coach_v1/research.py": "42912d1e7ac660c67b00514d7aa76b6d10252e77c0a478db55bc37ad21d3eb27",
+              "web_r4/pregame.html": "fb3f68eddabb3dde444d2af92590bffecc877fdaa7e0bebd6a3d4216a118872f",
+              "web_r4/pregame.js": "6fec71c634ef082e4ca47078c6279b5a1f01764a5c7f87146f25c8c39f0c90b7",
+              "web_r4/pregame.css": "b357844dc87a98d706ef609dfde3ab130312c83d7f8cd629d037b26b3f741127",
+              "tests_pregame/browser_pregame.cjs": "d57e380cab3a5867b5c9ae3912123114bc3f83582af3ff38031b78554b84ebcf",
+              "scripts/browser_pregame.py": "0dde347681d4e74454fccb851609fc9c10ccb0044f99f237db89ac16601c9570",
+              "scripts/verify_pregame.py": "0bc59f46814977a58cb929852053c1c0c883a7d69dac902f1919fb8875b51808",
+              "tests_pregame/test_contract.py": "8e1c17b61f46c768f39daf99559ae8c2a2942e428493fc735a94cca94643d626",
+              "tests_pregame/test_evaluator.py": "9179124f55d162d8d4dd28873d21612def4dbc62a7605cb5011ba167f0efc38c",
+              "tests_pregame/test_store.py": "243cd3a182d1f6518da8bfa383769e3e5a25e878e82b6d0709dfb6d6e6905abe",
+              "tests_pregame/test_http.py": "b81f301d5b5dbd80c0f45bc66cd03fad0faf19d0962348338d2a9f53374ec107",
+              "knowledge_candidates/executable-v1.json": "01be0ca8047ad1dc555067c6a5edb7545e7b317a5e6291ee4fe9d637e8a0942c",
+              "knowledge_candidates/q05-review-priority.json": "3578a7a20a1d8125d5670302e00dc450d44b93bcdfe6357d00eb64b0ecda56e8",
+              "knowledge_candidates/q05-roster-profiles.json": "4d823ccbef2dfced1cf02adf6091a2b5f51306089e2df9f9f517fc3fa06aabf2",
+              ".github/workflows/pregame-ci.yml": "2be8139bcce75f167013f0d5d754ea9e94d376f6d977f06910e59109553042c9",
+              "web_r4/pregame-icon.svg": "d8aea4fa9c1d4325dccfcc48955dbad992cdec3b7dc5392ae529b0638121cc49",
+              "tests_pregame/ui_pregame_pending_save.cjs": "b2324ad25bebf8e0243c093e5fb28efa9b076356f872ab32d6a9befd30f74fa5"
+            },
+            "store_review_audit": {
+              "proposal_rows": 2,
+              "states": [
+                "EXPLORATORY"
+              ],
+              "decision_rows": 0,
+              "review_actor_rows": 0
+            },
+            "git_head": "1afc97a39684d3bfe938ea493d137c2cab19ccf2",
+            "github_binding": {
+              "GITHUB_SHA": "1afc97a39684d3bfe938ea493d137c2cab19ccf2",
+              "GITHUB_RUN_ID": "38111430829",
+              "GITHUB_RUN_ATTEMPT": "1",
+              "GITHUB_REPOSITORY": "kco994553-star/lol-coach",
+              "GITHUB_WORKFLOW": "Pregame queue checks",
+              "GITHUB_JOB": "pregame"
+            },
+            "credential_handling": "Disposable token file; credentials excluded from receipts and logs",
+            "scope": "Actual Golden10 normal empty knowledge; no authoritative current gameplay patch",
+            "real_match_validation": "NOT_EVALUATED",
+            "coaching_accuracy": null
+          },
+          "synthetic": {
+            "passed": true,
+            "mode": "synthetic",
+            "process_exit_code": 0,
+            "runner_error": null,
+            "validation": {
+              "receipt_present": true,
+              "fresh_execution": true,
+              "exact_checks": true,
+              "unique_checks": true,
+              "checks_passed": true,
+              "browser_passed": true,
+              "console_clean": true,
+              "browser_version_present": true,
+              "source_binding": true,
+              "all_sources_present": true,
+              "no_user_reviews_persisted": true
+            },
+            "check_count": 52,
+            "expected_check_count": 52,
+            "checks_passed": 52,
+            "checks_failed": 0,
+            "checks_not_executed": 0,
+            "source_sha256": {
+              "contracts/pregame-v1.md": "7be83d86efab2088c7675bbfe740381a5c6e687d16e2e2d325121b30d2d16b6c",
+              "docs/queue/API.md": "31f7295480788456e14dd58016c3bb6956fbba6c41f8f5300a93de0965523621",
+              "coach_v1/pregame_contract.py": "23c9d0fd4a90f968c71d9e425bdd51ac56b8d0fdd9f7e7a9253aae4c1b9c9761",
+              "coach_v1/pregame_evaluator.py": "85b02e3cf41709712fe0eb68e7c64564c40a54e9bea9b53e90ad65e53b778886",
+              "coach_v1/pregame_store.py": "31b12899de04edc419457c4d8e59d3afd9396ebf26ebbe3f5e2b13bf2c1a262a",
+              "coach_v1/pregame_server.py": "ce9cad5c3cf9a808d482e29bad5abed31e60374001814f4f577371f734049506",
+              "coach_v1/server.py": "8e5c02d9bd1a589c53b961d82e00d1ca9c36854e32ac6a18ae0e731ee04323d2",
+              "coach_v1/knowledge.py": "90eea0df8590e58b3efa1cb9229268ca05f23198d110d596226ed175dc4d8ed2",
+              "coach_v1/research.py": "42912d1e7ac660c67b00514d7aa76b6d10252e77c0a478db55bc37ad21d3eb27",
+              "web_r4/pregame.html": "fb3f68eddabb3dde444d2af92590bffecc877fdaa7e0bebd6a3d4216a118872f",
+              "web_r4/pregame.js": "6fec71c634ef082e4ca47078c6279b5a1f01764a5c7f87146f25c8c39f0c90b7",
+              "web_r4/pregame.css": "b357844dc87a98d706ef609dfde3ab130312c83d7f8cd629d037b26b3f741127",
+              "tests_pregame/browser_pregame.cjs": "d57e380cab3a5867b5c9ae3912123114bc3f83582af3ff38031b78554b84ebcf",
+              "scripts/browser_pregame.py": "0dde347681d4e74454fccb851609fc9c10ccb0044f99f237db89ac16601c9570",
+              "scripts/verify_pregame.py": "0bc59f46814977a58cb929852053c1c0c883a7d69dac902f1919fb8875b51808",
+              "tests_pregame/test_contract.py": "8e1c17b61f46c768f39daf99559ae8c2a2942e428493fc735a94cca94643d626",
+              "tests_pregame/test_evaluator.py": "9179124f55d162d8d4dd28873d21612def4dbc62a7605cb5011ba167f0efc38c",
+              "tests_pregame/test_store.py": "243cd3a182d1f6518da8bfa383769e3e5a25e878e82b6d0709dfb6d6e6905abe",
+              "tests_pregame/test_http.py": "b81f301d5b5dbd80c0f45bc66cd03fad0faf19d0962348338d2a9f53374ec107",
+              "knowledge_candidates/executable-v1.json": "01be0ca8047ad1dc555067c6a5edb7545e7b317a5e6291ee4fe9d637e8a0942c",
+              "knowledge_candidates/q05-review-priority.json": "3578a7a20a1d8125d5670302e00dc450d44b93bcdfe6357d00eb64b0ecda56e8",
+              "knowledge_candidates/q05-roster-profiles.json": "4d823ccbef2dfced1cf02adf6091a2b5f51306089e2df9f9f517fc3fa06aabf2",
+              ".github/workflows/pregame-ci.yml": "2be8139bcce75f167013f0d5d754ea9e94d376f6d977f06910e59109553042c9",
+              "web_r4/pregame-icon.svg": "d8aea4fa9c1d4325dccfcc48955dbad992cdec3b7dc5392ae529b0638121cc49",
+              "tests_pregame/ui_pregame_pending_save.cjs": "b2324ad25bebf8e0243c093e5fb28efa9b076356f872ab32d6a9befd30f74fa5"
+            },
+            "store_review_audit": {
+              "proposal_rows": 19,
+              "states": [
+                "EXPLORATORY"
+              ],
+              "decision_rows": 0,
+              "review_actor_rows": 0
+            },
+            "git_head": "1afc97a39684d3bfe938ea493d137c2cab19ccf2",
+            "github_binding": {
+              "GITHUB_SHA": "1afc97a39684d3bfe938ea493d137c2cab19ccf2",
+              "GITHUB_RUN_ID": "38111430829",
+              "GITHUB_RUN_ATTEMPT": "1",
+              "GITHUB_REPOSITORY": "kco994553-star/lol-coach",
+              "GITHUB_WORKFLOW": "Pregame queue checks",
+              "GITHUB_JOB": "pregame"
+            },
+            "credential_handling": "Disposable token file; credentials excluded from receipts and logs",
+            "scope": "SYNTHETIC read-only reviewed fixture view over isolated EXPLORATORY source-bound proposals; does not prove actual approval persistence",
+            "real_match_validation": "NOT_EVALUATED",
+            "coaching_accuracy": null
+          }
+        }
+      }
+    },
+    "real_match_coaching_validation_passed": false,
+    "coaching_accuracy": null,
+    "ui_races": {
+      "evidence": "evidence/queue/ui-save-race-2026-10-11T04-24-19-973Z-check.json",
+      "executed_at": "2026-10-11T04:24:19.974Z",
+      "phase": "check",
+      "scope": "Production UI in Chromium with intercepted isolated API responses; three pending/ambiguous-save races; no server/database changes or approvals",
+      "source_sha256": "6fec71c634ef082e4ca47078c6279b5a1f01764a5c7f87146f25c8c39f0c90b7",
+      "test_sha256": "b2324ad25bebf8e0243c093e5fb28efa9b076356f872ab32d6a9befd30f74fa5",
+      "passed": true,
+      "results": [
+        {
+          "name": "unchanged input: history click during pending PUT",
+          "same_baseline": true,
+          "write_expected_revision": 1,
+          "write_position": "BOTTOM",
+          "history_outcome": "READ_BLOCKED",
+          "held_snapshot_before_ack": null,
+          "visible_before_ack": false,
+          "visible_after_ack": false,
+          "displayed_after_ack": null,
+          "history_requests": 0,
+          "acknowledged_revision": 2,
+          "ambiguous_save_retry_available": null,
+          "page_errors": [],
+          "decisions_sent": false,
+          "passed": true
+        },
+        {
+          "name": "role changes then returns to baseline: held history read released after PUT ACK",
+          "same_baseline": true,
+          "write_expected_revision": 1,
+          "write_position": "BOTTOM",
+          "history_outcome": "READ_BLOCKED",
+          "held_snapshot_before_ack": null,
+          "visible_before_ack": false,
+          "visible_after_ack": false,
+          "displayed_after_ack": null,
+          "history_requests": 0,
+          "acknowledged_revision": 2,
+          "ambiguous_save_retry_available": null,
+          "page_errors": [],
+          "decisions_sent": false,
+          "passed": true
+        },
+        {
+          "name": "unchanged input: ambiguous save still requires identical-operation retry",
+          "same_baseline": true,
+          "write_expected_revision": 1,
+          "write_position": "BOTTOM",
+          "history_outcome": "READ_BLOCKED",
+          "held_snapshot_before_ack": null,
+          "visible_before_ack": false,
+          "visible_after_ack": false,
+          "displayed_after_ack": null,
+          "history_requests": 0,
+          "acknowledged_revision": 1,
+          "ambiguous_save_retry_available": true,
+          "page_errors": [],
+          "decisions_sent": false,
+          "passed": true
+        }
+      ]
+    }
+  },
+  "mvp": {
+    "at_utc": "2026-10-11T04:24:23.264040+00:00",
+    "evidence_kind": "FRESH_SCOPED_MVP_EXECUTION",
+    "status": "PASS",
+    "passed": true,
+    "scope": "Frozen payload, preserved regressions, local backup/restore, and synthetic UI mechanics",
+    "python": "3.12.15",
+    "run_directory": "evidence/mvp/20261011T042343977820Z-b2915211",
+    "checks": {
+      "knowledge_review_binding": {
+        "status": "PASS",
+        "checks": {
+          "exact_intake": true,
+          "exact_parent_paths": true,
+          "archived_parent_bytes": true,
+          "exact_current_paths": true,
+          "current_bytes_bound": true,
+          "explicit_user_authority": true,
+          "frozen_parent_preserved": true,
+          "amendment_contract_bound": true,
+          "ai_consensus_stays_forbidden": true,
+          "browser_harness_only_cleanup_change": true,
+          "no_engine_or_sql_change": true
+        }
+      },
+      "preservation": {
+        "status": "PASS",
+        "frozen_payload_files": 27,
+        "frozen_errors": [],
+        "historical_r0_r6_blob_count": 123,
+        "historical_exact_identity_matches": 119,
+        "historical_exact_identity_differences": [
+          "coach_v1/server.py",
+          "web_r4/app.js",
+          "web_r4/index.html",
+          "web_r4/research.js"
+        ],
+        "historical_r7_verifier_identity_status": "FAIL",
+        "historical_verifier_executed": false,
+        "historical_identity_note": "The unchanged verify_r7.py gate binds the pre-repair app; an authorized UI repair causes its exact-byte identity gate to fail.",
+        "mvp_authorized_changed_path": "web_r4/app.js",
+        "mvp_authorized_changed_paths": [
+          "coach_v1/server.py",
+          "web_r4/app.js",
+          "web_r4/index.html",
+          "web_r4/research.js"
+        ],
+        "research_repair_binding": {
+          "status": "PASS",
+          "checks": {
+            "same_nine_case_ids": true,
+            "same_fixture": true,
+            "same_current_test": true,
+            "before_exact_failures": true,
+            "actual_exit_history": true,
+            "repaired_all_pass": true,
+            "before_binds_preserved_source": true,
+            "current_binds_navigation_parent": true,
+            "navigation_repair_binding": true,
+            "separate_repair_versions": true,
+            "request_source_chain": true,
+            "request_same_test_fixture": true,
+            "request_exact_cases": true,
+            "request_actual_failures": true,
+            "request_after_pass": true
+          },
+          "receipt_sha256": {
+            "evidence/mvp/research-bytes-before.json": "6357041b29b5485642b7ac8c340140b900f9cbebb86140311d1f3c38cba515b5",
+            "evidence/mvp/research-bytes-after.json": "1d77c7dd27eb6fc1cad0d4d34715a3e4852ce0298b90d1a40d9bb2f3191a97b3",
+            "evidence/mvp/research-bytes-final.json": "daca702951931e080d22fd841bcb4f84bd6bb56da3c9052d276f15405d280a89",
+            "evidence/mvp/research-bytes-request-repair.json": "51bf19786f005fc27cbccf384e2a01f3dec2b71cf2f70f43a4b851f4e142cc16",
+            "evidence/mvp/research-request-before.json": "f77a203064419d204bd45246f9bf7ceedcc73066bc2f33449c8e33e96c7862d4",
+            "evidence/mvp/research-request-after.json": "5e3de3d0e361c1077bab7604cc4b6ad6563f117cf26e8c99f3239a4f110856b7"
+          },
+          "historical_r6_harness": "Unchanged text-only File stub; its exact A-first expectations are rerun by R6-LATEST-FILE-A-FIRST with both native codec paths. No old expected value changed."
+        },
+        "note_history_version_binding": {
+          "status": "PASS",
+          "checks": {
+            "exact_intake_main": true,
+            "exact_parent_source": true,
+            "versioned_paths_only": true,
+            "current_source_bound": true,
+            "later_save_error_repair_binding": true,
+            "prior_navigation_source_preserved": true,
+            "unchanged_storage_schema": true,
+            "read_only_module_and_tests_present": true
+          },
+          "baseline_sha256": "5e43bb545f2943ef7e16387337f107122b07e3698a629cdfd30097caafff33c5",
+          "version_sha256": "12ddc8aee2e2ba56c8d1c44a3096d3481dd9a43cf150a01d532f5497a9ef53ef",
+          "authorized_versioned_paths": [
+            "coach_v1/server.py",
+            "web_r4/index.html",
+            "web_r4/research.js"
+          ]
+        },
+        "knowledge_version_binding": {
+          "status": "PASS",
+          "checks": {
+            "exact_intake": true,
+            "exact_baseline_paths": true,
+            "parent_research_errors": true,
+            "parent_history_sources": true,
+            "exact_version_paths": true,
+            "actual_current_hashes": true,
+            "later_recovery_source_chain": true,
+            "legacy_store_unchanged": true,
+            "independent_lifecycle_tests_present": true,
+            "migration_scope": true,
+            "deletion_repair_history": true,
+            "proposal_deletion_repair": true
+          },
+          "baseline_sha256": "54f08ab523226987ac0f83000b80342323e11e44dd97e345c34d50258299ba91",
+          "version_sha256": "4a5ffb137c46c75360bd99a99c311616099d464047d082275caedf172010941d"
+        },
+        "other_historical_byte_errors": [],
+        "historical_source_receipt": "evidence/r7/20261005T004048234257Z/verification.json",
+        "historical_source_receipt_sha256": "c356e99f4e97d8b7ad6cc440b1ca7abb7c9563dcc8672c612d5a7217719fb018",
+        "r7_sources_pinned": 14,
+        "r7_source_errors": [],
+        "old_test_file_set_errors": []
+      },
+      "draft_browser_repair_binding": {
+        "status": "PASS",
+        "checks": {
+          "actual_first_failure_retained": true,
+          "actual_visibility_failure": true,
+          "prior_checks_preserved": true,
+          "actual_test_bytes_archived": true,
+          "repaired_test_archived": true,
+          "same_original_literal_cases": true,
+          "production_unchanged_in_failed_run": true,
+          "actual_tested_tree_and_parents": true
+        }
+      },
+      "knowledge_browser_repair_binding": {
+        "status": "PASS",
+        "checks": {
+          "actual_first_run_failure_retained": true,
+          "exact_first_failure": true,
+          "actual_failed_source_archived": true,
+          "current_repaired_verifier": true,
+          "production_unchanged_by_verifier_repair": true,
+          "tested_tree_bound": true,
+          "required_count_preserved": true
+        }
+      },
+      "note_recovery_browser_repair_binding": {
+        "status": "PASS",
+        "checks": {
+          "actual_first_failure_retained": true,
+          "exact_first_failure": true,
+          "failed_test_bytes_archived": true,
+          "current_repaired_test": true,
+          "production_unchanged": true,
+          "tested_tree_and_parents": true,
+          "required_count_preserved": true,
+          "independent_completion_reproduction": true
+        }
+      },
+      "ui_repair_receipt_binding": {
+        "status": "PASS",
+        "checks": {
+          "before_captured_failures": true,
+          "after_all_seven_passed": true,
+          "before_after_same_case_ids": true,
+          "before_after_same_fixture": true,
+          "save_repair_binds_import_repair_parent": true,
+          "source_changed": true,
+          "before_binds_preserved_r6_source": true,
+          "honest_execution_receipts": true,
+          "import_before_has_actual_failure": true,
+          "import_after_all_cases_passed": true,
+          "import_same_case_ids": true,
+          "import_same_source_fixture": true,
+          "import_test_binds_current_script": true,
+          "import_repair_binds_current_source": true,
+          "import_source_changed": true,
+          "import_honest_execution_receipts": true
+        },
+        "receipt_sha256": {
+          "evidence/mvp/save-race-before.json": "8b84e4e23729af9b8e74f87c3bf8632050774d735bb66aaa4187181d20c17f2f",
+          "evidence/mvp/save-race-after.json": "c78c91ac92f4230b9c7d3892ec434a7917feb0774be4414760776574becb0d24"
+        },
+        "before_source_sha256": "c3986df5508c19dead28085bfe4a479c3a87f74dbf6f13cdf6bd2547869eab18",
+        "after_source_sha256": "2d644c17d041210f5a7691278a32911401944613bc7bdcb8d4f95901fbcd9393",
+        "current_source_sha256": "1d31505b1e88cbf5d68f163f8728f06138b421949c416961d19069af61fe79bb",
+        "import_receipt_sha256": {
+          "evidence/mvp/import-race-before.json": "d9a12e12466fea24ec65bf77e0ac69e92294e6f85b02f3023b5d8072d646f99c",
+          "evidence/mvp/import-race-after.json": "b0dbc03509f4812e076cb71848a2b0aa5324d74d547129ccbb1562b27a634756"
+        },
+        "before_source_reference": "evidence/r6/20261004T104558015957Z.json",
+        "before_source_reference_sha256": "d96ece393884844ae5f386ca01b6eb8106718361603b0adfa19e6ecc10bdb9da"
+      },
+      "draft_version_binding": {
+        "status": "PASS",
+        "checks": {
+          "exact_intake": true,
+          "exact_current_paths": true,
+          "pr8_source_version_retained": true,
+          "parent_server_and_backup": true,
+          "parent_index": true,
+          "original_store_unchanged": true,
+          "research_and_knowledge_unchanged": true,
+          "legacy_main_validator_unchanged": true,
+          "storage_native_suite_bound": true,
+          "fixed_ui_cases_bound": true,
+          "actual_missing_ui_and_repaired_pass": true,
+          "pr8_seven_ui_guards": true,
+          "backup_native_suite_bound": true,
+          "exact_roundtrip_repair": true,
+          "bounded_manual_capture": true
+        }
+      },
+      "draft_retry_binding": {
+        "status": "PASS",
+        "checks": {
+          "exact_intake": true,
+          "prior_manual_sources_bound": true,
+          "current_sources_bound": true,
+          "no_schema_or_activation_change": true,
+          "same_ui_case_red_green": true,
+          "actual_ui_red": true,
+          "actual_ui_green": true,
+          "first_local_browser_failure_retained": true,
+          "first_full_routing_failure_retained": true,
+          "browser_retry_is_required": true,
+          "frozen_history_preserved": true
+        }
+      },
+      "protected_regression": {
+        "status": "PASS",
+        "scope": "Protected nine legacy checks",
+        "execution": "Temporary isolated working-tree copy",
+        "result": {
+          "at_utc": "2026-10-11T04:23:44.713176+00:00",
+          "python": "3.12.15",
+          "pydantic": "2.13.5",
+          "evidence_kind": "FRESH_EXECUTION",
+          "historical_R1_reproduced": false,
+          "v1_runtime_tested": false,
+          "passed": 9,
+          "failed": 0,
+          "checks": [
+            {
+              "id": "REC-CHECK-SOURCE",
+              "status": "PASS",
+              "detail": {
+                "source_files": 14,
+                "python_files": 13,
+                "historical_identity": "UNKNOWN"
+              }
+            },
+            {
+              "id": "REC-CHECK-TRACEABILITY",
+              "status": "PASS",
+              "detail": {
+                "requirements": 24,
+                "scenarios": 18,
+                "scope": "reference integrity only; semantics independently reviewed"
+              }
+            },
+            {
+              "id": "REC-CHECK-HISTORY",
+              "status": "PASS",
+              "detail": "Historical IDs reserved, no claim of original 32/32 reproduction."
+            },
+            {
+              "id": "REC-CORE-UNKNOWN",
+              "status": "PASS",
+              "detail": {
+                "jungle": "UNKNOWN",
+                "permission": "P3",
+                "recommended": "SHORT_TRADE",
+                "classification": "legacy behavior, not v1 coaching correctness"
+              }
+            },
+            {
+              "id": "REC-CORE-FAR",
+              "status": "PASS",
+              "detail": {
+                "jungle": "CONFIRMED_FAR",
+                "permission": "P4",
+                "recommended": "SHORT_TRADE",
+                "classification": "legacy behavior, not v1 coaching correctness"
+              }
+            },
+            {
+              "id": "REC-CORE-NEAR",
+              "status": "PASS",
+              "detail": {
+                "jungle": "CONFIRMED_NEAR",
+                "permission": "P2",
+                "recommended": "THREAT",
+                "classification": "legacy behavior, not v1 coaching correctness"
+              }
+            },
+            {
+              "id": "REC-CORE-COUNTERFACTUAL",
+              "status": "PASS",
+              "detail": "Controlled jungle-state changes and removing CS-approach opportunity; new REC check."
+            },
+            {
+              "id": "REC-CHECK-MIGRATION",
+              "status": "PASS",
+              "detail": "Verified known legacy gaps: 16 enums / 9 definitions; return_path does not affect output. Not a desired v1 invariant."
+            },
+            {
+              "id": "REC-CHECK-FROZEN-PAYLOAD",
+              "status": "PASS",
+              "detail": {
+                "payload_files": 27,
+                "scope": "frozen payload integrity"
+              }
+            }
+          ]
+        }
+      },
+      "old_regression": {
+        "status": "PASS",
+        "tests_discovered": 111,
+        "tests_run": 111,
+        "required_count": 111,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skip_details": [],
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "log_path": "old-regression.log"
+      },
+      "backup": {
+        "status": "PASS",
+        "tests_discovered": 23,
+        "tests_run": 23,
+        "required_count": null,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skip_details": [],
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "log_path": "backup.log"
+      },
+      "draft_store": {
+        "status": "PASS",
+        "tests_discovered": 31,
+        "tests_run": 31,
+        "required_count": 31,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skip_details": [],
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "log_path": "draft-store.log"
+      },
+      "draft_http": {
+        "status": "PASS",
+        "tests_discovered": 17,
+        "tests_run": 17,
+        "required_count": 17,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skip_details": [],
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "log_path": "draft-http.log"
+      },
+      "draft_backup": {
+        "status": "PASS",
+        "tests_discovered": 19,
+        "tests_run": 19,
+        "required_count": 19,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skip_details": [],
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "log_path": "draft-backup.log"
+      },
+      "note_history_store": {
+        "status": "PASS",
+        "tests_discovered": 19,
+        "tests_run": 19,
+        "required_count": 19,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skip_details": [],
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "log_path": "note-history-store.log"
+      },
+      "note_history_http": {
+        "status": "PASS",
+        "tests_discovered": 5,
+        "tests_run": 5,
+        "required_count": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skip_details": [],
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "log_path": "note-history-http.log"
+      },
+      "knowledge_review": {
+        "status": "PASS",
+        "tests_discovered": 13,
+        "tests_run": 13,
+        "required_count": 13,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skip_details": [],
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "log_path": "knowledge-review.log"
+      },
+      "knowledge_store": {
+        "status": "PASS",
+        "tests_discovered": 42,
+        "tests_run": 42,
+        "required_count": 42,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skip_details": [],
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "log_path": "knowledge-store.log"
+      },
+      "knowledge_backup": {
+        "status": "PASS",
+        "tests_discovered": 19,
+        "tests_run": 19,
+        "required_count": 19,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skip_details": [],
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "log_path": "knowledge-backup.log"
+      },
+      "knowledge_http": {
+        "status": "PASS",
+        "tests_discovered": 5,
+        "tests_run": 5,
+        "required_count": 5,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "skip_details": [],
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "log_path": "knowledge-http.log"
+      },
+      "ui_save": {
+        "status": "PASS",
+        "receipt_path": "ui-save.json",
+        "receipt_sha256": "ba935b0925f60b3388906f14924a97f206bc8c6e3fa79098bef9674994ca827e",
+        "source_path": "web_r4/app.js",
+        "source_sha256": "1d31505b1e88cbf5d68f163f8728f06138b421949c416961d19069af61fe79bb",
+        "required_cases": 7,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "ui_delete_import": {
+        "status": "PASS",
+        "receipt_path": "ui-delete-import.json",
+        "receipt_sha256": "36baf52d685bc6e5c563c46aa401cdf7bff20df1685e6810c407855cbc82ab86",
+        "source_path": "web_r4/app.js",
+        "source_sha256": "1d31505b1e88cbf5d68f163f8728f06138b421949c416961d19069af61fe79bb",
+        "required_cases": 2,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "ui_research_bytes": {
+        "status": "PASS",
+        "receipt_path": "ui-research-bytes.json",
+        "receipt_sha256": "b3efa266e8f8576b46862202b8f5dde2512ff0f763a135d3d2599eca97fcf163",
+        "source_path": "web_r4/research.js",
+        "source_sha256": "39ae97ef2e9623961f054e9c07e5460255dc4664d0387abda3f0bd56fe6e8978",
+        "required_cases": 9,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "ui_research_requests": {
+        "status": "PASS",
+        "receipt_path": "ui-research-requests.json",
+        "receipt_sha256": "9f6b509f240e518e292f78bb5106af59b3fd0d3ed295ea4064d014510297d638",
+        "source_path": "web_r4/research.js",
+        "source_sha256": "39ae97ef2e9623961f054e9c07e5460255dc4664d0387abda3f0bd56fe6e8978",
+        "required_cases": 4,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "ui_research_navigation": {
+        "status": "PASS",
+        "receipt_path": "ui-research-navigation.json",
+        "receipt_sha256": "a86e6073c60e3c666fab4994d83aac0240cb033dae1b465154ea25517481a1cd",
+        "source_path": "web_r4/research.js",
+        "source_sha256": "39ae97ef2e9623961f054e9c07e5460255dc4664d0387abda3f0bd56fe6e8978",
+        "required_cases": 4,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "ui_research_save_errors": {
+        "status": "PASS",
+        "receipt_path": "ui-research-save-errors.json",
+        "receipt_sha256": "5b2173f4937970ac259eb4e940a538ddb7b5be1fab2217c4787cd0f7555fc700",
+        "source_path": "web_r4/research.js",
+        "source_sha256": "39ae97ef2e9623961f054e9c07e5460255dc4664d0387abda3f0bd56fe6e8978",
+        "required_cases": 4,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "ui_research_navigation_errors": {
+        "status": "PASS",
+        "receipt_path": "ui-research-navigation-errors.json",
+        "receipt_sha256": "908d036f255b2b1bb74d9a286b4c47ba15663a5931d350f4133d4feee88835a9",
+        "source_path": "web_r4/research.js",
+        "source_sha256": "39ae97ef2e9623961f054e9c07e5460255dc4664d0387abda3f0bd56fe6e8978",
+        "required_cases": 6,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "ui_knowledge_deletion": {
+        "status": "PASS",
+        "receipt_path": "ui-knowledge-deletion.json",
+        "receipt_sha256": "98f57040de6db83c327a4e06ba32f2dd92b5f4b8e5deb404d188777eb4f2d98c",
+        "source_path": "web_r4/knowledge.js",
+        "source_sha256": "3a99fd604c8327fecaa296cf98523bf82d9d52c429d4d6836ae7e6d4608e89dc",
+        "required_cases": 3,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "ui_knowledge_ack": {
+        "status": "PASS",
+        "receipt_path": "ui-knowledge-ack.json",
+        "receipt_sha256": "0b2eaf4dfaf2a257870113d68233650003b56953382684705f6e7241e23dba18",
+        "source_path": "web_r4/knowledge.js",
+        "source_sha256": "3a99fd604c8327fecaa296cf98523bf82d9d52c429d4d6836ae7e6d4608e89dc",
+        "required_cases": 1,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "ui_knowledge_reconcile_error": {
+        "status": "PASS",
+        "receipt_path": "ui-knowledge-reconcile-error.json",
+        "receipt_sha256": "0bafdc24df1ca248b1e2c69be88156dc3139888ec0b80a3299bacde1ae4171ec",
+        "source_path": "web_r4/knowledge.js",
+        "source_sha256": "3a99fd604c8327fecaa296cf98523bf82d9d52c429d4d6836ae7e6d4608e89dc",
+        "required_cases": 1,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "ui_knowledge_read_deletion": {
+        "status": "PASS",
+        "receipt_path": "ui-knowledge-read-deletion.json",
+        "receipt_sha256": "eebbf975ddc8e43a99337746b69fb3095ca22e91f37073a8df51cc38f6ec7d57",
+        "source_path": "web_r4/knowledge.js",
+        "source_sha256": "3a99fd604c8327fecaa296cf98523bf82d9d52c429d4d6836ae7e6d4608e89dc",
+        "required_cases": 2,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "ui_knowledge_proposal_delete": {
+        "status": "PASS",
+        "receipt_path": "ui-knowledge-proposal-delete.json",
+        "receipt_sha256": "2dd976d16efac923f323def9cf4a222851d93eea19bec1e154bf1c612f418091",
+        "source_path": "web_r4/knowledge.js",
+        "source_sha256": "3a99fd604c8327fecaa296cf98523bf82d9d52c429d4d6836ae7e6d4608e89dc",
+        "required_cases": 1,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "ui_note_recovery": {
+        "status": "PASS",
+        "receipt_path": "ui-note-recovery.json",
+        "receipt_sha256": "71966de40ea5f0c60dc631fc8ca123846e1ae6f4108794059c257066ea09bef3",
+        "source_path": "web_r4/research.js",
+        "source_sha256": "39ae97ef2e9623961f054e9c07e5460255dc4664d0387abda3f0bd56fe6e8978",
+        "required_cases": 5,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "ui_draft_capture": {
+        "status": "PASS",
+        "receipt_path": "ui-draft-capture.json",
+        "receipt_sha256": "c6680c3b7788be6aef16c3d89a4885e6557d8f5f01fcd2eb0fe046c58beb94b9",
+        "source_path": "web_r4/draft.js",
+        "source_sha256": "f6ebc4a62fbf12113a7b46f58bf7c006d6028f00c1aa39881038135864ce80b1",
+        "required_cases": 7,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "ui_draft_roundtrip": {
+        "status": "PASS",
+        "receipt_path": "ui-draft-roundtrip.json",
+        "receipt_sha256": "cb531f2cf195e5dbe5af0de28dda142e8168c6eb03645ddc34d5d73dfb90a68e",
+        "source_path": "web_r4/draft.js",
+        "source_sha256": "f6ebc4a62fbf12113a7b46f58bf7c006d6028f00c1aa39881038135864ce80b1",
+        "required_cases": 4,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "ui_draft_retry": {
+        "status": "PASS",
+        "receipt_path": "ui-draft-retry.json",
+        "receipt_sha256": "088b4b986e1c55bc396102c3269f5b64266d366eb5574c0feed98a533ff7a0b5",
+        "source_path": "web_r4/draft.js",
+        "source_sha256": "f6ebc4a62fbf12113a7b46f58bf7c006d6028f00c1aa39881038135864ce80b1",
+        "required_cases": 1,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "ui_note_recovery_delete": {
+        "status": "PASS",
+        "receipt_path": "ui-note-recovery-delete.json",
+        "receipt_sha256": "07ddebbb4c4553e1dafffac3c16b75a0862ae4c0f7678f88595e851e119ebdc9",
+        "source_path": "web_r4/research.js",
+        "source_sha256": "39ae97ef2e9623961f054e9c07e5460255dc4664d0387abda3f0bd56fe6e8978",
+        "required_cases": 3,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "ui_file_race": {
+        "status": "PASS",
+        "required_cases": 1,
+        "case_id": "R6-LATEST-FILE-A-FIRST",
+        "receipt_path": "ui-research-bytes.json",
+        "scope": "Original R6 A-first ordering expectations in current ArrayBuffer-capable harness; old test file preserved"
+      },
+      "ui_import": {
+        "status": "PASS",
+        "receipt_path": "ui-import.json",
+        "receipt_sha256": "c538cffe91ff57986ddd1ea908ad1701cb97315cd6170b03fc6ec03b17278340",
+        "source_path": "web_r4/app.js",
+        "source_sha256": "1d31505b1e88cbf5d68f163f8728f06138b421949c416961d19069af61fe79bb",
+        "required_cases": 7,
+        "process_exit_code": 0,
+        "scope": "Synthetic Node VM DOM stub; not browser E2E"
+      },
+      "postgame": {
+        "schema": {
+          "status": "PASS",
+          "tests_discovered": 13,
+          "tests_run": 13,
+          "required_count": 13,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "skip_details": [],
+          "expected_failures": 0,
+          "unexpected_successes": 0,
+          "log_path": "postgame-schema.log"
+        },
+        "pinned_source_integration": {
+          "status": "NOT_RUN",
+          "tests_planned": 4,
+          "tests_run": 0,
+          "skipped": 0,
+          "reason": "R7_POSTGAME_RAW_DIR or --postgame-raw-dir not supplied; preserved exact-byte private sources are unavailable to default CI",
+          "required_for_default_mvp_scope": false
+        },
+        "all_17_passed": false,
+        "coaching_accuracy_validated": false
+      }
+    },
+    "runner_errors": [],
+    "input_source_sha256": {
+      ".github/workflows/pregame-ci.yml": "2be8139bcce75f167013f0d5d754ea9e94d376f6d977f06910e59109553042c9",
+      ".github/workflows/private-mvp-ci.yml": "0400961e25dec6ffc7c8e8b1c9e396d5595a1eaa67f8521801f2205d040aba5c",
+      "FREEZE_MANIFEST.json": "fdbda5b6847763d91945debb737a941bc3710ffdfc71743d7f0d4196bf9d0ef9",
+      "coach_audit/__init__.py": "868c53acda9ab1d49332f6648846ad4cf30126f41dea3708a68e4301eb2827ba",
+      "coach_audit/__main__.py": "3bb3df409e3424e19ff4baa7e2058cfbd251b0186b87396afc793dc3cd347572",
+      "coach_audit/extraction.py": "d43ce27a4bb15dc1d73a7d6c13ef4b36554e654959539eeacc7f954e18a9471f",
+      "coach_audit/postgame.py": "1041bd16e92c1bcd76c34421a141ce0c201ec937479ae11412f6530252aaba26",
+      "coach_audit/replay.py": "5a337e02d5f083e56d4dd8941646e495baadb49710bc0500cbc8afa49d775ac1",
+      "coach_audit/sufficiency.py": "4e851900de4d6a7afb078198b0e9d75d08893955212c79e6c5a2626127fb5473",
+      "coach_intake/__init__.py": "842d9350a262049699ed31065b9d8939b5e098271cc2cc84a40dccdb15d54773",
+      "coach_intake/__main__.py": "f352dc6edb5486b48340611767fbb14f1b589c547243fe897bbc582046a6d83a",
+      "coach_intake/audit.py": "a37cf14e335adfa8115f93d4b4c2c3524004cd3b472b609a40b72b2e7b432186",
+      "coach_intake/io.py": "7d5ec3f0ecadd9c2a7a1f3ceb6169b7e4648fabb833b28cf73f321c6e55f4049",
+      "coach_intake/video.py": "ce686e843cc17a3c0b3f3d3f6265c91ede7cb168b7209d0c5ceab1e3fc65173a",
+      "coach_v1/__init__.py": "5bf777370450f55aca6dabf4e7235e72fad4fb3b7f53a1125046ab790cb3dca2",
+      "coach_v1/__main__.py": "da42f47917ca3d373c937cfb1c81e79507dd2a91f02943c7aa1796622068de52",
+      "coach_v1/backup.py": "e980269ebf7d5ab270ed0cde8d9277cae745ea83d5ee8d64f9ddf905b68b70eb",
+      "coach_v1/capture.py": "77f650ea018938d9959c2741b6d71c0ca3e46b1b462c5aeb37c9ccb467fdac45",
+      "coach_v1/draft.py": "f1c1df846bb56d8ad6c20882327e03ae69ca5f8abda1712b44ab08bf7f888595",
+      "coach_v1/engine.py": "37bb801a02df3464707fdd2012678d4fd174d7261c2df3765610abe47db5128a",
+      "coach_v1/knowledge.py": "90eea0df8590e58b3efa1cb9229268ca05f23198d110d596226ed175dc4d8ed2",
+      "coach_v1/models.py": "20366f44a66b17fba2eaa9a5e6f3ae21c9a7898475bc1dcdfc63de4facfa7ae8",
+      "coach_v1/note_history.py": "ff288b07e185ac86c9b877fb07a977ff9b7b1b0a8677b8ba4011ca4579cfa579",
+      "coach_v1/pregame_contract.py": "23c9d0fd4a90f968c71d9e425bdd51ac56b8d0fdd9f7e7a9253aae4c1b9c9761",
+      "coach_v1/pregame_evaluator.py": "85b02e3cf41709712fe0eb68e7c64564c40a54e9bea9b53e90ad65e53b778886",
+      "coach_v1/pregame_server.py": "ce9cad5c3cf9a808d482e29bad5abed31e60374001814f4f577371f734049506",
+      "coach_v1/pregame_store.py": "31b12899de04edc419457c4d8e59d3afd9396ebf26ebbe3f5e2b13bf2c1a262a",
+      "coach_v1/research.py": "42912d1e7ac660c67b00514d7aa76b6d10252e77c0a478db55bc37ad21d3eb27",
+      "coach_v1/server.py": "8e5c02d9bd1a589c53b961d82e00d1ca9c36854e32ac6a18ae0e731ee04323d2",
+      "coach_v1/state.py": "b0624cd06abcada3df414a4d1cf8e5e116c1cab6d0e786051106bd64bd51d025",
+      "coach_v1/storage.py": "45e4c4725fd516c66cf9348f1afe9aba8c8bebe8aae574939f8d47394f1ce6e0",
+      "contracts/amendments/2026-10-09-knowledge-review.json": "5f71e086c473612488b0c47f08f05914acf4510f0b7528c66b106fa05860f0b1",
+      "contracts/amendments/2026-10-11-pregame.json": "952fe2febef10dbaef94f340ba41afd68520ea17285d9b621060b2e5e9732bd2",
+      "contracts/pregame-v1.md": "7be83d86efab2088c7675bbfe740381a5c6e687d16e2e2d325121b30d2d16b6c",
+      "contracts/r7/action_requirements.json": "12a28ab0f20cd88382bcf03af0862ffda5dfc091f44f46eadccb5a88c872bb3c",
+      "contracts/r7/sources.json": "0ad7374eeb4f7432f85578899d2935b4df666ce51b4d31f89b116c8b50cea962",
+      "contracts/r7/state_source_matrix.json": "786f56d4b4af9ddb95aff28e1a75ca4936ce9abc24f4b988ca10a7e6815ab1de",
+      "contracts/requirements.json": "39442744cade349c05f3ad8e5dbf5cf14101d1709617ee80f1eb3c26ac21874f",
+      "contracts/reserved_history_ids.json": "103eee1ef1722b5341944b1c420c3700b7cb043699bee9c17c5e3a2ea1993364",
+      "contracts/scenarios.json": "2f2685b81a2ecda03ff8fc5fc640e193d5e81b6f06300bbf0bd2e9baf8e3531d",
+      "docs/MVP_BACKUP.md": "5541dff33640c0e610993a29e33e95f5bf20a64688a793f1161a742173b50daa",
+      "docs/MVP_DRAFT_CAPTURE.md": "4f95df14dc1a448cd095f614016d429870802b9975410bceb93e1115a06001c0",
+      "docs/MVP_KNOWLEDGE_PROPOSALS.md": "b442e4e2c7c7252414e003c0ff2630fc145ffaea7a00e969c4970d18b72427af",
+      "docs/MVP_KNOWLEDGE_REVIEW.md": "2eb1066066bf1625c66b520feb6ce983ea2fd057047b993accbb8c49b93116d7",
+      "docs/MVP_NOTE_RECOVERY.md": "7d81e0e4d2514b1063ec57f755c9a6e14415779546251389653875e5c0715850",
+      "docs/MVP_VALIDATION.md": "5e40ba2036b2f3b3e798a280f297e6faf1da4fbdc678b6b3211fb6e3967d2fee",
+      "docs/superpowers/plans/2026-10-05-manual-draft-capture.md": "9a1ba0938facac59adfe339ab435c11079a66ef307167a60cae582f3fc68ad1d",
+      "evidence/mvp/ci-cost-basis.json": "4aa063a77308f8b51862ee01ae9e642f854570ff8cb68ad0bcbfb59ac67cf5d4",
+      "evidence/mvp/draft-backup-after.json": "d5d116bbde255a471d4418521f40bd4f02e421d13803c7d5d2cd1c0780dd42d8",
+      "evidence/mvp/draft-backup-after.log": "67db3cb4004352929624fb5c1a5ea5cad784f18d889c578364e7c5608eeb3266",
+      "evidence/mvp/draft-backup-before.json": "9ed72427b283252d7755619d460754340cba8d507ae3588e1611104e1151c332",
+      "evidence/mvp/draft-backup-before.log": "6ee14a34d13a5901720ae399e1b30abbefb36fd8c8fc202099d2f972e4b730d0",
+      "evidence/mvp/draft-backup-expanded-red-corrected.json": "78a8024e4ad207e215fda655686517a9f6aec455fd2b020624ff00f45b615d0b",
+      "evidence/mvp/draft-backup-expanded-red.json": "55982d6c7dc5bdd9b25471ddce5472426a8d2666d179dea4babc41b5fe820edd",
+      "evidence/mvp/draft-backup-source-after.py": "e980269ebf7d5ab270ed0cde8d9277cae745ea83d5ee8d64f9ddf905b68b70eb",
+      "evidence/mvp/draft-backup-source-before.py": "693ec49e637bc32b01cb1ebca495a2d37296506096ebc2ea81e001eb7ff01abb",
+      "evidence/mvp/draft-backup-support-attempt.json": "ea7e82a762f2b89f53a06e4d9bf32395810f823863888f28819308e912787a6b",
+      "evidence/mvp/draft-backup-test-after.py": "9201ffec1cad74a0122015d7597bfc6ecca727615ec3affba2735860288f0ba1",
+      "evidence/mvp/draft-backup-test-before.py": "583c2d6f0a610da387fd073de00ec444f488c75c2ddbfda6f024661938fa3210",
+      "evidence/mvp/draft-backup-test-expanded-red.py": "cec64ae60fd07d4fc8b406ae52ca2ce074a40a016b2c3d720e8df41d1840a260",
+      "evidence/mvp/draft-baseline.json": "fa48af84404d94b181f914d179da13f66367b2b7bf853b4fbb1155d6d62d84cc",
+      "evidence/mvp/draft-browser-repair-collapsed-before-20261005T071706977959Z.json": "29e835f843f17a6e5fe85af4fd8fd3b369a34711307d347863e4fc47cb958059",
+      "evidence/mvp/draft-browser-repair-collapsed-static-20261005T071708651305Z.json": "741899c34782ed09606c1a3f11ce6711e7bc8a6b81c78181fbbbc074af1abdb3",
+      "evidence/mvp/draft-browser-repair.json": "57c7f42ae23a274e64ddc83f967fee1940c8fd6f085d9405fc72254f9d2d3e61",
+      "evidence/mvp/draft-browser-roundtrip-before-module-20261005T065319382702Z.json": "a434799ce9c16b8499456ff30faa105748456cf57a90cf65e5b7bf0d123ae103",
+      "evidence/mvp/draft-browser-roundtrip-scalar-before-20261005T070240426561Z.json": "356a68e680e98160f6b221645c5db2a77b3b81316b00689b3caf399b8d48c665",
+      "evidence/mvp/draft-browser-roundtrip-scalar-spec-20261005T070242080842Z.json": "83b89aa84d034082e6d2cd7fc844dbebbd76318d6d7b2e23c7b2e9c7d44f6268",
+      "evidence/mvp/draft-browser-roundtrip-spec-20261005T065320966907Z.json": "fc08f9420374703e5057feaf11b8f7eef70df00337c45bfef00b2fc69271e404",
+      "evidence/mvp/draft-browser-sources/8316b1c3efe1a007dc26e339e9204f08be260fad4ad2a6b0ed323d91a2d25601.cjs": "8316b1c3efe1a007dc26e339e9204f08be260fad4ad2a6b0ed323d91a2d25601",
+      "evidence/mvp/draft-browser-sources/f251d212c8657644245a4b384f213eef06ecd8303621a0d1064af58be00affa8.cjs": "f251d212c8657644245a4b384f213eef06ecd8303621a0d1064af58be00affa8",
+      "evidence/mvp/draft-browser-spec-20261005T063732727013Z.json": "4b394253afd2a0203b64c7af94d7d18c3785c98052c87711b13a5262c6d50f8a",
+      "evidence/mvp/draft-browser-spec-delete-completion-archive-20261005T064206457919Z.json": "d31af4072da01d403f4fbdd7e929062299475c85fba75c9327117af50ebc8f84",
+      "evidence/mvp/draft-http-green-20261005T064119771588Z.json": "6b9125ac2551b02e711bf9159c4b4afafd2d4e867cd048ac033bbf23bed168a2",
+      "evidence/mvp/draft-http-interface-amendment-20261005T064118210561Z.json": "470f3d9c853f0d63edb1431077e46439f839d672499641587d0324bde0397b93",
+      "evidence/mvp/draft-http-postwiring-20261005T063953533757Z.json": "b698d796e20a3b50b3e46ec605e72308187ae32f96d20e77fc4e3f503f9b8027",
+      "evidence/mvp/draft-http-red-20261005T063110962709Z.json": "732405badcac95ed207ead05fb4b3c165213addc013e74c2b03d0fb664ad586e",
+      "evidence/mvp/draft-http-red-source-archive-20261005T063826743027Z.json": "b396989434e8dd0a8947d0f4e4b3e8008704b0659a8f2621a8ae7edab7c2932b",
+      "evidence/mvp/draft-retry-ui-after.json": "bb630fdeaf1a552fad33c00b01aec9394681bcdfd45be1fdb59816434a498af0",
+      "evidence/mvp/draft-retry-ui-before.json": "05a5eec3e76c3c3a6bc9127bd50f3f5d34283c24b7476e8243ab27862cf1cd99",
+      "evidence/mvp/draft-retry-version.json": "2efcf006f3db2da20b1a75c325c0a8613eb56100feb96f749e6e705275be4f49",
+      "evidence/mvp/draft-roundtrip-after.json": "393f0adc17594740f0ae7e495ac2bbd2b3b0e101fd1f4e535bf14f2724592216",
+      "evidence/mvp/draft-roundtrip-before.json": "bf1385d9e7167d2eff8bfe1fee2edbae119e74a16e308001f20eb6d230c883d5",
+      "evidence/mvp/draft-roundtrip-independent-before.json": "434098bf1a96b0f57ad1d1b77ff3f36058935adeb6d027f487b1327469602eca",
+      "evidence/mvp/draft-roundtrip-independent-repro.cjs": "d75240ccbcf64d5952554cad0936960731a81012557e8b566b7463d58cb55e32",
+      "evidence/mvp/draft-roundtrip-scalar-after.json": "79380eea60cc54504ea1c9a54cba00b1a5ee1c9a5188a1a29c2c3732b55ccc01",
+      "evidence/mvp/draft-roundtrip-scalar-before.json": "e6328a82e66eb113c95fff7f80bec4ef396e1812ff2f36c78753f15250e8fe8a",
+      "evidence/mvp/draft-roundtrip-sources/6186b4cbff916ddfcc078e547fa19d2b171330864d6025fb50742e22493a3b5c.js": "6186b4cbff916ddfcc078e547fa19d2b171330864d6025fb50742e22493a3b5c",
+      "evidence/mvp/draft-roundtrip-sources/b9784c661ca49fb0f3fa2ef60b160f5664681ec395c5a46cb78929cbd138ee33.js": "b9784c661ca49fb0f3fa2ef60b160f5664681ec395c5a46cb78929cbd138ee33",
+      "evidence/mvp/draft-roundtrip-sources/d4e55d3b91dec05339667c0e13ec30f2f540c0ae251c4ac30113327433c3d67a.cjs": "d4e55d3b91dec05339667c0e13ec30f2f540c0ae251c4ac30113327433c3d67a",
+      "evidence/mvp/draft-source-version.json": "3c9976f4204b48caf257ae0c198962239602b60595f2c839ab4e5fbc2a14f3ba",
+      "evidence/mvp/draft-storage-after-corrected.json": "4897efdff13e66b212026b6700f0575df0aebd7f6582b745b3d2301098e74614",
+      "evidence/mvp/draft-storage-after.json": "b92ae14adf276c533d4a952499a9caebbdd0b617a58c808ffec3ff6df8384367",
+      "evidence/mvp/draft-storage-after.log": "5af1e2fd9d2542fabb77f9c80c201f77226b2627ed36fe4ecbeb279d3d5d7217",
+      "evidence/mvp/draft-storage-attempt1.json": "0e6669c2c276895b5f3ab4063a4b467315055b63d66c5c7d9b4a4edee6d3fcf0",
+      "evidence/mvp/draft-storage-attempt1.log": "9725f1391f98ac7a87ad65722f7200716795f2863178250f3953bc00d9b4dbf3",
+      "evidence/mvp/draft-storage-before.json": "44adb1847e5e461071fabc2f83893036d564b9a14dae574791c8ced8cb2f6b10",
+      "evidence/mvp/draft-storage-before.log": "c8e32aa22de9b5fac4ec06d0884a1a5c1ee7097505998c32802c357c2b8aa817",
+      "evidence/mvp/draft-storage-huge-head-before.json": "4fa735efec1078dbcae813487ec779e326bcce93a19adee3fa9073c66115438e",
+      "evidence/mvp/draft-storage-huge-head-before.log": "1da9066942b5299944c123919c9fc2052415b9e1081cea55cf065e8492c7239b",
+      "evidence/mvp/draft-storage-sources/5308c0e45ae79db8f7195e604b87ebc9a865c3ff928221cdbdc8d4d5bcffe814.py": "5308c0e45ae79db8f7195e604b87ebc9a865c3ff928221cdbdc8d4d5bcffe814",
+      "evidence/mvp/draft-ui-after.json": "d8411ccab1ff321b774fef6914be1c1a736c385251641224deb15eab6f2973cb",
+      "evidence/mvp/draft-ui-before-fixture-correction.json": "0863f5bd961fbdb7d75389d5d966daab8762f794d0b12509acc2e9d243e976af",
+      "evidence/mvp/draft-ui-before-service-head-correction.json": "60d6dd3477ea4b1eb226b4f408d8eeed3018b7caffed2019d762c39aa5be601a",
+      "evidence/mvp/draft-ui-before.json": "b1efebeaeca94ff5e32b7843b0e54cf091508f1dac78855292736cbc806b5107",
+      "evidence/mvp/draft-ui-final.json": "bc3d685ee371a0a924304c00d467bb07bf230ee93f44f2c3351573a8a87e3110",
+      "evidence/mvp/draft-ui-scalar-final.json": "87deaae08e441bba41b2661b513b08be129d6b5d61f24a40a61350d8ea652bd7",
+      "evidence/mvp/draft-ui-test-sources/80a86b3dc24d4c1209a37cf943b5a17c2c66002b18c25d4acec6b88d642bad5a.cjs": "80a86b3dc24d4c1209a37cf943b5a17c2c66002b18c25d4acec6b88d642bad5a",
+      "evidence/mvp/draft-ui-test-sources/909b23ac871a04563781dca81d0889e6cf9e52deaaba876ce9ccc83ef83455ef.cjs": "909b23ac871a04563781dca81d0889e6cf9e52deaaba876ce9ccc83ef83455ef",
+      "evidence/mvp/draft-ui-test-sources/e0bb6ae988640158ff88872912380d84f8c9e6ea085c081e76ef3ac705cfe9ac.cjs": "e0bb6ae988640158ff88872912380d84f8c9e6ea085c081e76ef3ac705cfe9ac",
+      "evidence/mvp/draft-verifier-source-before.py": "5e19ba816fe4b39ee7cab1a300c303c1800c8e204f1a05062bf93dfbdbdbbf77",
+      "evidence/mvp/github-ci-visibility.json": "15cc9b3675ca317f9cfc4ae3bd97632869056f3aafa9bdce127a877f001c5e0c",
+      "evidence/mvp/import-race-after.json": "b0dbc03509f4812e076cb71848a2b0aa5324d74d547129ccbb1562b27a634756",
+      "evidence/mvp/import-race-before.json": "d9a12e12466fea24ec65bf77e0ac69e92294e6f85b02f3023b5d8072d646f99c",
+      "evidence/mvp/knowledge-baseline.json": "54f08ab523226987ac0f83000b80342323e11e44dd97e345c34d50258299ba91",
+      "evidence/mvp/knowledge-browser-repair.json": "6ef022015786a31247851703f8bec1dbf05e421053aa8e28e944d832416df2a8",
+      "evidence/mvp/knowledge-browser-sources/0d85fa31eca29a1cda1bc4a9de6cd80e62974ff8d3f6afa6f03631f1ec3f264f.cjs": "0d85fa31eca29a1cda1bc4a9de6cd80e62974ff8d3f6afa6f03631f1ec3f264f",
+      "evidence/mvp/knowledge-ci-37268245767-failure.json": "4134361b4d2dba8e3b193c6f6b87fdd375a2c3ab0eaa4b61f561d2bae9e19a65",
+      "evidence/mvp/knowledge-review-parent.json": "c5b60b6cdf859a4d0be5dcd95057c919220a527173cccfed7d7e5decfe250f33",
+      "evidence/mvp/knowledge-review-parent/coach_v1/knowledge.py": "34e7e83d2579b3c617582fac50c41ae206613e304ddd6212699eb24d1bf87a95",
+      "evidence/mvp/knowledge-review-parent/coach_v1/server.py": "e24dff28bd832e00044cd3a08da787d5a802eb6725075c77004a393d7c156882",
+      "evidence/mvp/knowledge-review-parent/scripts/browser_mvp.py": "1d1c1254fe427db354bc9f2dd46eb058f3b8670e6cb6d7d1b90e1929ea06b5d0",
+      "evidence/mvp/knowledge-review-parent/scripts/verify_mvp.py": "e92a1cb3a791227c03473250ba384fe821f5feb9de9910c69108b057839dcd03",
+      "evidence/mvp/knowledge-review-parent/tests_mvp/browser_knowledge.cjs": "b9f3e268a89fcd54194eaf9df41a0bd99ceeb404157e634144cdf8376054e39a",
+      "evidence/mvp/knowledge-review-parent/tests_mvp/browser_note_recovery.cjs": "0ede01ad631c8062f569096f415680cfa37afc525757b321cf4a9938a62d3c46",
+      "evidence/mvp/knowledge-review-parent/tests_mvp/browser_save_race.cjs": "ee83d579d3b46016526465c96ac6c7040100700fc909d9e09a2bf5ca82fd060e",
+      "evidence/mvp/knowledge-review-parent/web_r4/index.html": "304d0a2c6ac3fa6ab9923da6dfb13750b3749c876e1b70337c1dd606b6ef7e0e",
+      "evidence/mvp/knowledge-review-parent/web_r4/knowledge.js": "2011b3f9d0fd2847cc2561c49d39e994f9eb2fe824c3022c64bf430bb6b47803",
+      "evidence/mvp/knowledge-review-version.json": "b3f5b77e3f8a752fe53c3690335b2df25018da38114cba83f320d7078bcec98d",
+      "evidence/mvp/knowledge-source-version.json": "4a5ffb137c46c75360bd99a99c311616099d464047d082275caedf172010941d",
+      "evidence/mvp/knowledge-ui-ack-after.json": "3e056eab32e95de8d7bbbd3507946f61620efef5d812db042fc736ee7b3f715f",
+      "evidence/mvp/knowledge-ui-ack-before.json": "b6c604ade584d8868d4fc4d265cddf55feecea76c577c9dc3ad6ea7b9fa92283",
+      "evidence/mvp/knowledge-ui-after.json": "45d931d74a50cd1396bc6fd760b7a79db730927386122583395e38e6ccf596d4",
+      "evidence/mvp/knowledge-ui-before.json": "7d39941be9914c89a23137902ccfdde377ec8a8289f67576cda424435e426cbf",
+      "evidence/mvp/knowledge-ui-error-after.json": "62a8b2d3187d2a4d58148137f5e0da3195664e8dac78b8f51275c96dc1b58a9b",
+      "evidence/mvp/knowledge-ui-error-before.json": "6af30bc6e33fb88cdd81d87869758494ffbf74ec1660b32aa5ec0173eb87a439",
+      "evidence/mvp/knowledge-ui-final.json": "e7488da12e4b647aa54eaaa93bda78b616748a546ba3522bf980df08e6c4be94",
+      "evidence/mvp/knowledge-ui-proposal-delete-after.json": "6d6b76469064a0b71496b49ffaf4ec38432a5ecf76f44dfc8a92ed9bc1b417fb",
+      "evidence/mvp/knowledge-ui-proposal-delete-before.json": "4477a398869a6ed08b8c839c6a0cc9a26267e1ae66a8a54b926046f3aab163eb",
+      "evidence/mvp/knowledge-ui-read-after.json": "73743e169f0aec7bba69da930bc221fe6b1ab076ddcf722c665b8eb2704c146e",
+      "evidence/mvp/knowledge-ui-read-before.json": "313855d8d6d6f0724b1358a49442315945c9200af56a8feba78a8b56904aa860",
+      "evidence/mvp/knowledge-ui-sources/2011b3f9d0fd2847cc2561c49d39e994f9eb2fe824c3022c64bf430bb6b47803.js": "2011b3f9d0fd2847cc2561c49d39e994f9eb2fe824c3022c64bf430bb6b47803",
+      "evidence/mvp/knowledge-ui-sources/c7f4ab2a4909d7374dcdd3b2881f5ece2f940102ba3da10a87ac92451c865ff8.js": "c7f4ab2a4909d7374dcdd3b2881f5ece2f940102ba3da10a87ac92451c865ff8",
+      "evidence/mvp/knowledge-ui-sources/cfd4f881288a69ce9ba020f3757afb407f3c0ae34b9209888b27b3f1314ba97c.js": "cfd4f881288a69ce9ba020f3757afb407f3c0ae34b9209888b27b3f1314ba97c",
+      "evidence/mvp/manual-capture-ci-37276347795-failure.json": "862df14a963591fe0c4b8d7511341e5efdfcfeda210b906c507bc21904e3a9df",
+      "evidence/mvp/note-history-baseline.json": "5e43bb545f2943ef7e16387337f107122b07e3698a629cdfd30097caafff33c5",
+      "evidence/mvp/note-history-source-version.json": "12ddc8aee2e2ba56c8d1c44a3096d3481dd9a43cf150a01d532f5497a9ef53ef",
+      "evidence/mvp/note-recovery-after.json": "cb180c563b5f0c34aeb82d153d215bf6035037ff7f55a3664bdd177c1f25b6d0",
+      "evidence/mvp/note-recovery-baseline.json": "8e8f5b91a966c67c53b4b5dff0838b1c8285bf25257f804b871e60de3cba1e3b",
+      "evidence/mvp/note-recovery-before.json": "5e549a3b233be4e604936f1ff6a7d3d5eeb131a818ada7a653230bd36101f5e8",
+      "evidence/mvp/note-recovery-browser-repair.json": "a00a85ae7bfad34f10410158560a8fe0f88a686c35b8580efeb7b0517b906db5",
+      "evidence/mvp/note-recovery-browser-sources/bcae2cf14a7e43b7115ddb484f852c96e8d80bc0e9e96127ce308e566369d6c4.cjs": "bcae2cf14a7e43b7115ddb484f852c96e8d80bc0e9e96127ce308e566369d6c4",
+      "evidence/mvp/note-recovery-ci-37270809307-failure.json": "93bebf6d703c7d2a6924725cdc0ca8a4ebc69ae6fc8fb6f3f7cab3480ba68f1c",
+      "evidence/mvp/note-recovery-delete-after.json": "5ca11687b47b02f331abc44b0c1fc7fae3263bf8b618e950c4b72e611b4d2f8b",
+      "evidence/mvp/note-recovery-delete-before.json": "015b290a729e5f212d1d0a5690de96ff48f9a2698b12568d87503729a8d735c4",
+      "evidence/mvp/note-recovery-delete-order-repro.cjs": "228e88924106ceb2879bf0e806850d2c5df03aa23f517a6e790af29b3b8f7a62",
+      "evidence/mvp/note-recovery-delete-order-repro.json": "721ed9d464515504fef87a1fa57d34e633e8e3440668c90e2114bc96041e138d",
+      "evidence/mvp/note-recovery-final.json": "e8860105df10cf784b697ab0bc91069955b2d3052ba89da56474a5e6763a0e62",
+      "evidence/mvp/note-recovery-source-version.json": "198f714b4e5b970657b15369baa289dae94457e1fc10a7de81986181f6f7031f",
+      "evidence/mvp/note-recovery-sources/63b517f7765fd8d2907a975a974bae28708052ecb75a28f4eab5a2599a29cb77.js": "63b517f7765fd8d2907a975a974bae28708052ecb75a28f4eab5a2599a29cb77",
+      "evidence/mvp/note-recovery-sources/bbe60c90b6596f092112eeaa6b1dee0b0ecaebee81842a74e873cec93442a73f.js": "bbe60c90b6596f092112eeaa6b1dee0b0ecaebee81842a74e873cec93442a73f",
+      "evidence/mvp/research-bytes-after.json": "1d77c7dd27eb6fc1cad0d4d34715a3e4852ce0298b90d1a40d9bb2f3191a97b3",
+      "evidence/mvp/research-bytes-before.json": "6357041b29b5485642b7ac8c340140b900f9cbebb86140311d1f3c38cba515b5",
+      "evidence/mvp/research-bytes-final.json": "daca702951931e080d22fd841bcb4f84bd6bb56da3c9052d276f15405d280a89",
+      "evidence/mvp/research-bytes-request-repair.json": "51bf19786f005fc27cbccf384e2a01f3dec2b71cf2f70f43a4b851f4e142cc16",
+      "evidence/mvp/research-navigation-after.json": "fdec1b0ee2f7735dfd9ffd50d338bbbe352a07bbeb7572044a8b6d0fc2574215",
+      "evidence/mvp/research-navigation-before.json": "7cccf973c19eb97b1b5c6ee1f12dc3acf7c49601be9e77e4295623eed608f2f3",
+      "evidence/mvp/research-navigation-errors-after.json": "01dc0557782ad26ba8b40695886be0ae4e50919b3232aa3f1a76f6d5e5ce5921",
+      "evidence/mvp/research-navigation-errors-before.json": "78bc2e78bdb88b680975324f48713d7fe37fe7891430b6d9a26bfa0d618f539a",
+      "evidence/mvp/research-navigation-final.json": "e6743d56840bd9ca9c88ea8bc2655b0014d5a2be80426287d8d6f3c1c330442e",
+      "evidence/mvp/research-request-after.json": "5e3de3d0e361c1077bab7604cc4b6ad6563f117cf26e8c99f3239a4f110856b7",
+      "evidence/mvp/research-request-before.json": "f77a203064419d204bd45246f9bf7ceedcc73066bc2f33449c8e33e96c7862d4",
+      "evidence/mvp/research-save-errors-after.json": "2675e118f66eb3855e408efc4054485e32aa6c6d8bd5a1235f935bf85c19221a",
+      "evidence/mvp/research-save-errors-before.json": "469eb13c956b7fb7e2b6850913524e3090ed2e6abc02bb61427bacde1422f939",
+      "evidence/mvp/research-save-errors-final.json": "ea8499170690f9a32c64a512a845e7188b861a2cfe1544468d966cdaeb2b5087",
+      "evidence/mvp/save-race-after.json": "c78c91ac92f4230b9c7d3892ec434a7917feb0774be4414760776574becb0d24",
+      "evidence/mvp/save-race-before.json": "8b84e4e23729af9b8e74f87c3bf8632050774d735bb66aaa4187181d20c17f2f",
+      "evidence/r6/20261004T104558015957Z.json": "d96ece393884844ae5f386ca01b6eb8106718361603b0adfa19e6ecc10bdb9da",
+      "evidence/r7/20261005T004048234257Z/verification.json": "c356e99f4e97d8b7ad6cc440b1ca7abb7c9563dcc8672c612d5a7217719fb018",
+      "evidence/r7/baseline-tree.json": "bd5ca914d4ed2aa30ff67b40407934ed3131cda14e2bd0b06fa3f64adf3e230e",
+      "examples/r3/compare-wait-retreat.json": "e74764c9151df568061c730fda8ada0fa9d45fc60325785a8423563d0113e391",
+      "examples/r3/compare-wait-retreat.result.json": "18b009b7326b5d3f246d260bef5c370d98090159d588840ba94761bebbc0c423",
+      "examples/r3/insufficient-evidence.json": "e91fd29460cd5ec819415bae2e3b23a056386a6117bab20194d0a0e96ea217d6",
+      "examples/r3/insufficient-evidence.result.json": "8a5e9f244f35f96c30b0e7fc8b26eacccc2d981888946b8bc6604becdebf6ade",
+      "fixtures/r7-continuation/representative-overlay.json": "1ce4e1e63f5ce87f34abf878ec5365392d2562ced2e3152041e4933cb913b083",
+      "fixtures/r7-continuation/structured-source-reference.json": "15dca7c4d9034ba6df5f6f192ae9b3bcfb738f6922c091880263875fb5bc4e0b",
+      "fixtures/r7-continuation/visual-reference-initial.json": "11347d22c84b4291ddc1d5bcd0d60291ff283bde93b997ee0a03d454bb9501ab",
+      "fixtures/r7-player-grounded/player-reference-initial.json": "591f3d2d2d25c4e0423e15ff74480723a39cd4a4702d9da0759b28c4d45a98a8",
+      "fixtures/r7-player-grounded/representative-overlay.json": "70fa14bc49aa86c95b6d8e4553ae9c4d0881ed26967c9467cc0bd1adce79a7b5",
+      "fixtures/r7-real/representative-overlay.json": "3dcb9f75617bd4319824c0c6f143f2e0e6feb5c3bd6a130e94e273866c05cb28",
+      "fixtures/r7-real/visual-reference-initial.json": "90284119fdf6e6edf078e5ee0bdf3f70cc54302e62287d5b04c21cfcc0491cde",
+      "fixtures/r7/documentation_reference.json": "26cbe67f55ccd5535cc71d6e3b024876ce1018877f4504f91cbfd3290af30d79",
+      "fixtures/r7/representative_set.json": "06bae4dceed14134d538e68d943c6b8800db2622b4b55b6a64d5318289a4c62f",
+      "legacy/README.md": "8384b2accba03e35efebda47b7fc79ac25056d1866d83099125b1bda6b1238fd",
+      "legacy/backend/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "legacy/backend/decision/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "legacy/backend/decision/actions.py": "94a1d770b615230cc6cf890c1606edce125ba2c684a82aa3051934610a144e3a",
+      "legacy/backend/decision/engine.py": "ede22fbf3575b5c4958cee7775a07eee463f27045baef794824a900a243dabc7",
+      "legacy/backend/decision/evaluator.py": "19e2c759631db60dbe9284d11b2e96ed076ea72fdeed024c2d21de34c23b7544",
+      "legacy/backend/decision/models.py": "417803b3664c224d24fa530617015954d62f76610e16a38a3b086d48b7ff18e0",
+      "legacy/backend/decision/opportunity.py": "018de17118c611423b2ddd1727ecfc6258c3f36d43b48c4a3265f740517de872",
+      "legacy/backend/decision/permission.py": "0f1c6505d6e6f5c89593f755b5d5048211f6de7d3efaba1b12d293903b497f62",
+      "legacy/backend/decision/reason_codes.py": "90c9fb53e77557192abc9bdcc97a631daa6d114d6259d0ca82707d454a9022e2",
+      "legacy/backend/decision/selector.py": "e937c132ffb26151163ffdb07f36d9e1ca754f31a5d77ccf6d534dfaf967a3a2",
+      "legacy/backend/decision/trace.py": "d45753079564302315cfb65dce369c1b2fc57c8aeaf90854e1f6420a1af4fafb",
+      "legacy/backend/state/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "legacy/backend/state/models.py": "e18b47809c6b2fe5eb012da6cd837b7349a4f986304b6cb44b303c208e27b5ff",
+      "requirements-r3.txt": "0327507575147a456e617e6222e4a8a9baf8a914053e324f5da5b2ef081cb580",
+      "schemas/r3-review-input.schema.json": "523cda1ca6abd830b607f8a1858e219a0165ff561db70e85f338fec40d571a22",
+      "scripts/audit_player_pov_r7.py": "43e506bae25881345f63e5788552436f7784c79e9bc09db31aaaed37c1587dae",
+      "scripts/audit_real_r7.py": "f0468cbd437fa63e7fd982b3bfc322678cd76caf47761d34be064a6390f19e81",
+      "scripts/browser_mvp.py": "478d0f3408924224a6a0c11e9d597ba29634769ea43abb1119ddd5eb46d839ec",
+      "scripts/browser_pregame.py": "0dde347681d4e74454fccb851609fc9c10ccb0044f99f237db89ac16601c9570",
+      "scripts/browser_r4.py": "2f037208175a447acd9b357ee136173980649b4050474aa73652bd4f466c7ecf",
+      "scripts/browser_r6.py": "593d64e1b9748f911577173d7ccefb5ee5df8a2fc9f650ee1af1109fd3a4b9a0",
+      "scripts/collect_local.py": "062e939aa0cf02d6a005983d188c36e9bd5ab782dd58f3132a8babd34c2a4ae8",
+      "scripts/verify_mvp.py": "1b1d5c97fccf6bacc90f536cb8aaa5a17196079384ba74624bba14c5e08530dd",
+      "scripts/verify_pregame.py": "0bc59f46814977a58cb929852053c1c0c883a7d69dac902f1919fb8875b51808",
+      "scripts/verify_r3.py": "22f4e0177cf2ca651317aadca5f6b21ceef6f62378255d2820f3e9e27e8ca0ef",
+      "scripts/verify_r4.py": "985ae827af274c197f63dd815ffe00b1a276a1a6e1ca3399596a497dea3bc327",
+      "scripts/verify_r5.py": "1dacee0920f851d3e91a9e06524835642001ce2a0980881ec6a20353b534d544",
+      "scripts/verify_r6.py": "0bf1462dc79fa002f50e35418ef83948a17c25e23518ba5eb63869b536499146",
+      "scripts/verify_r7.py": "2d1b0266eba823163d6e16b4a14ad1f074a57eca1a8c5f744e887e044cb07506",
+      "scripts/verify_r7_source_reference.py": "05e62596bd574c600fb83c807773dd882e4ffc97d17137457f28f9780654f7fa",
+      "scripts/video_report.py": "3319e7e3e9ffcd3a97d53aef0850f64acd021e77f0380b85c1563c8c124ed606",
+      "tests_mvp/__init__.py": "64807a70a050b4cf85a9e7689e3ab496d6ce6bde4d5a4f79b6975047172fe83f",
+      "tests_mvp/browser_draft_capture.cjs": "093709e18e60a8d2cd75af4df28e76aaa1dfb382b3190e01f3dd08fd5af52e73",
+      "tests_mvp/browser_draft_retry.cjs": "2ea34580b7b89e50215eb37a4cac8463945d4b6d68ba85dc297a0ac5b331dc90",
+      "tests_mvp/browser_knowledge.cjs": "dd0342e7947a00fea8302864141823b1d20e29f62c7d078eb70b1139fac7fcfa",
+      "tests_mvp/browser_knowledge_review.cjs": "9e99b0e9bf2bd07a2597a7ba4f078e2256f51b8c0f8889506878c51fba37b34d",
+      "tests_mvp/browser_note_history.cjs": "2627264b0c9c6056d3ba5e6f7e0d879e8023bd4e73db16de894a3b467b0c2e9f",
+      "tests_mvp/browser_note_recovery.cjs": "ef74bd4ba5fb7558ad4ba594fff7380110f94718d75916f61fa73a95e2ea5ea5",
+      "tests_mvp/browser_research_bytes.cjs": "14eb3fb461b76305bd0a032bb817c055b7a763419b9e96e116e05daca3a0aff5",
+      "tests_mvp/browser_research_navigation.cjs": "99415534b386a2f9db2b779542f0aae5cc4e388b3b5229cef5eb57c1d3d03eff",
+      "tests_mvp/browser_research_save_errors.cjs": "2841215bd1f5d080b9d54b77d3b876a1079583ada4a18c094e0be5072e5ba239",
+      "tests_mvp/browser_save_race.cjs": "a770213568816b7dee24bc25f0b40c4b7473709ad4a4a8c32f9917c9fce94bdf",
+      "tests_mvp/test_backup.py": "835eada77781f3988834d65d40b20b4d42bd58d37230b9edd20ab5ab1e4b781f",
+      "tests_mvp/test_draft_backup.py": "9201ffec1cad74a0122015d7597bfc6ecca727615ec3affba2735860288f0ba1",
+      "tests_mvp/test_draft_capture.py": "62fac0d33c4a6863804803df45c2e168dadac24683e4967649f4ed323f6187d6",
+      "tests_mvp/test_draft_http.py": "03044a6298e3b2aefb33b6eaaf839a6280a0f3bd7d0cd6bfbe3f4d8828cfc3ff",
+      "tests_mvp/test_knowledge.py": "bac406c1cd9346726773ee9f71d01a63ff18d0755e81d3addf6b18c2c798d136",
+      "tests_mvp/test_knowledge_backup.py": "57eef648274833a9b5a051f151a44714e72733aab7afb074cb17aba9189b0c35",
+      "tests_mvp/test_knowledge_http.py": "22bb631ac864559968b6ee4a00a7137a7fb95420b9341601b10713efc7778f8f",
+      "tests_mvp/test_knowledge_review.py": "13e00a80ac7c471ca1655b6bda08176ceb4cf53e16a65f4224fe61c5f933b2ef",
+      "tests_mvp/test_note_history.py": "25abca72b38f654f081fea3c710caba58a162c6cd6a8fabef47a2be631d06cd7",
+      "tests_mvp/test_note_history_http.py": "aeed02c160bb4b5e4e32f4fdfae82da6adf2344026014107af61e63410ef757c",
+      "tests_mvp/ui_draft_capture.cjs": "d293b6f4f9f2371f363708979e0e3403ccdbf7f5cb1f14e563dd21978a259565",
+      "tests_mvp/ui_draft_retry.cjs": "b1750aa5d3d44c9fd56e478defd92c84e0c58439d7495de6db78dfab47bbedf3",
+      "tests_mvp/ui_draft_roundtrip.cjs": "2270c390938b0ce43e7ed5ef722365fec21cb0df7a00c396c0a139d652ffa553",
+      "tests_mvp/ui_import_races.cjs": "448171663e914bd7b427d35da318e62b6ea215b5c7759140af127a9de445e79d",
+      "tests_mvp/ui_knowledge_ack.cjs": "bdd3cf2b2d8cdaeb699058b0b7bd8881e4296077f848130318df5adb92bb5267",
+      "tests_mvp/ui_knowledge_deletion.cjs": "3530e46234fb1dd9d8094b44aa65ab17a9f344ce0c47d18bad27007077d96b4c",
+      "tests_mvp/ui_knowledge_proposal_delete.cjs": "ce7018d54c6f3225551a5021729b7c6f89b82e89e01818b1691b1779d3df69de",
+      "tests_mvp/ui_knowledge_read_deletion.cjs": "690ec24c7b42673496c95ebfaa729aa3e689e5e7da881db84bd2d5e9f45a081b",
+      "tests_mvp/ui_knowledge_reconcile_error.cjs": "dcc601111a1bd6706a800a071bada817f5beb4f9d7b62f1fbb09e0f3553bad93",
+      "tests_mvp/ui_note_recovery.cjs": "72960118c9de8101dd5b00c1a6a5b15d6dfb25c36ab1835b8c1379cebed01677",
+      "tests_mvp/ui_note_recovery_delete.cjs": "48675f47e271df46cb425349ec793fd00c7dbcb7e8f4a14aa0f6823a3ee850a4",
+      "tests_mvp/ui_research_bytes.cjs": "10f48bfd934a183511d4cc13b3151d775223741964fcf370bdcb0ae4d9d08522",
+      "tests_mvp/ui_research_navigation.cjs": "2c7f0c8bab63cb8c5d3849580bee798c0670ef3b11eaf45ad5cf7dac88775de9",
+      "tests_mvp/ui_research_navigation_errors.cjs": "41f2732ae6dcf966fb5cb6eb839e70f920a867d180ba89ab205c7f413e832104",
+      "tests_mvp/ui_research_requests.cjs": "f119f880546a99fd393f840064488aab024df1e269b60996b8a7bfd400f3f81a",
+      "tests_mvp/ui_research_save_errors.cjs": "c4511f7b43b764bc254a5cc4f3780d7692676cbcfb04bf83b54b739d44fa137e",
+      "tests_mvp/ui_save_race.cjs": "497293ac5003089975e32f2e9073894eca0cd34cda8a26f73b414601a9f1ce08",
+      "tests_r3/__init__.py": "9ad489ee881d706c740d2cd597f637cc7f979e52cf9dbb5e381cf5c337530dfc",
+      "tests_r3/helpers.py": "020ceed97455798f06c29f1abac5c3b9896ca5ccd09d7b11b895584cd1030902",
+      "tests_r3/test_engine.py": "8aa473d717894024a93c34abe0a2c73c4e58a2cff3379b8ab9c0afc7935c4d23",
+      "tests_r3/test_state.py": "4bf26174a809bb6a95b090b06f547015b30193e79c32d958f12022f55b3ae67e",
+      "tests_r4/__init__.py": "2f873f3aeb588668b2f9e74322f32677a907f2ed21f3bc3bec4f8dc3df9af24f",
+      "tests_r4/browser.cjs": "ead6a8d18cb59e8142bfe0e1ddb965172462a37c7216efffca4f244dfb5181fc",
+      "tests_r4/test_capture.py": "ebb4a6a06142904e8623dcc881aa190c6cc65c0aafc793ce2d775da492fe6ff4",
+      "tests_r4/test_http.py": "b1cfb96191dac8a4b4f865d1fbb9bcba49e5796d44395cd586343fa9335ac4c4",
+      "tests_r4/test_storage.py": "61bbbb55373c59157d1abc613bdf9b2eb1bcefa8200fddb4d46500580e8c8edf",
+      "tests_r4/ui_races.cjs": "e09988a361dc105ecef72435815b7f88455d37ee7a207fce0f92114f203f4f4c",
+      "tests_r5/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tests_r5/test_intake.py": "4ce304d19bfd53827a6f2443d7b9033afacb449d591fa33afcd5df43ba0ca791",
+      "tests_r5/test_transport.py": "aeaec2f86c83ad6c593f67e47bcf4a342e1e4fcd9ef90485c7fde0226a9a9bc2",
+      "tests_r5/test_video.py": "9aac55af47eac71c4897588af258cb8ad0efb07cf58376b4e35aa24df4cabbbf",
+      "tests_r6/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tests_r6/browser.cjs": "e61ac49141dd79b41534ffbb0e914fb89cf570e2688056d981af79b697a1982b",
+      "tests_r6/test_api.py": "4f7f65efc524e5805d12263a0c33393f93f67205c2e9866a3d43ac541a98fcb8",
+      "tests_r6/test_research.py": "1c44530b01ff8f550027b9411ac6dc70e5657c055378fd00dda0649a34d91ef0",
+      "tests_r6/ui_file_race.cjs": "d9353c0f5d221e0a5ebf39a21587bdf68a764fca8a0a74342ae6860d2a72284b",
+      "tests_r7/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tests_r7/test_audit.py": "a861aefd326a12aa4bec35c0781421774d2a237e030a76f28bb76b577f36b620",
+      "tests_r7_player_grounded/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tests_r7_player_grounded/test_postgame.py": "6a6677990340774c72de849cb6b1d0483b79574efc216cc32fd4d2acb17f89e9",
+      "validation/__init__.py": "88a219d794d05c60efebfcbf2cd8d89fb8062826ef88f07f64025c41487f1027",
+      "validation/__main__.py": "7dd2d8ee8c3ba71531fb2de98bb529762c8ecc615badfb748c0b315f73818fc5",
+      "web_r4/app.js": "1d31505b1e88cbf5d68f163f8728f06138b421949c416961d19069af61fe79bb",
+      "web_r4/draft.js": "f6ebc4a62fbf12113a7b46f58bf7c006d6028f00c1aa39881038135864ce80b1",
+      "web_r4/index.html": "c552583e5174416f2b525b1e3295be72fffc866447cbdf6bbfdf8b4070d037b4",
+      "web_r4/knowledge.js": "3a99fd604c8327fecaa296cf98523bf82d9d52c429d4d6836ae7e6d4608e89dc",
+      "web_r4/knowledge_review.js": "174cc8b7d09729c2b045a5f2499fb7802cb0f4042f1d7280f625ec7665dee2c9",
+      "web_r4/pregame-icon.svg": "d8aea4fa9c1d4325dccfcc48955dbad992cdec3b7dc5392ae529b0638121cc49",
+      "web_r4/pregame.css": "b357844dc87a98d706ef609dfde3ab130312c83d7f8cd629d037b26b3f741127",
+      "web_r4/pregame.html": "fb3f68eddabb3dde444d2af92590bffecc877fdaa7e0bebd6a3d4216a118872f",
+      "web_r4/pregame.js": "6fec71c634ef082e4ca47078c6279b5a1f01764a5c7f87146f25c8c39f0c90b7",
+      "web_r4/research.js": "39ae97ef2e9623961f054e9c07e5460255dc4664d0387abda3f0bd56fe6e8978",
+      "web_r4/styles.css": "24fd8a7e75fa5bb26a053ad2117d49352f1396978c44b13f52e830d4473aec0d"
+    },
+    "inputs_changed_during_run": [],
+    "historical_evidence": {
+      "files_checked": 371,
+      "before_manifest_sha256": "055d0bd93b3b5d6f988334bfa9965566b5ad64ad201ab710ce143861bebf7309",
+      "after_manifest_sha256": "055d0bd93b3b5d6f988334bfa9965566b5ad64ad201ab710ce143861bebf7309",
+      "changed": []
+    },
+    "github_actions_run_status": "STEP_EXECUTION_ONLY_WORKFLOW_CONCLUSION_NOT_OBSERVED",
+    "github_actions_context": {
+      "run_id": "38111430739",
+      "run_attempt": "1",
+      "commit_sha": "1afc97a39684d3bfe938ea493d137c2cab19ccf2"
+    },
+    "full_postgame_17_passed": false,
+    "real_match_coaching_validation_passed": false,
+    "coaching_enabled": false,
+    "browser_e2e_executed": false,
+    "historical_R1_reproduced": false
+  },
+  "legacy_browser": {
+    "commit_sha": "1afc97a39684d3bfe938ea493d137c2cab19ccf2",
+    "run_id": "38111430739",
+    "run_attempt": "1",
+    "scope": "Actual browser against an isolated synthetic backend; no real game data",
+    "workflow_conclusion": "Not established by this receipt-printing step",
+    "launcher_receipt": {
+      "verifier": "Actual browser subprocess and isolated synthetic server launcher",
+      "started_at": "2026-10-11T04:23:42.007484+00:00",
+      "finished_at": "2026-10-11T04:24:03.228271+00:00",
+      "server_started": true,
+      "process_exit_code": 0,
+      "runner_error": null,
+      "passed": true,
+      "command": [
+        "node",
+        "tests_mvp/browser_save_race.cjs"
+      ],
+      "chromium_executable_override": true,
+      "source_sha256": {
+        "web_r4/app.js": "1d31505b1e88cbf5d68f163f8728f06138b421949c416961d19069af61fe79bb",
+        "web_r4/index.html": "c552583e5174416f2b525b1e3295be72fffc866447cbdf6bbfdf8b4070d037b4",
+        "web_r4/styles.css": "24fd8a7e75fa5bb26a053ad2117d49352f1396978c44b13f52e830d4473aec0d",
+        "coach_v1/server.py": "8e5c02d9bd1a589c53b961d82e00d1ca9c36854e32ac6a18ae0e731ee04323d2",
+        "coach_v1/storage.py": "45e4c4725fd516c66cf9348f1afe9aba8c8bebe8aae574939f8d47394f1ce6e0",
+        "examples/r3/compare-wait-retreat.json": "e74764c9151df568061c730fda8ada0fa9d45fc60325785a8423563d0113e391",
+        "tests_mvp/browser_save_race.cjs": "a770213568816b7dee24bc25f0b40c4b7473709ad4a4a8c32f9917c9fce94bdf",
+        "scripts/browser_mvp.py": "478d0f3408924224a6a0c11e9d597ba29634769ea43abb1119ddd5eb46d839ec",
+        "web_r4/research.js": "39ae97ef2e9623961f054e9c07e5460255dc4664d0387abda3f0bd56fe6e8978",
+        "coach_v1/research.py": "42912d1e7ac660c67b00514d7aa76b6d10252e77c0a478db55bc37ad21d3eb27",
+        "coach_intake/io.py": "7d5ec3f0ecadd9c2a7a1f3ceb6169b7e4648fabb833b28cf73f321c6e55f4049",
+        "coach_intake/audit.py": "a37cf14e335adfa8115f93d4b4c2c3524004cd3b472b609a40b72b2e7b432186",
+        "coach_intake/video.py": "ce686e843cc17a3c0b3f3d3f6265c91ede7cb168b7209d0c5ceab1e3fc65173a",
+        "tests_mvp/browser_research_bytes.cjs": "14eb3fb461b76305bd0a032bb817c055b7a763419b9e96e116e05daca3a0aff5",
+        "tests_mvp/browser_research_navigation.cjs": "99415534b386a2f9db2b779542f0aae5cc4e388b3b5229cef5eb57c1d3d03eff",
+        "coach_v1/note_history.py": "ff288b07e185ac86c9b877fb07a977ff9b7b1b0a8677b8ba4011ca4579cfa579",
+        "tests_mvp/browser_note_history.cjs": "2627264b0c9c6056d3ba5e6f7e0d879e8023bd4e73db16de894a3b467b0c2e9f",
+        "tests_mvp/browser_research_save_errors.cjs": "2841215bd1f5d080b9d54b77d3b876a1079583ada4a18c094e0be5072e5ba239",
+        "coach_v1/knowledge.py": "90eea0df8590e58b3efa1cb9229268ca05f23198d110d596226ed175dc4d8ed2",
+        "web_r4/knowledge.js": "3a99fd604c8327fecaa296cf98523bf82d9d52c429d4d6836ae7e6d4608e89dc",
+        "tests_mvp/browser_knowledge.cjs": "dd0342e7947a00fea8302864141823b1d20e29f62c7d078eb70b1139fac7fcfa",
+        "tests_mvp/browser_note_recovery.cjs": "ef74bd4ba5fb7558ad4ba594fff7380110f94718d75916f61fa73a95e2ea5ea5",
+        "tests_mvp/browser_draft_capture.cjs": "093709e18e60a8d2cd75af4df28e76aaa1dfb382b3190e01f3dd08fd5af52e73",
+        "tests_mvp/browser_draft_retry.cjs": "2ea34580b7b89e50215eb37a4cac8463945d4b6d68ba85dc297a0ac5b331dc90",
+        "web_r4/draft.js": "f6ebc4a62fbf12113a7b46f58bf7c006d6028f00c1aa39881038135864ce80b1",
+        "coach_v1/draft.py": "f1c1df846bb56d8ad6c20882327e03ae69ca5f8abda1712b44ab08bf7f888595",
+        "coach_v1/backup.py": "e980269ebf7d5ab270ed0cde8d9277cae745ea83d5ee8d64f9ddf905b68b70eb",
+        "web_r4/knowledge_review.js": "174cc8b7d09729c2b045a5f2499fb7802cb0f4042f1d7280f625ec7665dee2c9",
+        "tests_mvp/browser_knowledge_review.cjs": "9e99b0e9bf2bd07a2597a7ba4f078e2256f51b8c0f8889506878c51fba37b34d"
+      },
+      "github_binding": {
+        "GITHUB_SHA": "1afc97a39684d3bfe938ea493d137c2cab19ccf2",
+        "GITHUB_RUN_ID": "38111430739",
+        "GITHUB_RUN_ATTEMPT": "1",
+        "GITHUB_REPOSITORY": "kco994553-star/lol-coach",
+        "GITHUB_WORKFLOW": "MVP regression checks",
+        "GITHUB_JOB": "browser-regression"
+      },
+      "expected_browser_check_count": 124,
+      "browser_receipt_validation": {
+        "receipt_present": true,
+        "receipt_passed": true,
+        "actual_fresh_browser": true,
+        "browser_version_present": true,
+        "check_count_exact": true,
+        "check_ids_unique": true,
+        "all_checks_passed": true,
+        "no_first_failure": true,
+        "no_page_errors": true,
+        "tested_source_hashes_match_current": true,
+        "launcher_source_hashes_unchanged_during_run": true
+      },
+      "browser_receipt_error": null,
+      "browser_receipt_present": true,
+      "credential_handling": "Isolated temporary token file; token values and Authorization headers excluded from logs"
+    },
+    "browser_receipt": {
+      "verifier": "Actual Playwright Chromium browser with isolated coach_v1.server and SQLite; not Node VM",
+      "scope": "Affected synthetic save race, revision acknowledgement, exact draft retention, reload, native cancellation, native File read ordering/clearing, one synthetic analysis, 390px overflow and page errors",
+      "evidence_kind": "FRESH_BROWSER_EXECUTION",
+      "started_at": "2026-10-11T04:23:42.370Z",
+      "finished_at": "2026-10-11T04:24:03.129Z",
+      "node_version": "v22.23.3",
+      "browser_version": "154.0.8037.97",
+      "source_sha256": {
+        "web_r4/app.js": "1d31505b1e88cbf5d68f163f8728f06138b421949c416961d19069af61fe79bb",
+        "web_r4/index.html": "c552583e5174416f2b525b1e3295be72fffc866447cbdf6bbfdf8b4070d037b4",
+        "web_r4/styles.css": "24fd8a7e75fa5bb26a053ad2117d49352f1396978c44b13f52e830d4473aec0d",
+        "coach_v1/server.py": "8e5c02d9bd1a589c53b961d82e00d1ca9c36854e32ac6a18ae0e731ee04323d2",
+        "coach_v1/storage.py": "45e4c4725fd516c66cf9348f1afe9aba8c8bebe8aae574939f8d47394f1ce6e0",
+        "examples/r3/compare-wait-retreat.json": "e74764c9151df568061c730fda8ada0fa9d45fc60325785a8423563d0113e391",
+        "tests_mvp/browser_save_race.cjs": "a770213568816b7dee24bc25f0b40c4b7473709ad4a4a8c32f9917c9fce94bdf",
+        "scripts/browser_mvp.py": "478d0f3408924224a6a0c11e9d597ba29634769ea43abb1119ddd5eb46d839ec",
+        "web_r4/research.js": "39ae97ef2e9623961f054e9c07e5460255dc4664d0387abda3f0bd56fe6e8978",
+        "coach_v1/research.py": "42912d1e7ac660c67b00514d7aa76b6d10252e77c0a478db55bc37ad21d3eb27",
+        "coach_intake/io.py": "7d5ec3f0ecadd9c2a7a1f3ceb6169b7e4648fabb833b28cf73f321c6e55f4049",
+        "coach_intake/audit.py": "a37cf14e335adfa8115f93d4b4c2c3524004cd3b472b609a40b72b2e7b432186",
+        "coach_intake/video.py": "ce686e843cc17a3c0b3f3d3f6265c91ede7cb168b7209d0c5ceab1e3fc65173a",
+        "tests_mvp/browser_research_bytes.cjs": "14eb3fb461b76305bd0a032bb817c055b7a763419b9e96e116e05daca3a0aff5",
+        "tests_mvp/browser_research_navigation.cjs": "99415534b386a2f9db2b779542f0aae5cc4e388b3b5229cef5eb57c1d3d03eff",
+        "coach_v1/note_history.py": "ff288b07e185ac86c9b877fb07a977ff9b7b1b0a8677b8ba4011ca4579cfa579",
+        "tests_mvp/browser_note_history.cjs": "2627264b0c9c6056d3ba5e6f7e0d879e8023bd4e73db16de894a3b467b0c2e9f",
+        "tests_mvp/browser_research_save_errors.cjs": "2841215bd1f5d080b9d54b77d3b876a1079583ada4a18c094e0be5072e5ba239",
+        "coach_v1/knowledge.py": "90eea0df8590e58b3efa1cb9229268ca05f23198d110d596226ed175dc4d8ed2",
+        "web_r4/knowledge.js": "3a99fd604c8327fecaa296cf98523bf82d9d52c429d4d6836ae7e6d4608e89dc",
+        "tests_mvp/browser_knowledge.cjs": "dd0342e7947a00fea8302864141823b1d20e29f62c7d078eb70b1139fac7fcfa",
+        "tests_mvp/browser_note_recovery.cjs": "ef74bd4ba5fb7558ad4ba594fff7380110f94718d75916f61fa73a95e2ea5ea5",
+        "tests_mvp/browser_draft_capture.cjs": "093709e18e60a8d2cd75af4df28e76aaa1dfb382b3190e01f3dd08fd5af52e73",
+        "tests_mvp/browser_draft_retry.cjs": "2ea34580b7b89e50215eb37a4cac8463945d4b6d68ba85dc297a0ac5b331dc90",
+        "web_r4/draft.js": "f6ebc4a62fbf12113a7b46f58bf7c006d6028f00c1aa39881038135864ce80b1",
+        "coach_v1/draft.py": "f1c1df846bb56d8ad6c20882327e03ae69ca5f8abda1712b44ab08bf7f888595",
+        "coach_v1/backup.py": "e980269ebf7d5ab270ed0cde8d9277cae745ea83d5ee8d64f9ddf905b68b70eb",
+        "web_r4/knowledge_review.js": "174cc8b7d09729c2b045a5f2499fb7802cb0f4042f1d7280f625ec7665dee2c9",
+        "tests_mvp/browser_knowledge_review.cjs": "9e99b0e9bf2bd07a2597a7ba4f078e2256f51b8c0f8889506878c51fba37b34d"
+      },
+      "passed": true,
+      "checks": [
+        {
+          "id": "initial-real-save-v1",
+          "passed": true,
+          "actual": {
+            "http_status": 200,
+            "session_id": "cdeab3be-2a32-440b-be2e-51bf2987deb9",
+            "revision": 1,
+            "request_expected_revision": 0,
+            "snapshot_session_id": "cdeab3be-2a32-440b-be2e-51bf2987deb9",
+            "all_observation_session_ids_match_actual_server_id": true
+          }
+        },
+        {
+          "id": "initial-v1-backend-200",
+          "passed": true,
+          "actual": {
+            "status": 200
+          }
+        },
+        {
+          "id": "initial-v1-independently-stored",
+          "passed": true,
+          "actual": {
+            "revision": 1
+          }
+        },
+        {
+          "id": "held-put-actually-commits-v2",
+          "passed": true,
+          "actual": {
+            "http_status": 200,
+            "committed_revision": 2,
+            "request_expected_revision": 1
+          }
+        },
+        {
+          "id": "backend-v2-before-browser-ack-backend-200",
+          "passed": true,
+          "actual": {
+            "status": 200
+          }
+        },
+        {
+          "id": "backend-v2-visible-before-response-release",
+          "passed": true,
+          "actual": {
+            "revision": 2,
+            "objective": "Browser submitted edit for v2"
+          }
+        },
+        {
+          "id": "draft-entered-before-v2-ack",
+          "passed": true,
+          "actual": {
+            "current_label": "MVP actual browser save race · 저장 버전 1",
+            "exact_draft": true,
+            "save_disabled": true
+          }
+        },
+        {
+          "id": "real-v2-ack-exact-draft-retained",
+          "passed": true,
+          "actual": {
+            "exact_draft": true
+          }
+        },
+        {
+          "id": "real-v2-ack-analysis-disabled",
+          "passed": true,
+          "actual": {
+            "analyze_disabled": true
+          }
+        },
+        {
+          "id": "next-real-put-expects-v2-and-saves-v3",
+          "passed": true,
+          "actual": {
+            "request_expected_revision": 2,
+            "http_status": 200,
+            "committed_revision": 3
+          }
+        },
+        {
+          "id": "v3-save-canonical-editor",
+          "passed": true,
+          "actual": {
+            "exact_canonical": true,
+            "analyze_disabled": false
+          }
+        },
+        {
+          "id": "backend-after-v3-backend-200",
+          "passed": true,
+          "actual": {
+            "status": 200
+          }
+        },
+        {
+          "id": "backend-v3-has-newer-draft",
+          "passed": true,
+          "actual": {
+            "revision": 3,
+            "objective": "Browser newer draft while v2 response held",
+            "stored_case_semantically_matches_ack": true
+          }
+        },
+        {
+          "id": "reload-reopens-real-v3",
+          "passed": true,
+          "actual": {
+            "exact_canonical_from_stored_get": true,
+            "current_label": "MVP actual browser save race · 저장 버전 3",
+            "analyze_disabled": false,
+            "stored_case_semantically_matches_ack": true,
+            "ack_editor_sha256": "0c88271bd2f3648aeadd4bd85a7d8113d32a8156c3d4a8822f17ed3442340ac1",
+            "stored_get_editor_sha256": "857b1a6890ea15343d45f2ec1d8ffe1b0b64a5b1d8202404a316682c104874c8",
+            "reloaded_editor_sha256": "857b1a6890ea15343d45f2ec1d8ffe1b0b64a5b1d8202404a316682c104874c8"
+          }
+        },
+        {
+          "id": "real-synthetic-analysis-of-v3",
+          "passed": true,
+          "actual": {
+            "submission_status": 202,
+            "job_id": "82a56fd0-3922-4150-b7d2-ad3842eda82e",
+            "job_input_revision": 3,
+            "report_input_revision": 3,
+            "stale": false,
+            "objective": "Browser newer draft while v2 response held"
+          }
+        },
+        {
+          "id": "390px-no-horizontal-overflow",
+          "passed": true,
+          "actual": {
+            "scroll_width": 390,
+            "inner_width": 390
+          }
+        },
+        {
+          "id": "dirty-refreshed-reopen-cancel-native-confirm",
+          "passed": true,
+          "actual": {
+            "action": "dirty-refreshed-reopen-cancel",
+            "type": "confirm",
+            "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+            "response": "dismiss"
+          }
+        },
+        {
+          "id": "dirty-refreshed-reopen-cancel-exact-draft-retained",
+          "passed": true,
+          "actual": {
+            "editor_sha256": "27a90d3bdceb8cda58b889bd10db8536e6cf37731776b9428c504debfe0c49a4",
+            "expected_sha256": "27a90d3bdceb8cda58b889bd10db8536e6cf37731776b9428c504debfe0c49a4"
+          }
+        },
+        {
+          "id": "dirty-refreshed-reopen-cancel-current-session-retained",
+          "passed": true,
+          "actual": {
+            "current_label": "MVP actual browser save race · 저장 버전 3"
+          }
+        },
+        {
+          "id": "dirty-refreshed-reopen-cancel-analysis-disabled",
+          "passed": true,
+          "actual": {
+            "analyze_disabled": true
+          }
+        },
+        {
+          "id": "dirty-load-example-cancel-native-confirm",
+          "passed": true,
+          "actual": {
+            "action": "dirty-load-example-cancel",
+            "type": "confirm",
+            "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+            "response": "dismiss"
+          }
+        },
+        {
+          "id": "dirty-load-example-cancel-exact-draft-retained",
+          "passed": true,
+          "actual": {
+            "editor_sha256": "27a90d3bdceb8cda58b889bd10db8536e6cf37731776b9428c504debfe0c49a4",
+            "expected_sha256": "27a90d3bdceb8cda58b889bd10db8536e6cf37731776b9428c504debfe0c49a4"
+          }
+        },
+        {
+          "id": "dirty-load-example-cancel-current-session-retained",
+          "passed": true,
+          "actual": {
+            "current_label": "MVP actual browser save race · 저장 버전 3"
+          }
+        },
+        {
+          "id": "dirty-load-example-cancel-analysis-disabled",
+          "passed": true,
+          "actual": {
+            "analyze_disabled": true
+          }
+        },
+        {
+          "id": "dirty-import-cancel-native-confirm",
+          "passed": true,
+          "actual": {
+            "action": "dirty-import-cancel",
+            "type": "confirm",
+            "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+            "response": "dismiss"
+          }
+        },
+        {
+          "id": "dirty-import-cancel-exact-draft-retained",
+          "passed": true,
+          "actual": {
+            "editor_sha256": "27a90d3bdceb8cda58b889bd10db8536e6cf37731776b9428c504debfe0c49a4",
+            "expected_sha256": "27a90d3bdceb8cda58b889bd10db8536e6cf37731776b9428c504debfe0c49a4"
+          }
+        },
+        {
+          "id": "dirty-import-cancel-current-session-retained",
+          "passed": true,
+          "actual": {
+            "current_label": "MVP actual browser save race · 저장 버전 3"
+          }
+        },
+        {
+          "id": "dirty-import-cancel-analysis-disabled",
+          "passed": true,
+          "actual": {
+            "analyze_disabled": true
+          }
+        },
+        {
+          "id": "backend-after-native-cancellations-backend-200",
+          "passed": true,
+          "actual": {
+            "status": 200
+          }
+        },
+        {
+          "id": "native-cancellations-leave-backend-v3",
+          "passed": true,
+          "actual": {
+            "revision": 3,
+            "objective": "Browser newer draft while v2 response held"
+          }
+        },
+        {
+          "id": "import-a-first-keeps-newer-b-pending",
+          "passed": true,
+          "actual": {
+            "exact_initial_editor": true,
+            "selected_file": "b-second.json",
+            "unchanged_notice": true,
+            "notice_is_error": false,
+            "current_label": "아직 선택한 사례가 없습니다."
+          }
+        },
+        {
+          "id": "import-a-then-b-loads-exact-latest-b",
+          "passed": true,
+          "actual": {
+            "exact_latest_editor": true,
+            "selected_file": null,
+            "notice": "합성 입력 파일을 불러왔습니다.",
+            "notice_is_error": false,
+            "analyze_disabled": true,
+            "report_hidden": true
+          }
+        },
+        {
+          "id": "import-b-first-loads-exact-latest-b",
+          "passed": true,
+          "actual": {
+            "exact_latest_editor": true,
+            "selected_file": null,
+            "notice": "합성 입력 파일을 불러왔습니다.",
+            "notice_is_error": false
+          }
+        },
+        {
+          "id": "import-stale-a-after-b-cannot-replace-editor",
+          "passed": true,
+          "actual": {
+            "exact_latest_editor": true,
+            "selected_file": null,
+            "notice": "합성 입력 파일을 불러왔습니다.",
+            "notice_is_error": false,
+            "analyze_disabled": true,
+            "report_hidden": true
+          }
+        },
+        {
+          "id": "import-clear-selection-retains-initial-editor",
+          "passed": true,
+          "actual": {
+            "exact_initial_editor": true,
+            "selected_file": null,
+            "unchanged_notice": true,
+            "notice_is_error": false
+          }
+        },
+        {
+          "id": "import-cleared-stale-read-cannot-surface-error",
+          "passed": true,
+          "actual": {
+            "exact_initial_editor": true,
+            "selected_file": null,
+            "unchanged_notice": true,
+            "notice_is_error": false,
+            "current_label": "아직 선택한 사례가 없습니다.",
+            "analyze_disabled": true
+          }
+        },
+        {
+          "id": "research-valid-bom-raw-byte-hash",
+          "passed": true,
+          "actual": {
+            "http_status": 201,
+            "original_sha256": "77bc8ae89a5bb0100c7e4577b5b16e73cb8a38a3c5bfe2676f8d4dbd5b720c8a",
+            "reported_sha256": "77bc8ae89a5bb0100c7e4577b5b16e73cb8a38a3c5bfe2676f8d4dbd5b720c8a",
+            "persisted_sha256": "77bc8ae89a5bb0100c7e4577b5b16e73cb8a38a3c5bfe2676f8d4dbd5b720c8a"
+          }
+        },
+        {
+          "id": "research-valid-bom-transcript-byte-hash",
+          "passed": true,
+          "actual": {
+            "http_status": 201,
+            "original_sha256": "6b2b94759f54169abf69661cb408b9b49310c2f023f2eb6957850c9e53c6eca9",
+            "reported_sha256": "6b2b94759f54169abf69661cb408b9b49310c2f023f2eb6957850c9e53c6eca9",
+            "persisted_sha256": "6b2b94759f54169abf69661cb408b9b49310c2f023f2eb6957850c9e53c6eca9"
+          }
+        },
+        {
+          "id": "research-valid-multibyte-literal-replacement-byte-hash",
+          "passed": true,
+          "actual": {
+            "http_status": 201,
+            "original_sha256": "6cbdf000317a366297cdaa3902894b2aa9f300df7eccb43f2551339e527a8628",
+            "reported_sha256": "6cbdf000317a366297cdaa3902894b2aa9f300df7eccb43f2551339e527a8628"
+          }
+        },
+        {
+          "id": "research-malformed-utf8-no-post-or-resource",
+          "passed": true,
+          "actual": {
+            "posts_before": 3,
+            "posts_after": 3,
+            "resource_ids_unchanged": true
+          }
+        },
+        {
+          "id": "research-malformed-error-retains-old-dirty-note",
+          "passed": true,
+          "actual": {
+            "notice": "처리하지 못했습니다: UTF-8 파일 형식이 올바르지 않습니다.",
+            "old_resource_retained": true,
+            "exact_note_retained": true,
+            "note_revision_retained": true,
+            "dirty": true,
+            "note_editable": true,
+            "save_enabled": true
+          }
+        },
+        {
+          "id": "research-stale-invalid-a-before-b-keeps-newest-pending",
+          "passed": true,
+          "actual": {
+            "notice_unchanged": true,
+            "resource_unchanged": true,
+            "selected_file": "valid-b-pending.json",
+            "no_new_post": true,
+            "newest_b_still_held": true
+          }
+        },
+        {
+          "id": "research-stale-invalid-a-after-b-cannot-replace-or-error",
+          "passed": true,
+          "actual": {
+            "exact_ui_state_retained": true,
+            "no_stale_post": true,
+            "persisted_sha256": "99d28952d10c79c16d1bc4cff79db8cdb82ff8d20cc26e36cb39901bf1f6a390",
+            "original_b_sha256": "99d28952d10c79c16d1bc4cff79db8cdb82ff8d20cc26e36cb39901bf1f6a390"
+          }
+        },
+        {
+          "id": "research-logout-pending-malformed-read-no-stale-error",
+          "passed": true,
+          "actual": {
+            "exact_logged_out_state_retained_except_input_cleanup": true,
+            "workspace_hidden": true,
+            "cleared_resource": true,
+            "cleared_note": true,
+            "no_post_after_logout": true
+          }
+        },
+        {
+          "id": "research-loading-disables-delete-button",
+          "passed": true,
+          "actual": {
+            "actual_b_get_status": 200,
+            "old_resource_still_displayed": true,
+            "delete_disabled": true,
+            "note_disabled": true
+          }
+        },
+        {
+          "id": "research-real-held-delete-a-cannot-clear-new-b-draft",
+          "passed": true,
+          "actual": {
+            "actual_delete_status": 200,
+            "actual_deleted_id": "7f3470deae1f72676ae129937060c9aa1e7ae395b76248ddbc72279a6815ef4f",
+            "native_confirmation": {
+              "type": "confirm",
+              "message": "이 자료와 모든 복기 노트, 연결된 지식 후보 및 후속 버전을 삭제할까요?",
+              "response": "accept"
+            },
+            "exact_b_state_retained": true,
+            "exact_b_draft_retained": true,
+            "b_dirty": true
+          }
+        },
+        {
+          "id": "research-real-backend-a-deleted-b-preserved",
+          "passed": true,
+          "actual": {
+            "deleted_a_get_status": 404,
+            "retained_b_get_status": 200,
+            "b_note_revision": 0,
+            "b_exists_in_actual_list": true
+          }
+        },
+        {
+          "id": "research-current-delete-clears-notes-backend-and-list",
+          "passed": true,
+          "actual": {
+            "actual_current_delete_status": 200,
+            "native_confirmation": {
+              "type": "confirm",
+              "message": "이 자료와 모든 복기 노트, 연결된 지식 후보 및 후속 버전을 삭제할까요?",
+              "response": "accept"
+            },
+            "selection_cleared": true,
+            "exact_note_cleared": true,
+            "dirty_cleared": true,
+            "deleted_b_get_status": 404,
+            "deleted_b_note_status": 404,
+            "actual_list_excludes_b": true
+          }
+        },
+        {
+          "id": "note-history-real-index-descending-versions",
+          "passed": true,
+          "actual": {
+            "http_status": 200,
+            "current_revision": 3,
+            "actual_revisions": [
+              3,
+              2,
+              1
+            ],
+            "visible_revision_options": [
+              "",
+              "3",
+              "2",
+              "1"
+            ],
+            "read_only": true
+          }
+        },
+        {
+          "id": "note-history-v1-exact-unicode-readonly-dirty-v3-retained",
+          "passed": true,
+          "actual": {
+            "exact_real_api_preview": true,
+            "exact_unicode_v1": true,
+            "readonly_pre": true,
+            "exact_dirty_v3_editor_retained": true
+          }
+        },
+        {
+          "id": "note-history-v2-authentic-download-exact-preview-bytes",
+          "passed": true,
+          "actual": {
+            "exact_real_api_v2": true,
+            "exact_unicode_v2": true,
+            "genuine_browser_download_filename": "lol-coach-note-v2.json",
+            "downloaded_sha256": "0345720f77ab557f93c32de921ab4201a329ea7ca49486e697372d0a82865f6a",
+            "preview_utf8_sha256": "0345720f77ab557f93c32de921ab4201a329ea7ca49486e697372d0a82865f6a",
+            "exact_downloaded_bytes": true,
+            "exact_dirty_v3_editor_retained": true
+          }
+        },
+        {
+          "id": "note-history-current-save-uses-v3-and-creates-v4",
+          "passed": true,
+          "actual": {
+            "actual_expected_revision": 3,
+            "actual_saved_revision": 4,
+            "backend_latest_revision": 4,
+            "exact_v4_note": true,
+            "old_preview_invalidated": true
+          }
+        },
+        {
+          "id": "note-history-delayed-preview-cannot-follow-new-anchor",
+          "passed": true,
+          "actual": {
+            "held_real_status": 200,
+            "new_anchor": "1",
+            "exact_new_anchor_state_retained": true,
+            "no_stale_preview": true
+          }
+        },
+        {
+          "id": "note-history-delayed-preview-cannot-follow-new-resource",
+          "passed": true,
+          "actual": {
+            "held_real_status": 200,
+            "alternate_resource_selected": true,
+            "exact_new_resource_state_retained": true,
+            "no_stale_preview": true
+          }
+        },
+        {
+          "id": "note-history-delayed-preview-cannot-follow-logout",
+          "passed": true,
+          "actual": {
+            "held_real_status": 200,
+            "logged_out": true,
+            "exact_logged_out_history_retained": true,
+            "no_stale_preview": true
+          }
+        },
+        {
+          "id": "note-history-current-real-404-visible-with-draft-intact",
+          "passed": true,
+          "actual": {
+            "adversarial_missing_revision": 999,
+            "actual_http_status": 404,
+            "actual_error_code": "NOTE_REVISION_NOT_FOUND",
+            "visible_history_error": "처리하지 못했습니다: NOTE_REVISION_NOT_FOUND",
+            "stale_download_disabled": true,
+            "exact_dirty_current_editor_retained": true
+          }
+        },
+        {
+          "id": "note-history-reads-preserve-all-saved-versions-and-anchors",
+          "passed": true,
+          "actual": {
+            "final_actual_revisions": [
+              4,
+              3,
+              2,
+              1
+            ],
+            "all_original_unicode_payloads_preserved": true,
+            "alternate_anchor_revision": 1,
+            "actual_browser_note_writes": 1,
+            "sole_write_expected_revision": 3
+          }
+        },
+        {
+          "id": "note-history-delayed-real-404-cannot-follow-synthetic-view-toggle",
+          "passed": true,
+          "actual": {
+            "held_actual_http_status": 404,
+            "held_actual_error_code": "NOTE_REVISION_NOT_FOUND",
+            "exact_cleared_history_retained": true,
+            "exact_dirty_editor_retained": true,
+            "authentication_and_view_retained": true,
+            "authenticated": true,
+            "stale_history_error_absent": true
+          }
+        },
+        {
+          "id": "note-history-delayed-real-index-cannot-follow-current-resource-deletion",
+          "passed": true,
+          "actual": {
+            "held_actual_history_status": 200,
+            "held_actual_revisions": [
+              4,
+              3,
+              2,
+              1
+            ],
+            "actual_deleted_resource_status": 200,
+            "native_confirmation": {
+              "type": "confirm",
+              "message": "이 자료와 모든 복기 노트, 연결된 지식 후보 및 후속 버전을 삭제할까요?",
+              "response": "accept"
+            },
+            "exact_cleared_history_retained": true,
+            "old_options_absent": true,
+            "current_selection_cleared": true,
+            "notes_cleared": true,
+            "actual_deleted_resource_get_status": 404,
+            "actual_cascaded_history_get_status": 404
+          }
+        },
+        {
+          "id": "research-save-old-real-409-cannot-overwrite-new-b-draft-notice-auth",
+          "passed": true,
+          "actual": {
+            "actual_http_status": 409,
+            "actual_error_code": "REVISION_CONFLICT",
+            "submitted_expected_revision": 1,
+            "native_navigation_confirmation": {
+              "type": "confirm",
+              "message": "저장하지 않은 노트 변경을 버리고 이동할까요?",
+              "response": "accept"
+            },
+            "exact_b_ui_note_history_notice_auth_retained": true,
+            "exact_b_draft_retained": true,
+            "backend_a_revision": 2,
+            "backend_b_revision": 0,
+            "actual_browser_put_count": 1,
+            "authenticated": true
+          }
+        },
+        {
+          "id": "research-save-current-real-409-visible-keeps-draft-and-save-enabled",
+          "passed": true,
+          "actual": {
+            "actual_http_status": 409,
+            "actual_error_code": "REVISION_CONFLICT",
+            "submitted_expected_revision": 2,
+            "native_navigation_confirmation": {
+              "type": "confirm",
+              "message": "저장하지 않은 노트 변경을 버리고 이동할까요?",
+              "response": "accept"
+            },
+            "visible_current_error": "처리하지 못했습니다: REVISION_CONFLICT",
+            "exact_current_draft_retained": true,
+            "exact_other_ui_state_retained": true,
+            "save_enabled": true,
+            "authenticated": true,
+            "backend_a_revision": 3,
+            "backend_b_revision": 0,
+            "actual_browser_put_count": 2
+          }
+        },
+        {
+          "id": "knowledge-unsaved-source-note-gate-no-browser-post",
+          "passed": true,
+          "actual": {
+            "actual_browser_post_delta": 0,
+            "unsaved_note_revision": 0,
+            "source_unset": true,
+            "visible_source_gate": "저장된 복기 노트를 출처로 연결한 후 저장하세요."
+          }
+        },
+        {
+          "id": "knowledge-real-create-exploratory-unicode-source-hashes-keeps-new-draft",
+          "passed": true,
+          "actual": {
+            "actual_status": 201,
+            "review_state": "EXPLORATORY",
+            "coaching_enabled": false,
+            "exact_unicode_payload": true,
+            "exact_saved_source_hashes": true,
+            "new_draft_and_source_retained": true,
+            "saved_note_text_not_copied": true,
+            "native_source_confirmation": {
+              "type": "confirm",
+              "message": "이 초안에 연결된 출처를 현재 저장 노트로 바꿀까요? 제안 내용은 유지됩니다.",
+              "response": "accept"
+            }
+          }
+        },
+        {
+          "id": "knowledge-next-save-uses-acknowledged-cas-and-preserves-prior-version",
+          "passed": true,
+          "actual": {
+            "actual_expected_version": "a33f1e92466048b483e4c8908d01e853",
+            "actual_supersedes": "a33f1e92466048b483e4c8908d01e853",
+            "old_version_immutable": true,
+            "new_draft_exactly_saved": true
+          }
+        },
+        {
+          "id": "knowledge-old-version-authentic-download-exact-saved-object",
+          "passed": true,
+          "actual": {
+            "latest_cas_for_old_view": "c42e03640c644a7787d7e8cfa89c9960",
+            "genuine_download_filename": "lol-coach-knowledge-a33f1e92466048b483e4c8908d01e853.json",
+            "expected_download_filename": "lol-coach-knowledge-a33f1e92466048b483e4c8908d01e853.json",
+            "exact_filename": true,
+            "downloaded_utf8_sha256": "69fa4769ef4e14aac980654ae08e5b3cc87592e4ea34d1bacdbeceeb6bf220c0",
+            "viewed_get_pretty_utf8_sha256": "69fa4769ef4e14aac980654ae08e5b3cc87592e4ea34d1bacdbeceeb6bf220c0",
+            "independent_get_pretty_utf8_sha256": "69fa4769ef4e14aac980654ae08e5b3cc87592e4ea34d1bacdbeceeb6bf220c0",
+            "created_post_pretty_utf8_sha256": "acfe5015ebb44491a10af4c9366827d7957d9d4432d551c886ec3ffbfc9f61cc",
+            "post_get_semantically_equal": true,
+            "post_get_pretty_bytes_equal": false,
+            "exact_saved_download_bytes": true,
+            "exact_unicode_content": true,
+            "dirty_editor_untouched": true
+          }
+        },
+        {
+          "id": "knowledge-current-real-conflict-keeps-draft-source-and-auth",
+          "passed": true,
+          "actual": {
+            "actual_status": 409,
+            "actual_error_code": "REVISION_CONFLICT",
+            "submitted_expected_version": "c42e03640c644a7787d7e8cfa89c9960",
+            "exact_current_draft_retained": true,
+            "source_retained": true,
+            "authenticated": true,
+            "backend_latest_version": "f1fe323f27794bffa0bff3966cf970f4"
+          }
+        },
+        {
+          "id": "knowledge-native-dirty-navigation-cancel-and-hidden-draft-preserved",
+          "passed": true,
+          "actual": {
+            "native_confirmations": [
+              {
+                "type": "confirm",
+                "message": "저장하지 않은 지식 제안 변경을 버리고 이동할까요?",
+                "response": "dismiss"
+              },
+              {
+                "type": "confirm",
+                "message": "저장하지 않은 지식 제안 변경을 버리고 이동할까요?",
+                "response": "dismiss"
+              },
+              {
+                "type": "confirm",
+                "message": "이 초안에 연결된 출처를 현재 저장 노트로 바꿀까요? 제안 내용은 유지됩니다.",
+                "response": "dismiss"
+              }
+            ],
+            "exact_hidden_and_cancelled_draft_retained": true
+          }
+        },
+        {
+          "id": "knowledge-source-delete-cascades-descendants-keeps-independent-nonidentifying-receipt",
+          "passed": true,
+          "actual": {
+            "actual_delete_status": 200,
+            "actual_deleted_versions": 3,
+            "receipt_keys": [
+              "deleted_versions",
+              "id",
+              "receipt_id",
+              "status"
+            ],
+            "dependent_get_statuses": [
+              404,
+              404,
+              404
+            ],
+            "independent_get_status": 200,
+            "deleted_display_cleared": true
+          }
+        },
+        {
+          "id": "knowledge-unrelated-source-deletion-keeps-independent-dirty-draft",
+          "passed": true,
+          "actual": {
+            "actual_delete_status": 200,
+            "deleted_knowledge_versions": 0,
+            "exact_independent_editor_source_notice_auth_retained": true
+          }
+        },
+        {
+          "id": "knowledge-old-real-conflict-cannot-follow-new-editor-context",
+          "passed": true,
+          "actual": {
+            "held_actual_status": 409,
+            "held_actual_error_code": "REVISION_CONFLICT",
+            "new_context_exactly_retained": true,
+            "authenticated": true
+          }
+        },
+        {
+          "id": "knowledge-middle-source-delete-clears-displayed-descendant-with-ancestor-surviving",
+          "passed": true,
+          "actual": {
+            "actual_deleted_versions": 2,
+            "held_exact_missing_status": 404,
+            "download_immediately_blocked_while_exact_validation_pending": true,
+            "ancestor_middle_descendant_source_statuses": [
+              200,
+              404,
+              404,
+              200
+            ],
+            "deleted_exact_display_and_download_cleared": true
+          }
+        },
+        {
+          "id": "knowledge-late-deletion-read-keeps-new-independent-source-draft",
+          "passed": true,
+          "actual": {
+            "held_actual_source_status": 200,
+            "new_independent_source_and_draft_retained": true,
+            "deleted_saved_record_detached": true,
+            "dirty": true
+          }
+        },
+        {
+          "id": "knowledge-cached-exact-ack-cannot-resurrect-deleted-descendant-with-ancestor-selected",
+          "passed": true,
+          "actual": {
+            "actual_created_status": 201,
+            "held_exact_status": 200,
+            "actual_deleted_versions": 3,
+            "deleted_descendant_get_status": 404,
+            "retained_saved_ancestor_version": "2e21fd68339e43f1b2f48b06c5e27d43",
+            "postdelete_latest": "2e21fd68339e43f1b2f48b06c5e27d43",
+            "independent_manual_draft_retained": true,
+            "deleted_version_not_acknowledged": true
+          }
+        },
+        {
+          "id": "knowledge-cached-exact-open-cannot-display-deleted-historical-version",
+          "passed": true,
+          "actual": {
+            "held_actual_exact_status": 200,
+            "deleted_versions": 2,
+            "saved_ancestor_retained": true,
+            "deleted_historical_download_not_selected": true,
+            "current_revalidation_error_visible": "처리하지 못했습니다: KNOWLEDGE_RULE_NOT_FOUND"
+          }
+        },
+        {
+          "id": "knowledge-cached-list-cannot-restore-deleted-version-metadata",
+          "passed": true,
+          "actual": {
+            "held_actual_list_status": 200,
+            "held_list_contains_deleted_version": true,
+            "actual_deleted_versions": 2,
+            "deleted_claim_metadata_absent": true,
+            "actual_backend_deleted_versions_absent": true
+          }
+        },
+        {
+          "id": "knowledge-proposal-delete-invalidates-pending-same-rule-historical-open",
+          "passed": true,
+          "actual": {
+            "native_confirmation": {
+              "type": "confirm",
+              "message": "이 제안과 모든 버전·연결된 후속 제안을 삭제할까요?",
+              "response": "accept"
+            },
+            "actual_delete_expected_version": "8f9cb1ee53fe442d8f5e0b8ae7616de3",
+            "native_delete_dispatch_gated": true,
+            "held_genuine_latest_status": 200,
+            "actual_delete_status": 200,
+            "actual_deleted_versions": 3,
+            "late_deleted_version_not_rendered": true,
+            "deleted_download_blocked": true,
+            "exact_cleared_state_retained": true,
+            "deleted_exact_latest_and_surviving_source_statuses": [
+              404,
+              404,
+              404,
+              200
+            ]
+          }
+        },
+        {
+          "id": "knowledge-genuine-held-create-response-cannot-follow-logout",
+          "passed": true,
+          "actual": {
+            "held_actual_create_status": 201,
+            "exact_logout_state_retained": true,
+            "authenticated": false,
+            "workspace_hidden": true,
+            "backend_saved_version_exists": true,
+            "review_state": "EXPLORATORY",
+            "coaching_enabled": false
+          }
+        },
+        {
+          "id": "note-recovery-native-cancel-keeps-current-dirty-note-no-put",
+          "passed": true,
+          "actual": {
+            "native_confirmation": {
+              "type": "confirm",
+              "message": "현재 미저장 초안을 조회한 과거 내용으로 바꿀까요?",
+              "response": "dismiss"
+            },
+            "exact_dirty_editor_retained": true,
+            "exact_owned_preview_retained": true,
+            "browser_put_delta": 0,
+            "loaded_current_revision": 3
+          }
+        },
+        {
+          "id": "note-recovery-explicit-exact-unicode-draft-keeps-loaded-cas-no-put",
+          "passed": true,
+          "actual": {
+            "native_confirmation": {
+              "type": "confirm",
+              "message": "현재 미저장 초안을 조회한 과거 내용으로 바꿀까요?",
+              "response": "accept"
+            },
+            "exact_four_unicode_fields": true,
+            "loaded_note_revision_unchanged": 3,
+            "current_saved_note_unchanged": true,
+            "browser_put_delta": 0,
+            "dirty": true,
+            "save_enabled": true
+          }
+        },
+        {
+          "id": "note-recovery-save-uses-current-plus-one-preserves-old-notes-and-knowledge-source",
+          "passed": true,
+          "actual": {
+            "actual_put_status": 200,
+            "actual_expected_revision": 3,
+            "new_saved_revision": 4,
+            "all_old_payloads_immutable": true,
+            "saved_knowledge_exactly_unchanged": true,
+            "knowledge_before_sha256": "32159f42c9de627b42905fc95bd61ef75b0fcbe641763c8983c1b26542b2bfaf",
+            "knowledge_after_sha256": "32159f42c9de627b42905fc95bd61ef75b0fcbe641763c8983c1b26542b2bfaf",
+            "source_note_revision": 1,
+            "source_note_sha256": "03f9d498bd47abfc14ae12fe840c8c8f3278d0660b1f2afc65e410840224281e"
+          }
+        },
+        {
+          "id": "note-recovery-real-external-conflict-keeps-recovered-draft-current-cas",
+          "passed": true,
+          "actual": {
+            "actual_http_status": 409,
+            "actual_error_code": "REVISION_CONFLICT",
+            "submitted_expected_revision": 4,
+            "exact_recovered_draft_retained": true,
+            "loaded_cas_retained": 4,
+            "backend_latest_revision": 5,
+            "recovery_reenabled": true,
+            "authenticated": true
+          }
+        },
+        {
+          "id": "note-recovery-delayed-preview-cannot-recover-into-new-resource",
+          "passed": true,
+          "actual": {
+            "held_actual_status": 200,
+            "current_resource_is_b": true,
+            "exact_b_editor_retained": true,
+            "stale_preview_not_recoverable": true,
+            "browser_put_delta": 0
+          }
+        },
+        {
+          "id": "note-recovery-delayed-preview-view-and-logout-owners-blocked",
+          "passed": true,
+          "actual": {
+            "held_view_status": 200,
+            "view_editor_and_history_retained": true,
+            "held_logout_status": 200,
+            "logout_editor_and_history_retained": true,
+            "logged_out": true,
+            "stale_recovery_disabled": true
+          }
+        },
+        {
+          "id": "note-recovery-current-delete-cannot-recover-delayed-removed-preview",
+          "passed": true,
+          "actual": {
+            "held_actual_preview_status": 200,
+            "actual_delete_status": 200,
+            "native_confirmation": {
+              "type": "confirm",
+              "message": "이 자료와 모든 복기 노트, 연결된 지식 후보 및 후속 버전을 삭제할까요?",
+              "response": "accept"
+            },
+            "exact_cleared_state_retained": true,
+            "deleted_source_status": 404,
+            "deleted_history_status": 404,
+            "original_knowledge_survives": true
+          }
+        },
+        {
+          "id": "note-recovery-stale-delete-source-event-matches-current-resource-only",
+          "passed": true,
+          "actual": {
+            "genuine_delete_dispatch_gates": true,
+            "same_resource_actual_delete_status": 200,
+            "same_resource_anchor": "1",
+            "deleted_cached_resource_note_and_editor_purged": true,
+            "deleted_note_download_events": 0,
+            "same_resource_recovery_owner_cleared": true,
+            "unrelated_actual_delete_status": 200,
+            "independent_b_draft_and_preview_retained": true,
+            "held_real_b_get_status": 200,
+            "pending_delete_actual_status": 200,
+            "inactive_deleted_cache_purged": true,
+            "pending_b_generation_not_cancelled": true,
+            "real_b_navigation_completed": true
+          }
+        },
+        {
+          "id": "note-recovery-native-line-endings-preserve-original-history-download-and-source-hash",
+          "passed": true,
+          "actual": {
+            "original_crlf_cr_note_preserved": true,
+            "native_editor_literal_lf": true,
+            "original_download_exact_bytes": true,
+            "original_download_utf8_sha256": "36ec126acbaaff1af370b8fc53dcb909dd1eaf40f4d80de4a4d7f2cdf765c2b4",
+            "actual_saved_lf_note": true,
+            "actual_expected_revision": 2,
+            "new_revision": 3,
+            "knowledge_exactly_unchanged": true,
+            "original_source_note_sha256": "0e2085a0f03bd873522696f7e36d3939371658484e61efe040302c00981eba57"
+          }
+        },
+        {
+          "id": "note-recovery-mobile-390-control-visible-without-horizontal-overflow",
+          "passed": true,
+          "actual": {
+            "viewport_width": 390,
+            "document_width": 390,
+            "control_visible": true,
+            "control_enabled": true,
+            "control_bounds": {
+              "left": 148.265625,
+              "right": 307.59375,
+              "width": 159.328125
+            },
+            "current_saved_revision": 5
+          }
+        },
+        {
+          "id": "draft-native-operator-input-does-not-auto-save",
+          "passed": true,
+          "actual": {
+            "actual_browser_writes": 0,
+            "actual_saved_count": 0,
+            "dirty": true
+          }
+        },
+        {
+          "id": "draft-native-partial-save-preserves-declared-null-and-unverified-state",
+          "passed": true,
+          "actual": {
+            "actual_status": 201,
+            "declared_unknown_time": null,
+            "unknown_roles": true,
+            "validation_state": "UNVERIFIED",
+            "coaching_enabled": false
+          }
+        },
+        {
+          "id": "draft-native-saved-list-and-exact-version-use-actual-record",
+          "passed": true,
+          "actual": {
+            "actual_list_count": 1,
+            "exact_saved_version": true
+          }
+        },
+        {
+          "id": "draft-native-reload-restores-null-and-two-side-input",
+          "passed": true,
+          "actual": {
+            "saved_revision": 1,
+            "unknown_time_editor": "",
+            "exact_saved_record": true,
+            "ally_pick": "아리",
+            "enemy_pick": "Lux"
+          }
+        },
+        {
+          "id": "draft-native-explicit-correction-cas-creates-immutable-successor",
+          "passed": true,
+          "actual": {
+            "actual_expected_revision": 1,
+            "saved_revision": 2,
+            "prior_snapshot_preserved": true
+          }
+        },
+        {
+          "id": "draft-native-current-download-is-exact-saved-record-not-dirty-input",
+          "passed": true,
+          "actual": {
+            "genuine_download_sha256": "b93bf8f9896b8745d16bc7be7c3dfc9127adbb2228ae027d6e2a80b179c5b53a",
+            "exact_saved_bytes": true,
+            "dirty_input_excluded": true
+          }
+        },
+        {
+          "id": "draft-native-old-preview-download-preserves-exact-immutable-input",
+          "passed": true,
+          "actual": {
+            "original_revision": 1,
+            "actual_download_sha256": "8923eb563331cd60a073643a8aee3f4fc99c6a1fc9d406e3bde9e3376f6c7e9c",
+            "exact_original_saved_bytes": true,
+            "current_unsaved_editor_retained": true
+          }
+        },
+        {
+          "id": "draft-native-real-409-keeps-exact-dirty-input-and-loaded-cas",
+          "passed": true,
+          "actual": {
+            "actual_http_status": 409,
+            "expected_revision_sent": 2,
+            "loaded_revision": 2,
+            "exact_dirty_editor_retained": true
+          }
+        },
+        {
+          "id": "draft-native-cancel-new-keeps-dirty-input-without-write",
+          "passed": true,
+          "actual": {
+            "native_confirmation": {
+              "type": "confirm",
+              "message": "저장하지 않은 픽창 기록 변경을 버리고 이동할까요?",
+              "response": "dismiss"
+            },
+            "actual_write_delta": 0,
+            "exact_editor_retained": true
+          }
+        },
+        {
+          "id": "draft-native-confirmed-reopen-loads-current-external-revision",
+          "passed": true,
+          "actual": {
+            "native_confirmation": {
+              "type": "confirm",
+              "message": "저장하지 않은 픽창 기록 변경을 버리고 이동할까요?",
+              "response": "accept"
+            },
+            "actual_current_revision": 3
+          }
+        },
+        {
+          "id": "draft-native-cancel-delete-preserves-current-and-old-preview",
+          "passed": true,
+          "actual": {
+            "native_confirmation": {
+              "type": "confirm",
+              "message": "이 픽창 기록과 모든 저장 버전을 삭제할까요?",
+              "response": "dismiss"
+            },
+            "exact_current_and_preview_retained": true,
+            "actual_backend_still_present": true
+          }
+        },
+        {
+          "id": "draft-native-real-delete-purges-current-history-and-downloads",
+          "passed": true,
+          "actual": {
+            "actual_http_status": 200,
+            "actual_deleted_snapshots": 3,
+            "backend_current_status": 404,
+            "backend_history_status": 404,
+            "native_confirmation": {
+              "type": "confirm",
+              "message": "이 픽창 기록과 모든 저장 버전을 삭제할까요?",
+              "response": "accept"
+            }
+          }
+        },
+        {
+          "id": "draft-native-late-real-history-get-cannot-resurrect-deleted-input",
+          "passed": true,
+          "actual": {
+            "held_actual_http_status": 200,
+            "held_deleted_revision": 2,
+            "exact_deleted_state_retained": true
+          }
+        },
+        {
+          "id": "draft-native-empty-refresh-has-no-phantom-record",
+          "passed": true,
+          "actual": {
+            "actual_backend_count": 0,
+            "visible_capture_buttons": 0
+          }
+        },
+        {
+          "id": "draft-native-late-real-capture-get-keeps-new-owner-draft",
+          "passed": true,
+          "actual": {
+            "held_actual_capture_id": "4a9835a60b3db5c265749307c05c2376",
+            "active_capture_id": "a1a72afde603daf1f85594c913656a05",
+            "exact_new_owner_draft_retained": true
+          }
+        },
+        {
+          "id": "draft-native-mobile-390-save-usable-without-overflow",
+          "passed": true,
+          "actual": {
+            "viewport_width": 390,
+            "document_width": 390,
+            "control_visible": true,
+            "control_disabled": false,
+            "bounds": {
+              "left": 37,
+              "right": 117.0625
+            }
+          }
+        },
+        {
+          "id": "draft-native-logout-clears-private-input-and-blocks-late-get",
+          "passed": true,
+          "actual": {
+            "held_actual_http_status": 200,
+            "authenticated": false,
+            "workspace_hidden": true,
+            "cached_record_cleared": true,
+            "exact_logout_state_retained": true
+          }
+        },
+        {
+          "id": "draft-native-capture-remains-separate-from-synthetic-engine-and-real-coach",
+          "passed": true,
+          "actual": {
+            "manual_records_survive_logout": true,
+            "real_data_enabled": false,
+            "synthetic_mode": "SYNTHETIC_ONLY",
+            "draft_ids_absent_from_legacy_sessions": true
+          }
+        },
+        {
+          "id": "draft-native-no-edit-roundtrip-keeps-null-order-membership-and-declared-provenance",
+          "passed": true,
+          "actual": {
+            "actual_create_status": 201,
+            "actual_native_update_status": 200,
+            "input_was_not_edited": true,
+            "expected_revision_sent": 1,
+            "exact_submitted_input": true,
+            "exact_saved_successor_input": true,
+            "null_pick_members_and_unsorted_order_retained": true,
+            "null_ban_members_and_unsorted_order_retained": true,
+            "exact_role_membership_and_order_retained": true,
+            "absent_known_pick_role_stays_absent": true,
+            "native_title_and_author_remove_newlines": true,
+            "native_description_normalizes_crlf_to_lf": true,
+            "original_title_newline_retained": true,
+            "original_source_author_newline_retained": true,
+            "original_source_description_crlf_retained": true,
+            "declared_timestamp_retained": "2026-10-05T15:31:12.345678+09:00",
+            "declared_source_retained": true,
+            "original_snapshot_immutable": true,
+            "successor_revision": 2,
+            "validation_state": "UNVERIFIED",
+            "coaching_enabled": false
+          }
+        },
+        {
+          "id": "draft-retry-actual-committed-response-loss-keeps-retryable-editor",
+          "passed": true,
+          "actual": {
+            "committed_status": 200,
+            "backend_revision": 2,
+            "history_count": 2,
+            "ui_loaded_revision": 1,
+            "ui_dirty": true,
+            "retry_key_present": true
+          }
+        },
+        {
+          "id": "draft-retry-reuses-exact-key-and-body-without-extra-revision",
+          "passed": true,
+          "actual": {
+            "replay_status": 200,
+            "exact_key_reused": true,
+            "exact_body_reused": true,
+            "same_snapshot_id": true,
+            "history_count": 2
+          }
+        },
+        {
+          "id": "draft-retry-rotates-key-only-after-acknowledged-success",
+          "passed": true,
+          "actual": {
+            "next_status": 200,
+            "key_rotated": true,
+            "final_revision": 3,
+            "history_count": 3
+          }
+        },
+        {
+          "id": "knowledge-review-controls-show-exact-selected-version",
+          "passed": true,
+          "actual": {
+            "selected_version": "7f89d059f2ab42fd8fd28937774eeb60"
+          }
+        },
+        {
+          "id": "knowledge-review-script-clicks-cannot-decide",
+          "passed": true,
+          "actual": {
+            "decision_requests": 0
+          }
+        },
+        {
+          "id": "knowledge-review-api-automation-denied",
+          "passed": true,
+          "actual": {
+            "status": 403
+          }
+        },
+        {
+          "id": "knowledge-review-unknown-scope-blocked-before-request",
+          "passed": true,
+          "actual": {
+            "decision_requests": 0
+          }
+        },
+        {
+          "id": "knowledge-review-native-cancel-keeps-candidate",
+          "passed": true,
+          "actual": {
+            "decision_requests": 0
+          }
+        },
+        {
+          "id": "knowledge-review-native-click-persists-reviewed-immutable-version",
+          "passed": true,
+          "actual": {
+            "status": 201,
+            "selected": "7f89d059f2ab42fd8fd28937774eeb60",
+            "saved": "527cbd33f4e64b799fa4cde5b5ba638e",
+            "state": "REVIEWED"
+          }
+        },
+        {
+          "id": "knowledge-review-label-and-list-reflect-reviewed",
+          "passed": true,
+          "actual": {
+            "state": "REVIEWED"
+          }
+        },
+        {
+          "id": "knowledge-review-historical-native-reject-binds-selected-and-latest",
+          "passed": true,
+          "actual": {
+            "selected": "7f89d059f2ab42fd8fd28937774eeb60",
+            "parent": "527cbd33f4e64b799fa4cde5b5ba638e",
+            "state": "REJECTED"
+          }
+        },
+        {
+          "id": "knowledge-review-reload-preserves-decision",
+          "passed": true,
+          "actual": {
+            "state": "REJECTED"
+          }
+        },
+        {
+          "id": "knowledge-review-unsaved-claim-cannot-be-silently-reviewed",
+          "passed": true,
+          "actual": {
+            "decision_requests": 2
+          }
+        },
+        {
+          "id": "knowledge-review-controls-ready-after-native-candidate-save",
+          "passed": true,
+          "actual": {
+            "saved_version": "883fa5ad3e2c420eb6d3130c568e59cd"
+          }
+        },
+        {
+          "id": "knowledge-review-held-ack-cannot-replace-new-editor",
+          "passed": true,
+          "actual": {
+            "status": 201,
+            "state": "REVIEWED"
+          }
+        },
+        {
+          "id": "knowledge-review-held-ack-keeps-actual-backend-decision",
+          "passed": true,
+          "actual": {
+            "saved_version": "70a46d4d75e04ed986eedd9c4ccb095e"
+          }
+        },
+        {
+          "id": "no-page-errors",
+          "passed": true,
+          "actual": []
+        },
+        {
+          "id": "tested-source-unchanged-during-run",
+          "passed": true,
+          "actual": {
+            "web_r4/app.js": "1d31505b1e88cbf5d68f163f8728f06138b421949c416961d19069af61fe79bb",
+            "web_r4/index.html": "c552583e5174416f2b525b1e3295be72fffc866447cbdf6bbfdf8b4070d037b4",
+            "web_r4/styles.css": "24fd8a7e75fa5bb26a053ad2117d49352f1396978c44b13f52e830d4473aec0d",
+            "coach_v1/server.py": "8e5c02d9bd1a589c53b961d82e00d1ca9c36854e32ac6a18ae0e731ee04323d2",
+            "coach_v1/storage.py": "45e4c4725fd516c66cf9348f1afe9aba8c8bebe8aae574939f8d47394f1ce6e0",
+            "examples/r3/compare-wait-retreat.json": "e74764c9151df568061c730fda8ada0fa9d45fc60325785a8423563d0113e391",
+            "tests_mvp/browser_save_race.cjs": "a770213568816b7dee24bc25f0b40c4b7473709ad4a4a8c32f9917c9fce94bdf",
+            "scripts/browser_mvp.py": "478d0f3408924224a6a0c11e9d597ba29634769ea43abb1119ddd5eb46d839ec",
+            "web_r4/research.js": "39ae97ef2e9623961f054e9c07e5460255dc4664d0387abda3f0bd56fe6e8978",
+            "coach_v1/research.py": "42912d1e7ac660c67b00514d7aa76b6d10252e77c0a478db55bc37ad21d3eb27",
+            "coach_intake/io.py": "7d5ec3f0ecadd9c2a7a1f3ceb6169b7e4648fabb833b28cf73f321c6e55f4049",
+            "coach_intake/audit.py": "a37cf14e335adfa8115f93d4b4c2c3524004cd3b472b609a40b72b2e7b432186",
+            "coach_intake/video.py": "ce686e843cc17a3c0b3f3d3f6265c91ede7cb168b7209d0c5ceab1e3fc65173a",
+            "tests_mvp/browser_research_bytes.cjs": "14eb3fb461b76305bd0a032bb817c055b7a763419b9e96e116e05daca3a0aff5",
+            "tests_mvp/browser_research_navigation.cjs": "99415534b386a2f9db2b779542f0aae5cc4e388b3b5229cef5eb57c1d3d03eff",
+            "coach_v1/note_history.py": "ff288b07e185ac86c9b877fb07a977ff9b7b1b0a8677b8ba4011ca4579cfa579",
+            "tests_mvp/browser_note_history.cjs": "2627264b0c9c6056d3ba5e6f7e0d879e8023bd4e73db16de894a3b467b0c2e9f",
+            "tests_mvp/browser_research_save_errors.cjs": "2841215bd1f5d080b9d54b77d3b876a1079583ada4a18c094e0be5072e5ba239",
+            "coach_v1/knowledge.py": "90eea0df8590e58b3efa1cb9229268ca05f23198d110d596226ed175dc4d8ed2",
+            "web_r4/knowledge.js": "3a99fd604c8327fecaa296cf98523bf82d9d52c429d4d6836ae7e6d4608e89dc",
+            "tests_mvp/browser_knowledge.cjs": "dd0342e7947a00fea8302864141823b1d20e29f62c7d078eb70b1139fac7fcfa",
+            "tests_mvp/browser_note_recovery.cjs": "ef74bd4ba5fb7558ad4ba594fff7380110f94718d75916f61fa73a95e2ea5ea5",
+            "tests_mvp/browser_draft_capture.cjs": "093709e18e60a8d2cd75af4df28e76aaa1dfb382b3190e01f3dd08fd5af52e73",
+            "tests_mvp/browser_draft_retry.cjs": "2ea34580b7b89e50215eb37a4cac8463945d4b6d68ba85dc297a0ac5b331dc90",
+            "web_r4/draft.js": "f6ebc4a62fbf12113a7b46f58bf7c006d6028f00c1aa39881038135864ce80b1",
+            "coach_v1/draft.py": "f1c1df846bb56d8ad6c20882327e03ae69ca5f8abda1712b44ab08bf7f888595",
+            "coach_v1/backup.py": "e980269ebf7d5ab270ed0cde8d9277cae745ea83d5ee8d64f9ddf905b68b70eb",
+            "web_r4/knowledge_review.js": "174cc8b7d09729c2b045a5f2499fb7802cb0f4042f1d7280f625ec7665dee2c9",
+            "tests_mvp/browser_knowledge_review.cjs": "9e99b0e9bf2bd07a2597a7ba4f078e2256f51b8c0f8889506878c51fba37b34d"
+          }
+        }
+      ],
+      "backend_snapshots": [
+        {
+          "label": "initial-v1",
+          "observed_at": "2026-10-11T04:23:44.232Z",
+          "http_status": 200,
+          "session_id": "cdeab3be-2a32-440b-be2e-51bf2987deb9",
+          "revision": 1,
+          "objective": "합성 사례: 경험치와 다음 선택권 보존",
+          "case_sha256": "d1d7346bdf361b41418306dea7f41965479cbb1cc3b370b057318e2200e5f2c5"
+        },
+        {
+          "label": "backend-v2-before-browser-ack",
+          "observed_at": "2026-10-11T04:23:44.283Z",
+          "http_status": 200,
+          "session_id": "cdeab3be-2a32-440b-be2e-51bf2987deb9",
+          "revision": 2,
+          "objective": "Browser submitted edit for v2",
+          "case_sha256": "7e258f8cd2337e32e9da7dd6fb34ae4e4b4d2689596f90fe5b68fef1643e09b1"
+        },
+        {
+          "label": "backend-after-v3",
+          "observed_at": "2026-10-11T04:23:44.479Z",
+          "http_status": 200,
+          "session_id": "cdeab3be-2a32-440b-be2e-51bf2987deb9",
+          "revision": 3,
+          "objective": "Browser newer draft while v2 response held",
+          "case_sha256": "03c4abbfc4522ee6f64d53a35c3e191ed986658a1e761b9ec0455c66abf50aa8"
+        },
+        {
+          "label": "backend-after-native-cancellations",
+          "observed_at": "2026-10-11T04:23:45.221Z",
+          "http_status": 200,
+          "session_id": "cdeab3be-2a32-440b-be2e-51bf2987deb9",
+          "revision": 3,
+          "objective": "Browser newer draft while v2 response held",
+          "case_sha256": "03c4abbfc4522ee6f64d53a35c3e191ed986658a1e761b9ec0455c66abf50aa8"
+        }
+      ],
+      "ui_snapshots": [
+        {
+          "label": "typed-draft-before-release",
+          "observed_at": "2026-10-11T04:23:44.409Z",
+          "current_label": "MVP actual browser save race · 저장 버전 1",
+          "editor_sha256": "af5eb2c5ef69dcc3be37e626a0cd5b504396a2e9781dad55b049c02a101d9ee4",
+          "exact_editor_match": true,
+          "editor_objective": "Browser newer draft while v2 response held",
+          "analyze_disabled": true,
+          "save_disabled": true,
+          "report_hidden": true,
+          "notice": "입력을 저장했습니다. 분석 실행으로 이어가세요."
+        },
+        {
+          "label": "after-real-v2-ack",
+          "observed_at": "2026-10-11T04:23:44.423Z",
+          "current_label": "MVP actual browser save race · 저장 버전 2",
+          "editor_sha256": "af5eb2c5ef69dcc3be37e626a0cd5b504396a2e9781dad55b049c02a101d9ee4",
+          "exact_editor_match": true,
+          "editor_objective": "Browser newer draft while v2 response held",
+          "analyze_disabled": true,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "요청한 입력은 저장했습니다. 저장 중 수정한 초안은 그대로 남아 있으니 추가 저장하세요."
+        },
+        {
+          "label": "after-v3-save",
+          "observed_at": "2026-10-11T04:23:44.476Z",
+          "current_label": "MVP actual browser save race · 저장 버전 3",
+          "editor_sha256": "0c88271bd2f3648aeadd4bd85a7d8113d32a8156c3d4a8822f17ed3442340ac1",
+          "exact_editor_match": true,
+          "editor_objective": "Browser newer draft while v2 response held",
+          "analyze_disabled": false,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "입력을 저장했습니다. 분석 실행으로 이어가세요."
+        },
+        {
+          "label": "reloaded-v3",
+          "observed_at": "2026-10-11T04:23:44.622Z",
+          "current_label": "MVP actual browser save race · 저장 버전 3",
+          "editor_sha256": "857b1a6890ea15343d45f2ec1d8ffe1b0b64a5b1d8202404a316682c104874c8",
+          "exact_editor_match": true,
+          "editor_objective": "Browser newer draft while v2 response held",
+          "analyze_disabled": false,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "저장한 사례를 열었습니다."
+        },
+        {
+          "label": "dirty-refreshed-reopen-cancel-after-cancel",
+          "observed_at": "2026-10-11T04:23:45.175Z",
+          "current_label": "MVP actual browser save race · 저장 버전 3",
+          "editor_sha256": "27a90d3bdceb8cda58b889bd10db8536e6cf37731776b9428c504debfe0c49a4",
+          "exact_editor_match": true,
+          "editor_objective": "Browser dirty draft kept after native cancellation",
+          "analyze_disabled": true,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "복기 결과를 저장했습니다."
+        },
+        {
+          "label": "dirty-load-example-cancel-after-cancel",
+          "observed_at": "2026-10-11T04:23:45.195Z",
+          "current_label": "MVP actual browser save race · 저장 버전 3",
+          "editor_sha256": "27a90d3bdceb8cda58b889bd10db8536e6cf37731776b9428c504debfe0c49a4",
+          "exact_editor_match": true,
+          "editor_objective": "Browser dirty draft kept after native cancellation",
+          "analyze_disabled": true,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "복기 결과를 저장했습니다."
+        },
+        {
+          "label": "dirty-import-cancel-after-cancel",
+          "observed_at": "2026-10-11T04:23:45.216Z",
+          "current_label": "MVP actual browser save race · 저장 버전 3",
+          "editor_sha256": "27a90d3bdceb8cda58b889bd10db8536e6cf37731776b9428c504debfe0c49a4",
+          "exact_editor_match": true,
+          "editor_objective": "Browser dirty draft kept after native cancellation",
+          "analyze_disabled": true,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "복기 결과를 저장했습니다."
+        },
+        {
+          "label": "import-a-before-b-initial",
+          "observed_at": "2026-10-11T04:23:45.269Z",
+          "current_label": "아직 선택한 사례가 없습니다.",
+          "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "editor_objective": null,
+          "analyze_disabled": true,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+        },
+        {
+          "label": "import-stale-a-while-b-pending",
+          "observed_at": "2026-10-11T04:23:45.295Z",
+          "current_label": "아직 선택한 사례가 없습니다.",
+          "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "exact_editor_match": true,
+          "editor_objective": null,
+          "analyze_disabled": true,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+        },
+        {
+          "label": "import-a-then-b-final",
+          "observed_at": "2026-10-11T04:23:45.297Z",
+          "current_label": "아직 선택한 사례가 없습니다.",
+          "editor_sha256": "fc66483a3f0b7e0777e33727853725b6aa67d7f093044443ac2f4b70377a3c18",
+          "exact_editor_match": true,
+          "editor_objective": "Newest native File B survives either completion order",
+          "analyze_disabled": true,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "합성 입력 파일을 불러왔습니다."
+        },
+        {
+          "label": "import-b-before-a-initial",
+          "observed_at": "2026-10-11T04:23:45.343Z",
+          "current_label": "아직 선택한 사례가 없습니다.",
+          "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "editor_objective": null,
+          "analyze_disabled": true,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+        },
+        {
+          "label": "import-b-before-stale-a",
+          "observed_at": "2026-10-11T04:23:45.367Z",
+          "current_label": "아직 선택한 사례가 없습니다.",
+          "editor_sha256": "fc66483a3f0b7e0777e33727853725b6aa67d7f093044443ac2f4b70377a3c18",
+          "exact_editor_match": true,
+          "editor_objective": "Newest native File B survives either completion order",
+          "analyze_disabled": true,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "합성 입력 파일을 불러왔습니다."
+        },
+        {
+          "label": "import-b-then-stale-a-final",
+          "observed_at": "2026-10-11T04:23:45.368Z",
+          "current_label": "아직 선택한 사례가 없습니다.",
+          "editor_sha256": "fc66483a3f0b7e0777e33727853725b6aa67d7f093044443ac2f4b70377a3c18",
+          "exact_editor_match": true,
+          "editor_objective": "Newest native File B survives either completion order",
+          "analyze_disabled": true,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "합성 입력 파일을 불러왔습니다."
+        },
+        {
+          "label": "import-cleared-selection-initial",
+          "observed_at": "2026-10-11T04:23:45.416Z",
+          "current_label": "아직 선택한 사례가 없습니다.",
+          "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "editor_objective": null,
+          "analyze_disabled": true,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+        },
+        {
+          "label": "import-cleared-before-read-release",
+          "observed_at": "2026-10-11T04:23:45.436Z",
+          "current_label": "아직 선택한 사례가 없습니다.",
+          "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "exact_editor_match": true,
+          "editor_objective": null,
+          "analyze_disabled": true,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+        },
+        {
+          "label": "import-cleared-after-stale-read",
+          "observed_at": "2026-10-11T04:23:45.438Z",
+          "current_label": "아직 선택한 사례가 없습니다.",
+          "editor_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "exact_editor_match": true,
+          "editor_objective": null,
+          "analyze_disabled": true,
+          "save_disabled": false,
+          "report_hidden": true,
+          "notice": "연결됐습니다. 합성 사례를 불러와 시작하세요."
+        }
+      ],
+      "native_dialogs": [
+        {
+          "action": "dirty-refreshed-reopen-cancel",
+          "type": "confirm",
+          "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+          "response": "dismiss"
+        },
+        {
+          "action": "dirty-load-example-cancel",
+          "type": "confirm",
+          "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+          "response": "dismiss"
+        },
+        {
+          "action": "dirty-import-cancel",
+          "type": "confirm",
+          "message": "저장하지 않은 수정 내용이 있습니다. 다른 입력을 열면 이 초안이 사라집니다. 계속 열까요?",
+          "response": "dismiss"
+        }
+      ],
+      "actual_browser_write_requests": [
+        {
+          "at": "2026-10-11T04:23:44.024Z",
+          "route": "/dev/v1/sessions",
+          "method": "POST",
+          "title": "MVP actual browser save race"
+        },
+        {
+          "at": "2026-10-11T04:23:44.044Z",
+          "route": "/dev/v1/sessions/cdeab3be-2a32-440b-be2e-51bf2987deb9/case",
+          "method": "PUT",
+          "expected_revision": 0,
+          "objective": "합성 사례: 경험치와 다음 선택권 보존"
+        },
+        {
+          "at": "2026-10-11T04:23:44.275Z",
+          "route": "/dev/v1/sessions/cdeab3be-2a32-440b-be2e-51bf2987deb9/case",
+          "method": "PUT",
+          "expected_revision": 1,
+          "objective": "Browser submitted edit for v2"
+        },
+        {
+          "at": "2026-10-11T04:23:44.457Z",
+          "route": "/dev/v1/sessions/cdeab3be-2a32-440b-be2e-51bf2987deb9/case",
+          "method": "PUT",
+          "expected_revision": 2,
+          "objective": "Browser newer draft while v2 response held"
+        },
+        {
+          "at": "2026-10-11T04:23:44.657Z",
+          "route": "/dev/v1/sessions/cdeab3be-2a32-440b-be2e-51bf2987deb9/reviews",
+          "method": "POST",
+          "expected_revision": 3
+        },
+        {
+          "at": "2026-10-11T04:23:45.673Z",
+          "route": "/dev/v1/research",
+          "method": "POST",
+          "title": "browser-bytes-bom.json"
+        },
+        {
+          "at": "2026-10-11T04:23:45.710Z",
+          "route": "/dev/v1/research",
+          "method": "POST",
+          "title": "browser-bytes-bom.txt"
+        },
+        {
+          "at": "2026-10-11T04:23:45.733Z",
+          "route": "/dev/v1/research",
+          "method": "POST",
+          "title": "browser-bytes-multibyte.json"
+        },
+        {
+          "at": "2026-10-11T04:23:45.960Z",
+          "route": "/dev/v1/research",
+          "method": "POST",
+          "title": "valid-b-pending.json"
+        },
+        {
+          "at": "2026-10-11T04:23:46.160Z",
+          "route": "/dev/v1/research",
+          "method": "POST",
+          "title": "valid-b-first.json"
+        },
+        {
+          "at": "2026-10-11T04:23:46.743Z",
+          "route": "/dev/v1/research/7f3470deae1f72676ae129937060c9aa1e7ae395b76248ddbc72279a6815ef4f",
+          "method": "DELETE",
+          "expected_revision": null,
+          "objective": null,
+          "title": null
+        },
+        {
+          "at": "2026-10-11T04:23:46.826Z",
+          "route": "/dev/v1/research/516afb502f765456de5a76ec98de3aafcea3b15f87ad84bcca5144510ce4f46e",
+          "method": "DELETE",
+          "expected_revision": null,
+          "objective": null,
+          "title": null
+        },
+        {
+          "at": "2026-10-11T04:23:47.340Z",
+          "route": "/dev/v1/research/9d77b5170703fdac116f56bd5664aa0ffb63eaf17f498d9c2dbc73ee3074e224/notes/overview",
+          "method": "PUT",
+          "expected_revision": 3
+        },
+        {
+          "at": "2026-10-11T04:23:48.428Z",
+          "route": "/dev/v1/research/9d77b5170703fdac116f56bd5664aa0ffb63eaf17f498d9c2dbc73ee3074e224",
+          "method": "DELETE",
+          "expected_revision": null,
+          "objective": null,
+          "title": null
+        },
+        {
+          "at": "2026-10-11T04:23:48.725Z",
+          "route": "/dev/v1/research/cc8cc333c7f7b9fbd67049b21a65d0e45ced4f5b791aceece975c536642b8f4f/notes/overview",
+          "method": "PUT",
+          "expected_revision": 1
+        },
+        {
+          "at": "2026-10-11T04:23:48.924Z",
+          "route": "/dev/v1/research/cc8cc333c7f7b9fbd67049b21a65d0e45ced4f5b791aceece975c536642b8f4f/notes/overview",
+          "method": "PUT",
+          "expected_revision": 2
+        },
+        {
+          "at": "2026-10-11T04:23:49.408Z",
+          "route": "/dev/v1/research/3e9aff995d453da986090a227a48cb90f04cfe48ca747c941a55cc28522cc86b/notes/overview",
+          "method": "PUT",
+          "expected_revision": 0
+        },
+        {
+          "at": "2026-10-11T04:23:49.723Z",
+          "route": "/dev/v1/knowledge/proposals",
+          "method": "POST"
+        },
+        {
+          "at": "2026-10-11T04:23:50.023Z",
+          "route": "/dev/v1/knowledge/proposals",
+          "method": "POST"
+        },
+        {
+          "at": "2026-10-11T04:23:50.307Z",
+          "route": "/dev/v1/knowledge/proposals",
+          "method": "POST"
+        },
+        {
+          "at": "2026-10-11T04:23:50.693Z",
+          "route": "/dev/v1/research/3e9aff995d453da986090a227a48cb90f04cfe48ca747c941a55cc28522cc86b",
+          "method": "DELETE",
+          "expected_revision": null,
+          "objective": null,
+          "title": null
+        },
+        {
+          "at": "2026-10-11T04:23:51.058Z",
+          "route": "/dev/v1/research/872aa366fcfd5d6a8155882996cb4467b792442c5dbf0fb1416a87dc5888ee64",
+          "method": "DELETE",
+          "expected_revision": null,
+          "objective": null,
+          "title": null
+        },
+        {
+          "at": "2026-10-11T04:23:51.173Z",
+          "route": "/dev/v1/knowledge/proposals",
+          "method": "POST"
+        },
+        {
+          "at": "2026-10-11T04:23:51.742Z",
+          "route": "/dev/v1/research/4dde404345b07c3cfb1eab6ad1553affad34a57142d7f8cdbc2139977edcd6b2",
+          "method": "DELETE",
+          "expected_revision": null,
+          "objective": null,
+          "title": null
+        },
+        {
+          "at": "2026-10-11T04:23:52.260Z",
+          "route": "/dev/v1/research/c9bbfefbdd78cd9e4af2e5d951ebd2d3b857a8f8dc786f8e6d6ebbf00cd9a64f",
+          "method": "DELETE",
+          "expected_revision": null,
+          "objective": null,
+          "title": null
+        },
+        {
+          "at": "2026-10-11T04:23:53.123Z",
+          "route": "/dev/v1/knowledge/proposals",
+          "method": "POST"
+        },
+        {
+          "at": "2026-10-11T04:23:53.342Z",
+          "route": "/dev/v1/research/f48738d91669411fc070b0553a4ec2fad8a08bac8653934391a7a243b970083e",
+          "method": "DELETE",
+          "expected_revision": null,
+          "objective": null,
+          "title": null
+        },
+        {
+          "at": "2026-10-11T04:23:53.875Z",
+          "route": "/dev/v1/research/363079a9cee9475085495d8728777960dc375b65bdb275e723c9e8970107ffdd",
+          "method": "DELETE",
+          "expected_revision": null,
+          "objective": null,
+          "title": null
+        },
+        {
+          "at": "2026-10-11T04:23:54.393Z",
+          "route": "/dev/v1/research/9536826a72800d4b0b3659404823eec6b13bf36c622d71427e0e8e7e8def9606",
+          "method": "DELETE",
+          "expected_revision": null,
+          "objective": null,
+          "title": null
+        },
+        {
+          "at": "2026-10-11T04:23:54.593Z",
+          "route": "/dev/v1/knowledge/proposals/99cb973b13dc49e5bc2430e4939a186f",
+          "method": "DELETE"
+        },
+        {
+          "at": "2026-10-11T04:23:55.056Z",
+          "route": "/dev/v1/knowledge/proposals",
+          "method": "POST"
+        },
+        {
+          "at": "2026-10-11T04:23:55.807Z",
+          "route": "/dev/v1/research/f0a49fd025b489609c4063bd908909a7a95a38bbe053ff7b5567fd5aff21e9e9/notes/overview",
+          "method": "PUT",
+          "expected_revision": 3
+        },
+        {
+          "at": "2026-10-11T04:23:56.206Z",
+          "route": "/dev/v1/research/f0a49fd025b489609c4063bd908909a7a95a38bbe053ff7b5567fd5aff21e9e9/notes/overview",
+          "method": "PUT",
+          "expected_revision": 4
+        },
+        {
+          "at": "2026-10-11T04:23:57.692Z",
+          "route": "/dev/v1/research/0700046578ff74e0d7aef34d74e0af3a9d78e35a624fa8b6c81afd25b04b22a5",
+          "method": "DELETE",
+          "expected_revision": null,
+          "objective": null,
+          "title": null
+        },
+        {
+          "at": "2026-10-11T04:23:58.326Z",
+          "route": "/dev/v1/research/5948286b2fc8bde25bfd41127e9f5ac50ebcf99eb81e3b492f2c6a335d0adec0",
+          "method": "DELETE",
+          "expected_revision": null,
+          "objective": null,
+          "title": null
+        },
+        {
+          "at": "2026-10-11T04:23:58.641Z",
+          "route": "/dev/v1/research/03a39ebf9ede9933887fbf65e5ecb1e2568e4218746680268c1a761981a9edcf",
+          "method": "DELETE",
+          "expected_revision": null,
+          "objective": null,
+          "title": null
+        },
+        {
+          "at": "2026-10-11T04:23:59.058Z",
+          "route": "/dev/v1/research/b6e631909ab37208fbe6740cd346af02115200d64793b906a44774322f5be236",
+          "method": "DELETE",
+          "expected_revision": null,
+          "objective": null,
+          "title": null
+        },
+        {
+          "at": "2026-10-11T04:23:59.439Z",
+          "route": "/dev/v1/research/0299be5971439726fcbe546c56571c2f225731b3bdbc4a6b9d2587053e0d7bcf/notes/overview",
+          "method": "PUT",
+          "expected_revision": 2
+        },
+        {
+          "at": "2026-10-11T04:24:00.024Z",
+          "route": "/dev/v1/draft-captures",
+          "method": "POST"
+        },
+        {
+          "at": "2026-10-11T04:24:00.340Z",
+          "route": "/dev/v1/draft-captures/011db59c781d706505b32cbc5e1be79b",
+          "method": "PUT",
+          "expected_revision": 1
+        },
+        {
+          "at": "2026-10-11T04:24:00.607Z",
+          "route": "/dev/v1/draft-captures/011db59c781d706505b32cbc5e1be79b",
+          "method": "PUT",
+          "expected_revision": 2
+        },
+        {
+          "at": "2026-10-11T04:24:00.892Z",
+          "route": "/dev/v1/draft-captures/011db59c781d706505b32cbc5e1be79b",
+          "method": "DELETE",
+          "expected_revision": 3
+        },
+        {
+          "at": "2026-10-11T04:24:01.774Z",
+          "route": "/dev/v1/draft-captures/f5c82481e32f458c266246534570e413",
+          "method": "PUT",
+          "expected_revision": 1
+        },
+        {
+          "at": "2026-10-11T04:24:02.023Z",
+          "route": "/dev/v1/draft-captures/35661de6b914e82b734b0bb753bd1f0b",
+          "method": "PUT",
+          "expected_revision": 1
+        },
+        {
+          "at": "2026-10-11T04:24:02.089Z",
+          "route": "/dev/v1/draft-captures/35661de6b914e82b734b0bb753bd1f0b",
+          "method": "PUT",
+          "expected_revision": 1
+        },
+        {
+          "at": "2026-10-11T04:24:02.140Z",
+          "route": "/dev/v1/draft-captures/35661de6b914e82b734b0bb753bd1f0b",
+          "method": "PUT",
+          "expected_revision": 2
+        },
+        {
+          "at": "2026-10-11T04:24:02.441Z",
+          "route": "/dev/v1/knowledge/proposals/ec184d0d25af4e3490497e968c4c4a78/decisions",
+          "method": "POST"
+        },
+        {
+          "at": "2026-10-11T04:24:02.575Z",
+          "route": "/dev/v1/knowledge/proposals/ec184d0d25af4e3490497e968c4c4a78/decisions",
+          "method": "POST"
+        },
+        {
+          "at": "2026-10-11T04:24:02.989Z",
+          "route": "/dev/v1/knowledge/proposals",
+          "method": "POST"
+        },
+        {
+          "at": "2026-10-11T04:24:03.076Z",
+          "route": "/dev/v1/knowledge/proposals/d7aae0278dbb4384847aa2c535c2d91f/decisions",
+          "method": "POST"
+        }
+      ],
+      "page_errors": [],
+      "first_failure": null
+    }
+  },
+  "real_match_coaching_validation": false,
+  "coaching_accuracy": null
+}
