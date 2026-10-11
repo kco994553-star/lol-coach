@@ -57,7 +57,7 @@ def _utc(value):
 
 def _timestamp(value):
     _text(value,12)
-    match=re.fullmatch(r'(\d{2,}):([0-5]\d)',value)
+    match=re.fullmatch(r'([0-9]{2,}):([0-5][0-9])',value)
     _require(match is not None)
     return int(match[1])*60+int(match[2])
 
@@ -65,7 +65,7 @@ def _timestamp(value):
 def _patch(value):
     _text(value,40)
     if value=='UNKNOWN':return
-    _require(re.fullmatch(r'\d+\.\d+(?:-\d+\.\d+)?',value) is not None)
+    _require(re.fullmatch(r'[0-9]+\.[0-9]+(?:-[0-9]+\.[0-9]+)?',value) is not None)
     endpoints=[tuple(map(int,p.split('.'))) for p in value.split('-')]
     _require(len(endpoints)==1 or endpoints[0]<=endpoints[1])
 
@@ -75,7 +75,7 @@ def _measurement(value):
     _keys(value,{'kind','cohort_id','patch','tier','minute','operator','threshold','criterion_source_url','rationale','origin'})
     _require(value['kind']=='MOVEMENT_MEAN_DISTANCE')
     _require(type(value['cohort_id']) is str and re.fullmatch('[a-f0-9]{64}',value['cohort_id']) is not None)
-    _patch(value['patch']);_require(re.fullmatch(r'\d+\.\d+',value['patch']) is not None)
+    _patch(value['patch']);_require(re.fullmatch(r'[0-9]+\.[0-9]+',value['patch']) is not None)
     _require(value['tier'] in TIERS);_integer(value['minute'])
     _require(value['operator'] in ('LE','GE') and value['origin'] in ('MANUAL','REVIEWED'))
     _require(type(value['threshold']) in (int,float) and math.isfinite(value['threshold']) and value['threshold']>=0)

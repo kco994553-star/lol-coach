@@ -36,7 +36,7 @@ class ExpertContractTests(unittest.TestCase):
             with self.assertRaises(ValueError):self.module.validate_expert_artifact(bad)
 
     def test_timestamps_required_canonical_consistent_inside_duration(self):
-        for timestamp in [None,'1:30','01:60','-01:30','00:00:30','10:00']:
+        for timestamp in [None,'1:30','01:60','-01:30','00:00:30','10:00','٠١:٣٠']:
             bad=artifact();bad['claims'][0]['timestamp']=timestamp
             with self.assertRaises(ValueError):self.module.validate_expert_artifact(bad)
         bad=artifact();bad['claims'][0]['timestamp_seconds']=91
@@ -54,6 +54,7 @@ class ExpertContractTests(unittest.TestCase):
                        lambda a:a['video'].update(published_at='2026-10-11T00:00:00+09:00'),
                        lambda a:a['video'].update(upload_date='2026-02-30'),
                        lambda a:a['processing'].update(model='invented'),
+                       lambda a:a['claims'][0].update(patch_range='١٦.١٩'),
                        lambda a:a['claims'][0].update(independent_group_id='YOUTUBE:other'),
                        lambda a:a['claims'].append(copy.deepcopy(a['claims'][0]))]:
             bad=artifact();mutate(bad)
