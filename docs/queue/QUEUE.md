@@ -1,3 +1,13 @@
+# v1.4 publication and first actual collection outcome
+
+PR14 merged72718963ac10f5e78f638138c63828499276f546; local/published/merged trees match. Required PR and postmerge CI PASS with344 source paths checked (evidence/queue/v14/ci-pr14.json, ci-post14.json).
+
+Q15 is now **BLOCKED_EXTERNAL** for actual acquisition: trusted main run38116217243 received Riot HTTP403 on request1, reasonUNAUTHORIZED_OR_EXPIRED_OR_UNSUPPORTED_PATH, keykindUNKNOWN. Workflow completion is not data acquisition. All actual graph values remain unavailable. Seven-day anonymous artifact upload succeeded; CLI blob-download403 was resolved with connector fallback; strict validator confirmed the anonymous blocked receipt and no usable cohorts. Safe receipt: evidence/queue/v14/riot-collection-first.json. Confirm key/project access and rerun main Actions to resume; never put the key in code/issues/logs.
+
+DONE9/18 full IDs (Q01–Q09), closedblockers0; PRE_GAME Q16/Q17/Q18 subparts complete. Q10–Q14/postgame extensions remain external as recorded below. N0, accuracy=null. No independent READY task remains; implementation/verification/publication complete. This additive outcome supersedes historical Q15VERIFYING below without changing older proof.
+
+---
+
 # 실행 대기열 v1.4 — 현재 인수/확장
 
 사용자 v1.4가 이전 대기열을 대체합니다. PR11/PR12 완료 증거 재사용; 모든5포지션 지원. 기존9개DONE/전체18개; 종료blocker0. 무료 구현·게시·병합 사전승인, 사용자 웹 승인 행위는 대리하지 않습니다.

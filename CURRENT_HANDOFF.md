@@ -1,3 +1,23 @@
+된 것: 5개 포지션의 9개 카드·저장·근거 조회를 구현하고 PR #14를 병합했습니다.
+된 것: Q05 후보·Q15 수집/그래프·Q16 경기 전 신호·Q17 의존도·Q18 조건부 움직임을 연결했습니다.
+된 것: 필수 GitHub CI와 병합 후 검증을 통과했고 원문·승인 이력을 보존했습니다.
+안 된 것: Riot API 첫 요청이 403으로 막혔으며 개인 PC·영상이 필요한 복기는 대기입니다.
+내가 검토할 것: Riot 키/프로젝트 접근 권한, 실제 경기 패치, 웹 지식 후보를 확인합니다.
+
+# Queue v1.4 — implementation merged; real collection blocked
+
+PR14 https://github.com/kco994553-star/lol-coach/pull/14 merged2026-10-11T05:52:17Z as72718963ac10f5e78f638138c63828499276f546. Published headc4766775d2462119cad1358353fe6617edb041ed and main share exact tree799cca91b2a7463d61c6621c9aec9e7130887d51. Actual PR CI38116071036/38116070994 and postmerge CI38116191991/38116192017 passed all three jobs; exact344 source paths match. Additive receipts evidence/queue/v14/ci-pr14.json and ci-post14.json supplement immutable local evidence/queue/v13/final.json. Runtime bound code/contract/browser sources are unchanged by this closeout.
+
+Trusted main-only collection38116217243 completed, but first Riot request returned403 and acquisition is BLOCKED_EXTERNAL / UNAUTHORIZED_OR_EXPIRED_OR_UNSUPPORTED_PATH; request_count1, retry_count0, key_kindUNKNOWN, acquired matches0. This proves a failed acquisition, not usable empty statistics or known key expiry. No key value was read/logged/published. Safe status/source binding: evidence/queue/v14/riot-collection-first.json. The anonymous artifact was uploaded with seven-day retention; CLI blob download failedHTTP403; connector fallback succeeded and strict power-data validation confirmed a blocked receipt with no usable cohorts. No raw payload/artifact is published.
+
+Progress remains DONE Q01–Q09 =9/18 full IDs, closed external blockers0. Q15 actual acquisition now BLOCKED_EXTERNAL; collector/statistics/graph implementation and synthetic arithmetic/browser validation remain complete. PRE_GAME Q16/Q17/Q18 subparts are complete; postgame/recurrence/real dependency and phase support remain external. No coaching performance is calculated: N0, accuracy=null. User-approved current knowledge0; candidates190 remain EXPLORATORY. No AI approval/USER_WEB impersonation; no live coaching/cooldown tracking; paid services0.
+
+Resume Q15: check developer portal key/project access, register valid RIOT_API_KEY through GitHub Secrets UI, rerun Riot power aggregate collection on main; no further implementation approval required. Inspect real status and exact patch/tier before loading --power-data/--movement-data. Do not convert failure to zeros. Q10 needs own game-PC official capture receipt/fields/environment; Q11 follows actual originals, Q12 own matching POV, Q13 then-known evidence, Q14 independent evaluation. Q16 postgame suspected intervals, Q17 feedback and Q18 position comparison follow these dependencies. Actual phase annotations/review and gameplay patch remain unavailable.
+
+No independent READY implementation remains. Closeout branch work/queue-v14-closeout owns only this additive handoff/queue/run instructions and public-safe receipts, common claim tokenmain-20261011-queue-v13-050952. Existing intake/history retained below; the common coordination ref records CI_PENDING while remote checks run and PARKED_EXTERNAL after final publication.
+
+---
+
 된 것: 5개 포지션의 9개 카드·저장·근거 조회와 Q16 경기 전 전제·무효 신호를 구현했습니다.
 된 것: Q05 후보190개, Q15 통계·그래프·수집기, Q17 의존도, Q18 조건부 움직임을 연결했습니다.
 된 것: 기능124·의미12·브라우저208·기존 브라우저124·저장 경합3 검사 통과; AI 승인0입니다.
