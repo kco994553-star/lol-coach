@@ -56,20 +56,21 @@ async function generate(waitPower=true){const pending=page.waitForResponse(r=>/\
  // Isolated renderer fixture does not alter server knowledge, saved plans or approvals.
  const renderer=await page.evaluate(()=>{
   const host=document.createElement('div');host.id='renderer-test';document.body.append(host);
-  const point=(minute,mean,low,high,comparison='MATCHUP')=>({minute,n:30,mean,ci95:{low,high},visible:true,omission_reason:null,comparison,metric:'gold_delta'});
+  const point=(minute,mean,low,high,comparison='MATCHUP')=>({minute,n:30,mean,ci95:{low,high},visible:true,omission_reason:null,comparison,metric:'gold_delta',reference_n:comparison==='ROLE_POPULATION'?60:null});
   const marker={kind:'LEVEL',level:6,n:30,median_minute:6,q1_minute:5,q3_minute:7,label:'DESCRIPTIVE_NON_CAUSAL'};
-  const view={status:'KNOWN',metric:'gold_delta',source:{sample_kind:'SYNTHETIC',patch:'SYNTHETIC-1',tier:'TEST',precision_policy:{kind:'TEST'},limitations:['TEST sampling bias']},dataset_digest:'fixture-digest',points:[point(1,10,5,15),point(2,1,-2,4),{minute:3,n:1,mean:null,ci95:null,visible:false,omission_reason:'INSUFFICIENT_SAMPLES',comparison:null},point(4,-10,-15,-5,'ROLE_POPULATION'),point(5,-9,-14,-4,'ROLE_POPULATION')],markers:[marker]};
+  const view={status:'KNOWN',metric:'gold_delta',source:{sample_kind:'SYNTHETIC',patch:'SYNTHETIC-1',tier:'TEST',precision_policy:{kind:'TEST'},limitations:['TEST sampling bias']},dataset_digest:'fixture-digest',points:[point(0,10,5,15),point(1,10,5,15),point(2,1,-2,4),{minute:3,n:1,mean:null,ci95:null,visible:false,omission_reason:'INSUFFICIENT_SAMPLES',comparison:null},point(4,-10,-15,-5,'ROLE_POPULATION'),point(5,-9,-14,-4,'ROLE_POPULATION')],markers:[marker]};
   const response={view,opponent_view:{...view,markers:[{...marker,kind:'ITEM',item_id:1,item_order:1}]},test_mode:true};
   window.PregamePower.render(host,response,{testMode:true,champion:'Ornn',opponent:'Fiora'});
   const first={ci:host.querySelectorAll('.pg-power-ci').length,lines:host.querySelectorAll('.pg-power-line').length,zero:host.querySelectorAll('.pg-power-zero').length,text:host.textContent,metricOptions:host.querySelectorAll('.pg-power-metric option').length,own:host.querySelectorAll('[data-owner="own"]').length,opponent:host.querySelectorAll('[data-owner="opponent"]').length};
+  window.PregamePower.render(host,{...response,view:{...view,points:view.points.map(p=>({...p,comparison:'MATCHUP'}))}},{testMode:true});const rawOnly=host.textContent;
   window.PregamePower.render(host,response,{testMode:false});const blocked=host.textContent;
   window.PregamePower.render(host,{...response,test_mode:false},{testMode:true});const blockedResponse=host.textContent;
-  return {first,blocked,blockedResponse};
+  return {first,rawOnly,blocked,blockedResponse};
  });
  check('power-renderer-ci-gaps',renderer.first.metricOptions===3&&renderer.first.ci===2&&renderer.first.lines===2&&renderer.first.zero===1&&renderer.first.text.includes('강함')&&renderer.first.text.includes('약함')&&renderer.first.text.includes('비슷함'),renderer.first);
  check('power-markers',renderer.first.own>0&&renderer.first.opponent>0&&renderer.first.text.includes('IQR')&&renderer.first.text.includes('비인과')&&renderer.first.text.includes('빌드'),renderer.first);
  check('power-synthetic-gates',renderer.first.text.includes('TEST')&&renderer.blocked.includes('UNKNOWN')&&renderer.blockedResponse.includes('UNKNOWN'),{blocked:renderer.blocked,blockedResponse:renderer.blockedResponse});
- check('power-fallback-labels',renderer.first.text.includes('동일 포지션 전체')&&renderer.first.text.includes('n=30')&&renderer.first.text.includes('INSUFFICIENT_SAMPLES'),renderer.first);
+ check('power-fallback-labels',renderer.first.text.includes('경기 내 동일 포지션 2명 기준')&&renderer.first.text.includes('골드/분')&&renderer.first.text.includes('원래 누적값')&&renderer.first.text.includes('참조 n=60')&&renderer.first.text.includes('MINUTE_ZERO_RATE_UNAVAILABLE')&&renderer.first.text.includes('n=30')&&renderer.first.text.includes('INSUFFICIENT_SAMPLES')&&!renderer.rawOnly.includes('원래 누적값')&&!renderer.rawOnly.includes('골드/분'),renderer.first);
  await page.locator('#renderer-test').evaluate(n=>n.remove());
  if(mode==='actual'){await page.locator('#pg-patch').fill('14.1');await save();}
  let releases=[],heldResolve;const allHeld=()=>new Promise(resolve=>{heldResolve=resolve;});await page.route('**/pregame/power-view',async route=>{await new Promise(resolve=>{releases.push(resolve);if(releases.length===6&&heldResolve)heldResolve();});await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({view:{status:'UNKNOWN',points:[],markers:[]},opponent_view:null,test_mode:false})});});

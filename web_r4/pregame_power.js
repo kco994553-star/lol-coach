@@ -2,11 +2,12 @@
 (() => {
   const namespace='http://www.w3.org/2000/svg';
   const metrics={gold_delta:'골드 차이',xp_delta:'경험치 차이',cs_delta:'CS 차이'};
+  const rawUnits={gold_delta:'골드',xp_delta:'경험치',cs_delta:'CS'},rateUnits={gold_delta:'골드/분',xp_delta:'경험치/분',cs_delta:'CS/분'};
   const element=(tag,text,className)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=String(text);if(className)n.className=className;return n;};
   const svgElement=(tag,attributes,text)=>{const n=document.createElementNS(namespace,tag);for(const [key,value] of Object.entries(attributes || {}))n.setAttribute(key,String(value));if(text!==undefined)n.textContent=String(text);return n;};
   const finite=value=>typeof value==='number' && Number.isFinite(value);
   const number=value=>finite(value)?String(Math.round(value*100)/100):'UNKNOWN';
-  const comparison=value=>value==='MATCHUP'?'동일 상대 매치업':value==='ROLE_POPULATION'?'동일 포지션 전체':'비교 집단 UNKNOWN';
+  const comparison=value=>value==='MATCHUP'?'동일 상대 매치업':value==='ROLE_POPULATION'?'역할 평균 대비 분당 지표 · 경기 내 동일 포지션 2명 기준':'비교 집단 UNKNOWN';
   const state=point=>point.ci95.low>0?'강함':point.ci95.high<0?'약함':'비슷함';
   function provenance(parent,view,source){
     const details=element('details',undefined,'pg-power-source');details.append(element('summary','통계 출처·정밀도·표본 한계'));
@@ -20,9 +21,9 @@
     details.append(element('p','표본 선택·지역·시간 범위 편향과 경기 간 독립성은 검증되지 않았습니다.','small'));parent.append(details);
   }
   function graph(parent,view,opponent,options){
-    const points=Array.isArray(view.points)?view.points:[],metric=view.metric || 'gold_delta';
+    const points=Array.isArray(view.points)?view.points:[],metric=view.metric || 'gold_delta',unit=view.display_unit || rawUnits[metric];
     const shown=points.filter(p=>p.visible===true && finite(p.minute) && finite(p.mean) && finite(p.ci95?.low) && finite(p.ci95?.high));
-    const heading=element('p',(metrics[metric] || metric)+' · '+(options.champion || '내 챔피언')+(options.opponent?' / '+options.opponent:''),'pg-power-heading');parent.append(heading);
+    const heading=element('p',(metrics[metric] || metric)+' ['+unit+'] · '+(options.champion || '내 챔피언')+(options.opponent?' / '+options.opponent:''),'pg-power-heading');parent.append(heading);if(view.normalized)parent.append(element('p','표시 단위 '+unit+' · 매치업 누적 차이는 관측 분으로 나누어 표시했습니다. 각 점의 비교 기준을 확인하세요.','small'));
     parent.append(element('p','강함: 95% CI 전체가 0 위 · 약함: 전체가 0 아래 · 비슷함: 0 포함','small'));
     if(!shown.length)parent.append(element('p','통계 UNKNOWN · 정밀도 기준을 충족한 구간이 없습니다.','small'));
     else{
@@ -35,16 +36,16 @@
       svg.append(svgElement('title',{},'분별 '+(metrics[metric] || metric)+' · 음영 95% 신뢰구간 · 0 기준선'));
       svg.append(svgElement('line',{x1:left,x2:width-right,y1:y(0),y2:y(0),class:'pg-power-zero'}));
       for(const value of [-maxY,0,maxY])svg.append(svgElement('text',{x:left-6,y:y(value)+4,'text-anchor':'end',class:'pg-power-axis'},number(value)));
-      svg.append(svgElement('text',{x:left,y:14,class:'pg-power-axis'},metrics[metric] || metric));
+      svg.append(svgElement('text',{x:left,y:14,class:'pg-power-axis'},(metrics[metric] || metric)+' ['+unit+']'));
       for(const minute of [...new Set([minMinute,Math.round((minMinute+maxMinute)/2),maxMinute])])svg.append(svgElement('text',{x:x(minute),y:height-bottom+19,'text-anchor':'middle',class:'pg-power-axis'},number(minute)+'분'));
       let segments=[],segment=[];
-      for(const point of points){if(!shown.includes(point)){if(segment.length)segments.push(segment);segment=[];continue;}if(segment.length && point.minute!==segment[segment.length-1].minute+1){segments.push(segment);segment=[];}segment.push(point);}if(segment.length)segments.push(segment);
+      for(const point of points){if(!shown.includes(point)){if(segment.length)segments.push(segment);segment=[];continue;}if(segment.length && (point.minute!==segment[segment.length-1].minute+1 || point.comparison!==segment[segment.length-1].comparison)){segments.push(segment);segment=[];}segment.push(point);}if(segment.length)segments.push(segment);
       for(const values of segments){if(values.length>1){
         const area=[...values.map(p=>x(p.minute)+','+y(p.ci95.high)),...values.slice().reverse().map(p=>x(p.minute)+','+y(p.ci95.low))].join(' ');
         svg.append(svgElement('polygon',{points:area,class:'pg-power-ci'}));
         svg.append(svgElement('polyline',{points:values.map(p=>x(p.minute)+','+y(p.mean)).join(' '),class:'pg-power-line'}));
       }
-      for(const p of values){const title=number(p.minute)+'분 · n='+p.n+' · 평균 '+number(p.mean)+' · 95% CI ['+number(p.ci95.low)+', '+number(p.ci95.high)+'] · '+state(p)+' · '+comparison(p.comparison);
+      for(const p of values){const title=number(p.minute)+'분 · n='+p.n+' · 평균 '+number(p.mean)+' · 95% CI ['+number(p.ci95.low)+', '+number(p.ci95.high)+'] · '+state(p)+' '+unit+' · '+comparison(p.comparison)+(p.reference_n!==undefined && p.reference_n!==null?' · 참조 n='+p.reference_n:'')+(p.raw_cumulative?' · 원래 누적값 평균 '+number(p.raw_cumulative.mean)+' · CI ['+number(p.raw_cumulative.ci95.low)+', '+number(p.raw_cumulative.ci95.high)+'] '+rawUnits[metric]:'');
         const circle=svgElement('circle',{cx:x(p.minute),cy:y(p.mean),r:4,tabindex:0,role:'img','aria-label':title,class:'pg-power-point'});circle.append(svgElement('title',{},title));svg.append(circle);
       }}
       for(const [owner,data] of [['own',view],['opponent',opponent]])for(const m of data?.markers || []){
@@ -56,7 +57,7 @@
       parent.append(svg);
     }
     const data=element('details',undefined,'pg-power-points');data.append(element('summary','분별 표본·비교 집단·누락 구간'));
-    for(const p of points){const good=shown.includes(p);data.append(element('p',number(p.minute)+'분 · n='+p.n+' · '+comparison(p.comparison)+' · '+(good?'평균 '+number(p.mean)+' · 95% CI ['+number(p.ci95.low)+', '+number(p.ci95.high)+'] · '+state(p):'UNKNOWN · '+(p.omission_reason || '정밀도 미충족')),'small'));}parent.append(data);
+    for(const p of points){const good=shown.includes(p);data.append(element('p',number(p.minute)+'분 · n='+p.n+' · '+comparison(p.comparison)+(p.reference_n!==undefined && p.reference_n!==null?' · 참조 n='+p.reference_n:'')+' · '+(good?'평균 '+number(p.mean)+' · 95% CI ['+number(p.ci95.low)+', '+number(p.ci95.high)+'] · '+state(p)+' '+unit+(p.raw_cumulative?' · 원래 누적값 평균 '+number(p.raw_cumulative.mean)+' · CI ['+number(p.raw_cumulative.ci95.low)+', '+number(p.raw_cumulative.ci95.high)+'] '+rawUnits[metric]:''):'UNKNOWN · '+(p.omission_reason || '정밀도 미충족')),'small'));}parent.append(data);
     for(const [owner,value] of [['own',view],['opponent',opponent]])for(const m of value?.markers || [])parent.append(element('p',(owner==='own'?'내 챔피언':'상대 챔피언')+' · '+(m.kind==='LEVEL'?'레벨 '+(m.level ?? 'UNKNOWN'):'완성 아이템 '+(m.item_order ?? 'UNKNOWN')+' · '+(m.item_id ?? 'UNKNOWN'))+' · 중앙값 '+number(m.median_minute)+'분 · IQR '+number(m.q1_minute)+'–'+number(m.q3_minute)+'분 · n='+m.n+' · 비인과 기술 통계','small pg-power-marker-label'));
     parent.append(element('p','골드·경험치·CS 차이는 전투력 전체가 아닙니다. 레벨·아이템 시점은 비인과 기술 통계이며 서로 다른 빌드를 비교할 수 있습니다. 관측 프레임 사이의 실제 발생 시점은 확정할 수 없습니다.','small'));
   }
@@ -74,7 +75,14 @@
     function draw(){
       const metric=select.value;let points=(view.points || []).filter(p=>(p.metric || view.metric || 'gold_delta')===metric);
       for(const reason of view.reasons || []){const match=/^INSUFFICIENT_AT_MINUTE:([0-9.]+):(.+)$/.exec(reason);if(match && match[2]===metric && !points.some(p=>p.minute===Number(match[1])))points.push({minute:Number(match[1]),n:'UNKNOWN',visible:false,omission_reason:reason,comparison:null});}
-      points.sort((a,b)=>a.minute-b.minute);body.replaceChildren();graph(body,{...view,metric,points},safeOpponent,options);
+      const normalized=points.some(p=>p.comparison==='ROLE_POPULATION');
+      if(normalized)points=points.map(p=>{
+        if(p.comparison!=='MATCHUP' || p.visible!==true)return p;
+        if(!finite(p.minute) || p.minute<=0)return {...p,visible:false,omission_reason:'MINUTE_ZERO_RATE_UNAVAILABLE'};
+        if(!finite(p.mean) || !finite(p.ci95?.low) || !finite(p.ci95?.high))return p;
+        return {...p,mean:p.mean/p.minute,ci95:{low:p.ci95.low/p.minute,high:p.ci95.high/p.minute},raw_cumulative:{mean:p.mean,ci95:p.ci95}};
+      });
+      points.sort((a,b)=>a.minute-b.minute);body.replaceChildren();graph(body,{...view,metric,points,normalized,display_unit:normalized?rateUnits[metric]:rawUnits[metric]},safeOpponent,options);
     }
     select.addEventListener('change',draw);draw();provenance(parent,view,source);
   }
