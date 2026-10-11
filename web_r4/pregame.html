@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LoL Coach · 경기 전 준비</title><link rel="icon" type="image/svg+xml" href="/pregame-icon.svg"><link rel="stylesheet" href="/pregame.css"><script src="/pregame.js" defer></script></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LoL Coach · 경기 전 준비</title><link rel="icon" type="image/svg+xml" href="/pregame-icon.svg"><link rel="stylesheet" href="/pregame.css"><script src="/pregame_power.js" defer></script><script src="/pregame.js" defer></script></head>
 <body>
 <header><a href="/" class="brand">LoL Coach <span>PRIVATE WORKBENCH</span></a><span class="tag">PRE_GAME · 경기 전</span></header>
 <main>
@@ -18,6 +18,7 @@
 <form id="pg-input-form">
 <div class="grid"><label>제목<input id="pg-title" maxlength="200" required></label><label>단계 확인<select id="pg-phase"><option value="UNKNOWN">미확인</option><option value="PRE_GAME">경기 전 직접 확인</option></select></label><label>패치 · 빈 값은 미확인<input id="pg-patch" maxlength="100" placeholder="미확인"></label><label>입력 관측 시각 · ISO + 시간대<input id="pg-observed-at" placeholder="미확인"></label></div>
 <div class="grid"><label>내 포지션<select id="pg-my-position"></select></label><label>내 챔피언<input id="pg-my-champion" list="pg-roster" maxlength="100" placeholder="미확인"></label><label>내 아군 슬롯<select id="pg-my-slot"><option value="">미확인</option><option value="1">아군 1</option><option value="2">아군 2</option><option value="3">아군 3</option><option value="4">아군 4</option><option value="5">아군 5</option></select></label></div>
+<details id="pg-pick-metadata"><summary>선택 상태·자주 하는 챔피언 · 선택 입력</summary><div class="grid"><label>내 선택 상태<select id="pg-my-pick-state"><option value="">선언하지 않음 · 기존 입력 유지</option><option value="UNKNOWN">UNKNOWN · 미확인</option><option value="UNPICKED">UNPICKED · 아직 미선택</option><option value="PICKED">PICKED · 선택 완료</option></select></label><label>자주 하는 챔피언 · 쉼표/줄바꿈 구분<textarea id="pg-frequent-champions" rows="2" maxlength="2000" placeholder="선택 입력"></textarea></label></div><p class="small">내 챔피언의 빈 값은 미선택 선언이 아닙니다. 선택 후보는 명시한 미선택 상태와 검토된 근거가 있을 때만 표시합니다.</p></details>
 <p class="small">슬롯 번호는 포지션이 아닙니다. 내 챔피언·포지션·아군 슬롯을 각각 지정하세요.</p>
 <details><summary>입력 전체의 출처</summary><div id="pg-input-source"></div></details>
 <h3>아군 5명</h3><div id="pg-ally-slots"></div><h3>적군 5명</h3><div id="pg-enemy-slots"></div>
@@ -25,7 +26,7 @@
 <div class="actions"><button id="pg-save" type="submit">입력 저장</button><button id="pg-retry-save" type="button" class="secondary" hidden>동일 저장 요청 재시도</button><button id="pg-create-plan" type="button" disabled>저장 버전으로 계획 생성</button></div>
 <p id="pg-save-state" class="small"></p><details><summary>현재 구조화 입력·보존한 원본</summary><pre id="pg-input-json"></pre></details>
 </form></section>
-<section id="pg-plan-panel" class="panel" hidden><div class="section-head"><h2>경기 전 게임플랜</h2><span id="pg-plan-state" class="tag"></span></div><p id="pg-plan-meta" class="small"></p><div id="pg-cards" class="cards"></div><details><summary>전체 저장 계획·평가 이력</summary><pre id="pg-plan-json"></pre></details><p class="small">코칭 정확도: 미평가 · 실제 경기 검증: 미평가 · 실제 남은 쿨타임: 미제공</p></section>
+<section id="pg-plan-panel" class="panel" hidden><div class="section-head"><h2>경기 전 게임플랜</h2><span id="pg-plan-state" class="tag"></span></div><p id="pg-plan-meta" class="small"></p><label class="pg-power-tier-label">통계 비교 티어<select id="pg-power-tier"><option value="">티어 미확인</option></select></label><div id="pg-cards" class="cards"></div><details><summary>전체 저장 계획·평가 이력</summary><pre id="pg-plan-json"></pre></details><p class="small">코칭 정확도: 미평가 · 실제 경기 검증: 미평가 · 실제 남은 쿨타임: 미제공</p></section>
 <section class="panel"><div class="section-head"><h2>지식 후보·사용자 검토</h2><button id="pg-refresh-knowledge" class="secondary">현재 버전 새로고침</button></div><p class="small">AI 후보는 EXPLORATORY입니다. 출처·전체 명세·반례·한계를 검토한 뒤 직접 승인 또는 거절하세요.</p><details><summary>검토 추천 출처 후보 10개 · 추천 이유</summary><p class="small">출처 후보는 아직 실행 연결이 없을 수 있습니다. 목록은 승인·게임플랜 적용을 의미하지 않습니다.</p><div id="pg-review-priority"></div></details><div class="grid"><div><h3>등록된 현재 버전</h3><div id="pg-knowledge-list" class="list"></div></div><div><h3>가져올 실행 후보</h3><div id="pg-candidate-list" class="list"></div></div></div>
 <label for="pg-spec-json">후보 명세 JSON · 편집 후 전체 내용 보기</label><textarea id="pg-spec-json" rows="5" spellcheck="false"></textarea><p class="small">출처 버전과 실제 경기 패치는 별도입니다. 직접 확인한 적용 패치를 명시한 후 후보로 저장하세요. 값을 바꾸면 전체 명세를 다시 봐야 합니다.</p><button id="pg-preview-spec" class="secondary">전체 명세 보기</button>
 <div id="pg-knowledge-detail" hidden><h3 id="pg-knowledge-state"></h3><div id="pg-knowledge-sources"></div><pre id="pg-knowledge-json"></pre><div class="actions"><button id="pg-import-candidate" class="secondary" disabled>EXPLORATORY 후보로 가져오기</button><button id="pg-approve" disabled>이 버전 승인</button><button id="pg-reject" class="danger" disabled>이 버전 거절</button></div></div>
