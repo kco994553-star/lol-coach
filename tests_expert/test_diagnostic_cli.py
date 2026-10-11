@@ -61,6 +61,35 @@ class DiagnosticCliTests(unittest.TestCase):
             self.assertEqual(json.loads((final/'receipt.json').read_text())['status'],'PARTIAL')
             self.assertEqual(json.loads((final/'quota-ledger.json').read_text())['processed_video_ids'],[])
 
+    def test_schema_only_phase_never_discovers_reserves_or_requests_video(self):
+        for status in (200,400):
+            http=ProbeHTTP(status,response=None if status==200 else dict(error=dict(code='invalid_request',message='Bad TEST_GEMINI_KEY')))
+            with tempfile.TemporaryDirectory() as temp:
+                root=Path(temp);out=root/'format';prior=root/'prior.json';prior.write_text('TEST_UNTOUCHED_PRIOR_LEDGER')
+                code,log=self.invoke(['--phase','probe-format','--output-dir',str(out)],http)
+                self.assertEqual(code,0);self.assertEqual(http.probe_calls,1);self.assertEqual(http.model_calls,0)
+                self.assertEqual(prior.read_text(),'TEST_UNTOUCHED_PRIOR_LEDGER');self.assertFalse((out/'quota-ledger.json').exists())
+                receipt=json.loads((out/'format-probe.json').read_text())
+                self.assertEqual(receipt['profile'],'TEXT_ONLY_CLAIM_SCHEMA');self.assertEqual(receipt['text_probe']['http_status'],status)
+                self.assertIn('EXPERT_FORMAT_PROBE_JSON=',log);self.assertNotIn('TEST_GEMINI_KEY',log)
+                diag=json.loads((out/'diagnostics.json').read_text())
+                self.assertEqual(diag['request_counts'],dict(TEXT_PROBE=1,VIDEO_CLIP=0,METADATA=0))
+                self.assertEqual(http.calls[0][3]['response_format']['schema'],core.RESPONSE_SCHEMA)
+
+    def test_failed_format_phase_removes_prior_ready_receipt(self):
+        http=ProbeHTTP()
+        with tempfile.TemporaryDirectory() as temp:
+            out=Path(temp)/'format';args=['--phase','probe-format','--output-dir',str(out)]
+            code,_=self.invoke(args,http);self.assertEqual(code,0)
+            self.assertEqual(json.loads((out/'format-probe.json').read_text())['text_probe']['status'],'READY')
+            before=len(http.calls)
+            with patch.object(cli,'validate_entitlement_proof',side_effect=ValueError('TEST_BAD_PROOF')):
+                code,log=self.invoke(args,http)
+            self.assertEqual(code,1);self.assertEqual(len(http.calls),before)
+            self.assertFalse((out/'format-probe.json').exists());self.assertFalse((out/'entitlement.json').exists())
+            self.assertIsNone(json.loads((out/'diagnostics.json').read_text())['text_probe'])
+            self.assertNotIn('TEST_BAD_PROOF',log)
+
     def test_invalid_plan_has_null_http_safe_reason_and_zero_dispatch(self):
         http=ProbeHTTP()
         with tempfile.TemporaryDirectory() as temp:

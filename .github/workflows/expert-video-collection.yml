@@ -2,6 +2,11 @@ name: Free expert video collection
 
 on:
   workflow_dispatch:
+    inputs:
+      text_schema_only:
+        description: Isolate documented claim schema with one text request; no video/quota change
+        type: boolean
+        default: false
   schedule:
     - cron: '47 4 * * *'
 
@@ -43,8 +48,15 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python scripts/collect_expert_claims.py --phase recover --output-dir "$RUNNER_TEMP/expert-recovery"
+      - name: Isolate claim schema with text only without any video reservation
+        if: inputs.text_schema_only == true
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scripts/collect_expert_claims.py --phase probe-format --runtime-config config/expert_runtime.json --output-dir "$RUNNER_TEMP/expert-format"
       - name: Verify same-model text then discover public videos and reserve quota
         id: reserve
+        if: inputs.text_schema_only != true
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -91,6 +103,9 @@ jobs:
         with:
           name: expert-public-safe-${{ github.run_id }}
           path: |
+            ${{ runner.temp }}/expert-format/format-probe.json
+            ${{ runner.temp }}/expert-format/diagnostics.json
+            ${{ runner.temp }}/expert-format/entitlement.json
             ${{ runner.temp }}/expert-final/artifacts/*.json
             ${{ runner.temp }}/expert-final/diagnostics.json
             ${{ runner.temp }}/expert-reservation/diagnostics.json
