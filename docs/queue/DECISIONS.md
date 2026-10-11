@@ -1,3 +1,9 @@
+# Main diagnosis decision — separate schema text isolation
+
+Afteractualsame-key/modelTEXT200+VIDEO400invalid_request, Main uses the user's free diagnosis-first authorization for a distinct one-text schema-only profile. No newvideo request/reservation/retry; ordinary1plainprobe/1firstclip pipeline unchanged. Freshofficial/OpenAPI/pinnedSDK review findsnoincorrectwirefield, so Maindoesnotinventafix orswitchendpoint/model/offsettypes. Result narrowspossiblefailurebranches withoutprovingindividualschemakeyfault. Riot403aftervalidshape remainsliteralexternalrejection, noexpiryinference. Originalobservationsbelowpreserved.
+
+---
+
 # 2026-10-11 — user diagnosis-first resume
 
 User recopied RIOT_API_KEY through dashboardcopybutton and explicitlyreopensPARKED_EXTERNAL. Keyvalue/fingerprint mustneverbeemitted. Inspectprefix/length/outerwhitespace/linebreak only; trimouterwhitespace, rejectbadshape beforenetwork. Onfirst401403 retainliteralstatus.message withboundedcredentialredaction; immediate stop/noauthretry. Earlier user-directed expiry attribution stayshistorical; freshdiagnosisdoesnotassumeit.

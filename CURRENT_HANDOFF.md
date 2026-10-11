@@ -1,3 +1,23 @@
+된 것: PR #21을 병합하고 Riot·Gemini 실제 진단을 각각 한 번 실행했습니다.
+된 것: Riot 키 모양은 정상이며 Gemini 텍스트 확인은 200으로 성공했습니다.
+안 된 것: Riot 첫 응답은 403이고 읽을 수 있는 status.message가 없었습니다.
+안 된 것: 영상 한 구간은 400 invalid_request로 실패해 잘못된 인자를 조사합니다.
+내가 검토할 것: 추가 영상 없이 같은 JSON 출력 형식을 텍스트로 확인한 결과입니다.
+
+# Actual diagnosis recorded; distinct text-format isolation RUNNING
+
+PR21 mergedfc5b29e39be8fd1cd844cb676a27fa743d171eaf fromccc0687faa36dfc66ca10c262a69351f84855201; exacttreematch5d01e63a46f4d8cd6458b1ce2a7e182e027814ea. RequiredCI38131360877/38131360883all3PASS;13sourcegroups398paths matched publishedhead/PRmergetesttree. Evidence ci-pr21.json. Maintargeted92/localpregame179/expert125PASS; independent86core/23integrationPASS; twoRED/GREEN diagnosticbugs fixed. Userdiagnosis-first scope preserved, noSecretvalues/fingerprints/rawresponsesretained.
+
+Riot run38131594748 first403/request1/retry0. Raw/trimmedlength42/prefixtrue/noouterwhitespace/nolinebreak/validshape, no selectedstatus.messageavailable(null). Shapeacceptance isnotkeyvalidity; expiry/whichauthorizationcauseUNKNOWN. Stopauthfailure nofurtherRiotcollection. StrictvalidatedBLOCKEDdataset usablematches0, actualgraphbrowserNOT_RUN. Receipt riot-diagnosis-first.json.
+
+Expert run38131597343 actualTEXT200READY (samejobSecret/model), METADATA3 then VIDEO_CLIP1 returns400/invalid_request/Request contains an invalid argument./error.statusnull; acceptedclaims0. This failure isnottypedtimeout. RecoveryFOUND prior11695664409/38123631101; finalledger==durableledger; old5rows6644exactlypreserved,new752seconds,6rows7396total, processed[]. FreshfreeproofVERIFIED_FREE; noBillingtransition/refund/charged-IDretry. Receipt expert-diagnosis-first.json. No realsourcebrowser because noacceptedclaims.
+
+Fresh6officialdoc+4pinnedSDKsource audit matches typed fields/schema; no wrongfield/prohibitedcomboidentified. Additional explicitdispatchtext_schema_only=true isolates unchangedresponse_format/schema inone <=60s TEXT_ONLY request withsameSecret/model/freegates, URI0/metadata0/video0/newcharge0. Ordinaryflow/plainprobe1+firstclip1 untouched. MainownsCLI/workflow/contract/receipts; expertworkerstructuredprobe fd07e8f accepted onlyexactownedfiles; Maintargeted63PASS afterCLIRED; independentstaleREADY P2fixedRED/GREEN; finalindependentreview/requiredCI beforeexplicittext-onlydispatch. Generic400 cannotjustifyoffset/model/endpointguess. Diagnostic200 wouldverifytextformatonly;400 narrowsformatrequestonly. Followupconfirmedcausefixcontinuesfree; realQ10–Q14/postgameinputsremainexternal.
+
+ProgressDONEQ01–Q09=9/19fullIDs, originalinputblockersclosed3, noacquisitionblockerclosed. ActualcoachingN0/accuracy=null, reviewedknowledge0. Nexttext-formatdiagnostic; then recordprecise externalresumeconditionsifnoconfirmedinternalcause. Historicalobservationsbelowunchanged.
+
+---
+
 된 것: 최신 main·필수 CI·수집 실패와 예약 이력을 다시 확인했습니다.
 된 것: Interactions의 YouTube URL·구간 지원을 공식 문서에서 재확인했습니다.
 진행 중: Riot 키 모양·401/403 메시지와 Gemini 오류 코드를 안전하게 기록합니다.

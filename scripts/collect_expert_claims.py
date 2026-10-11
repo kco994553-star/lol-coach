@@ -80,7 +80,7 @@ def safe_probe_receipt(plan):
 
 def main(argv=None,*,entitlement_verifier=None):
     parser=argparse.ArgumentParser()
-    parser.add_argument('--phase',choices=('recover','reserve','process'),required=True)
+    parser.add_argument('--phase',choices=('recover','reserve','process','probe-format'),required=True)
     parser.add_argument('--config',default='config/expert_channels.json')
     parser.add_argument('--runtime-config')
     parser.add_argument('--output-dir',required=True)
@@ -90,17 +90,17 @@ def main(argv=None,*,entitlement_verifier=None):
     args=parser.parse_args(argv);directory=Path(args.output_dir);collector=None;plan=None
     def emit_diagnostic(event):
         print('EXPERT_PROVIDER_DIAGNOSTIC_JSON='+json.dumps(event,sort_keys=True),flush=True)
-    def retain_diagnostics(failure=False):
+    def retain_diagnostics(failure=False,probe=None):
         events=list(collector.diagnostics) if collector is not None else []
         if failure:
-            event=dict(provider='GEMINI',phase='TEXT_PROBE' if args.phase=='reserve' else 'VIDEO_CLIP',
+            event=dict(provider='GEMINI',phase='TEXT_PROBE' if args.phase in ('reserve','probe-format') else 'VIDEO_CLIP',
                 http_status=None,error_status=None,error_code=None,error_message=None,reason='INVALID_OR_UNAVAILABLE_PUBLIC_STATE')
             events.append(event);emit_diagnostic(event)
         receipt=dict(schema_version='expert.diagnostics.v1',phase=args.phase,api_route='INTERACTIONS',model=MODEL,
             total_request_count=collector.request_count if collector is not None else 0,
             request_counts=dict(collector.request_counts) if collector is not None else dict(TEXT_PROBE=0,VIDEO_CLIP=0,METADATA=0),
             events=events,text_probe=None)
-        receipt['text_probe']=safe_probe_receipt(plan) if not failure else None
+        receipt['text_probe']=safe_probe_receipt(dict(schema_version='expert.reservation-plan.v3',text_probe=probe) if probe is not None else plan) if not failure else None
         atomic_json(directory/'diagnostics.json',receipt)
     try:
         if args.phase=='recover':
@@ -114,6 +114,14 @@ def main(argv=None,*,entitlement_verifier=None):
         atomic_json(directory/'entitlement.json',proof)
         policy=policy_from_runtime(runtime,os.environ,now=int(time.time()),entitlement_proof=proof)
         collector=ExpertCollector(youtube_api_key=os.environ.get('YOUTUBE_API_KEY'),gemini_api_key=os.environ.get('GEMINI_API_KEY'),policy=policy,on_diagnostic=emit_diagnostic)
+        if args.phase=='probe-format':
+            probe=collector.probe_text(structured=True)
+            retain_diagnostics(probe=probe)
+            receipt=dict(schema_version='expert.format-probe.v1',profile='TEXT_ONLY_CLAIM_SCHEMA',
+                api_route='INTERACTIONS',text_probe=probe,request_count=collector.request_count,
+                video_requests=0,new_video_reservations=0,coaching_accuracy=None)
+            atomic_json(directory/'format-probe.json',receipt)
+            print('EXPERT_FORMAT_PROBE_JSON='+json.dumps(receipt,sort_keys=True));return 0
         if args.phase=='reserve':
             receipt=read_json(args.recovery_receipt) if args.recovery_receipt else {'status':'ABSENT'}
             history=receipt.get('status');ledger=read_json(args.ledger) if args.ledger and Path(args.ledger).exists() else None
@@ -134,6 +142,9 @@ def main(argv=None,*,entitlement_verifier=None):
         safe={key:result[key] for key in ('status','reason','request_count','publication_status','coaching_accuracy')}
         print('EXPERT_ACQUISITION_JSON='+json.dumps(safe,sort_keys=True));return 0
     except Exception:
+        if args.phase=='probe-format':
+            # A failed new diagnostic cannot leave an earlier READY/proof visible.
+            for name in ('format-probe.json','entitlement.json'):(directory/name).unlink(missing_ok=True)
         # Never echo exception strings, provider bodies, subprocess stderr or keys.
         receipt=dict(status='BLOCKED_EXTERNAL',reason='INVALID_OR_UNAVAILABLE_PUBLIC_STATE',publication_status='PUBLICATION_DEFERRED',coaching_accuracy=None)
         blocked=dict(receipt,artifacts=[],ledger=None,checked_at=int(time.time()),video_results=[],
