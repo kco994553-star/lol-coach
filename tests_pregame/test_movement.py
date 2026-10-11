@@ -223,4 +223,17 @@ class MovementTests(unittest.TestCase):
             c['id']=digest({k:c[k] for k in ('champion','position','patch','tier','stage','condition_signature')})
         with self.assertRaises(ValueError):self.m.validate_movement_dataset(q)
 
+    def test_after_reported_end_excluded_without_discarding_earlier_frames(self):
+        ps=[pair(i,minute=5) for i in range(2)];annotations=[]
+        for p in ps:
+            f=p['timeline']['info']['frames'][0]
+            p['timeline']['info']['frames']=[dict(copy.deepcopy(f),timestamp=60000),dict(copy.deepcopy(f),timestamp=300153)]
+            a=annotation(p);a['timestamp_ms']=300153;annotations.append(a)
+        d=self.m.build_movement_dataset(ps,source=source(),phase_annotations=annotations)
+        self.assertTrue(d['cohorts'],'earlier valid frames must survive an after-end frame')
+        self.assertTrue(all(c['stage'] is None for c in d['cohorts']))
+        c=next(c for c in d['cohorts'] if c['champion']=='Champion1')
+        self.assertEqual([(p['minute'],p['n'],p['visible']) for p in c['points']],[(1,2,True)])
+        self.assertIn('FRAME_AFTER_REPORTED_END_EXCLUDED_DURATION_RESOLUTION_UNKNOWN',d['source']['limitations'])
+
 if __name__=='__main__':unittest.main()

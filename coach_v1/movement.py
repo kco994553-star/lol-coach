@@ -136,7 +136,11 @@ def build_movement_dataset(pairs,*,source,phase_annotations=None):
         frames=timeline_info.get('frames',[])
         if not isinstance(frames,list):continue
         times=[f.get('timestamp') for f in frames if isinstance(f,dict)]
-        if len(times)!=len(frames) or not all(_number(t) and 0<=t<=duration*1000 for t in times) or times!=sorted(set(times)):continue
+        if len(times)!=len(frames) or not all(_number(t) and t>=0 for t in times) or times!=sorted(set(times)):continue
+        if any(t>duration*1000 for t in times):
+            reason='FRAME_AFTER_REPORTED_END_EXCLUDED_DURATION_RESOLUTION_UNKNOWN'
+            if reason not in s['limitations']:s['limitations'].append(reason)
+        frames=[frame for frame in frames if frame['timestamp']<=duration*1000]
         bins={}
         for frame in frames:bins[math.floor(frame['timestamp']/60000)]=frame
         for minute,frame in sorted(bins.items()):
