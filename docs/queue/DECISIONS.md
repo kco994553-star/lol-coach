@@ -1,3 +1,11 @@
+# 2026-10-11 — user directs cause diagnosis, explicit UA and generateContent
+
+User reopens prior PARKED_EXTERNAL. Riot403 without selected JSON message makes API-front blocking the prioritized HYPOTHESIS. Add explicit User-Agent to every request, inspect shape/trim before pair; same trusted job/Secret sends curl once and Python once. Retain only literal statuses and sanitized bounded403 fields. Both200 required before collection; no authentication retries. The authorized pair completes even if firstclient403, then stops all further collection. UA200 records access restored with UA; sole-cause attribution needs controlled evidence and remains separate from the user's conditional attribution.
+
+User explicitly chooses official generateContent + YouTube file_data.file_uri + video_metadata start/end offsets. Prior Interactions support/causeUNKNOWN evidence unchanged; route switch is user-directed, not retrospective proof400 cause. Fresh official reference maps current JSON-schema format and ProtoJSON names. TEXT503 alone gets initial plus <=3 retries spaced15s, neverVIDEOretry; success before one new uncharged <=20minvideo first<=10minclip/durablefulloriginalduration charge. Preserve every prior6row7396second reservation, no refund/Billing/modelpaidfallback. Additive contract cause-diagnosis-v2.md; new internalplanv4/probev2, publicsource/ledgers unchanged.
+
+---
+
 # Observed diagnosis outcome — additive, no retrospective cause substitution
 
 Riot keyshapevalid42/prefix/noouterspace/no linebreak, first403/no readable selectedstatus.message. Expiry notestablished. Gemini ordinarytext200 thenvideo400invalid_request; dedicatedsame-schema text503service_unavailable withmodelhighdemandmessage. The503 appliesonlyto thatlaterTEXT request and cannot explainpriorvideo400 orproveformatacceptance. No newvideo/charge fromschema diagnosis. Preserve6rows7396, noblindrepeat/paidchange. Exhaustedindependentwork awaitsaffectedexternalinput/provideravailability; finalstatefollowsrequiredclosureCI/merge.

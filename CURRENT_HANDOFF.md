@@ -1,3 +1,15 @@
+된 것: 최신 main·기존 병합과 완료된 CI를 다시 확인했습니다.
+진행 중: Riot User-Agent·curl/파이썬 비교 진단을 구현합니다.
+진행 중: Gemini generateContent 전환과 텍스트 503 재시도를 구현합니다.
+안 된 것: 새 실제 응답과 실제 통계·영상 요약은 아직 없습니다.
+내가 검토할 것: 수집된 근거와 웹 지식 후보이며, 추가 승인은 필요하지 않습니다.
+
+# User cause diagnosis RUNNING — additive continuation
+
+Intake main1ea54c77a528ce941b51df674f7f803de69be903; noopenPR/activeotherwriter; postmergeCI38133123103/38133123080SUCCESS. Sameowner token main-20261011-queue-v13-050952 reopened terminalclaim. Mainbranchwork/ua-generatecontent-20261011 ownscontracts/workflows/CLI/receipts/integration. q15_stats work/riot-front-ua ownsRiotcollector/pairmodule/tests; v14_server work/generatecontent-probe ownsGemcollector/tests; q16_source_audit officialscratchonly. Contracts frozen beforeconsumerimplementation. No actualproviderdispatchyet; allpriorobservations/failedledger6rows7396preserved. DONEQ01–Q09=9/19, originalinputblockersclosed3; coachingN0/accuracy=null, noAIapproval/paidchange. Next scopedRED/GREEN, independentreview, sourceboundrequiredCI/normalmerge, thenonepairedRiotdiagnostic andonegenerateContent pipeline withTEXT503-only boundedretries.
+
+---
+
 된 것: 진단 코드·텍스트 전용 원인 격리를 PR #21·#22로 병합했습니다.
 된 것: Riot 키 모양 정상과 Gemini 일반 텍스트 200을 실제로 확인했습니다.
 안 된 것: Riot 첫 403으로 실제 통계가 없고 status.message도 미확인입니다.
