@@ -39,6 +39,14 @@ class ApiDiagnosticTests(unittest.TestCase):
         self.assertIn('REDACTED',raw);self.assertIn('PRIVATE_LAST',raw)
         result=safe_http_error('RIOT',403,{'status':{'message':'x'*600+TEST_KEY}},secrets=[TEST_KEY]);self.assertLessEqual(len(result['error_message']),512);self.assertNotIn(TEST_KEY,json.dumps(result))
 
+    def test_error_symbols_cannot_echo_credentials(self):
+        key='AIza'+'Z'*35
+        for field in ['status','code']:
+            r=safe_http_error('GEMINI',403,{'error':{field:key,'message':'Forbidden'}},secrets=[key])
+            self.assertNotIn(key,json.dumps(r));self.assertIsNone(r['error_'+field])
+        r=safe_http_error('GEMINI',403,{'error':{'status':TEST_KEY,'code':TEST_KEY}})
+        self.assertNotIn(TEST_KEY,json.dumps(r))
+
     def test_malformed_oversized_deep_or_nonresponse_fields_stay_unknown(self):
         for body in [b'<html>SECRET_BODY</html>',b'{',b'x'*65537,b'{"error":'+b'['*20000+b'0'+b']'*20000+b'}',{'error':{'status':{},'message':['SECRET_BODY'],'code':True}}]:
             result=safe_http_error('GEMINI',None,body)

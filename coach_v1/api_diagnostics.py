@@ -34,8 +34,8 @@ def _message(value,secrets):
     return value[:MAX_MESSAGE_CHARS] or None
 
 
-def _symbol(value):
-    return value if isinstance(value,str) and re.fullmatch(r'[A-Za-z][A-Za-z0-9_.-]{0,63}',value) else None
+def _symbol(value,secrets=()):
+    return value if _message(value,secrets)==value and isinstance(value,str) and re.fullmatch(r'[A-Za-z][A-Za-z0-9_.-]{0,63}',value) else None
 
 
 def safe_http_error(provider,http_status,body,*,secrets=()):
@@ -51,8 +51,8 @@ def safe_http_error(provider,http_status,body,*,secrets=()):
         if not isinstance(error,dict):return result
         result['error_message']=_message(error.get('message'),secrets)
         if provider!='RIOT':
-            result['error_status']=_symbol(error.get('status'))
+            result['error_status']=_symbol(error.get('status'),secrets)
             code=error.get('code')
-            result['error_code']=code if type(code) is int and 0<=code<=999 else _symbol(code)
+            result['error_code']=code if type(code) is int and 0<=code<=999 else _symbol(code,secrets)
     except (ValueError,TypeError,UnicodeError,RecursionError,OverflowError):pass
     return result
