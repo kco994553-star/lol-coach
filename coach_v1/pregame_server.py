@@ -215,10 +215,18 @@ class PregameHandler(Handler):
         if imported and self.command=='GET':
             record=self.server.store.get_capture(imported[1],max_bytes=limit)
             return self.bounded_reply(200,import_capture(record))
-        input_route=re.fullmatch(re.escape(prefix)+r'/inputs/([a-f0-9]{32})(?:/(history|plans))?',route)
+        input_route=re.fullmatch(re.escape(prefix)+r'/inputs/([a-f0-9]{32})(?:/(history|plans|plan-history))?',route)
         if input_route:
             sid,action=input_route.groups()
             if action=='history' and self.command=='GET':return self.bounded_reply(200,pg.history(sid))
+            if action=='plan-history' and self.command=='GET':
+                knowledge=current_knowledge(self.server.research)
+                fields=('id','session_id','revision','input_revision','created_at','validity','expiry_reasons','schema_version')
+                history=[]
+                for plan in pg.list_plans(sid,self.fingerprint(knowledge)):
+                    checked=self.checked_plan(plan['id'],knowledge)
+                    history.append({key:checked[key] for key in fields})
+                return self.bounded_reply(200,history)
             if action=='plans':
                 from .pregame_v3 import evaluate_gameplan_v3
                 knowledge=current_knowledge(self.server.research)

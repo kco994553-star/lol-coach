@@ -152,5 +152,35 @@ class V14HTTPTests(unittest.TestCase):
                 with self.assertRaises(ValueError):main()
             fake.server_close.assert_called_once();fake.serve_forever.assert_not_called()
 
+    def test_metadata_history_stays_bounded_for_five_large_saved_plans(self):
+        import json
+        from unittest.mock import patch
+        from tests_pregame.test_evaluator import approved
+        specs=[]
+        for i in range(25):
+            spec=v2_rule();spec['rule_id']='large-fixture-'+str(i)
+            spec['output']['text']='SYNTHETIC original '+('x'*1900)
+            specs.append(spec)
+        knowledge=[approved(spec) for spec in specs]
+        record=self.call('/dev/v1/pregame/inputs','POST',dict(input=golden(patch='SYNTHETIC-1')),'large-input')[1]
+        path='/dev/v1/pregame/inputs/'+record['session_id']
+        with patch('coach_v1.pregame_server.current_knowledge',return_value=knowledge):
+            plans=[]
+            for i in range(5):
+                status,plan=self.call(path+'/plans','POST',dict(expected_revision=1),'large-plan-'+str(i))
+                self.assertEqual(status,201);self.assertEqual(plan['validity'],'CURRENT')
+                self.assertLess(len(json.dumps(plan,ensure_ascii=False).encode()),1000000);plans.append(plan)
+            self.assertGreater(len(json.dumps(plans,ensure_ascii=False).encode()),1000000)
+            self.assertEqual(self.call(path+'/plans')[0],413)
+            status,history=self.call(path+'/plan-history')
+            self.assertEqual(status,200);self.assertEqual(len(history),5)
+            fields={'id','session_id','revision','input_revision','created_at','validity','expiry_reasons','schema_version'}
+            self.assertTrue(all(set(item)==fields for item in history))
+            self.assertLess(len(json.dumps(history).encode()),10000)
+            self.assertEqual([item['id'] for item in history],[p['id'] for p in reversed(plans)])
+            for item,plan in zip(history,reversed(plans)):
+                self.assertEqual(item['validity'],'CURRENT')
+                self.assertEqual(self.call('/dev/v1/pregame/plans/'+item['id'])[1],plan)
+
 
 if __name__=='__main__':unittest.main()
