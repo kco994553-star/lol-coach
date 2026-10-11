@@ -64,6 +64,8 @@ class V13Tests(unittest.TestCase):
         d['my_pick_state']='UNPICKED'
         with self.assertRaises(ValueError):parse_input(d)
         d['my_champion']=None
+        with self.assertRaises(ValueError):parse_input(d)
+        d['slots'][3]['champion']=None
         self.assertEqual(parse_input(d).my_pick_state,'UNPICKED')
         d['my_pick_state']='PICKED'
         with self.assertRaises(ValueError):parse_input(d)
@@ -126,11 +128,16 @@ class V13Tests(unittest.TestCase):
     def test_pick_warnings_require_explicit_unpicked_preferences_and_reviewed_candidate(self):
         ops=v2_rule('OPERATIONS');ops['output']['operations']['pick_candidates']=[dict(champion='Ashe',reason='SYNTHETIC recommendation')]
         candidate=v2_profile('Ashe',['INITIATOR'])
-        d=golden(patch='SYNTHETIC-1');d['my_champion']=None
+        d=golden(patch='SYNTHETIC-1');d['my_champion']=None;d['slots'][3]['champion']=None
         self.assertEqual(self.evaluate(d,[approved(ops),approved(candidate)])['pick_warnings'],[])
         d=dict(d,schema_version='pregame.input-draft.v2',my_pick_state='UNPICKED',frequent_champions=['Ashe'])
         self.assertEqual(self.evaluate(d,[approved(ops)])['pick_warnings'],[])
-        self.assertEqual(self.evaluate(d,[approved(ops),approved(candidate)])['pick_warnings'][0]['champion'],'Ashe')
+        profiles=[v2_profile(c,['PROTECTOR']) for c in ['Ornn','Sejuani','Ahri','Lux']]
+        k=[approved(s) for s in [ops,candidate,*profiles]]
+        self.assertEqual(self.evaluate(d,[approved(ops),approved(candidate)])['pick_warnings'],[])
+        self.assertEqual(self.evaluate(d,k)['pick_warnings'][0]['champion'],'Ashe')
+        profiles[0]['profile']['initiative']=['INITIATOR'];profiles[1]['profile']['initiative']=['INITIATOR']
+        self.assertEqual(self.evaluate(d,[approved(s) for s in [ops,candidate,*profiles]])['pick_warnings'],[])
         d['my_pick_state']='UNKNOWN'
         self.assertEqual(self.evaluate(d,[approved(ops),approved(candidate)])['pick_warnings'],[])
 
@@ -152,7 +159,9 @@ class V13Tests(unittest.TestCase):
             self.assertEqual(restored.get_plan(p['id'],knowledge_fingerprint(k))['validity'],'EXPIRED')
 
     def test_prohibited_blame_templates_rejected(self):
-        s=v2_rule('OPERATIONS');s['output']['operations']['request_templates']=['정글 차이 때문에 졌다']
-        with self.assertRaises(ValueError):parse_rule(s)
+        s=v2_rule('OPERATIONS');
+        for phrase in ['정글 차이 때문에 졌다','jungle diff','support diff']:
+            s['output']['operations']['request_templates']=[phrase]
+            with self.assertRaises(ValueError):parse_rule(s)
 
 if __name__=='__main__':unittest.main()

@@ -14,7 +14,7 @@ FIELD_V2=re.compile(r'(?:'+FIELD.pattern.removesuffix(r'\Z')+r'|(ally|enemy)\.(?
 def _text(value):
     if not value.strip() or len(value)>2000:raise ValueError('bounded original text required')
     # Conservative known abusive formulations, never rewrite an approved quote.
-    if any(t in value.lower().replace(' ','') for t in ('정글차이','서폿차이','팀원탓','못하네','쓰레기','왜안하','너때문','jungle diff','support diff')):
+    if any(t in value.lower().replace(' ','') for t in ('정글차이','서폿차이','팀원탓','못하네','쓰레기','왜안하','너때문','junglediff','supportdiff')):
         raise ValueError('blame language not allowed')
     return value
 
@@ -143,7 +143,9 @@ class InputDraftV2(InputDraft):
     frequent_champions:list[str]=Field(max_length=30)
     @model_validator(mode='after')
     def check_pick(self):
-        if self.my_pick_state=='UNPICKED' and self.my_champion is not None:raise ValueError('unpicked requires no selected champion')
+        if self.my_pick_state=='UNPICKED':
+            own=next((s for s in self.slots if s.side=='ALLY' and (s.slot==self.my_slot or s.position==self.my_position)),None)
+            if self.my_champion is not None or own and own.champion is not None:raise ValueError('unpicked requires no selected champion')
         if self.my_pick_state=='PICKED' and self.my_champion is None:raise ValueError('picked requires selected champion')
         if len(set(self.frequent_champions))!=len(self.frequent_champions):raise ValueError('duplicate preferences')
         for c in self.frequent_champions:
@@ -202,7 +204,13 @@ def evaluate_gameplan_v2(input,knowledge):
     profiles,conflicts=_profiles_for_summary(result['evaluations'])
     result['operations']=operations;result['team_dependencies']=_team_summary(result['input'],profiles,conflicts)
     warnings=[];draft=result['input']
-    if operations['status']=='KNOWN' and draft.get('my_pick_state')=='UNPICKED':
+    # Explicitly unpicked own slot is not missing allied initiative. All other
+    # allied roles must be fully classified before a shortage can be asserted.
+    other_allies=[a for a in result['team_dependencies']['allies'] if a['position']!=draft.get('my_position')]
+    shortage=(len(other_allies)==4 and all(a['champion'] and a['initiative'] for a in other_allies)
+              and not any(':initiative' in reason or '.initiative' in reason for reason,_ in conflicts)
+              and sum('INITIATOR' in a['initiative'] for a in other_allies)<=1)
+    if operations['status']=='KNOWN' and draft.get('my_pick_state')=='UNPICKED' and shortage:
         for t in applied:
             for c in t['output']['operations']['pick_candidates']:
                 profile=profiles.get(c['champion'],{})
