@@ -1,0 +1,106 @@
+name: Free expert video collection
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '47 4 * * *'
+
+permissions:
+  contents: read
+  actions: read
+
+# All collectors for the same Gemini project must use this group, never run
+# elsewhere concurrently. Unknown external project use blocks via attestation.
+concurrency:
+  group: expert-gemini-project-quota
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    if: github.repository == 'kco994553-star/lol-coach' && github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'schedule')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GEMINI_FREE_TIER_CONFIRMED: ${{ vars.GEMINI_FREE_TIER_CONFIRMED }}
+      GEMINI_DOCUMENTED_FREE_ENTITLEMENT_CONFIRMED: ${{ vars.GEMINI_DOCUMENTED_FREE_ENTITLEMENT_CONFIRMED }}
+      GEMINI_QUOTA_EXCLUSIVE_CONFIRMED: ${{ vars.GEMINI_QUOTA_EXCLUSIVE_CONFIRMED }}
+      INITIAL_ZERO_USAGE_CONFIRMED: ${{ vars.INITIAL_ZERO_USAGE_CONFIRMED }}
+      INITIAL_ZERO_USAGE_CONFIRMED_AT: ${{ vars.INITIAL_ZERO_USAGE_CONFIRMED_AT }}
+      GEMINI_PROJECT_BILLING_TIER: ${{ vars.GEMINI_PROJECT_BILLING_TIER }}
+      GEMINI_FREE_ENTITLEMENT_CHECKED_AT: ${{ vars.GEMINI_FREE_ENTITLEMENT_CHECKED_AT }}
+    steps:
+      - name: Check out trusted default branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Recover newest durable quota including failed and cancelled runs
+        id: recover
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/collect_expert_claims.py --phase recover --output-dir "$RUNNER_TEMP/expert-recovery"
+      - name: Discover public allowlisted videos and reserve rolling quota
+        id: reserve
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python scripts/collect_expert_claims.py --phase reserve --runtime-config config/expert_runtime.json --output-dir "$RUNNER_TEMP/expert-reservation" --ledger "$RUNNER_TEMP/expert-recovery/quota-ledger.json" --recovery-receipt "$RUNNER_TEMP/expert-recovery/recovery.json"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          directory=Path(os.environ['RUNNER_TEMP'])/'expert-reservation'
+          plan=json.loads((directory/'plan.json').read_text())
+          with open(os.environ['GITHUB_OUTPUT'],'a') as output:
+              output.write('reserved='+str(plan['status']=='RESERVED').lower()+'\n')
+              output.write('has_ledger='+str((directory/'quota-ledger.json').is_file()).lower()+'\n')
+          PY
+      - name: Persist quota before any Gemini request
+        id: durable_reservation
+        if: steps.reserve.outputs.has_ledger == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: expert-quota-reservation-${{ github.run_id }}
+          path: ${{ runner.temp }}/expert-reservation/quota-ledger.json
+          retention-days: 7
+          if-no-files-found: error
+      - name: Process at most two videos only after durable reservation
+        if: steps.reserve.outputs.reserved == 'true' && steps.durable_reservation.outcome == 'success' && steps.durable_reservation.outputs.artifact-id != ''
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          RESERVATION_ARTIFACT_ID: ${{ steps.durable_reservation.outputs.artifact-id }}
+        run: python scripts/collect_expert_claims.py --phase process --runtime-config config/expert_runtime.json --plan "$RUNNER_TEMP/expert-reservation/plan.json" --reservation-artifact-id "$RESERVATION_ARTIFACT_ID" --output-dir "$RUNNER_TEMP/expert-final"
+      - name: Persist final quota without releasing any reservation
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: expert-quota-final-${{ github.run_id }}
+          path: ${{ runner.temp }}/expert-final/quota-ledger.json
+          retention-days: 7
+          if-no-files-found: ignore
+      - name: Retain bounded public-safe summaries and explicit receipt
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: expert-public-safe-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/expert-final/artifacts/*.json
+            ${{ runner.temp }}/expert-final/receipt.json
+            ${{ runner.temp }}/expert-reservation/receipt.json
+            ${{ runner.temp }}/expert-recovery/recovery.json
+          retention-days: 7
+          if-no-files-found: warn
+      - name: Record deferred publication
+        if: always()
+        run: |
+          python - <<'PY'
+          import os
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as output:
+              output.write('PUBLICATION_DEFERRED: Main publishes validated summaries under the shared owner protocol.\n\nWorkflow exit status does not establish acquisition. Inspect receipts; no raw video/transcript/model response or credential is retained.\n')
+          PY
