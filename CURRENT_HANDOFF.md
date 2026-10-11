@@ -1,3 +1,18 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261011-queue-v13-050952`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `work/real-aggregate-closeout-20261011`
+- authority: USER_CAUSE_DIAGNOSIS_UA_GENERATECONTENT_2026-10-11 and USER_QUEUE_V1.6_2026-10-11; explicit autonomous Main, free implementation/publication/CI/merge, all five roles.
+- intake_main_head: `4ffd50d757ec90254c69c2dc9d34bacf81bba6b4`
+- implementation_head: `6cb40df9de37d87eb83f9ae3962b5b01012aa11a`
+- task_scope: USER_CAUSE_DIAGNOSIS: Q15 explicit User-Agent and same-secret curl/Python pair plus bounded safe403 headers/body; Q19 user-directed generateContent YouTube clipping and up to3 spaced TEXT503 retries before one video clip; preserve all charges and integrate only validated real data.
+- scope_boundary: actual Q10–Q14 personal PC/video/review and postgame extensions unavailable; N0 coaching_accuracy=null; no live coaching or cooldown tracking.
+- updated_at: 2026-10-11T11:52:42.453990+00:00
+- prior history retained below; this token remains current; sibling non-force update required.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261011-queue-v13-050952`
 - status: `RUNNING`
