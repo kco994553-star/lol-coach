@@ -1,3 +1,26 @@
+# Latest common execution claim — PARKED_EXTERNAL
+- run_token: `main-20261011-queue-v13-050952`
+- status: `PARKED_EXTERNAL`
+- writer_active: false
+- owner_branch: `work/real-aggregate-closeout-20261011`
+- authority: USER_CAUSE_DIAGNOSIS_UA_GENERATECONTENT_2026-10-11 and USER_QUEUE_V1.6_2026-10-11; explicit autonomous Main, free implementation/publication/CI/merge, all five roles.
+- intake_main_head: `4ffd50d757ec90254c69c2dc9d34bacf81bba6b4`
+- implementation_head: `6cb40df9de37d87eb83f9ae3962b5b01012aa11a`
+- task_scope: USER_CAUSE_DIAGNOSIS: Q15 explicit User-Agent and same-secret curl/Python pair plus bounded safe403 headers/body; Q19 user-directed generateContent YouTube clipping and up to3 spaced TEXT503 retries before one video clip; preserve all charges and integrate only validated real data.
+- scope_boundary: actual Q10–Q14 personal PC/video/review and postgame extensions unavailable; N0 coaching_accuracy=null; no live coaching or cooldown tracking.
+- updated_at: 2026-10-11T11:56:24.233864+00:00
+- prior history retained below; this token remains current; sibling non-force update required.
+
+- Final publication PR25 merged 4ffd50d757ec90254c69c2dc9d34bacf81bba6b4 from6cb40df9de37d87eb83f9ae3962b5b01012aa11a; exact local/published/main treea2b6bd2d9b1afdb99b1dc6ad087bdca0f408f38c.
+- Required PR25 CI38136846965/38136846970 and postmerge38137127513/38137127534 each all3SUCCESS,13groups406paths independently source-bound. NoopenPR/nootherwriter/allagentscompleted.
+- Q15 DONE: same-secret curl200/Python200, full132requests0retry/50REAL patch16.20 CHALLENGERseed. Exact anonymous gzips committed, production detail14/five-role36 PASS/no approvals; sample/phase insufficiency honestlyUNKNOWN. UA-associated restored access verified, sole prior403 cause UNKNOWN.
+- Q19 BLOCKED_EXTERNAL: generateContent TEXT1 NETWORK_TIMEOUT/noHTTPresponse/retry0/METADATA0/VIDEO0/newcharge0; previous6rows7396sec ledger byte-identical. No blind retry or actualclaimbrowser without acceptedclaims; exact former400 cause stillUNKNOWN.
+- Progress10/19 fullDONE Q01–Q09,Q15; closedblockers4 (prior3+Q15_REAL_ACQUISITION); PRE_GAMEQ16/Q17/Q18 implemented, postgame/source-phase andQ10–Q14 external. CoachingN0/accuracy=null/reviewedknowledge0/paid0.
+- All independentREADY implementation/evidence work exhausted. ResumeQ19 onlychanged/evidenced free provider/network recovery +fresh intake/proof/quota +TEXT beforeoneunchargedclip; Q10ownPCcapture/Q11originals/Q12matchedPOVanchors/Q13then-knownreview/Q14independentreference. Userwebknowledgeapproval remainsuser-only; manualexpertinputavailable. Existing trustedRiot schedule remainsbounded/first401403stop; retained actualsnapshot doesnotexpire withdevelopmentkey.
+- Terminal PARKED_EXTERNAL releases this owner; current main handoff immutableprepublication snapshot is superseded by this verified final common claim; all prior provider/CI/testfailures/history preserved.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261011-queue-v13-050952`
 - status: `CI_PENDING`
