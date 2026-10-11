@@ -1,0 +1,29 @@
+======================================================================
+FAIL: test_jitter_frames_have_floor_bins_and_exact_annotation_times (tests_pregame.test_movement.MovementTests.test_jitter_frames_have_floor_bins_and_exact_annotation_times)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-q18/tests_pregame/test_movement.py", line 174, in test_jitter_frames_have_floor_bins_and_exact_annotation_times
+    self.assertTrue(ds['cohorts'],'ordinary jittered frames must produce cohorts')
+AssertionError: [] is not true : ordinary jittered frames must produce cohorts
+
+======================================================================
+FAIL: test_latest_received_frame_in_bin_and_nonminute_interval_withheld (tests_pregame.test_movement.MovementTests.test_latest_received_frame_in_bin_and_nonminute_interval_withheld)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-q18/tests_pregame/test_movement.py", line 192, in test_latest_received_frame_in_bin_and_nonminute_interval_withheld
+    self.assertTrue(d['cohorts'],'duplicate bins must select a received frame')
+AssertionError: [] is not true : duplicate bins must select a received frame
+
+======================================================================
+FAIL: test_provider_kind_parity_and_canonical_champion_names (tests_pregame.test_movement.MovementTests.test_provider_kind_parity_and_canonical_champion_names)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-q18/tests_pregame/test_movement.py", line 203, in test_provider_kind_parity_and_canonical_champion_names
+    with self.assertRaises(ValueError):self.m.validate_movement_dataset(d)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.055s
+
+FAILED (failures=3)

@@ -165,4 +165,62 @@ class MovementTests(unittest.TestCase):
         self.assertEqual(c['status'],'CONFLICTING')
         self.assertIn('REVIEWED_OUTPUT_CONFLICT',c['rules'][0]['reasons'])
 
+    def test_jitter_frames_have_floor_bins_and_exact_annotation_times(self):
+        ps=[pair(i,minute=8) for i in range(3)]
+        for p in ps:
+            frame=p['timeline']['info']['frames'][0]
+            p['timeline']['info']['frames']=[dict(copy.deepcopy(frame),timestamp=t) for t in (300153,360211,420399)]
+        ds=self.m.build_movement_dataset(ps,source=source(),phase_annotations=[annotation(p) for p in ps])
+        self.assertTrue(ds['cohorts'],'ordinary jittered frames must produce cohorts')
+        c=next(c for c in ds['cohorts'] if c['champion']=='Champion1' and c['stage'] is None)
+        self.assertEqual([(pt['minute'],pt['n'],pt['visible']) for pt in c['points']],[(5,3,True),(6,3,True),(7,3,True)])
+        c=next(c for c in ds['cohorts'] if c['champion']=='Champion1' and c['stage']=='LATE')
+        self.assertEqual([pt['minute'] for pt in c['points']],[5])
+        self.assertEqual(ds['source']['time_bin_policy']['frame_interval_ms'],60000)
+
+    def test_latest_received_frame_in_bin_and_nonminute_interval_withheld(self):
+        ps=[pair(i,minute=6) for i in range(3)]
+        old_annotations=[]
+        for p in ps:
+            frame=p['timeline']['info']['frames'][0]
+            old=dict(copy.deepcopy(frame),timestamp=300001)
+            new=dict(copy.deepcopy(frame),timestamp=300153)
+            new['participantFrames']['1']['position']['x']=100
+            p['timeline']['info']['frames']=[old,new]
+            old_annotations.append(annotation(p))
+        d=self.m.build_movement_dataset(ps,source=source(),phase_annotations=old_annotations)
+        self.assertTrue(d['cohorts'],'duplicate bins must select a received frame')
+        self.assertTrue(all(c['stage'] is None for c in d['cohorts']))
+        c=next(c for c in d['cohorts'] if c['champion']=='Champion1')
+        self.assertEqual(c['points'][0]['n'],3)
+        self.assertAlmostEqual(c['points'][0]['mean_distance'],(70**2+20**2)**.5)
+        for p in ps:p['timeline']['info']['frameInterval']=30000
+        self.assertEqual(self.m.build_movement_dataset(ps,source=source())['cohorts'],[])
+
+    def test_provider_kind_parity_and_canonical_champion_names(self):
+        d=self.dataset();d['source']['sample_kind']='REAL'
+        d['samples']['real_matches']=2;d['samples']['synthetic_matches']=0
+        with self.assertRaises(ValueError):self.m.validate_movement_dataset(d)
+        p=pair();p['match']['info']['participants'][0]['championName']='PRIVATE_PLAYER_ID'
+        self.assertEqual(self.m.build_movement_dataset([p],source=source())['cohorts'],[])
+        d=self.dataset();d['source']['provider']='RIOT_API'
+        with self.assertRaises(ValueError):self.m.validate_movement_dataset(d)
+
+    def test_asymmetric_confidence_interval_and_private_tier_are_rejected(self):
+        ps=[pair(i) for i in range(20)]
+        d=self.m.build_movement_dataset(ps,source=source())
+        q=copy.deepcopy(d);point=q['cohorts'][0]['points'][0]
+        point['ci95']=dict(low=0,high=40)
+        with self.assertRaises(ValueError):self.m.validate_movement_dataset(q)
+        q=copy.deepcopy(d);q['source']['tier']='GOLD_PRIVATE_ID'
+        for c in q['cohorts']:
+            c['tier']='GOLD_PRIVATE_ID'
+            c['id']=digest({k:c[k] for k in ('champion','position','patch','tier','stage','condition_signature')})
+        with self.assertRaises(ValueError):self.m.validate_movement_dataset(q)
+        q=copy.deepcopy(d);q['source']['patch']='PRIVATE_PATCH'
+        for c in q['cohorts']:
+            c['patch']='PRIVATE_PATCH'
+            c['id']=digest({k:c[k] for k in ('champion','position','patch','tier','stage','condition_signature')})
+        with self.assertRaises(ValueError):self.m.validate_movement_dataset(q)
+
 if __name__=='__main__':unittest.main()

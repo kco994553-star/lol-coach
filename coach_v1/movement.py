@@ -13,17 +13,23 @@ from .state import canonical, digest
 
 POSITIONS=('TOP','JUNGLE','MID','BOTTOM','SUPPORT')
 STAGES=('EARLY','MID','LATE')
+TIERS=('IRON','BRONZE','SILVER','GOLD','PLATINUM','EMERALD','DIAMOND','MASTER','GRANDMASTER','CHALLENGER')
+PATCH=re.compile(r'[0-9]+\.[0-9]+\Z')
 LAYERS=('DEFAULT','TYPE','CHAMPION','COMPOSITION')
 FIELDS=('LANING_ACTIVE','FIRST_TURRET_DESTROYED','MAJOR_OBJECTIVE_CONTEST','LONG_RESPAWN_RISK')
 HASH=re.compile(r'[a-f0-9]{64}\Z')
+CHAMPION=re.compile(r'[A-Za-z][A-Za-z0-9]{0,99}\Z')
+TIME_BIN_POLICY=dict(kind='ELAPSED_MINUTE_FLOOR',frame_interval_ms=60000,
+    selection='LATEST_RECEIVED_FRAME_PER_MATCH_BIN')
 SOURCE_KEYS={'provider','platform','regional','queue_id','map_id','tier','patch','window_start',
     'window_end','retrieved_at','sample_kind','endpoints','formula_version','precision_policy',
-    'limitations','phase_annotation_sources'}
+    'limitations','phase_annotation_sources','time_bin_policy'}
 LIMITATIONS=['KNOWN_ALLIES_MEDIAN_NOT_ACTUAL_MAIN_BODY','DESCRIPTIVE_NON_CAUSAL_NOT_TACTICAL_APPROVAL',
     'ALL_FIVE_COORDINATES_REQUIRED_NO_INTERPOLATION','MINUTE_IS_NOT_PHASE',
     'TIER_IS_CURRENT_LEAGUE_SEED_COHORT_NOT_ALL_PARTICIPANT_RANKS',
     'MATCH_INDEPENDENCE_AND_POPULATION_COVERAGE_UNVERIFIED','LEAGUE_SEED_SELECTION_AND_SURVIVORSHIP_BIAS',
-    'CONSTANT_SAMPLES_DO_NOT_PROVE_POPULATION_CERTAINTY','OPERATIONAL_PRECISION_NOT_VALIDATED_GAMEPLAY_THRESHOLD']
+    'CONSTANT_SAMPLES_DO_NOT_PROVE_POPULATION_CERTAINTY','OPERATIONAL_PRECISION_NOT_VALIDATED_GAMEPLAY_THRESHOLD',
+    'TIME_BIN_QUANTIZATION_LT_ONE_MINUTE_NO_INTERPOLATION','MULTIPLE_FRAMES_PER_BIN_USE_LATEST_RECEIVED']
 POLICY=dict(version='CI_WIDTH_LE_SAMPLE_SD.v1',units='MAP_COORDINATE_DISTANCE',
     rationale='ESTIMATION_UNCERTAINTY_LE_EMPIRICAL_INDIVIDUAL_SPREAD')
 
@@ -57,10 +63,11 @@ def _conditions(value,stage=None):
 def _source(source):
     _require(isinstance(source,dict) and set(source)<=SOURCE_KEYS,'source fields not allowlisted')
     s=deepcopy(source);s['formula_version']='KNOWN_ALLIES_COORDINATE_MEDIAN_DISTANCE_T95.v1'
-    s['precision_policy']=deepcopy(POLICY)
+    s['precision_policy']=deepcopy(POLICY);s['time_bin_policy']=deepcopy(TIME_BIN_POLICY)
     s['limitations']=list(dict.fromkeys(LIMITATIONS+s.get('limitations',[])))
     s.setdefault('phase_annotation_sources',[])
     _require(s.get('sample_kind') in ('REAL','SYNTHETIC'))
+    _require(s.get('provider')==('RIOT_API' if s['sample_kind']=='REAL' else 'SYNTHETIC'),'provider sample-kind mismatch')
     return s
 
 
@@ -122,17 +129,20 @@ def build_movement_dataset(pairs,*,source,phase_annotations=None):
         if not isinstance(people,list):continue
         teams={team:[p for p in people if isinstance(p,dict) and p.get('teamId')==team] for team in (100,200)}
         if any(len(ps)!=5 or {p.get('teamPosition') for p in ps}!=set(POSITIONS) for ps in teams.values()):continue
-        if any(not _integer(p.get('participantId'),1) or not _text(p.get('championName')) for ps in teams.values() for p in ps):continue
+        if any(not _integer(p.get('participantId'),1) or not isinstance(p.get('championName'),str) or not CHAMPION.fullmatch(p['championName']) for ps in teams.values() for p in ps):continue
         if len({p['participantId'] for ps in teams.values() for p in ps})!=10:continue
-        frames=timeline.get('info',{}).get('frames',[])
+        timeline_info=timeline.get('info',{})
+        if type(timeline_info.get('frameInterval')) is not int or timeline_info['frameInterval']!=60000:continue
+        frames=timeline_info.get('frames',[])
         if not isinstance(frames,list):continue
         times=[f.get('timestamp') for f in frames if isinstance(f,dict)]
         if len(times)!=len(frames) or not all(_number(t) and 0<=t<=duration*1000 for t in times) or times!=sorted(set(times)):continue
-        for frame in frames:
-            timestamp=frame['timestamp']
-            # Minute distributions use exact received minute frames; no rounding.
-            if timestamp%60000:continue
-            minute=timestamp/60000;pf=frame.get('participantFrames',{})
+        bins={}
+        for frame in frames:bins[math.floor(frame['timestamp']/60000)]=frame
+        for minute,frame in sorted(bins.items()):
+            # Chronologically sorted frames give a deterministic latest representative.
+            # Annotation binding keeps its original received timestamp, not the bin label.
+            timestamp=frame['timestamp'];pf=frame.get('participantFrames',{})
             if not isinstance(pf,dict):continue
             for people in teams.values():
                 coords=[]
@@ -173,11 +183,11 @@ def validate_movement_dataset(dataset):
     _require(d['schema_version']=='pregame.movement-data.v1' and d['status'] in ('READY','INSUFFICIENT_DATA') and d['coaching_accuracy'] is None)
     s=d['source'];_keys(s,SOURCE_KEYS-{'phase_annotation_sources'},{'phase_annotation_sources'})
     _require(s['sample_kind'] in ('REAL','SYNTHETIC') and s['queue_id']==420 and s['map_id']==11)
-    _require(s['platform']=='KR' and s['regional']=='ASIA' and _text(s['provider']) and _text(s['tier']))
-    _require(s['patch'] is None or _text(s['patch']))
+    _require(s['platform']=='KR' and s['regional']=='ASIA' and s['provider']==('RIOT_API' if s['sample_kind']=='REAL' else 'SYNTHETIC') and s['tier'] in TIERS)
+    _require(s['patch'] is None or (isinstance(s['patch'],str) and PATCH.fullmatch(s['patch'])))
     _require(all(s[k] is None or _number(s[k]) for k in ('window_start','window_end')))
     _require(s['retrieved_at'] is None or _text(s['retrieved_at']))
-    _require(s['formula_version']=='KNOWN_ALLIES_COORDINATE_MEDIAN_DISTANCE_T95.v1' and s['precision_policy']==POLICY)
+    _require(s['formula_version']=='KNOWN_ALLIES_COORDINATE_MEDIAN_DISTANCE_T95.v1' and s['precision_policy']==POLICY and s['time_bin_policy']==TIME_BIN_POLICY)
     _require(isinstance(s['endpoints'],list) and all(e in ('LEAGUE_V4_ENTRIES','LEAGUE_V4_MASTER','LEAGUE_V4_GRANDMASTER','LEAGUE_V4_CHALLENGER','MATCH_V5_IDS','MATCH_V5_MATCH','MATCH_V5_TIMELINE') for e in s['endpoints']))
     _require(isinstance(s['limitations'],list) and set(LIMITATIONS)<=set(s['limitations']) and all(_text(v) for v in s['limitations']))
     lineages=s.get('phase_annotation_sources',[]);_require(isinstance(lineages,list))
@@ -194,7 +204,7 @@ def validate_movement_dataset(dataset):
     for c in d['cohorts']:
         _keys(c,{'id','champion','position','patch','tier','stage','condition_signature','points'})
         _require(_hash(c['id']) and c['id'] not in ids);ids.add(c['id'])
-        _require(_text(c['champion']) and c['position'] in POSITIONS and _text(c['patch']) and c['tier']==s['tier'])
+        _require(isinstance(c['champion'],str) and CHAMPION.fullmatch(c['champion']) and c['position'] in POSITIONS and isinstance(c['patch'],str) and PATCH.fullmatch(c['patch']) and c['tier']==s['tier'])
         _require(s['patch'] is None or c['patch']==s['patch'])
         _require(c['stage'] is None or c['stage'] in STAGES)
         if c['stage'] is None:_require(c['condition_signature'] is None)
@@ -214,6 +224,7 @@ def validate_movement_dataset(dataset):
             if p['n']==1:_require(lo is None and hi is None and not p['visible'] and p['omission_reason']=='N_LT_2')
             else:
                 _require(_number(lo) and _number(hi) and lo<=p['mean_distance']<=hi)
+                _require(math.isclose((lo+hi)/2,p['mean_distance'],rel_tol=1e-9,abs_tol=1e-9),'confidence interval must center on mean')
                 # Recover the sample SD from the supplied t interval to validate eligibility.
                 from .power_stats import student_t_critical
                 sd=(hi-lo)*math.sqrt(p['n'])/(2*student_t_critical(p['n']-1))
