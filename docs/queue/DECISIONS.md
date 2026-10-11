@@ -1,3 +1,11 @@
+# 2026-10-11 16:40 KST — user resumes Riot and changes Gemini policy
+
+User reports previousRiot403 was expired24hdevelopmentkey, newLeague-V4CHALLENGER portal200 and GitHubRIOT_API_KEYupdated. Source isUSER_REPORT, notMainSecretinspection. Dispatch Q15onejob, record actualfirstHTTPcode; repeated401403 attribute KEY_EXPIRED perthisuserdecision andstop noauthretry. Successful200 continues actualaggregates/REALgraphs subjectstrictprecision/patch/cohort gates.
+
+User authorizes Gemini600sboundedwait, documented <=10minstaticclips, initial<=20minvideo1/run. Billing-free/exclusive/no-upgrade and fullfailedreservationpreservation unchanged. Fourpreviousreservedvideos4298seconds retained; userattributes theirfailure toprior60s ceiling, actualhistoricalfirst NETWORK_FAILURE(20sdefault) andsecond NETWORK_TIMEOUT(60s) remain separate. Only2actualmodelrequests observed, not4. Noquota refund orautomaticretryofchargedIDs. Additive contract expert-v1-segments.md; officialAPI staticstringoffset supported, timestamporigin/quota clipdiscount unconfirmed.
+
+---
+
 # 2026-10-11 — ADC expert 이브 added by user
 
 User supplies https://youtube.com/channel/UCerhqgFd8dnypewC3yjAlbg?si=vhmdI328HjaNTq28. Config adds exact canonical channelID as BOTTOM/enabled; content grade UNKNOWN because no L/C grade supplied. Speaker remains unverified and no RiotID inferred.16 channels/15 enabled, 클템 excluded, 블루리쉬(P)disabled. Additive contract expert-v1-channel-addition.md preserves the original15-channel decision. Collector bound50 suffices for45metadata+2model requests; existingrollingquota and failedreservations preserved.
