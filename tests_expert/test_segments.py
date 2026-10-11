@@ -61,6 +61,20 @@ class SegmentTests(unittest.TestCase):
         self.assertIn('SEGMENTED_EXTRACTION_INCOMPLETE',result['artifacts'][0]['claims'][0]['limitations'])
         self.assertNotIn('PRIVATE_PROVIDER_RESPONSE',json.dumps(result))
 
+    def test_second_clip_payment_block_is_explicit_while_partial_claims_survive(self):
+        class Payment(Clips):
+            def __call__(self,*args):
+                if '/interactions' in args[1] and self.model_calls==1:
+                    self.model_calls+=1;return 402,{},b'PRIVATE_PROVIDER_BODY'
+                return super().__call__(*args)
+        h=Payment();c=collector(h);plan=c.prepare(config());result=c.process(plan,reservation_persisted=True)
+        self.assertEqual(result['status'],'BLOCKED_PAYMENT')
+        self.assertEqual(result['video_results'][0]['status'],'BLOCKED_PAYMENT')
+        self.assertEqual(h.model_calls,2);self.assertEqual(len(result['artifacts']),1)
+        self.assertEqual(result['ledger']['processed_video_ids'],[])
+        self.assertEqual(result['ledger']['reservations'],plan['ledger']['reservations'])
+        self.assertNotIn('PRIVATE_PROVIDER_BODY',json.dumps(result))
+
     def test_second_clip_local_timestamp_rejected_without_offset_guess(self):
         h=Clips(outputs=[{'claims':[claim()]},{'claims':[claim('01:30')]}]);c=collector(h)
         result=c.process(c.prepare(config()),reservation_persisted=True)

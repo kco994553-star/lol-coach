@@ -480,12 +480,13 @@ class ExpertCollector:
                 if claims:
                     artifact=validate_expert_artifact(artifact);result['artifacts'].append(artifact)
                     if complete:ledger['processed_video_ids'].append(video['id'])
-                    result['video_results'].append(dict(video_id=video['id'],status='READY' if complete else 'PARTIAL'))
+                    status='READY' if complete else 'BLOCKED_PAYMENT' if failure_status=='BLOCKED_PAYMENT' else 'PARTIAL'
+                    result['video_results'].append(dict(video_id=video['id'],status=status))
                 else:result['video_results'].append(dict(video_id=video['id'],status='FAILED_FORMAT'))
             else:result['video_results'].append(dict(video_id=video['id'],status='NO_ACCEPTED_CLAIMS' if complete else failure_status))
         result['ledger']=validate_ledger(ledger,now);result['request_count']=self.request_count
         statuses=[x['status'] for x in result['video_results']]
-        result['status']='READY' if result['artifacts'] and all(x=='READY' for x in statuses) else 'PARTIAL' if result['artifacts'] else statuses[0]
+        result['status']='BLOCKED_PAYMENT' if 'BLOCKED_PAYMENT' in statuses else 'READY' if result['artifacts'] and all(x=='READY' for x in statuses) else 'PARTIAL' if result['artifacts'] else statuses[0]
         return result
 
 
