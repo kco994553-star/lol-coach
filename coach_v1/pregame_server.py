@@ -65,6 +65,7 @@ class PregameWorkbench(Workbench):
             self.pregame=PregameStore(str(db)+'.pregame.sqlite');self.RequestHandlerClass=PregameHandler
             # Internal fixture injection only. No HTTP operation can change these.
             self.test_mode=False;self.power_data=None;self.movement_statistics=None
+            self.outcome_data=None
         except Exception:self.server_close();raise
 
     def validated_power_data(self):
@@ -77,6 +78,13 @@ class PregameWorkbench(Workbench):
     def power_tiers(self):
         data=self.validated_power_data()
         return sorted({c['tier'] for c in data['cohorts']}) if data is not None else []
+
+    def validated_outcome_data(self):
+        if self.outcome_data is None:return None
+        from .outcome_stats import validate_outcome_dataset
+        dataset=validate_outcome_dataset(self.outcome_data)
+        if dataset['source']['sample_kind']=='SYNTHETIC' and not self.test_mode:return None
+        return dataset
 
 
 def unknown_power_view(reason):
@@ -116,6 +124,25 @@ def power_response(server,request):
     return dict(view=select(request['champion'],request['opponent_champion']),
                 opponent_view=select(request['opponent_champion'],request['champion']) if request['opponent_champion'] else None,
                 test_mode=server.test_mode)
+
+
+def outcome_response(server,request):
+    data=server.validated_outcome_data()
+    reason='OUTCOME_DATA_NOT_AVAILABLE' if data is None else None
+    if request['patch'] is None:reason='PATCH_UNKNOWN'
+    tier=request['tier']
+    if data is not None and tier is None:
+        tiers={c['tier'] for c in data['cohorts'] if c['patch']==request['patch']}
+        if len(tiers)==1:tier=next(iter(tiers))
+        else:reason='TIER_UNKNOWN_OR_AMBIGUOUS'
+    if reason:
+        view=dict(status='UNKNOWN',points=[],reasons=[reason],source=None,samples=None,
+                  dataset_digest=None,schema_version='pregame.outcome-data.v1')
+    else:
+        from .outcome_stats import select_outcome_view
+        selected=select_outcome_view(data,request['champion'],request['position'],request['patch'],tier,request['opponent_champion'])
+        view=dict(selected,dataset_digest=digest(data),schema_version=data['schema_version'])
+    return dict(view=view,test_mode=server.test_mode)
 
 
 class PregameHandler(Handler):
@@ -168,6 +195,7 @@ class PregameHandler(Handler):
         assets={'/pregame':('pregame.html','text/html; charset=utf-8'),'/pregame/':('pregame.html','text/html; charset=utf-8'),
             '/pregame.js':('pregame.js','text/javascript; charset=utf-8'),'/pregame.css':('pregame.css','text/css; charset=utf-8'),
             '/pregame_power.js':('pregame_power.js','text/javascript; charset=utf-8'),
+            '/pregame_outcome.js':('pregame_outcome.js','text/javascript; charset=utf-8'),
             '/pregame-icon.svg':('pregame-icon.svg','image/svg+xml')}
         if self.command=='GET' and route in assets:
             filename,ctype=assets[route];file=ROOT/'web_r4'/filename
@@ -182,6 +210,8 @@ class PregameHandler(Handler):
                 test_mode=self.server.test_mode,power_tiers=self.server.power_tiers()))
         if route==prefix+'/power-view' and self.command=='POST':
             return self.bounded_reply(200,power_response(self.server,power_request(self.body())))
+        if route==prefix+'/outcome-view' and self.command=='POST':
+            return self.bounded_reply(200,outcome_response(self.server,power_request(self.body())))
         if route==prefix+'/roster' and self.command=='GET':return self.bounded_reply(200,roster())
         if route==prefix+'/review-priority' and self.command=='GET':
             path=ROOT/'knowledge_candidates'/'q05-review-priority.json'
@@ -260,6 +290,7 @@ def main():
     parser.add_argument('--token-file',type=Path,required=True)
     parser.add_argument('--power-data',type=Path,help='Validated aggregate-only Q15 JSON')
     parser.add_argument('--movement-data',type=Path,help='Validated aggregate-only Q18 JSON')
+    parser.add_argument('--outcome-data',type=Path,help='Validated aggregate-only ending-duration outcome JSON')
     for flag in ('body-bytes','observations','actions','scenarios','comparisons','pending-jobs'):
         parser.add_argument('--max-'+flag,type=int,required=True)
     args=parser.parse_args()
@@ -279,6 +310,10 @@ def main():
             from .movement import validate_movement_dataset
             server.movement_statistics=validate_movement_dataset(json.loads(args.movement_data.read_text()))
             if server.movement_statistics['source']['sample_kind']=='SYNTHETIC':raise ValueError('Synthetic movement data requires an isolated test fixture')
+        if args.outcome_data:
+            from .outcome_stats import validate_outcome_dataset
+            server.outcome_data=validate_outcome_dataset(json.loads(args.outcome_data.read_text()))
+            if server.outcome_data['source']['sample_kind']=='SYNTHETIC':raise ValueError('Synthetic outcome data requires an isolated test fixture')
     except Exception:
         server.server_close();raise
     print(f'경기 전 준비: http://127.0.0.1:{server.server_port}/pregame',flush=True)
