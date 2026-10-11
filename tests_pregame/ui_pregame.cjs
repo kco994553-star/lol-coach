@@ -19,6 +19,7 @@ const unknown = (key) => ({key,title:key,status:'UNKNOWN',texts:[],reasons:['NO_
     await page.route('http://localhost/**', async route => {
       const request=route.request(), pathname=new URL(request.url()).pathname;
       if(pathname==='/pregame')return route.fulfill({contentType:'text/html',body:html});
+      if(pathname.endsWith('.svg'))return route.fulfill({contentType:'image/svg+xml',body:fs.readFileSync(path.join(root,'web_r4',path.basename(pathname)),'utf8')});
       if(pathname.endsWith('.js')||pathname.endsWith('.css'))return route.fulfill({contentType:pathname.endsWith('.js')?'application/javascript':'text/css',body:fs.readFileSync(path.join(root,'web_r4',path.basename(pathname)),'utf8')});
       const body=request.postDataJSON(); calls.push({path:pathname,method:request.method(),body,key:request.headers()['idempotency-key']});
       let data=[];
@@ -26,7 +27,7 @@ const unknown = (key) => ({key,title:key,status:'UNKNOWN',texts:[],reasons:['NO_
       if(pathname.endsWith('/candidates')){data=request.method()==='POST'?(imported={proposal:{rule_id:spec.rule_id,version:1,review_state:'EXPLORATORY',patch_range:body.spec.patches.join(','),applicability:{champion:'TYPE_BASED',role:'ALL',matchup:'STRUCTURED_CONDITIONS',level:'PRE_GAME_CONDITIONAL',context:'PRE_GAME'}},spec:body.spec}):[spec];}
       if(pathname.endsWith('/knowledge'))data=imported?[imported]:[];
       if(pathname.endsWith('/draft-captures'))data=[{id:'f'.repeat(32),session_id:'1'.repeat(32),revision:1,capture:{title:'Legacy draft'}}];
-      if(pathname.endsWith('/review-priority'))data={recommended_review_order:[{rank:1,candidate_id:'fixture-priority',title:'Isolated priority fixture',reason:'Synthetic readonly reason',source_urls:[spec.sources[0].url],patch_range:'UNKNOWN',counterexamples:['UI only'],review_state:'EXPLORATORY'}]};
+      if(pathname.endsWith('/review-priority'))data=[{rank:1,candidate_id:'fixture-priority',title:'Isolated priority fixture',reason:'Synthetic readonly reason',source_urls:[spec.sources[0].url],patch_range:'UNKNOWN',counterexamples:['UI only'],review_state:'EXPLORATORY'}];
       if(pathname.endsWith('/roster'))data={static_version:null,champions:[]};
       if(pathname.endsWith('/inputs')&&request.method()==='POST') {
         if(failSave){failSave=false;return route.abort('failed');}
@@ -40,6 +41,7 @@ const unknown = (key) => ({key,title:key,status:'UNKNOWN',texts:[],reasons:['NO_
       await route.fulfill({contentType:'application/json',body:JSON.stringify(data)});
     });
     await page.goto('http://localhost/pregame');
+    assert.equal(await page.locator('link[rel="icon"]').getAttribute('href'),'/pregame-icon.svg');
     await page.fill('#pg-token','fixture-only'); await page.click('#pg-login');
     await page.waitForSelector('#pg-workspace:visible');
     assert.equal(await page.locator('.pg-slot').count(),10);
@@ -100,7 +102,7 @@ const unknown = (key) => ({key,title:key,status:'UNKNOWN',texts:[],reasons:['NO_
     await page.setViewportSize({width:390,height:844});
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
     assert.deepEqual(errors,[]);
-    const evidence={executed_at:new Date().toISOString(),source_sha256:require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(root,'web_r4/pregame.js'))).digest('hex'),scope:'Local Chromium + intercepted synthetic API fixtures; no server integration or approval decisions',checks:['10 structured slots','explicit UNKNOWN/PRE_GAME phase','legacy selector uses session ID','null patch Golden input only','ambiguous save identical retry key/body','later edits preserved','plan acknowledged revision gate','7 cards/5 map rows','unknown reasons/full detail','edit hides plan','logout suppresses late plan','editable full spec preview before EXPLORATORY import','sources link','readonly priority source list and reasons','untrusted approval click blocked; no decisions sent','390px authenticated view no overflow'],passed:true,page_errors:errors};
+    const evidence={executed_at:new Date().toISOString(),source_sha256:require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(root,'web_r4/pregame.js'))).digest('hex'),scope:'Local Chromium + intercepted synthetic API fixtures; no server integration or approval decisions',checks:['10 structured slots','explicit UNKNOWN/PRE_GAME phase','legacy selector uses session ID','null patch Golden input only','ambiguous save identical retry key/body','later edits preserved','plan acknowledged revision gate','7 cards/5 map rows','unknown reasons/full detail','edit hides plan','logout suppresses late plan','editable full spec preview before EXPLORATORY import','sources link','same-origin SVG favicon declaration','readonly priority source list and reasons','untrusted approval click blocked; no decisions sent','390px authenticated view no overflow'],passed:true,page_errors:errors};
     fs.writeFileSync(path.join(root,'evidence/queue/ui-local.json'),JSON.stringify(evidence,null,2)+'\n');
     console.log(JSON.stringify(evidence));
   } finally {await browser.close();}
