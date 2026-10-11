@@ -1,3 +1,27 @@
+된 것: Riot 첫 응답 기록·포지션 변환과 Gemini 구간 처리를 병합했습니다.
+된 것: 5개 포지션·9개 카드와 필수 CI를 통과했습니다.
+안 된 것: Riot 첫 응답 403으로 실제 통계·그래프 연결은 대기입니다.
+안 된 것: Gemini 한 편 시험도 HTTP 실패로 요약을 얻지 못했습니다.
+내가 검토할 것: 무료 API 접근 상태와 웹 지식 후보의 출처·조건입니다.
+
+# Q15/Q19 resumed implementation merged; actual inputs BLOCKED_EXTERNAL
+
+PR18 merged4e1836e7722719c7da6db0dbfe963fc4caf37570 (published62bdd394e9d260d3231a833e87ff79c4da1d8507, exacttree397d5db908c7174a4070771e07aa99ef32f65c45). PR19 merged298cf739fa5f91190418fb96583776df1d528f4a (published2707dcb92eadc74adfb9b8ac5f2b8a621710c5ea, exacttree0b6aa9a44f8362d7ebcd7618896b51e549129768). Required3jobs PASS for each; source390/392paths and13groups verified. Receipts ci-pr18.json/ci-pr19.json in evidence/queue/resume-20261011. Main expert110PASS including17segmenttests and independent final P1/P2 cleared; golden five-role, guarded extension and expert source Chromium passed in actual CI. Tests establish implementation behavior, not coaching accuracy. Frozen/public artifact/ledger shapes and prior source history unchanged.
+
+Riot exactlyONE renewed-key CHALLENGERrun38123211940 first403/request1/retry0, BLOCKED_EXTERNAL, usablematches0. User-directed KEY_EXPIRED attribution kept separate from transport UNAUTHORIZED_OR_EXPIRED_OR_UNSUPPORTED_PATH/key_kindUNKNOWN. The portal200 is user testimony; Actions403 is observed. No further Riot dispatch in this session. Safe artifact strictvalidated; no REAL graphs or partial stats fabricated. Receipt riot-renewed-key-first.json.
+
+Gemini official8source audit supports static video processing with string offsets.600second modelbound, <=600secondclips, initial1video<=1200seconds, video-first prompt+absolute timestamp interval validation, workflow30minutes. Known BLOCKED_PAYMENT takes priority; malformed/partial outputs cannot mark source processed. New internal planv2, oldexpert.claims.v1/expert.quota-ledger.v1 and archivedplanv1 unchanged. Conservative fulloriginalduration-perclip reserves before modelcalls; no documented clipping discount assumed.
+
+Trusted initial segmented run38123631101 onPR19main completedworkflow but acquisitionBLOCKED_EXTERNAL/PROVIDER_HTTP_FAILURE, modelcalls1/metadatacalls3, no usableclaims; secondplannedclip notcalled. This is not a typedNETWORK_TIMEOUT; exactHTTPcode wasn't emitted by existing safe receipt and is unknown. No inference of expiredGeminikey, paidtier or unsupportedclipping. Fresh documented freeproofVERIFIED_FREE; project free/exclusive user attestation preserved. One1173secondvideo/two plannedclips added2346chargedseconds; old4rows4298 preserved byte-equivalently, now5rows6644seconds, finalledger exactly equals durable reservation. No refunds/charged-ID retry/Billing/newproviderdispatch. Receipts expert-segments-reservation.json and expert-segments-actual-first.json include strictvalidated safequota/entitlement/status data only. No originalproviderresponse/transcript/video/Secret or player rawJSON retained. Initial success notestablished, so video limit staysone and no increase follows.
+
+Prior four failed reservations retain source observation: firstrun20sdefault/NETWORK_FAILURE, secondrun60s/NETWORK_TIMEOUT, two actualmodelcalls. User-reported60srestrictioncause recorded separately; never turn fourreservations into fourobservedtimeouts. 이브 ADC channel exactID stays enabled/gradeUNKNOWN, 클템excluded, Pgrade블루리쉬disabled;16channels15enabled. Uploader never inferred asclipspeaker or RiotID.
+
+Progress DONE Q01–Q09=9/19fullIDs; closedoriginalinputblockers3, no new acquisition blocker closed. Q15statistics/graphs and PRE_GAME Q16/Q17/Q18 implemented; real statistics, verified movementstages, postgame Q16–Q18 and Q10–Q14 remain external. Approvedknowledge0/automatedusableexpertclaims0/coachingN0/accuracy=null/paidservices0. All independent agent tasks completed; no READY implementation remains after this additivecloseoutpublication. No actual-source browser run can be made without accepted data; scratch REAL-data runners are prepared but NOT_RUN.
+
+Resume Q15: provide working Riot developmentkey/project access via GitHubSecret and freshly re-intake before authorized one-run check; user401403stop persists. Resume Q19: freeprovider can accept documented publicYouTube static request, with durable quota available; preserve chargedIDs and failedhistory, capture only safe status and validate actualshort summaries before publication. No blind reattempt of this source or free→paid transition. Q10needs ownPCcapture/fieldreceipt, Q11actualraw samples, Q12matchingPOVanchors, Q13then-knownreview, Q14independentreference. User manual web review is optional content approval, never impersonated by AI. Next external change resumes only its affected queue task. Finalcloseoutbranch work/queue-segments-closeout owns evidence/handoff only; actual final HEAD/CI/normalmerge and PARKED_EXTERNAL are recorded on commonclaim.
+
+---
+
 된 것: PR #18을 병합했고 새 키로 Riot 수집을 한 번 실행했습니다.
 된 것: 첫 응답 403을 기록했고 요청 1회·재시도 0회로 멈췄습니다.
 된 것: Gemini 구간 지원을 확인하고 600초 대기·한 편 처리로 수정했습니다.
