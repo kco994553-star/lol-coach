@@ -1,0 +1,32 @@
+{
+  "repository_patch": null,
+  "runtime_patch": null,
+  "status": "UNKNOWN",
+  "source_snapshot_version": "16.20.1",
+  "source_snapshot_selection": "Explicit dated static source pin. Advertised official versions verified before download. Not a gameplay patch assertion.",
+  "intake_commit": "0337d915633f6ad5719f55de1252f05e06621c9b",
+  "audited_paths": [
+    {
+      "path": "coach_v1/draft.py",
+      "sha256": "f1c1df846bb56d8ad6c20882327e03ae69ca5f8abda1712b44ab08bf7f888595"
+    },
+    {
+      "path": "tests_mvp/test_knowledge_review.py",
+      "sha256": "13e00a80ac7c471ca1655b6bda08176ceb4cf53e16a65f4224fe61c5f933b2ef"
+    },
+    {
+      "path": "fixtures/r7-continuation/structured-source-reference.json",
+      "sha256": "15dca7c4d9034ba6df5f6f192ae9b3bcfb738f6922c091880263875fb5bc4e0b"
+    },
+    {
+      "path": "contracts/r7/sources.json",
+      "sha256": "0ad7374eeb4f7432f85578899d2935b4df666ce51b4d31f89b116c8b50cea962"
+    }
+  ],
+  "findings": [
+    "coach_v1/draft.py stores operator patch declarations, not an authoritative current-game version.",
+    "tests_mvp/test_knowledge_review.py declares 26.20 in synthetic requests. Tests are not patch authority.",
+    "fixtures/r7-continuation/structured-source-reference.json historical match version14.17.613.973 is unrelated to the golden prospective draft.",
+    "Golden initial manual runtime patch remains null."
+  ]
+}
