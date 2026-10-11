@@ -1,3 +1,9 @@
+# 2026-10-11 — ADC expert 이브 added by user
+
+User supplies https://youtube.com/channel/UCerhqgFd8dnypewC3yjAlbg?si=vhmdI328HjaNTq28. Config adds exact canonical channelID as BOTTOM/enabled; content grade UNKNOWN because no L/C grade supplied. Speaker remains unverified and no RiotID inferred.16 channels/15 enabled, 클템 excluded, 블루리쉬(P)disabled. Additive contract expert-v1-channel-addition.md preserves the original15-channel decision. Collector bound50 suffices for45metadata+2model requests; existingrollingquota and failedreservations preserved.
+
+---
+
 # 2026-10-11 — Gemini project quota attestation
 
 User explicitly confirms lol-coach is collector-exclusive and no Gemini YouTube processing occurred in the previous24hours. Main config/expert_runtime.json records this source assertion and UTC time; free-tier/no-Billing/no-upgrade decision remains. This enables a first absent-ledger initialization within the attested24h window, never resets missing expected/corrupt state or refunds failed reservations. Real dispatch still requires durable reservation upload and Secret presence. No Secret values read.

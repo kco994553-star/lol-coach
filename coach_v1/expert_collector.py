@@ -8,8 +8,8 @@ before process; Actions provides it only after upload-artifact succeeds.
 Rolling24h cap28800s is conservative; reset timezone is unknown. No retries:
 another uncertain dispatch would require another full duration reservation.
 Publication is always deferred to Main's repository ownership protocol.
-The default request budget is50 (also its hard maximum):14 enabled channels
-can use3 metadata requests each plus2 model requests, totaling44. Provider
+The default request budget is50 (also its hard maximum):15 enabled channels
+can use3 metadata requests each plus2 model requests, totaling47. Provider
 transport timeout defaults to the existing60-second hard maximum. A detected
 TimeoutError (direct or wrapped in URLError) is NETWORK_TIMEOUT; other network
 failures remain NETWORK_FAILURE without inferring expired keys or paid access.
@@ -130,7 +130,7 @@ def validate_config(value):
         _require(isinstance(cid,str) and re.fullmatch(r'UC[A-Za-z0-9_-]{22}',cid) is not None and cid not in seen);seen.add(cid)
         _require(all(_text(channel[k],200) for k in ('name','speaker')) and type(channel['speaker_verified']) is bool)
         _require(channel['main_position'] in ('TOP','JUNGLE','MID','BOTTOM','SUPPORT','UNKNOWN'))
-        _require(channel['content_grade'] in ('L','C','P') and type(channel['enabled']) is bool)
+        _require(channel['content_grade'] in ('L','C','P','UNKNOWN') and type(channel['enabled']) is bool)
         _require(channel['content_grade']!='P' or channel['enabled'] is False)
         _require(channel['language']=='UNKNOWN' or isinstance(channel['language'],str) and re.fullmatch(r'[a-zA-Z]{2,8}(?:-[a-zA-Z0-9]{1,8})*',channel['language']) is not None)
         _require(playlist is None or isinstance(playlist,str) and re.fullmatch(r'UU[A-Za-z0-9_-]{22}',playlist) is not None)
@@ -299,7 +299,7 @@ class ExpertCollector:
     def _discover(self,config,ledger,now):
         known=set(ledger['processed_video_ids'])|{row['video_id'] for row in ledger['reservations'] if row['reserved_at']>now-CHARGE_WINDOW}
         candidates=[];seen=set()
-        for channel in sorted(config['channels'],key=lambda c:('L','C','P').index(c['content_grade'])):
+        for channel in sorted(config['channels'],key=lambda c:('L','C','UNKNOWN','P').index(c['content_grade'])):
             if not channel['enabled']:continue
             if len(candidates)>=config['max_videos_per_run']:break
             playlist=channel['uploads_playlist_id']

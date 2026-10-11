@@ -1,4 +1,4 @@
-ADC expert addition 이브: requested2026-10-11; exact channelURL/ID BLOCKED_EXTERNAL, question pending. No guessedchannel enabled; 클템 remains excluded.
+ADC expert 이브 exact user channelID UCerhqgFd8dnypewC3yjAlbg added;16authorized/15enabled. GradeUNKNOWN, clipspeakerunverified; 클템 remains excluded.
 
 # v1.6 remaining source expansion / operational collection VERIFYING
 

@@ -70,18 +70,27 @@ class CollectorTests(unittest.TestCase):
         return self.module.ExpertCollector(youtube_api_key='TEST_YOUTUBE_KEY',gemini_api_key='TEST_GEMINI_KEY',
             transport=http or Transport(),clock=lambda:NOW,policy=kwargs.pop('policy',policy()),**kwargs)
 
+    def test_unknown_channel_grade_does_not_invent_teaching_grade_or_clip_speaker(self):
+        cfg=config();cfg['channels'][0].update(content_grade='UNKNOWN',speaker='이브',speaker_verified=False)
+        http=Transport();c=self.collector(http)
+        plan=c.prepare(cfg)
+        self.assertEqual(plan['status'],'RESERVED')
+        self.assertEqual(plan['videos'][0]['speaker'],'UNKNOWN')
+        self.assertFalse(plan['videos'][0]['speaker_verified'])
+        self.assertEqual(cfg['channels'][0]['content_grade'],'UNKNOWN')
+
     def test_default_empty_channels_blocks_without_any_network(self):
         http=Transport();c=self.collector(http);cfg=config();cfg['channels']=[]
         plan=c.prepare(cfg)
         self.assertEqual(plan['status'],'BLOCKED_EXTERNAL');self.assertEqual(http.calls,[])
 
-    def test_default_budget_reaches_tail_of_fourteen_authorized_channels(self):
+    def test_default_budget_reaches_tail_of_fifteen_authorized_channels(self):
         cfg=config();cfg['channels']=[];videos={}
-        for index in range(14):
+        for index in range(15):
             channel=copy.deepcopy(config()['channels'][0])
             channel.update(channel_id='UC'+str(index).zfill(22),uploads_playlist_id=None)
             cfg['channels'].append(channel)
-            ids=[str(index).zfill(11)] if index<13 else [str(index).zfill(11),'zyxwvutsrqp']
+            ids=[str(index).zfill(11)] if index<14 else [str(index).zfill(11),'zyxwvutsrqp']
             for video in ids:videos[video]=channel['channel_id']
         class Tail(Transport):
             def __call__(self,method,url,headers,body,timeout,max_bytes):
@@ -101,10 +110,10 @@ class CollectorTests(unittest.TestCase):
                 raise AssertionError('unexpected fixture URL')
         http=Tail();c=self.collector(http);plan=c.prepare(cfg)
         self.assertEqual(plan['status'],'RESERVED')
-        self.assertEqual([video['id'] for video in plan['videos']],[str(13).zfill(11),'zyxwvutsrqp'])
-        self.assertEqual(c.request_count,42)
+        self.assertEqual([video['id'] for video in plan['videos']],[str(14).zfill(11),'zyxwvutsrqp'])
+        self.assertEqual(c.request_count,45)
         result=c.process(plan,reservation_persisted=True)
-        self.assertEqual(result['status'],'READY');self.assertEqual(c.request_count,44)
+        self.assertEqual(result['status'],'READY');self.assertEqual(c.request_count,47)
         self.assertEqual(len(result['artifacts']),2)
         self.assertTrue(all('/search?' not in call[1] for call in http.calls))
         with self.assertRaises(ValueError):self.collector(max_requests=51)
