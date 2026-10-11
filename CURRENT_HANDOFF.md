@@ -3,6 +3,21 @@
 - status: `RUNNING`
 - writer_active: true
 - owner_branch: `work/api-diagnostics-20261011`
+- authority: USER_DIAGNOSIS_FIRST_RESUME_2026-10-11 and USER_QUEUE_V1.6_2026-10-11; explicit autonomous Main, free implementation/publication/CI/merge, all five roles.
+- intake_main_head: `bb543a52b0edd5f24834aae748142298358fbd9b`
+- implementation_head: `d8fcafd350c18e852b735eb906ef74a18c8d56c2`
+- task_scope: USER_DIAGNOSIS_FIRST_RESUME: Q15 key shape/trim and selected auth response; Q19 safe provider HTTP diagnostics, same-model text probe before one video clip; then confirmed-cause fixes and safe real acquisition integration.
+- scope_boundary: actual Q10–Q14 personal PC/video/review and postgame extensions unavailable; N0 coaching_accuracy=null; no live coaching or cooldown tracking.
+- updated_at: 2026-10-11T10:12:10.301393+00:00
+- prior history retained below; this token remains current; sibling non-force update required.
+
+---
+
+# Latest common execution claim — RUNNING
+- run_token: `main-20261011-queue-v13-050952`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/api-diagnostics-20261011`
 - authority: USER_QUEUE_V1.6_2026-10-11; explicit autonomous Main, free implementation/publication/CI/merge, all five roles.
 - intake_main_head: `bb543a52b0edd5f24834aae748142298358fbd9b`
 - implementation_head: `bb543a52b0edd5f24834aae748142298358fbd9b`
