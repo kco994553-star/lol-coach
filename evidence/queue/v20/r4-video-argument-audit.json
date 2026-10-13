@@ -1,0 +1,190 @@
+{
+  "schema_version": "expert.video-argument-audit.v1",
+  "checked_at": "2026-10-13T11:14:52.305363+00:00",
+  "evidence_kind": "READ_ONLY_OFFICIAL_DOCUMENT_AND_SAFE_RECEIPT_AUDIT",
+  "actual_run_id": 38387587260,
+  "safe_artifact_id": 11807017561,
+  "selected_model": "gemini-3.6-flash",
+  "video_id": "lSy9NeB5Ue4",
+  "diagnosis": "UNKNOWN",
+  "invalid_field": null,
+  "confirmed_request_argument_incompatibilities": [],
+  "primary_text_statuses": {
+    "curl": 503,
+    "python": 503
+  },
+  "fallback_text_statuses": {
+    "curl": 200,
+    "python": 200
+  },
+  "video_error": {
+    "error_code": 400,
+    "error_message": "Request contains an invalid argument.",
+    "error_status": "INVALID_ARGUMENT",
+    "http_status": 400,
+    "phase": "VIDEO_CLIP",
+    "provider": "GEMINI",
+    "reason": "PROVIDER_HTTP_FAILURE"
+  },
+  "video_request_count": 1,
+  "accepted_claims": 0,
+  "accepted_claims_basis": "MAIN_OBSERVATION_AND_BLOCKED_SAFE_RECEIPT",
+  "quota_recovery": {
+    "artifact_id": 11790310968,
+    "reason": null,
+    "run_id": 38349297786,
+    "status": "FOUND"
+  },
+  "ledger_reconciliation": "MAIN_OWNED_NOT_RECALCULATED",
+  "fallback_trial_consumed": true,
+  "charged_id_retry_allowed": false,
+  "request_wire_body_retained": false,
+  "builder_review": {
+    "path": "coach_v1/expert_collector.py",
+    "sha256": "17cc74f934d36be6816297c94d10fd4e1852d7cf7a612331b86820164935350d",
+    "video_part_fields": [
+      "file_data.file_uri",
+      "video_metadata.start_offset",
+      "video_metadata.end_offset"
+    ],
+    "offset_rule": "start=0s,end=min(600,original_duration)s",
+    "generation_config_fields": [
+      "candidateCount",
+      "responseMimeType",
+      "responseJsonSchema"
+    ],
+    "response_schema_keywords": [
+      "additionalProperties",
+      "enum",
+      "items",
+      "maxItems",
+      "properties",
+      "required",
+      "type"
+    ]
+  },
+  "checks": [
+    {
+      "feature": "MODEL_VIDEO_AND_STRUCTURED_CAPABILITIES",
+      "status": "DOCUMENTED"
+    },
+    {
+      "feature": "VIDEO_METADATA_NESTING_AND_DURATION_STRINGS",
+      "status": "DOCUMENTED"
+    },
+    {
+      "feature": "PROTOJSON_SNAKE_CASE_NAMES",
+      "status": "DOCUMENTED"
+    },
+    {
+      "feature": "OMITTED_FILE_MIME_IS_OPTIONAL",
+      "status": "DOCUMENTED"
+    },
+    {
+      "feature": "JSON_SCHEMA_KEYWORD_VOCABULARY",
+      "status": "DOCUMENTED"
+    },
+    {
+      "feature": "EXACT_ROUTE_MODEL_YOUTUBE_CLIPPING_SCHEMA_COMBINATION",
+      "status": "UNKNOWN"
+    },
+    {
+      "feature": "DEPRECATED_METADATA_REPLACEMENT_REQUEST_STRUCTURE",
+      "status": "NOT_ESTABLISHED"
+    },
+    {
+      "feature": "EXACT_REJECTED_FIELD",
+      "status": "UNKNOWN"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://ai.google.dev/api/generate-content",
+      "locators": [
+        "#GenerationConfig",
+        "#Part",
+        "#VideoMetadata",
+        "#FileData"
+      ],
+      "sha256": "4e13dbf933c72c53cd11b82236549618fe19e0de0d3b00636015b7b4509e5477",
+      "http_status": 200,
+      "excerpt": "If set, responseSchema must be omitted, but responseMimeType is required."
+    },
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/structured-output",
+      "locators": [
+        "supported schema properties"
+      ],
+      "sha256": "6a5bb8095be65e3c93c32995c528e4109ae6f1bd61af0e73f64fad4c6d558c28",
+      "http_status": 200,
+      "excerpt": "additionalProperties: Controls whether properties not listed in properties are allowed. Can be a boolean or a schema."
+    },
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/models/gemini-3.6-flash",
+      "locators": [
+        "supported data types",
+        "capabilities"
+      ],
+      "sha256": "7d18043c9d8485c900d67daefd26018fe88945a666cd93b5d924fe090905fb67",
+      "http_status": 200,
+      "excerpt": "Inputs Text, Image, Video, Audio, and PDF; Structured outputs Supported"
+    },
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/video-understanding",
+      "locators": [
+        "#youtube",
+        "#customize-video-processing",
+        "#clipping-intervals"
+      ],
+      "sha256": "fdf3bc67b9aa2d0e6d03d47fc79ff828507e8f9ea7d0cc7e103ca84c4a6e6bca",
+      "http_status": 200,
+      "excerpt": "By default, video inputs use static processing (extracting frames at 1 FPS)."
+    },
+    {
+      "url": "https://protobuf.dev/programming-guides/json/",
+      "locators": [
+        "#field-names-as-json-keys"
+      ],
+      "sha256": "b1ddf3edca841b66d0f6dca4605447d8db95bc9a6db60a1a073f5d5fc4761982",
+      "http_status": 200,
+      "excerpt": "Parsers accept both the lowerCamelCase name"
+    },
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/api-errors",
+      "locators": [
+        "Common API errors: invalid_request400"
+      ],
+      "sha256": "943e7eafa8c95681969971dbaa1fa3a32ad0f8f9420089e322c928eea300b2c6",
+      "http_status": 200,
+      "excerpt": "The request payload is malformed or contains invalid parameters."
+    }
+  ],
+  "source_fetch_limitations": [
+    "First video-guide public-document GET failed; second GET succeeded. No provider inference/API calls were made."
+  ],
+  "safe_local_evidence": [
+    {
+      "path": "expert-front/front-diagnostics.json",
+      "sha256": "314ecfc3ec464f5af7dcb4cff9a7aa081c680d0edc0256baaa459b7aa72dc76a"
+    },
+    {
+      "path": "expert-final/diagnostics.json",
+      "sha256": "248e4183a1b6543169c55c9d85dbf476bea54a2fb9583f9e9b618da1031cc321"
+    },
+    {
+      "path": "expert-final/receipt.json",
+      "sha256": "0797d3a56d66d4671fb496b1d8c4cd77d6cbd0df60031099c477474b162f57cf"
+    },
+    {
+      "path": "expert-recovery/recovery.json",
+      "sha256": "98f7cab5f817c5e64b98f45ca2ee7f57c6123b9850e30075766153c3256be6ac"
+    }
+  ],
+  "next_action": "Provider field-specific documentation clarification; retain manual timestamped-summary route. No blind retries.",
+  "audit_provider_api_calls": 0,
+  "audit_riot_api_calls": 0,
+  "audit_youtube_api_calls": 0,
+  "code_modified": false,
+  "raw_model_or_transcript_saved": false,
+  "coaching_accuracy": null
+}

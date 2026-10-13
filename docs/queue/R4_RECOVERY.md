@@ -15,3 +15,7 @@ Inspect the public-safe artifact's `front-diagnostics.json`, `diagnostics.json`,
 Open the local app's [expert workspace](/experts.html), connect using its existing private-app token and use **영상 발언을 직접 요약하기**. If using the Gemini app, request a short paraphrased summary of a10-minute-or-shorter interval with original-video timestamps. Confirm the public YouTube URL, title/channel, full original duration and each timestamp yourself. Paste a short paraphrase and leave unsupported patch, speaker, matchup or quantitative details unknown. Save as an unreviewed candidate, then review the source and conditions. This route creates no automatic USER_WEB approval and no tactical execution.
 
 Implementation checks use authored offline fixtures only; no API or Actions dispatch was performed by the implementation worker.
+
+## Actual authorized trial — 2026-10-13
+
+The one explicitly permitted alternative-model trial is consumed in trusted main run [38387587260](https://github.com/kco994553-star/lol-coach/actions/runs/38387587260). Primary3.8 returned503 in both clients; official-free fallback3.6 returned200 in both. Exactly one video clip then returned400 `INVALID_ARGUMENT`; no candidates were accepted. Official source audit did not identify the rejected field. Do not enable a second alternative trial, retry the charged video, or interpret workflow success as acquisition success. See [argument audit](R4_VIDEO_ARGUMENT_AUDIT_2026-10-13.md) and the safe actual receipt under `evidence/queue/v20/actual-gemini/`. Manual summary intake remains immediately available.
