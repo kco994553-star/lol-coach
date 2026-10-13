@@ -43,4 +43,3 @@ class BaselineViewTests(unittest.TestCase):
         self.assertEqual((self.data,self.progress),before)
         self.assertIsNone(view['coaching_accuracy'])
         self.assertNotIn('hashed_match_ids',str(view));self.assertNotIn('precision_evidence',str(view))
-
