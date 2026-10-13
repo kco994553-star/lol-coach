@@ -1,3 +1,19 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261013-pro-reference-resume`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/pro-reference-resume-20261013`
+- authority: explicit USER_DECISIONS_2026-10-13; remove U1/U2 own identity/tier dependency, renew KRkey19:00KST, start R2/R3; PC priority; new grounded sequential Gemini diagnostic. Prior model trial remains consumed; new distinct diagnostic stages are authorized.
+- intake_main: f987f71670c499fdcea1c9e810ba1478c36ab940 (PR26/27 verified; prior failures and quota9rows10712 preserved).
+- actual_started: Riot CHALLENGER trusted workflow38391353214,key_renewed=true; statusRUNNING, no futureacquisitionclaim.
+- plan/spec: docs/superpowers/{specs,plans}/2026-10-13-pro-reference-resume*.md onfeaturebranch.
+- scope: Challengerprimary/GMinsufficientonly;25pro+backups timeline cases withprivatecache; opponentrights REVIEWED+stats only; PC layout; baselineYouTubeexample ->clip ->format onceperstage withfullsanitizederror anddurablequota. Manualdefault/automaticpause ifunlocalized.
+- privacy: cloud cannot read provider Secrets; private raw processing/encrypted durable cache in trusted mainActions only, public anonymous aggregates. Dedicated newSecret adminAPI403; use domain-separated HKDF from existing YOUTUBE_API_KEY inrunner only, no keyexport/provider call forencryption; securityreview required.
+- next: parallel disjointworkers thenMainintegration/review/requiredCI/normalmerge, actualboundedpro/video stages andsafecloseout. No ownID/tierquestions.401/403 stops thatRiotrun/userkey-expiry attribution.
+- updated_at:2026-10-13
+
+---
+
 # Latest common execution claim — PARKED_EXTERNAL
 - run_token: `main-20261013-queue-v20`
 - status: `PARKED_EXTERNAL`
