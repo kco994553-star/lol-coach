@@ -1,3 +1,20 @@
+# Latest common execution claim — CI_PENDING_CLOSEOUT
+- run_token: `main-20261013-queue-v20`
+- status: `CI_PENDING_CLOSEOUT`
+- writer_active: false
+- owner_branch: `work/queue-v20-closeout-20261013`
+- authority: USER_QUEUE_V2.0 + USER_R3_PRO_REFERENCE_ROSTER; inherited free publication/normal merge.
+- implementation_main: `bdc7e3a891c3cb8b08dd98832482761cf5053f90`; PR26 MERGED from9d8de274, tree55391771b1320ee6036328dbb909299344c9430f.
+- required_PR26_and_postmerge: all three checks SUCCESS; each14sourcegroups/440paths verified. Original index gate restored, not weakened.
+- R4_one_trial: CONSUMED in38387587260; primary3.8 paired503, fallback3.6 paired200; one video400 INVALID_ARGUMENT, accepted0, exact_bad_argumentUNKNOWN after official audit. No more provider calls or enabled alternative trials; charged video lSy9NeB5Ue4 excluded.
+- fresh_quota: recovered38349297786/artifact11790310968;8rows9575sec ->9rows10712sec; all prior rows preserved, reservation/final bytes identical, no refund. Older6/7396 snapshots are historical only.
+- progress: v2 complete1/5 R1; newly closed tooling blocker1; legacy10/19 +4 prior closed blockers retained. User approvals0/ownmatches0/newRiotcalls0/paid0/coaching_accuracy=null.
+- affected_external: R2U2/U3; R3U1/U3 (pro list is not own identity); R4 video400 field-specific provider evidence or newly authorized grounded diagnostic; R5 PC/POV.
+- next: docs/safe-evidence-only closeout normal PR and required CI, source binding, normal merge and postmerge check; terminal PARKED_EXTERNAL afterward. No future closeout success asserted.
+- updated_at: 2026-10-13
+
+---
+
 # Latest common execution claim — VERIFYING_ACTUAL_PROVIDER
 - run_token: `main-20261013-queue-v20`
 - status: `VERIFYING_ACTUAL_PROVIDER`
