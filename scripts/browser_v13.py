@@ -79,7 +79,7 @@ def synthetic_statistics():
     from coach_v1.power_stats import build_power_dataset
     from coach_v1.movement import build_movement_dataset
     source=dict(provider='SYNTHETIC',platform='KR',regional='ASIA',queue_id=420,map_id=11,
-        tier='GOLD',patch=PATCH,window_start=None,window_end=None,
+        tier='CHALLENGER',patch=PATCH,window_start=None,window_end=None,
         retrieved_at='2026-10-11T00:00:00Z',sample_kind='SYNTHETIC',
         endpoints=['MATCH_V5_MATCH','MATCH_V5_TIMELINE'])
     pairs=synthetic_pairs()
