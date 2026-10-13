@@ -1,3 +1,21 @@
+# Latest common execution claim — VERIFYING_POSTMERGE_CLOSEOUT
+- run_token: `main-20261013-queue-v20`
+- status: `VERIFYING_POSTMERGE_CLOSEOUT`
+- writer_active: false
+- owner_branch: `work/queue-v20-closeout-20261013`
+- authority: USER_QUEUE_V2.0 + USER_R3_PRO_REFERENCE_ROSTER; inherited free publication/normal merge.
+- publication: PR26 implementation and PR27 safe diagnostic closeout both normally MERGED.
+- published_main: `f987f71670c499fdcea1c9e810ba1478c36ab940`
+- closeout_head: `f12edf2e8c5c8f7603df82befb4d126eef75d15a`
+- published_tree: `77a6ee1f0ee042e12173c0498138ca99f2780984`; PR27 testedmerge9280df70 matches exact tree.
+- required_PR27:38389463327/38389463340 all3SUCCESS;14sourcegroups440paths verified.
+- postmerge:38389925890/38389925618 RUNNING; do not claim future success.
+- actual_Gemini:38387587260 solealternativeCONSUMED; pairedprimary503/fallback200; video400 INVALID_ARGUMENT/candidates0/exactfieldUNKNOWN. Freshquota8/9575 ->9/10712 retained exactly; no more session provider requests/chargedID retry.
+- next: await required postmerge results, exact-source receipt, terminal PARKED_EXTERNAL. R1DONE; R2U2/U3, R3U1/U3, R4providerfielddiagnosis, R5PC/POV external. Userknowledgeapprovals0/realownmatches0/newRiotcalls0/paid0/accuracy=null.
+- updated_at: 2026-10-13
+
+---
+
 # Latest common execution claim — CI_PENDING_CLOSEOUT
 - run_token: `main-20261013-queue-v20`
 - status: `CI_PENDING_CLOSEOUT`
