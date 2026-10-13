@@ -7,6 +7,10 @@ on:
         description: Isolate claim schema; TEXT503 only up to3 retries, no video/quota change
         type: boolean
         default: false
+      allow_flash_fallback:
+        description: Main-authorized one-time officially free Flash fallback trial; never scheduled
+        type: boolean
+        default: false
   schedule:
     - cron: '47 4 * * *'
 
@@ -54,15 +58,27 @@ jobs:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python scripts/collect_expert_claims.py --phase probe-format --runtime-config config/expert_runtime.json --output-dir "$RUNNER_TEMP/expert-format"
-      # generateContent same-key/model TEXT: only503 gets <=3 spaced retries. VIDEO never retries.
-      - name: Verify same-model text then discover public videos and reserve quota
+      - name: Diagnose identical curl and Python text concurrently and select at most one official free fallback
+        if: inputs.text_schema_only != true
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          EXPERT_ALLOW_FLASH_FALLBACK: ${{ inputs.allow_flash_fallback }}
+        run: |
+          fallback_args=()
+          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" && "$EXPERT_ALLOW_FLASH_FALLBACK" == "true" ]]; then
+            fallback_args+=(--allow-fallback-once)
+          fi
+          python scripts/diagnose_expert_front.py --timeout 120 --runtime-config config/expert_runtime.json --recovery-receipt "$RUNNER_TEMP/expert-recovery/recovery.json" --ledger "$RUNNER_TEMP/expert-recovery/quota-ledger.json" --output "$RUNNER_TEMP/expert-front/front-diagnostics.json" "${fallback_args[@]}"
+      # Reuse the successful paired probe and its exact selected model; no duplicate text.
+      - name: Reuse selected successful text then discover public videos and reserve quota
         id: reserve
         if: inputs.text_schema_only != true
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          python scripts/collect_expert_claims.py --phase reserve --collection-mode DIAGNOSTIC_FIRST_CLIP --runtime-config config/expert_runtime.json --output-dir "$RUNNER_TEMP/expert-reservation" --ledger "$RUNNER_TEMP/expert-recovery/quota-ledger.json" --recovery-receipt "$RUNNER_TEMP/expert-recovery/recovery.json"
+          python scripts/collect_expert_claims.py --phase reserve --front-diagnostics "$RUNNER_TEMP/expert-front/front-diagnostics.json" --collection-mode DIAGNOSTIC_FIRST_CLIP --runtime-config config/expert_runtime.json --output-dir "$RUNNER_TEMP/expert-reservation" --ledger "$RUNNER_TEMP/expert-recovery/quota-ledger.json" --recovery-receipt "$RUNNER_TEMP/expert-recovery/recovery.json"
           python - <<'PY'
           import json, os
           from pathlib import Path
@@ -104,6 +120,7 @@ jobs:
         with:
           name: expert-public-safe-${{ github.run_id }}
           path: |
+            ${{ runner.temp }}/expert-front/front-diagnostics.json
             ${{ runner.temp }}/expert-format/format-probe.json
             ${{ runner.temp }}/expert-format/diagnostics.json
             ${{ runner.temp }}/expert-format/entitlement.json
@@ -123,5 +140,5 @@ jobs:
           python - <<'PY'
           import os
           with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as output:
-              output.write('PUBLICATION_DEFERRED: Main publishes validated summaries under the shared owner protocol.\n\nWorkflow exit status does not establish acquisition. Inspect receipts; no raw video/transcript/model response or credential is retained.\n')
+              output.write('PUBLICATION_DEFERRED: Main publishes validated summaries under the shared owner protocol.\n\nTEXT curl/Python run concurrently with identical body and120s wall bounds. Both timeout means provider/network-side timeout; no key-expiry inference. One officially verified free fallback pair only; successful selected text is reused before one <=600s video clip. Workflow exit status does not establish acquisition. Inspect receipts; no raw video/transcript/model response or credential is retained.\n\nManual timestamped summary: open /experts.html in the authenticated local app, then add a public URL, timestamps and paraphrases. See docs/queue/R4_RECOVERY.md.\n')
           PY

@@ -1,3 +1,27 @@
+된 것: 모바일 지식 검토 큐와 비공개 경기 기록 복기 화면을 구현했습니다.
+된 것: 표본 누적·필요 경기 수·프로 기준 명단과 PC·영상 안내를 연결했습니다.
+안 된 것: 본인 경기·새 Riot 표본은 U1·U2·U3 입력 대기입니다.
+진행 중: 필수 CI·게시·Gemini 120초 비교 진단을 마무리합니다.
+내가 할 것: 지식 후보 승인과 Riot ID·티어·키 갱신 확인입니다.
+
+# Queue v2.0 — integration VERIFYING (2026-10-13)
+
+Owner Main `work/queue-v20-20261013`, commonclaim token `main-20261013-queue-v20`. User's v1.6 free implementation/publication/normalmerge authority reused; v2.0 and explicit R3 pro roster steering incorporated. PR24/25 and Q01–Q09,Q15 evidence reused. Legacy fullDONE10/19 and prior closedblockers4 preserved. v2 completion is tracked separately by5R IDs, not tests/coaching accuracy.
+
+| ID | Current | Implemented / remaining |
+|---|---|---|
+| R1 | VERIFYING | One-candidate mobile queue, exact-version user-only decisions, editlineage, deferred pagination, excerpts/stats/conditional preview, progress/export; synthetic10decision browser proof actualUSER_WEB0; finalCI pending |
+| R2 | BLOCKED_EXTERNAL(U2/U3) | Exact anonymous patch/tier accumulator, hash dedup, rate650requests/300matches/900s, digest-bound targets,90day state, tiercomparison; retainedREAL50 reused, oldpooledSD unknown, newacquisition pending |
+| R3 | BLOCKED_EXTERNAL(U1/U3) | Own Match-V5 private import/graphs/markers/suspectedcontexts/minuteposition/dependencies/planpremise; exact25pro+9backup+alt config, privatePUUIDcache/localproreference prep; actualown1match pending |
+| R4 | VERIFYING |120s pairedidenticaltext, officialfreeFlash3.6 explicitoncefallback,600svideo/durablecharges preserved, manualroute; actualmainActions afterCI/merge pending |
+| R5 | BLOCKED_EXTERNAL | OneWindowscapture/OBS/gameclock/import guide prepared, originals/video absent; noactualPC/video analysis |
+
+New Riot calls0 inthissession. Existing2026-10-13 schedule38342732100 artifact11786929206 curl401/Python401 confirmed read-only; userkey-expiry attribution separate from observed auth failure, collector skipped. Old50 patch16.20CHALLENGER remains. SourceUG counts/seasonranks/probadges userreports; notindependentlyvalidated. Originalpreservation/normalmerge/sourceboundCI required beforeactualGeminitrial. ActualcoachingN0/accuracy=null/realUSER_WEBapprovals0/paid0.
+
+Design/plan: docs/superpowers/specs/2026-10-13-queue-v20-design.md; plans/2026-10-13-queue-v20.md; contract contracts/queue-v20.md. Usage docs/queue/V20_LOCAL_USE.md and R1–R5 docs. Earlier failures remain below and newred/green/browser failures under evidence/queue/v20; nofutureCI/provider success asserted.
+
+---
+
 된 것: Riot curl·파이썬 모두200과 실제50경기 수집·그래프 연결을 확인했습니다.
 된 것: 예시의5개 포지션에서 저장·재조회·9개 카드·근거 조회가 통과했습니다.
 안 된 것: Gemini 텍스트 확인이 타임아웃이어서 영상 요약은0건입니다.

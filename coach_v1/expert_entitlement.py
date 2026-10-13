@@ -9,6 +9,8 @@ import urllib.request
 
 
 MODEL = "gemini-3.8-flash"
+FALLBACK_MODEL = "gemini-3.6-flash"
+ALLOWED_MODELS = (MODEL, FALLBACK_MODEL)
 SOURCE_URLS = tuple("https://ai.google.dev/gemini-api/docs/" + path
                     for path in ("pricing", "video-understanding", "models"))
 MAX_BYTES = 2 * 1024 * 1024
@@ -83,15 +85,15 @@ def _one(nodes):
     return values[0]
 
 
-def _pricing(root):
+def _pricing(root, model=MODEL):
     nodes = list(root.nodes())
-    heading = _one(n for n in nodes if n.tag == "h2" and n.attrs.get("id") == MODEL)
+    heading = _one(n for n in nodes if n.tag == "h2" and n.attrs.get("id") == model)
     start = nodes.index(heading)
     end = next((i for i in range(start + 1, len(nodes)) if nodes[i].tag == "h2"), len(nodes))
     scope = nodes[start:end]
     link = _one(n for n in scope if n.tag == "a" and
-                n.attrs.get("href") == "/gemini-api/docs/models/" + MODEL)
-    if _one(n for n in link.nodes() if n.tag == "code").text() != MODEL:
+                n.attrs.get("href") == "/gemini-api/docs/models/" + model)
+    if _one(n for n in link.nodes() if n.tag == "code").text() != model:
         raise ValueError("Model code mismatch")
     section = _one(n for n in scope if n.tag == "section" and
                    any(h.tag == "h3" and h.text() == "Standard" for h in n.nodes()))
@@ -144,10 +146,10 @@ def _youtube(root):
         _one(n for n in scope if n.tag == "li" and n.text() == required)
 
 
-def _stable(root):
+def _stable(root, model=MODEL):
     card = _one(n for n in root.nodes() if n.tag == "a" and n.has_class("gemini-card-centered")
-                and n.attrs.get("href") == "/gemini-api/docs/models/" + MODEL)
-    _one(n for n in card.nodes() if n.tag == "h3" and n.attrs.get("id") == MODEL)
+                and n.attrs.get("href") == "/gemini-api/docs/models/" + model)
+    _one(n for n in card.nodes() if n.tag == "h3" and n.attrs.get("id") == model)
     status = _one(n for n in card.nodes() if n.tag == "p" and n.has_class("status-subtext"))
     labels = [n for n in status.nodes() if n.has_class("gemini-api-new")]
     if any(n.tag != "span" or n.text() != "New" for n in labels):
@@ -171,18 +173,20 @@ def _transport(url, *, timeout, max_bytes):
                 "url": response.url, "content_type": response.headers.get("Content-Type", "")}
 
 
-def verify_free_entitlement(*, transport=None, clock=None):
+def verify_free_entitlement(*, transport=None, clock=None, model=MODEL):
     """Return safe current UTC proof of documentation, without billing inference.
 
     transport(url, *, timeout, max_bytes) returns status/body(bytes)/url/content_type.
     clock() returns an aware datetime; injection is intended for offline tests.
     Network, selectors and parsing failures always become UNKNOWN with safe codes.
     """
+    if model not in ALLOWED_MODELS:
+        raise ValueError("Model is not pinned")
     now = (clock or (lambda: dt.datetime.now(dt.timezone.utc)))()
     if not isinstance(now, dt.datetime) or now.tzinfo is None or now.utcoffset() is None:
         raise ValueError("clock must return a timezone-aware datetime")
     result = {"status": "UNKNOWN", "checked_at": now.astimezone(dt.timezone.utc).date().isoformat(),
-              "model": MODEL, "sources": [], "reasons": []}
+              "model": model, "sources": [], "reasons": []}
     roots, failures = [], []
     for index, url in enumerate(SOURCE_URLS):
         try:
@@ -200,7 +204,7 @@ def verify_free_entitlement(*, transport=None, clock=None):
         except Exception:
             roots.append(None)
             failures.append(("PRICING", "YOUTUBE", "MODEL")[index] + "_SOURCE_UNAVAILABLE")
-    checks = (_pricing, _youtube, _stable)
+    checks = (lambda root: _pricing(root, model), _youtube, lambda root: _stable(root, model))
     price_status = None
     for index, (root, check) in enumerate(zip(roots, checks)):
         if root is None:

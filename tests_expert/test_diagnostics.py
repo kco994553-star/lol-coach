@@ -46,7 +46,7 @@ class DiagnosticTests(unittest.TestCase):
         self.assertNotIn('uri',json.dumps(body));self.assertIn(m.MODEL,h.calls[0][1])
         self.assertEqual(receipt['status'],'READY');self.assertEqual(receipt['input_kind'],'TEXT_ONLY')
         self.assertEqual(receipt['video_inputs'],0);self.assertNotIn('claims',json.dumps(receipt))
-        self.assertEqual(c.request_counts,dict(TEXT_PROBE=1,VIDEO_CLIP=0,METADATA=0));self.assertLessEqual(h.probe_timeout,60)
+        self.assertEqual(c.request_counts,dict(TEXT_PROBE=1,VIDEO_CLIP=0,METADATA=0));self.assertLessEqual(h.probe_timeout,120)
         body['generationConfig']['responseJsonSchema']['required'].append('TEST_MUTATION')
         self.assertEqual(m.RESPONSE_SCHEMA['required'],['claims'])
 
@@ -82,7 +82,7 @@ class DiagnosticTests(unittest.TestCase):
         self.assertEqual(plan['collection_mode'],'DIAGNOSTIC_FIRST_CLIP')
         self.assertEqual(plan['text_probe'],dict(schema_version='expert.text-probe.v2',status='READY',reason=None,
             model=m.MODEL,checked_at=NOW,http_status=200,input_kind='TEXT_ONLY',video_inputs=0,api_route='GENERATE_CONTENT',attempt_count=1,retry_count=0))
-        self.assertNotIn('PRIVATE_TEXT_NOT_RETAINED',json.dumps(plan));self.assertLessEqual(h.probe_timeout,60)
+        self.assertNotIn('PRIVATE_TEXT_NOT_RETAINED',json.dumps(plan));self.assertLessEqual(h.probe_timeout,120)
         result=c.process(plan,reservation_persisted=True)
         self.assertEqual(h.probe_calls,1);self.assertEqual(h.model_calls,1)
         self.assertEqual(c.request_counts,dict(TEXT_PROBE=1,VIDEO_CLIP=1,METADATA=2))

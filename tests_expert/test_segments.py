@@ -152,7 +152,7 @@ class SegmentTests(unittest.TestCase):
 
     def test_default_model_timeout_600_and_metadata_timeout_20(self):
         h=Clips(600);c=collector(h,timeout=600);c.process(c.prepare(config()),reservation_persisted=True)
-        self.assertEqual([timeout for method,timeout in h.timeouts if method=='POST'],[60,600])
+        self.assertEqual([timeout for method,timeout in h.timeouts if method=='POST'],[120,600])
         self.assertTrue(all(timeout<=20 for method,timeout in h.timeouts if method=='GET'))
         with self.assertRaises(ValueError):collector(h,timeout=601)
 

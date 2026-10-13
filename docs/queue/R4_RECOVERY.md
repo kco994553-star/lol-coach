@@ -1,0 +1,17 @@
+# R4 — paired text diagnosis and free recovery
+
+The trusted `expert-video-collection.yml` job recovers durable quota first, then runs curl and Python concurrently with the identical `Reply with OK.` generateContent body and API-key header. Both transports have a120-second total wall bound. Their HTTP statuses and response-validation result are retained; raw responses, stderr and credential fingerprints are discarded. Both timeouts produce `PROVIDER_NETWORK_TIMEOUT`, meaning provider/network-side timeout without an expired-key conclusion.
+
+Primary is `gemini-3.8-flash`; the only permitted fallback is `gemini-3.6-flash`. A primary timeout/provider-model failure permits one fallback pair, without503 retries inside this diagnostic. A401,402,403 or429 from either client is terminal: no model fallback can bypass authentication, payment or quota eligibility. Missing quota history, missing keys, stale/unknown free entitlement or known paid access blocks calls. Each attempted model receives its own current-UTC-day proof from exact official pricing, model and YouTube scopes. A new proof for the selected model is required again before reserve and process. A proof for another model cannot substitute. No free-to-paid transition occurs.
+
+Fallback is disabled by default. Main's single authorized manual dispatch sets `allow_flash_fallback=true`; scheduled runs cannot enable it. The CLI requires `--allow-fallback-once`, and the receipt records `allow_fallback_once`. Main records the trial in durable handoff/audit evidence and must not dispatch a second enabled trial. This explicit dispatch control does not provide a cross-run global trial counter.
+
+The reservation reuses the successful paired text receipt and exact selected model; it does not dispatch another baseline text request. The new pair counts against the existing50-request budget. Only successful selected text permits discovery and reservation of one first video clip, at most600seconds. Video timeout remains600seconds, metadata20seconds. The full original video duration is reserved before the artifact persistence ACK. All historical rows remain, including failed/uncertain attempts; charged IDs remain excluded even after their rolling quota window expires. No refund, quota reset, second video clip or charged-ID retry occurs in this workflow.
+
+Inspect the public-safe artifact's `front-diagnostics.json`, `diagnostics.json`, `entitlement.json` and reservation/acquisition receipts. Workflow success alone does not mean a usable claim was acquired. A successful first clip of a longer video can remain `PARTIAL`; factual correctness and coaching accuracy remain unassessed. Main owns actual dispatch and publication after normal CI/merge.
+
+## Manual timestamped summary
+
+Open the local app's [expert workspace](/experts.html), connect using its existing private-app token and use **영상 발언을 직접 요약하기**. If using the Gemini app, request a short paraphrased summary of a10-minute-or-shorter interval with original-video timestamps. Confirm the public YouTube URL, title/channel, full original duration and each timestamp yourself. Paste a short paraphrase and leave unsupported patch, speaker, matchup or quantitative details unknown. Save as an unreviewed candidate, then review the source and conditions. This route creates no automatic USER_WEB approval and no tactical execution.
+
+Implementation checks use authored offline fixtures only; no API or Actions dispatch was performed by the implementation worker.

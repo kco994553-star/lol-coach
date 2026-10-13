@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>내 경기 기록 리뷰</title><link rel="icon" href="/pregame-icon.svg"><link rel="stylesheet" href="/postgame.css"></head>
+<body><main><nav><a href="/">코치</a> · <a href="/pregame">경기 전 계획</a> · <a href="/experts#manual">수동 영상 타임스탬프</a></nav>
+<header><h1>내 경기 기록 리뷰</h1><p>골드·XP·CS와 기록된 이동을 함께 봅니다. 승패로 계획의 효과를 판단하지 않습니다.</p></header>
+<section aria-label="연결"><label>로컬 앱 토큰 <input id="pm-token" type="password" autocomplete="off"></label><button id="pm-connect">연결</button><button id="pm-logout" hidden>연결 해제</button></section>
+<p id="pm-status" role="status" aria-live="polite"></p>
+<div id="pm-workspace" hidden>
+<section><h2>개인 원본 가져오기</h2><p>Match-V5 경기 JSON과 timeline JSON을 선택하고 내 챔피언을 확인하세요. 원본은 로컬 private/에만 저장됩니다. Git·Actions artifact에 올리지 마세요. Windows에서는 dedicated private 폴더의 NTFS 접근 권한을 내 사용자만 허용하도록 직접 설정하세요. NTFS ACL은 앱에서 검증하지 않습니다.</p>
+<form id="pm-import"><div class="grid"><label>경기 JSON <input id="pm-match-file" type="file" accept="application/json,.json" required></label><label>타임라인 JSON <input id="pm-timeline-file" type="file" accept="application/json,.json" required></label><label>내 참가자 <select id="pm-participant" required><option value="">경기 파일을 먼저 선택하세요</option></select></label><label>자료 종류 <select id="pm-source"><option value="REAL">공식 경기 원본</option><option value="SYNTHETIC">SYNTHETIC · 서버 test mode 전용</option></select></label></div><button id="pm-import-button" type="submit">로컬 가져오기</button></form><p class="small">파일 한 쌍 최대 12 MB. 기본 서버 제한을 넘으면 로컬 서버를 --max-body-bytes 12000000으로 시작하세요. 보이지 않는 적·웨이브·스킬 상태는 UNKNOWN입니다.</p></section>
+<section><h2>비교 기준 선수 · 사용자 확인 명단</h2><p>2026-10-13 제공한 포지션별 5명과 백업을 사용합니다. 계정 주인·티어·판수는 사용자 확인 자료이며 앱에서 검증하지 않았습니다. 프로 표본은 일반 티어 표본과 별도입니다.</p><button id="pm-show-reference-roster" type="button">25명 명단·백업 규칙 보기</button><div id="pm-reference-roster"></div><p>키 갱신 후 로컬 collect_pro_reference.py를 사용합니다. 최초 Account-V1 조회로 고정한 PUUID와 원본 경기는 로컬 비공개 저장에만 보관합니다. 조회 실패·최근30일 솔로랭크 없음·포지션 비중 부족은 기록하고 백업으로 교체합니다.</p></section><section><h2>저장한 경기</h2><button id="pm-refresh">새로고침</button><div id="pm-list"></div></section>
+<section id="pm-detail" hidden><h2 id="pm-title"></h2><p id="pm-limitations" class="notice"></p><p id="pm-gaps"></p>
+<h3>내 자원 · 누적 총량</h3><div id="pm-resource-charts" class="charts"></div><div id="pm-markers"></div>
+<h3>같은 챔피언·포지션 참고 · 자원 차이</h3><p id="pm-reference-state"></p><div id="pm-reference-charts" class="charts"></div>
+<h3>선택한 프로 선수 · 별도 비교 표본</h3><p id="pm-pro-reference-state">프로 통계는 키 갱신 후 로컬 수집을 기다립니다.</p><div id="pm-pro-reference-charts" class="charts"></div><h3>분 단위 위치 · 페이즈는 별도 확인</h3><p>아군 5명 좌표 중앙값까지의 거리입니다. 실제 본대·협동 여부를 뜻하지 않습니다. 검증된 페이즈와 해당 표본이 없으면 비교는 UNKNOWN입니다.</p><div id="pm-position-chart"></div><div class="table-scroll"><table><thead><tr><th>분</th><th>기록 위치</th><th>아군 중앙값 거리</th><th>페이즈</th><th>참고 비교</th></tr></thead><tbody id="pm-positions"></tbody></table></div>
+<h3>의심 상황의 기록 · 원인 판단 없음</h3><p>사망·오브젝트·아군 와드 이벤트와 가장 최근 아군 정글/서포터 좌표만 표시합니다. 분 단위 샘플 사이의 이동과 적 시야는 확인되지 않았습니다.</p><div id="pm-contexts"></div>
+<h3>의존 플레이 · 실제 기록된 이동</h3><div id="pm-dependency"></div>
+<h3>경기 전 계획과 연결</h3><label>저장한 계획 ID · 직접 선택 <input id="pm-plan-id" maxlength="32" placeholder="경기 전 계획의 32자리 ID"></label><button id="pm-analyze">선택한 계획으로 보기</button><p class="small">현재 유효한 같은 챔피언·포지션·패치 계획만 표시합니다. 연결은 직접 선택이며 계획 실행·효과는 별도로 UNKNOWN입니다.</p><div id="pm-plan"></div>
+</section></div></main><script src="/postgame.js"></script><script src="/pro_reference_view.js"></script></body></html>

@@ -6,6 +6,7 @@ No publication or GitHub repository mutation is performed. Recovery reads all
 run conclusions. Credentials are environment-only headers, never CLI arguments.
 """
 import argparse
+import inspect
 import json
 import os
 from pathlib import Path
@@ -17,7 +18,7 @@ import time
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from coach_v1.expert_collector import (ExpertCollector,atomic_json,recover_ledger_snapshot,
-    policy_from_runtime,validate_entitlement_proof,write_public_result,_json,MODEL,COLLECTION_MODES,PLAN_STATUSES,SAFE_REASONS)
+    policy_from_runtime,validate_entitlement_proof,write_public_result,_json,MODEL,ALLOWED_MODELS,COLLECTION_MODES,PLAN_STATUSES,SAFE_REASONS)
 
 
 def read_json(path,maximum=2000000):
@@ -70,7 +71,7 @@ def safe_probe_receipt(plan):
     probe=plan.get('text_probe')
     fields={'schema_version','status','reason','model','checked_at','http_status','input_kind','video_inputs','api_route','attempt_count','retry_count'}
     if not isinstance(probe,dict) or set(probe)!=fields:return None
-    if probe['schema_version']!='expert.text-probe.v2' or probe['model']!=MODEL or probe['input_kind']!='TEXT_ONLY':return None
+    if probe['schema_version']!='expert.text-probe.v2' or probe['model'] not in ALLOWED_MODELS or probe['input_kind']!='TEXT_ONLY':return None
     if not isinstance(probe['status'],str) or probe['status'] not in set(PLAN_STATUSES)|{'READY'}:return None
     if probe['reason'] is not None and (not isinstance(probe['reason'],str) or probe['reason'] not in SAFE_REASONS):return None
     if type(probe['video_inputs']) is not int or probe['video_inputs']!=0 or (type(probe['checked_at']) is not int or probe['checked_at']<0):return None
@@ -90,9 +91,10 @@ def main(argv=None,*,entitlement_verifier=None):
     parser.add_argument('--runtime-config')
     parser.add_argument('--output-dir',required=True)
     parser.add_argument('--ledger');parser.add_argument('--recovery-receipt');parser.add_argument('--plan')
+    parser.add_argument('--front-diagnostics')
     parser.add_argument('--reservation-artifact-id')
     parser.add_argument('--collection-mode',choices=COLLECTION_MODES,default='DIAGNOSTIC_FIRST_CLIP')
-    args=parser.parse_args(argv);directory=Path(args.output_dir);collector=None;plan=None
+    args=parser.parse_args(argv);directory=Path(args.output_dir);collector=None;plan=None;model=MODEL
     def emit_diagnostic(event):
         print('EXPERT_PROVIDER_DIAGNOSTIC_JSON='+json.dumps(event,sort_keys=True),flush=True)
     def retain_diagnostics(failure=False,probe=None):
@@ -101,7 +103,7 @@ def main(argv=None,*,entitlement_verifier=None):
             event=dict(provider='GEMINI',phase='TEXT_PROBE' if args.phase in ('reserve','probe-format') else 'VIDEO_CLIP',
                 http_status=None,error_status=None,error_code=None,error_message=None,reason='INVALID_OR_UNAVAILABLE_PUBLIC_STATE')
             events.append(event);emit_diagnostic(event)
-        receipt=dict(schema_version='expert.diagnostics.v2',phase=args.phase,api_route='GENERATE_CONTENT',model=MODEL,
+        receipt=dict(schema_version='expert.diagnostics.v2',phase=args.phase,api_route='GENERATE_CONTENT',model=model,
             total_request_count=collector.request_count if collector is not None else 0,
             request_counts=dict(collector.request_counts) if collector is not None else dict(TEXT_PROBE=0,VIDEO_CLIP=0,METADATA=0),
             events=events,text_probe=None)
@@ -112,13 +114,29 @@ def main(argv=None,*,entitlement_verifier=None):
             receipt=recovery(directory)
             print('EXPERT_RECOVERY_JSON='+json.dumps(receipt,sort_keys=True));return 0
         runtime=read_json(args.runtime_config,200000) if args.runtime_config else None
+        front=None
+        if args.front_diagnostics:
+            if args.phase!='reserve':raise ValueError('front receipt only accepted at reserve')
+            from coach_v1.expert_front_diagnostics import validate_front_receipt
+            front=validate_front_receipt(read_json(args.front_diagnostics),now=int(time.time()))
+            model=front['selected_model'] or MODEL
+        if args.phase=='process' and args.plan:
+            plan=read_json(args.plan)
+            model=plan.get('text_probe',{}).get('model',MODEL) if isinstance(plan.get('text_probe'),dict) else MODEL
+            if model not in ALLOWED_MODELS:raise ValueError('model not pinned')
         if entitlement_verifier is None:
             from coach_v1.expert_entitlement import verify_free_entitlement
             entitlement_verifier=verify_free_entitlement
-        proof=validate_entitlement_proof(entitlement_verifier())
+        # Old test-injected verifier remains compatible for the primary only.
+        if 'model' in inspect.signature(entitlement_verifier).parameters:
+            verified=entitlement_verifier(model=model)
+        else:
+            if model!=MODEL:raise ValueError('model-specific verifier required')
+            verified=entitlement_verifier()
+        proof=validate_entitlement_proof(verified,model)
         atomic_json(directory/'entitlement.json',proof)
-        policy=policy_from_runtime(runtime,os.environ,now=int(time.time()),entitlement_proof=proof)
-        collector=ExpertCollector(youtube_api_key=os.environ.get('YOUTUBE_API_KEY'),gemini_api_key=os.environ.get('GEMINI_API_KEY'),policy=policy,on_diagnostic=emit_diagnostic)
+        policy=policy_from_runtime(runtime,os.environ,now=int(time.time()),entitlement_proof=proof,model=model)
+        collector=ExpertCollector(model=model,youtube_api_key=os.environ.get('YOUTUBE_API_KEY'),gemini_api_key=os.environ.get('GEMINI_API_KEY'),policy=policy,on_diagnostic=emit_diagnostic)
         if args.phase=='probe-format':
             probe=collector.probe_text(structured=True)
             retain_diagnostics(probe=probe)
@@ -130,7 +148,7 @@ def main(argv=None,*,entitlement_verifier=None):
         if args.phase=='reserve':
             receipt=read_json(args.recovery_receipt) if args.recovery_receipt else {'status':'ABSENT'}
             history=receipt.get('status');ledger=read_json(args.ledger) if args.ledger and Path(args.ledger).exists() else None
-            plan=collector.prepare(read_json(args.config,200000),ledger,ledger_history=history,collection_mode=args.collection_mode)
+            plan=collector.prepare(read_json(args.config,200000),ledger,ledger_history=history,collection_mode=args.collection_mode,front_diagnostics=front)
             retain_diagnostics()
             atomic_json(directory/'plan.json',plan)
             if plan['ledger'] is not None:atomic_json(directory/'quota-ledger.json',plan['ledger'])
