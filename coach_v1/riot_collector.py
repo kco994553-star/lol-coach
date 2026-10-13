@@ -25,6 +25,15 @@ from .api_diagnostics import MAX_ERROR_BYTES,inspect_riot_key,safe_http_error
 RIOT_USER_AGENT='lol-coach/1.0 (+https://github.com/kco994553-star/lol-coach)'
 
 
+def collection_tier(rotation,user_tier=None):
+    """Current seed cohort rotation; user tier is supplied only after U2."""
+    if type(rotation) is not int or rotation<0:raise ValueError('nonnegative rotation required')
+    if user_tier is not None:
+        if user_tier not in TIERS:raise ValueError('invalid user league tier')
+        return user_tier
+    return ('CHALLENGER','GRANDMASTER','MASTER')[rotation%3]
+
+
 class CollectionBlocked(Exception):
     def __init__(self,reason,status_code=None):
         self.reason=reason;self.status_code=status_code
@@ -73,8 +82,8 @@ def complete_item_ids(catalog):
 
 class RiotCollector:
     def __init__(self,api_key=None,*,transport=None,clock=None,sleeper=None,
-                 max_requests=250,max_matches=50,max_pages=1,max_players=20,
-                 max_retries=2,deadline_seconds=600,on_first_http_response=None,
+                 max_requests=650,max_matches=300,max_pages=1,max_players=40,
+                 max_retries=2,deadline_seconds=900,on_first_http_response=None,
                  on_key_shape=None,on_http_error=None,on_front_error=None):
         self.api_key=api_key if api_key is not None else os.environ.get('RIOT_API_KEY')
         self.transport=transport or _transport;self.clock=clock or time.monotonic;self.sleeper=sleeper or time.sleep
@@ -94,6 +103,19 @@ class RiotCollector:
         self.first_http_status=None;self._first_http_observed=False
         self.movement_data=None;self.movement_status='NOT_REQUESTED'
         self.outcome_data=None;self.outcome_status='NOT_REQUESTED'
+        self.sufficient_records=[];self._request_times={}
+
+    def _local_rate_wait(self,host):
+        """Enforce Riot's conservative development-key windows without headers."""
+        while True:
+            now=self.clock();times=[t for t in self._request_times.get(host,[]) if now-t<120]
+            self._request_times[host]=times
+            waits=[]
+            for maximum,window in ((20,1),(100,120)):
+                relevant=[t for t in times if now-t<window]
+                if len(relevant)>=maximum:waits.append(relevant[-maximum]+window-now)
+            if not waits:return
+            self._pause(max(waits))
 
     def _pause(self,seconds):
         remaining=self.started+self.limits['deadline_seconds']-self.clock()
@@ -146,9 +168,11 @@ class RiotCollector:
             if self.requests>=self.limits['max_requests']:raise CollectionBlocked('REQUEST_BUDGET_EXHAUSTED')
             wait=max(self.not_before.get(('app',host),0),self.not_before.get(('method',host,method),0))-self.clock()
             if wait>0:self._pause(wait)
+            if api:self._local_rate_wait(host)
             headers={'Accept':'application/json','User-Agent':RIOT_USER_AGENT}
             if api:headers['X-Riot-Token']=self._normalized_api_key
             self.requests+=1
+            if api:self._request_times.setdefault(host,[]).append(self.clock())
             try:status,response_headers,body=self.transport(url,headers,min(20,self.started+self.limits['deadline_seconds']-self.clock()))
             except CollectionBlocked as failure:
                 if type(failure.status_code) is int and 100<=failure.status_code<=599:
@@ -217,14 +241,18 @@ class RiotCollector:
                     complete_item_ids=ids,classification='PINNED_COMPLETE_NONBOOT_NONCONSUMABLE.v2')
 
     def collect(self,*,tier='GOLD',division='I',patch=None,start_time=None,end_time=None,collect_items=True,ci_width_limits=None,
-                collect_movement=False,collect_outcome=False):
+                collect_movement=False,collect_outcome=False,known_match_hashes=()):
         if tier not in TIERS or division not in ('I','II','III','IV'):raise ValueError('invalid league tier or division')
         if patch is not None and not re.fullmatch(r'[0-9]+\.[0-9]+',patch):raise ValueError('exact gameplay patch required')
         for value in (start_time,end_time):
             if value is not None and (type(value) is not int or value<0):raise ValueError('integer epoch window required')
         if start_time is not None and end_time is not None and start_time>end_time:raise ValueError('invalid collection window')
+        known=set(known_match_hashes)
+        if len(known)>10000 or any(not isinstance(h,str) or not re.fullmatch('[0-9a-f]{64}',h) for h in known):
+            raise ValueError('bounded anonymous known match hashes required')
         # A collector instance performs one bounded job, never cumulative reuse.
         self.started=self.clock();self.requests=0;self.retries=0;self.not_before={}
+        self._request_times={};self.sufficient_records=[]
         self.first_http_status=None;self._first_http_observed=False
         self.http_errors=[]
         self.front_errors=[]
@@ -256,7 +284,7 @@ class RiotCollector:
                 ids,_=self._get('https://asia.api.riotgames.com/lol/match/v5/matches/by-puuid/'+quote(puuid,safe='')+'/ids?'+urlencode(query),'MATCH_V5_IDS')
                 if not isinstance(ids,list) or not all(isinstance(i,str) for i in ids):raise CollectionBlocked('MALFORMED_RESPONSE')
                 for mid in ids:
-                    if mid in seen or not re.fullmatch(r'KR_[0-9]+',mid):continue
+                    if mid in seen or not re.fullmatch(r'KR_[0-9]+',mid) or hashlib.sha256(mid.encode()).hexdigest() in known:continue
                     seen.add(mid)
                     match,_=self._get('https://asia.api.riotgames.com/lol/match/v5/matches/'+mid,'MATCH_V5_MATCH',allow_missing=True)
                     if match is None:continue
@@ -284,6 +312,9 @@ class RiotCollector:
             division=None if tier in ('MASTER','GRANDMASTER','CHALLENGER') else division)
         if error:source.setdefault('limitations',[]).append(error.reason)
         result=build_power_dataset(pairs,source=source,ci_width_limits=ci_width_limits,
+            complete_item_ids=catalog['complete_item_ids'] if catalog else ())
+        from .power_accumulator import sufficient_records
+        self.sufficient_records=sufficient_records(pairs,source=source,ci_width_limits=ci_width_limits,
             complete_item_ids=catalog['complete_item_ids'] if catalog else ())
         if error:result['status']='BLOCKED_EXTERNAL'
         if collect_movement:

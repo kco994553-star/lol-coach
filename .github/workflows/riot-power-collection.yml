@@ -6,8 +6,12 @@ on:
       tier:
         description: Current League-V4 seed tier (not historical match rank)
         type: choice
-        default: GOLD
-        options: [IRON, BRONZE, SILVER, GOLD, PLATINUM, EMERALD, DIAMOND, MASTER, GRANDMASTER, CHALLENGER]
+        default: ROTATE
+        options: [ROTATE, IRON, BRONZE, SILVER, GOLD, PLATINUM, EMERALD, DIAMOND, MASTER, GRANDMASTER, CHALLENGER]
+      key_renewed:
+        description: U3 renewed Riot key confirmed; false only restores derived state
+        type: boolean
+        default: false
       division:
         type: choice
         default: I
@@ -21,6 +25,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: riot-power-collection-main
@@ -31,7 +36,7 @@ jobs:
     # Secrets are used only on trusted default-branch code; never fork/PR/ref code.
     if: github.repository == 'kco994553-star/lol-coach' && github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'schedule')
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - name: Check out trusted default branch
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -44,36 +49,63 @@ jobs:
           python-version: '3.12'
       - name: Install pinned runtime for aggregate hashing and validation
         run: python -m pip install --disable-pip-version-check -r requirements-r3.txt
-      - name: Diagnose same-secret curl and Python Riot responses
-        id: front
+      - name: Recover previous trusted anonymous sufficient state before expiry
         env:
-          RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          python scripts/diagnose_riot_front.py --output "$RUNNER_TEMP/power-output/riot-front-diagnostics.json"
-          python - <<'PYGATE'
-          import json, os
-          from pathlib import Path
-          from coach_v1.riot_front_diagnostics import validate_front_receipt
-          path = Path(os.environ['RUNNER_TEMP']) / 'power-output/riot-front-diagnostics.json'
-          receipt = validate_front_receipt(json.loads(path.read_text()))
-          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
-              output.write('proceed=' + ('true' if receipt['status'] == 'READY' else 'false') + '\n')
-          PYGATE
+          mkdir -p "$RUNNER_TEMP/power-state" "$RUNNER_TEMP/power-output"
+          python - <<'PY'
+          import json, os, subprocess
+          repo=os.environ['GITHUB_REPOSITORY']
+          def api(path):
+              result=subprocess.run(['gh','api',path],capture_output=True,text=True)
+              if result.returncode: raise RuntimeError('STATE_RECOVERY_API_UNAVAILABLE')
+              return json.loads(result.stdout)
+          artifacts=api('repos/'+repo+'/actions/artifacts?name=riot-power-accumulator&per_page=100')['artifacts']
+          artifacts=sorted(artifacts,key=lambda a:a['created_at'],reverse=True)
+          selected=None
+          for artifact in artifacts:
+              if artifact['expired']:continue
+              run=api('repos/'+repo+'/actions/runs/'+str(artifact['workflow_run']['id']))
+              if run['head_branch']=='main' and run['path']=='.github/workflows/riot-power-collection.yml' and run['event'] in ('schedule','workflow_dispatch'):
+                  selected=artifact;break
+          if selected:
+              result=subprocess.run(['gh','run','download',str(selected['workflow_run']['id']),'--repo',repo,
+                  '--name','riot-power-accumulator','--dir',os.environ['RUNNER_TEMP']+'/power-state'],capture_output=True,text=True)
+              if result.returncode:raise RuntimeError('STATE_RECOVERY_DOWNLOAD_UNAVAILABLE')
+              print('ANONYMOUS_STATE_RECOVERED')
+          else:
+              print('NO_PREVIOUS_UNEXPIRED_TRUSTED_STATE; LEGACY_REAL50_SEED_ONLY')
+          PY
+      - name: Restore and refresh existing aggregates without any provider request
+        run: |
+          python scripts/collect_power_stats.py --publish-only --accumulator "$RUNNER_TEMP/power-state/power-accumulator.json.gz" --seed-data data/riot/2026-10-11/power-data.json.gz --aggregate-directory "$RUNNER_TEMP/power-output" --output "$RUNNER_TEMP/power-output/power-data.json"
       - name: Collect official KR seed and ASIA matches with bounded requests
-        if: steps.front.outputs.proceed == 'true'
+        if: inputs.key_renewed == true || (github.event_name == 'schedule' && vars.RIOT_KEY_RENEWED == 'true')
         env:
           RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
-          COLLECTION_TIER: ${{ inputs.tier || 'GOLD' }}
+          COLLECTION_TIER: ${{ inputs.tier || 'ROTATE' }}
+          COLLECTION_USER_TIER: ${{ vars.RIOT_USER_TIER }}
           COLLECTION_DIVISION: ${{ inputs.division || 'I' }}
           COLLECTION_PATCH: ${{ inputs.patch }}
         shell: bash
         run: |
-          args=(--diagnostics-output "$RUNNER_TEMP/power-output/riot-diagnostics.json" --output "$RUNNER_TEMP/power-output/power-data.json" --movement-output "$RUNNER_TEMP/power-output/movement-data.json" --outcome-output "$RUNNER_TEMP/power-output/outcome-data.json" --tier "$COLLECTION_TIER" --division "$COLLECTION_DIVISION" --max-matches 50 --max-requests 250 --max-players 20 --max-pages 1 --max-retries 2 --deadline-seconds 600)
+          args=(--diagnostics-output "$RUNNER_TEMP/power-output/riot-diagnostics.json" --output "$RUNNER_TEMP/power-output/power-data.json" --movement-output "$RUNNER_TEMP/power-output/movement-data.json" --outcome-output "$RUNNER_TEMP/power-output/outcome-data.json" --accumulator "$RUNNER_TEMP/power-state/power-accumulator.json.gz" --aggregate-directory "$RUNNER_TEMP/power-output" --division "$COLLECTION_DIVISION" --max-matches 300 --max-requests 650 --max-players 40 --max-pages 1 --max-retries 2 --deadline-seconds 900)
+          if [[ "$COLLECTION_TIER" != ROTATE ]]; then
+            args+=(--tier "$COLLECTION_TIER")
+          elif [[ -n "$COLLECTION_USER_TIER" ]]; then
+            rotation=$((GITHUB_RUN_NUMBER % 4))
+            if [[ "$rotation" == 3 ]]; then args+=(--user-tier "$COLLECTION_USER_TIER"); else args+=(--rotation "$rotation"); fi
+          else
+            args+=(--rotation "$((GITHUB_RUN_NUMBER % 3))")
+          fi
           if [[ -n "$COLLECTION_PATCH" ]]; then args+=(--patch "$COLLECTION_PATCH"); fi
           python scripts/collect_power_stats.py "${args[@]}"
       - name: Print safe aggregate status only
         if: always()
+        env:
+          ACQUISITION_GATE: ${{ (inputs.key_renewed == true || (github.event_name == 'schedule' && vars.RIOT_KEY_RENEWED == 'true')) && 'ENABLED' || 'NOT_RENEWED_NO_PROVIDER_CALLS' }}
         shell: bash
         run: |
           python - <<'PY'
@@ -87,10 +119,18 @@ jobs:
               result = {'status': diagnostic.get('collection_status', diagnostic.get('status')) if diagnostic else 'OUTPUT_NOT_PRODUCED',
                         'reason': diagnostic.get('collection_reason', diagnostic.get('reasons')) if diagnostic else None, 'coaching_accuracy': None}
           else:
-              data = json.loads(path.read_text())
+              from coach_v1.power_stats import validate_power_dataset
+              data = validate_power_dataset(json.loads(path.read_text()))
               result = {'status': data['status'], 'real_matches': data['samples']['real_matches'],
                         'patch': data['source']['patch'], 'tier': data['source']['tier'],
                         'collection': data['source']['collection'], 'coaching_accuracy': None}
+          result['acquisition_gate']=os.environ['ACQUISITION_GATE']
+          diagnostic_path=path.with_name('riot-diagnostics.json')
+          if diagnostic_path.exists():
+              diagnostic=json.loads(diagnostic_path.read_text())
+              result['current_run_collection_status']=diagnostic['collection_status']
+              result['current_run_collection_reason']=diagnostic['collection_reason']
+              result['user_key_expiry_attribution']=diagnostic['user_key_expiry_attribution']
           print('RIOT_AGGREGATE_RECEIPT_JSON=' + json.dumps(result))
           outcome_path = path.with_name('outcome-data.json')
           if outcome_path.exists():
@@ -99,6 +139,7 @@ jobs:
               print('OUTCOME_AGGREGATE_RECEIPT_JSON=' + json.dumps({'status': outcome['status'], 'real_matches': outcome['samples']['real_matches'], 'coaching_accuracy': None}))
           with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a') as output:
               output.write('Public-safe aggregate only; raw payloads and player identifiers are never uploaded.\n\n```json\n' + json.dumps(result, indent=2) + '\n```\n')
+              output.write('\nState is restored/refreshed daily for90days. No Riot call occurs until U3 renewed-key gate is enabled. U2 tier is a current seed cohort, not historical participant rank.\n')
           PY
       - name: Retain public-safe aggregate for seven days
         if: always()
@@ -108,3 +149,11 @@ jobs:
           path: ${{ runner.temp }}/power-output/*.json
           retention-days: 7
           if-no-files-found: warn
+      - name: Refresh private anonymous sufficient state for ninety days
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: riot-power-accumulator
+          path: ${{ runner.temp }}/power-state/power-accumulator.json.gz
+          retention-days: 90
+          if-no-files-found: error

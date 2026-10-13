@@ -66,7 +66,9 @@ class PregameWorkbench(Workbench):
             self.pregame=PregameStore(str(db)+'.pregame.sqlite');self.RequestHandlerClass=PregameHandler
             # Internal fixture injection only. No HTTP operation can change these.
             self.test_mode=False;self.power_data=None;self.movement_statistics=None
-            self.outcome_data=None;self.expert_new_candidates=0
+            self.outcome_data=None;self.expert_new_candidates=0;self.power_datasets={};self.power_progress={};self.pro_reference_data=None
+            parent=Path(db).resolve().parent
+            self.personal_directory=(parent if 'private' in parent.parts else parent/'private')/'postgame'
         except Exception:self.server_close();raise
 
     def validated_power_data(self):
@@ -76,9 +78,37 @@ class PregameWorkbench(Workbench):
         if dataset['source']['sample_kind']=='SYNTHETIC' and not self.test_mode:return None
         return dataset
 
+    def validated_power_datasets(self):
+        from .power_stats import validate_power_dataset
+        rows={}
+        for data in [self.power_data,*self.power_datasets.values()]:
+            if data is None:continue
+            item=validate_power_dataset(data)
+            if item['source']['sample_kind']=='SYNTHETIC' and not self.test_mode:continue
+            key=(item['source']['patch'],item['source']['tier'])
+            if key in rows and digest(rows[key])!=digest(item):raise ServiceError(409,'POWER_DATASET_CONFLICT')
+            rows[key]=item
+        return rows
+
+    def select_power_data(self,patch,tier):
+        rows=self.validated_power_datasets()
+        if patch is not None and tier is not None:return rows.get((patch,tier))
+        candidates=[data for (p,t),data in rows.items() if (patch is None or p==patch) and (tier is None or t==tier)]
+        return candidates[0] if len(candidates)==1 else None
+
+    def current_pro_roster_digest(self):
+        from .pro_reference import validate_pro_roster
+        try:return digest(validate_pro_roster(json.loads((ROOT/'config/pro_reference_players.json').read_text())))
+        except (ValueError,OSError,TypeError):return None
+
+    def validated_progress(self,data):
+        from .collection_progress import progress_response,validate_progress
+        if data is None:return progress_response(None)
+        progress=self.power_progress.get((data['source']['patch'],data['source']['tier']))
+        return validate_progress(progress,data) if progress is not None else progress_response(data)
+
     def power_tiers(self):
-        data=self.validated_power_data()
-        return sorted({c['tier'] for c in data['cohorts']}) if data is not None else []
+        return sorted({tier for patch,tier in self.validated_power_datasets()})
 
     def validated_outcome_data(self):
         if self.outcome_data is None:return None
@@ -108,7 +138,7 @@ def power_request(body):
 
 
 def power_response(server,request):
-    data=server.validated_power_data()
+    data=server.select_power_data(request['patch'],request['tier'])
     reason='POWER_DATA_NOT_AVAILABLE' if data is None else None
     if request['patch'] is None:reason='PATCH_UNKNOWN'
     tier=request['tier']
@@ -144,6 +174,24 @@ def outcome_response(server,request):
         selected=select_outcome_view(data,request['champion'],request['position'],request['patch'],tier,request['opponent_champion'])
         view=dict(selected,dataset_digest=digest(data),schema_version=data['schema_version'])
     return dict(view=view,test_mode=server.test_mode)
+
+
+def postgame_response(server,store,match_id,plan=None):
+    """Choose only same-patch descriptive reference, preferring high seed tiers."""
+    result=store.get_match(match_id,plan=plan,movement_data=server.movement_statistics)
+    datasets=server.validated_power_datasets()
+    preference={'CHALLENGER':0,'GRANDMASTER':1,'MASTER':2}
+    candidates=[data for (patch,tier),data in datasets.items() if patch==result['patch'] and
+        any(c['champion']==result['champion'] and c['position']==result['role'] for c in data['cohorts'])]
+    candidates.sort(key=lambda data:(preference.get(data['source']['tier'],3),data['source']['tier']))
+    if candidates:
+        result=store.get_match(match_id,power_data=candidates[0],movement_data=server.movement_statistics,plan=plan)
+    if server.pro_reference_data is not None:
+        from .pro_reference_overlay import attach_pro_reference
+        matches=server.pro_reference_data['roster_sha256']==server.current_pro_roster_digest()
+        result=attach_pro_reference(result,server.pro_reference_data if matches else None,test_mode=server.test_mode)
+        if not matches:result['pro_reference']['reason']='PRO_ROSTER_VERSION_MISMATCH'
+    return result
 
 
 def load_expert_directory(server,directory,*,explicit=False):
@@ -240,7 +288,21 @@ class PregameHandler(Handler):
             '/pregame.js':('pregame.js','text/javascript; charset=utf-8'),'/pregame.css':('pregame.css','text/css; charset=utf-8'),
             '/pregame_power.js':('pregame_power.js','text/javascript; charset=utf-8'),
             '/pregame_outcome.js':('pregame_outcome.js','text/javascript; charset=utf-8'),
-            '/pregame-icon.svg':('pregame-icon.svg','image/svg+xml')}
+            '/pregame-icon.svg':('pregame-icon.svg','image/svg+xml'),
+            '/review-queue':('review_queue.html','text/html; charset=utf-8'),
+            '/review-queue/':('review_queue.html','text/html; charset=utf-8'),
+            '/review_queue.html':('review_queue.html','text/html; charset=utf-8'),
+            '/review_queue.js':('review_queue.js','text/javascript; charset=utf-8'),
+            '/review_queue.css':('review_queue.css','text/css; charset=utf-8'),
+            '/postgame':('postgame.html','text/html; charset=utf-8'),
+            '/postgame/':('postgame.html','text/html; charset=utf-8'),
+            '/postgame.html':('postgame.html','text/html; charset=utf-8'),
+            '/postgame.js':('postgame.js','text/javascript; charset=utf-8'),
+            '/postgame.css':('postgame.css','text/css; charset=utf-8'),
+            '/pro_reference_view.js':('pro_reference_view.js','text/javascript; charset=utf-8'),
+            '/setup':('setup.html','text/html; charset=utf-8'),
+            '/statistics':('statistics.html','text/html; charset=utf-8'),
+            '/statistics.js':('statistics.js','text/javascript; charset=utf-8')}
         if self.command=='GET' and route in assets:
             filename,ctype=assets[route];file=ROOT/'web_r4'/filename
             if not file.exists():raise ServiceError(404,'PREGAME_UI_NOT_INSTALLED')
@@ -260,6 +322,33 @@ class PregameHandler(Handler):
                 from .expert_bridge import import_expert_artifact
                 return self.bounded_reply(201,import_expert_artifact(self.server.research,artifact,max_bytes=self.server.limits.body_bytes))
             raise ServiceError(404,'NOT_FOUND')
+        if route.startswith('/dev/v1/postgame/'):
+            self.authorize()
+            if route=='/dev/v1/postgame/reference-roster' and self.command=='GET':
+                from .pro_reference import prepare_pro_reference
+                return self.bounded_reply(200,prepare_pro_reference(json.loads((ROOT/'config/pro_reference_players.json').read_text())))
+            from .postgame_match import PostgameStore
+            store=PostgameStore(self.server.personal_directory,test_mode=self.server.test_mode)
+            if route=='/dev/v1/postgame/matches' and self.command=='GET':
+                return self.bounded_reply(200,store.list_matches())
+            if route=='/dev/v1/postgame/import' and self.command=='POST':
+                return self.bounded_reply(201,store.import_match(self.body()))
+            if route=='/dev/v1/postgame/analyze' and self.command=='POST':
+                body=self.body();self.fields(body,('match_id','plan_id'))
+                if not isinstance(body['match_id'],str) or not re.fullmatch('[a-f0-9]{64}',body['match_id']):raise ServiceError(422,'INVALID_MATCH_ID')
+                if body['plan_id'] is not None and (not isinstance(body['plan_id'],str) or not re.fullmatch('[a-f0-9]{32}',body['plan_id'])):raise ServiceError(422,'INVALID_PLAN_ID')
+                plan=self.checked_plan(body['plan_id'],current_knowledge(self.server.research)) if body['plan_id'] else None
+                try:
+                    result=postgame_response(self.server,store,body['match_id'],plan)
+                except KeyError:raise ServiceError(404,'POSTGAME_MATCH_NOT_FOUND') from None
+                return self.bounded_reply(200,result)
+            match_route=re.fullmatch(r'/dev/v1/postgame/matches/([a-f0-9]{64})',route)
+            if match_route and self.command=='GET':
+                try:
+                    result=postgame_response(self.server,store,match_route[1])
+                except KeyError:raise ServiceError(404,'POSTGAME_MATCH_NOT_FOUND') from None
+                return self.bounded_reply(200,result)
+            raise ServiceError(404,'NOT_FOUND')
         prefix='/dev/v1/pregame'
         if not route.startswith(prefix+'/'):return super().dispatch()
         self.authorize();pg=self.server.pregame;limit=self.server.limits.body_bytes
@@ -267,6 +356,27 @@ class PregameHandler(Handler):
             return self.bounded_reply(200,dict(mode='PRE_GAME',automatic_collection='UNAVAILABLE',current_patch=None,
                 knowledge_count=len(current_knowledge(self.server.research)),accuracy=None,
                 test_mode=self.server.test_mode,power_tiers=self.server.power_tiers()))
+        if route==prefix+'/review-queue' and self.command=='GET':
+            from .review_queue import queue_response
+            return self.bounded_reply(200,queue_response(self.server))
+        if route==prefix+'/review-queue/page' and self.command=='POST':
+            from .review_queue import queue_response
+            body=self.body();self.fields(body,('page','later_page'))
+            if any(type(body[k]) is not int or not 0<=body[k]<=10000 for k in body):raise ServiceError(422,'INVALID_REVIEW_PAGE')
+            return self.bounded_reply(200,queue_response(self.server,page=body['page'],later_page=body['later_page']))
+        if route==prefix+'/review-queue/later' and self.command=='POST':
+            from .review_queue import defer_candidate
+            return self.bounded_reply(200,defer_candidate(self.server,self.body()))
+        if route==prefix+'/power-catalog' and self.command=='GET':
+            from .collection_progress import progress_response
+            datasets=[]
+            for (patch,tier),data in sorted(self.server.validated_power_datasets().items(),key=lambda row:str(row[0])):
+                datasets.append(dict(patch=patch,tier=tier,sample_kind=data['source']['sample_kind'],
+                    champions=sorted({c['champion'] for c in data['cohorts']}),progress=self.server.validated_progress(data)))
+            return self.bounded_reply(200,dict(datasets=datasets,test_mode=self.server.test_mode))
+        if route==prefix+'/collection-progress' and self.command=='GET':
+            from .collection_progress import progress_response
+            return self.bounded_reply(200,self.server.validated_progress(self.server.validated_power_data()))
         if route==prefix+'/power-view' and self.command=='POST':
             return self.bounded_reply(200,power_response(self.server,power_request(self.body())))
         if route==prefix+'/outcome-view' and self.command=='POST':
@@ -279,14 +389,18 @@ class PregameHandler(Handler):
         if route==prefix+'/candidates':
             if self.command=='GET':return self.bounded_reply(200,candidate_specs())
             if self.command=='POST':
-                b=self.body();self.fields(b,('spec',));spec=parse_rule(b['spec'])
+                b=self.body();self.fields(b,('spec',),('rule_id','expected_version'));spec=parse_rule(b['spec'])
+                if ('rule_id' in b)!=('expected_version' in b) or (b.get('rule_id') is None)!=(b.get('expected_version') is None):raise ServiceError(422,'CANDIDATE_REVISION_REQUIRED')
+                if b.get('rule_id') is not None:
+                    prior=self.server.research.get_proposal(b['rule_id'],max_bytes=limit)
+                    if prior['version']!=b.get('expected_version'):raise ServiceError(409,'REVISION_CONFLICT')
                 source=self.server.research.add('RAW_DIAGNOSTIC',spec.rule_id[:200],
                     dict(schema_version=spec.schema_version.replace('.rule.','.rule-source.'),spec=spec.model_dump(mode='json')))
                 note=self.server.research.get_note(source['id'],'overview')
                 if note['revision']==0:
                     note=self.server.research.put_note(source['id'],'overview',dict(known='AI 구조화 후보 명세 sha256:'+digest(spec.model_dump(mode='json')),
                         intention='경기 전 사용자 검토용; 출처 원문/패치/반례는 저장 자료 명세에 포함',alternative='',outcome='실제 코칭 성능 미검증'),0)
-                proposal=self.server.research.propose(proposal_rule(spec),dict(resource_id=source['id'],anchor='overview',note_revision=note['revision']),max_bytes=limit)
+                proposal=self.server.research.propose(proposal_rule(spec),dict(resource_id=source['id'],anchor='overview',note_revision=note['revision']),b.get('rule_id'),b.get('expected_version'),max_bytes=limit)
                 return self.bounded_reply(201,dict(proposal=proposal,spec=spec.model_dump(mode='json')))
         if route==prefix+'/export' and self.command=='GET':return self.bounded_reply(200,pg.export_data())
         if route==prefix+'/restore' and self.command=='POST':
@@ -348,8 +462,10 @@ def main():
     parser.add_argument('--db',type=Path,required=True);parser.add_argument('--port',type=int,default=8765)
     parser.add_argument('--token-file',type=Path,required=True)
     parser.add_argument('--power-data',type=Path,help='Validated aggregate-only Q15 JSON')
+    parser.add_argument('--power-data-dir',type=Path,help='Directory of validated power-<patch>-<tier>.json aggregates')
     parser.add_argument('--movement-data',type=Path,help='Validated aggregate-only Q18 JSON')
     parser.add_argument('--outcome-data',type=Path,help='Validated aggregate-only ending-duration outcome JSON')
+    parser.add_argument('--pro-reference-data',type=Path,help='Validated private pro-reference totals aggregate; separate from tier cohorts')
     parser.add_argument('--expert-claims-dir',type=Path,help='Validated local expert summaries; no raw videos or transcripts')
     for flag in ('body-bytes','observations','actions','scenarios','comparisons','pending-jobs'):
         parser.add_argument('--max-'+flag,type=int,required=True)
@@ -366,6 +482,27 @@ def main():
             from .power_stats import validate_power_dataset
             server.power_data=validate_power_dataset(json.loads(args.power_data.read_text()))
             if server.power_data['source']['sample_kind']=='SYNTHETIC':raise ValueError('Synthetic power data requires an isolated test fixture')
+        if args.power_data_dir:
+            from .power_stats import validate_power_dataset
+            directory=args.power_data_dir
+            if directory.is_symlink() or not directory.is_dir():raise ValueError('Invalid power dataset directory')
+            paths=sorted(directory.glob('power-*.json'))
+            if len(paths)>100:raise ValueError('Power dataset directory exceeds100 files')
+            for path in paths:
+                if path.is_symlink() or path.stat().st_size>64_000_000:raise ValueError('Invalid power aggregate file')
+                data=validate_power_dataset(json.loads(path.read_text()))
+                if data['source']['sample_kind']!='REAL':raise ValueError('Synthetic power data requires an isolated test fixture')
+                key=(data['source']['patch'],data['source']['tier'])
+                if key in server.power_datasets and digest(server.power_datasets[key])!=digest(data):raise ValueError('Conflicting power datasets')
+                server.power_datasets[key]=data
+        if args.power_data_dir:
+            from .collection_progress import validate_progress
+            for key,data in server.power_datasets.items():
+                patch,tier=key
+                path=args.power_data_dir/('progress-'+str(patch)+'-'+tier+'.json')
+                if path.exists():
+                    if path.is_symlink() or path.stat().st_size>1_000_000:raise ValueError('Invalid progress companion file')
+                    server.power_progress[key]=validate_progress(json.loads(path.read_text()),data)
         if args.movement_data:
             from .movement import validate_movement_dataset
             server.movement_statistics=validate_movement_dataset(json.loads(args.movement_data.read_text()))
@@ -374,6 +511,13 @@ def main():
             from .outcome_stats import validate_outcome_dataset
             server.outcome_data=validate_outcome_dataset(json.loads(args.outcome_data.read_text()))
             if server.outcome_data['source']['sample_kind']=='SYNTHETIC':raise ValueError('Synthetic outcome data requires an isolated test fixture')
+        if args.pro_reference_data:
+            from .pro_reference import validate_pro_reference
+            path=args.pro_reference_data
+            if '..' in path.parts or path.is_symlink() or 'private' not in path.resolve().parts or path.stat().st_size>12_000_000:raise ValueError('Pro reference data must be bounded private local file')
+            server.pro_reference_data=validate_pro_reference(json.loads(path.read_text()))
+            if server.pro_reference_data['sample_kind']!='REAL':raise ValueError('Synthetic pro reference data requires an isolated test fixture')
+            if server.pro_reference_data['roster_sha256']!=server.current_pro_roster_digest():raise ValueError('Pro reference roster version mismatch')
         expert_import=load_expert_directory(server,args.expert_claims_dir or ROOT/'data'/'expert_claims',explicit=args.expert_claims_dir is not None)
     except Exception:
         server.server_close();raise

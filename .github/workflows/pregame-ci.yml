@@ -80,6 +80,15 @@ jobs:
           CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
           export CHROMIUM_EXECUTABLE
           node tests_pregame/browser_outcome.cjs | tee "$RUNNER_TEMP/pregame-outcome-renderer.json"
+      - name: Verify queue v2 mobile review, private postgame and tier comparison
+        shell: bash
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/pregame-playwright/node_modules"
+          CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
+          export CHROMIUM_EXECUTABLE
+          python scripts/browser_review_queue_v20.py | tee "$RUNNER_TEMP/review-v20-browser.json"
+          python scripts/browser_postgame_v20.py | tee "$RUNNER_TEMP/postgame-v20-browser.json"
+          python scripts/browser_statistics_v20.py | tee "$RUNNER_TEMP/statistics-v20-browser.json"
       - name: Print exact fresh receipts
         if: always()
         run: |
@@ -110,6 +119,13 @@ jobs:
               payload['outcome_renderer'] = json.loads((Path(os.environ['RUNNER_TEMP']) / 'pregame-outcome-renderer.json').read_text())
           except (OSError, ValueError) as error:
               payload['outcome_renderer'] = {'status': 'NOT_PRODUCED', 'error': str(error)}
+          payload['v20']={}
+          for name in ('review','postgame','statistics'):
+              try:
+                  launch=json.loads((Path(os.environ['RUNNER_TEMP'])/(name+'-v20-browser.json')).read_text())
+                  payload['v20'][name]=json.loads((Path(launch['evidence_directory'])/'runner.json').read_text())
+              except (OSError,ValueError,KeyError) as error:
+                  payload['v20'][name]={'status':'NOT_PRODUCED','error':str(error)}
           print('PREGAME_RECEIPT_JSON=' + json.dumps(payload, ensure_ascii=False))
           with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a') as output:
               output.write('## Five-position pregame verification\n\n```json\n' + json.dumps(payload, ensure_ascii=False, indent=2) + '\n```\n')

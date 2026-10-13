@@ -5,8 +5,8 @@ unknown/failed attempts), with video_id/seconds/reserved_at/reservation_id, and
 processed_video_ids only after a nonempty validated artifact. Reserve produces
 expert.reservation-plan.v4. Archived v1/v2/v3 plans are never reinterpreted. An external durable persistence ACK is mandatory
 before process; Actions provides it only after upload-artifact succeeds.
-Rolling24h cap28800s is conservative; reset timezone is unknown. No video retries:
-another uncertain dispatch would require another full duration reservation.
+Rolling24h cap28800s is conservative; reset timezone is unknown. No charged
+video ID retries, including uncertain reservations outside the rolling window.
 Publication is always deferred to Main's repository ownership protocol.
 The default request budget is50 (also its hard maximum):15 enabled channels
 can use3 metadata requests each plus1 successful TEXT probe and2 video requests,
@@ -14,7 +14,8 @@ totaling48. Any authorized TEXT retries consume the same fixed50-request budget.
 of at most1200 seconds uses contiguous static clips of at most600 seconds.
 Each clip reserves its FULL ORIGINAL video duration; clipping is not evidence
 that the provider's daily upload charge decreases. Provider transport timeout
-defaults to600 seconds (hard maximum); metadata waits are at most20 seconds. A detected
+defaults to600 seconds (hard maximum); text probes are at most120seconds and
+metadata waits are at most20 seconds. A detected
 TimeoutError (direct or wrapped in URLError) is NETWORK_TIMEOUT; other network
 failures remain NETWORK_FAILURE without inferring expired keys or paid access.
 Only TEXT literal503 permits up to3 retries spaced15seconds. Video and metadata
@@ -47,6 +48,9 @@ import urllib.request
 from .api_diagnostics import MAX_ERROR_BYTES,safe_http_error
 
 MODEL='gemini-3.8-flash'
+FALLBACK_MODEL='gemini-3.6-flash'
+ALLOWED_MODELS=(MODEL,FALLBACK_MODEL)
+MAX_TEXT_TIMEOUT=120
 GENERATE_CONTENT_URL='https://generativelanguage.googleapis.com/v1beta/models/'+MODEL+':generateContent'
 YOUTUBE_URL='https://www.googleapis.com/youtube/v3/'
 DAY=86400
@@ -66,7 +70,7 @@ POLICY_KEYS={'free_tier_confirmed','entitlement_confirmed','quota_exclusive_conf
              'initial_zero_usage_confirmed','billing_tier'}
 SAFE_REASONS={'EMPTY_CHANNEL_ALLOWLIST','KNOWN_PAID_PROJECT','FREE_PROJECT_OR_ENTITLEMENT_UNVERIFIED',
     'DOCUMENTED_PAID_ENTITLEMENT_REQUIRED',
-    'MISSING_API_KEYS','REQUEST_BUDGET_EXHAUSTED','NETWORK_FAILURE','NETWORK_TIMEOUT','PROVIDER_HTTP_FAILURE','RESPONSE_TOO_LARGE',
+    'PROVIDER_NETWORK_TIMEOUT','MISSING_API_KEYS','REQUEST_BUDGET_EXHAUSTED','NETWORK_FAILURE','NETWORK_TIMEOUT','PROVIDER_HTTP_FAILURE','RESPONSE_TOO_LARGE',
     'MALFORMED_RESPONSE','MALFORMED_CHANNEL_METADATA','MALFORMED_VIDEO_METADATA',
     'QUOTA_HISTORY_UNKNOWN','INITIAL_QUOTA_NOT_ATTESTED','NO_UNPROCESSED_PUBLIC_MATCHING_VIDEOS',
     'ROLLING_VIDEO_BUDGET_EXHAUSTED','RESERVATION_PERSISTENCE_NOT_CONFIRMED','RESERVATION_DISPATCH_DEADLINE_EXPIRED'}
@@ -126,10 +130,10 @@ def _reservation_payload(created_at,videos,prior,text_probe,collection_mode):
         collection_mode=collection_mode,planned_intervals=[_segments(v,collection_mode) for v in videos])
 
 
-def _valid_probe(receipt,now):
+def _valid_probe(receipt,now,model=MODEL):
     _keys(receipt,{'schema_version','status','reason','model','checked_at','http_status','input_kind','video_inputs','api_route','attempt_count','retry_count'})
     _require(receipt['schema_version']=='expert.text-probe.v2' and receipt['status']=='READY' and receipt['reason'] is None)
-    _require(receipt['model']==MODEL and receipt['input_kind']=='TEXT_ONLY' and type(receipt['video_inputs']) is int and receipt['video_inputs']==0)
+    _require(receipt['model']==model and receipt['input_kind']=='TEXT_ONLY' and type(receipt['video_inputs']) is int and receipt['video_inputs']==0)
     _require(type(receipt['http_status']) is int and receipt['http_status']==200)
     _require(receipt['api_route']=='GENERATE_CONTENT' and _int(receipt['attempt_count'],1) and receipt['attempt_count']<=4)
     _require(_int(receipt['retry_count']) and receipt['retry_count']<=3 and receipt['attempt_count']==receipt['retry_count']+1)
@@ -203,9 +207,9 @@ def validate_config(value):
     return c
 
 
-def validate_entitlement_proof(proof):
+def validate_entitlement_proof(proof,model=MODEL):
     p=deepcopy(proof);_keys(p,{'status','checked_at','model','sources','reasons'})
-    _require(p['status'] in ('VERIFIED_FREE','UNKNOWN','PAID_REQUIRED') and p['model']==MODEL)
+    _require(p['status'] in ('VERIFIED_FREE','UNKNOWN','PAID_REQUIRED') and p['model']==model and model in ALLOWED_MODELS)
     _require(isinstance(p['checked_at'],str) and re.fullmatch(r'\d{4}-\d{2}-\d{2}',p['checked_at']) is not None)
     try:date.fromisoformat(p['checked_at'])
     except (ValueError,TypeError):raise ValueError('invalid expert collector state') from None
@@ -222,7 +226,7 @@ def validate_entitlement_proof(proof):
     return p
 
 
-def policy_from_runtime(runtime,environ,*,now,entitlement_proof=None):
+def policy_from_runtime(runtime,environ,*,now,entitlement_proof=None,model=MODEL):
     """Main's USER billing proof plus fresh public-source entitlement proof.
 
     Documentation proof dates expire after their verified UTC day. Model is hard pinned;
@@ -245,7 +249,7 @@ def policy_from_runtime(runtime,environ,*,now,entitlement_proof=None):
         values.update({key:runtime[key] for key in values})
     names=dict(free_tier_confirmed='GEMINI_FREE_TIER_CONFIRMED',quota_exclusive_confirmed='GEMINI_QUOTA_EXCLUSIVE_CONFIRMED',
         initial_zero_usage_confirmed='INITIAL_ZERO_USAGE_CONFIRMED',entitlement_confirmed='GEMINI_DOCUMENTED_FREE_ENTITLEMENT_CONFIRMED')
-    proof=validate_entitlement_proof(entitlement_proof) if entitlement_proof is not None else None
+    proof=validate_entitlement_proof(entitlement_proof,model) if entitlement_proof is not None else None
     current_free=proof is not None and proof['status']=='VERIFIED_FREE' and proof['checked_at']==datetime.fromtimestamp(now,timezone.utc).date().isoformat()
     values['entitlement_confirmed']=current_free
     for key,variable in names.items():
@@ -321,7 +325,9 @@ def _transport(method,url,headers,body,timeout,max_bytes):
 
 class ExpertCollector:
     def __init__(self,*,youtube_api_key=None,gemini_api_key=None,transport=None,clock=None,policy=None,
-                 max_requests=50,timeout=600,max_bytes=1000000,on_diagnostic=None,sleeper=None):
+                 max_requests=50,timeout=600,max_bytes=1000000,on_diagnostic=None,sleeper=None,model=MODEL):
+        _require(model in ALLOWED_MODELS)
+        self.model=model;self.generate_content_url="https://generativelanguage.googleapis.com/v1beta/models/"+model+":generateContent"
         self.youtube_key=youtube_api_key;self.gemini_key=gemini_api_key
         self.transport=transport or _transport;self.clock=clock or time.time
         self.policy=deepcopy(policy or dict(free_tier_confirmed=False,entitlement_confirmed=False,
@@ -354,7 +360,7 @@ class ExpertCollector:
 
     def _request(self,method,url,body=None,*,phase=None,timeout_limit=None):
         youtube=url.startswith(YOUTUBE_URL) and method=='GET'
-        _require(youtube or url==GENERATE_CONTENT_URL and method=='POST')
+        _require(youtube or url==self.generate_content_url and method=='POST')
         provider='YOUTUBE' if youtube else 'GEMINI';phase=phase or ('METADATA' if youtube else 'VIDEO_CLIP')
         _require(phase in self.request_counts)
         def fail(reason,status='BLOCKED_EXTERNAL',http_status=None,response=None):
@@ -383,7 +389,7 @@ class ExpertCollector:
 
     def probe_text(self,*,structured=False):
         _require(type(structured) is bool)
-        receipt=dict(schema_version='expert.text-probe.v2',status='BLOCKED_EXTERNAL',reason=None,model=MODEL,
+        receipt=dict(schema_version='expert.text-probe.v2',status='BLOCKED_EXTERNAL',reason=None,model=self.model,
             checked_at=int(self.clock()),http_status=None,input_kind='TEXT_ONLY',video_inputs=0,
             api_route='GENERATE_CONTENT',attempt_count=0,retry_count=0)
         before=len(self.diagnostics)
@@ -396,7 +402,7 @@ class ExpertCollector:
         for attempt in range(4):
             count_before=self.request_counts['TEXT_PROBE']
             try:
-                response=self._request('POST',GENERATE_CONTENT_URL,body,phase='TEXT_PROBE',timeout_limit=60)
+                response=self._request('POST',self.generate_content_url,body,phase='TEXT_PROBE',timeout_limit=MAX_TEXT_TIMEOUT)
                 receipt['http_status']=200
                 _generated_text(response)  # Retain only the receipt, never response text.
                 receipt.update(status='READY',reason=None,checked_at=int(self.clock()))
@@ -417,7 +423,7 @@ class ExpertCollector:
         return self._request('GET',YOUTUBE_URL+endpoint+'?'+urllib.parse.urlencode(params))
 
     def _discover(self,config,ledger,now):
-        known=set(ledger['processed_video_ids'])|{row['video_id'] for row in ledger['reservations'] if row['reserved_at']>now-CHARGE_WINDOW}
+        known=set(ledger['processed_video_ids'])|{row['video_id'] for row in ledger['reservations']}
         candidates=[];seen=set()
         for channel in sorted(config['channels'],key=lambda c:('L','C','UNKNOWN','P').index(c['content_grade'])):
             if not channel['enabled']:continue
@@ -462,7 +468,7 @@ class ExpertCollector:
                 except (ValueError,KeyError,TypeError,OverflowError):continue
         return candidates
 
-    def prepare(self,config,ledger=None,*,ledger_history='ABSENT',collection_mode='FULL_VIDEO'):
+    def prepare(self,config,ledger=None,*,ledger_history='ABSENT',collection_mode='FULL_VIDEO',front_diagnostics=None):
         c=validate_config(config);now=int(self.clock())
         # Active operational policy remains bounded even for a legacy config.
         c['max_videos_per_run']=1;c['max_duration_seconds']=min(c['max_duration_seconds'],MAX_VIDEO_SECONDS)
@@ -481,7 +487,16 @@ class ExpertCollector:
                 if ledger_history=='FOUND' or not self.policy['initial_zero_usage_confirmed']:raise _External('INITIAL_QUOTA_NOT_ATTESTED')
                 ledger=dict(schema_version='expert.quota-ledger.v1',initialized_at=now,reservations=[],processed_video_ids=[])
             if sum(row['seconds'] for row in ledger['reservations'] if row['reserved_at']>now-CHARGE_WINDOW)>=CAP:raise _External('ROLLING_VIDEO_BUDGET_EXHAUSTED')
-            plan['text_probe']=self.probe_text()
+            if front_diagnostics is None:
+                plan['text_probe']=self.probe_text()
+            else:
+                from .expert_front_diagnostics import validate_front_receipt
+                front=validate_front_receipt(front_diagnostics,now=now)
+                self.request_count+=front['request_count'];self.request_counts['TEXT_PROBE']+=front['request_count']
+                if front['status']!='READY':
+                    plan.update(status='BLOCKED_EXTERNAL',reason=front['reason'],ledger=ledger);return plan
+                _require(front['selected_model']==self.model)
+                plan['text_probe']=front['selected_text_probe']
             if plan['text_probe']['status']!='READY':
                 plan.update(status=plan['text_probe']['status'],reason=plan['text_probe']['reason'],ledger=ledger);return plan
             now=int(self.clock());plan['created_at']=now
@@ -517,7 +532,7 @@ class ExpertCollector:
         ledger=validate_ledger(plan['ledger'],now)
         _require(_sha(plan['reservation_id']) and _digest(ledger)==plan['ledger_sha256'])
         _require(_int(plan['created_at']) and 0<=now-plan['created_at']<=MAX_DISPATCH_DELAY)
-        _valid_probe(plan['text_probe'],now);_require(plan['text_probe']['checked_at']<=plan['created_at'])
+        _valid_probe(plan['text_probe'],now,self.model);_require(plan['text_probe']['checked_at']<=plan['created_at'])
         _require(isinstance(plan['videos'],list) and len(plan['videos'])==1)
         prior=deepcopy(ledger)
         prior['reservations']=[row for row in prior['reservations'] if row['reservation_id']!=plan['reservation_id']]
@@ -541,7 +556,7 @@ class ExpertCollector:
             for (start,end),body in zip(intervals,bodies):
                 try:
                     if not 0<=int(self.clock())-plan['created_at']<=MAX_DISPATCH_DELAY:raise _External('RESERVATION_DISPATCH_DEADLINE_EXPIRED')
-                    response=self._request('POST',GENERATE_CONTENT_URL,body)
+                    response=self._request('POST',self.generate_content_url,body)
                     last_http_status=200
                     text=_generated_text(response)
                     decoded=_json(text);accepted,rejected=normalize_gemini_claims(decoded,video['duration_seconds'])
@@ -574,7 +589,7 @@ class ExpertCollector:
                 rejections=rejections[:99]+[dict(index=0,reason='FAILED_FORMAT')];complete=False
             if claims:
                 artifact=dict(schema_version='expert.claims.v1',video=video,
-                    processing=dict(method='GEMINI_YOUTUBE',model=MODEL,processed_at=_utc(int(self.clock())),input_sha256=_digest(bodies)),
+                    processing=dict(method='GEMINI_YOUTUBE',model=self.model,processed_at=_utc(int(self.clock())),input_sha256=_digest(bodies)),
                     claims=claims,rejections=rejections,visual_verified=False,coaching_accuracy=None)
                 # Combined clips can exceed the immutable public artifact bound.
                 # Retain a bounded partial source, visibly marking truncation.

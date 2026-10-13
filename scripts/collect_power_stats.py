@@ -3,13 +3,35 @@
 import argparse
 from datetime import datetime, timezone
 import json
+import gzip
 import os
 from pathlib import Path
 import sys
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from coach_v1.power_stats import TIERS, validate_power_dataset
-from coach_v1.riot_collector import RiotCollector
+from coach_v1.riot_collector import RiotCollector, collection_tier
+from coach_v1.power_accumulator import PowerAccumulator
+from coach_v1.collection_progress import validate_progress
+
+
+def write_json(path,data):
+    path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
+    temporary=path.with_name(path.name+'.tmp')
+    temporary.write_text(json.dumps(data,ensure_ascii=False,allow_nan=False,sort_keys=True,indent=2)+'\n')
+    os.replace(temporary,path)
+
+
+def publish_accumulator(accumulator,directory):
+    if not directory:return
+    state=accumulator.to_dict()
+    keys={(d['source']['patch'],d['source']['tier']) for d in state['legacy']+state['buckets']}
+    for patch,tier in sorted(keys):
+        if patch is None:continue
+        dataset=accumulator.dataset(patch,tier)
+        write_json(Path(directory)/('power-'+patch+'-'+tier+'.json'),dataset)
+        progress=validate_progress(accumulator.progress(patch,tier),dataset)
+        write_json(Path(directory)/('progress-'+patch+'-'+tier+'.json'),progress)
 
 
 def main(argv=None):
@@ -18,23 +40,48 @@ def main(argv=None):
     parser.add_argument('--movement-output',help='optional anonymous movement companion; absent on blocked collection')
     parser.add_argument('--outcome-output',help='optional anonymous ending-duration outcome companion; absent on blocked collection')
     parser.add_argument('--diagnostics-output',help='safe key-shape and selected HTTP error metadata only')
-    parser.add_argument('--tier',choices=TIERS,default='GOLD')
+    parser.add_argument('--tier',choices=TIERS)
+    parser.add_argument('--rotation',type=int,default=0,help='default CHALLENGER/GRANDMASTER/MASTER seed rotation')
+    parser.add_argument('--user-tier',choices=TIERS,help='explicit U2-confirmed user-tier cohort')
+    parser.add_argument('--accumulator',help='anonymous sufficient-state JSON or JSON.gz; atomically preserved across runs')
+    parser.add_argument('--aggregate-directory',help='write patch/tier power and digest-bound progress companions')
+    parser.add_argument('--seed-data',help='retained legacy summary reusable as evidence, never blindly merged')
+    parser.add_argument('--publish-only',action='store_true',help='restore/publish existing state; makes no provider call')
+    parser.add_argument('--user-reported-key-expired',action='store_true',help='separate user attribution, not HTTP-inferred expiry')
     parser.add_argument('--division',choices=('I','II','III','IV'),default='I')
     parser.add_argument('--patch',help='exact gameplay patch; omitted pins first eligible match patch')
     parser.add_argument('--start-time',type=int)
     parser.add_argument('--end-time',type=int)
     parser.add_argument('--lookback-days',type=int,default=7)
-    for option,default in [('max-matches',50),('max-requests',250),('max-pages',1),('max-players',20),('max-retries',2),('deadline-seconds',600)]:
+    for option,default in [('max-matches',300),('max-requests',650),('max-pages',1),('max-players',40),('max-retries',2),('deadline-seconds',900)]:
         parser.add_argument('--'+option,type=int,default=default)
     parser.add_argument('--no-item-markers',action='store_true')
     parser.add_argument('--max-gold-ci-width',type=float)
     parser.add_argument('--max-xp-ci-width',type=float)
     parser.add_argument('--max-cs-ci-width',type=float)
     args=parser.parse_args(argv)
-    paths=[Path(p).resolve() for p in (args.output,args.movement_output,args.outcome_output,args.diagnostics_output) if p]
+    paths=[Path(p).resolve() for p in (args.output,args.movement_output,args.outcome_output,args.diagnostics_output,args.accumulator) if p]
     if len(paths)!=len(set(paths)):
         parser.error('aggregate and diagnostics outputs must be different paths')
     if args.lookback_days<1:parser.error('lookback-days must be positive')
+    try:
+        tier=args.tier or collection_tier(args.rotation,args.user_tier)
+        accumulator=PowerAccumulator.load(args.accumulator) if args.accumulator and Path(args.accumulator).exists() else PowerAccumulator()
+        if args.seed_data:
+            path=Path(args.seed_data)
+            with (gzip.open(path,'rt') if path.suffix=='.gz' else path.open()) as input_file:
+                accumulator.seed_legacy(json.load(input_file))
+        if args.publish_only:
+            if not args.accumulator:parser.error('publish-only requires an accumulator')
+            publish_accumulator(accumulator,args.aggregate_directory);accumulator.save(args.accumulator)
+            state=accumulator.to_dict();available=state['legacy']+state['buckets']
+            if available:
+                representative=max(available,key=lambda d:d['source'].get('retrieved_at') or '')['source']
+                write_json(args.output,accumulator.dataset(representative['patch'],representative['tier']))
+            print(json.dumps(dict(status='RESTORED_DERIVED_STATE',request_count=0,coaching_accuracy=None)))
+            return 0
+    except (ValueError,OSError,EOFError,json.JSONDecodeError):
+        parser.error('invalid retained accumulator or seed; no provider call made')
     end=args.end_time if args.end_time is not None else int(datetime.now(timezone.utc).timestamp())
     start=args.start_time if args.start_time is not None else max(0,end-args.lookback_days*86400)
     limits={name:getattr(args,name) for name in ('max_matches','max_requests','max_pages','max_players','max_retries','deadline_seconds')}
@@ -53,9 +100,10 @@ def main(argv=None):
     try:
         collector=RiotCollector(**limits,on_first_http_response=first_http_receipt,
             on_key_shape=key_shape_receipt,on_http_error=http_error_receipt,on_front_error=front_error_receipt)
-        result=collector.collect(tier=args.tier,division=args.division,patch=args.patch,
+        result=collector.collect(tier=tier,division=args.division,patch=args.patch,
             start_time=start,end_time=end,collect_items=not args.no_item_markers,ci_width_limits=overrides or None,
-            collect_movement=bool(args.movement_output),collect_outcome=bool(args.outcome_output))
+            collect_movement=bool(args.movement_output),collect_outcome=bool(args.outcome_output),
+            known_match_hashes=accumulator.known_hashes(args.patch,tier) if args.accumulator else ())
         result=validate_power_dataset(result)
     except ValueError:
         parser.error('invalid collection arguments or unsafe aggregate; no output written')
@@ -64,11 +112,20 @@ def main(argv=None):
         diagnostics=dict(schema_version='riot.diagnostics.v2',key_shape=collector.key_shape,
             first_http_status=collector.first_http_status,http_errors=collector.http_errors,front_errors=collector.front_errors,
             collection_status=result['status'],collection_reason=result['source']['collection']['reason'],
+            user_key_expiry_attribution='USER_REPORTED_EXPIRED' if args.user_reported_key_expired else 'UNKNOWN',
             request_count=collector.requests,retry_count=collector.retries,coaching_accuracy=None)
         path=Path(args.diagnostics_output);path.parent.mkdir(parents=True,exist_ok=True)
         temporary=path.with_name(path.name+'.tmp')
         temporary.write_text(json.dumps(diagnostics,ensure_ascii=False,allow_nan=False,sort_keys=True,indent=2)+'\n')
         os.replace(temporary,path)
+    if args.accumulator:
+        if result['source']['patch'] is not None:
+            cumulative=accumulator.add_records(collector.sufficient_records,source=result['source'])
+            # Acquisition status remains in diagnostics; usable retained history
+            # remains visible even when this run stopped on its first auth error.
+            if cumulative['samples']['real_matches']+cumulative['samples']['synthetic_matches']>0:result=cumulative
+        accumulator.save(args.accumulator)
+        publish_accumulator(accumulator,args.aggregate_directory)
     if not collector.key_shape['valid_shape']:
         # A malformed or missing credential creates only a diagnostic receipt.
         # Remove requested stale aggregates so old values cannot be uploaded.
