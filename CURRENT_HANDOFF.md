@@ -1,3 +1,26 @@
+# Latest common execution claim — PARKED_EXTERNAL
+- run_token: `main-20261013-queue-v20`
+- status: `PARKED_EXTERNAL`
+- writer_active: false
+- owner_branch: `work/queue-v20-closeout-20261013`
+- authority: USER_QUEUE_V2.0 + USER_R3_PRO_REFERENCE_ROSTER; inherited free implementation/publication/normal merge.
+- final_main: `f987f71670c499fdcea1c9e810ba1478c36ab940`
+- published_closeout_head: `f12edf2e8c5c8f7603df82befb4d126eef75d15a`
+- exact_main/published/tested_tree: `77a6ee1f0ee042e12173c0498138ca99f2780984`
+- PR26 implementation: normally MERGED; required38386604901/38386604920 and postmerge38387425422/38387425433 all three SUCCESS; each14groups440paths verified, original-index gate unchanged/restored.
+- PR27 closeout: normally MERGED2026-10-13T11:23:49Z; required38389463327/38389463340 and postmerge38389925890/38389925618 all three SUCCESS; each14groups440paths verified. PR testedmerge9280df70 tree equals published/main. Evidence ci-pr27-source-binding.json and ci-main-pr27-source-binding.json on this coordination branch.
+- actual_R4: trusted38387587260; primary3.8 curl503/Python503; sole authorized fallback3.6 curl200/Python200. Four text calls, one <=600-second video request ->400 INVALID_ARGUMENT, accepted0. Exact bad field UNKNOWN after current official-doc audit; provider workflow success is not acquisition success.
+- R4_trial: CONSUMED; no more session provider requests, enabled alternative trials or charged video lSy9NeB5Ue4 retry. Manual timestamped-summary route ready.
+- fresh_quota: recovery38349297786/artifact11790310968;8rows9575sec ->9rows10712sec; +1 conservative1137sec full-original reservation; all prior rows and processed IDs preserved; reservation/final ledgers byte-identical; no refund/rawledger publication.
+- progress: v2 fullDONE1/5 R1; newclosedblocker1 REVIEW_QUEUE_TOOLING, not reviewed content. Legacy fullDONE10/19 Q01–Q09/Q15 and4 prior closed blockers reused. Test counts never represent coaching accuracy.
+- external: R2U2/U3; R3U1/U3, user25pro/9backup roster not own identity; R4 field-specific provider evidence or newly authorized grounded diagnostic; R5 actualPC/POV files.
+- invariants: actualUSER_WEBapprovals0/REVIEWEDknowledge0/ownmatches0/prolookups0/newRiotcalls0/coaching_accuracy=null/paidservices0; no live coaching/cooldown tracking. Today's existing schedule38342732100 curl401/Python401 recorded with separate user-key-expiry attribution; no new expired-key probe.
+- user_next: review knowledge candidates; supply own Riot ID+server and approximate tier, confirm Secret renewal without exposing key. Personal/pro raw Match-V5 and PUUID collection remain local/private; claimed pro ownership/counts are user-reported. PC/POV and manual expert summaries can be imported independently.
+- all independent READY work exhausted; no open PR and no active sibling writer. Terminal owner released; resume only affected inputs, preserving all historical failures/charges and source evidence.
+- updated_at: 2026-10-13
+
+---
+
 # Latest common execution claim — VERIFYING_POSTMERGE_CLOSEOUT
 - run_token: `main-20261013-queue-v20`
 - status: `VERIFYING_POSTMERGE_CLOSEOUT`
