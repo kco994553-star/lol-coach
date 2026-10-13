@@ -1,3 +1,27 @@
+# Latest common execution claim — PARKED_EXTERNAL
+- run_token: `main-20261013-pro-reference-resume`
+- status: `PARKED_EXTERNAL`
+- writer_active: false
+- owner_branch: `work/pro-reference-results-20261013`
+- authority: USER_DECISIONS_2026-10-13 + inheritedv1.6 freeimplementation/publication/requiredCI/normalmerge; no ownRiotID/tier dependency or approval reconfirmation.
+- final_main: `8e404fde3d68f5db09ac35fcef418b8f108426ab`
+- published_results_head: `b058bde1d85b7cab258f7f5efdec8becb12367ae`
+- exact_main/published/tested_tree: `f01bc799a0fb764fa607b67d40442418dbc7b613`
+- PR28: normallyMERGED b6cdced, required38409767081/38409766412 +postmerge38410614883/38410614946 allthreeSUCCESS;14groups464paths matched each.
+- PR29: normallyMERGED2026-10-13T14:58:56Z; required38415545517/38415545883 +postmerge38418076875/38418076833 allthreeSUCCESS;14groups474paths independently matched each; main/published/testedtree identical. ci-pr29-source-binding.json andci-main-pr29-source-binding.json onthiscoordinationbranch. OpenPRs0; trackedworktreeclean onmain; unrelateduntracked prior/debugevidence preserved.
+- actual_R2:38391353214 firstHTTP200/37REAL16.19 separated;38393589558 first200/275REAL16.20 CHALLENGER601requests0retry. All5basicroles×3resources visible:495READYpoints,60ESTIMATED+60UNKNOWN latepoints withheld, no100%claim. Sourceoriginal6090cohorts archived; default exact852ROLE_POPULATIONprojection keepssame275matches/unchangedvalues, strictprogressrebinding+hashmanifest. GM38399585294 first200 butjobtimelimitCANCELLED/no newGMpublicdata, neverattributescanceltoauth. Prior50legacyretained/notnaivelymerged.
+- actual_R3:38410710876 READY260requests/87distinctREALmatches/106selectedchampion-rolematches/25selectedplayers/2backupreplacements/0failedaccounts. 16.20all5roles×3operationstages;24cohorts across16.19/16.20 separate; only8coordinateCIs visible, othersUNKNOWN. Publicsafe11822326318 only3approvedfiles downloaded; authenticatedencryptedprivatecache11822391323 NOTdownloaded/decrypted in cloud; PUUID/rawJSONneverGit. Account-V1 cache/checkpoint/rerun/privacy protections retained.
+- actual_R4:38410728980 literalofficialYouTubeURL9hE5-98ZeCg, fixedknownfree3.6Interactions;1metadata,1BASELINEvideo150s =>429PROJECT_QUOTA_EXCEEDED. Complete sanitizederror recorded; exactquota metricUNKNOWN andprior400invalidfieldUNKNOWN. CLIPPING/FORMAT/text/retrycalls0; diagnostictrialCONSUMED, no moreprovidertrial. Automaticjobworkflow_dispatchONLY (scheduledjobcannotresumeviarepo-variable), manualsummarydefault; acceptedclaims0.
+- fresh_quota:9priorrows exactprefix+150secondfull-originalreservation =>10historicalrows10862seconds; processedIDs unchanged; reservation/finalbyte-identical; durable11821261465/11821296454, rawledgers/modeltextneverGit. No refund/reset. Prior400message complete andsavedbeforetrial.
+- actual_PC:22nativeREALbrowserchecks PASS1600px plus390pxno-overflow;15basicgraphs+champion3graphs; all5pro roles3stages;85sourcepaths unchanged. No owninput; USER_WEB0/REVIEWED0/ownmatches0/accuracyNULL/paid0. Native350candidatequeue read3.456s, top20returned, no approval; catalog2.35s observed. Product/math+securityreviews no materialfindings. Ownedverificationserverstopped.
+- queue_progress: v2 4/5 byR4explicit-failure-recordalternative; doesNOTmeanautomaticvideosummaryrecovered. Closedv2blockers4 (reviewtooling1 +ownIDdependencyremoved1 +own-tierdependencyremoved1 +keyaccessrestored1). Legacy10/19 and4oldclosedblockers maintained; reviewcontent/quota/R5PC-POV blockers remainopen.
+- READY_implementation_remaining:0; no openPR/activewriter/providerretry. R2 authorizedschedule continues withinrecorded KRkey24hwindow approx2026-10-13T10Z..14T10Z; currentofficialpatch, sharedrollingratecooldown,20/second100/120s, first401/403 stopsaffectedexecution andrecordsuserexpiry attribution separately. Outsidewindow no Riot probe. R3 acquisition complete, no ownID/tierquestions.
+- user_next: manuallyreviewknowledgecandidates; manualtimestampedsummary default; optionalPCoriginals/POVvideo forR5 whenavailable. No AIUSER_WEB impersonation; ninecard rights risk/safety onlyactivecontributingREVIEWED/manualassertion/eligiblematchingstatistics; current45examplelabelsUNKNOWN. No livegamecoaching or cooldowntracking.
+- evidence: runtimeevidence/queue/pro-resume/{actual-browser,actual-pro,actual-gemini,final-independent-reviews.json}; datamanifests+anonymousprocases; allfailedattempts preserved. Usage docs/queue/V20_LOCAL_USE.md.
+- updated_at:2026-10-13T15:04Z
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261013-pro-reference-resume`
 - status: `RUNNING`
