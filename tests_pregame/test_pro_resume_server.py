@@ -54,3 +54,23 @@ class ProResumeServerTests(unittest.TestCase):
         with self.assertRaises(ValueError):read_aggregate_file(path,max_bytes=200)
         link=Path(self.tmp.name)/'link.json.gz';link.symlink_to(path)
         with self.assertRaises(ValueError):read_aggregate_file(link)
+
+    def test_cli_default_real_cases_remain_roster_bound(self):
+        from unittest.mock import Mock,patch
+        from coach_v1.pregame_server import main,ROOT
+        path=ROOT/'data/pro_reference/2026-10-13/reference-cases.json'
+        expected=json.loads(path.read_text())
+        token=Path(self.tmp.name)/'cli-token';token.write_text('fixture-cli-token')
+        argv=['pregame','--db',self.tmp.name+'/cli.sqlite','--token-file',str(token)]
+        for flag in ('body-bytes','observations','actions','scenarios','comparisons','pending-jobs'):
+            argv.extend(['--max-'+flag,'12000000'])
+        for roster_digest,success in ((self.server.current_pro_roster_digest(),True),('f'*64,False)):
+            fake=Mock();fake.server_port=8765;fake.test_mode=True
+            fake.current_pro_roster_digest.return_value=roster_digest
+            with patch('sys.argv',argv),patch('coach_v1.pregame_server.PregameWorkbench',return_value=fake),patch('builtins.print'):
+                if success:
+                    main();self.assertEqual(fake.pro_cases_data,expected);fake.serve_forever.assert_called_once()
+                else:
+                    with self.assertRaises(ValueError):main()
+                    fake.serve_forever.assert_not_called()
+            fake.server_close.assert_called_once()

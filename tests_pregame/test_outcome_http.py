@@ -118,6 +118,9 @@ class OutcomeHTTPTests(unittest.TestCase):
         token_path=Path(self.tmp.name)/'real-empty-token';token_path.write_text(self.token)
         data_path=Path(self.tmp.name)/'real-empty-outcome.json';data_path.write_text(json.dumps(aggregate))
         fake=Mock();fake.server_port=8765
+        # The CLI now loads shipped anonymous pro cases by default.
+        # Emulate the native roster digest instead of Mock's implicit method.
+        fake.current_pro_roster_digest.return_value=self.server.current_pro_roster_digest()
         args=['pregame','--db',self.tmp.name+'/real-empty-cli.sqlite','--token-file',str(token_path),'--outcome-data',str(data_path)]
         for flag in ['body-bytes','observations','actions','scenarios','comparisons','pending-jobs']:args.extend(['--max-'+flag,'1000000'])
         with patch('sys.argv',args),patch('coach_v1.pregame_server.PregameWorkbench',return_value=fake),patch('builtins.print'):
