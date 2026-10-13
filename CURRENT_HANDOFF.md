@@ -9,6 +9,8 @@
 - plan/spec: docs/superpowers/{specs,plans}/2026-10-13-pro-reference-resume*.md onfeaturebranch.
 - scope: Challengerprimary/GMinsufficientonly;25pro+backups timeline cases withprivatecache; opponentrights REVIEWED+stats only; PC layout; baselineYouTubeexample ->clip ->format onceperstage withfullsanitizederror anddurablequota. Manualdefault/automaticpause ifunlocalized.
 - privacy: cloud cannot read provider Secrets; private raw processing/encrypted durable cache in trusted mainActions only, public anonymous aggregates. Dedicated newSecret adminAPI403; use domain-separated HKDF from existing YOUTUBE_API_KEY inrunner only, no keyexport/provider call forencryption; securityreview required.
+- PR28: normallyMERGED2026-10-13T14:07:07Z; published3721f4d858414dc0f3b08f5cbeb1f4a299c8fff5 ->mainb6cdced0c819424e048ec412de6f7e57c5b1c545; exactpublished/tested/main treee018c6f376ae93faec2772b17b2d8498f1fb56ba. Required38409767081/38409766412 allthreeSUCCESS,14groups464paths independentlymatched. Postmerge38410614883/38410614946 pending.
+- Gemini distinctdiagnostic: DISPATCH_RESERVED once afterpriorcomplete400archived, officialliteralURL9hE5-98ZeCg, sameknownfree3.6, no furtheralternative-modeltrial. Actualdispatchnotyetdone; maximumordered3video requests, full-durationcharges, no retry afterfailure; manualdefault remains.
 - next: Mainintegration/reviewscomplete; literalofficialYouTubeURLcorrection finishing. RequiredCI/normalmerge before actualboundedpro/video stages andsafecloseout. No ownID/tierquestions.401/403 stops thatRiotrun/userkey-expiry attribution.
 - updated_at:2026-10-13
 
