@@ -6,10 +6,10 @@ on:
       tier:
         description: Current League-V4 seed tier (not historical match rank)
         type: choice
-        default: ROTATE
-        options: [ROTATE, IRON, BRONZE, SILVER, GOLD, PLATINUM, EMERALD, DIAMOND, MASTER, GRANDMASTER, CHALLENGER]
+        default: CHALLENGER
+        options: [CHALLENGER, GRANDMASTER]
       key_renewed:
-        description: U3 renewed Riot key confirmed; false only restores derived state
+        description: Manual key renewal confirmation; otherwise use recorded24h user window
         type: boolean
         default: false
       division:
@@ -81,31 +81,42 @@ jobs:
       - name: Restore and refresh existing aggregates without any provider request
         run: |
           python scripts/collect_power_stats.py --publish-only --accumulator "$RUNNER_TEMP/power-state/power-accumulator.json.gz" --seed-data data/riot/2026-10-11/power-data.json.gz --aggregate-directory "$RUNNER_TEMP/power-output" --output "$RUNNER_TEMP/power-output/power-data.json"
+      - name: Resolve current official patch and Challenger or auxiliary-only collection policy
+        id: policy
+        env:
+          EXPLICIT_PATCH: ${{ inputs.patch }}
+          REQUESTED_TIER: ${{ inputs.tier || 'CHALLENGER' }}
+          MANUAL_RENEWED: ${{ inputs.key_renewed }}
+        run: |
+          policy_args=(--patch "$EXPLICIT_PATCH" --tier "$REQUESTED_TIER" --aggregate-directory "$RUNNER_TEMP/power-output")
+          if [[ "$MANUAL_RENEWED" == true ]]; then policy_args+=(--manual-renewed); fi
+          python scripts/resolve_riot_collection.py "${policy_args[@]}"
+      - name: Clear prior job rolling Riot rate window before fresh client
+        if: steps.policy.outputs.enabled == 'true'
+        run: |
+          python - <<'PY'
+          import time
+          time.sleep(60)
+          time.sleep(60)
+          time.sleep(1)
+          PY
       - name: Collect official KR seed and ASIA matches with bounded requests
-        if: inputs.key_renewed == true || (github.event_name == 'schedule' && vars.RIOT_KEY_RENEWED == 'true')
+        if: steps.policy.outputs.enabled == 'true'
         env:
           RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
-          COLLECTION_TIER: ${{ inputs.tier || 'ROTATE' }}
-          COLLECTION_USER_TIER: ${{ vars.RIOT_USER_TIER }}
+          COLLECTION_TIER: ${{ inputs.tier || 'CHALLENGER' }}
           COLLECTION_DIVISION: ${{ inputs.division || 'I' }}
-          COLLECTION_PATCH: ${{ inputs.patch }}
+          COLLECTION_PATCH: ${{ steps.policy.outputs.patch }}
         shell: bash
         run: |
           args=(--diagnostics-output "$RUNNER_TEMP/power-output/riot-diagnostics.json" --output "$RUNNER_TEMP/power-output/power-data.json" --movement-output "$RUNNER_TEMP/power-output/movement-data.json" --outcome-output "$RUNNER_TEMP/power-output/outcome-data.json" --accumulator "$RUNNER_TEMP/power-state/power-accumulator.json.gz" --aggregate-directory "$RUNNER_TEMP/power-output" --division "$COLLECTION_DIVISION" --max-matches 300 --max-requests 650 --max-players 40 --max-pages 1 --max-retries 2 --deadline-seconds 900)
-          if [[ "$COLLECTION_TIER" != ROTATE ]]; then
-            args+=(--tier "$COLLECTION_TIER")
-          elif [[ -n "$COLLECTION_USER_TIER" ]]; then
-            rotation=$((GITHUB_RUN_NUMBER % 4))
-            if [[ "$rotation" == 3 ]]; then args+=(--user-tier "$COLLECTION_USER_TIER"); else args+=(--rotation "$rotation"); fi
-          else
-            args+=(--rotation "$((GITHUB_RUN_NUMBER % 3))")
-          fi
+          args+=(--tier "$COLLECTION_TIER")
           if [[ -n "$COLLECTION_PATCH" ]]; then args+=(--patch "$COLLECTION_PATCH"); fi
           python scripts/collect_power_stats.py "${args[@]}"
       - name: Print safe aggregate status only
         if: always()
         env:
-          ACQUISITION_GATE: ${{ (inputs.key_renewed == true || (github.event_name == 'schedule' && vars.RIOT_KEY_RENEWED == 'true')) && 'ENABLED' || 'NOT_RENEWED_NO_PROVIDER_CALLS' }}
+          ACQUISITION_GATE: ${{ steps.policy.outputs.enabled == 'true' && 'ENABLED' || 'NOT_REQUIRED_OR_EXPIRED_NO_PROVIDER_CALLS' }}
         shell: bash
         run: |
           python - <<'PY'
@@ -139,7 +150,7 @@ jobs:
               print('OUTCOME_AGGREGATE_RECEIPT_JSON=' + json.dumps({'status': outcome['status'], 'real_matches': outcome['samples']['real_matches'], 'coaching_accuracy': None}))
           with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a') as output:
               output.write('Public-safe aggregate only; raw payloads and player identifiers are never uploaded.\n\n```json\n' + json.dumps(result, indent=2) + '\n```\n')
-              output.write('\nState is restored/refreshed daily for90days. No Riot call occurs until U3 renewed-key gate is enabled. U2 tier is a current seed cohort, not historical participant rank.\n')
+              output.write('\nState is restored/refreshed daily for90days. CHALLENGER primary; GRANDMASTER only insufficient same-patch auxiliary. No ownID/tier required. Recorded24h renewal window gates schedule; first401/403 stops that execution. Current seed tier is not historical participant rank.\n')
           PY
       - name: Retain public-safe aggregate for seven days
         if: always()

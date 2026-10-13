@@ -16,8 +16,8 @@ import threading
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 FILES=['coach_v1/postgame_match.py','coach_v1/personal_riot.py','coach_v1/pregame_server.py',
-       'web_r4/postgame.html','web_r4/postgame.js','web_r4/postgame.css','web_r4/pro_reference_view.js','config/pro_reference_players.json','coach_v1/pro_reference.py','coach_v1/pro_reference_overlay.py',
-       'tests_pregame/test_v20_postgame.py','tests_pregame/browser_postgame_v20.cjs','scripts/browser_postgame_v20.py']
+       'web_r4/pregame.html','web_r4/pregame.js','web_r4/postgame.html','web_r4/postgame.js','web_r4/postgame.css','web_r4/pro_reference_view.js','config/pro_reference_players.json','coach_v1/pro_reference.py','coach_v1/pro_reference_overlay.py','coach_v1/pro_reference_cases.py',
+       'tests_pregame/test_v20_postgame.py','tests_pregame/test_pro_reference_cases.py','tests_pregame/test_pro_reference.py','scripts/collect_pro_reference.py','tests_pregame/browser_postgame_v20.cjs','scripts/browser_postgame_v20.py']
 
 
 def fixture():
@@ -49,6 +49,13 @@ def main(argv=None):
             for n in (1,2):
                 pair=copy.deepcopy(b);mid='KR_'+str(n);pair['match']['metadata']['matchId']=mid;pair['timeline']['metadata']['matchId']=mid;pair.pop('phase_annotations')
                 pairs.append(pair);a=copy.deepcopy(b['phase_annotations'][0]);a['match_sha256']=hashlib.sha256(mid.encode()).hexdigest();annotations.append(a)
+            from coach_v1.pro_reference_cases import build_reference_cases
+            from tests_pregame.test_pro_reference_cases import observation
+            case_observations=[]
+            for role_number,role in enumerate(['TOP','JUNGLE','MID','BOTTOM','SUPPORT']):
+                for number in (1,2,3):
+                    sample=observation(role_number*3+number);sample['role']=role;case_observations.append(sample)
+            server.pro_cases_data=build_reference_cases(case_observations,roster_sha256=server.current_pro_roster_digest(),retrieved_at='2026-10-13T00:00:00Z',sample_kind='SYNTHETIC')
             server.power_data=build_power_dataset(pairs,source=source());server.movement_statistics=build_movement_dataset(pairs,source=source(),phase_annotations=annotations)
             store=PostgameStore(Path(td)/'private'/'postgame',test_mode=True);known=store.import_match(b)
             incomplete=copy.deepcopy(b);incomplete['match']['metadata']['matchId']='KR_999';incomplete['timeline']['metadata']['matchId']='KR_999';incomplete.pop('phase_annotations');del incomplete['timeline']['info']['frames'][1]['participantFrames']['2']['position'];missing=store.import_match(incomplete)

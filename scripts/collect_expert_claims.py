@@ -54,7 +54,8 @@ def recovery(directory):
         if not isinstance(jobs,list) or data.get('total_count',101)>100:return None
         if not jobs:return False
         states=[step.get('conclusion') for job in jobs for step in job.get('steps',[])
-                if step.get('name')=='Persist quota before any Gemini request']
+                if step.get('name') in ('Persist quota before any Gemini request',
+                    'Persist clipping diagnostic quota','Persist format diagnostic quota')]
         if 'success' in states:return True
         if states and all(state in ('skipped','failure','cancelled') for state in states):return False
         return None

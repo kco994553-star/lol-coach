@@ -22,9 +22,15 @@ const {chromium}=require('playwright');const fs=require('fs');const assert=requi
 (async()=>{
  const fixture=JSON.parse(fs.readFileSync(process.env.RQ_FIXTURE));let view=fixture;let decisions=0;let userEvents=0;const checks=[];const errors=[];
  const browser=await chromium.launch({headless:true,executablePath:process.env.CHROMIUM_EXECUTABLE,args:['--no-sandbox']});
- const page=await browser.newPage({viewport:{width:390,height:844}});
+ const page=await browser.newPage({viewport:{width:1440,height:1000}});
  page.on('pageerror',e=>errors.push(String(e)));const token=fs.readFileSync(process.env.WORKBENCH_TOKEN_FILE,'utf8').trim();
  const base=process.env.WORKBENCH_URL;
+ for(const c of fixture.candidates){
+  c.sources=[{url:'https://example.org/synthetic',title:'SYNTHETIC archived excerpt',locator:'fixture.only',patch:'SYNTHETIC-1',excerpt:'SYNTHETIC source excerpt: recorded condition only. '.repeat(45),excerpt_status:'SYNTHETIC_FIXTURE'}];
+  c.conditions.source_conditions=['SYNTHETIC declared circumstance'];
+  c.statistics={status:'DESCRIPTIVE_ONLY',comparisons:[{champion:'Caitlyn',position:'BOTTOM',patch:'SYNTHETIC-1',tier:'CHALLENGER',comparison:'MATCHUP',unit:'gold delta',sample_kind:'SYNTHETIC',points:[{minute:10,n:2,mean:100,ci95:{low:90,high:110}}]}],limitations:['SYNTHETIC descriptive fixture; not tactical proof']};
+ }
+
  try{
   await page.goto(base+'/review-queue');await page.fill('#rq-token',token);await page.click('#rq-connect');await page.waitForSelector('#rq-card:visible');
   checks.push('normal-queue-authenticated');
@@ -33,6 +39,21 @@ const {chromium}=require('playwright');const fs=require('fs');const assert=requi
   const denied=await page.request.post(base+'/dev/v1/knowledge/proposals/'+view.candidates[0].candidate_id+'/decisions',{headers:{Authorization:'Bearer '+token},data:{selected_version:view.candidates[0].selected_version,expected_version:view.candidates[0].selected_version,decision:'REVIEWED',patch_range:'SYNTHETIC-1',applicability:view.candidates[0].proposal.applicability}});
   assert.equal(denied.status(),403);checks.push('normal-automation-decision403');
   await page.route('**/dev/v1/pregame/review-queue',route=>route.fulfill({json:view}));
+  await page.click('#rq-refresh');await page.waitForFunction(()=>document.querySelector('#rq-sources').textContent.includes('SYNTHETIC archived excerpt'));
+  for(const width of [1280,1600]){
+   await page.setViewportSize({width,height:844});await page.evaluate(()=>window.scrollTo(0,0));
+   const geometry=await page.evaluate(()=>{
+    const box=id=>{const r=document.querySelector(id).getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,bottom:r.bottom};};
+    return {card:box('#rq-card'),conditions:box('#rq-conditions'),sources:box('#rq-sources'),statistics:box('#rq-statistics'),viewport:innerHeight,scroll:document.documentElement.scrollWidth,width:innerWidth,statisticsTable:box('#rq-statistics table'),sourceExcerpt:box('#rq-sources blockquote'),closedEvidence:document.querySelectorAll('#rq-sources details:not([open])').length};
+   });
+   assert(geometry.card.width>=width-100,'PC candidate must use the available desktop width');
+   assert(geometry.conditions.x<geometry.sources.x&&geometry.sources.x<geometry.statistics.x,'conditions, source excerpt and statistics must be adjacent desktop columns');
+   assert(Math.abs(geometry.conditions.y-geometry.sources.y)<30&&Math.abs(geometry.sources.y-geometry.statistics.y)<30,'all evidence starts in the same desktop row');
+   assert(geometry.sources.y+80<geometry.viewport&&geometry.statistics.y+80<geometry.viewport,'source excerpt and comparison are immediately in view');
+   assert(geometry.statisticsTable.bottom<=geometry.viewport,'first comparison table must be in the initial desktop viewport');assert(geometry.sourceExcerpt.y+28<=geometry.viewport,'first source excerpt line must be immediately visible');assert.equal(geometry.closedEvidence,0);assert(geometry.scroll<=geometry.width);checks.push('pc-visible-evidence-grid-'+width);if(process.env.RQ_BROWSER_SCREENSHOTS)await page.screenshot({path:process.env.RQ_BROWSER_SCREENSHOTS+'/desktop-'+width+'.png',fullPage:true});
+  }
+  await page.setViewportSize({width:390,height:844});const mobile=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth}));assert(mobile.scroll<=mobile.width);checks.push('mobile-rich-evidence-no-overflow');if(process.env.RQ_BROWSER_SCREENSHOTS)await page.screenshot({path:process.env.RQ_BROWSER_SCREENSHOTS+'/mobile-390.png',fullPage:true});
+  await page.setViewportSize({width:1440,height:1000});
   await page.route('**/dev/v1/knowledge/proposals/*/decisions',async route=>{
    const b=route.request().postDataJSON();const current=view.candidates[0];assert.equal(b.selected_version,current.selected_version);assert.equal(b.expected_version,current.selected_version);
    decisions++;const saved={...current.proposal,version:'fixture-decision-'+decisions,review_state:b.decision,review_decision:{actor:'TEST_FIXTURE',selected_version:b.selected_version}};
@@ -80,6 +101,12 @@ const {chromium}=require('playwright');const fs=require('fs');const assert=requi
   const backResponse=page.waitForResponse(r=>r.url().endsWith('/review-queue'));await page.click('#rq-page-previous');await backResponse;await page.waitForFunction(()=>document.querySelector('#rq-page-position').textContent.startsWith('1 / 2'));checks.push('twenty-first-deferred-candidate-page-navigation');
   for(const width of [390,1280]){await page.setViewportSize({width,height:844});const geometry=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth}));assert(geometry.scroll<=geometry.width);checks.push('layout-'+width);}
   await page.click('#rq-export');const exported=await page.locator('#rq-export-text').inputValue();assert(!exported.includes('resource_id'));assert(!exported.includes(token));checks.push('safe-text-export');
+  assert.equal(await page.evaluate(()=>sessionStorage.getItem('lol-coach-dev-token')),token,'review login must share the app session token');
+  await page.evaluate(t=>sessionStorage.setItem('pregame-token',t),token);
+  await page.unroute('**/dev/v1/pregame/candidates');await page.goto(base+'/pregame');await page.waitForSelector('#pg-workspace:visible');checks.push('review-login-shared-pregame-autoauth');
+  await page.click('#pg-logout');await page.waitForSelector('#pg-auth:visible');assert.equal(await page.evaluate(()=>sessionStorage.getItem('lol-coach-dev-token')),null);
+  await page.goto(base+'/review-queue');await page.waitForLoadState('networkidle');assert(await page.locator('#rq-auth').isVisible());assert(!(await page.locator('#rq-workspace').isVisible()));
+  assert.equal(await page.evaluate(()=>sessionStorage.getItem('pregame-token')),null);assert.equal(await page.evaluate(()=>sessionStorage.getItem('lol-coach-dev-token')),null);checks.push('pregame-logout-clears-review-auth-and-legacy-token');
   assert.equal(errors.length,0);checks.push('no-page-errors');
   process.stdout.write(JSON.stringify({passed:true,checks,decision_requests:decisions,simulated_actor:'TEST_FIXTURE',actual_user_web_decisions:0})+'\n');
  }catch(e){process.stderr.write(JSON.stringify({notice:await page.locator('#rq-notice').textContent(),errors})+'\n');throw e;}finally{await browser.close();}
@@ -115,7 +142,7 @@ def main():
             fixture=private/'fixture.json';fixture.write_text(json.dumps(queue_response(server)))
             script=private/'browser.cjs';script.write_text(BROWSER)
             thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
-            env=dict(os.environ,RQ_FIXTURE=str(fixture),WORKBENCH_TOKEN_FILE=str(tokenfile),WORKBENCH_URL='http://127.0.0.1:'+str(server.server_port),NODE_PATH=os.environ.get('NODE_PATH','/opt/codex/cua_node/lib/node_modules'),CHROMIUM_EXECUTABLE=os.environ.get('CHROMIUM_EXECUTABLE','/usr/bin/chromium'))
+            env=dict(os.environ,RQ_BROWSER_SCREENSHOTS=str(output),RQ_FIXTURE=str(fixture),WORKBENCH_TOKEN_FILE=str(tokenfile),WORKBENCH_URL='http://127.0.0.1:'+str(server.server_port),NODE_PATH=os.environ.get('NODE_PATH','/opt/codex/cua_node/lib/node_modules'),CHROMIUM_EXECUTABLE=os.environ.get('CHROMIUM_EXECUTABLE','/usr/bin/chromium'))
             result=subprocess.run(['node',str(script)],cwd=ROOT,env=env,text=True,capture_output=True,timeout=120)
             with server.research._db() as db:
                 rows=db.execute('SELECT payload FROM knowledge_rules').fetchall()

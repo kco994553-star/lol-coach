@@ -70,7 +70,7 @@ class AccumulationTests(unittest.TestCase):
         workflow=(Path(__file__).resolve().parents[1]/'.github/workflows/riot-power-collection.yml').read_text()
         self.assertNotIn('python scripts/diagnose_riot_front.py',workflow,
                          'routine front diagnosis calls Python even after a first curl401/403')
-        self.assertLess(workflow.index('--publish-only'),workflow.index('if: inputs.key_renewed'))
+        self.assertLess(workflow.index('--publish-only'),workflow.index("if: steps.policy.outputs.enabled == 'true'"))
         self.assertIn('retention-days: 90',workflow)
 
     def test_conflicting_duplicate_fails_and_legacy_seed_cannot_be_blindly_merged(self):

@@ -75,7 +75,7 @@ class ProCollectionTests(unittest.TestCase):
         d=self.m.prepare_pro_reference(self.config)
         self.assertEqual(d['primary_count'],25);self.assertEqual(d['backup_count'],9);self.assertEqual(d['alt_count'],1)
         self.assertEqual(d['roles'][3]['role'],'BOTTOM');self.assertEqual(d['tier'],'UNKNOWN')
-        self.assertEqual(d['status'],'BLOCKED_EXTERNAL');self.assertNotIn('\"puuid\":',json.dumps(d).lower())
+        self.assertEqual(d['status'],'READY_TO_COLLECT');self.assertNotIn('\"puuid\":',json.dumps(d).lower())
         for bad in [dict(self.config,unknown=True),dict(self.config,region='EU')]:
             with self.assertRaises(ValueError):self.m.validate_pro_roster(bad)
         bad=copy.deepcopy(self.config);bad['players']['TOP'].pop()
@@ -114,6 +114,10 @@ class ProCollectionTests(unittest.TestCase):
         receipt=self.collector(forbidden).collect(self.config,self.directory,now=self.now)
         self.assertEqual(len(called),1);self.assertEqual(receipt['status'],'BLOCKED_EXTERNAL');self.assertEqual(receipt['selections'],[])
         self.assertNotIn('PRIVATE_',json.dumps(receipt))
+        self.assertEqual(receipt['observed_http_status'],403)
+        self.assertEqual(receipt['user_key_expiry_attribution'],'KEY_EXPIRED_PER_USER_RULE')
+        from coach_v1.pro_reference_cases import public_collection_receipt
+        self.assertEqual(public_collection_receipt(receipt)['observed_http_status'],403)
     def test_missing_key_zero_requests_and_request_budget_bounded(self):
         c=self.m.ProReferenceCollector(api_key='',transport=self.transport)
         receipt=c.collect(self.config,self.directory,now=self.now);self.assertEqual(receipt['request_count'],0);self.assertEqual(self.calls,[])
@@ -172,6 +176,15 @@ class ProCollectionTests(unittest.TestCase):
         selected=[r for r in receipt['selections'] if r['status']=='SELECTED']
         self.assertEqual(len(selected),25);self.assertEqual({r['role'] for r in selected},{'TOP','JUNGLE','MID','BOTTOM','SUPPORT'})
         self.assertLessEqual(receipt['request_count'],250);self.assertEqual(receipt['matches_per_account'],3)
+
+    def test_collector_emits_anonymous_cases_from_selected_private_timeline(self):
+        self.add_account('MID',1,puuid='PRIVATE_SHOWMAKER',mid='KR_20')
+        c=self.collector();receipt=c.collect(self.config,self.directory,now=self.now)
+        self.assertEqual(receipt['reference_cases_file'],'reference-cases.json')
+        cases=json.loads((self.directory/'reference-cases.json').read_text())
+        self.assertEqual(cases['schema_version'],'postgame.pro-reference-cases.v1')
+        self.assertNotIn('PRIVATE_SHOWMAKER',json.dumps(cases));self.assertNotIn('KR_20',json.dumps(cases));self.assertNotIn('match_sha256',json.dumps(cases))
+        self.assertEqual(cases,c.reference_cases_data)
 
     def test_cache_symlink_and_extra_aggregate_identity_rejected(self):
         self.directory.mkdir(parents=True);outside=Path(self.tmp.name)/'outside.json';outside.write_text('{}');(self.directory/'accounts.json').symlink_to(outside)

@@ -3,6 +3,10 @@ name: Free expert video collection
 on:
   workflow_dispatch:
     inputs:
+      video_argument_diagnostic:
+        description: Explicit user2026-10-13 official YouTube baseline, then clip, then format once each
+        type: boolean
+        default: false
       text_schema_only:
         description: Isolate claim schema; TEXT503 only up to3 retries, no video/quota change
         type: boolean
@@ -26,9 +30,9 @@ concurrency:
 
 jobs:
   collect:
-    if: github.repository == 'kco994553-star/lol-coach' && github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || github.event_name == 'schedule')
+    if: github.repository == 'kco994553-star/lol-coach' && github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && vars.GEMINI_AUTOMATIC_SUMMARY_ENABLED == 'true')) && (inputs.video_argument_diagnostic != true || github.run_attempt == 1)
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     env:
       GEMINI_FREE_TIER_CONFIRMED: ${{ vars.GEMINI_FREE_TIER_CONFIRMED }}
       GEMINI_DOCUMENTED_FREE_ENTITLEMENT_CONFIRMED: ${{ vars.GEMINI_DOCUMENTED_FREE_ENTITLEMENT_CONFIRMED }}
@@ -53,13 +57,13 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: python scripts/collect_expert_claims.py --phase recover --output-dir "$RUNNER_TEMP/expert-recovery"
       - name: Isolate claim schema with text only without any video reservation
-        if: inputs.text_schema_only == true
+        if: inputs.text_schema_only == true && inputs.video_argument_diagnostic != true
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python scripts/collect_expert_claims.py --phase probe-format --runtime-config config/expert_runtime.json --output-dir "$RUNNER_TEMP/expert-format"
       - name: Diagnose identical curl and Python text concurrently and select at most one official free fallback
-        if: inputs.text_schema_only != true
+        if: inputs.text_schema_only != true && inputs.video_argument_diagnostic != true
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -73,7 +77,7 @@ jobs:
       # Reuse the successful paired probe and its exact selected model; no duplicate text.
       - name: Reuse selected successful text then discover public videos and reserve quota
         id: reserve
-        if: inputs.text_schema_only != true
+        if: inputs.text_schema_only != true && inputs.video_argument_diagnostic != true
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -106,6 +110,170 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           RESERVATION_ARTIFACT_ID: ${{ steps.durable_reservation.outputs.artifact-id }}
         run: python scripts/collect_expert_claims.py --phase process --runtime-config config/expert_runtime.json --plan "$RUNNER_TEMP/expert-reservation/plan.json" --reservation-artifact-id "$RESERVATION_ARTIFACT_ID" --output-dir "$RUNNER_TEMP/expert-final"
+      - name: Require recorded complete prior400 before new diagnostic discovery
+        if: inputs.video_argument_diagnostic == true
+        run: |
+          python - <<'PY'
+          import json
+          from coach_v1.expert_video_diagnostic import validate_complete_error
+          path='evidence/queue/pro-resume/prior-full-video400.json'
+          data=validate_complete_error(json.load(open(path)),prior=True)
+          assert data['message_complete'] and data['recorded_before_new_attempt']
+          print('PRIOR_FULL_SANITIZED_ERROR_RECORDED_BEFORE_NEW_ATTEMPT')
+          PY
+      - name: Discover one fresh public source using metadata only
+        if: inputs.video_argument_diagnostic == true && steps.recover.outcome == 'success'
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scripts/diagnose_expert_video.py --phase discover --authorization USER_PRO_REFERENCE_RESUME_2026-10-13 --ledger "$RUNNER_TEMP/expert-recovery/quota-ledger.json" --prior-error evidence/queue/pro-resume/prior-full-video400.json --output-dir "$RUNNER_TEMP/video-discovery"
+      - name: Reserve full original duration for BASELINE diagnostic
+        id: video_baseline_prepare
+        if: inputs.video_argument_diagnostic == true
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scripts/diagnose_expert_video.py --phase prepare --stage BASELINE --authorization USER_PRO_REFERENCE_RESUME_2026-10-13 --ledger "$RUNNER_TEMP/expert-recovery/quota-ledger.json" --prior-error evidence/queue/pro-resume/prior-full-video400.json --video "$RUNNER_TEMP/video-discovery/selected-video.json" --output-dir "$RUNNER_TEMP/video-baseline-prepare"
+      - name: Persist quota before any Gemini request
+        id: video_baseline_reservation
+        if: steps.video_baseline_prepare.outputs.reserved == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: expert-quota-reservation-${{ github.run_id }}
+          path: ${{ runner.temp }}/video-baseline-prepare/quota-ledger.json
+          retention-days: 90
+          if-no-files-found: error
+      - name: Process BASELINE once after durable reservation
+        id: video_baseline_process
+        if: steps.video_baseline_reservation.outcome == 'success' && steps.video_baseline_reservation.outputs.artifact-id != ''
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          RESERVATION_ARTIFACT_ID: ${{ steps.video_baseline_reservation.outputs.artifact-id }}
+        run: |
+          python scripts/diagnose_expert_video.py --phase process --authorization USER_PRO_REFERENCE_RESUME_2026-10-13 --plan "$RUNNER_TEMP/video-baseline-prepare/plan.json" --reservation-artifact-id "$RESERVATION_ARTIFACT_ID" --output-dir "$RUNNER_TEMP/video-baseline-process"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          result=json.loads((Path(os.environ['RUNNER_TEMP'])/'video-baseline-process/result.json').read_text())
+          with open(os.environ['GITHUB_OUTPUT'],'a') as output:output.write('ready='+str(result['status']=='READY').lower()+'\n')
+          PY
+      - name: Respect diagnostic stage rate window before CLIPPING
+        if: inputs.video_argument_diagnostic == true && steps.video_baseline_process.outputs.ready == 'true'
+        run: python -c 'import time; time.sleep(15)'
+      - name: Reserve full original duration for CLIPPING diagnostic
+        id: video_clipping_prepare
+        if: inputs.video_argument_diagnostic == true && steps.video_baseline_process.outputs.ready == 'true'
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scripts/diagnose_expert_video.py --phase prepare --stage CLIPPING --authorization USER_PRO_REFERENCE_RESUME_2026-10-13 --ledger "$RUNNER_TEMP/video-baseline-process/quota-ledger.json" --prior-error evidence/queue/pro-resume/prior-full-video400.json --video "$RUNNER_TEMP/video-discovery/selected-video.json" --previous-result "$RUNNER_TEMP/video-baseline-process/result.json" --output-dir "$RUNNER_TEMP/video-clipping-prepare"
+      - name: Persist clipping diagnostic quota
+        id: video_clipping_reservation
+        if: steps.video_clipping_prepare.outputs.reserved == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: expert-quota-reservation-${{ github.run_id }}-CLIPPING
+          path: ${{ runner.temp }}/video-clipping-prepare/quota-ledger.json
+          retention-days: 90
+          if-no-files-found: error
+      - name: Process CLIPPING once after durable reservation
+        id: video_clipping_process
+        if: steps.video_clipping_reservation.outcome == 'success' && steps.video_clipping_reservation.outputs.artifact-id != ''
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          RESERVATION_ARTIFACT_ID: ${{ steps.video_clipping_reservation.outputs.artifact-id }}
+        run: |
+          python scripts/diagnose_expert_video.py --phase process --authorization USER_PRO_REFERENCE_RESUME_2026-10-13 --plan "$RUNNER_TEMP/video-clipping-prepare/plan.json" --reservation-artifact-id "$RESERVATION_ARTIFACT_ID" --output-dir "$RUNNER_TEMP/video-clipping-process"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          result=json.loads((Path(os.environ['RUNNER_TEMP'])/'video-clipping-process/result.json').read_text())
+          with open(os.environ['GITHUB_OUTPUT'],'a') as output:output.write('ready='+str(result['status']=='READY').lower()+'\n')
+          PY
+      - name: Respect diagnostic stage rate window before RESPONSE_FORMAT
+        if: inputs.video_argument_diagnostic == true && steps.video_clipping_process.outputs.ready == 'true'
+        run: python -c 'import time; time.sleep(15)'
+      - name: Reserve full original duration for RESPONSE_FORMAT diagnostic
+        id: video_format_prepare
+        if: inputs.video_argument_diagnostic == true && steps.video_clipping_process.outputs.ready == 'true'
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scripts/diagnose_expert_video.py --phase prepare --stage RESPONSE_FORMAT --authorization USER_PRO_REFERENCE_RESUME_2026-10-13 --ledger "$RUNNER_TEMP/video-clipping-process/quota-ledger.json" --prior-error evidence/queue/pro-resume/prior-full-video400.json --video "$RUNNER_TEMP/video-discovery/selected-video.json" --previous-result "$RUNNER_TEMP/video-clipping-process/result.json" --output-dir "$RUNNER_TEMP/video-format-prepare"
+      - name: Persist format diagnostic quota
+        id: video_format_reservation
+        if: steps.video_format_prepare.outputs.reserved == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: expert-quota-reservation-${{ github.run_id }}-RESPONSE_FORMAT
+          path: ${{ runner.temp }}/video-format-prepare/quota-ledger.json
+          retention-days: 90
+          if-no-files-found: error
+      - name: Process RESPONSE_FORMAT once after durable reservation
+        id: video_format_process
+        if: steps.video_format_reservation.outcome == 'success' && steps.video_format_reservation.outputs.artifact-id != ''
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          RESERVATION_ARTIFACT_ID: ${{ steps.video_format_reservation.outputs.artifact-id }}
+        run: |
+          python scripts/diagnose_expert_video.py --phase process --authorization USER_PRO_REFERENCE_RESUME_2026-10-13 --plan "$RUNNER_TEMP/video-format-prepare/plan.json" --reservation-artifact-id "$RESERVATION_ARTIFACT_ID" --output-dir "$RUNNER_TEMP/video-format-process"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          result=json.loads((Path(os.environ['RUNNER_TEMP'])/'video-format-process/result.json').read_text())
+          with open(os.environ['GITHUB_OUTPUT'],'a') as output:output.write('ready='+str(result['status']=='READY').lower()+'\n')
+          PY
+      - name: Preserve newest prepared or processed diagnostic quota without refund
+        if: always() && inputs.video_argument_diagnostic == true && steps.video_baseline_reservation.outputs.artifact-id != ''
+        run: |
+          python - <<'PY'
+          import os,shutil
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP']);paths=[]
+          for slug in ('baseline','clipping','format'):
+              for phase in ('prepare','process'):
+                  path=root/('video-'+slug+'-'+phase)/'quota-ledger.json'
+                  if path.is_file():paths.append(path)
+          if not paths:raise RuntimeError('NO_DURABLE_DIAGNOSTIC_LEDGER')
+          target=root/'expert-final/quota-ledger.json';target.parent.mkdir(parents=True,exist_ok=True)
+          shutil.copyfile(paths[-1],target)
+          print('ALL_DIAGNOSTIC_CHARGES_RETAINED')
+          PY
+      - name: Project public-safe stage outcomes and complete errors without raw ledger
+        if: always() && inputs.video_argument_diagnostic == true
+        run: |
+          python - <<'PY'
+          import json,os,shutil
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP']);out=root/'video-public';out.mkdir(exist_ok=True)
+          for slug in ('baseline','clipping','format'):
+              for phase in ('prepare','process'):
+                  source=root/('video-'+slug+'-'+phase)
+                  for name in ('receipt.json','complete-error.json','entitlement.json'):
+                      path=source/name
+                      if path.is_file():shutil.copyfile(path,out/(slug+'-'+phase+'-'+name))
+                  path=source/'result.json'
+                  if path.is_file():
+                      data=json.loads(path.read_text());safe={k:v for k,v in data.items() if k not in ('ledger','video','prior_error_receipt')}
+                      (out/(slug+'-'+phase+'-result.json')).write_text(json.dumps(safe,ensure_ascii=False)+'\n')
+          shutil.copyfile('evidence/queue/pro-resume/prior-full-video400.json',out/'prior-full-video400.json')
+          discovery=root/'video-discovery/receipt.json'
+          if discovery.is_file():
+              data=json.loads(discovery.read_text());data.pop('video',None)
+              (out/'discovery-receipt.json').write_text(json.dumps(data)+'\n')
+          print('MANUAL_SUMMARY_DEFAULT; NO_AUTOMATIC_RESTORE_FROM_DIAGNOSTIC')
+          PY
+      - name: Retain public-safe video argument diagnostic receipts
+        if: always() && inputs.video_argument_diagnostic == true
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: expert-video-argument-public-safe
+          path: ${{ runner.temp }}/video-public/*.json
+          retention-days: 90
+          if-no-files-found: warn
       - name: Persist final quota without releasing any reservation
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
