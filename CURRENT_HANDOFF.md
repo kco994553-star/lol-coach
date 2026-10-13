@@ -1,3 +1,18 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261013-queue-v20`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `work/queue-v20-20261013`
+- authority: USER_QUEUE_V2.0_2026-10-13 + USER_R3_PRO_REFERENCE_ROSTER; inherited free implementation/publication/CI/normalmerge.
+- implementation_head: `0fdf753`
+- scope: R1 mobile review, R2 exact anonymous accumulation/progress, R3 own/private + user25pro/9backup reference, R4 120s pairedtext/explicitonefreeFlashfallback, R5 PC/video guide.
+- verification: source-bound272pregame/162expert/Frozenextension PASS; freshChromium R1=15/R3=23/R2comparison=8 PASS; USER_WEB0/coachingaccuracy=null/paid0.
+- blockers: U1/U2/U3 pending, actualownmatch0, prolookup0, PC/POV absent. Existing today'sRiot schedule401/401 recorded as userkey-expiry attribution; newRiotcalls0.
+- next: requiredCI sourcebound/normalmerge then sole authorizedGemini diagnostic dispatch allow_flash_fallback=true (notyetdispatched); preservehistoricalquota6rows7396 seconds viafreshrecovery.
+- updated_at: 2026-10-13
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261013-queue-v20`
 - status: `RUNNING`
