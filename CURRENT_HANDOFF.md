@@ -1,3 +1,16 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261013-queue-v20`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/queue-v20-20261013`
+- authority: USER_QUEUE_V2.0_2026-10-13; inherited free implementation/publication/CI/normal merge.
+- intake_main_head: `4ffd50d757ec90254c69c2dc9d34bacf81bba6b4`
+- task_scope: R1 mobile user-only review; R2 patch dedup/progress; R3 private Match-V5 review; R4 120s paired text and one documented free Flash alternative; R5 external preparation.
+- boundaries: no AI USER_WEB approval; no live coaching/cooldown tracking; no paid services; own raw matches private; U1/U2/U3 pending.
+- updated_at: 2026-10-13
+
+---
+
 # Latest common execution claim — PARKED_EXTERNAL
 - run_token: `main-20261011-queue-v13-050952`
 - status: `PARKED_EXTERNAL`
