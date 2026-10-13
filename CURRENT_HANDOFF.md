@@ -1,3 +1,20 @@
+# Latest common execution claim — VERIFYING_ACTUAL_PROVIDER
+- run_token: `main-20261013-queue-v20`
+- status: `VERIFYING_ACTUAL_PROVIDER`
+- writer_active: false
+- owner_branch: `work/queue-v20-20261013`
+- authority: USER_QUEUE_V2.0 + USER_R3_PRO_REFERENCE_ROSTER; inherited freepublication/normalmerge.
+- published_main: `bdc7e3a891c3cb8b08dd98832482761cf5053f90`
+- published_head: `9d8de274e8b385135de7c2c3163b6f91cc2e063b`
+- published_tree: `55391771b1320ee6036328dbb909299344c9430f`
+- PR26: MERGED; requiredCI38386604901/38386604920 all3SUCCESS;14sourcegroups440paths verified. Prior failedMVPindexgate preserved/restored exactbytes, no gateweakened.
+- R4_one_trial: DISPATCH_RESERVED_2026-10-13; nextone mainworkflow explicit allow_flash_fallback=true, no second enabledtrial authorized inthisqueue.
+- postmergeCI: 38387425422/38387425433 RUNNING (no future successclaim).
+- progress: R1 software/browserDONE; R2U2/U3,R3U1/U3,R5PC/POVexternal. Actualuserapprovals0/ownmatches0/newRiotcalls0/paid0/coachingaccuracy=null.
+- next: solechangeddiagnostic120s curl/Python pair, currentfreeproof, oneofficialFlashfallback ifneeded; textsuccess before one<=600s video; historicalquota6rows7396 recovered/preserved.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261013-queue-v20`
 - status: `CI_PENDING`
