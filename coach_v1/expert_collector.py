@@ -686,7 +686,9 @@ def recover_ledger_snapshot(runs,*,current_run_id,list_artifacts,download_artifa
             found=False
             for artifact in artifacts:
                 name=artifact.get('name') if isinstance(artifact,dict) else None
-                if name not in ('expert-quota-reservation-'+str(run['id']),'expert-quota-final-'+str(run['id'])):continue
+                base='expert-quota-reservation-'+str(run['id'])
+                allowed=(base,base+'-CLIPPING',base+'-RESPONSE_FORMAT','expert-quota-final-'+str(run['id']))
+                if name not in allowed:continue
                 found=True
                 _require(_int(artifact.get('id'),1) and isinstance(artifact.get('created_at'),str))
                 created=datetime.fromisoformat(artifact['created_at'].replace('Z','+00:00'))
@@ -709,18 +711,23 @@ def recover_ledger_snapshot(runs,*,current_run_id,list_artifacts,download_artifa
         latest=candidates[0]
         _require(len([x for x in candidates if x[0]==latest[0] and x[1]!=latest[1]])==0)
         run_id=latest[1];same=[x[2] for x in candidates if x[1]==run_id]
-        final=[a for a in same if a['name']=='expert-quota-final-'+str(run_id)]
-        reserved=[a for a in same if a['name']=='expert-quota-reservation-'+str(run_id)]
-        _require(len(final)<=1 and len(reserved)==1)
-        reservation=reserved[0];_require(not reservation.get('expired',False))
-        reserved_ledger=validate_ledger(download_artifact(run_id,reservation),now)
-        selected=reservation;ledger=reserved_ledger
-        if final:
-            selected=final[0];_require(not selected.get('expired',False))
-            ledger=validate_ledger(download_artifact(run_id,selected),now)
-            _require(ledger['initialized_at']==reserved_ledger['initialized_at'])
-            _require({_canonical(x) for x in reserved_ledger['reservations']}<={_canonical(x) for x in ledger['reservations']})
-            _require(set(reserved_ledger['processed_video_ids'])<=set(ledger['processed_video_ids']))
+        base='expert-quota-reservation-'+str(run_id)
+        order=(base,base+'-CLIPPING',base+'-RESPONSE_FORMAT','expert-quota-final-'+str(run_id))
+        groups={name:[a for a in same if a['name']==name] for name in order}
+        _require(len(groups[base])==1 and all(len(group)<=1 for group in groups.values()))
+        _require(not groups[order[2]] or groups[order[1]])
+        snapshots=[groups[name][0] for name in order if groups[name]]
+        previous=None;previous_created=None;selected=None;ledger=None
+        for snapshot in snapshots:
+            _require(not snapshot.get('expired',False))
+            created=datetime.fromisoformat(snapshot['created_at'].replace('Z','+00:00')).timestamp()
+            _require(previous_created is None or created>=previous_created)
+            current=validate_ledger(download_artifact(run_id,snapshot),now)
+            if previous is not None:
+                _require(current['initialized_at']==previous['initialized_at'])
+                _require(current['reservations'][:len(previous['reservations'])]==previous['reservations'])
+                _require(current['processed_video_ids'][:len(previous['processed_video_ids'])]==previous['processed_video_ids'])
+            previous=current;previous_created=created;selected=snapshot;ledger=current
         receipt.update(status='FOUND',run_id=run_id,artifact_id=selected['id'],reason=None)
         return ledger,receipt
     except Exception:return None,receipt

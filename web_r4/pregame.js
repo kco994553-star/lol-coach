@@ -275,12 +275,21 @@
     for(const trace of [...applied,...(p.evaluations || [])]){d.append(node('p',(trace.rule_id || '규칙')+' · 버전 '+(trace.version || '')+' · '+(trace.status || '')+' · '+(trace.condition || ''),'small'));addSources(d,trace.sources || trace.spec?.sources);cooldowns(d,trace.cooldowns);}
     d.append(node('pre',json({saved_input:{session_id:p.session_id,input_revision:p.input_revision,input_sha256:p.input_sha256,input:p.input},cells,applied_rules:applied,evaluations:p.evaluations || []})));parent.append(d);
   }
+  function renderOpponentRights(p){
+    const hosts=new Map(),mark=context(),view=planViewEpoch;
+    for(const card of $('pg-cards').children){const h=node('div',undefined,'pg-opponent-rights');h.dataset.status='UNKNOWN';h.append(node('strong','상대 권리: 미확인'),node('p','CHALLENGER·프로를 우선 기준으로 봅니다. 위험·안전 표시는 적용된 REVIEWED 주장과 통계 근거가 함께 있을 때만 가능합니다.','small'));card.insertBefore(h,card.children[1]||null);hosts.set(card.id,h);}
+    api('/opponent-rights','POST',JSON.stringify({plan_id:p.id})).then(result=>{
+      if(!alive(mark)||view!==planViewEpoch||plan!==p||dirty())return;
+      for(const item of result.cards||[]){const host=hosts.get('pg-card-'+item.key.toLowerCase());if(!host||!host.isConnected)continue;host.dataset.status=item.status;host.replaceChildren(node('strong','상대 권리: '+item.label));if(item.status==='UNKNOWN')host.append(node('p','적용된 검토 지식·상대 권리 진술·통계 대조가 부족합니다. 미확인을 안전으로 해석하지 마세요.','small'));else host.append(node('p','사용자가 검토한 주장에 연결된 조건부 판정입니다. 관측 밖 상대 위치·스킬 상태는 포함하지 않습니다.','small'));const detail=node('details');detail.append(node('summary','권리 판정의 조건·검토 근거·통계'),node('pre',json(item)));host.append(detail);}
+    }).catch(e=>{if(!alive(mark)||view!==planViewEpoch||plan!==p)return;if(e.status===401)apiError(e,mark);});
+  }
   function renderPlan(p){
     planViewEpoch++;plan=p;$('pg-plan-panel').hidden=false;$('pg-plan-state').textContent=labels[p.validity] || p.validity;
     $('pg-plan-meta').textContent='입력 v'+p.input_revision+' · '+p.created_at+' · '+(p.input.my_position?roleNames[p.input.my_position]:'내 포지션 미확인')+(p.expiry_reasons?.length?' · 만료 근거: '+p.expiry_reasons.join(', '):'');$('pg-plan-json').textContent=json(p);$('pg-cards').replaceChildren();
     const unknownOperations={key:'OPERATIONS',title:'운영·의존',status:'UNKNOWN',texts:[],reasons:['LEGACY_OPERATIONS_UNAVAILABLE'],rules:[],cooldowns:[]};
     const sections=[['map','① 5개 포지션 지도',p.common.map],['jungle','② 정글 주도권',[p.common.jungle]],['composition','③ 조합 방향',[p.common.composition]],['role','④ 내 역할',[p.personal.role]],['lane','⑤ 라인·동선',[p.personal.lane]],['fight','⑥ 교전·생존',[p.personal.fight]],['operations','⑦ 운영·팀 의존',[p.operations || unknownOperations]],['movement','⑧ 이동 단계',[p.movement || {...unknownOperations,key:'MOVEMENT',title:'이동 단계',reasons:['MOVEMENT_UNAVAILABLE']}]],['changes','⑨ 변화 조건·미확인',[p.changes]]];
     for(const [id,title,cells] of sections){const card=node('article',undefined,'card');card.id='pg-card-'+id;card.append(node('h3',title));for(const c of cells){if(id==='map'){const row=node('div',undefined,'pg-map-row'+(c.key===p.input.my_position?' selected':''));row.dataset.position=c.key;cellContent(row,c,p);if(c.key===p.input.my_position)row.append(node('span','내 포지션','badge'));card.append(row);powerSlot(row,p,c.key,true);}else cellContent(card,c,p);}if(id==='operations')renderOperations(card,p,cells[0]);if(id==='movement')renderMovement(card,p,cells[0]);if(id==='lane'){powerSlot(card,p,p.input.my_position,false);outcomeSlot(card,p);}detail(card,p,cells);$('pg-cards').append(card);}
+    renderOpponentRights(p);
   }
 
   function knowledgeControls(){
@@ -325,7 +334,7 @@
   }
   async function connect(){
     const auth=++authEpoch;navEpoch++;$('pg-login').disabled=true;
-    try{const status=await api('/status');if(auth!==authEpoch)return;connected=true;testMode=status.test_mode===true;powerTiers=Array.isArray(status.power_tiers)?status.power_tiers:[];$('pg-power-tier').replaceChildren(option('','티어 미확인'));for(const tier of powerTiers)$('pg-power-tier').append(option(tier,tier));if(powerTiers.length)$('pg-power-tier').value=powerTiers[0];sessionStorage.setItem('lol-coach-dev-token',token);$('pg-token').value='';$('pg-auth').hidden=true;$('pg-workspace').hidden=false;$('pg-status').textContent='연결됨 · 자동 수집 미제공 · 패치 미확인';updateEditor();const mark=context();
+    try{const status=await api('/status');if(auth!==authEpoch)return;connected=true;testMode=status.test_mode===true;powerTiers=Array.isArray(status.power_tiers)?status.power_tiers:[];$('pg-power-tier').replaceChildren(option('CHALLENGER','CHALLENGER'));$('pg-power-tier').disabled=true;sessionStorage.setItem('lol-coach-dev-token',token);$('pg-token').value='';$('pg-auth').hidden=true;$('pg-workspace').hidden=false;$('pg-status').textContent='연결됨 · 자동 수집 미제공 · 패치 미확인';updateEditor();const mark=context();
       const results=await Promise.allSettled([refreshInputs(),refreshKnowledge(),api('/roster'),api('/draft-captures','GET',undefined,undefined,true)]);if(!alive(mark))return;
       for(const result of results)if(result.status==='rejected'){apiError(result.reason,mark);if(!connected)return;}
       if(results[2].status==='fulfilled'){const roster=results[2].value;$('pg-roster').replaceChildren();for(const c of roster.champions){const o=node('option');o.value=c.id;o.label=c.name+' · '+c.roles.map(r=>roleNames[r] || r).join(', ');$('pg-roster').append(o);}}

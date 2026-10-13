@@ -11,7 +11,7 @@ const token = fs.readFileSync(process.env.WORKBENCH_TOKEN_FILE, 'utf8').trim();
 const url = process.env.WORKBENCH_URL;
 const roles = ['TOP', 'JUNGLE', 'MID', 'BOTTOM', 'SUPPORT'];
 const champions = ['Ornn', 'Sejuani', 'Ahri', 'Caitlyn', 'Lux'];
-const roleChecks = ['exact-input', 'nine-cards', 'selected-map-row', 'common-invariant',
+const roleChecks = ['exact-input', 'nine-cards', 'opponent-rights-unknown', 'selected-map-row', 'common-invariant',
   'personal-context', 'detail-input-binding', 'immutable-reopen', 'edit-hides-plan'];
 const finalChecks = ['source-preview', 'source-navigation', 'proposal-only-import',
   'untrusted-approval-blocked', 'empty-patch-approval-disabled', 'export-history',
@@ -100,6 +100,8 @@ async function reopen(plan) {
         {patch:plan.input.patch, position:role, revision:plan.input_revision});
       check(role+'-nine-cards', await page.locator('#pg-cards > article').count() === 9 &&
         await page.locator('.pg-map-row').count() === 5, {cards:9,map_rows:5});
+      await page.waitForFunction(() => [...document.querySelectorAll('.pg-opponent-rights')].length===9 && [...document.querySelectorAll('.pg-opponent-rights')].every(h=>h.querySelector('details')));
+      check(role+'-opponent-rights-unknown', await page.locator('.pg-opponent-rights[data-status="UNKNOWN"]').count()===9 && await page.locator('.pg-opponent-rights').count()===9);
       check(role+'-selected-map-row', await page.locator('.pg-map-row.selected').count() === 1 &&
         await page.locator('.pg-map-row.selected').getAttribute('data-position') === role, {role});
       check(role+'-common-invariant', common === null || same(common, plan.common), {common_sha256:hash(JSON.stringify(plan.common))});
@@ -109,8 +111,8 @@ async function reopen(plan) {
         ['role','lane','fight'].every(section => same(plan.personal[section].texts, ['SYNTHETIC fixture '+role+' '+section.toUpperCase()]));
       check(role+'-personal-context', personalOK && (previousPersonal === null || !same(previousPersonal, plan.personal)),
         {personal:plan.personal}); previousPersonal = plan.personal;
-      await page.locator('#pg-card-role details > summary').click();
-      const detail = JSON.parse(await page.locator('#pg-card-role details pre').textContent());
+      await page.locator('#pg-card-role > details > summary').click();
+      const detail = JSON.parse(await page.locator('#pg-card-role > details pre').textContent());
       check(role+'-detail-input-binding', same(detail.saved_input.input, plan.input) &&
         detail.saved_input.input_sha256 === plan.input_sha256 && same(detail.evaluations, plan.evaluations),
         {input_sha256:plan.input_sha256, evaluations:plan.evaluations.length});

@@ -1,5 +1,6 @@
 """Additive local PRE_GAME app; all legacy Workbench routes remain available."""
 import argparse
+import gzip
 import json
 import os
 from pathlib import Path
@@ -14,6 +15,15 @@ from .pregame_contract import parse_input, parse_rule, proposal_rule, import_cap
 from .pregame_store import PregameStore, plan_fields
 from .knowledge import validate_knowledge_content, _records, _head
 from .state import digest
+
+
+def read_aggregate_file(path,*,max_bytes=64_000_000):
+    path=Path(path)
+    if path.is_symlink() or not path.is_file() or path.stat().st_size>max_bytes:raise ValueError('Invalid aggregate file')
+    opener=gzip.open if path.suffix=='.gz' else open
+    with opener(path,'rb') as stream:body=stream.read(max_bytes+1)
+    if len(body)>max_bytes:raise ValueError('Expanded aggregate exceeds limit')
+    return json.loads(body)
 
 
 def current_knowledge(research):
@@ -67,6 +77,7 @@ class PregameWorkbench(Workbench):
             # Internal fixture injection only. No HTTP operation can change these.
             self.test_mode=False;self.power_data=None;self.movement_statistics=None
             self.outcome_data=None;self.expert_new_candidates=0;self.power_datasets={};self.power_progress={};self.pro_reference_data=None
+            self.pro_cases_data=None;self.opponent_right_annotations=[]
             parent=Path(db).resolve().parent
             self.personal_directory=(parent if 'private' in parent.parts else parent/'private')/'postgame'
         except Exception:self.server_close();raise
@@ -302,7 +313,8 @@ class PregameHandler(Handler):
             '/pro_reference_view.js':('pro_reference_view.js','text/javascript; charset=utf-8'),
             '/setup':('setup.html','text/html; charset=utf-8'),
             '/statistics':('statistics.html','text/html; charset=utf-8'),
-            '/statistics.js':('statistics.js','text/javascript; charset=utf-8')}
+            '/statistics.js':('statistics.js','text/javascript; charset=utf-8'),
+            '/statistics.css':('statistics.css','text/css; charset=utf-8')}
         if self.command=='GET' and route in assets:
             filename,ctype=assets[route];file=ROOT/'web_r4'/filename
             if not file.exists():raise ServiceError(404,'PREGAME_UI_NOT_INSTALLED')
@@ -324,6 +336,13 @@ class PregameHandler(Handler):
             raise ServiceError(404,'NOT_FOUND')
         if route.startswith('/dev/v1/postgame/'):
             self.authorize()
+            if route=='/dev/v1/postgame/reference-cases' and self.command=='GET':
+                from .pro_reference_cases import validate_reference_cases,empty_reference_cases
+                data=self.server.pro_cases_data
+                if data is not None:
+                    data=validate_reference_cases(data)
+                    if data['roster_sha256']!=self.server.current_pro_roster_digest() or (data['sample_kind']=='SYNTHETIC' and not self.server.test_mode):data=None
+                return self.bounded_reply(200,data if data is not None else empty_reference_cases())
             if route=='/dev/v1/postgame/reference-roster' and self.command=='GET':
                 from .pro_reference import prepare_pro_reference
                 return self.bounded_reply(200,prepare_pro_reference(json.loads((ROOT/'config/pro_reference_players.json').read_text())))
@@ -379,6 +398,17 @@ class PregameHandler(Handler):
             return self.bounded_reply(200,self.server.validated_progress(self.server.validated_power_data()))
         if route==prefix+'/power-view' and self.command=='POST':
             return self.bounded_reply(200,power_response(self.server,power_request(self.body())))
+        if route==prefix+'/challenger-reference' and self.command=='POST':
+            from .challenger_reference import challenger_reference_response
+            try:result=challenger_reference_response(self.server,self.body())
+            except ValueError:raise ServiceError(422,'INVALID_CHALLENGER_REFERENCE_REQUEST') from None
+            return self.bounded_reply(200,result)
+        if route==prefix+'/opponent-rights' and self.command=='POST':
+            from .opponent_rights import opponent_rights_response
+            body=self.body();self.fields(body,('plan_id',))
+            if not isinstance(body['plan_id'],str) or not re.fullmatch('[a-f0-9]{32}',body['plan_id']):raise ServiceError(422,'INVALID_PLAN_ID')
+            plan=self.checked_plan(body['plan_id'],current_knowledge(self.server.research))
+            return self.bounded_reply(200,opponent_rights_response(self.server,plan))
         if route==prefix+'/outcome-view' and self.command=='POST':
             return self.bounded_reply(200,outcome_response(self.server,power_request(self.body())))
         if route==prefix+'/roster' and self.command=='GET':return self.bounded_reply(200,roster())
@@ -466,6 +496,8 @@ def main():
     parser.add_argument('--movement-data',type=Path,help='Validated aggregate-only Q18 JSON')
     parser.add_argument('--outcome-data',type=Path,help='Validated aggregate-only ending-duration outcome JSON')
     parser.add_argument('--pro-reference-data',type=Path,help='Validated private pro-reference totals aggregate; separate from tier cohorts')
+    parser.add_argument('--pro-cases-data',type=Path,help='Anonymous derived pro stage/location/signal reference cases')
+    parser.add_argument('--opponent-rights-annotations',type=Path,help='Manual reviewed-claim and statistics-bound rights annotations; no automatic approval')
     parser.add_argument('--expert-claims-dir',type=Path,help='Validated local expert summaries; no raw videos or transcripts')
     for flag in ('body-bytes','observations','actions','scenarios','comparisons','pending-jobs'):
         parser.add_argument('--max-'+flag,type=int,required=True)
@@ -482,27 +514,33 @@ def main():
             from .power_stats import validate_power_dataset
             server.power_data=validate_power_dataset(json.loads(args.power_data.read_text()))
             if server.power_data['source']['sample_kind']=='SYNTHETIC':raise ValueError('Synthetic power data requires an isolated test fixture')
-        if args.power_data_dir:
+        power_directory=args.power_data_dir
+        if power_directory is None and args.power_data is None and not server.test_mode and server.power_data is None and not server.power_datasets:
+            # Only anonymous dated patch/tier snapshots. Explicit flags override.
+            candidates=sorted((ROOT/'data/riot').glob('20??-??-??'),reverse=True)
+            power_directory=next((p for p in candidates if p.is_dir() and any(p.glob('power-*-*.json*'))),None)
+        if power_directory:
             from .power_stats import validate_power_dataset
-            directory=args.power_data_dir
+            directory=power_directory
             if directory.is_symlink() or not directory.is_dir():raise ValueError('Invalid power dataset directory')
-            paths=sorted(directory.glob('power-*.json'))
+            paths=sorted([*directory.glob('power-*.json'),*directory.glob('power-*.json.gz')])
             if len(paths)>100:raise ValueError('Power dataset directory exceeds100 files')
             for path in paths:
                 if path.is_symlink() or path.stat().st_size>64_000_000:raise ValueError('Invalid power aggregate file')
-                data=validate_power_dataset(json.loads(path.read_text()))
+                data=validate_power_dataset(read_aggregate_file(path))
                 if data['source']['sample_kind']!='REAL':raise ValueError('Synthetic power data requires an isolated test fixture')
                 key=(data['source']['patch'],data['source']['tier'])
                 if key in server.power_datasets and digest(server.power_datasets[key])!=digest(data):raise ValueError('Conflicting power datasets')
                 server.power_datasets[key]=data
-        if args.power_data_dir:
+        if power_directory:
             from .collection_progress import validate_progress
             for key,data in server.power_datasets.items():
                 patch,tier=key
-                path=args.power_data_dir/('progress-'+str(patch)+'-'+tier+'.json')
+                path=power_directory/('progress-'+str(patch)+'-'+tier+'.json')
+                if not path.exists():path=path.with_suffix('.json.gz')
                 if path.exists():
                     if path.is_symlink() or path.stat().st_size>1_000_000:raise ValueError('Invalid progress companion file')
-                    server.power_progress[key]=validate_progress(json.loads(path.read_text()),data)
+                    server.power_progress[key]=validate_progress(read_aggregate_file(path,max_bytes=1_000_000),data)
         if args.movement_data:
             from .movement import validate_movement_dataset
             server.movement_statistics=validate_movement_dataset(json.loads(args.movement_data.read_text()))
@@ -518,6 +556,17 @@ def main():
             server.pro_reference_data=validate_pro_reference(json.loads(path.read_text()))
             if server.pro_reference_data['sample_kind']!='REAL':raise ValueError('Synthetic pro reference data requires an isolated test fixture')
             if server.pro_reference_data['roster_sha256']!=server.current_pro_roster_digest():raise ValueError('Pro reference roster version mismatch')
+        cases_path=args.pro_cases_data or ROOT/'data/pro_reference/2026-10-13/reference-cases.json'
+        if args.pro_cases_data or cases_path.exists():
+            from .pro_reference_cases import validate_reference_cases
+            if cases_path.is_symlink() or not cases_path.is_file() or cases_path.stat().st_size>12_000_000:raise ValueError('Invalid anonymous reference cases file')
+            server.pro_cases_data=validate_reference_cases(json.loads(cases_path.read_text()))
+            if server.pro_cases_data['sample_kind']!='REAL' or server.pro_cases_data['roster_sha256']!=server.current_pro_roster_digest():raise ValueError('Reference cases sample/roster mismatch')
+        if args.opponent_rights_annotations:
+            from .opponent_rights import validate_right_annotations
+            path=args.opponent_rights_annotations
+            if path.is_symlink() or not path.is_file() or path.stat().st_size>1_000_000:raise ValueError('Invalid rights annotation file')
+            server.opponent_right_annotations=validate_right_annotations(json.loads(path.read_text()))
         expert_import=load_expert_directory(server,args.expert_claims_dir or ROOT/'data'/'expert_claims',explicit=args.expert_claims_dir is not None)
     except Exception:
         server.server_close();raise

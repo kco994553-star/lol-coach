@@ -21,7 +21,7 @@ from datetime import datetime, timezone
 
 ROOT = Path(os.environ.get('EXPERT_REPO_ROOT', Path(__file__).resolve().parents[1])).resolve()
 sys.path.insert(0, str(ROOT))
-SOURCE_FILES = sorted(str(p.relative_to(ROOT)) for folder in
+SOURCE_FILES = ['requirements-private-cache.txt'] + sorted(str(p.relative_to(ROOT)) for folder in
     ['contracts', 'coach_v1', 'web_r4', 'tests_expert', 'scripts', 'knowledge_candidates', 'config', '.github']
     for p in (ROOT / folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts
     and p.suffix in {'.py', '.cjs', '.js', '.html', '.css', '.svg', '.json', '.md', '.yml', '.yaml'})

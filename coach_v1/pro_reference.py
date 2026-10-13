@@ -76,7 +76,7 @@ def validate_pro_roster(config):
 
 def prepare_pro_reference(config):
     c=validate_pro_roster(config)
-    return dict(schema_version='pro.reference-preparation.v1',status='BLOCKED_EXTERNAL',reason='U3_RENEWED_RIOT_KEY_PENDING',
+    return dict(schema_version='pro.reference-preparation.v1',status='READY_TO_COLLECT',reason='COLLECTION_NOT_STARTED',
         region=c['region'],checked_at=c['checked_at'],verification='USER_REPORT_NOT_NETWORK_VERIFIED',tier='UNKNOWN',
         primary_count=25,backup_count=9,alt_count=1,roles=[dict(role=CANONICAL_ROLES[r],input_role=r,
         players=[dict(player=p['name'],team=p['team'],riot_id=p['riot_id'],alt_accounts=p.get('alt_riot_ids',[]),seen=p['seen']) for p in c['players'][r]],
@@ -142,7 +142,10 @@ class ProReferenceCollector(RiotCollector):
             roster_sha256=digest(c),roster_verification='USER_REPORT_NOT_NETWORK_VERIFIED',selection='USER_PRO_REFERENCE_ROSTER',tier='UNKNOWN',
             now=timestamp,window_start=timestamp-30*86400,position_share_threshold=float(position_share_threshold),
             threshold_policy='OPERATIONAL_REPLACEMENT_RULE_NOT_TACTICAL_ACCURACY',matches_per_account=matches_per_account,
-            selections=[],failed_accounts=[],request_count=0,unique_recorded_matches=0,privacy='LOCAL_PRIVATE',limitations=deepcopy(LIMITATIONS))
+            selections=[],failed_accounts=[],request_count=0,unique_recorded_matches=0,privacy='LOCAL_PRIVATE',limitations=deepcopy(LIMITATIONS),
+            observed_http_status=None,user_key_expiry_attribution='NOT_APPLICABLE')
+        from .pro_reference_cases import build_reference_cases
+        self.reference_cases_data=build_reference_cases([],roster_sha256=receipt['roster_sha256'],retrieved_at=datetime.fromtimestamp(timestamp,timezone.utc).isoformat())
         if not self.key_shape['valid_shape']:return receipt
         cache=ProReferenceCache(private_directory);store=PostgameStore(cache.directory/'private'/'matches')
         self._raw_pairs={};self._ids_by_puuid={};self._player_observations={};selected=[]
@@ -162,13 +165,16 @@ class ProReferenceCollector(RiotCollector):
                         selected.extend(observations)
                     receipt['selections'].append(record)
             receipt.update(status='READY' if selected else 'INSUFFICIENT_DATA',reason=None if selected else 'NO_ELIGIBLE_PLAYER_OBSERVATIONS')
-        except CollectionBlocked as e:receipt.update(status='BLOCKED_EXTERNAL',reason=e.reason)
+        except CollectionBlocked as e:receipt.update(status='BLOCKED_EXTERNAL',reason=e.reason,observed_http_status=e.status_code,
+            user_key_expiry_attribution='KEY_EXPIRED_PER_USER_RULE' if e.status_code in (401,403) else 'NOT_APPLICABLE')
         except ValueError:receipt.update(status='BLOCKED_EXTERNAL',reason='MALFORMED_PRIVATE_OR_RIOT_RESPONSE')
         receipt['failed_accounts']=cache.safe_summary()['failed_accounts'];receipt['request_count']=self.requests
         receipt['unique_recorded_matches']=len({o['match_sha256'] for o in selected})
         if selected:
             data=build_pro_reference(selected,roster_sha256=receipt['roster_sha256'],retrieved_at=datetime.fromtimestamp(timestamp,timezone.utc).isoformat())
             _write_private(cache.directory/'reference-data.json',data);receipt['reference_file']='reference-data.json';receipt['cohort_count']=len(data['cohorts'])
+        self.reference_cases_data=build_reference_cases(selected,roster_sha256=receipt['roster_sha256'],retrieved_at=datetime.fromtimestamp(timestamp,timezone.utc).isoformat())
+        _write_private(cache.directory/'reference-cases.json',self.reference_cases_data);receipt['reference_cases_file']='reference-cases.json'
         _write_private(cache.directory/'collection-receipt.json',receipt)
         return receipt
 
@@ -214,7 +220,7 @@ class ProReferenceCollector(RiotCollector):
                 if row['role']!=role:continue
                 detail=store.get_match(row['id'])
                 mh=hashlib.sha256(mid.encode()).hexdigest()
-                observations[(mh,own['participantId'])]=dict(match_sha256=mh,role=role,champion=row['champion'],patch=row['patch'],resources=detail['resources'])
+                observations[(mh,own['participantId'])]=dict(match_sha256=mh,role=role,champion=row['champion'],patch=row['patch'],resources=detail['resources'],movement=detail['dependency']['samples'],contexts=detail['contexts'])
         known_positions=all(position in CANONICAL_ROLES.values() for position in recent.values())
         share=sum(position==role for position in recent.values())/len(recent) if recent and known_positions else None
         reason='NO_RANKED_SOLO_420_WITHIN_30_DAYS' if not recent else 'POSITION_ASSIGNMENT_UNVERIFIED' if not known_positions else 'POSITION_SHARE_BELOW_OPERATIONAL_THRESHOLD' if share<receipt['position_share_threshold'] else 'NO_USABLE_ROLE_TIMELINES' if not observations else None

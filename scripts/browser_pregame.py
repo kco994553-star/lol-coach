@@ -51,7 +51,7 @@ SOURCE_FILES = ['coach_v1/outcome_stats.py','tests_pregame/test_outcome_stats.py
     'evidence/queue/q05-expansion/initial-roster.json']
 
 # Additive v2 sources participate in the same immutable source receipts.
-SOURCE_FILES = sorted(set(SOURCE_FILES) | {
+SOURCE_FILES = sorted(set(SOURCE_FILES) | {'requirements-private-cache.txt'} | {
     str(path.relative_to(ROOT)) for folder in ('contracts','coach_v1','web_r4','tests_pregame','scripts','knowledge_candidates','config','.github')
     for path in (ROOT/folder).rglob('*') if path.is_file() and '__pycache__' not in path.parts
     and path.suffix in {'.py','.cjs','.js','.html','.css','.svg','.json','.md','.yml','.yaml'}
@@ -59,7 +59,7 @@ SOURCE_FILES = sorted(set(SOURCE_FILES) | {
 
 EXPECTED_BROWSER_IDS = ['connected'] + [p + '-' + check for p in
     ['TOP', 'JUNGLE', 'MID', 'BOTTOM', 'SUPPORT'] for check in
-    ['exact-input', 'nine-cards', 'selected-map-row', 'common-invariant',
+    ['exact-input', 'nine-cards', 'opponent-rights-unknown', 'selected-map-row', 'common-invariant',
      'personal-context', 'detail-input-binding', 'immutable-reopen', 'edit-hides-plan']] + [
     'source-preview', 'source-navigation', 'proposal-only-import', 'untrusted-approval-blocked',
     'empty-patch-approval-disabled', 'export-history', 'mobile-layout', 'logout-clears',

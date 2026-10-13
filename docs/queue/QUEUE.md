@@ -1,3 +1,25 @@
+된 것: 본인 ID·티어 입력 대기를 해제하고 갱신 키의 Riot200을 확인했습니다.
+된 것: PC 검토 큐·CHALLENGER 우선 통계·프로 기준 사례 화면을 준비했습니다.
+진행 중: 16.20 통계 추가 수집과 프로 비공개 수집·상대 권리 표시를 통합합니다.
+진행 중: 이전400 메시지 전문을 보존하고 공식 영상 예시의 단계별 시험을 준비합니다.
+내가 할 것: 지식을 직접 검토합니다. 본인 Riot ID·티어는 보내지 않아도 됩니다.
+
+# User decisions2026-10-13 — pro reference continuation RUNNING
+
+Authority: explicit user decisions replace U1/U2 with the supplied pro roster and CHALLENGER primary; refreshed KR RIOT_API_KEY reported around19:00KST,24h validity. PC layout/verification first. New Gemini official-example baseline ->clipping ->response-format test authorized once perstage; prior alternative-model trial remains consumed. No approval reconfirmation needed. Main branch work/pro-reference-resume-20261013; common token main-20261013-pro-reference-resume.
+
+Actual first renewed-key collection run38391353214 returned firstHTTP200,598requests/0retries/37newREALmatches on16.19. Patch remains separate from retained50REAL16.20; no summary/SD mixing. Followup38393589558 pinned16.20 and completed:601requests/0retries/275newREALmatches; allfive observed role baseline segmentsREADY with0estimatedremaining. Late observed tails stillUNKNOWN; overall completion percentageUNKNOWN. GRANDMASTER run38399585294 firstHTTP200 but was cancelled at job time limit; no newGMpublicaggregate was produced and retained275CHis unchanged. Current official DDragon versions read first16.20.1; new scheduled policy pins current officialpatch rather than firstinactive seed's older match. Current collector remains bounded20/1s100/120s and stops first401/403, recording userkey-expiry attribution separately.
+
+R1 PC layout completed20browser checks and10simulatedfixture decisions with actualUSER_WEB0, including sharedtoken/logout, on stable sources. R2 primaryCH+insufficient-only GM samepoint provenance and remainingCHsample requirement implemented, no usertier selectors. R3 anonymouspro case default page prepared with operational stages/Q16 observed contexts/Q18 grid distributions, all tacticalphaseUNKNOWN; own import is optional. No real procollection yet; trustedmain workflow awaits source-boundCI/normalmerge. RawPUUID/originals stay runnerprivate/encrypted, publicsafe projector only. Long-livedYouTubeSecret HKDF domain separation avoids credential export; keyrotation/unresolved interruptedcache blocks newlookups, reruns forbidden. SharedRiotconcurrency+121s startupwait addresses crossjob rolling limits.
+
+Pregame ninecards each show opponentright risk/safety/UNKNOWN. Only contributing active REVIEWED claim, exact source/version/spec, explicit manually reviewed rightassertion and visible matchingstatistics canclassify. No sidecar bydefault; reviewedknowledge0 means all45example labelsUNKNOWN. Challenger/pro preference is not automatic tacticalproof. No AIUSER_WEB approvals or live/cooldowntracking.
+
+Priorcomplete sanitized400saved before anynewdiagnostic: evidence/queue/pro-resume/prior-full-video400.json, literal “Request contains an invalid argument.” (observedlength belowold512limit,no truncation); rawerrorbody notretained. NewofficialInteractions baseline has no clipping/format; sameknown free3.6model, notanotheralternative trial. Eachrequest hasdurablefull-durationcharge andordered15s spacedcontinuation; stopfailure/no retries. Ifcauseunlocalized, manualsummary remainsdefault/ordinaryautomatic schedules paused. Actualnewdiagnostic notyetdispatched.
+
+Status v2 R1/R2software-and-sampleDONE2/5; R3/R4 READY integration/verification/acquisition underway, R5PC/POVstillBLOCKED_EXTERNAL. Legacy10/19 and4oldclosedblockers maintained. Earlier v2toolingblocker1 closed; U1/U2 dependencies now removed and U3 access restored (newlyclosed3 input/accessblockers). RealUSER_WEB0/ownmatches0/procases0/accuracy=null/paid0. Test counts describe implementation only. Design/plan docs/superpowers/*/2026-10-13-pro-reference-resume*.md; final runtimecontract contracts/queue-v20.md; all earlier evidence preserved below.
+
+---
+
 된 것: 모바일 지식 검토 큐를 구현하고 브라우저에서 10개 후보 결정·재조회를 확인했습니다.
 된 것: 표본 진행률·비공개 복기·프로 25명 명단·PC 준비 안내를 연결했습니다.
 안 된 것: 본인 경기와 새 통계 수집은 Riot ID·티어·키 갱신 입력을 기다립니다.

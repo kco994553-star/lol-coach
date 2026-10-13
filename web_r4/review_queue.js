@@ -1,7 +1,8 @@
 'use strict';
 (()=>{
  const $=id=>document.getElementById(id),prefix='/dev/v1/pregame';
- let token=sessionStorage.getItem('pregame-token')||'',queue=null,current=null,busy=false,epoch=0,selectionIndex=0,page=0,laterPage=0;
+ sessionStorage.removeItem('pregame-token');
+ let token=sessionStorage.getItem('lol-coach-dev-token')||'',queue=null,current=null,busy=false,epoch=0,selectionIndex=0,page=0,laterPage=0;
  const node=(tag,text)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;return n;};
  const notice=text=>{$('rq-notice').textContent=text;};
  async function api(path,method='GET',body){const r=await fetch(path,{method,mode:'same-origin',headers:{Authorization:'Bearer '+token,...(body===undefined?{}:{'Content-Type':'application/json'})},...(body===undefined?{}:{body:JSON.stringify(body)})});const data=await r.json();if(!r.ok){const e=new Error(data.error_code||'요청 실패');e.status=r.status;throw e;}return data;}
@@ -48,11 +49,11 @@
   finally{busy=false;controls();}
  }
  for(const [id,kind] of [['rq-approve','approve'],['rq-reject','reject'],['rq-edit-approve','edit'],['rq-later','later'],['rq-prepare','prepare']])$(id).addEventListener('click',e=>action(e,kind));
- $('rq-login').addEventListener('submit',async e=>{e.preventDefault();token=$('rq-token').value.trim();try{await refresh();sessionStorage.setItem('pregame-token',token);$('rq-token').value='';notice('개인 작업실에 연결했습니다.');}catch(err){notice(err.message);}});
+ $('rq-login').addEventListener('submit',async e=>{e.preventDefault();token=$('rq-token').value.trim();try{await refresh();sessionStorage.setItem('lol-coach-dev-token',token);$('rq-token').value='';notice('개인 작업실에 연결했습니다.');}catch(err){notice(err.message);}});
  $('rq-refresh').addEventListener('click',()=>{if(!busy)refresh().catch(e=>notice(e.message));});$('rq-show-later').addEventListener('change',()=>{if(!busy){selectionIndex=0;render();}});for(const [id,offset] of [['rq-previous',-1],['rq-next',1]])$(id).addEventListener('click',()=>{if(!busy&&queue){selectionIndex+=offset;render();}});
  for(const [id,offset] of [['rq-page-previous',-1],['rq-page-next',1]])$(id).addEventListener('click',()=>{if(!busy&&queue){if($('rq-show-later').checked)laterPage=Math.max(0,laterPage+offset);else page=Math.max(0,page+offset);selectionIndex=0;refresh().catch(e=>notice(e.message));}});
  $('rq-export').addEventListener('click',()=>{$('rq-export-panel').hidden=false;$('rq-export-text').value=queue?.export_text||'';});
  $('rq-download').addEventListener('click',()=>{const url=URL.createObjectURL(new Blob([$('rq-export-text').value],{type:'text/plain;charset=utf-8'}));const a=node('a');a.href=url;a.download='review-top20.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),0);});
- $('rq-logout').addEventListener('click',()=>{epoch++;token='';queue=current=null;sessionStorage.removeItem('pregame-token');$('rq-workspace').hidden=true;$('rq-auth').hidden=false;$('rq-claim').textContent='';$('rq-export-text').value='';$('rq-sources').replaceChildren();notice('연결을 해제했습니다.');});
+ $('rq-logout').addEventListener('click',()=>{epoch++;token='';queue=current=null;sessionStorage.removeItem('lol-coach-dev-token');sessionStorage.removeItem('pregame-token');$('rq-workspace').hidden=true;$('rq-auth').hidden=false;$('rq-claim').textContent='';$('rq-export-text').value='';$('rq-sources').replaceChildren();notice('연결을 해제했습니다.');});
  if(token)refresh().catch(e=>notice(e.message));
 })();
