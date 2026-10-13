@@ -1,24 +1,32 @@
-된 것: 모바일 지식 검토 큐와 비공개 경기 기록 복기 화면을 구현했습니다.
-된 것: 표본 누적·필요 경기 수·프로 기준 명단과 PC·영상 안내를 연결했습니다.
-안 된 것: 본인 경기·새 Riot 표본은 U1·U2·U3 입력 대기입니다.
-진행 중: 필수 CI·게시·Gemini 120초 비교 진단을 마무리합니다.
-내가 할 것: 지식 후보 승인과 Riot ID·티어·키 갱신 확인입니다.
+된 것: 모바일 지식 검토 큐를 구현하고 브라우저에서 10개 후보 결정·재조회를 확인했습니다.
+된 것: 표본 진행률·비공개 복기·프로 25명 명단·PC 준비 안내를 연결했습니다.
+안 된 것: 본인 경기와 새 통계 수집은 Riot ID·티어·키 갱신 입력을 기다립니다.
+안 된 것: Gemini 대체 모델 텍스트는 200이지만 영상은 400으로 실패해 요약은 0건입니다.
+내가 할 것: 후보를 직접 검토하고, 본인 Riot ID·티어·키 갱신 여부를 알려주세요.
 
-# Queue v2.0 — integration VERIFYING (2026-10-13)
+# Queue v2.0 — implementation published; actual-data blockers recorded (2026-10-13)
 
-Owner Main `work/queue-v20-20261013`, commonclaim token `main-20261013-queue-v20`. User's v1.6 free implementation/publication/normalmerge authority reused; v2.0 and explicit R3 pro roster steering incorporated. PR24/25 and Q01–Q09,Q15 evidence reused. Legacy fullDONE10/19 and prior closedblockers4 preserved. v2 completion is tracked separately by5R IDs, not tests/coaching accuracy.
+Main implemented and normally merged PR #26 from `9d8de274e8b385135de7c2c3163b6f91cc2e063b` into main `bdc7e3a891c3cb8b08dd98832482761cf5053f90`, tree `55391771b1320ee6036328dbb909299344c9430f`. Required PR runs `38386604901`/`38386604920` and postmerge runs `38387425422`/`38387425433` each passed all three checks. Both publication and postmerge receipts independently match 14 source groups / 440 paths. The original-index regression initially failed; original bytes were restored and the required check passed. No verification gate was weakened.
 
-| ID | Current | Implemented / remaining |
-|---|---|---|
-| R1 | VERIFYING | One-candidate mobile queue, exact-version user-only decisions, editlineage, deferred pagination, excerpts/stats/conditional preview, progress/export; synthetic10decision browser proof actualUSER_WEB0; finalCI pending |
-| R2 | BLOCKED_EXTERNAL(U2/U3) | Exact anonymous patch/tier accumulator, hash dedup, rate650requests/300matches/900s, digest-bound targets,90day state, tiercomparison; retainedREAL50 reused, oldpooledSD unknown, newacquisition pending |
-| R3 | BLOCKED_EXTERNAL(U1/U3) | Own Match-V5 private import/graphs/markers/suspectedcontexts/minuteposition/dependencies/planpremise; exact25pro+9backup+alt config, privatePUUIDcache/localproreference prep; actualown1match pending |
-| R4 | VERIFYING |120s pairedidenticaltext, officialfreeFlash3.6 explicitoncefallback,600svideo/durablecharges preserved, manualroute; actualmainActions afterCI/merge pending |
-| R5 | BLOCKED_EXTERNAL | OneWindowscapture/OBS/gameclock/import guide prepared, originals/video absent; noactualPC/video analysis |
+This closeout branch publishes documentation and safe diagnostic evidence only. Its own required CI and normal merge are verified separately in the durable `work/main-execution-claim` handoff; this immutable snapshot does not predict their result. Authority is the user's v2.0 queue and supplied pro roster, inheriting v1.6 free implementation/publication/normal merge. No READY implementation remains.
 
-New Riot calls0 inthissession. Existing2026-10-13 schedule38342732100 artifact11786929206 curl401/Python401 confirmed read-only; userkey-expiry attribution separate from observed auth failure, collector skipped. Old50 patch16.20CHALLENGER remains. SourceUG counts/seasonranks/probadges userreports; notindependentlyvalidated. Originalpreservation/normalmerge/sourceboundCI required beforeactualGeminitrial. ActualcoachingN0/accuracy=null/realUSER_WEBapprovals0/paid0.
+| ID | Current | Completed preparation / remaining criterion |
+| --- | --- | --- |
+| R1 | DONE | One-candidate review, mobile layout, priority, conditions/excerpts/links/patch/counterexamples/statistics/conditional card preview, user-only versioned approval/edit/reject/later, progress and safe top-20 export. Actual Chromium opened and decided/requeried 10 sequential synthetic candidates at mobile and desktop widths. The isolated runner uses TEST_FIXTURE; actual USER_WEB decisions and approved knowledge remain 0. |
+| R2 | BLOCKED_EXTERNAL (U2/U3) | Exact anonymous same-patch/tier accumulation, match-hash dedup, high-tier/user-tier comparison, confidence targets and remaining sample counts, bounded schedule and authentication stop prepared. Existing 50 real patch16.20 CHALLENGER matches reused. New user-tier sample and live enlargement await approximate tier and renewed key. |
+| R3 | BLOCKED_EXTERNAL (U1/U3) | Private own-match curves/level-item markers, timeline-only suspected contexts, minute-position limits and explicit UNKNOWN, dependency/premise/execution/effect view prepared. Supplied `config/pro_reference_players.json` saved: 25 primary players, 9 backups, ShowMaker alternate. Stable private account cache and separate pro overlay prepared. Roster is a reference cohort, not the user's identity; actual own matches and pro lookups remain 0. |
+| R4 | BLOCKED_EXTERNAL (video HTTP400) | 120-second paired text and one official free Flash alternative actually attempted, followed by exactly one <=600-second clip after text success. Primary3.8 curl/Python503; fallback3.6 curl/Python200. Video400 `INVALID_ARGUMENT`, accepted candidates0. Exact rejected field UNKNOWN after official-document audit. Alternative trial consumed; no further enabled trial or charged-video retry. Manual timestamped-summary intake ready. |
+| R5 | BLOCKED_EXTERNAL (PC/POV files) | Existing Windows command, OBS/HUD settings, app import and first game-clock alignment procedure documented. Actual Windows originals and POV video absent. |
 
-Design/plan: docs/superpowers/specs/2026-10-13-queue-v20-design.md; plans/2026-10-13-queue-v20.md; contract contracts/queue-v20.md. Usage docs/queue/V20_LOCAL_USE.md and R1–R5 docs. Earlier failures remain below and newred/green/browser failures under evidence/queue/v20; nofutureCI/provider success asserted.
+Progress: v2.0 full completion **1/5 (R1)**; **1 newly closed blocker (review-queue tooling)**. User-reviewed knowledge is still0; the content-review bottleneck is not declared closed. Legacy Q01–Q09 and Q15 remain10/19 complete with4 previously closed blockers. Test counts are implementation evidence only. Coaching accuracy remains unassessed (`null`), real own-match count0, new Riot calls0, paid services0.
+
+The read-only inspection of today's existing Riot run `38342732100` / artifact `11786929206` found curl401 and Python401; collection was skipped. Record user-reported key-expiry attribution separately from the observed authentication failure; exact server authorization cause is UNKNOWN. The User-Agent diagnosis and old successful50-match evidence are preserved. Routine collection is gated on renewed-key confirmation and stops the affected execution at the first401/403.
+
+Actual Gemini run [38387587260](https://github.com/kco994553-star/lol-coach/actions/runs/38387587260) ran trusted merged main. Workflow success does not establish acquisition success. There were4 text requests,1 video request,0 accepted claims and no subsequent provider request. Recovery used the freshest available ledger from run38349297786/artifact11790310968:8 reservations/9575 seconds, not the older6/7396 snapshot. All8 prior entries are preserved; one conservative full-original-duration reservation adds1137 seconds, yielding9/10712. Reservation/final ledgers are byte-identical. Clip length<=600 seconds does not refund full-duration charge; video `lSy9NeB5Ue4` remains charged and excluded. Raw ledgers, model output and video text are not committed.
+
+Resume only affected inputs: U1 own Riot ID and server; U2 approximate current tier; U3 Secret renewal confirmation (never paste the key). Personal/pro raw collection runs locally with the key in the local environment; PUUID and original JSON stay private. The supplied roster's ownership/tier/game counts remain user-reported, not independently verified. R4 needs field-specific provider evidence or an explicitly authorized source-grounded changed diagnostic; the sole model trial is already consumed. Manual expert summary and user knowledge review work now. R5 awaits PC originals/POV video; minute position never identifies wave, hidden enemies or cooldowns.
+
+Usage: [V20_LOCAL_USE.md](https://github.com/kco994553-star/lol-coach/blob/main/docs/queue/V20_LOCAL_USE.md). Actual Gemini receipt: [actual-receipt.json](https://github.com/kco994553-star/lol-coach/blob/main/evidence/queue/v20/actual-gemini/actual-receipt.json); [official video-argument audit](https://github.com/kco994553-star/lol-coach/blob/main/docs/queue/R4_VIDEO_ARGUMENT_AUDIT_2026-10-13.md). Source-bound CI: [PR26](https://github.com/kco994553-star/lol-coach/blob/main/evidence/queue/v20/ci-pr26-source-binding.json), [postmerge](https://github.com/kco994553-star/lol-coach/blob/main/evidence/queue/v20/ci-main-pr26-source-binding.json). Design/plan and contract are under `docs/superpowers/` and `contracts/queue-v20.md`. Earlier evidence and failed attempts remain below and under `evidence/queue/v20/`.
 
 ---
 
