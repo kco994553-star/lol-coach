@@ -188,8 +188,13 @@ knowledge. Invalid or missing contextual bindings never yield risk/safety.
 def opponent_rights_response(server,plan):
     """Server integration; the optional sidecar is read, never promoted/written."""
     from .pregame_server import current_knowledge
-    datasets=list(server.validated_power_datasets().values())
-    pro=getattr(server,'pro_reference_data',None)
-    if pro is not None and pro['roster_sha256']==server.current_pro_roster_digest(): datasets.append(pro)
+    annotations=getattr(server,'opponent_right_annotations',[])
+    # Without an explicit reviewed assertion statistics cannot classify a card.
+    # Avoid loading/validating large aggregates for the default UNKNOWN view.
+    datasets=[]
+    if annotations:
+        datasets=list(server.validated_power_datasets().values())
+        pro=getattr(server,'pro_reference_data',None)
+        if pro is not None and pro['roster_sha256']==server.current_pro_roster_digest(): datasets.append(pro)
     return build_rights(plan,current_knowledge(server.research),datasets,
-        annotations=getattr(server,'opponent_right_annotations',[]),test_mode=server.test_mode)
+        annotations=annotations,test_mode=server.test_mode)

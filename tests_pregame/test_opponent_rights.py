@@ -138,6 +138,17 @@ class OpponentRightsTests(unittest.TestCase):
             a=copy.deepcopy(self.annotation);mutate(a)
             with self.assertRaises(ValueError):self.m.validate_right_annotations([a])
 
+    def test_no_annotations_adapter_does_not_load_statistics(self):
+        from types import SimpleNamespace
+        from unittest.mock import Mock, patch
+        loader=Mock(side_effect=AssertionError('unnecessary full aggregate validation'))
+        server=SimpleNamespace(research=object(),validated_power_datasets=loader,
+            opponent_right_annotations=[],test_mode=True)
+        with patch('coach_v1.pregame_server.current_knowledge',return_value=self.knowledge):
+            result=self.m.opponent_rights_response(server,self.plan)
+        loader.assert_not_called()
+        self.assertTrue(all(c['status']=='UNKNOWN' for c in result['cards']))
+
     def test_read_only_adapter_preserves_every_input(self):
         values=copy.deepcopy((self.plan,self.knowledge,self.data,self.annotation))
         self.build()

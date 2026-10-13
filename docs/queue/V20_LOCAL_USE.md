@@ -3,7 +3,7 @@
 저장소 루트에서 Python3.11 이상을 사용합니다.
 
 ```text
-python -m pip install -r requirements-r3.txt
+python -m pip install -r requirements-r3.txt -r requirements-private-cache.txt
 python -m coach_v1.pregame_server --db private/work.sqlite --token-file private/app-token.txt --port 8765 --max-body-bytes 12000000 --max-observations 1000 --max-actions 100 --max-scenarios 100 --max-comparisons 100 --max-pending-jobs 10
 ```
 
@@ -43,3 +43,14 @@ python -m coach_v1.pregame_server --db private/work.sqlite --token-file private/
 경기 전9개 카드의 상대 권리 표시는 검토 지식·명시적으로 검토한 권리 진술·표본을 갖춰야 위험/안전이 됩니다. 근거가 없으면 미확인입니다. 현재 REVIEWED0이므로 모두 미확인인 것이 정상입니다. 선택적 --opponent-rights-annotations PATH/annotations.json은 기존 검토된 주장에 수동 연결한 sidecar를 읽습니다. 이 파일이 지식 승인이나 통계 증거를 대신하지 않습니다.
 
 기본 영상 경로는 /experts의 수동 타임스탬프 요약입니다. 자동화는 명시적 단계별400 진단과 별개이며 API200만으로 재개하지 않습니다. 키는 Secret/로컬 환경에만 보관하고 채팅에 올리지 않습니다.
+
+
+## 현재 실제 자료 — 2026-10-13
+
+기본 실행은 data/riot/2026-10-13의 실제275경기·16.20 CHALLENGER 곡선과 data/pro_reference/2026-10-13의 실제87경기 프로 기준 사례를 자동으로 읽습니다. 별도 Riot ID·티어·영상 입력이 필요하지 않습니다. PC에서 /statistics는5포지션 ×3기본 자원 곡선과 챔피언 차이 곡선을 구분해 보여줍니다. 기본33분 구간은 표시 기준을 통과했고 후반8분 구간은 추가표본추정/미확인으로 남습니다. 기본곡선이 표시되어도 특정챔피언의 부족한점까지 충분하다는 뜻은 아닙니다.
+
+기본 통계파일은 원래852개 ROLE_POPULATION 집계만 값 변경 없이 분리해 조회를 빠르게 합니다. 전체6090개 집계(매치업 포함)는 archives/full-power-16.20-CHALLENGER.json.gz와 manifest.json에 원본해시를 보존했습니다. 매치업까지 필요한 경우 개인 작업 폴더에서 전체파일을 풀고 --power-data로 지정합니다. 기본투영과전체원본을 동시에같은패치/티어로넣으면 충돌을거절합니다. 16.19와16.20을합치지않습니다.
+
+프로 화면은5포지션·3운영구간의 위치분포와 기록된신호를 보여줍니다. 경기단위 좌표CI가 넓은 항목은 미확인이며 신호 자체는 잘못이나원인판정이 아닙니다. 영상은 미확인이고 웨이브·보이지않는상대·스킬상태를 추정하지 않습니다.
+
+공식YouTube예시 진단은429(프로젝트할당량초과)로끝났습니다. /experts의 수동타임스탬프요약이 기본경로입니다. 구간/형식추가나재시도는하지않았고 자동수집은보류입니다. 사용자는기존EXPLORATORY후보를 원문·조건과함께 직접검토합니다.

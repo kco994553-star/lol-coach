@@ -389,9 +389,12 @@ class PregameHandler(Handler):
         if route==prefix+'/power-catalog' and self.command=='GET':
             from .collection_progress import progress_response
             datasets=[]
+            from .role_baseline_view import role_baseline_curves_from_validated
             for (patch,tier),data in sorted(self.server.validated_power_datasets().items(),key=lambda row:str(row[0])):
+                progress=self.server.validated_progress(data)
                 datasets.append(dict(patch=patch,tier=tier,sample_kind=data['source']['sample_kind'],
-                    champions=sorted({c['champion'] for c in data['cohorts']}),progress=self.server.validated_progress(data)))
+                    champions=sorted({c['champion'] for c in data['cohorts']}),progress=progress,
+                    role_baseline_curves=role_baseline_curves_from_validated(data,progress)))
             return self.bounded_reply(200,dict(datasets=datasets,test_mode=self.server.test_mode))
         if route==prefix+'/collection-progress' and self.command=='GET':
             from .collection_progress import progress_response

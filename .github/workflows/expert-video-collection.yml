@@ -29,8 +29,10 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # User2026-10-13: automatic Q19 remains paused after unsuccessful diagnosis.
+  # A repository variable cannot silently restart provider requests.
   collect:
-    if: github.repository == 'kco994553-star/lol-coach' && github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && vars.GEMINI_AUTOMATIC_SUMMARY_ENABLED == 'true')) && (inputs.video_argument_diagnostic != true || github.run_attempt == 1)
+    if: github.repository == 'kco994553-star/lol-coach' && github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && (inputs.video_argument_diagnostic != true || github.run_attempt == 1)
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
