@@ -1,0 +1,24 @@
+======================================================================
+FAIL: test_no_annotations_adapter_does_not_load_statistics (tests_pregame.test_opponent_rights.OpponentRightsTests.test_no_annotations_adapter_does_not_load_statistics)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_opponent_rights.py", line 148, in test_no_annotations_adapter_does_not_load_statistics
+    result=self.m.opponent_rights_response(server,self.plan)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/opponent_rights.py", line 191, in opponent_rights_response
+    datasets=list(server.validated_power_datasets().values())
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+AssertionError: unnecessary full aggregate validation
+
+----------------------------------------------------------------------
+Ran 1 test in 0.299s
+
+FAILED (failures=1)

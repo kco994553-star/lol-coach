@@ -26,6 +26,12 @@ SOURCE_FILES = ['requirements-private-cache.txt'] + sorted(str(p.relative_to(ROO
     for p in (ROOT / folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts
     and p.suffix in {'.py', '.cjs', '.js', '.html', '.css', '.svg', '.json', '.md', '.yml', '.yaml'})
 
+# Published real anonymous snapshots participate in source-bound receipts.
+SOURCE_FILES = sorted(set(SOURCE_FILES) | {
+    str(p.relative_to(ROOT)) for folder in ('data/riot/2026-10-13','data/pro_reference/2026-10-13')
+    for p in (ROOT/folder).rglob('*') if p.is_file() and p.suffix in {'.json','.gz'}
+})
+
 EXPECTED_BROWSER_IDS = ['connected', 'empty-claims', 'manual-import', 'count-only-notification', 'safe-timestamp-link', 'speaker-context-patch', 'measurement-status', 'independent-source-counts', 'nonexecutable-review-state', 'selected-version-source-binding', 'incomplete-scope-disabled', 'complete-scope-enabled', 'scripted-approval-blocked', 'immutable-proposal-guard', 'idempotent-import', 'mobile-keyboard', 'friendly-manual-form', 'invalid-manual-timestamp-no-write', 'manual-builder-original-binding', 'late-auth-navigation', 'no-decisions-errors-source-change']
 
 def now():return datetime.now(timezone.utc).isoformat()

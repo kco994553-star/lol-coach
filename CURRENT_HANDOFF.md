@@ -1,3 +1,35 @@
+된 것: PC 지식 검토 큐에서 후보10개 결정·재조회를 확인했습니다.
+된 것: 챌린저275경기로 5포지션 기본 곡선15개가 실제 화면에 표시됩니다.
+된 것: 프로87경기의 위치·막힘 신호 기준 사례를 본인 정보 없이 볼 수 있습니다.
+안 된 것: Gemini 예시 요청은429 할당량 초과로 실패했고 자동 요약은 보류합니다.
+내가 할 것: 지식을 직접 검토합니다. PC 원본·영상은 준비되면 선택적으로 제공합니다.
+
+# Queue v2 — user-decisions continuation actual results (2026-10-13)
+
+PR28 implementation normally merged into main b6cdced0c819424e048ec412de6f7e57c5b1c545 at14:07:07UTC. Required38409767081/38409766412 and postmerge38410614883/38410614946 allthreeSUCCESS. Each14source groups/464paths independentlymatched; published/tested/main treee018c6f376ae93faec2772b17b2d8498f1fb56ba. Earlier first CI failure was a GOLD synthetic fixture incompatible with newlyfixedCHALLENGER UI; fixture corrected, all120v13browser assertions retained andpassed. This results branch must receive its own requiredCI/normalmerge; that future outcome is not asserted here.
+
+| Task | Current | Actual result / limits |
+| --- | --- | --- |
+| R1 | DONE | PC wide source/conditions/statistics; stable20checks and10sequential fixture decisions/requeries. ActualUSER_WEB0 and REVIEWEDknowledge0; approvals remain exclusively user actions. |
+| R2 | DONE | Fresh275REAL16.20CHALLENGER; PC basic15curves/495eligiblepoints and champion3resourcecharts visible. All5roles have33READYminute bins perresource,4lateESTIMATED and4UNKNOWN bins. Overall100% is not claimed. Remaining sample estimates stayvisible. GM38399585294 first200 butjob-time-limitCANCELLED, no newGMpublicsample; no tierpool/user-tier comparison. Separate37REAL16.19 and prior50legacy16.20 retained, never naivelymerged. |
+| R3 | DONE (pro reference scope) | Trusted38410710876:260requests,87distinctmatches,106selectedchampion-rolematches,25selectedplayers,2backupreplacements,0failedaccounts. Current16.20 hasall5roles ×3operationstages;24cohorts across16.19/16.20 separately. Q18grid distributions and Q16recorded contexts shown. Only8coordinate intervals pass precision; wider onesUNKNOWN. No deviation judgment, wave/hiddenenemy/cooldown/video facts remainUNKNOWN. |
+| R4 | DONE_WITH_FAILURE_RECORD | Trusted38410728980 usedliteralofficialYouTubeexample once, sameknownfree3.6Interactions,1metadata/1video request. HTTP429 providererror explicitly saysprojectquota exceeded; exactquota metricUNKNOWN. Complete sanitizedmessage archived, no clipping/format/retry calls. Earlier400invalidfield remainsUNKNOWN. AutomaticQ19PAUSED; manualtimestampedsummary default, acceptedclaims0. |
+| R5 | BLOCKED_EXTERNAL | ExistingWindows/OBS/HUD/import/gameclockalignment guide ready; actualPCoriginals/POVvideo absent. |
+
+Progress: v2completion4/5 by the queue's accepted explicit-failure-record alternative forR4; this is not recovered automatic video summary. Closedv2blockers4: reviewtooling1 plusremovedownIDdependency1, removedown-tierdependency1 andrestoredkeyaccess1. Knowledgecontent-review and automatic-summaryquota blockers remain open. Legacy10/19 and4oldclosedblockers unchanged. Ownmatches0, actualUSER_WEB0, REVIEWED0, acceptedvideocandidates0, coaching_accuracy=null, paidservices0.
+
+ActualPC Chromium22checks passed onREALanonymous275/87data at1600px, with390pxno-overflow. Native endpoints, source85paths unchanged,5rolecases/3stages each and15basiccurves verified. Evidence/queue/pro-resume/actual-browser/runner.json and screenshots. Baselinemeans use unanimous exactrole-population means withretainedmatch-cluster SD/Student-tCI; no invention fromSDalone. The main default dataset is the exactROLE_POPULATION cohortprojection (852of6090cohorts, unchangedvalues andsame275matches) forresponsive2.35s observedcatalog; fulloriginalanonymoussnapshotarchived andhashed, MATCHUPfullarchive remains separatelyavailable. Allpoints are descriptive/noncausal.
+
+Privacy: onlyanonymousreference-cases/safereceipt/source-binding downloaded/published. PUUID andrawmatchJSON remainin authenticatedAES256GCM runnercache artifact11822391323 (notdownloaded/decrypted tocloud). StableAccount-V1 cache, firstauthfailurestop, checkpoint/rerun guards retained. ExistingSecret-derived HKDF encryptionseed neverexported; privatecache restore onseedrotation/missinginterruptedcheckpoint failsclosed. Proownership/tier/seasoncounts remain userreported ratherthan independentlyverified.
+
+Riot firstrenewedHTTP200, bounded20/second100/120seconds, sharedjobconcurrency+121sstartupwindow. Automaticcollection onlyduring user-confirmed KRkey24h window (approx2026-10-13T10:00Z to14T10:00Z);401/403 stops thatexecution andrecords userkey-expiry attribution separately fromobservedstatus. No ownID/tierpendinginput. Currentofficialpatch selection preserved. Proreference andChallenger groups neverpooled.
+
+Gemini priorfull400 preservedbeforethistrial. Quota9priorrows exactprefix plus150second full-original reservation =>10historicalrows/10862seconds, reservation/finalbyte-identical; no refund/reset. Bothdurableartifacts retained; rawledgers/modeltext notcommitted. Currentfailureerror.message is “Your project has exceeded a quota. See [REDACTED_URL] to manage your rate limits.” Complete afteridentifierredaction. No furtherprovidertrial authorized/needed; manualdefault meets user'sstopdecision, auto doesnotresumeonworkflowSUCCESS.
+
+Usage docs/queue/V20_LOCAL_USE.md. Startlocalapp toopen /review-queue, /statistics, /postgame, /experts. Newanonymousdataautoloads; localapptoken required, ownRiotID/tiernotrequired. Pregame9cards showconditional opponentrights onlyfromcontributingactiveREVIEWED +explicitreviewedassertion +eligiblematchingstatistics. Current45examplelabelsUNKNOWN, asrequired. No livegamecoaching or cooldowntracking.
+
+---
+
 된 것: 본인 ID·티어 입력 대기를 해제하고 갱신 키의 Riot200을 확인했습니다.
 된 것: PC 검토 큐·CHALLENGER 우선 통계·프로 기준 사례 화면을 준비했습니다.
 진행 중: 16.20 통계 추가 수집과 프로 비공개 수집·상대 권리 표시를 통합합니다.

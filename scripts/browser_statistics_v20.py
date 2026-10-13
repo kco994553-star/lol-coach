@@ -25,6 +25,10 @@ function check(id,passed){checks.push({id,passed:!!passed});if(!passed)throw Err
  fs.writeFileSync(path.join(out,'initial-state.json'),JSON.stringify(await page.evaluate(()=>({notice:document.querySelector('#stats-notice').textContent,summary:document.querySelector('#stats-summary')?.textContent,graphs:document.querySelector('#stats-graphs')?.textContent}))));
  await page.screenshot({path:path.join(out,'initial-state.png'),fullPage:true});
  check('three-resource-graphs',await page.locator('.stats-metric svg').count()===3);
+ check('five-primary-role-baselines-visible',await page.locator('.stats-baseline-role').count()===5&&await page.locator('.stats-baseline-metric svg').count()===15);
+ check('basic-curves-separate-from-champion-deltas',await page.locator('#stats-baselines').innerText().then(t=>t.includes('기본 자원 곡선')&&t.includes('CHALLENGER')&&t.includes('골드/분')&&t.includes('경험치/분')&&t.includes('CS/분')));
+ check('clustered-baseline-ci-and-samples',await page.locator('.stats-baseline-point').first().getAttribute('aria-label').then(t=>t.includes('95%')&&t.includes('독립 경기 n=24')&&t.includes('참가자 n=48')));
+ check('late-unknowns-never-plotted-as-known',await page.locator('.stats-baseline-point[data-minute="4"]').count()===0&&await page.locator('.stats-baseline-metric').first().textContent().then(t=>t.includes('4분')&&t.includes('UNKNOWN')));
  check('primary-and-insufficient-only-auxiliary-labeled',await page.locator('#stats-summary').innerText().then(t=>t.includes('CHALLENGER')&&t.includes('GRANDMASTER')&&t.includes('보조')));
  check('exact-primary-point-count',await page.locator('.stats-point[data-origin="PRIMARY"]').count()===6);
  check('only-inadequate-minutes-get-auxiliary',await page.locator('.stats-point[data-origin="AUXILIARY"]').count()===3);
@@ -36,7 +40,7 @@ function check(id,passed){checks.push({id,passed:!!passed});if(!passed)throw Err
  await page.locator('#stats-role').selectOption('MID');await held;await page.locator('#stats-role').selectOption('TOP');await page.waitForFunction(()=>document.querySelectorAll('.stats-metric svg').length===3);release();await page.waitForLoadState('networkidle');
  check('stale-error-does-not-clear-current-reference',await page.locator('.stats-point[data-origin="PRIMARY"]').count()===6);await page.unroute('**/pregame/challenger-reference');
  await page.screenshot({path:path.join(out,'desktop.png'),fullPage:true});
- await page.setViewportSize({width:390,height:844});check('mobile-no-overflow',await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.screenshot({path:path.join(out,'mobile.png'),fullPage:true});
+ await page.setViewportSize({width:390,height:844});await page.locator('.stats-baseline-metric details').first().evaluate(n=>{n.open=true;});check('mobile-no-overflow',await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.screenshot({path:path.join(out,'mobile.png'),fullPage:true});
  await page.locator('#stats-role').selectOption('MID');await page.waitForFunction(()=>document.querySelector('#stats-summary h2')?.textContent==='Champion · MID · 16.19');check('unavailable-exact-cohort-unknown',await page.locator('#stats-summary').innerText().then(t=>t.includes('UNKNOWN')));
  await page.locator('#stats-logout').click();check('logout-clears-reference',await page.locator('#stats-body').isHidden()&&await page.locator('.stats-point').count()===0);check('no-browser-errors',errors.length===0);
  fs.writeFileSync(path.join(out,'browser.json'),JSON.stringify({passed:true,checks,errors,coaching_accuracy:null}));
@@ -47,10 +51,11 @@ def main():
     from coach_v1.pregame_server import PregameWorkbench
     from coach_v1.server import Limits
     from coach_v1.power_stats import build_power_dataset
+    from coach_v1.power_accumulator import PowerAccumulator
     from tests_pregame.test_power_stats import pair,source
     output=ROOT/'evidence/queue/v20'/('statistics-browser-'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ'))
     output.mkdir(parents=True)
-    names=['coach_v1/pregame_server.py','coach_v1/power_stats.py','coach_v1/collection_progress.py','coach_v1/challenger_reference.py','web_r4/statistics.html','web_r4/statistics.js','web_r4/statistics.css','scripts/browser_statistics_v20.py','tests_pregame/test_challenger_reference.py']
+    names=['coach_v1/pregame_server.py','coach_v1/power_stats.py','coach_v1/power_accumulator.py','coach_v1/collection_progress.py','coach_v1/role_baseline_view.py','coach_v1/challenger_reference.py','web_r4/statistics.html','web_r4/statistics.js','web_r4/statistics.css','scripts/browser_statistics_v20.py','tests_pregame/test_challenger_reference.py','tests_pregame/test_role_baseline_view.py']
     hashes=lambda:{name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in names}
     before=hashes()
     with tempfile.TemporaryDirectory(prefix='stats-browser-v20-') as tmp:
@@ -58,7 +63,11 @@ def main():
         server=PregameWorkbench(path/'work.sqlite',token,Limits(1000000,1000,100,100,100,10));server.test_mode=True
         for tier in ['CHALLENGER','GRANDMASTER']:
             src=source();src['tier']=tier
-            server.power_datasets[('16.19',tier)]=build_power_dataset([pair(i,100+i*10,minutes=(1,3) if tier=='CHALLENGER' and i<23 else (1,2,3)) for i in range(24)],source=src)
+            pairs=[pair(i,100+i*10,minutes=(1,3) if tier=='CHALLENGER' and i<23 else ((1,2,3,4,5) if tier=='CHALLENGER' else (1,2,3))) for i in range(24)]
+            server.power_datasets[('16.19',tier)]=build_power_dataset(pairs,source=src)
+            if tier=='CHALLENGER':
+                accumulator=PowerAccumulator();accumulator.add_pairs(pairs,source=src)
+                server.power_progress[('16.19',tier)]=accumulator.progress('16.19',tier)
         thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
         playwright=subprocess.check_output(['node','-p','require.resolve("playwright")'],cwd=ROOT,text=True).strip()
         env=dict(os.environ,WORKBENCH_TOKEN_FILE=str(tokenfile),WORKBENCH_URL=f'http://127.0.0.1:{server.server_port}',STATS_EVIDENCE_DIR=str(output),PLAYWRIGHT_MODULE=playwright)

@@ -57,6 +57,12 @@ SOURCE_FILES = sorted(set(SOURCE_FILES) | {'requirements-private-cache.txt'} | {
     and path.suffix in {'.py','.cjs','.js','.html','.css','.svg','.json','.md','.yml','.yaml'}
 })
 
+# Published real anonymous snapshots participate in source-bound receipts.
+SOURCE_FILES = sorted(set(SOURCE_FILES) | {
+    str(p.relative_to(ROOT)) for folder in ('data/riot/2026-10-13','data/pro_reference/2026-10-13')
+    for p in (ROOT/folder).rglob('*') if p.is_file() and p.suffix in {'.json','.gz'}
+})
+
 EXPECTED_BROWSER_IDS = ['connected'] + [p + '-' + check for p in
     ['TOP', 'JUNGLE', 'MID', 'BOTTOM', 'SUPPORT'] for check in
     ['exact-input', 'nine-cards', 'opponent-rights-unknown', 'selected-map-row', 'common-invariant',
