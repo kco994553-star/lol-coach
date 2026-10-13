@@ -1,0 +1,15 @@
+# Queue v2.0 design — authorized user requirements
+
+Purpose: turn the existing private coach into a tool usable each match. The user's 2026-10-13 R1–R5 specification supplies design, execution method and acceptance criteria; READY work continues without another approval gate.
+
+R1: one-candidate mobile review, priority Golden10 applicable card coverage → Yunara/Ashe/Kaisa/Caitlyn and saved recent picks → observed champion frequency → remainder. Show claim, structured conditions, excerpts/links, patch, counterexamples, descriptive statistics comparison and conditional card preview. Existing USER_WEB approval remains user-only, revision-bound and auditable; later/reject persist. Export top20 claim/conditions/public source URLs only. Browser verification uses isolated SYNTHETIC fixtures and must not approve real candidates.
+
+R2: aggregate multiple same-patch runs by hashed match identity. Retain anonymous per-match sufficient records where needed for exact dedup; do not merge summary means blindly. Preserve Student-t CI policy, role clustering and existing source schema lineage. Compare current League seed cohorts, not historical participant rank. Bound requests under20/s and100/120s, first401/403 stops that run and records user's key-expiry attribution separately. Confidence progress reports estimated remaining samples; undefined estimates stay UNKNOWN. U2/U3 gate actual user-tier/renewed-key acquisition.
+
+R3: authenticated local-only import/list/detail of own Match-V5 raw pair and participantId; raw originals stay in private/ with restrictive permissions, no Git/Actions artifact upload. CLI Riot ID lookup after U1/U3. Gold/XP/CS and level/item markers; same champion/role resource-delta reference uses explicit units, never invent absolute reference. Minute positioning descriptively compared only where verified stage reference exists; lack of phase samples stays UNKNOWN. Suspected contexts use recorded allied jungle/support, team ward events and death/objective events only, never invisible enemy/wave/skills. Dependency movement and plan assumptions/execution/effect are separate; no win/loss judgement. Actual1-match completion gated U1/U3; synthetic/browser ready work continues.
+
+R4: same Actions job parallel curl/Python identical text request ≤120s; video≤600s unchanged. Both timeout → provider/network-side timeout record, not key expiry. Official documented free Flash fallback once only, model and evidence URL pinned; fresh free proof/quota recovered before calls. Text success required before ≤600s one-video clip, all historical charges retained, no charged-ID retry. Manual timestamped summary route prominently linked.
+
+R5: Windows collect_windows.cmd + OBS recommended resolution/HUD game clock + private app import procedure; BLOCKED_EXTERNAL until originals/video arrive. Clock anchors precede minimap tracking.
+
+Main owns common contracts/server routes/integration/CI/queue/handoff. Workers own disjoint files below. Frozen/core/approval/cooldown contracts unchanged.
