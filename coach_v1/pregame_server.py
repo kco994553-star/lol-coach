@@ -305,6 +305,7 @@ class PregameHandler(Handler):
             '/review_queue.html':('review_queue.html','text/html; charset=utf-8'),
             '/review_queue.js':('review_queue.js','text/javascript; charset=utf-8'),
             '/review_queue.css':('review_queue.css','text/css; charset=utf-8'),
+            '/official_reference.js':('official_reference.js','text/javascript; charset=utf-8'),
             '/postgame':('postgame.html','text/html; charset=utf-8'),
             '/postgame/':('postgame.html','text/html; charset=utf-8'),
             '/postgame.html':('postgame.html','text/html; charset=utf-8'),
@@ -377,7 +378,18 @@ class PregameHandler(Handler):
                 test_mode=self.server.test_mode,power_tiers=self.server.power_tiers()))
         if route==prefix+'/review-queue' and self.command=='GET':
             from .review_queue import queue_response
+            return self.bounded_reply(200,queue_response(self.server,focused=True))
+        if route==prefix+'/official-facts':
+            from .official_reference import facts_response,request_facts
+            if self.command=='GET':return self.bounded_reply(200,facts_response())
+            if self.command=='POST':return self.bounded_reply(200,request_facts(self.body()))
+        if route==prefix+'/review-queue/archive' and self.command=='GET':
+            from .review_queue import queue_response
             return self.bounded_reply(200,queue_response(self.server))
+        if route==prefix+'/review-queue/archive/page' and self.command=='POST':
+            from .review_queue import queue_response
+            body=self.body();self.fields(body,('page','later_page'))
+            return self.bounded_reply(200,queue_response(self.server,page=body['page'],later_page=body['later_page']))
         if route==prefix+'/review-queue/github-sync' and self.command=='POST':
             self.fields(self.body(),())
             from .practical_review import sync_github
@@ -386,7 +398,7 @@ class PregameHandler(Handler):
             from .review_queue import queue_response
             body=self.body();self.fields(body,('page','later_page'))
             if any(type(body[k]) is not int or not 0<=body[k]<=10000 for k in body):raise ServiceError(422,'INVALID_REVIEW_PAGE')
-            return self.bounded_reply(200,queue_response(self.server,page=body['page'],later_page=body['later_page']))
+            return self.bounded_reply(200,queue_response(self.server,page=body['page'],later_page=body['later_page'],focused=True))
         if route==prefix+'/review-queue/later' and self.command=='POST':
             from .review_queue import defer_candidate
             return self.bounded_reply(200,defer_candidate(self.server,self.body()))

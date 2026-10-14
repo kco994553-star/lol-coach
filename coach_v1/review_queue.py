@@ -169,7 +169,36 @@ def _all(server):
     return rows,knowledge
 
 
-def queue_response(server,page=0,later_page=0):
+def _focus_context(inputs):
+    if inputs:
+        draft=inputs[0];champion=draft.get('my_champion');position=draft.get('my_position');patch=draft.get('patch')
+        team={s['position']:s['champion'] for s in draft['slots'] if s['side']=='ENEMY' and s.get('position') and s.get('champion')}
+        kind='SAVED_PICK'
+    else:
+        champion='Caitlyn';position='BOTTOM';patch=None;team=GOLDEN['ENEMY'];kind='EXAMPLE'
+    nearby={'TOP':['TOP','JUNGLE'],'JUNGLE':['JUNGLE','TOP'],'MID':['MID','JUNGLE'],'BOTTOM':['BOTTOM','SUPPORT'],'SUPPORT':['SUPPORT','BOTTOM']}.get(position,[])
+    names=list(dict.fromkeys([c for c in [champion,*[team.get(p) for p in nearby]] if c]))
+    return dict(kind=kind,champion=champion,position=position,patch=patch,enemy=team,nearby_positions=nearby,reference_champions=names)
+
+
+def _focus_rank(candidate,focus):
+    spec=candidate['spec'];own=False;nearby=False
+    if focus['position'] and spec['positions'] and focus['position'] not in spec['positions']:return None
+    if focus['patch'] and spec['patches'] and focus['patch'] not in spec['patches']:return None
+    for predicate in spec['conditions']:
+        if predicate['op']!='EQ':continue
+        field=predicate['field'];value=predicate['value']
+        if field=='my.champion':
+            if value!=focus['champion']:return None
+            own=True
+        elif field.startswith('enemy.') and field.endswith('.champion'):
+            position=field.split('.')[1]
+            if focus['enemy'].get(position)!=value:return None
+            if position in focus['nearby_positions']:nearby=True
+    return 0 if own else 1 if nearby else 2
+
+
+def queue_response(server,page=0,later_page=0,*,focused=False):
     if any(type(v) is not int or not 0<=v<=10000 for v in (page,later_page)):raise ServiceError(422,'INVALID_REVIEW_PAGE')
     rows,knowledge=_all(server);inputs=_inputs(server)
     from .practical_review import advice_catalog
@@ -209,14 +238,35 @@ def queue_response(server,page=0,later_page=0):
         (later if (candidate_id,version) in deferred else ready).append(item)
     order=lambda c:(c['priority']['tier'],-c['priority']['conditional_card_targets'],-c['priority']['observed_frequency'],c['candidate_id'])
     ready.sort(key=order);later.sort(key=order)
+    policy=None;focus=None;official=None;optional_archive=0
+    # Keep the historical complete projection for archive access and fixtures.
+    # The ordinary product route uses focused=True for the practical catalog.
+    if focused and rows and all((r['spec'] or {}).get('rule_id') in practical for r in rows):
+        focus=_focus_context(inputs)
+        eligible=[c for c in ready if _focus_rank(c,focus) is not None]
+        eligible.sort(key=lambda c:(_focus_rank(c,focus),c['candidate_id']))
+        selected=[];seen=set()
+        for c in eligible:
+            key=(practical[c['spec']['rule_id']]['champion'],c['spec']['output']['section'])
+            if key in seen:continue
+            selected.append(c);seen.add(key)
+            if len(selected)==5:break
+        optional_archive=len(ready)-len(selected);ready=selected
+        policy=dict(mode='REFERENCE_FIRST',review_required_for_reference=False,tactical_review_optional=True,focus_limit=5)
+        from .official_reference import facts_response
+        official=facts_response(focus['reference_champions'],patch=focus['patch'])
+    page_limit=5 if policy else LIMIT
     export=[]
     for c in ready[:LIMIT]:
         export.extend(['주장: '+c['claim'],'조건: '+json.dumps(c['conditions'],ensure_ascii=False),'출처: '+', '.join(s['url'] for s in c['sources'] if s['url']),''])
-    result=dict(schema_version='pregame.review-queue.v1',candidates=ready[page*LIMIT:(page+1)*LIMIT],deferred_candidates=later[later_page*LIMIT:(later_page+1)*LIMIT],page_limit=LIMIT,
-                pagination=dict(page=page,later_page=later_page,ready_pages=(len(ready)+LIMIT-1)//LIMIT,later_pages=(len(later)+LIMIT-1)//LIMIT),
+    result=dict(schema_version='pregame.review-queue.v1',candidates=ready[page*page_limit:(page+1)*page_limit],deferred_candidates=later[later_page*LIMIT:(later_page+1)*LIMIT],page_limit=page_limit,
+                pagination=dict(page=page,later_page=later_page,ready_pages=(len(ready)+page_limit-1)//page_limit,later_pages=(len(later)+LIMIT-1)//LIMIT),
                 progress=dict(total=len(rows),pending=len(ready)+len(later),ready=len(ready),deferred=len(later),reviewed=reviewed,rejected=rejected,
                               example_card_filled=_coverage(knowledge),example_card_total=45,example_card_status='UNKNOWN_PATCH_CONDITIONAL',
                               example_card_by_patch={'16.20':_coverage(knowledge,patch='16.20')}),export_text='\n'.join(export))
+    if policy:
+        result.update(operating_policy=policy,focus=focus,official_reference=official)
+        result['progress']['optional_archive']=optional_archive
     # Full source schemas are unbounded in aggregate. Send fewer candidates when
     # a large specification would otherwise exceed the authenticated limit.
     budget=getattr(server.limits,'body_bytes',1_000_000)

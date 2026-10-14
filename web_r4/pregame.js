@@ -19,7 +19,7 @@
   const manual = reference => ({kind:'MANUAL',reference:reference || null,observed_at:null,verification:'UNVERIFIED'});
   const unknownSource = () => ({kind:'UNKNOWN',reference:null,observed_at:null,verification:'UNKNOWN'});
   function notice(text,bad=false){$('pg-notice').textContent=text;$('pg-notice').className=bad?'error':'';}
-  function hidePlan(){planViewEpoch++;plan=null;$('pg-plan-panel').hidden=true;$('pg-cards').replaceChildren();$('pg-plan-json').textContent='';}
+  function hidePlan(){planViewEpoch++;plan=null;$('pg-plan-panel').hidden=true;$('pg-cards').replaceChildren();$('pg-reference').replaceChildren();$('pg-plan-json').textContent='';}
   function apiError(error,mark){if(mark && !alive(mark))return;if(error.status===401){logout();notice('토큰을 확인하고 다시 연결하세요.',true);return;}notice('처리하지 못했습니다: '+error.message,true);}
   async function api(path,method='GET',bodyString,key,legacy=false){
     const headers={Authorization:'Bearer '+token};
@@ -283,6 +283,15 @@
       for(const item of result.cards||[]){const host=hosts.get('pg-card-'+item.key.toLowerCase());if(!host||!host.isConnected)continue;host.dataset.status=item.status;host.replaceChildren(node('strong','상대 권리: '+item.label));if(item.status==='UNKNOWN')host.append(node('p','적용된 검토 지식·상대 권리 진술·통계 대조가 부족합니다. 미확인을 안전으로 해석하지 마세요.','small'));else host.append(node('p','사용자가 검토한 주장에 연결된 조건부 판정입니다. 관측 밖 상대 위치·스킬 상태는 포함하지 않습니다.','small'));const detail=node('details');detail.append(node('summary','권리 판정의 조건·검토 근거·통계'),node('pre',json(item)));host.append(detail);}
     }).catch(e=>{if(!alive(mark)||view!==planViewEpoch||plan!==p)return;if(e.status===401)apiError(e,mark);});
   }
+  function renderOfficialReference(p){
+    const host=$('pg-reference'),mark=context(),view=planViewEpoch;
+    const champions=[...new Set([p.input.my_champion,...p.input.slots.map(s=>s.champion)].filter(Boolean))];
+    host.replaceChildren(node('p','공식 한국어 설명을 확인하고 있습니다.','small'));
+    api('/official-facts','POST',JSON.stringify({champions,patch:p.input.patch})).then(result=>{
+      if(!alive(mark)||view!==planViewEpoch||plan!==p||dirty()||!host.isConnected)return;
+      window.OfficialReference.render(host,result);
+    }).catch(e=>{if(!alive(mark)||view!==planViewEpoch||plan!==p)return;if(e.status===401){apiError(e,mark);return;}host.replaceChildren(node('p','공식 설명 자료를 조회하지 못했습니다.','small'));});
+  }
   function renderPlan(p){
     planViewEpoch++;plan=p;$('pg-plan-panel').hidden=false;$('pg-plan-state').textContent=labels[p.validity] || p.validity;
     $('pg-plan-meta').textContent='입력 v'+p.input_revision+' · '+p.created_at+' · '+(p.input.my_position?roleNames[p.input.my_position]:'내 포지션 미확인')+(p.expiry_reasons?.length?' · 만료 근거: '+p.expiry_reasons.join(', '):'');$('pg-plan-json').textContent=json(p);$('pg-cards').replaceChildren();
@@ -290,6 +299,7 @@
     const sections=[['map','① 5개 포지션 지도',p.common.map],['jungle','② 정글 주도권',[p.common.jungle]],['composition','③ 조합 방향',[p.common.composition]],['role','④ 내 역할',[p.personal.role]],['lane','⑤ 라인·동선',[p.personal.lane]],['fight','⑥ 교전·생존',[p.personal.fight]],['operations','⑦ 운영·팀 의존',[p.operations || unknownOperations]],['movement','⑧ 이동 단계',[p.movement || {...unknownOperations,key:'MOVEMENT',title:'이동 단계',reasons:['MOVEMENT_UNAVAILABLE']}]],['changes','⑨ 변화 조건·미확인',[p.changes]]];
     for(const [id,title,cells] of sections){const card=node('article',undefined,'card');card.id='pg-card-'+id;card.append(node('h3',title));for(const c of cells){if(id==='map'){const row=node('div',undefined,'pg-map-row'+(c.key===p.input.my_position?' selected':''));row.dataset.position=c.key;cellContent(row,c,p);if(c.key===p.input.my_position)row.append(node('span','내 포지션','badge'));card.append(row);powerSlot(row,p,c.key,true);}else cellContent(card,c,p);}if(id==='operations')renderOperations(card,p,cells[0]);if(id==='movement')renderMovement(card,p,cells[0]);if(id==='lane'){powerSlot(card,p,p.input.my_position,false);outcomeSlot(card,p);}detail(card,p,cells);$('pg-cards').append(card);}
     renderOpponentRights(p);
+    renderOfficialReference(p);
   }
 
   function knowledgeControls(){
