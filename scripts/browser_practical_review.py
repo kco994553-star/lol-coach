@@ -35,7 +35,8 @@ const {chromium}=require('playwright'),fs=require('fs'),assert=require('node:ass
   const response=page.waitForResponse(r=>r.url().endsWith('/review-queue/github-sync'));
   await page.click('#rq-github-sync');const synced=await response;assert.equal(synced.status(),200);assert.equal((await synced.json()).applied,0);
   await page.waitForFunction(()=>document.querySelector('#rq-notice').textContent.includes('사용자 결정 0개 반영'));
-  const changed=page.waitForResponse(r=>r.url().endsWith('/review-queue/page'));
+  await page.check('#rq-show-archive');await page.waitForFunction(()=>document.querySelector('#rq-page-position').textContent.startsWith('1 / 2'));
+  const changed=page.waitForResponse(r=>r.url().endsWith('/review-queue/archive/page'));
   await page.click('#rq-page-next');await changed;await page.waitForFunction(()=>document.querySelector('#rq-page-position').textContent.startsWith('2 / 2'));
   for(const width of [390,1440]){
    await page.setViewportSize({width,height:900});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
@@ -51,7 +52,7 @@ const {chromium}=require('playwright'),fs=require('fs'),assert=require('node:ass
 def main():
     from coach_v1.pregame_server import PregameWorkbench,current_knowledge
     from coach_v1.server import Limits
-    output=ROOT/'evidence/queue/practical-review-20261014'
+    output=ROOT/'evidence/queue/reference-first/legacy-browser'
     output.mkdir(parents=True,exist_ok=True)
     with tempfile.TemporaryDirectory() as folder:
         private=Path(folder);token=secrets.token_hex(32);tokenfile=private/'token';tokenfile.write_text(token);tokenfile.chmod(0o600)

@@ -1,5 +1,6 @@
 """Exact source amendment must fail on an unbound edit or lost predecessor."""
 import json
+import hashlib
 from pathlib import Path
 import shutil
 import tempfile
@@ -15,7 +16,15 @@ class PracticalBindingTests(unittest.TestCase):
         binding=json.loads((verifier.ROOT/'contracts/amendments/2026-10-14-practical-review.json').read_text())
         paths=set(binding['current_sha256'])|{'contracts/amendments/2026-10-14-practical-review.json','evidence/mvp/knowledge-review-version.json','evidence/mvp/knowledge-review-parent.json','evidence/mvp/knowledge-review-parent/coach_v1/knowledge.py',binding['parent_archive'],binding['contract'],'FREEZE_MANIFEST.json','scripts/verify_mvp.py'}
         for path in paths:
-            target=self.root/path;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(verifier.ROOT/path,target)
+            target=self.root/path;target.parent.mkdir(parents=True,exist_ok=True)
+            source=verifier.ROOT/path
+            expected=binding['current_sha256'].get(path)
+            if expected and hashlib.sha256(source.read_bytes()).hexdigest()!=expected:
+                # Test the preserved historical contract against its exact
+                # predecessor bytes when a newer operating version exists.
+                source=verifier.ROOT/'evidence/queue/reference-first/parent'/path
+                self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(),expected)
+            shutil.copyfile(source,target)
         self.context=patch.object(verifier,'ROOT',self.root);self.context.start();self.addCleanup(self.context.stop)
 
     def test_exact_successor_chain_passes(self):
