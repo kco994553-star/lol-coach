@@ -378,6 +378,10 @@ class PregameHandler(Handler):
         if route==prefix+'/review-queue' and self.command=='GET':
             from .review_queue import queue_response
             return self.bounded_reply(200,queue_response(self.server))
+        if route==prefix+'/review-queue/github-sync' and self.command=='POST':
+            self.fields(self.body(),())
+            from .practical_review import sync_github
+            return self.bounded_reply(200,sync_github(self.server.research))
         if route==prefix+'/review-queue/page' and self.command=='POST':
             from .review_queue import queue_response
             body=self.body();self.fields(body,('page','later_page'))

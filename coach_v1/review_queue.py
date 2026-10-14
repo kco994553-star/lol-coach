@@ -109,7 +109,7 @@ def _inputs(server):
     return records
 
 
-def _coverage(knowledge):
+def _coverage(knowledge,patch=None):
     from .pregame_v3 import evaluate_gameplan_v3
     manual=dict(kind='MANUAL',reference='Golden10 example only',observed_at=None,verification='UNVERIFIED')
     slots=[dict(side=side,slot=i+1,champion=champion,position=position,position_candidates=[],uncertainty='Example',
@@ -118,12 +118,12 @@ def _coverage(knowledge):
            for side,team in GOLDEN.items() for i,(position,champion) in enumerate(team.items())]
     filled=0
     for position in POSITIONS:
-        draft=dict(title='Golden10 example',patch=None,phase='PRE_GAME',observed_at=None,my_position=position,
+        draft=dict(title='Golden10 example',patch=patch,phase='PRE_GAME',observed_at=None,my_position=position,
                    my_champion=GOLDEN['ALLY'][position],my_slot=POSITIONS.index(position)+1,slots=slots,source=manual,original_capture=None)
         plan=evaluate_gameplan_v3(draft,knowledge)
         cells=[*plan['common']['map'],plan['common']['jungle'],plan['common']['composition'],*plan['personal'].values(),plan['changes'],plan['operations'],plan['movement']]
         # The map is one card comprising five position rows.
-        filled+=int(all(c['status']=='APPLIED' for c in cells[:5]))+sum(c['status']=='APPLIED' for c in cells[5:])
+        filled+=int(all(c['status']=='KNOWN' for c in cells[:5]))+sum(c['status']=='KNOWN' for c in cells[5:])
     return filled
 
 
@@ -154,8 +154,17 @@ def _statistics(datasets,names):
 def _all(server):
     from .pregame_server import current_knowledge,candidate_specs
     knowledge=current_knowledge(server.research);catalog=candidate_specs()
-    represented={r['spec']['rule_id'] for r in knowledge if r['spec']}
-    rows=[dict(proposal=r['proposal'],spec=r['spec']) for r in knowledge]
+    from .practical_review import advice_catalog
+    practical=advice_catalog()
+    # Original catalogs remain readable via /candidates. Review only the newly
+    # written batch when the complete original source catalog is available.
+    if {r['original_candidate_id'] for r in practical} <= {s['rule_id'] for s in catalog}:
+        catalog=[r['spec'] for r in practical]
+        ids={s['rule_id'] for s in catalog}
+        visible=[r for r in knowledge if r['spec'] and r['spec']['rule_id'] in ids]
+    else:visible=knowledge
+    represented={r['spec']['rule_id'] for r in visible if r['spec']}
+    rows=[dict(proposal=r['proposal'],spec=r['spec']) for r in visible]
     rows.extend(dict(proposal=None,spec=s) for s in catalog if s['rule_id'] not in represented)
     return rows,knowledge
 
@@ -163,6 +172,8 @@ def _all(server):
 def queue_response(server,page=0,later_page=0):
     if any(type(v) is not int or not 0<=v<=10000 for v in (page,later_page)):raise ServiceError(422,'INVALID_REVIEW_PAGE')
     rows,knowledge=_all(server);inputs=_inputs(server)
+    from .practical_review import advice_catalog
+    practical={r['id']:r for r in advice_catalog()}
     frequency=Counter(s['champion'] for d in inputs for s in d['slots'] if s['champion'])
     recent={d.get('my_champion') for d in inputs[:10]}|{c for d in inputs[:10] for c in d.get('frequent_champions',[])}
     datasets=list(server.validated_power_datasets().values())
@@ -190,6 +201,11 @@ def queue_response(server,page=0,later_page=0):
               sources=[statement['source']] if statement else _sources(s),patch_range=rule['patch_range'],counterexamples=rule['counterexamples'],statistics=_statistics(datasets,names),
               preview=dict(status='CONDITIONAL_PREVIEW',section=(s or {}).get('output',{}).get('section'),target=(s or {}).get('output',{}).get('target'),
                            text=(s or {}).get('output',{}).get('text',rule['claim']),conditions=(s or {}).get('conditions',[]),reasons=reasons,coaching_enabled=False))
+        practical_row=practical.get((s or {}).get('rule_id'))
+        if practical_row:
+            item['practical_advice']=practical_row['advice'] if rule['claim']==practical_row['spec']['output']['text'] else None
+            item['original_candidate_id']=practical_row['original_candidate_id']
+            item['user_decision_only']=True
         (later if (candidate_id,version) in deferred else ready).append(item)
     order=lambda c:(c['priority']['tier'],-c['priority']['conditional_card_targets'],-c['priority']['observed_frequency'],c['candidate_id'])
     ready.sort(key=order);later.sort(key=order)
@@ -199,7 +215,8 @@ def queue_response(server,page=0,later_page=0):
     result=dict(schema_version='pregame.review-queue.v1',candidates=ready[page*LIMIT:(page+1)*LIMIT],deferred_candidates=later[later_page*LIMIT:(later_page+1)*LIMIT],page_limit=LIMIT,
                 pagination=dict(page=page,later_page=later_page,ready_pages=(len(ready)+LIMIT-1)//LIMIT,later_pages=(len(later)+LIMIT-1)//LIMIT),
                 progress=dict(total=len(rows),pending=len(ready)+len(later),ready=len(ready),deferred=len(later),reviewed=reviewed,rejected=rejected,
-                              example_card_filled=_coverage(knowledge),example_card_total=45,example_card_status='UNKNOWN_PATCH_CONDITIONAL'),export_text='\n'.join(export))
+                              example_card_filled=_coverage(knowledge),example_card_total=45,example_card_status='UNKNOWN_PATCH_CONDITIONAL',
+                              example_card_by_patch={'16.20':_coverage(knowledge,patch='16.20')}),export_text='\n'.join(export))
     # Full source schemas are unbounded in aggregate. Send fewer candidates when
     # a large specification would otherwise exceed the authenticated limit.
     budget=getattr(server.limits,'body_bytes',1_000_000)

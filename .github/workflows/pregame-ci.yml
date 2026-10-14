@@ -87,6 +87,7 @@ jobs:
           CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
           export CHROMIUM_EXECUTABLE
           python scripts/browser_review_queue_v20.py | tee "$RUNNER_TEMP/review-v20-browser.json"
+          python scripts/browser_practical_review.py
           python scripts/browser_postgame_v20.py | tee "$RUNNER_TEMP/postgame-v20-browser.json"
           python scripts/browser_statistics_v20.py | tee "$RUNNER_TEMP/statistics-v20-browser.json"
       - name: Print exact fresh receipts

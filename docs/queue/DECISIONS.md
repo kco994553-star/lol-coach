@@ -1,3 +1,7 @@
+# 2026-10-14 — USER 지식 검토 방식 변경
+
+사용자 원문: 기존 350개 EXPLORATORY 후보를 보존하고 예시 조합 10명과 유나라·애쉬·카이사·케이틀린 관련 30개를 쉬운 한국어 실전 조언으로 재작성한다. 형식은 상황/할 것/하지 말 것/상대 권리/무효 조건/근거(공식·Q15·전문가 수동 요약 및 링크)/패치이며 근거 없는 수치·주장을 금지한다. 10개씩 GitHub 이슈에 게시하고 사용자 댓글의 승인/거절/수정을 PC와 같은 저장 형식에 USER 결정으로 가져온다. 댓글 URL·작성 시각·원문을 보존한다. Codex는 같은 계정의 결정 이슈에 댓글을 쓰거나 수정하지 않는다. 결정 반영 후 예시 카드의 채워진 칸 수를 보고한다. 기존 웹 전용 승인은 이 사용자 결정의 GitHub 채널 추가 범위에서 변경하며 자동 AI 승인은 계속 금지한다.
+
 # Actual cause diagnosis outcome — 2026-10-11
 
 User-directed explicit User-Agent and same-secret comparison produced curl200/Python200 on trusted main79c863d072190e088c889b132441edbd553bbee2, run38135582016. User success criterion met; continue Q15. Full collector132requests0retry acquired50REAL patch16.20 CHALLENGER-seed matches. Prior403 observations remain unchanged. This establishes restored access after the UA change, not exclusive causal attribution: no identical-key controlled old-UA comparison was performed and credentials/fingerprints are deliberately not retained. Anonymous snapshot data/riot/2026-10-11 is exact gzip of validated artifact11700808186; no raw identity data published.

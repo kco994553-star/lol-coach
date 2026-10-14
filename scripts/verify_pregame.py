@@ -80,7 +80,7 @@ def main():
     out = ROOT/'evidence/queue'/('q09-verifier-'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')+'-'+uuid.uuid4().hex[:8])
     out.mkdir(parents=True,exist_ok=False)
     before = hashes(); errors = []; results = {}; semantic = []
-    expected_minimum = {'test_contract':9,'test_evaluator':22,'test_store':7,'test_http':7,'test_initiative_candidates':4,'test_initiative_expansion':5,'test_v13':12,'test_v14':5,
+    expected_minimum = {'test_practical_binding':4,'test_practical_review':16,'test_contract':9,'test_evaluator':22,'test_store':7,'test_http':7,'test_initiative_candidates':4,'test_initiative_expansion':5,'test_v13':12,'test_v14':5,
         'test_v14_http':6,'test_power_stats':8,'test_riot_collector':7,'test_movement':6,
         'test_outcome_stats':8,'test_outcome_collection':3,'test_outcome_http':4,'test_api_diagnostics':8,'test_riot_diagnostics':7,'test_riot_front_diagnostics':17,'test_riot_front_cli':1,'test_review_queue':11,'test_v20_http':12,'test_v20_stats':13,'test_v20_postgame':21,'test_pro_reference':17,'test_challenger_reference':5,'test_pro_reference_cases':10,'test_opponent_rights':20,'test_private_pro_bundle':4,'test_pro_resume_server':5,'test_pro_checkpoint':9,'test_riot_collection_policy':4,'test_role_baseline_view':4}
     for module, minimum in expected_minimum.items():

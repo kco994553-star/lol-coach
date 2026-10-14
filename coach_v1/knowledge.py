@@ -4,7 +4,8 @@ Research v1 remains independently readable by its original implementation. This
 store performs an atomic, additive v2 migration and keeps references as SQLite
 foreign keys. Pure validators are also used by offline backup/restore.
 """
-from contextlib import closing
+from contextlib import closing, contextmanager
+from contextvars import ContextVar
 import hashlib
 from itertools import zip_longest
 import json
@@ -42,7 +43,28 @@ _MAX_SQLITE_INTEGER = 9223372036854775807
 # Only the authenticated, browser-only server route supplies this capability.
 # Generic propose callers and client JSON cannot select a review state.
 _WEB_REVIEW_AUTHORITY = object()
+_GITHUB_REVIEW_AUTHORITY = object()
+_ATOMIC_DB = ContextVar("knowledge_atomic_db", default=None)
 _DECISION_FIELDS = frozenset(('actor', 'selected_version', 'selected_payload_sha256'))
+
+
+def _github_comment(value):
+    """Strict additive provenance; original USER_WEB payloads remain valid."""
+    from datetime import datetime
+    fields = {'repository', 'issue_number', 'comment_id', 'url', 'created_at', 'updated_at', 'body', 'author', 'body_sha256'}
+    try:
+        if not isinstance(value, dict) or set(value) != fields: raise ValueError('comment fields')
+        if any(type(value[k]) is not int or value[k] < 1 for k in ('issue_number', 'comment_id')): raise ValueError('comment id')
+        if any(not isinstance(value[k], str) or not value[k] for k in fields - {'issue_number', 'comment_id'}): raise ValueError('comment strings')
+        if not re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+', value['repository']): raise ValueError('repository')
+        if value['url'] != f"https://github.com/{value['repository']}/issues/{value['issue_number']}#issuecomment-{value['comment_id']}": raise ValueError('comment url')
+        for k in ('created_at', 'updated_at'):
+            if datetime.fromisoformat(value[k].replace('Z','+00:00')).utcoffset() is None: raise ValueError('comment time')
+        if value['created_at'] != value['updated_at']: raise ValueError('edited comment')
+        if hashlib.sha256(value['body'].encode()).hexdigest() != value['body_sha256']: raise ValueError('comment hash')
+    except (ValueError, TypeError, KeyError, OverflowError):
+        raise ServiceError(422, 'INVALID_GITHUB_USER_PROVENANCE') from None
+    return value
 
 
 def _schema(db, version):
@@ -254,8 +276,13 @@ def validate_knowledge_content(db):
                 raise ValueError('source binding')
             if decision:
                 audit = report['review_decision']
-                if (not isinstance(audit, dict) or set(audit) != _DECISION_FIELDS
-                    or audit['actor'] != 'USER_WEB' or row['parent_version'] is None):
+                if not isinstance(audit, dict) or row['parent_version'] is None:
+                    raise ValueError('decision provenance')
+                if audit.get('actor') == 'USER_GITHUB':
+                    if set(audit) != _DECISION_FIELDS | {'github_comment'}:
+                        raise ValueError('decision provenance')
+                    _github_comment(audit['github_comment'])
+                elif set(audit) != _DECISION_FIELDS or audit.get('actor') != 'USER_WEB':
                     raise ValueError('decision provenance')
                 _token(audit['selected_version'])
                 target = db.execute('SELECT payload FROM knowledge_rules WHERE id=? AND version=?',
@@ -316,6 +343,25 @@ def _head(db, rule_id):
 
 
 class KnowledgeStore(ResearchStore):
+    @contextmanager
+    def _db(self):
+        active = _ATOMIC_DB.get()
+        if active is not None and active[0] is self:
+            yield active[1]
+        else:
+            with super()._db() as db:
+                yield db
+
+    @contextmanager
+    def atomic(self):
+        """All comment commands and receipt commit or roll back together."""
+        with self._db() as db:
+            token = _ATOMIC_DB.set((self, db))
+            try:
+                yield db
+            finally:
+                _ATOMIC_DB.reset(token)
+
     def __init__(self, dbpath):
         self.dbpath = str(Path(dbpath).resolve())
         self.migration_backup = None
@@ -389,9 +435,13 @@ class KnowledgeStore(ResearchStore):
             return _bounded(result, max_bytes)
 
     def decide(self, rule_id, selected_version, expected_version, decision,
-               patch_range, applicability, *, max_bytes, web_authority=None):
-        if web_authority is not _WEB_REVIEW_AUTHORITY:
+               patch_range, applicability, *, max_bytes, web_authority=None,
+               github_authority=None, github_comment=None):
+        github = github_authority is _GITHUB_REVIEW_AUTHORITY
+        if web_authority is not _WEB_REVIEW_AUTHORITY and not github:
             raise ServiceError(403, 'USER_WEB_REVIEW_REQUIRED')
+        if github:
+            _github_comment(github_comment)
         _budget(max_bytes)
         _token(rule_id); _token(selected_version); _token(expected_version)
         if decision not in ('REVIEWED', 'REJECTED'):
@@ -415,6 +465,8 @@ class KnowledgeStore(ResearchStore):
                           supersedes=expected_version, coaching_enabled=False,
                           review_decision=dict(actor='USER_WEB', selected_version=selected_version,
                               selected_payload_sha256=hashlib.sha256(row[0].encode('utf-8')).hexdigest()))
+            if github:
+                report['review_decision'].update(actor='USER_GITHUB', github_comment=github_comment)
             payload = _json(report)
             if len(payload.encode('utf-8')) > 2_000_000:
                 raise ServiceError(413, 'REPORT_TOO_LARGE')
