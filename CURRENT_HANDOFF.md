@@ -1,3 +1,14 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261015-queue-v23`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `work/queue-v23-20261015`
+- authority: USER_QUEUE_V2.3_2026-10-15 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `fedc30060259b5eeac4ab2ca096daa6259e354b6`
+- detail: RepairPR37 mergedf4fa37a exacttree2db33f7; newtrustedcollection38728134121 started once fromguardv2, prior38726213006 cancellednotaccepted. PostmergeCI pending. Localpatchcompatibility fix12pcPASS independentreviewPASS heldforresultspublication; extractor/collector unchanged. Waiting actualsafeartifact; noactivewriter.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261015-queue-v23`
 - status: `RUNNING`
