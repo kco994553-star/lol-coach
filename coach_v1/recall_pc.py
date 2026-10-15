@@ -1,17 +1,68 @@
 """Read-only V6 projection. Shop events describe observed purchases, not advice."""
 from collections import Counter
+from copy import deepcopy
 import hashlib
 import json
 import math
 from pathlib import Path
 import re
+import threading
 
 from .storage import ServiceError
 
 ROOT = Path(__file__).resolve().parents[1]
 POPULATIONS = ('CHALLENGER', 'PRO_REFERENCE')
-NAMES = {'CHALLENGER': '챌린저 모집 경기', 'PRO_REFERENCE': '선택한 프로 기준 선수'}
+NAMES = {'CHALLENGER': '챌린저 모집 경기', 'PRO_REFERENCE': '사용자 명단의 프로 참고'}
 LIMITATION = '구매 시각으로 추정한 귀환입니다. 구매 없는 귀환·웨이브·상대 의도는 알 수 없습니다. 마지막 수신 프레임 이전까지만 집계하며 끝 구간은 제외합니다.'
+
+
+class PCPowerSnapshot:
+    """PC archive snapshot; reuse the unchanged Q15 selector on small cohorts.
+
+    Full validation and original full-dataset digest happen once at loading.
+    Selected subsets retain original sample/source denominators; only display
+    readiness is recomputed for the subset as required by its validator.
+    """
+    def __init__(self,data):
+        from .power_stats import validate_power_dataset
+        self.__data=validate_power_dataset(data)
+        self.sha256=hashlib.sha256(json.dumps(self.__data,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()).hexdigest()
+        self.__index={}
+        for cohort in self.__data['cohorts']:
+            self.__index.setdefault((cohort['champion'],cohort['position']),[]).append(cohort)
+        self.__views={}
+        self.__cache_lock=threading.Lock()
+
+    def view(self,champion,position,patch,tier,opponent):
+        from .power_stats import select_power_view
+        key=(champion,position,patch,tier,opponent)
+        with self.__cache_lock:
+            value=self.__views.get(key)
+        if value is None:
+            subset=dict(self.__data,cohorts=self.__index.get((champion,position),[]))
+            if subset['status']!='BLOCKED_EXTERNAL':
+                subset['status']='READY' if any(p['visible'] for c in subset['cohorts'] for p in c['points']) else 'INSUFFICIENT_DATA'
+            view=select_power_view(subset,champion,position,patch,tier,opponent)
+            value=dict(view,dataset_digest=self.sha256,schema_version=self.__data['schema_version'])
+            with self.__cache_lock:
+                self.__views[key]=value
+                # Keep transient manual champion queries bounded across threads.
+                while len(self.__views)>512:self.__views.pop(next(iter(self.__views)))
+        # Keep a local reference: another HTTP thread may evict this cache key.
+        return deepcopy(value)
+
+
+def pc_power_response(server,request):
+    """Use startup-owned immutable archives only; all other servers use Q15."""
+    key=(request['patch'],request['tier'])
+    entry=getattr(server,'pc_power_snapshots',{}).get(key)
+    if entry is None or server.power_data is not None or server.power_datasets.get(key) is not entry[0]:
+        return None
+    snapshot=entry[1]
+    def select(champion,opponent):
+        return snapshot.view(champion,request['position'],request['patch'],request['tier'],opponent)
+    return dict(view=select(request['champion'],request['opponent_champion']),
+        opponent_view=select(request['opponent_champion'],request['champion']) if request['opponent_champion'] else None,test_mode=server.test_mode)
 
 
 def validate_request(body):
@@ -29,7 +80,7 @@ def validate_request(body):
 
 def load_datasets(server):
     """Local files only; newest valid archive per population, no provider calls."""
-    from .recall_stats import validate_dataset
+    from .recall_stats import RecallDataset
     datasets = {}
     statuses = {}
     folders = sorted((ROOT / 'data/recall').glob('20??-??-??'), reverse=True)
@@ -39,10 +90,10 @@ def load_datasets(server):
             if not path.exists():
                 continue
             try:
-                if path.is_symlink() or path.stat().st_size > 12_000_000:
+                if path.is_symlink() or path.stat().st_size > 32_000_000:
                     raise ValueError('bounded archive required')
-                data = validate_dataset(json.loads(path.read_text(encoding='utf-8')))
-                if data['population'] != population:
+                data = RecallDataset(json.loads(path.read_text(encoding='utf-8')))
+                if data.population != population:
                     raise ValueError('population mismatch')
                 datasets[population] = data
                 statuses[population] = 'AVAILABLE'
@@ -90,11 +141,16 @@ def reference_response(server, body):
     items = items_response(request['patch'])
     if not hasattr(server, 'recall_datasets'):
         load_datasets(server)
-    from .recall_stats import recall_view
+    from .recall_stats import RecallDataset
     result = dict(schema_version='recall-reference.v1', own=[], opponent=[], markers=[], items=items,
                   descriptive_only=True, coaching_accuracy=None)
     for population in POPULATIONS:
         data = server.recall_datasets.get(population)
+        if data is not None and not isinstance(data, RecallDataset):
+            data = RecallDataset(data)
+            if data.population != population:
+                raise ValueError('population mismatch')
+            server.recall_datasets[population] = data
         for who, champion in [('own', request['champion']), ('opponent', request['opponent_champion'])]:
             if not champion:
                 continue
@@ -104,9 +160,9 @@ def reference_response(server, body):
             elif request['patch'] is None:
                 view = _unknown(population, query, 'PATCH_UNKNOWN')
             else:
-                view = recall_view(data, champion=champion, position=request['position'], patch=request['patch'])
+                view = data.view(champion=champion, position=request['position'], patch=request['patch'])
                 # Bind the precise immutable public dataset, never just its title.
-                view = dict(view, dataset_sha256=hashlib.sha256(json.dumps(data, sort_keys=True, separators=(',', ':'), ensure_ascii=False, allow_nan=False).encode()).hexdigest())
+                view = dict(view, dataset_sha256=data.sha256)
             first = view.get('first_recall')
             if view['status'] == 'AVAILABLE' and first:
                 view['purchase_summary'] = purchase_summary(first.get('purchases', []), items)
@@ -156,6 +212,12 @@ def cards_for_draft(server, draft):
     if draft['phase'] != 'PRE_GAME' or not draft['patch'] or not draft['my_champion'] or not draft['my_position']:
         return []
     from .pc_coach import _card
+    if not re.fullmatch(r'\d{1,3}\.\d{1,3}(?:\.\d{1,3})?', draft['patch']):
+        card = _card('recall-patch-unknown', '귀환·저체력 관측', 'UNKNOWN',
+            ['경기 패치를 확인하지 못해 집계 적용을 보류합니다.', '예: 16.20처럼 경기 패치를 입력하세요.', '공식 설명은 자료 패치를 확인하며 참고할 수 있습니다.'],
+            '지원하지 않는 입력 패치에서는 귀환·저체력 수치를 추측하지 않습니다.', [], section='RECALL')
+        card['patch_status'] = 'GAME_PATCH_UNKNOWN'
+        return [card]
     opponent = next((s['champion'] for s in draft['slots'] if s['side'] == 'ENEMY' and s['position'] == draft['my_position']), None)
     response = reference_response(server, dict(champion=draft['my_champion'], position=draft['my_position'], patch=draft['patch'], opponent_champion=opponent))
     cards = []
@@ -183,6 +245,10 @@ def cards_for_draft(server, draft):
                       '먼저 구매한 뒤 120초 동안의 관측(실제 주도권 공백은 미확인):',
                       *outcome_lines(first.get('priority_gap', {})),
                       '최소 표본은 유효 5경기라는 출력 규칙이며 충분한 통계 표본을 보장하지 않습니다. 모집단과 패치를 합치지 않습니다.']
+            if population == 'PRO_REFERENCE':
+                detail.append('사용자가 기록한 프로 참고 명단의 참가자입니다. 최종 선정 전 후보가 포함될 수 있고, 전원 프로 여부를 별도로 확인한 표본은 아닙니다.')
+            else:
+                detail.append('챌린저 모집 계정의 경기이며 경기 참가자 전원이 챌린저임을 뜻하지 않습니다.')
             card = _card(cid, title, 'STATISTICS', lines, '\n'.join(detail), sources, section='RECALL')
             card['graph'] = _resource_graph(server, dict(draft,my_champion=view['champion']), response['markers'], population)
             if card['graph'].get('source'):
@@ -193,6 +259,7 @@ def cards_for_draft(server, draft):
                 details = ['이후 결과의 관측 경향이며 귀환과 잔류 중 정답을 판정하지 않습니다.',
                     '저체력은 수신 시점 체력 30% 이하, 결과 창은 120초라는 분석 규칙입니다. 게임 권장 수치가 아닙니다.',
                     '분 단위 체력 사이의 변화·웨이브·상대 의도는 미확인입니다.',
+                    '참가자별로 각 분석 조건의 첫 저체력 프레임만 사용합니다. 모든 저체력 상황의 합계는 아닙니다.',
                     '저체력 관측 뒤 120초 중 구매가 관측된 구간(구매 전 사건도 포함):', *outcome_lines(low.get('purchase', {})),
                     '저체력 관측 뒤 120초 중 다음 프레임 라인 잔류가 관측된 구간:', *outcome_lines(low.get('stay', {})),
                     '제외된 관측: ' + str(sum(r['count'] for r in low.get('excluded', []))) + '개 · 체력·위치 누락과 사망 뒤 구매 등을 제외합니다.',

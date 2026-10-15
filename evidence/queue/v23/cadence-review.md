@@ -37,3 +37,9 @@ Read the two production-line changes and two new PC cases without executing test
 `pc-graph-owner-red.log` records the missing explicit champion title before correction. `pc-graph-owner-green.log` records **11 tests, OK**, including real five-match recall extraction/view/card assembly that observes separate Ahri then Syndra power queries and a Syndra opponent graph title. Only the power-data projection is stubbed in that new ownership case. The earlier browser evidence is not claimed as execution of these later graph bytes; Main owns the final source seal and remote affected checks.
 
 Scoped graph correction verdict: **PASS; no important findings**. No provider calls, private data access, or test reruns were performed by this reviewer.
+
+## Subsequent unsupported draft-patch compatibility correction
+
+Read the small early guard in `cards_for_draft`, its new regression, and `pc-unsupported-patch-{red,green}.log`. Existing validated drafts can contain arbitrary patch text or longer build identifiers, while the direct recall-reference API deliberately accepts a narrower patch syntax. Unsupported draft values now produce one explicit UNKNOWN recall card with `GAME_PATCH_UNKNOWN` before the strict reference call. This preserves the surrounding preview flow and withholds unsupported aggregate numbers. PRE_GAME/champion/position prerequisites remain ahead of the guard, and direct public API validation remains unchanged.
+
+The RED log reproduces the prior 422 exception; the GREEN log records **12 tests, OK**, including UNKNOWN, a four-component build, and Korean free-text patch inputs. Collector/extractor source is unchanged by this compatibility correction. Scoped verdict: **PASS; no important findings**. This reviewer performed no test reruns or provider calls; final source sealing remains Main's responsibility.

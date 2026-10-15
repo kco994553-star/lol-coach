@@ -31,7 +31,7 @@ MODIFIED_PATHS = {
 CURRENT_PATHS = MODIFIED_PATHS | {
     'coach_v1/recall_pc.py', 'coach_v1/recall_candidates.py', 'coach_v1/recall_stats.py',
     'coach_v1/recall_collection.py', 'coach_v1/official_items.py',
-    'scripts/collect_recall_stats.py', 'scripts/browser_recall_v23.py',
+    'scripts/collect_recall_stats.py', 'scripts/browser_recall_v23.py', 'scripts/browser_recall_actual_v23.py',
     'scripts/report_queue_v23.py', 'scripts/verify_mvp_v23.py',
     '.github/workflows/recall-reference-collection.yml',
     'tests_pregame/test_recall_pc_v23.py', 'tests_pregame/test_recall_stats_v23.py',

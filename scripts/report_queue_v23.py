@@ -42,7 +42,7 @@ def report():
                 previous_evidence=dict(path=str(prior_path.relative_to(ROOT)),sha256=hashlib.sha256(prior_path.read_bytes()).hexdigest(),reused_without_revalidation=True),
                 auto_review=dict(passed=old['passed']+new['passed'],held=old['held']+new['held'],existing_completed=old,new_candidates=new,user_decisions_created=0),
                 official_items={k:v for k,v in items_response('16.20').items() if k!='items'},
-                recall_datasets={p:dict(samples=d['samples'],cohorts=len(d['cohorts'])) for p,d in server.recall_datasets.items()},
+                recall_datasets={p:d.summary() for p,d in server.recall_datasets.items()},
                 example_views=views,example_total={level:sum(v['counts'].get(level,0) for v in views) for level in ('OFFICIAL','STATISTICS','USER','AUTO_VERIFIED','HYPOTHESIS','UNKNOWN')},
                 actual_user_decisions_created=len(server.research.list()),actual_windows_lcu='BLOCKED_EXTERNAL',
                 coaching_accuracy=None,scope='Golden10 synthetic picks, original official archives and available REAL anonymous datasets. No actual game-PC proof.')

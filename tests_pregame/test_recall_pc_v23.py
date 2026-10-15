@@ -8,6 +8,53 @@ from tests_pregame.test_pc_coach import draft
 
 
 class RecallPCIntegrationTests(unittest.TestCase):
+    def test_pc_power_snapshot_matches_original_view_and_isolates_output(self):
+        from coach_v1.recall_pc import PCPowerSnapshot
+        from coach_v1.power_stats import build_power_dataset,select_power_view
+        from tests_pregame.test_power_stats import pair,source
+        data=build_power_dataset([pair(0),pair(1)],source=source())
+        snapshot=PCPowerSnapshot(data)
+        for champion,opponent in [('Champion','Opponent'),('Champion',None),('Absent',None)]:
+            expected=select_power_view(data,champion,'TOP','16.19','GOLD',opponent)
+            actual=snapshot.view(champion,'TOP','16.19','GOLD',opponent)
+            actual.pop('dataset_digest');actual.pop('schema_version')
+            self.assertEqual(actual,expected)
+        first=snapshot.view('Champion','TOP','16.19','GOLD',None)
+        first['source']['tier']='IRON'
+        data['source']['tier']='IRON'
+        self.assertEqual(snapshot.view('Champion','TOP','16.19','GOLD',None)['source']['tier'],'GOLD')
+
+    def test_real_sized_archive_loads_but_over_limit_archive_is_rejected(self):
+        import json
+        from coach_v1.recall_pc import load_datasets
+        from coach_v1.recall_stats import build_dataset
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);target=root/'data/recall/2026-10-15/challenger/recall-data.json'
+            target.parent.mkdir(parents=True)
+            payload=json.dumps(build_dataset([],population='CHALLENGER',retrieved_at='2026-10-15T00:00:00Z'))
+            target.write_text(payload+' '*(12_000_001-len(payload)),encoding='utf-8')
+            server=type('Server',(),{})()
+            with patch('coach_v1.recall_pc.ROOT',root):
+                self.assertEqual(load_datasets(server)['CHALLENGER'],'AVAILABLE')
+                with target.open('r+b') as stream:stream.truncate(32_000_001)
+                self.assertEqual(load_datasets(server)['CHALLENGER'],'INVALID_NEWEST_ARCHIVE')
+
+    def test_validated_projection_is_cached_and_isolated_from_mutable_inputs_and_outputs(self):
+        from coach_v1.recall_pc import reference_response
+        from coach_v1.recall_stats import build_dataset,validate_dataset
+        raw=build_dataset([],population='CHALLENGER',retrieved_at='2026-10-15T00:00:00Z')
+        server=type('Server',(),{'recall_datasets':{'CHALLENGER':raw}})()
+        body=dict(champion='Caitlyn',position='BOTTOM',patch='16.20',opponent_champion='Ezreal')
+        with patch('coach_v1.recall_stats.validate_dataset',wraps=validate_dataset) as validate:
+            first=reference_response(server,body)
+            raw['population']='PRO_REFERENCE'
+            first['own'][0]['measurement_policy']['coverage_guard']['version']='tampered'
+            second=reference_response(server,body)
+            self.assertEqual(validate.call_count,1)
+        self.assertEqual(second['own'][0]['population'],'CHALLENGER')
+        self.assertEqual(second['own'][0]['measurement_policy']['coverage_guard']['version'],'FRAME_ORIGIN_AND_CADENCE.v2')
+        self.assertEqual(first['own'][0]['dataset_sha256'],second['own'][0]['dataset_sha256'])
+
     def test_missing_data_stays_unknown_with_reason_not_zero(self):
         from coach_v1.recall_pc import reference_response, cards_for_draft
         class Server:
@@ -50,6 +97,16 @@ class RecallPCIntegrationTests(unittest.TestCase):
         from coach_v1.recall_pc import validate_request
         body=dict(champion='Caitlyn',position='BOTTOM',patch='16.20.1',opponent_champion=None)
         self.assertEqual(validate_request(body)['patch'],'16.20')
+
+    def test_unsupported_existing_draft_patch_keeps_unknown_card_instead_of_failing_projection(self):
+        from coach_v1.recall_pc import cards_for_draft
+        class Server:
+            recall_datasets={}
+        for value in ('UNKNOWN','16.20.1234.5678','차후 패치'):
+            cards=cards_for_draft(Server(),draft(patch=value))
+            self.assertTrue(cards)
+            self.assertTrue(all(c['evidence_level']=='UNKNOWN' for c in cards))
+            self.assertTrue(all(c['patch_status']=='GAME_PATCH_UNKNOWN' for c in cards))
 
     def test_item_cost_never_uses_mismatching_patch_or_invents_components(self):
         from coach_v1.recall_pc import purchase_summary
