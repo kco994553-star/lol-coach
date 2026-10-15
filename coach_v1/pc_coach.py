@@ -76,6 +76,10 @@ def preview(server,body):
             if rid in withdrawn:continue
             cards.append(_card('user-'+rid,SECTION_NAMES.get(spec['output']['section'],'사용자 조언'),'USER',spec['output']['text'].splitlines()[:3],spec['output']['text'],spec['sources'],section=spec['output']['section']))
         _statistics_cards(server,draft,cards)
+        from .recall_pc import cards_for_draft
+        cards.extend(cards_for_draft(server,draft))
+        from .recall_candidates import cards_for_draft as candidate_cards
+        cards.extend(candidate_cards(server,draft))
     if not cards:cards.append(_card('unknown','경기 전 준비','UNKNOWN',['내 챔피언부터 입력하세요.'],'근거가 없는 항목은 미확인으로 남습니다.',[],section='PROFILE'))
     rank={'USER':0,'AUTO_VERIFIED':1,'HYPOTHESIS':2,'STATISTICS':3,'OFFICIAL':4,'UNKNOWN':5}
     cards.sort(key=lambda c:(rank[c['evidence_level']],c.get('champion')!=champion))

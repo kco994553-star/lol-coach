@@ -202,6 +202,12 @@ def postgame_response(server,store,match_id,plan=None):
         matches=server.pro_reference_data['roster_sha256']==server.current_pro_roster_digest()
         result=attach_pro_reference(result,server.pro_reference_data if matches else None,test_mode=server.test_mode)
         if not matches:result['pro_reference']['reason']='PRO_ROSTER_VERSION_MISMATCH'
+    from .recall_pc import private_context
+    body,_,_=store._load(match_id)
+    try:
+        result['recall_contexts']=private_context(body['match'],body['timeline'],body['participant_id'])
+    except (ValueError,KeyError,TypeError):
+        result['recall_contexts']=dict(status='UNKNOWN',reason='RECALL_FIELDS_OR_SUPPORTED_MATCH_UNAVAILABLE',signals=[])
     return result
 
 
@@ -377,6 +383,16 @@ class PregameHandler(Handler):
         if route==prefix+'/pc-preview' and self.command=='POST':
             from .pc_coach import preview
             return self.bounded_reply(200,preview(self.server,self.body()))
+        if route==prefix+'/recall-reference' and self.command=='POST':
+            from .recall_pc import reference_response
+            return self.bounded_reply(200,reference_response(self.server,self.body()))
+        if route==prefix+'/official-items' and self.command=='POST':
+            body=self.body()
+            self.fields(body,('patch',))
+            if body['patch'] is not None and (not isinstance(body['patch'],str) or not re.fullmatch(r'\d{1,3}\.\d{1,3}(?:\.\d{1,3})?',body['patch'])):
+                raise ServiceError(422,'INVALID_ITEM_PATCH')
+            from .official_items import items_response
+            return self.bounded_reply(200,items_response(body['patch']))
         if route==prefix+'/pc-status' and self.command=='GET':
             from .pc_runtime import pc_status
             return self.bounded_reply(200,pc_status(self.server))

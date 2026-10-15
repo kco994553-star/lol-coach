@@ -1,0 +1,134 @@
+name: Recall and low-health anonymous reference collection
+
+on:
+  workflow_dispatch:
+    inputs:
+      key_renewed:
+        description: User confirmed renewed KR Riot key; trusted first attempt only
+        type: boolean
+        default: false
+      collect_challenger:
+        description: Also collect fresh bounded current-patch Challenger seed matches
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: riot-power-collection-main
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    if: github.repository == 'kco994553-star/lol-coach' && github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && inputs.key_renewed == true && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out trusted main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Install pinned validation and private cache runtime
+        run: python -m pip install --disable-pip-version-check -r requirements-r3.txt -r requirements-private-cache.txt
+      - name: Recover newest trusted encrypted pro cache including interrupted runs
+        id: recover
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/recover_pro_cache.py --directory "$RUNNER_TEMP/recall-recovery"
+      - name: Require existing cache and decrypt privately without identity lookup fallback
+        id: restore
+        env:
+          PRO_REFERENCE_ENCRYPTION_SEED: ${{ secrets.YOUTUBE_API_KEY }}
+          CACHE_FOUND: ${{ steps.recover.outputs.found }}
+        run: |
+          umask 077
+          if [[ "$CACHE_FOUND" != true ]]; then
+            echo 'BLOCKED_EXTERNAL; EXISTING_PRIVATE_CACHE_REQUIRED; NO_NEW_LOOKUPS'
+            exit 2
+          fi
+          python scripts/private_pro_bundle.py decrypt --directory "$RUNNER_TEMP/private/pro-reference" --bundle "$RUNNER_TEMP/recall-recovery/pro-private.bundle"
+      - name: Reuse original selected pro match and timeline cache offline
+        id: pro
+        run: |
+          umask 077
+          python scripts/collect_recall_stats.py --private-directory "$RUNNER_TEMP/private/pro-reference" --output-directory "$RUNNER_TEMP/recall-public/pro"
+      - name: Resolve current exact official patch for optional fresh Challenger collection
+        if: inputs.collect_challenger == true
+        id: policy
+        run: |
+          mkdir -p "$RUNNER_TEMP/recall-public/challenger"
+          python scripts/resolve_riot_collection.py --tier CHALLENGER --manual-renewed --aggregate-directory "$RUNNER_TEMP/recall-public/challenger"
+      - name: Clear shared rolling Riot rate window before fresh client
+        if: inputs.collect_challenger == true && steps.policy.outputs.enabled == 'true'
+        run: |
+          python - <<'PY'
+          import time
+          time.sleep(60)
+          time.sleep(60)
+          time.sleep(1)
+          PY
+      - name: Collect fresh bounded Challenger raw pair stream privately in memory
+        id: challenger
+        if: inputs.collect_challenger == true && steps.policy.outputs.enabled == 'true'
+        env:
+          RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
+          COLLECTION_PATCH: ${{ steps.policy.outputs.patch }}
+        run: |
+          umask 077
+          python scripts/collect_recall_stats.py --population CHALLENGER --patch "$COLLECTION_PATCH" --private-directory "$RUNNER_TEMP/private/pro-reference" --output-directory "$RUNNER_TEMP/recall-public/challenger" --max-matches 300 --max-requests 650 --max-players 40 --max-pages 1 --max-retries 2 --deadline-seconds 900
+      - name: Validate anonymous datasets and bind actual checked out source
+        if: always() && steps.pro.outcome == 'success'
+        id: validate
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,subprocess
+          from pathlib import Path
+          from coach_v1.recall_stats import validate_dataset
+          root=Path(os.environ['RUNNER_TEMP'])/'recall-public'
+          paths=['coach_v1/recall_stats.py','coach_v1/recall_collection.py','coach_v1/postgame_match.py','coach_v1/pro_reference_cases.py','coach_v1/riot_collector.py','coach_v1/riot_collection_policy.py','coach_v1/pro_checkpoint.py','coach_v1/private_pro_bundle.py','scripts/collect_recall_stats.py','scripts/resolve_riot_collection.py','scripts/recover_pro_cache.py','scripts/private_pro_bundle.py','.github/workflows/recall-reference-collection.yml','contracts/queue-v23.md','requirements-r3.txt','requirements-private-cache.txt']
+          receipt=dict(actual_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),source_sha256={p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in paths},privacy='SOURCE_ONLY_NO_RAW_OR_IDENTIFIERS',validated_datasets={})
+          for population in ('pro','challenger'):
+              path=root/population/'recall-data.json'
+              if path.exists():
+                  data=validate_dataset(json.loads(path.read_text()))
+                  safe=json.loads((path.parent/'collection-receipt.json').read_text())
+                  if safe.get('schema_version')!='recall.collection-receipt.v1' or safe.get('dataset_samples')!=data['samples']:
+                      raise ValueError('SAFE_RECALL_RECEIPT_MISSING_OR_MISMATCHED')
+                  receipt['validated_datasets'][population]=dict(sha256=hashlib.sha256(path.read_bytes()).hexdigest(),samples=data['samples'])
+          policy=root/'challenger/collection-policy.json'
+          if policy.exists():receipt['official_current_patch']=json.loads(policy.read_text())['patch']
+          (root/'source-binding.json').write_text(json.dumps(receipt,sort_keys=True,indent=2)+'\n')
+          print('ANONYMOUS_RECALL_DATASETS_VALIDATED_AND_ACTUAL_SOURCE_BOUND')
+          PY
+      - name: Publish strict anonymous datasets and safe receipts only
+        if: always() && steps.validate.outcome == 'success'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: recall-reference-public-safe
+          path: |
+            ${{ runner.temp }}/recall-public/pro/recall-data.json
+            ${{ runner.temp }}/recall-public/pro/collection-receipt.json
+            ${{ runner.temp }}/recall-public/challenger/recall-data.json
+            ${{ runner.temp }}/recall-public/challenger/collection-receipt.json
+            ${{ runner.temp }}/recall-public/source-binding.json
+          retention-days: 90
+          if-no-files-found: error
+      - name: Remove ephemeral private originals and recovered ciphertext
+        if: always()
+        run: |
+          python - <<'PY'
+          import os,shutil
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP'])
+          for name in ('private/pro-reference','recall-recovery'):
+              path=root/name
+              if path.is_dir():shutil.rmtree(path)
+          print('EPHEMERAL_PRIVATE_CACHE_REMOVED')
+          PY
