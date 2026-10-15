@@ -5,6 +5,17 @@
 - owner_branch: `work/queue-v23-20261015`
 - authority: USER_QUEUE_V2.3_2026-10-15 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
 - intake_main: `fedc30060259b5eeac4ab2ca096daa6259e354b6`
+- detail: Local actual integration passed87newdelta tests and independent review; exact source actual browser868.1/553.1ms. Publishing result PR with291CH/89PRO public aggregates.
+
+---
+
+# Latest common execution claim — RUNNING
+- run_token: `main-20261015-queue-v23`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/queue-v23-20261015`
+- authority: USER_QUEUE_V2.3_2026-10-15 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `fedc30060259b5eeac4ab2ca096daa6259e354b6`
 - detail: Integrating actual v2.3 data; correcting bounded archive loading and cached read-only projection performance
 
 ---
