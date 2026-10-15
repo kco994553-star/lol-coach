@@ -1,0 +1,301 @@
+{
+  "source_url": "https://www.mingweisamuel.com/lcu-schema/lcu/openapi.json",
+  "source_sha256": "f0378fd40c1c95a0353ee075f3205ad01e347eef1aae1aa660ee471cafc63d3d",
+  "retrieved_at": "2026-10-15",
+  "paths": {
+    "/lol-champ-select/v1/session": {
+      "get": {
+        "operationId": "GetLolChampSelectV1Session",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LolChampSelectChampSelectSession"
+                }
+              }
+            },
+            "description": "Successful response"
+          }
+        },
+        "tags": [
+          "Plugins",
+          "Plugin lol-champ-select"
+        ]
+      }
+    },
+    "/lol-gameflow/v1/gameflow-phase": {
+      "get": {
+        "operationId": "GetLolGameflowV1GameflowPhase",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LolGameflowGameflowPhase"
+                }
+              }
+            },
+            "description": "Successful response"
+          }
+        },
+        "tags": [
+          "Plugins",
+          "Plugin lol-gameflow"
+        ]
+      }
+    }
+  },
+  "schemas": {
+    "LolChampSelectChampSelectAction": {
+      "properties": {
+        "actorCellId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "championId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "completed": {
+          "type": "boolean"
+        },
+        "id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "isAllyAction": {
+          "type": "boolean"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LolChampSelectChampSelectBannedChampions": {
+      "properties": {
+        "myTeamBans": {
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        "numBans": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "theirTeamBans": {
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "LolChampSelectChampSelectPlayerSelection": {
+      "properties": {
+        "assignedPosition": {
+          "type": "string"
+        },
+        "cellId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "championId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "championPickIntent": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "entitledFeatureType": {
+          "type": "string"
+        },
+        "selectedSkinId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "spell1Id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "spell2Id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "summonerId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "team": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "wardSkinId": {
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "LolChampSelectChampSelectSession": {
+      "properties": {
+        "actions": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "allowBattleBoost": {
+          "type": "boolean"
+        },
+        "allowDuplicatePicks": {
+          "type": "boolean"
+        },
+        "allowLockedEvents": {
+          "type": "boolean"
+        },
+        "allowRerolling": {
+          "type": "boolean"
+        },
+        "allowSkinSelection": {
+          "type": "boolean"
+        },
+        "bans": {
+          "$ref": "#/components/schemas/LolChampSelectChampSelectBannedChampions"
+        },
+        "benchChampionIds": {
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        "benchEnabled": {
+          "type": "boolean"
+        },
+        "boostableSkinCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "chatDetails": {
+          "$ref": "#/components/schemas/LolChampSelectChampSelectChatRoomDetails"
+        },
+        "counter": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "entitledFeatureState": {
+          "$ref": "#/components/schemas/LolChampSelectEntitledFeatureState"
+        },
+        "gameId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "hasSimultaneousBans": {
+          "type": "boolean"
+        },
+        "hasSimultaneousPicks": {
+          "type": "boolean"
+        },
+        "isCustomGame": {
+          "type": "boolean"
+        },
+        "isSpectating": {
+          "type": "boolean"
+        },
+        "localPlayerCellId": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "lockedEventIndex": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "myTeam": {
+          "items": {
+            "$ref": "#/components/schemas/LolChampSelectChampSelectPlayerSelection"
+          },
+          "type": "array"
+        },
+        "recoveryCounter": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "rerollsRemaining": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "skipChampionSelect": {
+          "type": "boolean"
+        },
+        "theirTeam": {
+          "items": {
+            "$ref": "#/components/schemas/LolChampSelectChampSelectPlayerSelection"
+          },
+          "type": "array"
+        },
+        "timer": {
+          "$ref": "#/components/schemas/LolChampSelectChampSelectTimer"
+        },
+        "trades": {
+          "items": {
+            "$ref": "#/components/schemas/LolChampSelectChampSelectTradeContract"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "LolChampSelectChampSelectTimer": {
+      "properties": {
+        "adjustedTimeLeftInPhase": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "internalNowInEpochMs": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "isInfinite": {
+          "type": "boolean"
+        },
+        "phase": {
+          "type": "string"
+        },
+        "totalTimeInPhase": {
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "LolGameflowGameflowPhase": {
+      "enum": [
+        "None",
+        "Lobby",
+        "Matchmaking",
+        "CheckedIntoTournament",
+        "ReadyCheck",
+        "ChampSelect",
+        "GameStart",
+        "FailedToLaunch",
+        "InProgress",
+        "Reconnect",
+        "WaitingForStats",
+        "PreEndOfGame",
+        "EndOfGame",
+        "TerminatedInError"
+      ],
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,609 @@
+{
+  "schema_version": "auto-review.agent.v1",
+  "role": "COUNTER",
+  "reviewer": "/root/v21_counter_check",
+  "packet_sha256": "b5a628011764b91936b76de3ec3b44c8ea22de18b81f3434ef50599351d62649",
+  "q15_sha256": "948c69e2157776134dd7b198a71faf4654cebfc41bbfd323e795204bd663c2f7",
+  "reviews": [
+    {
+      "id": "KR-001",
+      "candidate_sha256": "ecd235848eb81af40207fd40e851417a6dafca55f65fae6c4c041ab8a19a2564",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 피오라가 오른의 지형 충돌 띄우기에 응수하는 반격을 대입했다. 응수 가능 여부와 충돌 경로를 모르면 보류한다는 본문 제한이 있으며, 이를 확정 진입이나 응수 재사용 대기시간 계산으로 해석하지 않았다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «피오라의 응수 사용 여부나 벽 충돌 경로를 모르면 진입을 보류하세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «피오라의 응수 사용 여부나 벽 충돌 경로를 모르면 진입을 보류하세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Ornn 관련 실제 cohort 3개, positions=TOP, points.champion_n=1..1를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-002",
+      "candidate_sha256": "67218cfdfad869bba4437e71dec7eb7b39608a9f9ad96d71843bce658b2bc655",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 정령 첫 통과만으로 띄우기를 기대하는 경우, 재충돌 불가, 아군 후속 불가, 피오라 응수를 대입했다. 본문은 재충돌 경로 점검과 상대의 응수 권리를 명시하며 성공을 보장하지 않는다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «정령에 다시 부딪칠 수 없거나 아군이 이어갈 수 없으면 진입 계획을 바꾸세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «정령에 다시 부딪칠 수 없거나 아군이 이어갈 수 없으면 진입 계획을 바꾸세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Ornn 관련 실제 cohort 3개, positions=TOP, points.champion_n=1..1를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-003",
+      "candidate_sha256": "cb434a7293b3ed87176bb78e23c14b61df8d5f319ddcec942182d8bf84fc7534",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 서리 중첩 미달과 리신의 밀어내기를 대입했다. 최대 중첩 및 사용 가능 여부는 사용자가 나중에 확인할 조건이며 자동으로 충족되었다고 볼 수 없다. 공식 발췌는 최대 중첩 대상에 대한 기절만 뒷받침한다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «중첩이나 기술 사용 가능 여부를 모르면 기절을 전제로 들어가지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «중첩이나 기술 사용 가능 여부를 모르면 기절을 전제로 들어가지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Sejuani 관련 실제 cohort 3개, positions=SUPPORT, points.champion_n=1..2를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-004",
+      "candidate_sha256": "27d345ac2aa1d3a9e9ebefde7d0d1f6090f5790be25b9ca54cc166ebb0d76614",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 앞 챔피언의 가로막기와 리신의 아군 이동을 대입했다. 본문은 처음 맞은 챔피언을 구분하고 막힘 또는 후속 불가 시 목표 변경을 요구하므로 뒤 목표의 확정 적중을 주장하지 않는다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «앞의 적이 가로막거나 아군이 공격을 이어갈 수 없으면 목표를 바꾸세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «앞의 적이 가로막거나 아군이 공격을 이어갈 수 없으면 목표를 바꾸세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Sejuani 관련 실제 cohort 3개, positions=SUPPORT, points.champion_n=1..2를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-005",
+      "candidate_sha256": "c677b3c9f44a88f158c4f7134b3ce6d1c642e169bfcb927e3fceff983c80872b",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 제드의 대상 지정 불가 진입과 매혹 빗나감을 대입했다. 본문은 두 경우 중단을 명시하며, 매혹 적중 확인을 승리나 안전의 보장으로 해석하지 않았다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «매혹이 빗나가거나 제드가 대상으로 지정되지 않으면 계획을 멈추세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «매혹이 빗나가거나 제드가 대상으로 지정되지 않으면 계획을 멈추세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Ahri 관련 실제 cohort 6개, positions=MID,TOP, points.champion_n=1..2를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-006",
+      "candidate_sha256": "52ad940b263641f4cd4b75812d1b8d15bcde5f6646f033b999bf99d5fc0aa2a4",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 제드의 그림자 교환 및 처치 관여 없이 아리의 추가 이동이 생기지 않는 경우를 대입했다. 본문은 남은 이동과 퇴로를 직접 확인하고 추가 사용을 미리 가정하지 않도록 제한한다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «남은 이동이나 제드의 그림자 위치를 확인할 수 없으면 깊게 따라가지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «남은 이동이나 제드의 그림자 위치를 확인할 수 없으면 깊게 따라가지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Ahri 관련 실제 cohort 6개, positions=MID,TOP, points.champion_n=1..2를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-007",
+      "candidate_sha256": "d8dd6d004672ca197fec5967023df96237666ce2b000ec4e21694a447fb5dbfe",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 럭스 속박 빗나감, 이즈리얼의 위치 변경, 덫 미발동을 대입했다. 덫 설치와 발동을 구분하고 실제 발동 전 강화 공격을 전제로 추격하지 말라는 제한을 확인했다. 아군 럭스 존재는 typed conditions로 확인되지 않으므로 상황 문구를 사용자 수동 전제로만 읽었다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «속박이 빗나가거나 적이 덫을 밟지 않으면 강화 공격을 전제로 따라가지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «속박이 빗나가거나 적이 덫을 밟지 않으면 강화 공격을 전제로 따라가지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Caitlyn 관련 실제 cohort 3개, positions=BOTTOM, points.champion_n=1..35를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-008",
+      "candidate_sha256": "2dff01646e8c98669ddfba090ce2b194937bab2005640982181c5cc7715f8890",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 투망 반동이 위험한 착지점으로 향하거나 노틸러스의 닻 경로가 계속 열리는 경우를 대입했다. 본문의 착지점 확인 및 다른 퇴로 선택이 이를 다룬다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «밀려날 자리가 위험하거나 이동 후에도 닻 경로가 열리면 다른 퇴로를 고르세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «밀려날 자리가 위험하거나 이동 후에도 닻 경로가 열리면 다른 퇴로를 고르세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Caitlyn 관련 실제 cohort 3개, positions=BOTTOM, points.champion_n=1..35를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-009",
+      "candidate_sha256": "3acad7ab948245b1544431ff6a07a20bb9f2ce729704a2cbfebf943ec2362e36",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 다른 적 챔피언의 탄환 가로막기 및 이즈리얼의 위치 변경을 대입했다. 본문은 마무리 근거 없음을 포함해 확정 처치 판단을 금지한다. 피해량이나 처치 확률의 통계 주장은 없다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «다른 적이 탄환을 막을 수 있거나 목표를 마무리할 근거가 없으면 확정 처치로 보지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «다른 적이 탄환을 막을 수 있거나 목표를 마무리할 근거가 없으면 확정 처치로 보지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Caitlyn 관련 실제 cohort 3개, positions=BOTTOM, points.champion_n=1..35를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-010",
+      "candidate_sha256": "da42fac839cae82ea190144529171a211984210abf570705929509b9bc97fc19",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 늘어난 헤드샷 사거리를 안전 보장으로 오인해 노틸러스 닻 경로로 들어가는 경우를 대입했다. 본문은 그 접근을 금지하고 적중 또는 안전 경로 미확인 시 공격 보류를 요구한다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «덫이나 투망 적중이 확인되지 않거나 접근 경로가 위험하면 공격을 보류하세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «덫이나 투망 적중이 확인되지 않거나 접근 경로가 위험하면 공격을 보류하세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Caitlyn 관련 실제 cohort 3개, positions=BOTTOM, points.champion_n=1..35를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-011",
+      "candidate_sha256": "e8046bb36fbea9787ed9d54c7e9986a5d7e45f00f2f12d99617805d026baa48f",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 빛의 구속 앞에 두 유닛이 있어 뒤 목표에 도달하지 못하는 경우 및 이즈리얼 위치 변경을 대입했다. 공식 발췌의 up to two enemy units와 본문의 최대 두 유닛이 일치하며, 닿지 못하면 전진하지 말라는 제한이 있다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «앞의 대상들 때문에 목표에 닿을 수 없거나 속박이 빗나가면 전진하지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «앞의 대상들 때문에 목표에 닿을 수 없거나 속박이 빗나가면 전진하지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Lux 관련 실제 cohort 3개, positions=SUPPORT, points.champion_n=1..1를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-012",
+      "candidate_sha256": "f1fcd1c3d005abe272d8a520080f93111f6ac14235238d7fe845bc94140306b9",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 보호막이 노틸러스의 추적 궁극기 제어를 제거하지 않는 경우와 지팡이가 아군에 닿지 않는 경우를 대입했다. 본문은 보호막을 제어 면역으로 취급하지 않고 퇴로 확보를 요구한다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «지팡이가 아군에 닿지 않거나 상대의 추적 공격이 계속되면 퇴로도 확보하세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «지팡이가 아군에 닿지 않거나 상대의 추적 공격이 계속되면 퇴로도 확보하세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Lux 관련 실제 cohort 3개, positions=SUPPORT, points.champion_n=1..1를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-013",
+      "candidate_sha256": "5de915d11574c3b87310b759b07d4e759106ae6315808744cc9bd4c365015092",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 피오라가 이동 불가를 응수하고 찌르기에 적이 맞는 반격을 대입했다. 공식 발췌는 첫 적 챔피언 적중이 필요하며 본문도 적중한 적의 기절로 한정한다. 응수 중 주요 제어 집중을 금지한다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «응수 사용 여부나 찌르기 방향이 보이지 않으면 안전한 진입이라고 판단하지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «응수 사용 여부나 찌르기 방향이 보이지 않으면 안전한 진입이라고 판단하지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Fiora 관련 실제 cohort 9개, positions=BOTTOM,MID,TOP, points.champion_n=1..35를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-014",
+      "candidate_sha256": "062d00c315f16f18c8d2facd673c5fa91059c15ff074d996d4dac5c5dce3320b",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 급소를 일부만 맞힌 뒤 표식 대상이 죽어 회복이 생기는 경우를 대입했다. 공식 발췌의 적어도 한 급소 적중 조건과 본문의 일부 급소 적중 후 사망 조건이 일치하며, 급소 적중 미확인 시 회복을 배제하지 않는다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «급소 적중 여부를 모르면 상대 회복을 배제한 계산을 하지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «급소 적중 여부를 모르면 상대 회복을 배제한 계산을 하지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Fiora 관련 실제 cohort 9개, positions=BOTTOM,MID,TOP, points.champion_n=1..35를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-015",
+      "candidate_sha256": "1b6ad3c373b137377c4af43fe7d2d3ef2e77fe012b2a5c0296aaee272a6308de",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 음파 후 공명의 일격으로 리신이 재접근하는 경우를 대입했다. 본문은 첫 피해로 위협 종료를 판단하지 않도록 하며, 공식 발췌의 후속 사용 기회를 항상 사용 가능한 상태로 자동 판정하지 않는다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «음파 적중이나 리신 위치가 불명확하면 후속 접근이 없다고 단정하지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «음파 적중이나 리신 위치가 불명확하면 후속 접근이 없다고 단정하지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. LeeSin 관련 실제 cohort 3개, positions=JUNGLE, points.champion_n=2..88를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-016",
+      "candidate_sha256": "09342939484e9fe1eb4bacb7eed9328150609a9ce65dac798a2ab761859289d4",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 리신이 찬 아군이 뒤의 다른 아군과 충돌하는 경우 및 차는 방향 불명확을 대입했다. 본문은 뒤에 모이지 말고 방향 불명확 시 겹쳐 서는 계획을 피하도록 한다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «리신의 위치나 밀려날 방향이 보이지 않으면 겹쳐 서는 계획을 피하세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «리신의 위치나 밀려날 방향이 보이지 않으면 겹쳐 서는 계획을 피하세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. LeeSin 관련 실제 cohort 3개, positions=JUNGLE, points.champion_n=2..88를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-017",
+      "candidate_sha256": "93877a0dfba1b752204518ebfb777c558dcd0db9d9971c679afeb2551ee03718",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 제드 본체가 멀어진 뒤 남은 그림자로 위치를 바꾸는 경우를 대입했다. 본문은 본체와 그림자 모두 점검하고 그림자 잔존 여부를 모르면 복귀 방향을 확정하지 않도록 한다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «그림자의 위치나 남아 있는지를 모르면 복귀 방향을 확정하지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «그림자의 위치나 남아 있는지를 모르면 복귀 방향을 확정하지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Zed 관련 실제 cohort 12개, positions=BOTTOM,JUNGLE,MID,TOP, points.champion_n=1..3를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-018",
+      "candidate_sha256": "3c7d6ac97b2cefcbc7ab354eb9ac352792b5d9faf8f24838908311f772f5d300",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 현재 체력이 남아 있어도 죽음의 표식 후속 피해로 죽는 경우를 대입했다. 본문은 추가 피해를 고려한 퇴로와 생존 확정 금지를 요구하며, 피해량을 자동 계산하거나 생존을 보장하지 않는다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «표식 상태나 받은 피해를 모르면 생존이나 맞싸움 승리를 확정하지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «표식 상태나 받은 피해를 모르면 생존이나 맞싸움 승리를 확정하지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Zed 관련 실제 cohort 12개, positions=BOTTOM,JUNGLE,MID,TOP, points.champion_n=1..3를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-019",
+      "candidate_sha256": "786a5a746a976d090001a48a327fb5d99cd00d3b0403f7d64a6131046a02ad79",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 이즈리얼이 신비한 화살을 맞혀 다음 이동 기술의 대기시간을 줄이는 경우를 대입했다. 본문은 화살 적중 및 이동 후 위치 미확인 시 다음 이동 시각을 단정하지 않도록 한다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «화살 적중이나 이동 후 위치를 모르면 다음 이동까지의 시간을 단정하지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «화살 적중이나 이동 후 위치를 모르면 다음 이동까지의 시간을 단정하지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Ezreal 관련 실제 cohort 3개, positions=BOTTOM, points.champion_n=2..48를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-020",
+      "candidate_sha256": "aa4cad2eb462d1c4bbfed4c1b80a5d843105d6a5d5f086bda1261a4070b60ea0",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 정수의 흐름 부착 직후 피해가 없지만 후속 적중으로 폭발하는 경우를 대입했다. 본문은 후속 거리와 경로를 점검하며 구체 상태 미확인 시 안전을 단정하지 않는다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «구체 상태나 후속 공격 경로가 보이지 않으면 안전하다고 단정하지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «구체 상태나 후속 공격 경로가 보이지 않으면 안전하다고 단정하지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Ezreal 관련 실제 cohort 3개, positions=BOTTOM, points.champion_n=2..48를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-021",
+      "candidate_sha256": "8b83de5bd09e9ff7c195b21251d4bad3dab23157aaf56e547ee68ea564354cfa",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 노틸러스 닻이 자신을 지나 지형에 맞아 노틸러스가 접근하는 경우를 대입했다. 본문은 빗나감과 이동 종료를 구분하고 지형과 도착점 미확인 시 접근 부재를 단정하지 않는다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «주변 지형이나 닻의 도착 지점이 보이지 않으면 접근이 없다고 단정하지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «주변 지형이나 닻의 도착 지점이 보이지 않으면 접근이 없다고 단정하지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Nautilus 관련 실제 cohort 3개, positions=SUPPORT, points.champion_n=1..57를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-022",
+      "candidate_sha256": "418997384298c43129de743dc28cc4eccb158fd75f144af4fb7244e08da27369",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 노틸러스 폭뢰 대상이 이동해 진행 경로가 바뀌거나 주변 아군이 경로에 겹치는 경우를 대입했다. 본문은 대상 및 진행 방향을 확인하는 수동 조건이고 확정 회피를 보장하지 않는다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «진행 방향이나 대상이 보이지 않으면 확정 회피 경로를 제시하지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «진행 방향이나 대상이 보이지 않으면 확정 회피 경로를 제시하지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Nautilus 관련 실제 cohort 3개, positions=SUPPORT, points.champion_n=1..57를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-023",
+      "candidate_sha256": "02b9c617a67bf1fae7f876527db3936e689d72270e1c82e6c65aeaaab2b5224e",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 유나라가 강화 상태가 아닌데 이동 속도 증가를 돌진으로 취급하거나 노틸러스 닻에 맞는 경우를 대입했다. 공식 발췌의 평상시 이동 속도/유닛 통과와 강화 시 돌진 구분을 본문이 유지한다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «강화 상태가 아니거나 이동할 자리가 보이지 않으면 돌진을 전제로 움직이지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «강화 상태가 아니거나 이동할 자리가 보이지 않으면 돌진을 전제로 움직이지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Yunara 관련 실제 cohort 3개, positions=BOTTOM, points.champion_n=2..34를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-024",
+      "candidate_sha256": "895da0b9739d13e9ea5e04f18248efc0f29e9f93ef262dd2f5e43de0e2f376e8",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 유나라가 강화 상태여도 노틸러스 궁극기에 제어되는 경우를 대입했다. 본문은 제어 면역을 주장하지 않고 상대 궁극기 대상 미확인 시 안전 진입 판단을 금지한다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «강화 상태나 상대 궁극기 대상을 모르면 안전한 진입으로 판단하지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «강화 상태나 상대 궁극기 대상을 모르면 안전한 진입으로 판단하지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Yunara 관련 실제 cohort 3개, positions=BOTTOM, points.champion_n=2..34를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-025",
+      "candidate_sha256": "cb5665979a5f150465adb582eb6dfc9f2e587ba6b9fa3cef6d814a335b39fe7d",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 유나라 둔화 후 이즈리얼이 비전 이동하는 경우와 기술 빗나감을 대입했다. 본문은 둔화를 이동 기술 제거로 취급하지 않고 위치 변경 시 거리 계획 재검토를 요구한다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «투사체나 광선이 빗나가거나 상대가 위치를 바꾸면 거리 계획을 다시 세우세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «투사체나 광선이 빗나가거나 상대가 위치를 바꾸면 거리 계획을 다시 세우세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Yunara 관련 실제 cohort 3개, positions=BOTTOM, points.champion_n=2..34를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-026",
+      "candidate_sha256": "bd43bb16911d7e19905bc98759d1c2bfcef17aa9ebfb3d5ea90352f8f29f0cde",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 매 날리기가 드러낸 장소와 이동 시점이 달라지거나 리신이 음파 후 재접근하는 경우를 대입했다. 본문은 모든 경로 안전을 주장하지 않고 관측 장소·시간이 경로 확인에 부족하면 진입을 보류한다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «관측한 곳과 시간이 이동 경로를 확인해 주지 못하면 진입을 보류하세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «관측한 곳과 시간이 이동 경로를 확인해 주지 못하면 진입을 보류하세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Ashe 관련 실제 cohort 3개, positions=BOTTOM, points.champion_n=1..1를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-027",
+      "candidate_sha256": "813300db9d7e99b803cb046553f493fdbbca3c39ee3b9913c496e3fe2afbf571",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 이즈리얼의 비전 이동, 다른 챔피언의 가로막기, 아군 후속 불가를 대입했다. 본문은 최초 충돌 대상 및 아군 위치 점검과 원래 목표 추격 중단을 요구하며 장거리 적중이나 후속을 보장하지 않는다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «화살이 빗나가거나 다른 챔피언에게 맞으면 원래 목표를 따라가지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «화살이 빗나가거나 다른 챔피언에게 맞으면 원래 목표를 따라가지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Ashe 관련 실제 cohort 3개, positions=BOTTOM, points.champion_n=1..1를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-028",
+      "candidate_sha256": "5a550708cd304138f7b585ba3706a0de664379d058c86f8f1d2d6af3bca60e0d",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 집중 미달 상태와 노틸러스 첫 기본 공격의 이동 불가를 대입했다. 본문은 최대 집중을 확인하도록 하며, 상태·거리 미확인 시 강화 공격을 전제로 접근하지 않도록 한다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «집중 상태나 상대와의 거리를 확인할 수 없으면 강화 공격을 전제로 접근하지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «집중 상태나 상대와의 거리를 확인할 수 없으면 강화 공격을 전제로 접근하지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Ashe 관련 실제 cohort 3개, positions=BOTTOM, points.champion_n=1..1를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-029",
+      "candidate_sha256": "798bddcb5022df533fc3fef8d79e8ccd43d43e37ccc7f75a0041079007b22fef",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 아군 효과가 둔화뿐인 경우와 노틸러스의 추적 궁극기를 대입했다. 공식 발췌는 아군 immobilizing effects만 플라스마를 돕는다고 하며 본문도 둔화를 일괄 인정하지 않는다. 대상 일치는 공격 안전 보장이 아니다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «아군의 이동 불가 적중이나 대상이 확인되지 않으면 중첩을 전제로 접근하지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «아군의 이동 불가 적중이나 대상이 확인되지 않으면 중첩을 전제로 접근하지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Kaisa 관련 실제 cohort 6개, positions=BOTTOM,TOP, points.champion_n=1..40를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-030",
+      "candidate_sha256": "7297b61cacf0ed13ea239be3abc068016f2668045594284f399521d11bf8c108",
+      "verdict": "HOLD",
+      "reasons": [
+        "패치 도전: spec.patches는 16.20, 발췌의 URL·patch는 16.20.1이다. 별도 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 Q15 source.patch=16.20을 확인했다. 이름의 단순 불일치만으로 게임 반례로 삼지 않았으며 다른 패치나 16.20의 모든 후속 변경까지 검증한 것으로 확대하지 않는다.",
+        "게임 반례 검사: 미진화 고속 충전에 은신이 있다고 오인하거나 은신만 믿고 노틸러스 닻 경로로 진입하는 경우를 대입했다. 본문은 진화 여부와 목적지를 확인하고 은신을 안전 보장으로 취급하지 않는다.",
+        "구조 의미 불일치로 HOLD: plan_guard.invalidation_signals의 field=ALLY_MINIMAP이지만 text는 «진화 상태나 이동할 자리를 모르면 은신을 전제로 들어가지 마세요.»이다. contracts/pregame-v2.md의 VisibleSignal은 명시된 미래 수동 점검 분야를 가리킨다. 아군 미니맵으로 확인할 수 없는 적중·스킬 상태·적 경로 등의 문장을 이 분야로 표시해 점검 근거와 문장이 일치하지 않는다. 수동 상황 조언과 해당 타입의 점검을 분리한 별도 계보가 필요하다. 빈 stop_conditions를 자동 상태 감시로 보완하라는 뜻이 아니며 PRE_GAME에서 사용 가능 여부를 판정해서도 안 된다."
+      ],
+      "counterexamples": [
+        "구조 반례: patch=16.20 및 현재 conditions의 챔피언 조합이 모두 맞고 아군 미니맵의 위치 점검은 끝났지만, «진화 상태나 이동할 자리를 모르면 은신을 전제로 들어가지 마세요.»에 필요한 별도 화면 정보가 아직 없는 입력 상황을 대입했다. ALLY_MINIMAP 확인으로 이 중단 조건을 확인한 것으로 기록할 수 없다. 본문 수동 조건의 유용성과 별개로 현재 guard 분야는 그 정보를 나타내지 못한다."
+      ],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 직접 해제: schema=pregame.power-data.v1, source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 전체 852 cohort의 metric은 gold_delta/xp_delta/cs_delta, comparison은 ROLE_POPULATION이며 opponent_champion=null이다. Kaisa 관련 실제 cohort 6개, positions=BOTTOM,TOP, points.champion_n=1..40를 확인했다. 이 행의 피해·기절·이동·적중 메커니즘은 Q15에 스킬 상태/거리/피해 필드가 없어 통계 검증 대상이 아니다. 수치 전술 주장과 성능·승률·시점 기준이 없어 통계적 일치 또는 조언 유효성으로 승격하지 않는다."
+        }
+      ]
+    }
+  ]
+}
