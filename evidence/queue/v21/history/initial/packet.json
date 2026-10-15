@@ -1,0 +1,3522 @@
+{
+  "schema_version": "auto-review.packet.v1",
+  "author": "Codex/Main: prior practical-review authoring preserved",
+  "rows": [
+    {
+      "id": "KR-001",
+      "original_candidate_id": "Q05-I-Ornn",
+      "original_spec_sha256": "83a19b9231daaf9925828d61a0a60fbcb17eb5048a707f0f43fcae0423225ace",
+      "champion": "Ornn",
+      "advice": {
+        "상황": "오른으로 피오라를 상대하며 벽 근처에서 싸움을 열려는 때",
+        "할 것": "피오라의 응수가 끝났는지 확인한 뒤 벽과 돌진 방향을 정하세요.",
+        "하지 말 것": "응수가 가능한 피오라에게 벽 돌진을 바로 쓰지 마세요.",
+        "상대 권리": "피오라는 응수로 이동 불가 효과를 막으면 찌르기에 맞은 적을 기절시킬 수 있습니다.",
+        "무효 조건": "피오라의 응수 사용 여부나 벽 충돌 경로를 모르면 진입을 보류하세요.",
+        "근거": "공식 설명 확인: 오른의 돌진은 지형 충돌 시 주변 적을 띄웁니다. 피오라의 응수는 피해와 방해 효과를 막고, 이동 불가 효과를 막았을 때 찌르기에 기절을 더합니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-001",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "TOP"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ornn.json",
+            "title": "오른 공식 스킬 설명",
+            "locator": "data.Ornn.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "6b5c63d0a13bb342d40cd5b2feef2005e5a5c094964790cf6dea5ecbc1f41929",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Fiora.json",
+            "title": "피오라 공식 스킬 설명",
+            "locator": "data.Fiora.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "7a089668881a767f3bf3dbc6e312a94d0f55d7b9ce9d3ea27d8a7e921b2a867e",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Ornn"
+          },
+          {
+            "field": "enemy.TOP.champion",
+            "op": "EQ",
+            "value": "Fiora"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "피오라의 응수 사용 여부나 벽 충돌 경로를 모르면 진입을 보류하세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Ornn"
+        ],
+        "output": {
+          "section": "LANE",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 오른으로 피오라를 상대하며 벽 근처에서 싸움을 열려는 때\n할 것: 피오라의 응수가 끝났는지 확인한 뒤 벽과 돌진 방향을 정하세요.\n하지 말 것: 응수가 가능한 피오라에게 벽 돌진을 바로 쓰지 마세요.\n상대 권리: 피오라는 응수로 이동 불가 효과를 막으면 찌르기에 맞은 적을 기절시킬 수 있습니다.\n무효 조건: 피오라의 응수 사용 여부나 벽 충돌 경로를 모르면 진입을 보류하세요.\n근거: 공식 설명 확인: 오른의 돌진은 지형 충돌 시 주변 적을 띄웁니다. 피오라의 응수는 피해와 방해 효과를 막고, 이동 불가 효과를 막았을 때 찌르기에 기절을 더합니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "피오라의 응수 사용 여부나 벽 충돌 경로를 모르면 진입을 보류하세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "오른으로 피오라를 상대하며 벽 근처에서 싸움을 열려는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "피오라의 응수 사용 여부나 벽 충돌 경로를 모르면 진입을 보류하세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "ecd235848eb81af40207fd40e851417a6dafca55f65fae6c4c041ab8a19a2564",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ornn.json",
+          "title": "오른 공식 스킬 설명",
+          "locator": "data.Ornn.spells.2.description",
+          "patch": "16.20.1",
+          "excerpt": "Ornn charges, dealing damage to enemies he passes through. If Ornn collides with terrain while charging, the impact creates a shockwave around him which deals damage and knocks up enemies.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "6b5c63d0a13bb342d40cd5b2feef2005e5a5c094964790cf6dea5ecbc1f41929"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Fiora.json",
+          "title": "피오라 공식 스킬 설명",
+          "locator": "data.Fiora.spells.1.description",
+          "patch": "16.20.1",
+          "excerpt": "Fiora parries all incoming damage and disables for a short time, then stabs in a direction. This stab slows the first enemy champion hit, or stuns them if Fiora blocked an immobilizing effect with this ability.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "7a089668881a767f3bf3dbc6e312a94d0f55d7b9ce9d3ea27d8a7e921b2a867e"
+        }
+      ]
+    },
+    {
+      "id": "KR-002",
+      "original_candidate_id": "Q05-I-Ornn",
+      "original_spec_sha256": "83a19b9231daaf9925828d61a0a60fbcb17eb5048a707f0f43fcae0423225ace",
+      "champion": "Ornn",
+      "advice": {
+        "상황": "오른의 궁극기로 아군과 함께 싸움을 시작하려는 때",
+        "할 것": "정령이 돌아오는 경로와 다시 부딪칠 방향을 먼저 보세요.",
+        "하지 말 것": "처음 지나간 정령만 보고 적이 이미 공중에 떴다고 판단하지 마세요.",
+        "상대 권리": "피오라가 응수로 띄우기를 막으면 기절로 되받아칠 수 있습니다.",
+        "무효 조건": "정령에 다시 부딪칠 수 없거나 아군이 이어갈 수 없으면 진입 계획을 바꾸세요.",
+        "근거": "공식 설명 확인: 오른의 정령은 처음에는 둔화와 불안정 상태를 주며, 다시 부딪쳐 방향을 바꾼 뒤 지나가는 적을 띄웁니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-002",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "TOP"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ornn.json",
+            "title": "오른 공식 스킬 설명",
+            "locator": "data.Ornn.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "6b5c63d0a13bb342d40cd5b2feef2005e5a5c094964790cf6dea5ecbc1f41929",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Fiora.json",
+            "title": "피오라 공식 스킬 설명",
+            "locator": "data.Fiora.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "7a089668881a767f3bf3dbc6e312a94d0f55d7b9ce9d3ea27d8a7e921b2a867e",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Ornn"
+          },
+          {
+            "field": "enemy.TOP.champion",
+            "op": "EQ",
+            "value": "Fiora"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "정령에 다시 부딪칠 수 없거나 아군이 이어갈 수 없으면 진입 계획을 바꾸세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Ornn"
+        ],
+        "output": {
+          "section": "FIGHT",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 오른의 궁극기로 아군과 함께 싸움을 시작하려는 때\n할 것: 정령이 돌아오는 경로와 다시 부딪칠 방향을 먼저 보세요.\n하지 말 것: 처음 지나간 정령만 보고 적이 이미 공중에 떴다고 판단하지 마세요.\n상대 권리: 피오라가 응수로 띄우기를 막으면 기절로 되받아칠 수 있습니다.\n무효 조건: 정령에 다시 부딪칠 수 없거나 아군이 이어갈 수 없으면 진입 계획을 바꾸세요.\n근거: 공식 설명 확인: 오른의 정령은 처음에는 둔화와 불안정 상태를 주며, 다시 부딪쳐 방향을 바꾼 뒤 지나가는 적을 띄웁니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "정령에 다시 부딪칠 수 없거나 아군이 이어갈 수 없으면 진입 계획을 바꾸세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "오른의 궁극기로 아군과 함께 싸움을 시작하려는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "정령에 다시 부딪칠 수 없거나 아군이 이어갈 수 없으면 진입 계획을 바꾸세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "67218cfdfad869bba4437e71dec7eb7b39608a9f9ad96d71843bce658b2bc655",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ornn.json",
+          "title": "오른 공식 스킬 설명",
+          "locator": "data.Ornn.spells.3.description",
+          "patch": "16.20.1",
+          "excerpt": "Ornn summons a massive elemental at a location which travels toward him with increasing speed. Enemies run over by the elemental take damage, are slowed and are made Brittle. Ornn can recast the ability to charge into the elemental, redirecting it in the direction he hits it, causing the elemental to affect any enemies it runs over to be knocked up, dealing the same damage and re-applying Brittle.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "6b5c63d0a13bb342d40cd5b2feef2005e5a5c094964790cf6dea5ecbc1f41929"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Fiora.json",
+          "title": "피오라 공식 스킬 설명",
+          "locator": "data.Fiora.spells.1.description",
+          "patch": "16.20.1",
+          "excerpt": "Fiora parries all incoming damage and disables for a short time, then stabs in a direction. This stab slows the first enemy champion hit, or stuns them if Fiora blocked an immobilizing effect with this ability.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "7a089668881a767f3bf3dbc6e312a94d0f55d7b9ce9d3ea27d8a7e921b2a867e"
+        }
+      ]
+    },
+    {
+      "id": "KR-003",
+      "original_candidate_id": "Q05-I-Sejuani",
+      "original_spec_sha256": "5470fdd880caf001926f5659cc028d24ff9cd9cc4d94dd328b56ba971c9e7f32",
+      "champion": "Sejuani",
+      "advice": {
+        "상황": "세주아니로 적에게 서리 중첩을 쌓으며 접근하는 때",
+        "할 것": "최대 중첩이 되었는지 확인한 뒤 얼리는 기술로 연결하세요.",
+        "하지 말 것": "중첩 확인 없이 언제나 즉시 기절시킬 수 있다고 생각하지 마세요.",
+        "상대 권리": "리신은 궁극기로 대상을 차서 밀어내고 충돌한 다른 적도 띄울 수 있습니다.",
+        "무효 조건": "중첩이나 기술 사용 가능 여부를 모르면 기절을 전제로 들어가지 마세요.",
+        "근거": "공식 설명 확인: 세주아니의 영구 동토는 서리 중첩이 최대인 적 챔피언을 얼리고 기절시킵니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-003",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "JUNGLE"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Sejuani.json",
+            "title": "세주아니 공식 스킬 설명",
+            "locator": "data.Sejuani.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "2deba1bd3c270216bad103a16a920b0fa8cfa5e8d199bbc7aebbb194b725dfa3",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/LeeSin.json",
+            "title": "리신 공식 스킬 설명",
+            "locator": "data.LeeSin.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "1f73eed2730b956dce393e51d9fcd18765ded329bfde46470ff3e3e8761099d4",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Sejuani"
+          },
+          {
+            "field": "enemy.JUNGLE.champion",
+            "op": "EQ",
+            "value": "LeeSin"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "중첩이나 기술 사용 가능 여부를 모르면 기절을 전제로 들어가지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Sejuani"
+        ],
+        "output": {
+          "section": "ROLE",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 세주아니로 적에게 서리 중첩을 쌓으며 접근하는 때\n할 것: 최대 중첩이 되었는지 확인한 뒤 얼리는 기술로 연결하세요.\n하지 말 것: 중첩 확인 없이 언제나 즉시 기절시킬 수 있다고 생각하지 마세요.\n상대 권리: 리신은 궁극기로 대상을 차서 밀어내고 충돌한 다른 적도 띄울 수 있습니다.\n무효 조건: 중첩이나 기술 사용 가능 여부를 모르면 기절을 전제로 들어가지 마세요.\n근거: 공식 설명 확인: 세주아니의 영구 동토는 서리 중첩이 최대인 적 챔피언을 얼리고 기절시킵니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "중첩이나 기술 사용 가능 여부를 모르면 기절을 전제로 들어가지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "세주아니로 적에게 서리 중첩을 쌓으며 접근하는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "중첩이나 기술 사용 가능 여부를 모르면 기절을 전제로 들어가지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "cb434a7293b3ed87176bb78e23c14b61df8d5f319ddcec942182d8bf84fc7534",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Sejuani.json",
+          "title": "세주아니 공식 스킬 설명",
+          "locator": "data.Sejuani.spells.2.description",
+          "patch": "16.20.1",
+          "excerpt": "Sejuani freezes and stuns an enemy champion that has maximum Frost stacks.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "2deba1bd3c270216bad103a16a920b0fa8cfa5e8d199bbc7aebbb194b725dfa3"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/LeeSin.json",
+          "title": "리신 공식 스킬 설명",
+          "locator": "data.LeeSin.spells.3.description",
+          "patch": "16.20.1",
+          "excerpt": "Lee Sin performs a powerful roundhouse kick launching his target back, dealing physical damage to the target and any enemies they collide with. Enemies the target collides with are knocked into the air for a short duration. This technique was taught to him by Jesse Perring, although Lee Sin does not kick players off the map.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "1f73eed2730b956dce393e51d9fcd18765ded329bfde46470ff3e3e8761099d4"
+        }
+      ]
+    },
+    {
+      "id": "KR-004",
+      "original_candidate_id": "Q05-I-Sejuani",
+      "original_spec_sha256": "5470fdd880caf001926f5659cc028d24ff9cd9cc4d94dd328b56ba971c9e7f32",
+      "champion": "Sejuani",
+      "advice": {
+        "상황": "세주아니의 궁극기로 뒤쪽 적을 노리는 때",
+        "할 것": "투사체가 먼저 만날 적을 확인하고 목표를 정하세요.",
+        "하지 말 것": "앞의 적을 지나 뒤의 목표에게 바로 맞는다고 가정하지 마세요.",
+        "상대 권리": "리신은 아군에게 이동하면서 자신을 보호하고, 대상이 챔피언이면 그 아군도 보호할 수 있습니다.",
+        "무효 조건": "앞의 적이 가로막거나 아군이 공격을 이어갈 수 없으면 목표를 바꾸세요.",
+        "근거": "공식 설명 확인: 세주아니의 궁극기는 처음 맞힌 챔피언을 얼리고 기절시키며 주변에는 둔화를 남깁니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-004",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "JUNGLE"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Sejuani.json",
+            "title": "세주아니 공식 스킬 설명",
+            "locator": "data.Sejuani.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "2deba1bd3c270216bad103a16a920b0fa8cfa5e8d199bbc7aebbb194b725dfa3",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/LeeSin.json",
+            "title": "리신 공식 스킬 설명",
+            "locator": "data.LeeSin.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "1f73eed2730b956dce393e51d9fcd18765ded329bfde46470ff3e3e8761099d4",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Sejuani"
+          },
+          {
+            "field": "enemy.JUNGLE.champion",
+            "op": "EQ",
+            "value": "LeeSin"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "앞의 적이 가로막거나 아군이 공격을 이어갈 수 없으면 목표를 바꾸세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Sejuani"
+        ],
+        "output": {
+          "section": "FIGHT",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 세주아니의 궁극기로 뒤쪽 적을 노리는 때\n할 것: 투사체가 먼저 만날 적을 확인하고 목표를 정하세요.\n하지 말 것: 앞의 적을 지나 뒤의 목표에게 바로 맞는다고 가정하지 마세요.\n상대 권리: 리신은 아군에게 이동하면서 자신을 보호하고, 대상이 챔피언이면 그 아군도 보호할 수 있습니다.\n무효 조건: 앞의 적이 가로막거나 아군이 공격을 이어갈 수 없으면 목표를 바꾸세요.\n근거: 공식 설명 확인: 세주아니의 궁극기는 처음 맞힌 챔피언을 얼리고 기절시키며 주변에는 둔화를 남깁니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "앞의 적이 가로막거나 아군이 공격을 이어갈 수 없으면 목표를 바꾸세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "세주아니의 궁극기로 뒤쪽 적을 노리는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "앞의 적이 가로막거나 아군이 공격을 이어갈 수 없으면 목표를 바꾸세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "27d345ac2aa1d3a9e9ebefde7d0d1f6090f5790be25b9ca54cc166ebb0d76614",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Sejuani.json",
+          "title": "세주아니 공식 스킬 설명",
+          "locator": "data.Sejuani.spells.3.description",
+          "patch": "16.20.1",
+          "excerpt": "Sejuani throws her bola that freezes and stuns the first champion hit and creates an ice storm that slows other enemies.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "2deba1bd3c270216bad103a16a920b0fa8cfa5e8d199bbc7aebbb194b725dfa3"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/LeeSin.json",
+          "title": "리신 공식 스킬 설명",
+          "locator": "data.LeeSin.spells.1.description",
+          "patch": "16.20.1",
+          "excerpt": "Safeguard: Lee Sin rushes to target ally, shielding himself from damage. If the ally is a champion, they are also shielded. After using Safeguard, Lee Sin can cast Iron Will.<br>Iron Will: Lee Sin's intense training allows him to thrive in battle. Lee Sin gains Omnivamp.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "1f73eed2730b956dce393e51d9fcd18765ded329bfde46470ff3e3e8761099d4"
+        }
+      ]
+    },
+    {
+      "id": "KR-005",
+      "original_candidate_id": "Q05-I-Ahri",
+      "original_spec_sha256": "346334802794f4ec4d9de1cd66b7de5f6ac51ffe33b6329ca50ad4579dded693",
+      "champion": "Ahri",
+      "advice": {
+        "상황": "아리로 제드의 접근에 대응하거나 매혹 뒤에 공격하려는 때",
+        "할 것": "매혹이 맞은 것을 보고 다음 공격을 이어가세요.",
+        "하지 말 것": "매혹을 빗맞힌 뒤에도 같은 거리로 따라 들어가지 마세요.",
+        "상대 권리": "제드는 궁극기를 쓸 때 대상으로 지정되지 않는 상태가 되어 다가오고, 표식 동안 준 피해 일부를 다시 가합니다.",
+        "무효 조건": "매혹이 빗나가거나 제드가 대상으로 지정되지 않으면 계획을 멈추세요.",
+        "근거": "공식 설명 확인: 아리의 매혹은 적에게 맞으면 이동 기술을 멈추고 아리 쪽으로 걷게 만듭니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-005",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "MID"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ahri.json",
+            "title": "아리 공식 스킬 설명",
+            "locator": "data.Ahri.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "27a17429c2ee4391b190242985ad252e47eb7fe01e016db81c10497ecd4a3cb8",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Zed.json",
+            "title": "제드 공식 스킬 설명",
+            "locator": "data.Zed.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "16a4a845aad6967e74aac981400571b66f8cb59007247d6f6c7e0442e6519cd2",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Ahri"
+          },
+          {
+            "field": "enemy.MID.champion",
+            "op": "EQ",
+            "value": "Zed"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "매혹이 빗나가거나 제드가 대상으로 지정되지 않으면 계획을 멈추세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Ahri"
+        ],
+        "output": {
+          "section": "LANE",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 아리로 제드의 접근에 대응하거나 매혹 뒤에 공격하려는 때\n할 것: 매혹이 맞은 것을 보고 다음 공격을 이어가세요.\n하지 말 것: 매혹을 빗맞힌 뒤에도 같은 거리로 따라 들어가지 마세요.\n상대 권리: 제드는 궁극기를 쓸 때 대상으로 지정되지 않는 상태가 되어 다가오고, 표식 동안 준 피해 일부를 다시 가합니다.\n무효 조건: 매혹이 빗나가거나 제드가 대상으로 지정되지 않으면 계획을 멈추세요.\n근거: 공식 설명 확인: 아리의 매혹은 적에게 맞으면 이동 기술을 멈추고 아리 쪽으로 걷게 만듭니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "매혹이 빗나가거나 제드가 대상으로 지정되지 않으면 계획을 멈추세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "아리로 제드의 접근에 대응하거나 매혹 뒤에 공격하려는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "매혹이 빗나가거나 제드가 대상으로 지정되지 않으면 계획을 멈추세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "c677b3c9f44a88f158c4f7134b3ce6d1c642e169bfcb927e3fceff983c80872b",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ahri.json",
+          "title": "아리 공식 스킬 설명",
+          "locator": "data.Ahri.spells.2.description",
+          "patch": "16.20.1",
+          "excerpt": "Ahri blows a kiss that damages and charms an enemy it encounters, instantly stopping movement abilities and causing them to walk harmlessly towards her.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "27a17429c2ee4391b190242985ad252e47eb7fe01e016db81c10497ecd4a3cb8"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Zed.json",
+          "title": "제드 공식 스킬 설명",
+          "locator": "data.Zed.spells.3.description",
+          "patch": "16.20.1",
+          "excerpt": "Zed becomes untargetable and dashes to an enemy champion, marking them. After 3 seconds the mark triggers, repeating a portion of all the damage Zed dealt to the target while they were marked.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "16a4a845aad6967e74aac981400571b66f8cb59007247d6f6c7e0442e6519cd2"
+        }
+      ]
+    },
+    {
+      "id": "KR-006",
+      "original_candidate_id": "Q05-I-Ahri",
+      "original_spec_sha256": "346334802794f4ec4d9de1cd66b7de5f6ac51ffe33b6329ca50ad4579dded693",
+      "champion": "Ahri",
+      "advice": {
+        "상황": "아리의 궁극기로 공격과 이동을 함께 하려는 때",
+        "할 것": "남은 이동 사용 횟수와 돌아갈 길을 확인하고 접근하세요.",
+        "하지 말 것": "추가 이동을 얻을 것이라고 미리 가정해 퇴로를 버리지 마세요.",
+        "상대 권리": "제드는 살아있는 그림자를 다시 사용해 그림자와 위치를 바꿀 수 있습니다.",
+        "무효 조건": "남은 이동이나 제드의 그림자 위치를 확인할 수 없으면 깊게 따라가지 마세요.",
+        "근거": "공식 설명 확인: 아리의 궁극기는 여러 번 이동할 수 있으며 적 챔피언 처치 관여 시 추가 사용을 얻습니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-006",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "MID"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ahri.json",
+            "title": "아리 공식 스킬 설명",
+            "locator": "data.Ahri.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "27a17429c2ee4391b190242985ad252e47eb7fe01e016db81c10497ecd4a3cb8",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Zed.json",
+            "title": "제드 공식 스킬 설명",
+            "locator": "data.Zed.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "16a4a845aad6967e74aac981400571b66f8cb59007247d6f6c7e0442e6519cd2",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Ahri"
+          },
+          {
+            "field": "enemy.MID.champion",
+            "op": "EQ",
+            "value": "Zed"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "남은 이동이나 제드의 그림자 위치를 확인할 수 없으면 깊게 따라가지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Ahri"
+        ],
+        "output": {
+          "section": "FIGHT",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 아리의 궁극기로 공격과 이동을 함께 하려는 때\n할 것: 남은 이동 사용 횟수와 돌아갈 길을 확인하고 접근하세요.\n하지 말 것: 추가 이동을 얻을 것이라고 미리 가정해 퇴로를 버리지 마세요.\n상대 권리: 제드는 살아있는 그림자를 다시 사용해 그림자와 위치를 바꿀 수 있습니다.\n무효 조건: 남은 이동이나 제드의 그림자 위치를 확인할 수 없으면 깊게 따라가지 마세요.\n근거: 공식 설명 확인: 아리의 궁극기는 여러 번 이동할 수 있으며 적 챔피언 처치 관여 시 추가 사용을 얻습니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "남은 이동이나 제드의 그림자 위치를 확인할 수 없으면 깊게 따라가지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "아리의 궁극기로 공격과 이동을 함께 하려는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "남은 이동이나 제드의 그림자 위치를 확인할 수 없으면 깊게 따라가지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "52ad940b263641f4cd4b75812d1b8d15bcde5f6646f033b999bf99d5fc0aa2a4",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ahri.json",
+          "title": "아리 공식 스킬 설명",
+          "locator": "data.Ahri.spells.3.description",
+          "patch": "16.20.1",
+          "excerpt": "Ahri dashes forward and fires essence bolts, damaging nearby enemies. Spirit Rush can be cast up to three times before going on cooldown, and gains additional recasts when taking down enemy champions.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "27a17429c2ee4391b190242985ad252e47eb7fe01e016db81c10497ecd4a3cb8"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Zed.json",
+          "title": "제드 공식 스킬 설명",
+          "locator": "data.Zed.spells.1.description",
+          "patch": "16.20.1",
+          "excerpt": "<font color='#FF9900'>Passive:</font> Zed gains energy whenever he and his shadows strike an enemy with the same ability. Energy can only be gained once per cast ability.<br><br><font color='#FF9900'>Active:</font> Zed's shadow dashes forward, remaining in place for a few seconds. Reactivating Living Shadow will cause Zed to switch positions with this shadow.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "16a4a845aad6967e74aac981400571b66f8cb59007247d6f6c7e0442e6519cd2"
+        }
+      ]
+    },
+    {
+      "id": "KR-007",
+      "original_candidate_id": "Q05-I-Caitlyn",
+      "original_spec_sha256": "803e9df763603187485615519c171cf52b9cce8a4c5bf68eba6de6a18dea1f32",
+      "champion": "Caitlyn",
+      "advice": {
+        "상황": "케이틀린으로 럭스의 속박에 맞은 적 근처에 덫을 놓으려는 때",
+        "할 것": "속박이 맞은 위치를 보고 덫을 놓을 후보 자리를 정하세요.",
+        "하지 말 것": "덫을 놓았다는 이유만으로 적이 밟았다고 생각하지 마세요.",
+        "상대 권리": "이즈리얼은 비전 이동으로 근처 위치로 순간이동할 수 있습니다.",
+        "무효 조건": "속박이 빗나가거나 적이 덫을 밟지 않으면 강화 공격을 전제로 따라가지 마세요.",
+        "근거": "공식 설명 확인: 케이틀린의 덫은 발동하면 적 챔피언을 드러내고 묶으며 강화된 헤드샷을 줍니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-007",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "BOTTOM"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Caitlyn.json",
+            "title": "케이틀린 공식 스킬 설명",
+            "locator": "data.Caitlyn.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "151a89d2f1d2cf7f79eb017aadfa29f1514bd52078f8d15c0522ea7c974297b1",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ezreal.json",
+            "title": "이즈리얼 공식 스킬 설명",
+            "locator": "data.Ezreal.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "cee607e5b067723cb3e3eeacbdcf85dba4d573e7818d695abb554e2928a84859",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Lux.json",
+            "title": "럭스 공식 스킬 설명",
+            "locator": "data.Lux.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "54342f28c2e1d8449e831906aefcb74fe374e6130049520fff3c7ad70e237a70",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Caitlyn"
+          },
+          {
+            "field": "enemy.BOTTOM.champion",
+            "op": "EQ",
+            "value": "Ezreal"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "속박이 빗나가거나 적이 덫을 밟지 않으면 강화 공격을 전제로 따라가지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Caitlyn"
+        ],
+        "output": {
+          "section": "LANE",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 케이틀린으로 럭스의 속박에 맞은 적 근처에 덫을 놓으려는 때\n할 것: 속박이 맞은 위치를 보고 덫을 놓을 후보 자리를 정하세요.\n하지 말 것: 덫을 놓았다는 이유만으로 적이 밟았다고 생각하지 마세요.\n상대 권리: 이즈리얼은 비전 이동으로 근처 위치로 순간이동할 수 있습니다.\n무효 조건: 속박이 빗나가거나 적이 덫을 밟지 않으면 강화 공격을 전제로 따라가지 마세요.\n근거: 공식 설명 확인: 케이틀린의 덫은 발동하면 적 챔피언을 드러내고 묶으며 강화된 헤드샷을 줍니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "속박이 빗나가거나 적이 덫을 밟지 않으면 강화 공격을 전제로 따라가지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "케이틀린으로 럭스의 속박에 맞은 적 근처에 덫을 놓으려는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "속박이 빗나가거나 적이 덫을 밟지 않으면 강화 공격을 전제로 따라가지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "d8dd6d004672ca197fec5967023df96237666ce2b000ec4e21694a447fb5dbfe",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Caitlyn.json",
+          "title": "케이틀린 공식 스킬 설명",
+          "locator": "data.Caitlyn.spells.1.description",
+          "patch": "16.20.1",
+          "excerpt": "Caitlyn sets a trap that, when sprung, reveals and immobilizes the enemy champion for 1.5 seconds, granting Caitlyn an empowered Headshot.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "151a89d2f1d2cf7f79eb017aadfa29f1514bd52078f8d15c0522ea7c974297b1"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ezreal.json",
+          "title": "이즈리얼 공식 스킬 설명",
+          "locator": "data.Ezreal.spells.2.description",
+          "patch": "16.20.1",
+          "excerpt": "Ezreal teleports to a target nearby location and fires a homing bolt which strikes the nearest enemy unit. Prioritizes enemies stuck with Essence Flux.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "cee607e5b067723cb3e3eeacbdcf85dba4d573e7818d695abb554e2928a84859"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Lux.json",
+          "title": "럭스 공식 스킬 설명",
+          "locator": "data.Lux.spells.0.description",
+          "patch": "16.20.1",
+          "excerpt": "Lux releases a sphere of light that binds and deals damage to up to two enemy units.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "54342f28c2e1d8449e831906aefcb74fe374e6130049520fff3c7ad70e237a70"
+        }
+      ]
+    },
+    {
+      "id": "KR-008",
+      "original_candidate_id": "Q05-I-Caitlyn",
+      "original_spec_sha256": "803e9df763603187485615519c171cf52b9cce8a4c5bf68eba6de6a18dea1f32",
+      "champion": "Caitlyn",
+      "advice": {
+        "상황": "케이틀린으로 노틸러스의 접근을 피해 이동하려는 때",
+        "할 것": "투망의 반동으로 밀려날 방향과 착지할 곳을 먼저 보세요.",
+        "하지 말 것": "상대를 맞히는 데만 집중해 위험한 쪽으로 밀려나지 마세요.",
+        "상대 권리": "노틸러스의 닻은 적과 부딪치면 서로를 끌어당기고, 지형에 맞으면 노틸러스가 이동합니다.",
+        "무효 조건": "밀려날 자리가 위험하거나 이동 후에도 닻 경로가 열리면 다른 퇴로를 고르세요.",
+        "근거": "공식 설명 확인: 케이틀린의 투망은 대상을 둔화시키고 반동으로 케이틀린을 뒤로 밀어냅니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-008",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "BOTTOM"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Caitlyn.json",
+            "title": "케이틀린 공식 스킬 설명",
+            "locator": "data.Caitlyn.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "151a89d2f1d2cf7f79eb017aadfa29f1514bd52078f8d15c0522ea7c974297b1",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+            "title": "노틸러스 공식 스킬 설명",
+            "locator": "data.Nautilus.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Caitlyn"
+          },
+          {
+            "field": "enemy.SUPPORT.champion",
+            "op": "EQ",
+            "value": "Nautilus"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "밀려날 자리가 위험하거나 이동 후에도 닻 경로가 열리면 다른 퇴로를 고르세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Caitlyn"
+        ],
+        "output": {
+          "section": "FIGHT",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 케이틀린으로 노틸러스의 접근을 피해 이동하려는 때\n할 것: 투망의 반동으로 밀려날 방향과 착지할 곳을 먼저 보세요.\n하지 말 것: 상대를 맞히는 데만 집중해 위험한 쪽으로 밀려나지 마세요.\n상대 권리: 노틸러스의 닻은 적과 부딪치면 서로를 끌어당기고, 지형에 맞으면 노틸러스가 이동합니다.\n무효 조건: 밀려날 자리가 위험하거나 이동 후에도 닻 경로가 열리면 다른 퇴로를 고르세요.\n근거: 공식 설명 확인: 케이틀린의 투망은 대상을 둔화시키고 반동으로 케이틀린을 뒤로 밀어냅니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "밀려날 자리가 위험하거나 이동 후에도 닻 경로가 열리면 다른 퇴로를 고르세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "케이틀린으로 노틸러스의 접근을 피해 이동하려는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "밀려날 자리가 위험하거나 이동 후에도 닻 경로가 열리면 다른 퇴로를 고르세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "2dff01646e8c98669ddfba090ce2b194937bab2005640982181c5cc7715f8890",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Caitlyn.json",
+          "title": "케이틀린 공식 스킬 설명",
+          "locator": "data.Caitlyn.spells.2.description",
+          "patch": "16.20.1",
+          "excerpt": "Caitlyn fires a heavy net to slow her target. The recoil knocks Caitlyn back.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "151a89d2f1d2cf7f79eb017aadfa29f1514bd52078f8d15c0522ea7c974297b1"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+          "title": "노틸러스 공식 스킬 설명",
+          "locator": "data.Nautilus.spells.0.description",
+          "patch": "16.20.1",
+          "excerpt": "Nautilus hurls his anchor forward.  Colliding with an enemy pulls them and Nautilus together, dealing magic damage.  Colliding with terrain pulls Nautilus towards it.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff"
+        }
+      ]
+    },
+    {
+      "id": "KR-009",
+      "original_candidate_id": "Q05-I-Caitlyn",
+      "original_spec_sha256": "803e9df763603187485615519c171cf52b9cce8a4c5bf68eba6de6a18dea1f32",
+      "champion": "Caitlyn",
+      "advice": {
+        "상황": "케이틀린의 궁극기로 멀리 있는 적을 마무리하려는 때",
+        "할 것": "목표와 자신 사이에 다른 적 챔피언이 들어올 수 있는지 보세요.",
+        "하지 말 것": "궁극기 피해가 반드시 지정한 목표에게 들어간다고 가정하지 마세요.",
+        "상대 권리": "이즈리얼은 비전 이동으로 위치를 바꿀 수 있고 다른 적 챔피언은 궁극기 탄환을 대신 막을 수 있습니다.",
+        "무효 조건": "다른 적이 탄환을 막을 수 있거나 목표를 마무리할 근거가 없으면 확정 처치로 보지 마세요.",
+        "근거": "공식 설명 확인: 케이틀린의 궁극기 탄환은 다른 적 챔피언이 가로막아 아군 대신 맞을 수 있습니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-009",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "BOTTOM"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Caitlyn.json",
+            "title": "케이틀린 공식 스킬 설명",
+            "locator": "data.Caitlyn.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "151a89d2f1d2cf7f79eb017aadfa29f1514bd52078f8d15c0522ea7c974297b1",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ezreal.json",
+            "title": "이즈리얼 공식 스킬 설명",
+            "locator": "data.Ezreal.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "cee607e5b067723cb3e3eeacbdcf85dba4d573e7818d695abb554e2928a84859",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Caitlyn"
+          },
+          {
+            "field": "enemy.BOTTOM.champion",
+            "op": "EQ",
+            "value": "Ezreal"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "다른 적이 탄환을 막을 수 있거나 목표를 마무리할 근거가 없으면 확정 처치로 보지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Caitlyn"
+        ],
+        "output": {
+          "section": "ROLE",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 케이틀린의 궁극기로 멀리 있는 적을 마무리하려는 때\n할 것: 목표와 자신 사이에 다른 적 챔피언이 들어올 수 있는지 보세요.\n하지 말 것: 궁극기 피해가 반드시 지정한 목표에게 들어간다고 가정하지 마세요.\n상대 권리: 이즈리얼은 비전 이동으로 위치를 바꿀 수 있고 다른 적 챔피언은 궁극기 탄환을 대신 막을 수 있습니다.\n무효 조건: 다른 적이 탄환을 막을 수 있거나 목표를 마무리할 근거가 없으면 확정 처치로 보지 마세요.\n근거: 공식 설명 확인: 케이틀린의 궁극기 탄환은 다른 적 챔피언이 가로막아 아군 대신 맞을 수 있습니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "다른 적이 탄환을 막을 수 있거나 목표를 마무리할 근거가 없으면 확정 처치로 보지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "케이틀린의 궁극기로 멀리 있는 적을 마무리하려는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "다른 적이 탄환을 막을 수 있거나 목표를 마무리할 근거가 없으면 확정 처치로 보지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "3acad7ab948245b1544431ff6a07a20bb9f2ce729704a2cbfebf943ec2362e36",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Caitlyn.json",
+          "title": "케이틀린 공식 스킬 설명",
+          "locator": "data.Caitlyn.spells.3.description",
+          "patch": "16.20.1",
+          "excerpt": "Caitlyn takes time to line up the perfect shot, dealing massive damage to a single target at a huge range. Enemy champions can intercept the bullet for their ally.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "151a89d2f1d2cf7f79eb017aadfa29f1514bd52078f8d15c0522ea7c974297b1"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ezreal.json",
+          "title": "이즈리얼 공식 스킬 설명",
+          "locator": "data.Ezreal.spells.2.description",
+          "patch": "16.20.1",
+          "excerpt": "Ezreal teleports to a target nearby location and fires a homing bolt which strikes the nearest enemy unit. Prioritizes enemies stuck with Essence Flux.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "cee607e5b067723cb3e3eeacbdcf85dba4d573e7818d695abb554e2928a84859"
+        }
+      ]
+    },
+    {
+      "id": "KR-010",
+      "original_candidate_id": "Q05-I-Caitlyn",
+      "original_spec_sha256": "803e9df763603187485615519c171cf52b9cce8a4c5bf68eba6de6a18dea1f32",
+      "champion": "Caitlyn",
+      "advice": {
+        "상황": "케이틀린의 덫이나 투망에 적이 맞은 뒤 공격하려는 때",
+        "할 것": "맞은 대상과 강화 헤드샷을 쓸 수 있는지 확인하세요.",
+        "하지 말 것": "강화 공격을 위해 노틸러스가 닻을 맞힐 수 있는 자리까지 무리해서 들어가지 마세요.",
+        "상대 권리": "노틸러스가 닻을 맞히면 서로 끌려가므로 더 긴 공격 거리가 안전을 보장하지는 않습니다.",
+        "무효 조건": "덫이나 투망 적중이 확인되지 않거나 접근 경로가 위험하면 공격을 보류하세요.",
+        "근거": "공식 설명 확인: 덫이나 투망에 맞은 대상에게는 케이틀린의 헤드샷 사거리가 늘어납니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-010",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "BOTTOM"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Caitlyn.json",
+            "title": "케이틀린 공식 스킬 설명",
+            "locator": "data.Caitlyn.passive.description",
+            "patch": "16.20.1",
+            "sha256": "151a89d2f1d2cf7f79eb017aadfa29f1514bd52078f8d15c0522ea7c974297b1",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+            "title": "노틸러스 공식 스킬 설명",
+            "locator": "data.Nautilus.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Caitlyn"
+          },
+          {
+            "field": "enemy.SUPPORT.champion",
+            "op": "EQ",
+            "value": "Nautilus"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "덫이나 투망 적중이 확인되지 않거나 접근 경로가 위험하면 공격을 보류하세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Caitlyn"
+        ],
+        "output": {
+          "section": "LANE",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 케이틀린의 덫이나 투망에 적이 맞은 뒤 공격하려는 때\n할 것: 맞은 대상과 강화 헤드샷을 쓸 수 있는지 확인하세요.\n하지 말 것: 강화 공격을 위해 노틸러스가 닻을 맞힐 수 있는 자리까지 무리해서 들어가지 마세요.\n상대 권리: 노틸러스가 닻을 맞히면 서로 끌려가므로 더 긴 공격 거리가 안전을 보장하지는 않습니다.\n무효 조건: 덫이나 투망 적중이 확인되지 않거나 접근 경로가 위험하면 공격을 보류하세요.\n근거: 공식 설명 확인: 덫이나 투망에 맞은 대상에게는 케이틀린의 헤드샷 사거리가 늘어납니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "덫이나 투망 적중이 확인되지 않거나 접근 경로가 위험하면 공격을 보류하세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "케이틀린의 덫이나 투망에 적이 맞은 뒤 공격하려는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "덫이나 투망 적중이 확인되지 않거나 접근 경로가 위험하면 공격을 보류하세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "da42fac839cae82ea190144529171a211984210abf570705929509b9bc97fc19",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Caitlyn.json",
+          "title": "케이틀린 공식 스킬 설명",
+          "locator": "data.Caitlyn.passive.description",
+          "patch": "16.20.1",
+          "excerpt": "Every few basic attacks, or against a target she has trapped or netted, Caitlyn will fire a headshot dealing bonus damage that scales with her critical strike chance. On trapped or netted targets, Caitlyn's Headshot attack range is doubled.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "151a89d2f1d2cf7f79eb017aadfa29f1514bd52078f8d15c0522ea7c974297b1"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+          "title": "노틸러스 공식 스킬 설명",
+          "locator": "data.Nautilus.spells.0.description",
+          "patch": "16.20.1",
+          "excerpt": "Nautilus hurls his anchor forward.  Colliding with an enemy pulls them and Nautilus together, dealing magic damage.  Colliding with terrain pulls Nautilus towards it.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff"
+        }
+      ]
+    },
+    {
+      "id": "KR-011",
+      "original_candidate_id": "Q05-I-Lux",
+      "original_spec_sha256": "32da58342343e267e930396d52347231eeed3024b9df52e2c0d6e2fc92a4da76",
+      "champion": "Lux",
+      "advice": {
+        "상황": "럭스로 미니언 뒤의 적에게 속박을 노리는 때",
+        "할 것": "빛의 구속이 먼저 만날 대상들을 보고 조준하세요.",
+        "하지 말 것": "여러 적을 무제한으로 관통해 묶는다고 생각하지 마세요.",
+        "상대 권리": "이즈리얼은 비전 이동으로 위치를 바꿀 수 있습니다.",
+        "무효 조건": "앞의 대상들 때문에 목표에 닿을 수 없거나 속박이 빗나가면 전진하지 마세요.",
+        "근거": "공식 설명 확인: 빛의 구속은 최대 두 적 유닛을 묶고 피해를 줍니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-011",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "SUPPORT"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Lux.json",
+            "title": "럭스 공식 스킬 설명",
+            "locator": "data.Lux.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "54342f28c2e1d8449e831906aefcb74fe374e6130049520fff3c7ad70e237a70",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ezreal.json",
+            "title": "이즈리얼 공식 스킬 설명",
+            "locator": "data.Ezreal.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "cee607e5b067723cb3e3eeacbdcf85dba4d573e7818d695abb554e2928a84859",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Lux"
+          },
+          {
+            "field": "enemy.BOTTOM.champion",
+            "op": "EQ",
+            "value": "Ezreal"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "앞의 대상들 때문에 목표에 닿을 수 없거나 속박이 빗나가면 전진하지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Lux"
+        ],
+        "output": {
+          "section": "LANE",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 럭스로 미니언 뒤의 적에게 속박을 노리는 때\n할 것: 빛의 구속이 먼저 만날 대상들을 보고 조준하세요.\n하지 말 것: 여러 적을 무제한으로 관통해 묶는다고 생각하지 마세요.\n상대 권리: 이즈리얼은 비전 이동으로 위치를 바꿀 수 있습니다.\n무효 조건: 앞의 대상들 때문에 목표에 닿을 수 없거나 속박이 빗나가면 전진하지 마세요.\n근거: 공식 설명 확인: 빛의 구속은 최대 두 적 유닛을 묶고 피해를 줍니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "앞의 대상들 때문에 목표에 닿을 수 없거나 속박이 빗나가면 전진하지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "럭스로 미니언 뒤의 적에게 속박을 노리는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "앞의 대상들 때문에 목표에 닿을 수 없거나 속박이 빗나가면 전진하지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "e8046bb36fbea9787ed9d54c7e9986a5d7e45f00f2f12d99617805d026baa48f",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Lux.json",
+          "title": "럭스 공식 스킬 설명",
+          "locator": "data.Lux.spells.0.description",
+          "patch": "16.20.1",
+          "excerpt": "Lux releases a sphere of light that binds and deals damage to up to two enemy units.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "54342f28c2e1d8449e831906aefcb74fe374e6130049520fff3c7ad70e237a70"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ezreal.json",
+          "title": "이즈리얼 공식 스킬 설명",
+          "locator": "data.Ezreal.spells.2.description",
+          "patch": "16.20.1",
+          "excerpt": "Ezreal teleports to a target nearby location and fires a homing bolt which strikes the nearest enemy unit. Prioritizes enemies stuck with Essence Flux.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "cee607e5b067723cb3e3eeacbdcf85dba4d573e7818d695abb554e2928a84859"
+        }
+      ]
+    },
+    {
+      "id": "KR-012",
+      "original_candidate_id": "Q05-I-Lux",
+      "original_spec_sha256": "32da58342343e267e930396d52347231eeed3024b9df52e2c0d6e2fc92a4da76",
+      "champion": "Lux",
+      "advice": {
+        "상황": "럭스로 공격받는 아군을 보호하려는 때",
+        "할 것": "지팡이가 아군에게 닿는 경로를 보고 보호막을 보내세요.",
+        "하지 말 것": "보호막만으로 상대의 접근이나 제어가 없어졌다고 생각하지 마세요.",
+        "상대 권리": "노틸러스의 궁극기는 대상을 추적해 도착하면 띄우고 기절시킵니다.",
+        "무효 조건": "지팡이가 아군에 닿지 않거나 상대의 추적 공격이 계속되면 퇴로도 확보하세요.",
+        "근거": "공식 설명 확인: 럭스의 프리즘 보호막은 지팡이가 닿는 아군을 적 피해로부터 보호합니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-012",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "SUPPORT"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Lux.json",
+            "title": "럭스 공식 스킬 설명",
+            "locator": "data.Lux.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "54342f28c2e1d8449e831906aefcb74fe374e6130049520fff3c7ad70e237a70",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+            "title": "노틸러스 공식 스킬 설명",
+            "locator": "data.Nautilus.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Lux"
+          },
+          {
+            "field": "enemy.SUPPORT.champion",
+            "op": "EQ",
+            "value": "Nautilus"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "지팡이가 아군에 닿지 않거나 상대의 추적 공격이 계속되면 퇴로도 확보하세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Lux"
+        ],
+        "output": {
+          "section": "FIGHT",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 럭스로 공격받는 아군을 보호하려는 때\n할 것: 지팡이가 아군에게 닿는 경로를 보고 보호막을 보내세요.\n하지 말 것: 보호막만으로 상대의 접근이나 제어가 없어졌다고 생각하지 마세요.\n상대 권리: 노틸러스의 궁극기는 대상을 추적해 도착하면 띄우고 기절시킵니다.\n무효 조건: 지팡이가 아군에 닿지 않거나 상대의 추적 공격이 계속되면 퇴로도 확보하세요.\n근거: 공식 설명 확인: 럭스의 프리즘 보호막은 지팡이가 닿는 아군을 적 피해로부터 보호합니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "지팡이가 아군에 닿지 않거나 상대의 추적 공격이 계속되면 퇴로도 확보하세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "럭스로 공격받는 아군을 보호하려는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "지팡이가 아군에 닿지 않거나 상대의 추적 공격이 계속되면 퇴로도 확보하세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "f1fcd1c3d005abe272d8a520080f93111f6ac14235238d7fe845bc94140306b9",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Lux.json",
+          "title": "럭스 공식 스킬 설명",
+          "locator": "data.Lux.spells.1.description",
+          "patch": "16.20.1",
+          "excerpt": "Lux throws her wand and bends the light around any friendly target it touches, protecting them from enemy damage.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "54342f28c2e1d8449e831906aefcb74fe374e6130049520fff3c7ad70e237a70"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+          "title": "노틸러스 공식 스킬 설명",
+          "locator": "data.Nautilus.spells.3.description",
+          "patch": "16.20.1",
+          "excerpt": "Nautilus fires a shockwave into the earth that chases an opponent. This shockwave rips up the earth above it, knocking enemies into the air. When it reaches the opponent, the shockwave erupts, knocking his target into the air and stunning them.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff"
+        }
+      ]
+    },
+    {
+      "id": "KR-013",
+      "original_candidate_id": "Q05-I-Fiora",
+      "original_spec_sha256": "3654210f1f09beb393f6b6c81e228092d47324396f130eb939cc861080cece64",
+      "champion": "Fiora",
+      "advice": {
+        "상황": "상대 피오라에게 이동 불가 기술을 맞히려는 때",
+        "할 것": "응수 동작과 찌르는 방향을 확인하고 공격을 이어가세요.",
+        "하지 말 것": "피오라가 응수하는 동안 주요 제어 기술을 한꺼번에 쓰지 마세요.",
+        "상대 권리": "피오라가 이동 불가 효과를 막으면 찌르기에 맞은 적을 기절시킬 수 있습니다.",
+        "무효 조건": "응수 사용 여부나 찌르기 방향이 보이지 않으면 안전한 진입이라고 판단하지 마세요.",
+        "근거": "공식 설명 확인: 피오라의 응수는 피해와 방해 효과를 막고 이후 찌르며, 이동 불가 효과를 막으면 둔화 대신 기절시킵니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-013",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "TOP",
+          "JUNGLE",
+          "MID",
+          "BOTTOM",
+          "SUPPORT"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Fiora.json",
+            "title": "피오라 공식 스킬 설명",
+            "locator": "data.Fiora.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "7a089668881a767f3bf3dbc6e312a94d0f55d7b9ce9d3ea27d8a7e921b2a867e",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "enemy.TOP.champion",
+            "op": "EQ",
+            "value": "Fiora"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "응수 사용 여부나 찌르기 방향이 보이지 않으면 안전한 진입이라고 판단하지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Fiora"
+        ],
+        "output": {
+          "section": "FIGHT",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 상대 피오라에게 이동 불가 기술을 맞히려는 때\n할 것: 응수 동작과 찌르는 방향을 확인하고 공격을 이어가세요.\n하지 말 것: 피오라가 응수하는 동안 주요 제어 기술을 한꺼번에 쓰지 마세요.\n상대 권리: 피오라가 이동 불가 효과를 막으면 찌르기에 맞은 적을 기절시킬 수 있습니다.\n무효 조건: 응수 사용 여부나 찌르기 방향이 보이지 않으면 안전한 진입이라고 판단하지 마세요.\n근거: 공식 설명 확인: 피오라의 응수는 피해와 방해 효과를 막고 이후 찌르며, 이동 불가 효과를 막으면 둔화 대신 기절시킵니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "응수 사용 여부나 찌르기 방향이 보이지 않으면 안전한 진입이라고 판단하지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "상대 피오라에게 이동 불가 기술을 맞히려는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "응수 사용 여부나 찌르기 방향이 보이지 않으면 안전한 진입이라고 판단하지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "5de915d11574c3b87310b759b07d4e759106ae6315808744cc9bd4c365015092",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Fiora.json",
+          "title": "피오라 공식 스킬 설명",
+          "locator": "data.Fiora.spells.1.description",
+          "patch": "16.20.1",
+          "excerpt": "Fiora parries all incoming damage and disables for a short time, then stabs in a direction. This stab slows the first enemy champion hit, or stuns them if Fiora blocked an immobilizing effect with this ability.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "7a089668881a767f3bf3dbc6e312a94d0f55d7b9ce9d3ea27d8a7e921b2a867e"
+        }
+      ]
+    },
+    {
+      "id": "KR-014",
+      "original_candidate_id": "Q05-I-Fiora",
+      "original_spec_sha256": "3654210f1f09beb393f6b6c81e228092d47324396f130eb939cc861080cece64",
+      "champion": "Fiora",
+      "advice": {
+        "상황": "피오라의 궁극기 표식이 아군에게 생긴 때",
+        "할 것": "노출된 급소와 피오라가 접근하는 방향을 함께 확인하세요.",
+        "하지 말 것": "표식 대상이 죽어도 상대에게 회복이 없다고 가정하지 마세요.",
+        "상대 권리": "피오라는 모든 급소를 맞히거나 일부 급소를 맞힌 뒤 대상이 죽으면 주변 아군과 함께 회복할 수 있습니다.",
+        "무효 조건": "급소 적중 여부를 모르면 상대 회복을 배제한 계산을 하지 마세요.",
+        "근거": "공식 설명 확인: 대결투는 급소를 드러내고 조건을 달성하면 주변의 피오라와 아군을 회복시킵니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-014",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "TOP",
+          "JUNGLE",
+          "MID",
+          "BOTTOM",
+          "SUPPORT"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Fiora.json",
+            "title": "피오라 공식 스킬 설명",
+            "locator": "data.Fiora.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "7a089668881a767f3bf3dbc6e312a94d0f55d7b9ce9d3ea27d8a7e921b2a867e",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "enemy.TOP.champion",
+            "op": "EQ",
+            "value": "Fiora"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "급소 적중 여부를 모르면 상대 회복을 배제한 계산을 하지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Fiora"
+        ],
+        "output": {
+          "section": "FIGHT",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 피오라의 궁극기 표식이 아군에게 생긴 때\n할 것: 노출된 급소와 피오라가 접근하는 방향을 함께 확인하세요.\n하지 말 것: 표식 대상이 죽어도 상대에게 회복이 없다고 가정하지 마세요.\n상대 권리: 피오라는 모든 급소를 맞히거나 일부 급소를 맞힌 뒤 대상이 죽으면 주변 아군과 함께 회복할 수 있습니다.\n무효 조건: 급소 적중 여부를 모르면 상대 회복을 배제한 계산을 하지 마세요.\n근거: 공식 설명 확인: 대결투는 급소를 드러내고 조건을 달성하면 주변의 피오라와 아군을 회복시킵니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "급소 적중 여부를 모르면 상대 회복을 배제한 계산을 하지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "피오라의 궁극기 표식이 아군에게 생긴 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "급소 적중 여부를 모르면 상대 회복을 배제한 계산을 하지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "062d00c315f16f18c8d2facd673c5fa91059c15ff074d996d4dac5c5dce3320b",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Fiora.json",
+          "title": "피오라 공식 스킬 설명",
+          "locator": "data.Fiora.spells.3.description",
+          "patch": "16.20.1",
+          "excerpt": "Fiora reveals all four Vitals on an enemy champion and gains Move Speed while near them. If Fiora hits all four Vitals or if the target dies after she has hit at least one, Fiora and her allies in the area are healed over the next few seconds.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "7a089668881a767f3bf3dbc6e312a94d0f55d7b9ce9d3ea27d8a7e921b2a867e"
+        }
+      ]
+    },
+    {
+      "id": "KR-015",
+      "original_candidate_id": "Q05-I-LeeSin",
+      "original_spec_sha256": "ffec564700f1a6b2eb79a773fb874dc7a164f73b33cbf2ea59794cad0ce77b3d",
+      "champion": "LeeSin",
+      "advice": {
+        "상황": "리신의 음파에 맞은 뒤 대응하는 때",
+        "할 것": "리신이 다시 다가올 수 있는 경로와 자기 퇴로를 확인하세요.",
+        "하지 말 것": "첫 피해만 끝났다고 생각하고 그대로 앞으로 가지 마세요.",
+        "상대 권리": "리신은 음파를 맞히면 그 대상에게 다시 이동할 수 있고 대상이 잃은 체력에 따라 피해를 줍니다.",
+        "무효 조건": "음파 적중이나 리신 위치가 불명확하면 후속 접근이 없다고 단정하지 마세요.",
+        "근거": "공식 설명 확인: 음파 적중은 공명의 일격으로 대상에게 이동할 기회를 줍니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-015",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "TOP",
+          "JUNGLE",
+          "MID",
+          "BOTTOM",
+          "SUPPORT"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/LeeSin.json",
+            "title": "리신 공식 스킬 설명",
+            "locator": "data.LeeSin.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "1f73eed2730b956dce393e51d9fcd18765ded329bfde46470ff3e3e8761099d4",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "enemy.JUNGLE.champion",
+            "op": "EQ",
+            "value": "LeeSin"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "음파 적중이나 리신 위치가 불명확하면 후속 접근이 없다고 단정하지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-LeeSin"
+        ],
+        "output": {
+          "section": "FIGHT",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 리신의 음파에 맞은 뒤 대응하는 때\n할 것: 리신이 다시 다가올 수 있는 경로와 자기 퇴로를 확인하세요.\n하지 말 것: 첫 피해만 끝났다고 생각하고 그대로 앞으로 가지 마세요.\n상대 권리: 리신은 음파를 맞히면 그 대상에게 다시 이동할 수 있고 대상이 잃은 체력에 따라 피해를 줍니다.\n무효 조건: 음파 적중이나 리신 위치가 불명확하면 후속 접근이 없다고 단정하지 마세요.\n근거: 공식 설명 확인: 음파 적중은 공명의 일격으로 대상에게 이동할 기회를 줍니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "음파 적중이나 리신 위치가 불명확하면 후속 접근이 없다고 단정하지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "리신의 음파에 맞은 뒤 대응하는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "음파 적중이나 리신 위치가 불명확하면 후속 접근이 없다고 단정하지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "1b6ad3c373b137377c4af43fe7d2d3ef2e77fe012b2a5c0296aaee272a6308de",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/LeeSin.json",
+          "title": "리신 공식 스킬 설명",
+          "locator": "data.LeeSin.spells.0.description",
+          "patch": "16.20.1",
+          "excerpt": "Sonic Wave: Lee Sin projects a discordant wave of sound to locate his enemies, dealing physical damage to the first enemy it encounters. If Sonic Wave hits, Lee Sin can cast Resonating Strike for the next 3 seconds.<br>Resonating Strike: Lee Sin dashes to the enemy hit by Sonic Wave, dealing physical damage based on the target's missing Health.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "1f73eed2730b956dce393e51d9fcd18765ded329bfde46470ff3e3e8761099d4"
+        }
+      ]
+    },
+    {
+      "id": "KR-016",
+      "original_candidate_id": "Q05-I-LeeSin",
+      "original_spec_sha256": "ffec564700f1a6b2eb79a773fb874dc7a164f73b33cbf2ea59794cad0ce77b3d",
+      "champion": "LeeSin",
+      "advice": {
+        "상황": "리신이 아군 한 명에게 가까이 붙은 때",
+        "할 것": "차이는 대상 뒤쪽에 다른 아군이 겹쳐 있는지 보세요.",
+        "하지 말 것": "한 명만 밀려날 것이라 생각하고 그 뒤에 모이지 마세요.",
+        "상대 권리": "리신이 찬 대상과 충돌하는 다른 적도 피해를 받고 공중에 뜰 수 있습니다.",
+        "무효 조건": "리신의 위치나 밀려날 방향이 보이지 않으면 겹쳐 서는 계획을 피하세요.",
+        "근거": "공식 설명 확인: 용의 분노는 대상을 뒤로 밀며 충돌하는 다른 적에게 피해와 띄우기를 줍니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-016",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "TOP",
+          "JUNGLE",
+          "MID",
+          "BOTTOM",
+          "SUPPORT"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/LeeSin.json",
+            "title": "리신 공식 스킬 설명",
+            "locator": "data.LeeSin.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "1f73eed2730b956dce393e51d9fcd18765ded329bfde46470ff3e3e8761099d4",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "enemy.JUNGLE.champion",
+            "op": "EQ",
+            "value": "LeeSin"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "리신의 위치나 밀려날 방향이 보이지 않으면 겹쳐 서는 계획을 피하세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-LeeSin"
+        ],
+        "output": {
+          "section": "FIGHT",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 리신이 아군 한 명에게 가까이 붙은 때\n할 것: 차이는 대상 뒤쪽에 다른 아군이 겹쳐 있는지 보세요.\n하지 말 것: 한 명만 밀려날 것이라 생각하고 그 뒤에 모이지 마세요.\n상대 권리: 리신이 찬 대상과 충돌하는 다른 적도 피해를 받고 공중에 뜰 수 있습니다.\n무효 조건: 리신의 위치나 밀려날 방향이 보이지 않으면 겹쳐 서는 계획을 피하세요.\n근거: 공식 설명 확인: 용의 분노는 대상을 뒤로 밀며 충돌하는 다른 적에게 피해와 띄우기를 줍니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "리신의 위치나 밀려날 방향이 보이지 않으면 겹쳐 서는 계획을 피하세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "리신이 아군 한 명에게 가까이 붙은 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "리신의 위치나 밀려날 방향이 보이지 않으면 겹쳐 서는 계획을 피하세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "09342939484e9fe1eb4bacb7eed9328150609a9ce65dac798a2ab761859289d4",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/LeeSin.json",
+          "title": "리신 공식 스킬 설명",
+          "locator": "data.LeeSin.spells.3.description",
+          "patch": "16.20.1",
+          "excerpt": "Lee Sin performs a powerful roundhouse kick launching his target back, dealing physical damage to the target and any enemies they collide with. Enemies the target collides with are knocked into the air for a short duration. This technique was taught to him by Jesse Perring, although Lee Sin does not kick players off the map.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "1f73eed2730b956dce393e51d9fcd18765ded329bfde46470ff3e3e8761099d4"
+        }
+      ]
+    },
+    {
+      "id": "KR-017",
+      "original_candidate_id": "Q05-I-Zed",
+      "original_spec_sha256": "b453ef10ef294ff22a611aa8fc25cc1e4d3603f5f7a026cdc878c4df4167a41b",
+      "champion": "Zed",
+      "advice": {
+        "상황": "제드가 살아있는 그림자를 놓은 때",
+        "할 것": "본체와 그림자 위치를 함께 확인하며 이동하세요.",
+        "하지 말 것": "본체가 멀어졌다고 그림자 쪽이 안전해졌다고 생각하지 마세요.",
+        "상대 권리": "제드는 살아있는 그림자를 다시 사용해 그림자와 자신의 위치를 바꿀 수 있습니다.",
+        "무효 조건": "그림자의 위치나 남아 있는지를 모르면 복귀 방향을 확정하지 마세요.",
+        "근거": "공식 설명 확인: 살아있는 그림자는 제드가 다시 사용하면 위치 교환을 할 수 있습니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-017",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "TOP",
+          "JUNGLE",
+          "MID",
+          "BOTTOM",
+          "SUPPORT"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Zed.json",
+            "title": "제드 공식 스킬 설명",
+            "locator": "data.Zed.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "16a4a845aad6967e74aac981400571b66f8cb59007247d6f6c7e0442e6519cd2",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "enemy.MID.champion",
+            "op": "EQ",
+            "value": "Zed"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "그림자의 위치나 남아 있는지를 모르면 복귀 방향을 확정하지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Zed"
+        ],
+        "output": {
+          "section": "FIGHT",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 제드가 살아있는 그림자를 놓은 때\n할 것: 본체와 그림자 위치를 함께 확인하며 이동하세요.\n하지 말 것: 본체가 멀어졌다고 그림자 쪽이 안전해졌다고 생각하지 마세요.\n상대 권리: 제드는 살아있는 그림자를 다시 사용해 그림자와 자신의 위치를 바꿀 수 있습니다.\n무효 조건: 그림자의 위치나 남아 있는지를 모르면 복귀 방향을 확정하지 마세요.\n근거: 공식 설명 확인: 살아있는 그림자는 제드가 다시 사용하면 위치 교환을 할 수 있습니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "그림자의 위치나 남아 있는지를 모르면 복귀 방향을 확정하지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "제드가 살아있는 그림자를 놓은 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "그림자의 위치나 남아 있는지를 모르면 복귀 방향을 확정하지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "93877a0dfba1b752204518ebfb777c558dcd0db9d9971c679afeb2551ee03718",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Zed.json",
+          "title": "제드 공식 스킬 설명",
+          "locator": "data.Zed.spells.1.description",
+          "patch": "16.20.1",
+          "excerpt": "<font color='#FF9900'>Passive:</font> Zed gains energy whenever he and his shadows strike an enemy with the same ability. Energy can only be gained once per cast ability.<br><br><font color='#FF9900'>Active:</font> Zed's shadow dashes forward, remaining in place for a few seconds. Reactivating Living Shadow will cause Zed to switch positions with this shadow.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "16a4a845aad6967e74aac981400571b66f8cb59007247d6f6c7e0442e6519cd2"
+        }
+      ]
+    },
+    {
+      "id": "KR-018",
+      "original_candidate_id": "Q05-I-Zed",
+      "original_spec_sha256": "b453ef10ef294ff22a611aa8fc25cc1e4d3603f5f7a026cdc878c4df4167a41b",
+      "champion": "Zed",
+      "advice": {
+        "상황": "제드의 궁극기 표식이 붙은 때",
+        "할 것": "당장 받은 피해뿐 아니라 표식이 끝날 때 추가 피해가 올 수 있음을 고려해 퇴로를 잡으세요.",
+        "하지 말 것": "표식 중 체력이 남았다는 이유만으로 맞싸움을 계속하지 마세요.",
+        "상대 권리": "제드는 표식 중 자신이 준 피해의 일부를 표식이 터질 때 다시 가합니다.",
+        "무효 조건": "표식 상태나 받은 피해를 모르면 생존이나 맞싸움 승리를 확정하지 마세요.",
+        "근거": "공식 설명 확인: 죽음의 표식은 부착 후 발동하며 표식 중 제드가 준 피해 일부를 다시 가합니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-018",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "TOP",
+          "JUNGLE",
+          "MID",
+          "BOTTOM",
+          "SUPPORT"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Zed.json",
+            "title": "제드 공식 스킬 설명",
+            "locator": "data.Zed.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "16a4a845aad6967e74aac981400571b66f8cb59007247d6f6c7e0442e6519cd2",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "enemy.MID.champion",
+            "op": "EQ",
+            "value": "Zed"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "표식 상태나 받은 피해를 모르면 생존이나 맞싸움 승리를 확정하지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Zed"
+        ],
+        "output": {
+          "section": "FIGHT",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 제드의 궁극기 표식이 붙은 때\n할 것: 당장 받은 피해뿐 아니라 표식이 끝날 때 추가 피해가 올 수 있음을 고려해 퇴로를 잡으세요.\n하지 말 것: 표식 중 체력이 남았다는 이유만으로 맞싸움을 계속하지 마세요.\n상대 권리: 제드는 표식 중 자신이 준 피해의 일부를 표식이 터질 때 다시 가합니다.\n무효 조건: 표식 상태나 받은 피해를 모르면 생존이나 맞싸움 승리를 확정하지 마세요.\n근거: 공식 설명 확인: 죽음의 표식은 부착 후 발동하며 표식 중 제드가 준 피해 일부를 다시 가합니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "표식 상태나 받은 피해를 모르면 생존이나 맞싸움 승리를 확정하지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "제드의 궁극기 표식이 붙은 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "표식 상태나 받은 피해를 모르면 생존이나 맞싸움 승리를 확정하지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "3c7d6ac97b2cefcbc7ab354eb9ac352792b5d9faf8f24838908311f772f5d300",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Zed.json",
+          "title": "제드 공식 스킬 설명",
+          "locator": "data.Zed.spells.3.description",
+          "patch": "16.20.1",
+          "excerpt": "Zed becomes untargetable and dashes to an enemy champion, marking them. After 3 seconds the mark triggers, repeating a portion of all the damage Zed dealt to the target while they were marked.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "16a4a845aad6967e74aac981400571b66f8cb59007247d6f6c7e0442e6519cd2"
+        }
+      ]
+    },
+    {
+      "id": "KR-019",
+      "original_candidate_id": "Q05-I-Ezreal",
+      "original_spec_sha256": "ade980999b55757be47ee755a43f74bd0204a75c18fd5b8b42573a44990acd39",
+      "champion": "Ezreal",
+      "advice": {
+        "상황": "이즈리얼이 비전 이동으로 빠진 뒤 따라가려는 때",
+        "할 것": "이동한 위치와 주변 적을 다시 확인하세요.",
+        "하지 말 것": "이즈리얼이 이동했다는 이유만으로 더 이상 기술을 쓰지 못한다고 가정하지 마세요.",
+        "상대 권리": "이즈리얼은 신비한 화살을 적 유닛에 맞히면 기술 재사용 대기시간을 줄일 수 있습니다.",
+        "무효 조건": "화살 적중이나 이동 후 위치를 모르면 다음 이동까지의 시간을 단정하지 마세요.",
+        "근거": "공식 설명 확인: 비전 이동은 근처 위치로 순간이동합니다. 신비한 화살 적중은 재사용 대기시간을 줄입니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-019",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "TOP",
+          "JUNGLE",
+          "MID",
+          "BOTTOM",
+          "SUPPORT"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ezreal.json",
+            "title": "이즈리얼 공식 스킬 설명",
+            "locator": "data.Ezreal.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "cee607e5b067723cb3e3eeacbdcf85dba4d573e7818d695abb554e2928a84859",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ezreal.json",
+            "title": "이즈리얼 공식 스킬 설명",
+            "locator": "data.Ezreal.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "cee607e5b067723cb3e3eeacbdcf85dba4d573e7818d695abb554e2928a84859",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "enemy.BOTTOM.champion",
+            "op": "EQ",
+            "value": "Ezreal"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "화살 적중이나 이동 후 위치를 모르면 다음 이동까지의 시간을 단정하지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Ezreal"
+        ],
+        "output": {
+          "section": "FIGHT",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 이즈리얼이 비전 이동으로 빠진 뒤 따라가려는 때\n할 것: 이동한 위치와 주변 적을 다시 확인하세요.\n하지 말 것: 이즈리얼이 이동했다는 이유만으로 더 이상 기술을 쓰지 못한다고 가정하지 마세요.\n상대 권리: 이즈리얼은 신비한 화살을 적 유닛에 맞히면 기술 재사용 대기시간을 줄일 수 있습니다.\n무효 조건: 화살 적중이나 이동 후 위치를 모르면 다음 이동까지의 시간을 단정하지 마세요.\n근거: 공식 설명 확인: 비전 이동은 근처 위치로 순간이동합니다. 신비한 화살 적중은 재사용 대기시간을 줄입니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "화살 적중이나 이동 후 위치를 모르면 다음 이동까지의 시간을 단정하지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "이즈리얼이 비전 이동으로 빠진 뒤 따라가려는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "화살 적중이나 이동 후 위치를 모르면 다음 이동까지의 시간을 단정하지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "786a5a746a976d090001a48a327fb5d99cd00d3b0403f7d64a6131046a02ad79",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ezreal.json",
+          "title": "이즈리얼 공식 스킬 설명",
+          "locator": "data.Ezreal.spells.2.description",
+          "patch": "16.20.1",
+          "excerpt": "Ezreal teleports to a target nearby location and fires a homing bolt which strikes the nearest enemy unit. Prioritizes enemies stuck with Essence Flux.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "cee607e5b067723cb3e3eeacbdcf85dba4d573e7818d695abb554e2928a84859"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ezreal.json",
+          "title": "이즈리얼 공식 스킬 설명",
+          "locator": "data.Ezreal.spells.0.description",
+          "patch": "16.20.1",
+          "excerpt": "Ezreal fires a damaging bolt of energy which reduces all of his cooldowns slightly if it strikes an enemy unit.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "cee607e5b067723cb3e3eeacbdcf85dba4d573e7818d695abb554e2928a84859"
+        }
+      ]
+    },
+    {
+      "id": "KR-020",
+      "original_candidate_id": "Q05-I-Ezreal",
+      "original_spec_sha256": "ade980999b55757be47ee755a43f74bd0204a75c18fd5b8b42573a44990acd39",
+      "champion": "Ezreal",
+      "advice": {
+        "상황": "이즈리얼의 정수의 흐름 구체가 자신에게 붙은 때",
+        "할 것": "후속 적중이 가능한 거리와 방향에서 벗어날 길을 보세요.",
+        "하지 말 것": "구체가 붙었는데 피해가 바로 없다는 이유로 위험이 끝났다고 생각하지 마세요.",
+        "상대 권리": "이즈리얼이 구체가 붙은 적을 다시 맞히면 구체가 터져 피해를 줍니다.",
+        "무효 조건": "구체 상태나 후속 공격 경로가 보이지 않으면 안전하다고 단정하지 마세요.",
+        "근거": "공식 설명 확인: 정수의 흐름은 구체를 붙이고 이즈리얼의 후속 적중으로 터뜨려 피해를 줍니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-020",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "TOP",
+          "JUNGLE",
+          "MID",
+          "BOTTOM",
+          "SUPPORT"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ezreal.json",
+            "title": "이즈리얼 공식 스킬 설명",
+            "locator": "data.Ezreal.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "cee607e5b067723cb3e3eeacbdcf85dba4d573e7818d695abb554e2928a84859",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "enemy.BOTTOM.champion",
+            "op": "EQ",
+            "value": "Ezreal"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "구체 상태나 후속 공격 경로가 보이지 않으면 안전하다고 단정하지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Ezreal"
+        ],
+        "output": {
+          "section": "FIGHT",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 이즈리얼의 정수의 흐름 구체가 자신에게 붙은 때\n할 것: 후속 적중이 가능한 거리와 방향에서 벗어날 길을 보세요.\n하지 말 것: 구체가 붙었는데 피해가 바로 없다는 이유로 위험이 끝났다고 생각하지 마세요.\n상대 권리: 이즈리얼이 구체가 붙은 적을 다시 맞히면 구체가 터져 피해를 줍니다.\n무효 조건: 구체 상태나 후속 공격 경로가 보이지 않으면 안전하다고 단정하지 마세요.\n근거: 공식 설명 확인: 정수의 흐름은 구체를 붙이고 이즈리얼의 후속 적중으로 터뜨려 피해를 줍니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "구체 상태나 후속 공격 경로가 보이지 않으면 안전하다고 단정하지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "이즈리얼의 정수의 흐름 구체가 자신에게 붙은 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "구체 상태나 후속 공격 경로가 보이지 않으면 안전하다고 단정하지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "aa4cad2eb462d1c4bbfed4c1b80a5d843105d6a5d5f086bda1261a4070b60ea0",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ezreal.json",
+          "title": "이즈리얼 공식 스킬 설명",
+          "locator": "data.Ezreal.spells.1.description",
+          "patch": "16.20.1",
+          "excerpt": "Ezreal fires an orb that sticks to the first champion or objective hit. If Ezreal hits an enemy with the orb, it detonates and deals damage.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "cee607e5b067723cb3e3eeacbdcf85dba4d573e7818d695abb554e2928a84859"
+        }
+      ]
+    },
+    {
+      "id": "KR-021",
+      "original_candidate_id": "Q05-I-Nautilus",
+      "original_spec_sha256": "8e580b3d211f71c920ab9f57175b5221bd564515f5a9157c76c44cbeb1717228",
+      "champion": "Nautilus",
+      "advice": {
+        "상황": "노틸러스의 닻이 자신 쪽으로 날아오는 때",
+        "할 것": "닻의 경로와 노틸러스가 지형을 타고 접근할 수 있는 방향을 보세요.",
+        "하지 말 것": "닻이 자신에게 빗나갔다고 노틸러스의 이동도 끝났다고 생각하지 마세요.",
+        "상대 권리": "닻이 지형에 맞으면 노틸러스가 지형 쪽으로 이동할 수 있습니다.",
+        "무효 조건": "주변 지형이나 닻의 도착 지점이 보이지 않으면 접근이 없다고 단정하지 마세요.",
+        "근거": "공식 설명 확인: 닻줄 견인은 적과 부딪치면 서로 끌어당기고 지형과 부딪치면 노틸러스가 이동합니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-021",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "TOP",
+          "JUNGLE",
+          "MID",
+          "BOTTOM",
+          "SUPPORT"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+            "title": "노틸러스 공식 스킬 설명",
+            "locator": "data.Nautilus.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "enemy.SUPPORT.champion",
+            "op": "EQ",
+            "value": "Nautilus"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "주변 지형이나 닻의 도착 지점이 보이지 않으면 접근이 없다고 단정하지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Nautilus"
+        ],
+        "output": {
+          "section": "FIGHT",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 노틸러스의 닻이 자신 쪽으로 날아오는 때\n할 것: 닻의 경로와 노틸러스가 지형을 타고 접근할 수 있는 방향을 보세요.\n하지 말 것: 닻이 자신에게 빗나갔다고 노틸러스의 이동도 끝났다고 생각하지 마세요.\n상대 권리: 닻이 지형에 맞으면 노틸러스가 지형 쪽으로 이동할 수 있습니다.\n무효 조건: 주변 지형이나 닻의 도착 지점이 보이지 않으면 접근이 없다고 단정하지 마세요.\n근거: 공식 설명 확인: 닻줄 견인은 적과 부딪치면 서로 끌어당기고 지형과 부딪치면 노틸러스가 이동합니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "주변 지형이나 닻의 도착 지점이 보이지 않으면 접근이 없다고 단정하지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "노틸러스의 닻이 자신 쪽으로 날아오는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "주변 지형이나 닻의 도착 지점이 보이지 않으면 접근이 없다고 단정하지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "8b83de5bd09e9ff7c195b21251d4bad3dab23157aaf56e547ee68ea564354cfa",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+          "title": "노틸러스 공식 스킬 설명",
+          "locator": "data.Nautilus.spells.0.description",
+          "patch": "16.20.1",
+          "excerpt": "Nautilus hurls his anchor forward.  Colliding with an enemy pulls them and Nautilus together, dealing magic damage.  Colliding with terrain pulls Nautilus towards it.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff"
+        }
+      ]
+    },
+    {
+      "id": "KR-022",
+      "original_candidate_id": "Q05-I-Nautilus",
+      "original_spec_sha256": "8e580b3d211f71c920ab9f57175b5221bd564515f5a9157c76c44cbeb1717228",
+      "champion": "Nautilus",
+      "advice": {
+        "상황": "노틸러스의 궁극기 대상이 된 아군 근처에 있는 때",
+        "할 것": "궁극기 대상과 충격파의 진행 방향을 보고 서로 겹치지 않을 자리를 찾으세요.",
+        "하지 말 것": "대상 한 명만 영향을 받는다고 생각하고 진행 경로에 모이지 마세요.",
+        "상대 권리": "충격파는 대상을 추적하며 지나가는 경로의 적도 공중에 띄웁니다.",
+        "무효 조건": "진행 방향이나 대상이 보이지 않으면 확정 회피 경로를 제시하지 마세요.",
+        "근거": "공식 설명 확인: 폭뢰는 대상을 향해 추적하고 경로의 적을 띄우며 대상 도착 시 띄우기와 기절을 줍니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-022",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "TOP",
+          "JUNGLE",
+          "MID",
+          "BOTTOM",
+          "SUPPORT"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+            "title": "노틸러스 공식 스킬 설명",
+            "locator": "data.Nautilus.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "enemy.SUPPORT.champion",
+            "op": "EQ",
+            "value": "Nautilus"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "진행 방향이나 대상이 보이지 않으면 확정 회피 경로를 제시하지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Nautilus"
+        ],
+        "output": {
+          "section": "FIGHT",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 노틸러스의 궁극기 대상이 된 아군 근처에 있는 때\n할 것: 궁극기 대상과 충격파의 진행 방향을 보고 서로 겹치지 않을 자리를 찾으세요.\n하지 말 것: 대상 한 명만 영향을 받는다고 생각하고 진행 경로에 모이지 마세요.\n상대 권리: 충격파는 대상을 추적하며 지나가는 경로의 적도 공중에 띄웁니다.\n무효 조건: 진행 방향이나 대상이 보이지 않으면 확정 회피 경로를 제시하지 마세요.\n근거: 공식 설명 확인: 폭뢰는 대상을 향해 추적하고 경로의 적을 띄우며 대상 도착 시 띄우기와 기절을 줍니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "진행 방향이나 대상이 보이지 않으면 확정 회피 경로를 제시하지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "노틸러스의 궁극기 대상이 된 아군 근처에 있는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "진행 방향이나 대상이 보이지 않으면 확정 회피 경로를 제시하지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "418997384298c43129de743dc28cc4eccb158fd75f144af4fb7244e08da27369",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+          "title": "노틸러스 공식 스킬 설명",
+          "locator": "data.Nautilus.spells.3.description",
+          "patch": "16.20.1",
+          "excerpt": "Nautilus fires a shockwave into the earth that chases an opponent. This shockwave rips up the earth above it, knocking enemies into the air. When it reaches the opponent, the shockwave erupts, knocking his target into the air and stunning them.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff"
+        }
+      ]
+    },
+    {
+      "id": "KR-023",
+      "original_candidate_id": "Q05-I-Yunara",
+      "original_spec_sha256": "bbd7e070af4f6aad76fa516311eb72bcb4a75215accff8b60888ff48efbb3e69",
+      "champion": "Yunara",
+      "advice": {
+        "상황": "유나라로 이동 기술을 써서 빠지거나 접근하려는 때",
+        "할 것": "궁극기로 강화된 상태인지 먼저 확인하세요.",
+        "하지 말 것": "평소 이동 속도 증가를 강화 상태의 돌진과 같은 이동으로 취급하지 마세요.",
+        "상대 권리": "노틸러스의 닻에 맞으면 서로 끌려갈 수 있습니다. 이동 속도 증가만으로 닻을 피한다고 보장할 수 없습니다.",
+        "무효 조건": "강화 상태가 아니거나 이동할 자리가 보이지 않으면 돌진을 전제로 움직이지 마세요.",
+        "근거": "공식 설명 확인: 유나라의 이동 기술은 평소에는 이동 속도를 높이고 유닛을 통과하게 하며 강화 상태에서는 방향을 정해 돌진합니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-023",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "BOTTOM"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Yunara.json",
+            "title": "유나라 공식 스킬 설명",
+            "locator": "data.Yunara.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "65a556076834d7e97e3cbe01a1690eb556e136f7be7970f0ae8465b4018d0f45",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+            "title": "노틸러스 공식 스킬 설명",
+            "locator": "data.Nautilus.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Yunara"
+          },
+          {
+            "field": "enemy.SUPPORT.champion",
+            "op": "EQ",
+            "value": "Nautilus"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "강화 상태가 아니거나 이동할 자리가 보이지 않으면 돌진을 전제로 움직이지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Yunara"
+        ],
+        "output": {
+          "section": "ROLE",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 유나라로 이동 기술을 써서 빠지거나 접근하려는 때\n할 것: 궁극기로 강화된 상태인지 먼저 확인하세요.\n하지 말 것: 평소 이동 속도 증가를 강화 상태의 돌진과 같은 이동으로 취급하지 마세요.\n상대 권리: 노틸러스의 닻에 맞으면 서로 끌려갈 수 있습니다. 이동 속도 증가만으로 닻을 피한다고 보장할 수 없습니다.\n무효 조건: 강화 상태가 아니거나 이동할 자리가 보이지 않으면 돌진을 전제로 움직이지 마세요.\n근거: 공식 설명 확인: 유나라의 이동 기술은 평소에는 이동 속도를 높이고 유닛을 통과하게 하며 강화 상태에서는 방향을 정해 돌진합니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "강화 상태가 아니거나 이동할 자리가 보이지 않으면 돌진을 전제로 움직이지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "유나라로 이동 기술을 써서 빠지거나 접근하려는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "강화 상태가 아니거나 이동할 자리가 보이지 않으면 돌진을 전제로 움직이지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "02b9c617a67bf1fae7f876527db3936e689d72270e1c82e6c65aeaaab2b5224e",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Yunara.json",
+          "title": "유나라 공식 스킬 설명",
+          "locator": "data.Yunara.spells.2.description",
+          "patch": "16.20.1",
+          "excerpt": "Yunara gains Move Speed and becomes Ghosted. While in her Transcendent State she instead dashes in a direction.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "65a556076834d7e97e3cbe01a1690eb556e136f7be7970f0ae8465b4018d0f45"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+          "title": "노틸러스 공식 스킬 설명",
+          "locator": "data.Nautilus.spells.0.description",
+          "patch": "16.20.1",
+          "excerpt": "Nautilus hurls his anchor forward.  Colliding with an enemy pulls them and Nautilus together, dealing magic damage.  Colliding with terrain pulls Nautilus towards it.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff"
+        }
+      ]
+    },
+    {
+      "id": "KR-024",
+      "original_candidate_id": "Q05-I-Yunara",
+      "original_spec_sha256": "bbd7e070af4f6aad76fa516311eb72bcb4a75215accff8b60888ff48efbb3e69",
+      "champion": "Yunara",
+      "advice": {
+        "상황": "유나라의 궁극기를 쓰고 공격 방식을 바꾸려는 때",
+        "할 것": "강화 상태에서 바뀐 기본 기술을 확인해 이동과 공격을 선택하세요.",
+        "하지 말 것": "궁극기 사용만으로 상대의 제어를 무시할 수 있다고 생각하지 마세요.",
+        "상대 권리": "노틸러스의 폭뢰는 대상을 추적해 띄우고 기절시킵니다.",
+        "무효 조건": "강화 상태나 상대 궁극기 대상을 모르면 안전한 진입으로 판단하지 마세요.",
+        "근거": "공식 설명 확인: 유나라의 궁극기는 강화 상태로 들어가 기본 기술을 바꿉니다. 이 설명은 제어 면역을 보장하지 않습니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-024",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "BOTTOM"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Yunara.json",
+            "title": "유나라 공식 스킬 설명",
+            "locator": "data.Yunara.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "65a556076834d7e97e3cbe01a1690eb556e136f7be7970f0ae8465b4018d0f45",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+            "title": "노틸러스 공식 스킬 설명",
+            "locator": "data.Nautilus.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Yunara"
+          },
+          {
+            "field": "enemy.SUPPORT.champion",
+            "op": "EQ",
+            "value": "Nautilus"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "강화 상태나 상대 궁극기 대상을 모르면 안전한 진입으로 판단하지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Yunara"
+        ],
+        "output": {
+          "section": "FIGHT",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 유나라의 궁극기를 쓰고 공격 방식을 바꾸려는 때\n할 것: 강화 상태에서 바뀐 기본 기술을 확인해 이동과 공격을 선택하세요.\n하지 말 것: 궁극기 사용만으로 상대의 제어를 무시할 수 있다고 생각하지 마세요.\n상대 권리: 노틸러스의 폭뢰는 대상을 추적해 띄우고 기절시킵니다.\n무효 조건: 강화 상태나 상대 궁극기 대상을 모르면 안전한 진입으로 판단하지 마세요.\n근거: 공식 설명 확인: 유나라의 궁극기는 강화 상태로 들어가 기본 기술을 바꿉니다. 이 설명은 제어 면역을 보장하지 않습니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "강화 상태나 상대 궁극기 대상을 모르면 안전한 진입으로 판단하지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "유나라의 궁극기를 쓰고 공격 방식을 바꾸려는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "강화 상태나 상대 궁극기 대상을 모르면 안전한 진입으로 판단하지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "895da0b9739d13e9ea5e04f18248efc0f29e9f93ef262dd2f5e43de0e2f376e8",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Yunara.json",
+          "title": "유나라 공식 스킬 설명",
+          "locator": "data.Yunara.spells.3.description",
+          "patch": "16.20.1",
+          "excerpt": "Yunara enters a Transcendent State that upgrades her basic Abilities.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "65a556076834d7e97e3cbe01a1690eb556e136f7be7970f0ae8465b4018d0f45"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+          "title": "노틸러스 공식 스킬 설명",
+          "locator": "data.Nautilus.spells.3.description",
+          "patch": "16.20.1",
+          "excerpt": "Nautilus fires a shockwave into the earth that chases an opponent. This shockwave rips up the earth above it, knocking enemies into the air. When it reaches the opponent, the shockwave erupts, knocking his target into the air and stunning them.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff"
+        }
+      ]
+    },
+    {
+      "id": "KR-025",
+      "original_candidate_id": "Q05-I-Yunara",
+      "original_spec_sha256": "bbd7e070af4f6aad76fa516311eb72bcb4a75215accff8b60888ff48efbb3e69",
+      "champion": "Yunara",
+      "advice": {
+        "상황": "유나라로 상대를 늦추고 거리를 벌리려는 때",
+        "할 것": "염주 또는 강화 상태의 광선이 맞는 방향을 확인하세요.",
+        "하지 말 것": "둔화가 상대의 이동 기술까지 없애 준다고 가정하지 마세요.",
+        "상대 권리": "이즈리얼은 비전 이동으로 근처 위치로 순간이동할 수 있습니다.",
+        "무효 조건": "투사체나 광선이 빗나가거나 상대가 위치를 바꾸면 거리 계획을 다시 세우세요.",
+        "근거": "공식 설명 확인: 유나라의 해당 기술은 피해와 둔화를 주며 강화 상태에서는 광선으로 바뀝니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-025",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "BOTTOM"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Yunara.json",
+            "title": "유나라 공식 스킬 설명",
+            "locator": "data.Yunara.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "65a556076834d7e97e3cbe01a1690eb556e136f7be7970f0ae8465b4018d0f45",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ezreal.json",
+            "title": "이즈리얼 공식 스킬 설명",
+            "locator": "data.Ezreal.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "cee607e5b067723cb3e3eeacbdcf85dba4d573e7818d695abb554e2928a84859",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Yunara"
+          },
+          {
+            "field": "enemy.BOTTOM.champion",
+            "op": "EQ",
+            "value": "Ezreal"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "투사체나 광선이 빗나가거나 상대가 위치를 바꾸면 거리 계획을 다시 세우세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Yunara"
+        ],
+        "output": {
+          "section": "LANE",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 유나라로 상대를 늦추고 거리를 벌리려는 때\n할 것: 염주 또는 강화 상태의 광선이 맞는 방향을 확인하세요.\n하지 말 것: 둔화가 상대의 이동 기술까지 없애 준다고 가정하지 마세요.\n상대 권리: 이즈리얼은 비전 이동으로 근처 위치로 순간이동할 수 있습니다.\n무효 조건: 투사체나 광선이 빗나가거나 상대가 위치를 바꾸면 거리 계획을 다시 세우세요.\n근거: 공식 설명 확인: 유나라의 해당 기술은 피해와 둔화를 주며 강화 상태에서는 광선으로 바뀝니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "투사체나 광선이 빗나가거나 상대가 위치를 바꾸면 거리 계획을 다시 세우세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "유나라로 상대를 늦추고 거리를 벌리려는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "투사체나 광선이 빗나가거나 상대가 위치를 바꾸면 거리 계획을 다시 세우세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "cb5665979a5f150465adb582eb6dfc9f2e587ba6b9fa3cef6d814a335b39fe7d",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Yunara.json",
+          "title": "유나라 공식 스킬 설명",
+          "locator": "data.Yunara.spells.1.description",
+          "patch": "16.20.1",
+          "excerpt": "Yunara fires a spinning prayer bead that deals damage and slows enemies. While in her Transcendent State she instead fires off a laser that deals damage and slows enemies.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "65a556076834d7e97e3cbe01a1690eb556e136f7be7970f0ae8465b4018d0f45"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ezreal.json",
+          "title": "이즈리얼 공식 스킬 설명",
+          "locator": "data.Ezreal.spells.2.description",
+          "patch": "16.20.1",
+          "excerpt": "Ezreal teleports to a target nearby location and fires a homing bolt which strikes the nearest enemy unit. Prioritizes enemies stuck with Essence Flux.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "cee607e5b067723cb3e3eeacbdcf85dba4d573e7818d695abb554e2928a84859"
+        }
+      ]
+    },
+    {
+      "id": "KR-026",
+      "original_candidate_id": "Q05-I-Ashe",
+      "original_spec_sha256": "02553640898c1f5e6b83465dba0105a25354148749113ac9e64b9631fc7c7f22",
+      "champion": "Ashe",
+      "advice": {
+        "상황": "애쉬로 보이지 않는 경로를 확인하려는 때",
+        "할 것": "매 날리기를 보낼 위치를 정하고 드러난 정보를 보고 이동 여부를 정하세요.",
+        "하지 말 것": "매를 보냈다는 사실만으로 보이지 않는 모든 경로가 안전하다고 생각하지 마세요.",
+        "상대 권리": "리신이 음파를 맞히면 그 대상에게 다시 이동할 수 있습니다.",
+        "무효 조건": "관측한 곳과 시간이 이동 경로를 확인해 주지 못하면 진입을 보류하세요.",
+        "근거": "공식 설명 확인: 매 날리기는 맵의 원하는 곳으로 매를 보내 정찰합니다. 전체 경로의 안전을 보장하는 설명은 아닙니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-026",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "BOTTOM"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ashe.json",
+            "title": "애쉬 공식 스킬 설명",
+            "locator": "data.Ashe.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "c40f2eb94d478873b9e0a81fd96b813734c54dcece4d9b45c3a5c5b7e9d44ea2",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/LeeSin.json",
+            "title": "리신 공식 스킬 설명",
+            "locator": "data.LeeSin.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "1f73eed2730b956dce393e51d9fcd18765ded329bfde46470ff3e3e8761099d4",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Ashe"
+          },
+          {
+            "field": "enemy.JUNGLE.champion",
+            "op": "EQ",
+            "value": "LeeSin"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "관측한 곳과 시간이 이동 경로를 확인해 주지 못하면 진입을 보류하세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Ashe"
+        ],
+        "output": {
+          "section": "ROLE",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 애쉬로 보이지 않는 경로를 확인하려는 때\n할 것: 매 날리기를 보낼 위치를 정하고 드러난 정보를 보고 이동 여부를 정하세요.\n하지 말 것: 매를 보냈다는 사실만으로 보이지 않는 모든 경로가 안전하다고 생각하지 마세요.\n상대 권리: 리신이 음파를 맞히면 그 대상에게 다시 이동할 수 있습니다.\n무효 조건: 관측한 곳과 시간이 이동 경로를 확인해 주지 못하면 진입을 보류하세요.\n근거: 공식 설명 확인: 매 날리기는 맵의 원하는 곳으로 매를 보내 정찰합니다. 전체 경로의 안전을 보장하는 설명은 아닙니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "관측한 곳과 시간이 이동 경로를 확인해 주지 못하면 진입을 보류하세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "애쉬로 보이지 않는 경로를 확인하려는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "관측한 곳과 시간이 이동 경로를 확인해 주지 못하면 진입을 보류하세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "bd43bb16911d7e19905bc98759d1c2bfcef17aa9ebfb3d5ea90352f8f29f0cde",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ashe.json",
+          "title": "애쉬 공식 스킬 설명",
+          "locator": "data.Ashe.spells.2.description",
+          "patch": "16.20.1",
+          "excerpt": "Ashe sends her Hawk Spirit on a scouting mission anywhere on the map.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "c40f2eb94d478873b9e0a81fd96b813734c54dcece4d9b45c3a5c5b7e9d44ea2"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/LeeSin.json",
+          "title": "리신 공식 스킬 설명",
+          "locator": "data.LeeSin.spells.0.description",
+          "patch": "16.20.1",
+          "excerpt": "Sonic Wave: Lee Sin projects a discordant wave of sound to locate his enemies, dealing physical damage to the first enemy it encounters. If Sonic Wave hits, Lee Sin can cast Resonating Strike for the next 3 seconds.<br>Resonating Strike: Lee Sin dashes to the enemy hit by Sonic Wave, dealing physical damage based on the target's missing Health.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "1f73eed2730b956dce393e51d9fcd18765ded329bfde46470ff3e3e8761099d4"
+        }
+      ]
+    },
+    {
+      "id": "KR-027",
+      "original_candidate_id": "Q05-I-Ashe",
+      "original_spec_sha256": "02553640898c1f5e6b83465dba0105a25354148749113ac9e64b9631fc7c7f22",
+      "champion": "Ashe",
+      "advice": {
+        "상황": "애쉬의 궁극기로 아군과 공격을 시작하려는 때",
+        "할 것": "화살이 처음 만날 적 챔피언과 아군이 이어갈 위치를 확인하세요.",
+        "하지 말 것": "멀리 쏜 화살이 목표에 반드시 맞거나 아군이 반드시 따라온다고 가정하지 마세요.",
+        "상대 권리": "이즈리얼은 비전 이동으로 위치를 바꿀 수 있습니다.",
+        "무효 조건": "화살이 빗나가거나 다른 챔피언에게 맞으면 원래 목표를 따라가지 마세요.",
+        "근거": "공식 설명 확인: 마법의 수정화살은 적 챔피언과 충돌하면 피해와 기절을 주고 주변에는 피해와 둔화를 줍니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-027",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "BOTTOM"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ashe.json",
+            "title": "애쉬 공식 스킬 설명",
+            "locator": "data.Ashe.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "c40f2eb94d478873b9e0a81fd96b813734c54dcece4d9b45c3a5c5b7e9d44ea2",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ezreal.json",
+            "title": "이즈리얼 공식 스킬 설명",
+            "locator": "data.Ezreal.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "cee607e5b067723cb3e3eeacbdcf85dba4d573e7818d695abb554e2928a84859",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Ashe"
+          },
+          {
+            "field": "enemy.BOTTOM.champion",
+            "op": "EQ",
+            "value": "Ezreal"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "화살이 빗나가거나 다른 챔피언에게 맞으면 원래 목표를 따라가지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Ashe"
+        ],
+        "output": {
+          "section": "FIGHT",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 애쉬의 궁극기로 아군과 공격을 시작하려는 때\n할 것: 화살이 처음 만날 적 챔피언과 아군이 이어갈 위치를 확인하세요.\n하지 말 것: 멀리 쏜 화살이 목표에 반드시 맞거나 아군이 반드시 따라온다고 가정하지 마세요.\n상대 권리: 이즈리얼은 비전 이동으로 위치를 바꿀 수 있습니다.\n무효 조건: 화살이 빗나가거나 다른 챔피언에게 맞으면 원래 목표를 따라가지 마세요.\n근거: 공식 설명 확인: 마법의 수정화살은 적 챔피언과 충돌하면 피해와 기절을 주고 주변에는 피해와 둔화를 줍니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "화살이 빗나가거나 다른 챔피언에게 맞으면 원래 목표를 따라가지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "애쉬의 궁극기로 아군과 공격을 시작하려는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "화살이 빗나가거나 다른 챔피언에게 맞으면 원래 목표를 따라가지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "813300db9d7e99b803cb046553f493fdbbca3c39ee3b9913c496e3fe2afbf571",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ashe.json",
+          "title": "애쉬 공식 스킬 설명",
+          "locator": "data.Ashe.spells.3.description",
+          "patch": "16.20.1",
+          "excerpt": "Ashe fires a missile of ice in a straight line. If the arrow collides with an enemy Champion, it deals damage and stuns the Champion, stunning for longer the farther arrow has traveled. In addition, surrounding enemy units take damage and are slowed.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "c40f2eb94d478873b9e0a81fd96b813734c54dcece4d9b45c3a5c5b7e9d44ea2"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ezreal.json",
+          "title": "이즈리얼 공식 스킬 설명",
+          "locator": "data.Ezreal.spells.2.description",
+          "patch": "16.20.1",
+          "excerpt": "Ezreal teleports to a target nearby location and fires a homing bolt which strikes the nearest enemy unit. Prioritizes enemies stuck with Essence Flux.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "cee607e5b067723cb3e3eeacbdcf85dba4d573e7818d695abb554e2928a84859"
+        }
+      ]
+    },
+    {
+      "id": "KR-028",
+      "original_candidate_id": "Q05-I-Ashe",
+      "original_spec_sha256": "02553640898c1f5e6b83465dba0105a25354148749113ac9e64b9631fc7c7f22",
+      "champion": "Ashe",
+      "advice": {
+        "상황": "애쉬로 집중 중첩을 모아 강화 공격을 쓰려는 때",
+        "할 것": "집중이 최대인지 확인한 뒤 강화 공격을 쓰세요.",
+        "하지 말 것": "중첩이 충분하지 않은데 강화 공격을 바로 쓸 수 있다고 계산하지 마세요.",
+        "상대 권리": "노틸러스의 대상에 대한 첫 기본 공격은 잠깐 이동 불가 효과를 줍니다.",
+        "무효 조건": "집중 상태나 상대와의 거리를 확인할 수 없으면 강화 공격을 전제로 접근하지 마세요.",
+        "근거": "공식 설명 확인: 애쉬는 공격으로 집중을 쌓고 최대 집중에서 이를 소비해 공격 속도와 공격 방식을 강화합니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-028",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "BOTTOM"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ashe.json",
+            "title": "애쉬 공식 스킬 설명",
+            "locator": "data.Ashe.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "c40f2eb94d478873b9e0a81fd96b813734c54dcece4d9b45c3a5c5b7e9d44ea2",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+            "title": "노틸러스 공식 스킬 설명",
+            "locator": "data.Nautilus.passive.description",
+            "patch": "16.20.1",
+            "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Ashe"
+          },
+          {
+            "field": "enemy.SUPPORT.champion",
+            "op": "EQ",
+            "value": "Nautilus"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "집중 상태나 상대와의 거리를 확인할 수 없으면 강화 공격을 전제로 접근하지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Ashe"
+        ],
+        "output": {
+          "section": "LANE",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 애쉬로 집중 중첩을 모아 강화 공격을 쓰려는 때\n할 것: 집중이 최대인지 확인한 뒤 강화 공격을 쓰세요.\n하지 말 것: 중첩이 충분하지 않은데 강화 공격을 바로 쓸 수 있다고 계산하지 마세요.\n상대 권리: 노틸러스의 대상에 대한 첫 기본 공격은 잠깐 이동 불가 효과를 줍니다.\n무효 조건: 집중 상태나 상대와의 거리를 확인할 수 없으면 강화 공격을 전제로 접근하지 마세요.\n근거: 공식 설명 확인: 애쉬는 공격으로 집중을 쌓고 최대 집중에서 이를 소비해 공격 속도와 공격 방식을 강화합니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "집중 상태나 상대와의 거리를 확인할 수 없으면 강화 공격을 전제로 접근하지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "애쉬로 집중 중첩을 모아 강화 공격을 쓰려는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "집중 상태나 상대와의 거리를 확인할 수 없으면 강화 공격을 전제로 접근하지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "5a550708cd304138f7b585ba3706a0de664379d058c86f8f1d2d6af3bca60e0d",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ashe.json",
+          "title": "애쉬 공식 스킬 설명",
+          "locator": "data.Ashe.spells.0.description",
+          "patch": "16.20.1",
+          "excerpt": "Ashe builds up Focus by attacking. At maximum Focus, Ashe can cast Ranger's Focus to consume all stacks of Focus, temporarily increasing her Attack Speed and transforming her basic attack into a powerful flurry attack for the duration.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "c40f2eb94d478873b9e0a81fd96b813734c54dcece4d9b45c3a5c5b7e9d44ea2"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+          "title": "노틸러스 공식 스킬 설명",
+          "locator": "data.Nautilus.passive.description",
+          "patch": "16.20.1",
+          "excerpt": "Nautilus' first Attack against a target deals increased physical damage and roots them briefly.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff"
+        }
+      ]
+    },
+    {
+      "id": "KR-029",
+      "original_candidate_id": "Q05-I-Kaisa",
+      "original_spec_sha256": "7d9c6afe4cc8ab0c5566700e368f97c82920fc76ff2fa1e0049a314ebcf3bd66",
+      "champion": "Kaisa",
+      "advice": {
+        "상황": "카이사로 아군의 이동 불가 기술 뒤에 공격하려는 때",
+        "할 것": "아군의 제어가 맞은 대상과 자신의 기본 공격 대상을 맞추세요.",
+        "하지 말 것": "아군의 모든 둔화가 반드시 플라스마 중첩을 준다고 생각하지 마세요.",
+        "상대 권리": "노틸러스는 폭뢰로 대상을 추적해 띄우고 기절시킬 수 있습니다.",
+        "무효 조건": "아군의 이동 불가 적중이나 대상이 확인되지 않으면 중첩을 전제로 접근하지 마세요.",
+        "근거": "공식 설명 확인: 카이사의 기본 공격은 플라스마를 쌓고 아군의 이동 불가 효과도 중첩을 돕습니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-029",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "BOTTOM"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Kaisa.json",
+            "title": "카이사 공식 스킬 설명",
+            "locator": "data.Kaisa.passive.description",
+            "patch": "16.20.1",
+            "sha256": "f3b00f4f57d90eefef314b329145f2762fd8f6a2dd613cecae6551f25e4cf3b6",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+            "title": "노틸러스 공식 스킬 설명",
+            "locator": "data.Nautilus.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Kaisa"
+          },
+          {
+            "field": "enemy.SUPPORT.champion",
+            "op": "EQ",
+            "value": "Nautilus"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "아군의 이동 불가 적중이나 대상이 확인되지 않으면 중첩을 전제로 접근하지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Kaisa"
+        ],
+        "output": {
+          "section": "ROLE",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 카이사로 아군의 이동 불가 기술 뒤에 공격하려는 때\n할 것: 아군의 제어가 맞은 대상과 자신의 기본 공격 대상을 맞추세요.\n하지 말 것: 아군의 모든 둔화가 반드시 플라스마 중첩을 준다고 생각하지 마세요.\n상대 권리: 노틸러스는 폭뢰로 대상을 추적해 띄우고 기절시킬 수 있습니다.\n무효 조건: 아군의 이동 불가 적중이나 대상이 확인되지 않으면 중첩을 전제로 접근하지 마세요.\n근거: 공식 설명 확인: 카이사의 기본 공격은 플라스마를 쌓고 아군의 이동 불가 효과도 중첩을 돕습니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "아군의 이동 불가 적중이나 대상이 확인되지 않으면 중첩을 전제로 접근하지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "카이사로 아군의 이동 불가 기술 뒤에 공격하려는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "아군의 이동 불가 적중이나 대상이 확인되지 않으면 중첩을 전제로 접근하지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "798bddcb5022df533fc3fef8d79e8ccd43d43e37ccc7f75a0041079007b22fef",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Kaisa.json",
+          "title": "카이사 공식 스킬 설명",
+          "locator": "data.Kaisa.passive.description",
+          "patch": "16.20.1",
+          "excerpt": "Kai'Sa's basic attacks stack Plasma, dealing increasing bonus magic damage. Allies' immobilizing effects help stack Plasma. Additionally, Kai'Sa's item purchases upgrade her basic spells to have more powerful properties.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "f3b00f4f57d90eefef314b329145f2762fd8f6a2dd613cecae6551f25e4cf3b6"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+          "title": "노틸러스 공식 스킬 설명",
+          "locator": "data.Nautilus.spells.3.description",
+          "patch": "16.20.1",
+          "excerpt": "Nautilus fires a shockwave into the earth that chases an opponent. This shockwave rips up the earth above it, knocking enemies into the air. When it reaches the opponent, the shockwave erupts, knocking his target into the air and stunning them.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff"
+        }
+      ]
+    },
+    {
+      "id": "KR-030",
+      "original_candidate_id": "Q05-I-Kaisa",
+      "original_spec_sha256": "7d9c6afe4cc8ab0c5566700e368f97c82920fc76ff2fa1e0049a314ebcf3bd66",
+      "champion": "Kaisa",
+      "advice": {
+        "상황": "카이사로 고속 충전을 써서 이동하거나 공격하려는 때",
+        "할 것": "진화 여부를 확인하고 이동할 자리를 정하세요.",
+        "하지 말 것": "진화하지 않은 기술에도 은신이 있다고 생각하지 마세요.",
+        "상대 권리": "노틸러스가 닻을 맞히면 서로 끌려갈 수 있습니다. 이동 속도 증가나 은신만으로 안전을 보장하지 않습니다.",
+        "무효 조건": "진화 상태나 이동할 자리를 모르면 은신을 전제로 들어가지 마세요.",
+        "근거": "공식 설명 확인: 고속 충전은 잠시 이동 속도를 높인 뒤 공격 속도를 높이고 진화하면 잠깐 은신을 줍니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "spec": {
+        "schema_version": "pregame.rule.v2",
+        "rule_id": "KR-030",
+        "version": "practical-2026-10-14.v1",
+        "scope": "POSITION",
+        "positions": [
+          "BOTTOM"
+        ],
+        "patches": [
+          "16.20"
+        ],
+        "sources": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Kaisa.json",
+            "title": "카이사 공식 스킬 설명",
+            "locator": "data.Kaisa.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "f3b00f4f57d90eefef314b329145f2762fd8f6a2dd613cecae6551f25e4cf3b6",
+            "kind": "DATA_DRAGON"
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+            "title": "노틸러스 공식 스킬 설명",
+            "locator": "data.Nautilus.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff",
+            "kind": "DATA_DRAGON"
+          }
+        ],
+        "required_fields": [
+          "patch"
+        ],
+        "conditions": [
+          {
+            "field": "my.champion",
+            "op": "EQ",
+            "value": "Kaisa"
+          },
+          {
+            "field": "enemy.SUPPORT.champion",
+            "op": "EQ",
+            "value": "Nautilus"
+          }
+        ],
+        "counterconditions": [],
+        "stop_conditions": [],
+        "counterexamples": [
+          "진화 상태나 이동할 자리를 모르면 은신을 전제로 들어가지 마세요."
+        ],
+        "limitations": [
+          "사용자 검토 전 조언 후보입니다.",
+          "공식 기술 설명에서 행동을 제안한 것으로 승패나 최적 선택을 증명하지 않습니다.",
+          "기술 사용 가능 여부·피해·거리·시간을 자동으로 추적하거나 계산하지 않습니다.",
+          "원래 후보: Q05-I-Kaisa"
+        ],
+        "output": {
+          "section": "FIGHT",
+          "target": "SELF",
+          "outlook": null,
+          "text": "상황: 카이사로 고속 충전을 써서 이동하거나 공격하려는 때\n할 것: 진화 여부를 확인하고 이동할 자리를 정하세요.\n하지 말 것: 진화하지 않은 기술에도 은신이 있다고 생각하지 마세요.\n상대 권리: 노틸러스가 닻을 맞히면 서로 끌려갈 수 있습니다. 이동 속도 증가나 은신만으로 안전을 보장하지 않습니다.\n무효 조건: 진화 상태나 이동할 자리를 모르면 은신을 전제로 들어가지 마세요.\n근거: 공식 설명 확인: 고속 충전은 잠시 이동 속도를 높인 뒤 공격 속도를 높이고 진화하면 잠깐 은신을 줍니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.\n패치: 검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요.",
+          "alternatives": [
+            "정보가 부족하면 접근을 보류하고 보이는 안전한 자리에서 다시 확인하세요."
+          ],
+          "change_conditions": [
+            "진화 상태나 이동할 자리를 모르면 은신을 전제로 들어가지 마세요."
+          ],
+          "operations": null
+        },
+        "profile": null,
+        "cooldowns": [],
+        "plan_guard": {
+          "preconditions": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "카이사로 고속 충전을 써서 이동하거나 공격하려는 때 아군 위치와 이어갈 수 있는 상황을 직접 확인하세요."
+            }
+          ],
+          "invalidation_signals": [
+            {
+              "field": "ALLY_MINIMAP",
+              "text": "진화 상태나 이동할 자리를 모르면 은신을 전제로 들어가지 마세요."
+            }
+          ],
+          "alternative": "정보가 부족하면 진입을 보류하세요."
+        }
+      },
+      "candidate_sha256": "7297b61cacf0ed13ea239be3abc068016f2668045594284f399521d11bf8c108",
+      "source_excerpts": [
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Kaisa.json",
+          "title": "카이사 공식 스킬 설명",
+          "locator": "data.Kaisa.spells.2.description",
+          "patch": "16.20.1",
+          "excerpt": "Kai'Sa briefly increases her Move Speed, then increases her Attack Speed.<br><br>Living Weapon: Supercharge is upgraded to briefly grant Invisibility.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "f3b00f4f57d90eefef314b329145f2762fd8f6a2dd613cecae6551f25e4cf3b6"
+        },
+        {
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+          "title": "노틸러스 공식 스킬 설명",
+          "locator": "data.Nautilus.spells.0.description",
+          "patch": "16.20.1",
+          "excerpt": "Nautilus hurls his anchor forward.  Colliding with an enemy pulls them and Nautilus together, dealing magic damage.  Colliding with terrain pulls Nautilus towards it.",
+          "excerpt_status": "ARCHIVED_VERIFIED",
+          "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff"
+        }
+      ]
+    }
+  ],
+  "q15_path": "data/riot/2026-10-13/power-16.20-CHALLENGER.json.gz",
+  "q15_sha256": "948c69e2157776134dd7b198a71faf4654cebfc41bbfd323e795204bd663c2f7"
+}

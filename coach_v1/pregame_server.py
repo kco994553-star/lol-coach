@@ -291,7 +291,9 @@ class PregameHandler(Handler):
     def dispatch(self):
         self.preflight();path=urlsplit(self.path);route=path.path
         if path.query or path.fragment:raise ServiceError(400,'QUERY_NOT_SUPPORTED')
-        assets={'/pregame':('pregame.html','text/html; charset=utf-8'),'/pregame/':('pregame.html','text/html; charset=utf-8'),
+        assets={'/pc':('pc.html','text/html; charset=utf-8'),'/pc/':('pc.html','text/html; charset=utf-8'),
+            '/pc.js':('pc.js','text/javascript; charset=utf-8'),'/pc.css':('pc.css','text/css; charset=utf-8'),
+            '/pregame':('pregame.html','text/html; charset=utf-8'),'/pregame/':('pregame.html','text/html; charset=utf-8'),
             '/experts':('experts.html','text/html; charset=utf-8'),'/experts/':('experts.html','text/html; charset=utf-8'),
             '/experts.js':('experts.js','text/javascript; charset=utf-8'),
             '/experts_review.js':('experts_review.js','text/javascript; charset=utf-8'),
@@ -372,6 +374,21 @@ class PregameHandler(Handler):
         prefix='/dev/v1/pregame'
         if not route.startswith(prefix+'/'):return super().dispatch()
         self.authorize();pg=self.server.pregame;limit=self.server.limits.body_bytes
+        if route==prefix+'/pc-preview' and self.command=='POST':
+            from .pc_coach import preview
+            return self.bounded_reply(200,preview(self.server,self.body()))
+        if route==prefix+'/pc-status' and self.command=='GET':
+            from .pc_runtime import pc_status
+            return self.bounded_reply(200,pc_status(self.server))
+        if route==prefix+'/pc-objection' and self.command=='POST':
+            # Same-account human/code distinction is an operating rule, as for
+            # USER_WEB. Only the trusted user button calls this protected route.
+            from .pc_coach import objection
+            return self.bounded_reply(200,objection(self.server,self.body()))
+        if route==prefix+'/official-catalog':
+            from .official_catalog import facts_response,request_facts
+            if self.command=='GET':return self.bounded_reply(200,facts_response())
+            if self.command=='POST':return self.bounded_reply(200,request_facts(self.body()))
         if route==prefix+'/status' and self.command=='GET':
             return self.bounded_reply(200,dict(mode='PRE_GAME',automatic_collection='UNAVAILABLE',current_patch=None,
                 knowledge_count=len(current_knowledge(self.server.research)),accuracy=None,

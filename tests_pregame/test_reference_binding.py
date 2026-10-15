@@ -1,5 +1,6 @@
 """Reference-first source successor stays bound; unrecorded edits must fail."""
 import importlib.util
+import hashlib
 import json
 from pathlib import Path
 import shutil
@@ -19,7 +20,14 @@ class ReferenceBindingTests(unittest.TestCase):
         paths=set(b['current_sha256'])|set(b['official_source_sha256'])|set(prior['current_sha256'])|{b['parent_amendment'],b['contract'],'contracts/amendments/2026-10-14-reference-first.json','FREEZE_MANIFEST.json'}
         paths|={b['parent_directory']+'/'+p for p in prior['current_sha256']}
         for p in paths:
-            dest=self.root/p;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(self.v.ROOT/p,dest)
+            source=self.v.ROOT/p
+            expected=b['current_sha256'].get(p)
+            if expected and hashlib.sha256(source.read_bytes()).hexdigest()!=expected:
+                # Keep the four historical assertions against exact reference
+                # bytes after a separately bound v2.1 successor changes source.
+                source=self.v.ROOT/'evidence/queue/v21/parent'/p
+                self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(),expected)
+            dest=self.root/p;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(source,dest)
         self.context=patch.object(self.v,'ROOT',self.root);self.context.start();self.addCleanup(self.context.stop)
 
     def test_exact_reference_chain_passes(self):self.assertEqual(self.v.reference_binding()['status'],'PASS')

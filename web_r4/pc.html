@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><title>LoL Coach · 경기 전 PC</title><link rel="stylesheet" href="/pc.css"><script src="/pc.js" defer></script></head>
+<body>
+<header class="topbar"><div class="brand"><span class="brand-mark" aria-hidden="true">L</span><div><b>LoL Coach</b><small>경기 전 브리핑</small></div></div><div class="header-end"><span id="pc-connection" role="status">연결 대기</span><button id="pc-logout" hidden>연결 해제</button></div></header>
+<main>
+<section id="pc-auth" class="auth panel"><p class="eyebrow">이 PC에서만 연결</p><h1>픽을 고르면, 준비가 시작됩니다.</h1><p>시작 도구로 열면 자동 연결됩니다. 직접 연 경우 로컬 접속키를 입력하세요.</p><form id="pc-login"><label>로컬 접속키<input id="pc-token" type="password" autocomplete="off" spellcheck="false" required></label><button type="submit" class="primary">연결</button></form></section>
+<p id="pc-notice" role="status" aria-live="polite"></p>
+<div id="pc-workspace" hidden>
+<section class="intro"><div><p class="eyebrow">CHAMPION SELECT · PRE-GAME ONLY</p><h1>이번 픽의 경기 전 준비</h1><p>공식 설명에서 시작해, 상대와 조합이 보이면 정보를 더합니다.</p></div><div class="phase-pill" id="pc-phase">수동 입력</div></section>
+<div class="workspace-grid">
+<aside class="panel editor"><div class="section-heading"><h2>픽 입력</h2><span class="small" id="pc-input-mode">수동 · 미검증</span></div>
+<label class="toggle"><input id="pc-auto" type="checkbox" checked>클라이언트 연결 시 자동 반영</label><p id="pc-lcu-reason" class="small">클라이언트 연결을 확인합니다.</p>
+<form id="pc-draft" autocomplete="off">
+<div class="row"><label>내 포지션<select id="pc-position"><option value="">미확인</option value="TOP">탑</option><option value="JUNGLE">정글</option><option value="MID">미드</option><option value="BOTTOM">원딜</option><option value="SUPPORT">서포터</option></select></label><label>게임 패치<input id="pc-patch" placeholder="예: 16.19" maxlength="100"></label></div>
+<label class="step"><span><em>01</em> 내 챔피언</span><input id="pc-own" list="pc-roster" placeholder="챔피언 이름 / ID" maxlength="100"></label>
+<label class="step"><span><em>02</em> 상대 라이너</span><input id="pc-laner" list="pc-roster" placeholder="아직 모르면 비워 두세요" maxlength="100"></label>
+<label class="step"><span><em>03</em> 적 정글러</span><input id="pc-jungler" list="pc-roster" placeholder="아직 모르면 비워 두세요" maxlength="100"></label>
+<details id="pc-composition"><summary><em>04</em> 나머지 조합 입력</summary><div id="pc-team-inputs"></div></details>
+<label class="toggle phase-toggle"><input id="pc-pregame" type="checkbox" checked>챔피언 선택 중입니다</label><p class="small">직접 입력한 값은 항상 수동·미검증으로 처리됩니다.</p>
+</form><datalist id="pc-roster"></datalist>
+<button id="pc-refresh" class="secondary">현재 입력 다시 보기</button>
+</aside>
+<section class="briefing" aria-labelledby="pc-brief-title"><div class="section-heading"><h2 id="pc-brief-title">경기 전 브리핑</h2><span id="pc-stage" class="small">내 픽을 기다리는 중</span></div><ol class="stage-track" aria-label="정보 단계"><li data-stage="OWN">내 픽</li><li data-stage="LANER">상대 라인</li><li data-stage="JUNGLE">적 정글</li><li data-stage="COMPOSITION">조합</li></ol><p id="pc-review" class="small"></p><div id="pc-cards" aria-live="polite"></div><div id="pc-empty" class="empty panel"><span aria-hidden="true">◇</span><h3>내 챔피언부터 알려 주세요</h3><p>확인할 수 있는 정보부터 차례로 보여드립니다.</p></div></section>
+</div>
+<details class="panel references" id="pc-official"><summary>전체 챔피언 공식 한국어 설명 · 참고 자료</summary><p class="small">공식 사실은 사용자 승인이나 전술 검증이 아닙니다. 게임 패치가 미확인이면 참고용입니다.</p><label>챔피언 검색<input id="pc-reference-search" placeholder="이름 또는 ID"></label><div id="pc-reference-list"></div></details>
+<details class="footer-note panel weekly" id="pc-weekly"><summary id="pc-weekly-title">이번 주 로컬 점검</summary><p>검토는 선택사항입니다. 자동 검토는 코칭 정확도를 보장하지 않습니다.</p><ul id="pc-weekly-items"></ul></details>
+</div>
+</main>
+</body></html>

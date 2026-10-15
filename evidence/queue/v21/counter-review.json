@@ -1,0 +1,579 @@
+{
+  "schema_version": "auto-review.agent.v1",
+  "role": "COUNTER",
+  "reviewer": "/root/v21_counter_check",
+  "packet_sha256": "160e4080da35b138f0e02290cab328cec8d13ca0dc139f85ced96012363e6eed",
+  "q15_sha256": "948c69e2157776134dd7b198a71faf4654cebfc41bbfd323e795204bd663c2f7",
+  "reviews": [
+    {
+      "id": "KR-001",
+      "candidate_sha256": "794418884f92833e9d48ca1624785630a8639d7bfe62fae099b4adfe4a3fd6c7",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 피오라가 벽 충돌 띄우기에 응수하는 반격, 응수 동작만 끝나고 다음 사용 가능 여부는 모르는 경우, 벽 경로 불명을 대입했다. 응수가 가능하면 바로 쓰지 말고 사용 여부·경로 불명 시 보류한다는 문구가 각각 이를 다룬다. 응수 동작 종료만으로 재사용 불가를 판정하지 않는다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Ornn cohort 3개, positions=TOP, points.champion_n=1..1를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-002",
+      "candidate_sha256": "f8f7bb421523e244f39e70a3e5730cef6598346028ce99a4c77ba8eab505e656",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 정령 첫 통과를 띄우기로 오인하는 경우, 재충돌 실패, 아군 후속 불가, 피오라 응수를 대입했다. 첫 통과와 재충돌을 구분하고 재충돌·후속 불가 시 계획 변경을 요구한다. 응수 반격 권리가 남아 있어 경로 확인을 안전 보장으로 해석할 수 없다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Ornn cohort 3개, positions=TOP, points.champion_n=1..1를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-003",
+      "candidate_sha256": "f3fb542d379986854a0afbe4cf5df4f96acadcf0d913c9367b5b1d497ddb6d53",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 서리 중첩 미달, 세주아니 기술 사용 가능 여부 불명, 리신의 밀어내기를 대입했다. 본문은 최대 중첩 확인과 사용 가능 여부 미확인 시 보류를 요구하며 상대의 밀어내기 권리를 유지한다. 최대 중첩만으로 리신의 대응 불가나 기절 연계 성공을 보장하지 않는다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Sejuani cohort 3개, positions=SUPPORT, points.champion_n=1..2를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-004",
+      "candidate_sha256": "84ee74a5386e5439ee23e0f4ebab158814256dc37a3e426f271a47a5e12948f8",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 뒤 목표 앞에 다른 챔피언이 서거나 리신이 아군에게 이동해 경로가 바뀌는 경우 및 아군 후속 불가를 대입했다. 첫 충돌 대상 점검과 막힘·후속 불가 시 목표 변경이 있다. 가로막는 적이 없다는 사실만으로 적중을 보장하지 않는다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Sejuani cohort 3개, positions=SUPPORT, points.champion_n=1..2를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-005",
+      "candidate_sha256": "f8c2ca6819d0f49e10881b768f9a25f31c60ebcb936fe94b698d0bbac62935a2",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 제드가 궁극기의 대상 지정 불가로 매혹을 피하거나 매혹이 빗나가는 경우를 대입했다. 두 경우 계획 중단이 있고 매혹 적중 확인 뒤의 공격만 제안한다. 적중을 체력 우위나 승리의 보장으로 확대하지 않는다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Ahri cohort 6개, positions=MID,TOP, points.champion_n=1..2를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-006",
+      "candidate_sha256": "cd01d8415b7d8377add705a6bbe6e5ed532738db98f004b29bcdf34cc8e4366d",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 처치 관여 없이 아리 추가 이동이 생기지 않는 경우, 남은 이동 부족, 제드의 그림자 위치 교환을 대입했다. 추가 이동을 미리 가정하지 않으며 남은 이동·그림자 위치 불명 시 깊은 추격을 금지한다. 퇴로 확인은 미래 수동 점검이다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Ahri cohort 6개, positions=MID,TOP, points.champion_n=1..2를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-007",
+      "candidate_sha256": "4bc8c0351acc2968cc025a32914239cbc670c8d520205a3858f16ddcf2e09ac8",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 럭스가 아군에 없는 드래프트, 속박 빗나감, 이즈리얼 위치 변경, 덫 설치 후 미발동을 대입했다. ally.SUPPORT.champion=Lux가 첫 경우를 적용 범위에서 제외하며 나머지는 속박 적중 위치를 본 후보 선정과 실제 덫 발동 전 강화 공격 추격 금지로 제한한다. 덫 설치 즉시 속박이나 헤드샷이 보장된다고 주장하지 않는다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Caitlyn cohort 3개, positions=BOTTOM, points.champion_n=1..35를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-008",
+      "candidate_sha256": "6069bb284dab32894cc2be885f02c72c2a0790f479c4d7178f6bead11ee7f3d1",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 투망 반동으로 위험한 착지점에 도착하거나 노틸러스 닻 경로가 이동 후에도 열리는 경우를 대입했다. 착지점 확인과 두 경우의 다른 퇴로 선택이 명시되어 있다. 상대 적중만으로 탈출 성공을 보장하지 않는다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Caitlyn cohort 3개, positions=BOTTOM, points.champion_n=1..35를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-009",
+      "candidate_sha256": "73c0a7740dedf6e63fa7d98baed49e1507a0eac24070e7d94ea32685cca935c9",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 다른 적 챔피언의 탄환 가로막기, 이즈리얼 위치 변경, 피해가 부족한 마무리를 대입했다. 탄환 차단 가능성과 마무리 근거 부재를 명시해 확정 처치를 금지한다. 비전 이동 자체가 추적 탄환을 무조건 제거한다는 주장은 없다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Caitlyn cohort 3개, positions=BOTTOM, points.champion_n=1..35를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-010",
+      "candidate_sha256": "b1e1b6055cb2016a7591c5d1bffa24923d0e680c79f157f301f887f8a046563a",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 늘어난 헤드샷 사거리를 믿고 노틸러스 닻 경로로 들어가는 경우, 덫·투망 미적중, 강화 헤드샷 사용 불가를 대입했다. 실제 대상과 사용 가능 여부 확인, 위험 경로 진입 금지 및 공격 보류가 있다. 더 긴 사거리를 안전 보장으로 취급하지 않는다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Caitlyn cohort 3개, positions=BOTTOM, points.champion_n=1..35를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-011",
+      "candidate_sha256": "7493838c21db68a0edde523f618fd7edb559640527ea19bd93670b5549b72977",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 빛의 구속 앞에 두 유닛이 있어 뒤 목표에 닿지 않는 경우와 이즈리얼 위치 변경을 대입했다. 공식 발췌의 최대 두 유닛 제한을 본문이 유지하고, 목표에 닿지 않거나 빗나가면 전진하지 않는다. 무제한 관통 또는 적중 보장이 없다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Lux cohort 3개, positions=SUPPORT, points.champion_n=1..1를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-012",
+      "candidate_sha256": "b8beacb3040fa5f21e2a27a7132afcfb750daac782931d1d4d9342afca58a266",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 보호막이 노틸러스 추적 궁극기 제어를 없애지 않는 경우와 지팡이가 아군을 놓치는 경우를 대입했다. 보호막을 제어 면역으로 취급하지 않고 추적 지속 또는 지팡이 미적중 시 퇴로 확보를 요구한다. 피해 전부를 막는다는 수치 주장은 없다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Lux cohort 3개, positions=SUPPORT, points.champion_n=1..1를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-013",
+      "candidate_sha256": "66ef338905f012328c99e3742f1bb378fe9ad4bd8105f41f2e2b83de1b3cb377",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 피오라가 주요 이동 불가를 응수해 첫 적 챔피언에게 기절 찌르기를 맞히는 경우를 대입했다. 응수 중 제어 집중을 금지하고 찌르기 적중 대상이라는 조건을 유지한다. 응수·방향 불명 시 안전 진입을 판단하지 않는다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Fiora cohort 9개, positions=BOTTOM,MID,TOP, points.champion_n=1..35를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-014",
+      "candidate_sha256": "632f02fbbf6ad24f00e3104d97bffd45eba4d0a8bdee277c5d396a38b6858973",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 피오라가 급소를 한 번만 맞힌 후 표식 대상이 죽어 회복을 얻는 경우 및 급소 미적중 여부 불명을 대입했다. 일부 급소 적중 뒤 사망에도 회복할 수 있음을 명시하고, 적중 불명 시 회복을 배제한 계산을 금지한다. 표식 대상 사망만으로 회복이 항상 생긴다는 주장은 아니다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Fiora cohort 9개, positions=BOTTOM,MID,TOP, points.champion_n=1..35를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-015",
+      "candidate_sha256": "ae175c71b32ff61e6201a30894de3ed8ef93bc417f7e2bac08510a16c8e78e36",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 음파의 첫 피해 뒤 리신이 공명의 일격으로 재접근하는 경우, 적중·리신 위치 불명, 후속 사용 창 종료를 대입했다. 첫 피해로 위협 종료를 판단하지 말라는 경고이며 리신의 후속 기회를 항상 유효한 상태로 자동 확정하지 않는다. 본문에는 사용 창이나 피해량을 계산한 수치 전술이 없다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. LeeSin cohort 3개, positions=JUNGLE, points.champion_n=2..88를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-016",
+      "candidate_sha256": "e3480901c6cab5c0abf16a841aedc3c5207daeb375a582d145db668ef7dae9ae",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 리신이 찬 아군이 뒤의 다른 아군과 충돌하는 경우 및 리신 위치·차는 방향 불명을 대입했다. 뒤에 모이지 말고 방향을 모르면 겹쳐 서는 계획을 피하도록 한다. 현재 방향을 영구 고정하거나 산개가 모든 피해를 막는다고 주장하지 않는다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. LeeSin cohort 3개, positions=JUNGLE, points.champion_n=2..88를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-017",
+      "candidate_sha256": "e17d889036244459859ead508c7c7da6adb0433d494949a09b67827fc53250aa",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 제드 본체가 멀어진 후 남은 그림자와 교환하는 경우 및 그림자가 사라진 경우를 대입했다. 본체·그림자 동시 확인과 잔존 여부 불명 시 복귀 방향 미확정 조건이 있다. 그림자 존재만으로 교환 가능 시간이나 횟수를 자동 판정하지 않는다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Zed cohort 12개, positions=BOTTOM,JUNGLE,MID,TOP, points.champion_n=1..3를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-018",
+      "candidate_sha256": "199011a69de7ecd2eee9517937c99e5d7a20c3890ae411693ea4bc36391f75e8",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 현재 체력이 남아도 죽음의 표식 후속 피해로 죽는 경우와 표식·누적 피해 불명을 대입했다. 추가 피해를 고려한 퇴로 및 생존·맞싸움 승리 확정 금지가 있다. 단순 후퇴가 생존을 보장하거나 피해를 계산한다는 주장이 아니다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Zed cohort 12개, positions=BOTTOM,JUNGLE,MID,TOP, points.champion_n=1..3를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-019",
+      "candidate_sha256": "d8a6c98d7332c8092765f4e4cb3f48dad112040b6113bff1f2ab0b453256712b",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 이즈리얼이 이동 후 신비한 화살 적중으로 대기시간을 줄이는 경우, 화살 미적중, 이동 위치 불명을 대입했다. 다음 이동까지 시간을 단정하지 말라는 조건이 있고, 모든 경우 화살이 맞았다고 자동 가정하지 않는다. 특정 재사용 초 수를 주장하지 않는다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Ezreal cohort 3개, positions=BOTTOM, points.champion_n=2..48를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-020",
+      "candidate_sha256": "5979dc1b80d74e2d26f3264f5503718e32394d6bbea4a2bd81996ed2b052bcff",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 정수의 흐름 부착 직후 피해가 없지만 후속 적중으로 폭발하는 경우, 후속 공격 경로 불명, 탈출 경로 부재를 대입했다. 위험 종료나 안전을 단정하지 않고 벗어날 길을 찾아보는 제안이다. 반드시 탈출할 수 있다고 보장하지 않는다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Ezreal cohort 3개, positions=BOTTOM, points.champion_n=2..48를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-021",
+      "candidate_sha256": "26eff1de894c01d16ae1866352a055f6c0c5a34545c770e7854d3088ec3c16bd",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 노틸러스 닻이 자신을 지나 지형에 맞아 접근하는 경우 및 지형·도착점 미관측을 대입했다. 본문은 닻 빗나감과 이동 종료를 구분하고 불명 시 접근 부재를 단정하지 않는다. 닻이 언제나 자신에게 맞거나 지형을 통과한다는 주장이 아니다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Nautilus cohort 3개, positions=SUPPORT, points.champion_n=1..57를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-022",
+      "candidate_sha256": "661bb18261eaee8e968f5dccb3ae53f426de03d56a4850a333f5894448a19ee1",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 폭뢰 대상이 이동해 추적 경로가 바뀌거나 주변 아군이 진행 경로에 겹치는 경우를 대입했다. 대상·현재 진행 방향을 보고 겹치지 않는 후보 자리를 찾는 제안이며 방향·대상 불명 시 확정 회피 경로를 제시하지 않는다. 현재 직선만으로 완전 회피를 보장하지 않는다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Nautilus cohort 3개, positions=SUPPORT, points.champion_n=1..57를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-023",
+      "candidate_sha256": "da4ab1027f976b9fba119482dc657228ab0fd8657c2099207b30025f47de7d66",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 유나라가 강화 상태가 아닌데 돌진을 기대하거나 노틸러스 닻에 맞는 경우를 대입했다. 평상시 이동 속도 증가와 강화 시 돌진을 분리하며 강화 상태 아님·목적지 불명 시 돌진 전제 이동을 금지한다. 이전의 궁극기 원인 및 Ghosted 정의 확장은 현재 조언에서 제거되어 별도 추론하지 않는다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Yunara cohort 3개, positions=BOTTOM, points.champion_n=2..34를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-024",
+      "candidate_sha256": "a0012c4c6a3041dc28d65084d5bd59b631392815d6970d691b930257a25beeb3",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 유나라가 강화 상태여도 노틸러스 폭뢰의 추적 제어를 받는 경우를 대입했다. 제어 면역을 보장하지 않는다고 명시하고 강화 상태·궁극기 대상 불명 시 안전 진입을 판단하지 않는다. 강화 상태 자체를 안전 근거로 삼지 않는다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Yunara cohort 3개, positions=BOTTOM, points.champion_n=2..34를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-025",
+      "candidate_sha256": "4fbdaf382d50f6835556c35520c44785d4b1daf42cb7563778857511d15e5e14",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 유나라 둔화가 맞아도 이즈리얼이 비전 이동하는 경우와 투사체·광선 빗나감을 대입했다. 둔화를 이동 기술 제거로 해석하지 않고 적중 실패나 위치 변경 시 거리 계획을 다시 세우도록 한다. 적중으로 거리 유지가 확정된다는 주장이 없다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Yunara cohort 3개, positions=BOTTOM, points.champion_n=2..34를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-026",
+      "candidate_sha256": "6a30fdfa78e95a8154fb4227ca2b690e198dfef7e4e4ce084d479fc1fc2ec3fa",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 매 날리기의 관측 장소와 실제 이동 경로가 다르거나 관측 후 적이 이동한 경우 및 리신 음파 후 재접근을 대입했다. 장소와 시간이 경로를 확인하지 못하면 진입을 보류하고 모든 미관측 경로의 안전을 주장하지 않는다. 정찰 한 번이 안전을 보장하지 않는다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Ashe cohort 3개, positions=BOTTOM, points.champion_n=1..1를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-027",
+      "candidate_sha256": "de01062adb0973cef64b4b2cb1516fe5010c63ab8ee66fcdc63c044544881c79",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 이즈리얼 비전 이동, 다른 챔피언의 화살 차단, 아군 후속 불가를 대입했다. 최초 충돌 대상과 후속 아군 위치를 확인하고, 빗나감·다른 대상 적중 시 원래 목표를 따라가지 않는다. 아군이 반드시 따라온다는 가정도 금지한다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Ashe cohort 3개, positions=BOTTOM, points.champion_n=1..1를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-028",
+      "candidate_sha256": "499cc8ad15cfa25e893a489bf0296096d6080c5d19b5bce275f0694204ac80b7",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 애쉬 집중 미달, 집중 상태·상대 거리 불명, 노틸러스 첫 기본 공격의 이동 불가를 대입했다. 최대 집중 확인 및 상태·거리 미확인 시 강화 공격 전제 접근 금지가 있다. 집중만 충분하면 접근이 안전하다고 말하지 않는다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Ashe cohort 3개, positions=BOTTOM, points.champion_n=1..1를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-029",
+      "candidate_sha256": "7fdff54173ce9767a2ba8d7910131081b88c0a52cf3aebb75bb7c5c07ebed24a",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 아군 효과가 이동 불가가 아닌 둔화뿐인 경우, 제어 미적중, 다른 대상 공격 및 노틸러스 폭뢰 반격을 대입했다. 이동 불가 효과와 같은 대상 확인을 요구하고 모든 둔화를 플라스마 중첩으로 인정하지 않는다. 대상을 맞추라는 조언을 안전 진입이나 처치 보장으로 해석하지 않는다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Kaisa cohort 6개, positions=BOTTOM,TOP, points.champion_n=1..40를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    },
+    {
+      "id": "KR-030",
+      "candidate_sha256": "755aecb331663bf453325a1f2431ef2acb549039f974d23694a6652dbc6c6e49",
+      "verdict": "PASS",
+      "reasons": [
+        "패치 도전: 적용 패치는 16.20, 공식 발췌의 자료 버전은 16.20.1이다. 공식 아카이브 manifest의 game_patch=16.20/source_patch=16.20.1 대응과 실제 Q15 source.patch=16.20을 확인했다. 두 표기를 맹목적으로 같은 문자열로 취급하지 않았으며, 다른 경기 패치나 후속 변경에까지 판정을 확대하지 않는다.",
+        "상대 대응·무효 조건 도전: 미진화 고속 충전에 은신을 기대하거나 이동 속도·은신만 믿고 노틸러스 닻 경로에 진입하는 경우를 대입했다. 진화 여부·목적지 확인과 불명 시 은신 전제 진입 금지가 있다. 은신이나 가속만으로 닻을 회피할 수 있다고 보장하지 않는다.",
+        "구조 재검사: auto-advice.v1은 draft의 챔피언·역할·패치에 대한 정적 적용 범위만 사용한다. 이 행의 manual_checks는 상황·무효 조건 원문과 일치하고 automatic_state_checks=false이며 legacy plan_guard가 없다. 적중·남은 사용·경로·스킬 준비 상태를 관측 완료로 기록하거나 빈 stop_conditions에서 추론하지 않는 PRE_GAME 수동 조언 범위에서 이전 분야 불일치는 재현되지 않는다.",
+        "판정 범위: 명시한 상황과 수동 무효 조건을 지키는 경기 전 참고 조언에 대해 위 반격을 도전한 결과 살아남는 반례를 찾지 못했다. 최적 플레이·안전·승리·자동 상태 판단·USER 승인이나 코칭 정확도를 입증한 판정은 아니다."
+      ],
+      "counterexamples": [],
+      "statistic_checks": [
+        {
+          "claim": "Q15로 비교 가능한 수치 전술 주장 없음",
+          "status": "NOT_APPLICABLE",
+          "evidence": "지정 실제 gzip을 다시 해제하고 raw SHA256을 대조했다. source.patch=16.20, tier=CHALLENGER, real_matches=275, synthetic_matches=0, coaching_accuracy=null. 실제 전체 852 cohort는 ROLE_POPULATION, opponent_champion=null, metric gold_delta/xp_delta/cs_delta이다. Kaisa cohort 6개, positions=BOTTOM,TOP, points.champion_n=1..40를 직접 확인했다. 해당 조언에는 Q15의 gold/xp/cs·승률·시점 등과 비교할 수치 전술 주장이 없다. Q15에는 기술 적중·준비·거리·피해·제어 상태 필드가 없어 메커니즘 경고를 통계 검증이나 전술 성능 검증으로 기록하지 않는다."
+        }
+      ]
+    }
+  ]
+}

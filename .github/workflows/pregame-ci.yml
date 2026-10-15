@@ -91,6 +91,13 @@ jobs:
           python scripts/browser_reference_first.py
           python scripts/browser_postgame_v20.py | tee "$RUNNER_TEMP/postgame-v20-browser.json"
           python scripts/browser_statistics_v20.py | tee "$RUNNER_TEMP/statistics-v20-browser.json"
+      - name: Verify v2.1 PC cards, automatic grades and input latency in Chromium
+        shell: bash
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/pregame-playwright/node_modules"
+          CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
+          export CHROMIUM_EXECUTABLE
+          python scripts/browser_pc_v21.py | tee "$RUNNER_TEMP/pc-v21-browser.json"
       - name: Print exact fresh receipts
         if: always()
         run: |
@@ -104,7 +111,8 @@ jobs:
                                              ('expert_browser', 'expert-browser.json', 'runner.json'),
                                              ('extensions', 'pregame-extensions.json', 'verification.json'),
                                              ('browser', 'pregame-browser.json', 'runner.json'),
-                                             ('browser_v13', 'pregame-browser-v13.json', 'runner.json')]:
+                                             ('browser_v13', 'pregame-browser-v13.json', 'runner.json'),
+                                             ('pc_v21_browser', 'pc-v21-browser.json', 'runner.json')]:
               try:
                   launch = json.loads((Path(os.environ['RUNNER_TEMP']) / filename).read_text())
                   receipts[name] = json.loads((Path(launch['evidence_directory']) / reportfile).read_text())
