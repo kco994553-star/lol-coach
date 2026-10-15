@@ -112,20 +112,72 @@
     }
     if(ul.children.length)parent.append(ul);
   }
+  let graphSequence=0;
+  function resourceGraph(graph) {
+    if(!graph || !Array.isArray(graph.points))return null;
+    const finite=value=>typeof value==='number' && Number.isFinite(value);
+    const valid=point=>point && finite(point.minute) && point.minute>=0 && finite(point.value) && point.visible!==false;
+    const points=graph.points.filter(valid);
+    if(!points.length)return null;
+    const markers=(Array.isArray(graph.markers)?graph.markers:[]).filter(marker=>marker && finite(marker.minute) && marker.minute>=0 && ['OWN','OPPONENT'].includes(marker.who));
+    const ns='http://www.w3.org/2000/svg';
+    const svgNode=(tag,attributes,text)=>{const element=document.createElementNS(ns,tag);for(const [key,value] of Object.entries(attributes || {}))element.setAttribute(key,String(value));if(text!==undefined)element.textContent=String(text);return element;};
+    const width=560,height=254,left=84,right=24,top=32,bottom=64;
+    const times=[...points,...markers].map(point=>point.minute);
+    let minimumX=Math.min(...times),maximumX=Math.max(...times),minimumY=Math.min(...points.map(point=>point.value)),maximumY=Math.max(...points.map(point=>point.value));
+    if(minimumX===maximumX){minimumX=Math.max(0,minimumX-1);maximumX+=1;}
+    if(minimumY===maximumY){const padding=Math.max(1,Math.abs(minimumY)*0.05);minimumY-=padding;maximumY+=padding;}
+    if(!finite(maximumX-minimumX) || maximumX<=minimumX || !finite(maximumY-minimumY) || maximumY<=minimumY)return null;
+    const x=minute=>left+(minute-minimumX)/(maximumX-minimumX)*(width-left-right);
+    const y=value=>height-bottom-(value-minimumY)/(maximumY-minimumY)*(height-top-bottom);
+    const number=value=>new Intl.NumberFormat('ko-KR',{maximumFractionDigits:2}).format(value);
+    const title=String(graph.title || '관측된 자원 변화'),unit=String(graph.units || '관측값');
+    const xLabel=String(graph.x_label || '경과 시간 (분)'),yLabel=String(graph.y_label || '자원 변화 차이')+' ('+unit+')';
+    const id='pc-resource-graph-'+(++graphSequence),figure=node('figure',undefined,'resource-graph');
+    figure.append(node('figcaption',title));
+    const svg=svgNode('svg',{viewBox:'0 0 '+width+' '+height,role:'img','aria-labelledby':id+'-title '+id+'-description'});
+    svg.append(svgNode('title',{id:id+'-title'},title),svgNode('desc',{id:id+'-description'},xLabel+'; '+yLabel+'. 빈 관측 구간은 연결하지 않습니다. 선은 관측값이며 교전 강도나 승패 예측이 아닙니다.'));
+    svg.append(svgNode('path',{d:'M '+left+' '+top+' V '+(height-bottom)+' H '+(width-right),class:'graph-axis'}));
+    for(const value of [minimumY,minimumY+(maximumY-minimumY)/2,maximumY]){
+      svg.append(svgNode('line',{x1:left,y1:y(value),x2:width-right,y2:y(value),class:'graph-grid'}),svgNode('text',{x:left-8,y:y(value)+4,'text-anchor':'end',class:'graph-tick'},number(value)));
+    }
+    for(const minute of [minimumX,minimumX+(maximumX-minimumX)/2,maximumX])svg.append(svgNode('text',{x:x(minute),y:height-bottom+19,'text-anchor':'middle',class:'graph-tick'},number(minute)));
+    svg.append(svgNode('text',{x:(left+width-right)/2,y:height-10,'text-anchor':'middle',class:'graph-label'},xLabel),svgNode('text',{x:14,y:(top+height-bottom)/2,transform:'rotate(-90 14 '+((top+height-bottom)/2)+')','text-anchor':'middle',class:'graph-label'},yLabel));
+    let segment=[];
+    const flush=()=>{if(segment.length>1)svg.append(svgNode('polyline',{points:segment.map(point=>x(point.minute)+','+y(point.value)).join(' '),class:'graph-line'}));segment=[];};
+    for(const point of graph.points){
+      if(!valid(point)){flush();continue;}
+      if(segment.length && point.minute<=segment[segment.length-1].minute)flush();
+      segment.push(point);
+    }
+    flush();
+    for(const point of points){const dot=svgNode('circle',{cx:x(point.minute),cy:y(point.value),r:3,class:'graph-point'});dot.append(svgNode('title',{},number(point.minute)+'분 · '+number(point.value)+' '+unit));svg.append(dot);}
+    const legend=node('ul',undefined,'graph-legend');
+    for(const marker of markers){
+      const own=marker.who==='OWN',label=(own?'내 챔피언':'맞라이너')+' · '+String(marker.label || '첫 구매 대리 관측')+' · '+number(marker.minute)+'분';
+      const line=svgNode('line',{x1:x(marker.minute),y1:top,x2:x(marker.minute),y2:height-bottom,class:'graph-marker '+(own?'own':'opponent'),tabindex:0,role:'img','aria-label':label});
+      line.append(svgNode('title',{},label));svg.append(line);
+      legend.append(node('li',label,own?'own':'opponent'));
+    }
+    figure.append(svg);if(legend.children.length)figure.append(legend);
+    return figure;
+  }
   function render(result) {
     $('pc-cards').replaceChildren();
     const phase=result.phase==='PRE_GAME';
     const cards=Array.isArray(result.cards)?result.cards:[];
-    const visible=cards.filter(card=>phase || ['OFFICIAL','OFFICIAL_FACT','OFFICIAL_REFERENCE'].includes(card.evidence_level));
-    const tactical=visible.filter(card=>['USER','AUTO_VERIFIED','HYPOTHESIS','EXPLORATORY'].includes(card.evidence_level)).slice(0,3);
+    const recall=card=>['RECALL','LOW_HEALTH'].includes(card.section);
+    const visible=cards.filter(card=>phase || (!recall(card) && ['OFFICIAL','OFFICIAL_FACT','OFFICIAL_REFERENCE'].includes(card.evidence_level)));
+    const tactical=visible.filter(card=>!recall(card) && ['USER','AUTO_VERIFIED','HYPOTHESIS','EXPLORATORY'].includes(card.evidence_level)).slice(0,3);
     const ownOfficial=visible.find(card=>card.evidence_level==='OFFICIAL' && card.champion===currentInput?.my_champion);
     const first=[...tactical,...(ownOfficial?[ownOfficial]:[])];
-    if(!first.length && visible.length)first.push(visible[0]);
+    if(!first.length){const fallback=visible.find(card=>!recall(card));if(fallback)first.push(fallback);}
     const others=visible.filter(card=>!first.includes(card));
     const more=node('details',undefined,'more-cards');more.open=moreExpanded;more.append(node('summary','다른 준비 조언·공식 설명 '+others.length+'개'));
     const group=node('div',undefined,'card-group');more.append(group);more.addEventListener('toggle',()=>{moreExpanded=more.open;});
     for(const card of [...first,...others]){
       const article=node('article',undefined,'coach-card');article.dataset.cardId=card.id || '';
+      article.dataset.section=card.section || '';
       if(card.candidate_id)article.dataset.candidateId=card.candidate_id;
       const hypothesis=['EXPLORATORY','HYPOTHESIS'].includes(card.evidence_level);
       const label=hypothesis?'미검토 가설(AI 작성, 근거 링크)':card.evidence_label || '근거 미확인';
@@ -133,9 +185,12 @@
       article.append(node('span',label+(reference?' · 참고용':''),'evidence '+(card.evidence_level || '')));
       article.append(node('h3',card.title || '경기 전 참고'));
       const lines=node('div',undefined,'card-lines');for(const line of (card.lines || []).slice(0,3))lines.append(node('p',line));article.append(lines);
-      const detail=node('details'),summary=node('summary','상세 설명 · 근거 보기');detail.open=expandedCards.has(card.id);detail.addEventListener('toggle',()=>{if(detail.open)expandedCards.add(card.id);else expandedCards.delete(card.id);});detail.append(summary);
+      const detail=node('details'),summary=node('summary','상세 설명 · 근거 보기');detail.open=expandedCards.has(card.id);
+      const syncGraph=()=>{detail.querySelector('.resource-graph')?.remove();if(detail.open){const graph=resourceGraph(card.graph);if(graph)detail.append(graph);}};
+      detail.addEventListener('toggle',()=>{if(detail.open)expandedCards.add(card.id);else expandedCards.delete(card.id);syncGraph();});detail.append(summary);
       if(card.details)detail.append(node('p',card.details));
       detail.append(node('p',patchLabel(card.patch_status)));sources(detail,card.sources);article.append(detail);
+      syncGraph();
       if(card.evidence_level==='AUTO_VERIFIED' && card.candidate_id && card.candidate_sha256){
         const button=node('button','이 자동 검토에 이의 제기','objection');button.type='button';
         button.addEventListener('click',event=>objection(event,card,button));article.append(button);

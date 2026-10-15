@@ -1,0 +1,80 @@
+...........EEEEE..........
+======================================================================
+ERROR: test_malformed_shapes_fail_closed_with_value_errors (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_malformed_shapes_fail_closed_with_value_errors) (side='match', key='metadata')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 229, in test_malformed_shapes_fail_closed_with_value_errors
+    with self.assertRaises(ValueError):self.extract(m,t)
+                                       ^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 29, in extract
+    def extract(self,match,timeline):return self.module().extract_match(match,timeline,population='CHALLENGER')
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/recall_stats.py", line 197, in extract_match
+    mid=match.get('metadata',{}).get('matchId')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+======================================================================
+ERROR: test_malformed_shapes_fail_closed_with_value_errors (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_malformed_shapes_fail_closed_with_value_errors) (side='timeline', key='metadata')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 229, in test_malformed_shapes_fail_closed_with_value_errors
+    with self.assertRaises(ValueError):self.extract(m,t)
+                                       ^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 29, in extract
+    def extract(self,match,timeline):return self.module().extract_match(match,timeline,population='CHALLENGER')
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/recall_stats.py", line 198, in extract_match
+    _require(isinstance(mid,str) and mid and timeline.get('metadata',{}).get('matchId')==mid,'match/timeline identity mismatch')
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+======================================================================
+ERROR: test_malformed_shapes_fail_closed_with_value_errors (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_malformed_shapes_fail_closed_with_value_errors) (side='match', key='info')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 229, in test_malformed_shapes_fail_closed_with_value_errors
+    with self.assertRaises(ValueError):self.extract(m,t)
+                                       ^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 29, in extract
+    def extract(self,match,timeline):return self.module().extract_match(match,timeline,population='CHALLENGER')
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/recall_stats.py", line 200, in extract_match
+    _require(info.get('queueId')==420 and info.get('mapId')==11,'only ranked Summoners Rift supported')
+             ^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+======================================================================
+ERROR: test_malformed_shapes_fail_closed_with_value_errors (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_malformed_shapes_fail_closed_with_value_errors) (side='timeline', key='info')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 229, in test_malformed_shapes_fail_closed_with_value_errors
+    with self.assertRaises(ValueError):self.extract(m,t)
+                                       ^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 29, in extract
+    def extract(self,match,timeline):return self.module().extract_match(match,timeline,population='CHALLENGER')
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/recall_stats.py", line 199, in extract_match
+    info=match.get('info',{});raw_frames=timeline.get('info',{}).get('frames')
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+======================================================================
+ERROR: test_malformed_shapes_fail_closed_with_value_errors (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_malformed_shapes_fail_closed_with_value_errors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 232, in test_malformed_shapes_fail_closed_with_value_errors
+    with self.assertRaises(ValueError):self.module().validate_dataset(data)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/recall_stats.py", line 398, in validate_dataset
+    _validate_distribution(first['timing'],n);_validate_distribution(first['current_gold'],n)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/recall_stats.py", line 334, in _validate_distribution
+    _require(d['status']==('AVAILABLE' if d['match_n']>=5 else 'UNKNOWN'))
+                                          ^^^^^^^^^^^^^^^
+TypeError: '>=' not supported between instances of 'str' and 'int'
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.134s
+
+FAILED (errors=5)

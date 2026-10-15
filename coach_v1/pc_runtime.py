@@ -101,6 +101,8 @@ class PCServices:
             try:
                 from .official_catalog import refresh_if_due
                 refresh_if_due()
+                from .official_items import refresh_if_due as refresh_items
+                refresh_items()
                 if self.stop.is_set():return
                 result=assess();review_store(self.server).weekly(result['rows'])
             except (OSError,ValueError,KeyError):pass
@@ -123,6 +125,8 @@ class PCServices:
 
 def start_pc_services(server,*,lcu_lockfile=None,lcu_certificate_sha256=None):
     load_pc_default_datasets(server)
+    from .recall_pc import load_datasets
+    load_datasets(server)
     controller=PCServices(server,lcu_lockfile=lcu_lockfile,lcu_certificate_sha256=lcu_certificate_sha256)
     server.pc_services=controller;controller.thread.start();controller.maintenance.start()
     return controller

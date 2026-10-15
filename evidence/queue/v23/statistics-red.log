@@ -1,0 +1,170 @@
+FFFFFFFFFFFF
+======================================================================
+FAIL: test_aggregation_cluster_dedup_patch_population_and_privacy (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_aggregation_cluster_dedup_patch_population_and_privacy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 97, in test_aggregation_cluster_dedup_patch_population_and_privacy
+    observations.append(self.extract(m,t))
+                        ^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 29, in extract
+    def extract(self,match,timeline):return self.module().extract_match(match,timeline,population='CHALLENGER')
+                                            ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 26, in module
+    self.assertIsNotNone(importlib.util.find_spec('coach_v1.recall_stats'),'new recall extraction module missing')
+AssertionError: unexpectedly None : new recall extraction module missing
+
+======================================================================
+FAIL: test_chronological_first_bundle_undo_and_preceding_gold (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_chronological_first_bundle_undo_and_preceding_gold)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 40, in test_chronological_first_bundle_undo_and_preceding_gold
+    first=self.participant(self.extract(match,tl))['first_recall']
+                           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 29, in extract
+    def extract(self,match,timeline):return self.module().extract_match(match,timeline,population='CHALLENGER')
+                                            ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 26, in module
+    self.assertIsNotNone(importlib.util.find_spec('coach_v1.recall_stats'),'new recall extraction module missing')
+AssertionError: unexpectedly None : new recall extraction module missing
+
+======================================================================
+FAIL: test_jungle_missing_health_and_unknown_lane_are_separate_exclusions (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_jungle_missing_health_and_unknown_lane_are_separate_exclusions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 79, in test_jungle_missing_health_and_unknown_lane_are_separate_exclusions
+    low=self.participant(self.extract(match,tl))['low_health'];self.assertEqual(low['reason'],'JUNGLE_EXCLUDED')
+                         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 29, in extract
+    def extract(self,match,timeline):return self.module().extract_match(match,timeline,population='CHALLENGER')
+                                            ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 26, in module
+    self.assertIsNotNone(importlib.util.find_spec('coach_v1.recall_stats'),'new recall extraction module missing')
+AssertionError: unexpectedly None : new recall extraction module missing
+
+======================================================================
+FAIL: test_low_health_purchase_before_death_and_opponent_other_lane_assist (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_low_health_purchase_before_death_and_opponent_other_lane_assist)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 62, in test_low_health_purchase_before_death_and_opponent_other_lane_assist
+    low=self.participant(self.extract(match,tl))['low_health']
+                         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 29, in extract
+    def extract(self,match,timeline):return self.module().extract_match(match,timeline,population='CHALLENGER')
+                                            ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 26, in module
+    self.assertIsNotNone(importlib.util.find_spec('coach_v1.recall_stats'),'new recall extraction module missing')
+AssertionError: unexpectedly None : new recall extraction module missing
+
+======================================================================
+FAIL: test_low_health_stay_actual_lane_then_death_is_not_recall (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_low_health_stay_actual_lane_then_death_is_not_recall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 54, in test_low_health_stay_actual_lane_then_death_is_not_recall
+    low=self.participant(self.extract(match,tl))['low_health']
+                         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 29, in extract
+    def extract(self,match,timeline):return self.module().extract_match(match,timeline,population='CHALLENGER')
+                                            ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 26, in module
+    self.assertIsNotNone(importlib.util.find_spec('coach_v1.recall_stats'),'new recall extraction module missing')
+AssertionError: unexpectedly None : new recall extraction module missing
+
+======================================================================
+FAIL: test_malformed_or_cross_match_input_rejected (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_malformed_or_cross_match_input_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 143, in test_malformed_or_cross_match_input_rejected
+    with self.assertRaises(ValueError):self.extract(m,t)
+                                       ^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 29, in extract
+    def extract(self,match,timeline):return self.module().extract_match(match,timeline,population='CHALLENGER')
+                                            ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 26, in module
+    self.assertIsNotNone(importlib.util.find_spec('coach_v1.recall_stats'),'new recall extraction module missing')
+AssertionError: unexpectedly None : new recall extraction module missing
+
+======================================================================
+FAIL: test_missing_gold_is_missing_not_zero_and_match_weighted_outcomes (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_missing_gold_is_missing_not_zero_and_match_weighted_outcomes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 135, in test_missing_gold_is_missing_not_zero_and_match_weighted_outcomes
+    data=self.dataset([self.extract(m,t)])
+                       ^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 29, in extract
+    def extract(self,match,timeline):return self.module().extract_match(match,timeline,population='CHALLENGER')
+                                            ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 26, in module
+    self.assertIsNotNone(importlib.util.find_spec('coach_v1.recall_stats'),'new recall extraction module missing')
+AssertionError: unexpectedly None : new recall extraction module missing
+
+======================================================================
+FAIL: test_partial_window_and_missing_event_position_are_unknown (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_partial_window_and_missing_event_position_are_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 70, in test_partial_window_and_missing_event_position_are_unknown
+    low=self.participant(self.extract(match,tl))['low_health']
+                         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 29, in extract
+    def extract(self,match,timeline):return self.module().extract_match(match,timeline,population='CHALLENGER')
+                                            ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 26, in module
+    self.assertIsNotNone(importlib.util.find_spec('coach_v1.recall_stats'),'new recall extraction module missing')
+AssertionError: unexpectedly None : new recall extraction module missing
+
+======================================================================
+FAIL: test_pre_purchase_death_excludes_post_death_shop (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_pre_purchase_death_excludes_post_death_shop)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 48, in test_pre_purchase_death_excludes_post_death_shop
+    first=self.participant(self.extract(match,tl))['first_recall']
+                           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 29, in extract
+    def extract(self,match,timeline):return self.module().extract_match(match,timeline,population='CHALLENGER')
+                                            ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 26, in module
+    self.assertIsNotNone(importlib.util.find_spec('coach_v1.recall_stats'),'new recall extraction module missing')
+AssertionError: unexpectedly None : new recall extraction module missing
+
+======================================================================
+FAIL: test_priority_gap_is_observed_noncausal_and_sensitivity_grid (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_priority_gap_is_observed_noncausal_and_sensitivity_grid)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 89, in test_priority_gap_is_observed_noncausal_and_sensitivity_grid
+    p=self.participant(self.extract(match,tl));gap=p['first_recall']['priority_gap']
+                       ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 29, in extract
+    def extract(self,match,timeline):return self.module().extract_match(match,timeline,population='CHALLENGER')
+                                            ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 26, in module
+    self.assertIsNotNone(importlib.util.find_spec('coach_v1.recall_stats'),'new recall extraction module missing')
+AssertionError: unexpectedly None : new recall extraction module missing
+
+======================================================================
+FAIL: test_strict_validation_rejects_identity_and_nested_shape_injection (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_strict_validation_rejects_identity_and_nested_shape_injection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 124, in test_strict_validation_rejects_identity_and_nested_shape_injection
+    module=self.module();data=self.dataset([self.extract(*fixture())]);module.validate_dataset(data)
+           ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 26, in module
+    self.assertIsNotNone(importlib.util.find_spec('coach_v1.recall_stats'),'new recall extraction module missing')
+AssertionError: unexpectedly None : new recall extraction module missing
+
+======================================================================
+FAIL: test_view_champion_role_unknown_uses_matches_not_participant_count (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_view_champion_role_unknown_uses_matches_not_participant_count)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 112, in test_view_champion_role_unknown_uses_matches_not_participant_count
+    obs=[self.extract(*fixture(n)) for n in range(1,6)];data=self.dataset(obs)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 29, in extract
+    def extract(self,match,timeline):return self.module().extract_match(match,timeline,population='CHALLENGER')
+                                            ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 26, in module
+    self.assertIsNotNone(importlib.util.find_spec('coach_v1.recall_stats'),'new recall extraction module missing')
+AssertionError: unexpectedly None : new recall extraction module missing
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.006s
+
+FAILED (failures=12)

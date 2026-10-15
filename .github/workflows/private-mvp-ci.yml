@@ -23,16 +23,30 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
+      - name: Select source-bound verification scope
+        id: scope
+        shell: bash
+        run: |
+          if [[ -f contracts/queue-v23.md || -f contracts/amendments/2026-10-15-queue-v23.json ]]; then
+            echo 'mode=v23' >> "$GITHUB_OUTPUT"
+          else
+            echo 'mode=historical' >> "$GITHUB_OUTPUT"
+          fi
       - name: Set up Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
       - name: Install pinned runtime dependency
         run: python -m pip install --disable-pip-version-check -r requirements-r3.txt
+      - name: Verify v2.3 source delta and new affected tests
+        if: steps.scope.outputs.mode == 'v23'
+        run: python scripts/verify_mvp_v23.py --tests
       - name: Verify synthetic and local MVP scope
+        if: steps.scope.outputs.mode != 'v23'
         run: python scripts/verify_mvp_v21.py
       - name: Print scope and private-data availability
-        if: always()
+        if: always() && steps.scope.outputs.mode != 'v23'
         run: |
           python - <<'PY'
           import json
@@ -66,6 +80,16 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
+      - name: Select source-bound verification scope
+        id: scope
+        shell: bash
+        run: |
+          if [[ -f contracts/queue-v23.md || -f contracts/amendments/2026-10-15-queue-v23.json ]]; then
+            echo 'mode=v23' >> "$GITHUB_OUTPUT"
+          else
+            echo 'mode=historical' >> "$GITHUB_OUTPUT"
+          fi
       - name: Set up Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
@@ -76,7 +100,17 @@ jobs:
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
         run: npm install --prefix "$RUNNER_TEMP/mvp-playwright" --no-save --package-lock=false --no-audit --no-fund playwright@1.62.1
+      - name: Verify v2.3 bound source and recall browser delta
+        if: steps.scope.outputs.mode == 'v23'
+        shell: bash
+        run: |
+          python scripts/verify_mvp_v23.py
+          export NODE_PATH="$RUNNER_TEMP/mvp-playwright/node_modules"
+          CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
+          export CHROMIUM_EXECUTABLE
+          python scripts/browser_recall_v23.py
       - name: Run actual browser against isolated synthetic server
+        if: steps.scope.outputs.mode != 'v23'
         shell: bash
         run: |
           export NODE_PATH="$RUNNER_TEMP/mvp-playwright/node_modules"
@@ -84,7 +118,7 @@ jobs:
           export CHROMIUM_EXECUTABLE
           python scripts/browser_mvp.py | tee "$RUNNER_TEMP/mvp-browser-summary.json"
       - name: Print fresh browser receipts and source binding
-        if: always()
+        if: always() && steps.scope.outputs.mode != 'v23'
         run: |
           python - <<'PY'
           import json

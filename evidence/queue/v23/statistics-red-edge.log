@@ -1,0 +1,38 @@
+..EFE...........
+======================================================================
+ERROR: test_enough_matches_without_valid_recall_does_not_claim_usable_timing (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_enough_matches_without_valid_recall_does_not_claim_usable_timing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 157, in test_enough_matches_without_valid_recall_does_not_claim_usable_timing
+    self.assertEqual(view['first_recall']['timing']['status'],'UNKNOWN')
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+KeyError: 'status'
+
+======================================================================
+ERROR: test_five_valid_matches_exposes_distribution_status (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_five_valid_matches_exposes_distribution_status)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 173, in test_five_valid_matches_exposes_distribution_status
+    self.assertEqual(exact['first_recall']['timing']['status'],'AVAILABLE')
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+KeyError: 'status'
+
+======================================================================
+FAIL: test_first_purchase_bundle_stops_before_subsequent_death (tests_pregame.test_recall_stats_v23.RecallStatsTests.test_first_purchase_bundle_stops_before_subsequent_death)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_stats_v23.py", line 165, in test_first_purchase_bundle_stops_before_subsequent_death
+    self.assertEqual(self.participant(self.extract(m,t))['first_recall']['item_ids'],[1001])
+AssertionError: Lists differ: [1001, 1052] != [1001]
+
+First list contains 1 additional elements.
+First extra element 1:
+1052
+
+- [1001, 1052]
++ [1001]
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.087s
+
+FAILED (failures=1, errors=2)

@@ -1,3 +1,23 @@
+된 것: 기존 자동 검토 30개와 공식 한국어 173명 자료는 재검증 없이 재사용합니다.
+된 것: 귀환·저체력 집계·공식 아이템 870개·PC 카드·경기 후 관측 신호를 추가했습니다.
+안 된 것: 새 후보 20개는 전술 근거·반례 때문에 보류이며 확정 조언으로 승격하지 않습니다.
+진행 중: 필수 변경 CI·정상 병합 후 기존 비공개 원본과 갱신 키로 실제 통계를 수집합니다.
+내가 할 것: 지금 필요한 승인은 없습니다. 실제 Windows 픽창 실증만 PC 사용 가능할 때 남습니다.
+
+# Queue v2.3 — new delta integrated, actual acquisition pending (2026-10-15)
+
+Main intake fedc30060259b5eeac4ab2ca096daa6259e354b6 (PR35 completed v2.1). Existing completed reports/CI/source bytes reused without rerunning old verifiers, tests or browsers. Parent exact3936-path source archive and CI38722880438/38722880374 are evidence/queue/v23/parent/. Main claim token main-20261015-queue-v23, implementation branch work/queue-v23-20261015.
+
+V6 added source/patch-separated anonymous recall and low-health extractors, survivor/death/undo/missingness checks, match-weighted outcomes, valid-first-recall min5 exact->role->UNKNOWN, sensitivity20/30/40percent and60/120/180seconds. These are analytical definitions, never recommended health/timing thresholds. First purchases proxy recall; currentGold preceding frame, not purchase instant. Wave and intent UNKNOWN. Individual postgame signals use selected original participant, never label own player CHALLENGER/pro; post-purchase roam requires event after purchase within original window. Real cache/fresh acquisition remains pending trusted main.
+
+New official item archive16.20.1/870 records; source URL/version/hash immutable. Different patch suppresses prices. Nominal purchase bundle full costs disclosed with owned components/discounts/exactrequiredgold UNKNOWN. Four preferred champions have12 classification +8recall/lowhealth sevenfield candidates, exact source packet201d3421e7899ba6aae0296f1bfbedd1097284bceeba63893da16638f0fceedf. IndependentEVIDENCE8mechanicsgroundingPASS/12HOLD, COUNTER0PASS/20HOLD with actualQ15 comparison; combined newAUTO0/HOLD20. ExistingAUTO30 reused, USERdecision0; no protectedissue writes, no REVIEWED promotion.
+
+New realChromium8case proof browser-20261015T110957120440Z: synthetic input realHTTP, no response mocks; PC682.5/708.1/495.0ms, postgame import-to-two-signals163.87ms; noerrors/unexpectedwrites/USERapproval;2isolatedSYNTHETICprivateimports. This timing is fixture-scoped, not full actualdataset or actualWindowsLCU proof. Earlier failed runner assertion retained; corrected open-state assumption, product patch warning correct. Earlier v21 evidence remains untouched.
+
+Current example5roles sum OFFICIAL50/STATISTICS2/USER0/AUTO62/HYPOTHESIS4/UNKNOWN26; filled118cards across5views, not distinct advice count and not old45conclusion slots. Actual recall dataset currentlynone; later real collection updates this additive report. Coachingaccuracy=null, no live coaching/cooldowntracking, paid0. ActualWindowsLCU BLOCKED_EXTERNAL only. New delta verification plus normal gated publication and trusted collection continue without reconfirmation.
+
+---
+
 된 것: PC 지식 검토 큐에서 후보10개 결정·재조회를 확인했습니다.
 된 것: 챌린저275경기로 5포지션 기본 곡선15개가 실제 화면에 표시됩니다.
 된 것: 프로87경기의 위치·막힘 신호 기준 사례를 본인 정보 없이 볼 수 있습니다.
