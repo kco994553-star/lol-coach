@@ -1,3 +1,14 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261015-queue-v23`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `work/queue-v23-20261015`
+- authority: USER_QUEUE_V2.3_2026-10-15 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `fedc30060259b5eeac4ab2ca096daa6259e354b6`
+- detail: PR36 normallymerged97f9217 at11:16:44Z, exacttree1a2265a matchespublished/tested. PR3jobsSUCCESS sourcebound receiptci-pr36. Postmerge38726194734/38726194841 pending. Trusted new recall workflow dispatched once key_renewedtrue collect_challengertrue; no rerun, encryptedprocache offline first, freshCH bounded later. Waiting externaljobs noactivewriter.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261015-queue-v23`
 - status: `RUNNING`
