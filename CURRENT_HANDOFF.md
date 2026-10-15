@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261015-queue-v23`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/queue-v23-20261015`
+- authority: USER_QUEUE_V2.3_2026-10-15 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `fedc30060259b5eeac4ab2ca096daa6259e354b6`
+- detail: New confirmed internal-frame-gap defect can fabricateknownzero/death-freefirstpurchase; cancel own active38726213006 before accepting V6data, addcadenceguard and targetedregression, preserveall oldreceipts. ReuseexistingprivatePROraw, new trustedCHdispatch only after sourcefix gatedmerge. Not authfailure/notblindproviderretry.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261015-queue-v23`
 - status: `CI_PENDING`
