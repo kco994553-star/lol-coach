@@ -1,3 +1,14 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261015-queue-v23`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `work/queue-v23-20261015`
+- authority: USER_QUEUE_V2.3_2026-10-15 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `fedc30060259b5eeac4ab2ca096daa6259e354b6`
+- detail: PR36 implementation head2ed425c; local74newtests and22sourcebindingchecksPASS, oldCI reused unchanged; new8Chromiumcases PASS scoped snapshot. Await required remote3jobs then normalmerge, postmerge and trusted actual recall collection. No active writer while awaiting CI.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261015-queue-v23`
 - status: `RUNNING`
