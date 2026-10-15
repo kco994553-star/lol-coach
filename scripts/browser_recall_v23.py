@@ -17,6 +17,17 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 
+def place_events_in_received_frames(timeline):
+    """Keep synthetic event batches inside their actual received interval."""
+    frames = timeline['info']['frames']
+    events = [event for frame in frames for event in frame['events']]
+    for frame in frames:
+        frame['events'] = []
+    for event in events:
+        enclosing = next(frame for frame in frames if frame['timestamp'] >= event['timestamp'])
+        enclosing['events'].append(event)
+
+
 def synthetic_datasets():
     from tests_pregame.test_recall_stats_v23 import fixture, event
     from coach_v1.recall_stats import extract_match, build_dataset
@@ -51,6 +62,7 @@ def synthetic_datasets():
         event(timeline, 'ITEM_PURCHASED', 250000 + number * 1000, participantId=6, itemId=1001)
         event(timeline, 'CHAMPION_KILL', 220000, victimId=4, killerId=8,
               assistingParticipantIds=[6], position=dict(x=1000, y=8000))
+        place_events_in_received_frames(timeline)
         observations.append(extract_match(match, timeline, population='CHALLENGER'))
         pairs.append(dict(match=match, timeline=timeline))
     recall = build_dataset(observations, population='CHALLENGER', retrieved_at='2026-10-15T00:00:00Z')
@@ -75,7 +87,7 @@ def synthetic_postgame():
         for pid, participant in participants.items():
             participant.update(totalGold=500 + 100 * minute + int(pid), xp=60 * minute,
                                minionsKilled=5 * minute, jungleMinionsKilled=minute,
-                               level=min(18, minute + 1), currentGold=900 + 60 * minute,
+                               level=min(18, minute + 1), currentGold=0 if minute == 0 else 900 + 60 * minute,
                                championStats=dict(health=200 if pid == '4' and minute == 3 else 1000,
                                                   healthMax=1000),
                                position=dict(x=11000, y=1800))
@@ -86,6 +98,7 @@ def synthetic_postgame():
         dict(type='CHAMPION_KILL', timestamp=260000, victimId=4, killerId=9,
              position=dict(x=11000, y=1800))]
     sample['timeline']['info']['frames'] = frames
+    place_events_in_received_frames(sample['timeline'])
     return sample
 
 
@@ -215,6 +228,7 @@ const connectionFile=process.env.PC_CONNECTION_FILE;
    const contexts=await page.locator('.recall-context').allTextContents();
    assert(contexts.every(text=>text.includes('관측된 맥락')));
    assert(contexts.some(text=>text.includes('원인이라는 판정은 아닙니다')));
+   assert((await page.locator('#pm-contexts').innerText()).includes('마지막 수신 프레임 이전까지만 집계하며 끝 구간은 제외합니다.'));
    assert(!contexts.some(text=>/AUTO_VERIFIED|자동 검토됨|사용자 승인|확정 실수|CHALLENGER|PRO_REFERENCE/.test(text)));
    assert(!JSON.stringify(positive).includes('PRIVATE_PUUID'));
    checks.push('new-private-postgame-real-import-two-positive-observation-contexts-without-wrong-labels');
@@ -300,6 +314,14 @@ def main():
                                         for path in source_paths if (ROOT/path).is_file()}
             receipt['synthetic_input_sha256'] = {name: hashlib.sha256(json.dumps(data, sort_keys=True).encode()).hexdigest()
                                                 for name, data in [('recall', recall), ('power', power), ('private_postgame_fixture', postgame)]}
+            from coach_v1.recall_stats import POLICY
+            receipt['tested_coverage_guard'] = POLICY.get('coverage_guard')
+            receipt['private_postgame_fixture_coverage'] = dict(
+                first_received_frame_ms=postgame['timeline']['info']['frames'][0]['timestamp'],
+                penultimate_received_frame_ms=postgame['timeline']['info']['frames'][-2]['timestamp'],
+                last_received_frame_ms=postgame['timeline']['info']['frames'][-1]['timestamp'],
+                last_interior_signal_event_ms=260000, positive_low_health_window_end_ms=300000,
+                final_frame_event_count=len(postgame['timeline']['info']['frames'][-1]['events']))
             receipt['git_head'] = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
             (output/'runner.json').write_text(json.dumps(receipt, ensure_ascii=False, indent=2)+'\n')
             (output/'browser.log').write_text((result.stdout+result.stderr).replace(server.token, '[REDACTED]'))

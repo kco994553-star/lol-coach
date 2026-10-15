@@ -11,7 +11,7 @@ from .storage import ServiceError
 ROOT = Path(__file__).resolve().parents[1]
 POPULATIONS = ('CHALLENGER', 'PRO_REFERENCE')
 NAMES = {'CHALLENGER': '챌린저 모집 경기', 'PRO_REFERENCE': '선택한 프로 기준 선수'}
-LIMITATION = '구매 시각으로 추정한 귀환입니다. 구매 없는 귀환·웨이브·상대 의도는 알 수 없습니다.'
+LIMITATION = '구매 시각으로 추정한 귀환입니다. 구매 없는 귀환·웨이브·상대 의도는 알 수 없습니다. 마지막 수신 프레임 이전까지만 집계하며 끝 구간은 제외합니다.'
 
 
 def validate_request(body):
@@ -184,7 +184,7 @@ def cards_for_draft(server, draft):
                       *outcome_lines(first.get('priority_gap', {})),
                       '최소 표본은 유효 5경기라는 출력 규칙이며 충분한 통계 표본을 보장하지 않습니다. 모집단과 패치를 합치지 않습니다.']
             card = _card(cid, title, 'STATISTICS', lines, '\n'.join(detail), sources, section='RECALL')
-            card['graph'] = _resource_graph(server, draft, response['markers'], population)
+            card['graph'] = _resource_graph(server, dict(draft,my_champion=view['champion']), response['markers'], population)
             if card['graph'].get('source'):
                 card['sources'].append(card['graph']['source'])
             cards.append(card)
@@ -219,7 +219,7 @@ def _resource_graph(server, draft, markers, population):
             plotted[int(match[1])] = None
     source = dict(url='https://developer.riotgames.com/apis#match-v5',title='Q15 챌린저 모집 경기 · 자원 변화',
         patch=draft['patch'],sha256=view['dataset_digest'],locator=draft['my_champion']+' / '+draft['my_position']) if view.get('dataset_digest') else None
-    return dict(title='Q15 챌린저 자원 변화 · ' + NAMES[population] + ' 귀환 구매 시각 참고', units='골드/분 차이',source=source,
+    return dict(title=draft['my_champion'] + ' · Q15 챌린저 자원 변화 · ' + NAMES[population] + ' 귀환 구매 시각 참고', units='골드/분 차이',source=source,
         points=[dict(minute=minute, value=value) for minute,value in sorted(plotted.items())],
         markers=[m for m in markers if m['population'] == population])
 

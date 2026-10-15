@@ -7,17 +7,31 @@ import unittest
 from unittest.mock import patch
 
 from tests_pregame.test_riot_collector import Clock, Responses, TEST_KEY, okay
-from tests_pregame.test_power_stats import pair
+
+
+def recall_body():
+    """New synthetic minute-cadence fixture; preserve the predecessor gap fixture.
+
+    Minute2 is an explicit synthetic received snapshot with unchanged counters,
+    no events and intentionally missing health. Production extraction never fills
+    gaps. The origin frame has a genuinely empty event stream.
+    """
+    from tests_pregame.test_v20_postgame import body
+    envelope=body()
+    frames=envelope['timeline']['info']['frames']
+    origin=copy.deepcopy(frames[0]);origin['timestamp']=0;origin['events']=[]
+    minute_two=dict(timestamp=120000,participantFrames=copy.deepcopy(frames[1]['participantFrames']),events=[])
+    envelope['timeline']['info']['frames']=[origin,frames[1],minute_two,frames[2]]
+    return envelope
 
 
 class RecallCollectionTests(unittest.TestCase):
     def test_offline_reuses_private_envelopes_and_only_selected_participant(self):
         from coach_v1.recall_collection import reuse_private_cache
         from coach_v1.postgame_match import PostgameStore
-        from tests_pregame.test_v20_postgame import body
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)/'private';store=PostgameStore(root/'private/matches',test_mode=True)
-            envelope=body();envelope['source']='REAL';store.import_match(envelope)
+            envelope=recall_body();envelope['source']='REAL';store.import_match(envelope)
             selected=[]
             def extract(match,timeline,**kwargs):
                 selected.append(kwargs);return dict(population='PRO_REFERENCE',patch='16.19',cluster_key='a'*64,exclusions=[],participants=[{'observation':'anonymous'}])
@@ -40,7 +54,7 @@ class RecallCollectionTests(unittest.TestCase):
 
     def test_challenger_consumes_original_raw_pair_once_no_extra_requests(self):
         from coach_v1.recall_collection import RecallCollector
-        raw=pair(101);raw['match']['metadata']['matchId']='KR_101';raw['timeline']['metadata']['matchId']='KR_101';clock=Clock()
+        raw=recall_body();raw['match']['metadata']['matchId']='KR_101';raw['timeline']['metadata']['matchId']='KR_101';clock=Clock()
         transport=Responses([okay({'entries':[{'puuid':'PRIVATE_SEED'}]}),okay(['KR_101']),
                              okay(raw['match']),okay(raw['timeline'])])
         with patch('coach_v1.recall_collection.extract_match',return_value={'anonymous':True}) as extract:
@@ -53,8 +67,7 @@ class RecallCollectionTests(unittest.TestCase):
 
     def test_actual_challenger_extraction_filters_exact_patch_and_exports_safe_dataset(self):
         from coach_v1.recall_collection import RecallCollector,export_recall
-        from tests_pregame.test_v20_postgame import body
-        envelope=body();raw=envelope
+        envelope=recall_body();raw=envelope
         old=copy.deepcopy(raw['match']);old['info']['gameVersion']='16.18.1';old['metadata']['matchId']='KR_111'
         clock=Clock();transport=Responses([okay({'entries':[{'puuid':'PRIVATE_SEED'}]}),
             okay(['KR_111','KR_123456']),okay(old),okay(raw['match']),okay(raw['timeline'])])
@@ -84,10 +97,9 @@ class RecallCollectionTests(unittest.TestCase):
         from coach_v1.recall_collection import reuse_private_cache, export_recall
         from coach_v1.postgame_match import PostgameStore
         from coach_v1.recall_stats import validate_dataset
-        from tests_pregame.test_v20_postgame import body
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)/'private';store=PostgameStore(root/'private/matches')
-            envelope=body();envelope['source']='REAL';store.import_match(envelope)
+            envelope=recall_body();envelope['source']='REAL';store.import_match(envelope)
             other=copy.deepcopy(envelope);other['participant_id']=9;store.import_match(other)
             observations,receipt=reuse_private_cache(root)
             self.assertEqual(len(observations),1);self.assertEqual(len(observations[0]['participants']),2)
@@ -103,21 +115,19 @@ class RecallCollectionTests(unittest.TestCase):
     def test_runtime_rejects_synthetic_envelopes_without_relabeling(self):
         from coach_v1.recall_collection import reuse_private_cache
         from coach_v1.postgame_match import PostgameStore
-        from tests_pregame.test_v20_postgame import body
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)/'private';store=PostgameStore(root/'private/matches',test_mode=True)
-            store.import_match(body())
+            store.import_match(recall_body())
             with self.assertRaises(ValueError):reuse_private_cache(root)
 
     def test_cli_is_offline_by_default_and_has_no_unsafe_fallback_on_bad_cache(self):
         from scripts.collect_recall_stats import main
         from coach_v1.postgame_match import PostgameStore
-        from tests_pregame.test_v20_postgame import body
         from contextlib import redirect_stdout
         from io import StringIO
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)/'private';store=PostgameStore(root/'private/matches')
-            envelope=body();envelope['source']='REAL';store.import_match(envelope)
+            envelope=recall_body();envelope['source']='REAL';store.import_match(envelope)
             output=Path(tmp)/'public';args=['--private-directory',str(root),'--output-directory',str(output)]
             with patch('coach_v1.riot_collector._transport',side_effect=AssertionError('no provider calls')),redirect_stdout(StringIO()) as stdout:
                 self.assertEqual(main(args),0)
@@ -128,6 +138,33 @@ class RecallCollectionTests(unittest.TestCase):
                 self.assertEqual(main(args),2)
             self.assertFalse((output/'recall-data.json').exists())
             self.assertNotIn('BROKEN_RAW',stdout.getvalue())
+
+    def test_missing_frame_origin_cache_and_fresh_stream_fail_closed(self):
+        from coach_v1.recall_collection import RecallCollector,reuse_private_cache
+        from coach_v1.postgame_match import PostgameStore
+        from scripts.collect_recall_stats import main
+        from contextlib import redirect_stdout
+        from io import StringIO
+        envelope=recall_body();envelope['source']='REAL'
+        envelope['timeline']['info']['frames']=envelope['timeline']['info']['frames'][1:]
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)/'private';store=PostgameStore(root/'private/matches')
+            store.import_match(envelope)
+            with self.assertRaisesRegex(ValueError,'missing timeline frame origin'):
+                reuse_private_cache(root)
+            output=Path(tmp)/'public'
+            with patch('coach_v1.riot_collector._transport',side_effect=AssertionError('no provider calls')),redirect_stdout(StringIO()) as stdout:
+                self.assertEqual(main(['--private-directory',str(root),'--output-directory',str(output)]),2)
+            self.assertEqual(json.loads(stdout.getvalue())['status'],'BLOCKED_EXTERNAL')
+            self.assertFalse((output/'recall-data.json').exists())
+            self.assertNotIn('KR_123456',stdout.getvalue())
+        clock=Clock();transport=Responses([okay({'entries':[{'puuid':'PRIVATE_SEED'}]}),
+            okay(['KR_123456']),okay(envelope['match']),okay(envelope['timeline'])])
+        collector=RecallCollector(TEST_KEY,transport=transport,clock=clock.now,sleeper=clock.sleep,max_matches=1)
+        with self.assertRaisesRegex(ValueError,'missing timeline frame origin'):
+            collector.collect_recall(patch='16.19')
+        self.assertEqual(collector.requests,4);self.assertEqual(collector.retries,0)
+        self.assertEqual(collector._recall_observations,[]);self.assertIsNone(collector._pending_match)
 
     def test_challenger_hard_caps_and_request_budget(self):
         from coach_v1.recall_collection import RecallCollector

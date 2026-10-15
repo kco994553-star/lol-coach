@@ -37,6 +37,11 @@ POLICY = dict(
     health_ratio=.30, outcome_window_ms=120000,
     sensitivity_health_ratios=[.20,.30,.40], sensitivity_windows_ms=[60000,120000,180000],
     minimum_matches=5, minimum_match_basis='DISTINCT_VALID_FIRST_PURCHASE_TIMING_MATCHES', thresholds_are_advice=False,
+    coverage_guard=dict(version='FRAME_ORIGIN_AND_CADENCE.v2',first_frame_timestamp_ms=0,
+                        declared_interval_ms=60000,declared_interval_rule='IF_PRESENT_INTEGER_60000',
+                        max_internal_gap_ms=65000,timestamp_jitter_tolerance_ms=5000,
+                        final_short_interval_allowed=True,final_frame_excluded_from_observation=True,
+                        rationale='ANALYSIS_SAMPLING_INTEGRITY_TOLERANCE_NOT_GAMEPLAY_ADVICE'),
     lane_geometry=dict(top='x<3000 and 4500<y<12500 OR y>12000 and 2500<x<10000',
                        bottom='y<3000 and 4500<x<12500 OR x>12000 and 2500<y<10000',
                        mid='3500<=x,y<=11500 and abs(x-y)<=1800',
@@ -235,7 +240,22 @@ def _extract_match(match,timeline,*,population,participant_ids=None):
     frames=sorted([f for f in raw_frames if isinstance(f,dict) and _number(f.get('timestamp')) and f['timestamp']>=0],key=lambda f:f['timestamp'])
     _require(frames and len({f['timestamp'] for f in frames})==len(frames),'missing/duplicate frames')
     _require(all(isinstance(f.get('events'),list) for f in frames),'missing timeline event stream')
-    events=sorted([e for f in frames for e in (f.get('events',[]) if isinstance(f.get('events',[]),list) else [])
+    guard=POLICY['coverage_guard']
+    _require(frames[0]['timestamp']==guard['first_frame_timestamp_ms'],'missing timeline frame origin')
+    if 'frameInterval' in timeline['info']:
+        interval=timeline['info']['frameInterval']
+        _require(type(interval) is int and interval==guard['declared_interval_ms'],'unsupported timeline cadence')
+    # Minute frames can have small timestamp jitter; a missing internal frame
+    # removes its local event batch. A late final frame cannot recover that batch.
+    _require(all(right['timestamp']-left['timestamp']<=guard['max_internal_gap_ms']
+                 for left,right in zip(frames,frames[1:])),'incomplete timeline cadence')
+    # A short final frame cannot prove a regular interval was received: the
+    # preceding regular frame could be missing within the jitter tolerance.
+    # Keep event ordering based on event timestamps, independent of buckets.
+    _require(len(frames)>=2,'insufficient timeline frame coverage')
+    received_frames=frames
+    frames=received_frames[:-1]
+    events=sorted([e for f in received_frames for e in f['events']
                    if isinstance(e,dict) and isinstance(e.get('type'),str) and _number(e.get('timestamp')) and 0<=e['timestamp']<=frames[-1]['timestamp']],key=lambda e:e['timestamp'])
     purchases={pid:_purchases(events,pid) for pid in players}
     firsts={pid:_first_recall(pid,frames,events,purchases[pid]) for pid in players}
