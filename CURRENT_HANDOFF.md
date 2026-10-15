@@ -1,3 +1,14 @@
+# Latest common execution claim — PARKED_EXTERNAL
+- run_token: `main-20261015-queue-v23`
+- status: `PARKED_EXTERNAL`
+- writer_active: false
+- owner_branch: `work/queue-v23-20261015`
+- authority: USER_QUEUE_V2.3_2026-10-15 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `fedc30060259b5eeac4ab2ca096daa6259e354b6`
+- detail: CompletedPR38 main9da650ae/tree37729ed; exact PR38732218861/38732219027 andpostmain38732438850/38732438842 all3jobsPASS. RealCH291/2910obs partialdeadline600req1retry; PRO89/108obs reused0requests. AUTO30reused/HOLD20/USER0. BOTTOM35of36filled official10/stat7/auto14/hyp4/unknown1. Actualbrowser868.1/553.1ms. NoREADYleft; onlyactualWindowsLCU external and sourceunsupportedtactics held. Oldv21notrerun; noextra provider calls.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261015-queue-v23`
 - status: `RUNNING`
