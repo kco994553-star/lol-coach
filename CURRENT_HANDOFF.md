@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261015-queue-v23`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/queue-v23-20261015`
+- authority: USER_QUEUE_V2.3_2026-10-15 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `fedc30060259b5eeac4ab2ca096daa6259e354b6`
+- detail: PR38 merged9da650ae; exact tree37729ed equals tested/published. PR38732218861/38732219027 andmain38732438850/38732438842 all3jobsPASS. Recording completion only.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261015-queue-v23`
 - status: `CI_PENDING`
