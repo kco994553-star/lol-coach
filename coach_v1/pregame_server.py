@@ -149,6 +149,9 @@ def power_request(body):
 
 
 def power_response(server,request):
+    from .recall_pc import pc_power_response
+    cached=pc_power_response(server,request)
+    if cached is not None:return cached
     data=server.select_power_data(request['patch'],request['tier'])
     reason='POWER_DATA_NOT_AVAILABLE' if data is None else None
     if request['patch'] is None:reason='PATCH_UNKNOWN'

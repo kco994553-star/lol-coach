@@ -1,0 +1,24 @@
+..........F..F
+======================================================================
+FAIL: test_real_sized_archive_loads_but_over_limit_archive_is_rejected (tests_pregame.test_recall_pc_v23.RecallPCIntegrationTests.test_real_sized_archive_loads_but_over_limit_archive_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_pc_v23.py", line 22, in test_real_sized_archive_loads_but_over_limit_archive_is_rejected
+    self.assertEqual(load_datasets(server)['CHALLENGER'],'AVAILABLE')
+AssertionError: 'INVALID_NEWEST_ARCHIVE' != 'AVAILABLE'
+- INVALID_NEWEST_ARCHIVE
++ AVAILABLE
+
+
+======================================================================
+FAIL: test_validated_projection_is_cached_and_isolated_from_mutable_inputs_and_outputs (tests_pregame.test_recall_pc_v23.RecallPCIntegrationTests.test_validated_projection_is_cached_and_isolated_from_mutable_inputs_and_outputs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_pc_v23.py", line 37, in test_validated_projection_is_cached_and_isolated_from_mutable_inputs_and_outputs
+    self.assertEqual(validate.call_count,1)
+AssertionError: 4 != 1
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.258s
+
+FAILED (failures=2)

@@ -7,6 +7,7 @@ recall completion; no recall starts, wave state or intent are reconstructed.
 from collections import Counter, defaultdict
 from copy import deepcopy
 import hashlib
+import json
 import math
 import re
 from datetime import datetime
@@ -465,13 +466,36 @@ def validate_dataset(data):
     return deepcopy(data)
 
 
+class RecallDataset:
+    """Validated private snapshot; request views copy only the chosen cohort.
+
+    Replacing an archive creates a new instance. Neither original dictionaries
+    nor returned views can mutate the snapshot or its once-computed digest.
+    """
+    def __init__(self,data):
+        self.__data=validate_dataset(data)
+        self.__index={(c['champion'],c['position'],c['patch']):c for c in self.__data['cohorts']}
+        self.population=self.__data['population']
+        self.sha256=hashlib.sha256(json.dumps(self.__data,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()).hexdigest()
+
+    def view(self,*,champion,position,patch):
+        return deepcopy(_recall_view(self.__data,self.__index,champion=champion,position=position,patch=patch))
+
+    def summary(self):
+        return dict(samples=deepcopy(self.__data['samples']),cohorts=len(self.__data['cohorts']))
+
+
 def recall_view(data,*,champion,position,patch):
+    return RecallDataset(data).view(champion=champion,position=position,patch=patch)
+
+
+def _recall_view(data,index,*,champion,position,patch):
     """Same-population/same-patch exact -> pooled role -> UNKNOWN at <5 matches."""
-    data=validate_dataset(data);role=ROLE_MAP.get(position)
+    role=ROLE_MAP.get(position)
     _require(_champion(champion) and role is not None,'invalid champion/position')
     _require(isinstance(patch,str) and re.fullmatch(r'\d+\.\d+',patch),'invalid patch')
-    exact=next((c for c in data['cohorts'] if (c['champion'],c['position'],c['patch'])==(champion,role,patch)),None)
-    pooled=next((c for c in data['cohorts'] if (c['champion'],c['position'],c['patch'])==(None,role,patch)),None)
+    exact=index.get((champion,role,patch))
+    pooled=index.get((None,role,patch))
     chosen=exact if exact and exact['first_recall']['timing']['match_n']>=5 else pooled if pooled and pooled['first_recall']['timing']['match_n']>=5 else None
     sample=chosen or pooled or exact
     return dict(status='AVAILABLE' if chosen else 'UNKNOWN',population=data['population'],patch=patch,champion=champion,position=role,

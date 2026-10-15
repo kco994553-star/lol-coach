@@ -32,6 +32,8 @@ def load_pc_default_datasets(server):
     from .pregame_server import ROOT, read_aggregate_file
     from .power_stats import validate_power_dataset
     from .collection_progress import validate_progress
+    from .recall_pc import PCPowerSnapshot
+    server.pc_power_snapshots={}
     directories=sorted((ROOT/'data/riot').glob('20??-??-??'),reverse=True)
     directory=next((p for p in directories if p.is_dir() and any(p.glob('power-*-*.json*'))),None)
     if directory is None:return
@@ -40,6 +42,7 @@ def load_pc_default_datasets(server):
         if data['source']['sample_kind']!='REAL':continue
         key=(data['source']['patch'],data['source']['tier'])
         server.power_datasets[key]=data
+        server.pc_power_snapshots[key]=(data,PCPowerSnapshot(data))
         progress=directory/('progress-'+key[0]+'-'+key[1]+'.json')
         if not progress.exists():progress=progress.with_suffix('.json.gz')
         if progress.exists():server.power_progress[key]=validate_progress(read_aggregate_file(progress,max_bytes=1_000_000),data)

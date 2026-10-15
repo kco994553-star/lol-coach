@@ -1,0 +1,23 @@
+test_unsupported_existing_draft_patch_keeps_unknown_card_instead_of_failing_projection (tests_pregame.test_recall_pc_v23.RecallPCIntegrationTests.test_unsupported_existing_draft_patch_keeps_unknown_card_instead_of_failing_projection) ... ERROR
+
+======================================================================
+ERROR: test_unsupported_existing_draft_patch_keeps_unknown_card_instead_of_failing_projection (tests_pregame.test_recall_pc_v23.RecallPCIntegrationTests.test_unsupported_existing_draft_patch_keeps_unknown_card_instead_of_failing_projection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_recall_pc_v23.py", line 59, in test_unsupported_existing_draft_patch_keeps_unknown_card_instead_of_failing_projection
+    cards=cards_for_draft(Server(),draft(patch=value))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/recall_pc.py", line 160, in cards_for_draft
+    response = reference_response(server, dict(champion=draft['my_champion'], position=draft['my_position'], patch=draft['patch'], opponent_champion=opponent))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/recall_pc.py", line 84, in reference_response
+    request = validate_request(body)
+              ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/recall_pc.py", line 26, in validate_request
+    raise ServiceError(422, 'INVALID_RECALL_REQUEST')
+coach_v1.storage.ServiceError: INVALID_RECALL_REQUEST
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+FAILED (errors=1)

@@ -1,3 +1,23 @@
+된 것: 귀환·저체력 실제 집계를 PC 카드에 연결했습니다.
+된 것: 챌린저 291경기와 사용자 명단의 프로 참고 89경기를 출처·패치별로 보존했습니다.
+안 된 것: 새 전술 후보 20개는 보류이며 실제 Windows 픽창 실증은 외부 대기입니다.
+진행 상태: 실제 자료 화면의 1초 목표를 확인했고 결과 커밋은 필수 CI와 정상 병합으로 게시합니다.
+내가 할 것: 지금 추가 승인이나 키 전송은 필요 없습니다.
+
+# Queue v2.3 — actual anonymous data and PC projection completed locally (2026-10-15)
+
+PR37 normally merged f4fa37a501fe78679d3a11e39162437c89f58cab after three required checks, postmerge38728119948/38728119978 allSUCCESS. Completed v2.1 evidence remains reused without rerunning its tests, verifier, or browser. New real collection38728134121, attempt1, trusted main f4fa37a; public-only artifact11969029431. Independently audited16/16 source hashes and both dataset digests, strict cadencev2/schema and privacy allowlists. Raw/private cache was not downloaded into this workspace. Original source-binding remains to f4fa37a; subsequent projection-only changes do not rewrite extraction lineage.
+
+PRO_REFERENCE:89distinctmatches/108recorded participant observations,16.19/16.20 separate,0providerrequests from reused private envelopes. Includes user-recorded roster candidates before final selection; not verified every participant pro. CHALLENGER:291distinctmatches/2910participantobservations,16.20,600requests/1retry. Workflow ended failure/DEADLINE_EXHAUSTED; accepted partial observations remain valid, not a completed300match acquisition. No additional provider retry. Challenger seed does not establish every participant's rank.
+
+Actual archive exposed two integration bugs:12MB cap rejected12,366,272byte CH; repeated Q15 validation/copying caused3–7second cards. Loader now bounds at32MB with strict startup validation; private recall snapshots cache digest/index, and PC Q15 snapshots reuse unchanged selector on validated narrow cohorts with original full dataset/source/sample bindings. Cached views copy outputs, bounded eviction tolerates concurrent HTTP requests. Replacement data disables Q15 fast path. Actual Chromium+localHTTP, synthetic manual Caitlyn/Ezreal picks with both REAL datasets: latest named receipts in evidence/queue/v23/actual-browser-*;1second goal measured, no actualWindowsLCU or coachingaccuracy claim. Earlier slow receipts retained.
+
+AUTO_VERIFIED existing30PASS reused; new20HOLD after separate evidence/counter reviews. USER decisions0, no protectedissue writes or REVIEWED promotion. Golden10 synthetic full drafts across5positions:146filledcards (OFFICIAL50,STATISTICS30,AUTO_VERIFIED62,HYPOTHESIS4,USER0), UNKNOWN3. BOTTOM35/36filled:OFFICIAL10/STATISTICS7/AUTO14/HYPOTHESIS4/USER0/UNKNOWN1. Counts are repeated card instances acrossviews, not distinct tactics or accuracy. report.json is the detailed output.
+
+Only external game-PC/WindowsLCU proof is BLOCKED_EXTERNAL. Wave/intent/exact recall/instant gold remain UNKNOWN; new tactical classifications remain hypotheses. No READY provider retry, paid/Gemini request, mobile static app or in-game automatic instruction is authorized by these results. This result commit still receives its own affected CI/expected-head normal merge; future CI success is not asserted in advance.
+
+---
+
 된 것: 누락 구간과 마지막 프레임 경계를 차단하는 보완을 끝냈습니다.
 된 것: 새 통계 31개·수집 연결 11개·실제 브라우저 8개 검사를 확인했습니다.
 안 된 것: 수정 전 자료는 카드에서 제외하며 실제 Windows 픽창 연결은 아직 외부 대기입니다.
