@@ -77,6 +77,34 @@ class RecallPCIntegrationTests(unittest.TestCase):
         self.assertIn('누락 2',' '.join(result))
         self.assertNotIn('self_deaths',' '.join(result))
 
+    def test_resource_plot_explicitly_names_and_queries_its_champion(self):
+        from coach_v1.recall_pc import _resource_graph
+        value=draft('Ezreal')
+        with patch('coach_v1.pregame_server.power_response',return_value={'view':{'points':[],'reasons':[]}}) as read:
+            result=_resource_graph(object(),value,[],'CHALLENGER')
+        self.assertEqual(read.call_args.args[1]['champion'],'Ezreal')
+        self.assertIn('Ezreal',result['title'])
+
+    def test_opponent_recall_card_queries_opponent_resource_curve(self):
+        from coach_v1.recall_pc import cards_for_draft
+        from coach_v1.recall_stats import extract_match,build_dataset
+        from tests_pregame.test_recall_stats_v23 import fixture,event
+        observations=[]
+        for i in range(5):
+            match,timeline=fixture(i)
+            event(timeline,'ITEM_PURCHASED',200000,participantId=1,itemId=1001)
+            event(timeline,'ITEM_PURCHASED',250000,participantId=6,itemId=1052)
+            observations.append(extract_match(match,timeline,population='CHALLENGER'))
+        class Server:
+            recall_datasets={'CHALLENGER':build_dataset(observations,population='CHALLENGER',retrieved_at='2026-10-15T00:00:00Z')}
+        value=draft('Ahri');value['my_position']='MID'
+        next(s for s in value['slots'] if s['side']=='ENEMY' and s['position']=='MID')['champion']='Syndra'
+        with patch('coach_v1.pregame_server.power_response',return_value={'view':{'points':[],'reasons':[]}}) as read:
+            cards=cards_for_draft(Server(),value)
+        self.assertEqual([call.args[1]['champion'] for call in read.call_args_list],['Ahri','Syndra'])
+        opponent=next(c for c in cards if c['id']=='recall-CHALLENGER-opponent')
+        self.assertIn('Syndra',opponent['graph']['title'])
+
     def test_private_signals_require_positive_observed_outcome(self):
         from coach_v1.recall_pc import private_context
         from tests_pregame.test_recall_stats_v23 import fixture,event

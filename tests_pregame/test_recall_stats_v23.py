@@ -66,7 +66,9 @@ class RecallStatsTests(unittest.TestCase):
         self.assertEqual(low['outcomes']['opponent_jungle_objectives']['value'],1)
 
     def test_partial_window_and_missing_event_position_are_unknown(self):
-        match,tl=fixture(end=240000);event(tl,'ITEM_PURCHASED',200000,participantId=1,itemId=1001)
+        # Retained coverage reaches240s after excluding final300s; the
+        # purchase is observed, but the180-300s outcome window is incomplete.
+        match,tl=fixture(end=300000);event(tl,'ITEM_PURCHASED',200000,participantId=1,itemId=1001)
         low=self.participant(self.extract(match,tl))['low_health']
         self.assertIsNone(low['outcomes']['self_deaths']['value'])
         match,tl=fixture();event(tl,'CHAMPION_KILL',220000,killerId=6,victimId=2)
@@ -261,6 +263,66 @@ class RecallStatsTests(unittest.TestCase):
                 public=self.participant(self.extract(m,t))['low_health']
                 self.assertNotIn('post_action_outcomes',public)
                 self.assertEqual(public['outcomes']['opponent_other_lane_involvements']['value'],int(roam_time<=300000))
+
+    def test_cadence_guard_rejects_internal_frame_loss_before_extracting_zero(self):
+        m,t=fixture();t['info']['frameInterval']=60000
+        by_time={f['timestamp']:f for f in t['info']['frames']}
+        by_time[180000]['events'].append(dict(type='ITEM_PURCHASED',timestamp=160000,participantId=1,itemId=1001))
+        by_time[240000]['events'].append(dict(type='CHAMPION_KILL',timestamp=220000,victimId=1,killerId=6,position=dict(x=7000,y=7000)))
+        by_time[300000]['events'].append(dict(type='ITEM_PURCHASED',timestamp=250000,participantId=6,itemId=1052))
+        complete=self.participant(self.extract(m,t))
+        self.assertEqual(complete['first_recall']['priority_gap']['outcomes']['self_deaths']['value'],1)
+        t['info']['frames']=[f for f in t['info']['frames'] if f['timestamp']!=240000]
+        with self.assertRaisesRegex(ValueError,'cadence'):self.extract(m,t)
+        with self.assertRaisesRegex(ValueError,'cadence'):self.module().extract_private_context(m,t,1)
+
+    def test_cadence_guard_accepts_timestamp_jitter_and_short_final_interval(self):
+        m,t=fixture();t['info']['frameInterval']=60000
+        for index,frame in enumerate(t['info']['frames']):frame['timestamp']=index*60030
+        t['info']['frames'][-1]['timestamp']=570000
+        self.assertEqual(self.extract(m,t)['patch'],'16.20')
+
+    def test_cadence_guard_rejects_missing_origin_and_unsupported_declared_interval(self):
+        m,t=fixture();t['info']['frames']=t['info']['frames'][1:]
+        with self.assertRaisesRegex(ValueError,'origin'):self.extract(m,t)
+        for interval in (None,True,60000.0,30000,120000):
+            m,t=fixture();t['info']['frameInterval']=interval
+            with self.subTest(interval=interval):
+                with self.assertRaisesRegex(ValueError,'cadence'):self.extract(m,t)
+
+    def test_pre_guard_dataset_policy_cannot_project_as_current_evidence(self):
+        data=self.dataset([self.extract(*fixture())])
+        self.assertIn('coverage_guard',data['measurement_policy'])
+        data['measurement_policy'].pop('coverage_guard')
+        with self.assertRaises(ValueError):self.module().validate_dataset(data)
+        with self.assertRaises(ValueError):self.module().recall_view(data,champion='Ahri',position='MID',patch='16.20')
+
+    def test_missing_penultimate_regular_frame_before_short_final_is_rejected(self):
+        m,t=fixture(end=240000);t['info']['frameInterval']=60000
+        final=copy.deepcopy(t['info']['frames'][-1]);final['timestamp']=270000;final['events']=[]
+        t['info']['frames'].append(final)
+        event(t,'ITEM_PURCHASED',140000,participantId=1,itemId=1001)
+        event(t,'ITEM_PURCHASED',150000,participantId=6,itemId=1052)
+        t['info']['frames'][-2]['events'].append(dict(type='CHAMPION_KILL',timestamp=220000,victimId=1,killerId=6,position=dict(x=7000,y=7000)))
+        t['info']['frames']=[f for f in t['info']['frames'] if f['timestamp']!=240000]
+        with self.assertRaisesRegex(ValueError,'cadence'):self.extract(m,t)
+
+    def test_short_final_frame_cannot_establish_action_purchase_or_completed_window(self):
+        m,t=fixture(end=240000);t['info']['frameInterval']=60000
+        m['info']['participants'].append(dict(participantId=2,teamId=100,championName='Lux',teamPosition='TOP'))
+        final=copy.deepcopy(t['info']['frames'][-1]);final['timestamp']=241000;final['events']=[]
+        t['info']['frames'].append(final)
+        event(t,'ITEM_PURCHASED',140000,participantId=1,itemId=1001)
+        event(t,'ITEM_PURCHASED',150000,participantId=6,itemId=1052)
+        event(t,'ITEM_PURCHASED',220000,participantId=2,itemId=1056)
+        event(t,'ITEM_PURCHASED',250000,participantId=2,itemId=1001)
+        t['info']['frames']=[f for f in t['info']['frames'] if f['timestamp']!=240000]
+        observation=self.extract(m,t);own=self.participant(observation)
+        self.assertEqual(own['first_recall']['timestamp_ms'],140000)
+        self.assertIsNone(own['first_recall']['priority_gap']['outcomes']['self_deaths']['value'])
+        self.assertEqual(own['low_health']['status'],'EXCLUDED')
+        self.assertEqual(own['low_health']['reason'],'NEXT_FRAME_UNOBSERVED')
+        self.assertEqual(self.participant(observation,'Lux')['first_recall']['status'],'UNKNOWN')
 
     def test_malformed_or_cross_match_input_rejected(self):
         m,t=fixture();t['metadata']['matchId']='OTHER'

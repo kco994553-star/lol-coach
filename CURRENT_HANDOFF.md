@@ -1,3 +1,33 @@
+된 것: 누락 구간과 마지막 프레임 경계를 차단하는 보완을 끝냈습니다.
+된 것: 새 통계 31개·수집 연결 11개·실제 브라우저 8개 검사를 확인했습니다.
+안 된 것: 수정 전 자료는 카드에서 제외하며 실제 Windows 픽창 연결은 아직 외부 대기입니다.
+진행 중: 수정 코드의 필수 CI·병합 후 실제 집계를 다시 수집합니다.
+내가 할 것: 추가 승인이나 키 전송은 필요 없습니다.
+
+# V2.3 final cadence contract ready — 2026-10-15
+
+Final FRAME_ORIGIN_AND_CADENCE.v2: first0, optionaldeclaredinteger60000, maxgap65000 with5000msanalysisjitter; lastreceivedframeexcluded fromeffectiveframes andeventtimestampcoverage. This handles missingpenultimate240before270 ANDbefore241final. Endintervalwithheld explicitly inKoreanPC/postgameUI. Oldpolicydatasets failstrictvalidation. Fulloriginalframeeventbuckets are gathered chronologically then timestampclipped; no observedgapinterpolation.
+
+Newstats31PASS (old25/29 andredcounterexamples preserved); newcollection11PASS withnewtestfixture explicitregular0/60/120/180seconds, oldfixtureuntouched. Browsernew8cases finalsource browser-20261015T112737600708Z:589.8/377.5/517ms PC,146.4ms private2contexts, finalintervalwarning/selectedowner/opposite0; noerrors/unexpectedwrites/USERapprovals. Scoped independentcadence-review PASS. Onlychangednewv2.3scope isrechecked, completedv2.1notrerun. FinaldeltaCI/reacquisition next, no priorrunrerun.
+
+---
+
+된 것: 기존 완료 증거와 새 PC 귀환·저체력 기능의 병합 증거를 보존했습니다.
+된 것: 중간 프레임 누락을 0건으로 오인하는 결함을 재현하고 차단 코드를 추가했습니다.
+안 된 것: 이전 추출 계약의 실제 자료는 현재 카드에 넣지 않습니다.
+진행 중: 수정 CI·정상 병합 후 프로 원본을 다시 추출하고 새 코드로 챌린저를 수집합니다.
+내가 할 것: 추가 승인이나 키 전송은 필요 없습니다. 실제 Windows 픽창 실증만 외부 대기입니다.
+
+# V2.3 sampling integrity correction — 2026-10-15
+
+PR36 merged97f9217, exacttree1a2265a; PR38725863271/38725862912 andpostmerge38726194734/38726194841 all3jobsSUCCESS withsource/current/preservedchecks. Completedv2.1neverrerun. All initialfailures retained, including boundedchanges omittedcandidateauthorgenerator corrected with exactpathhash, local74newtestsPASS.
+
+New adversarial scratch case deletedrawframe240000 containingdeath220000 butkeptfinal600000: old extractor falselyproducedknown0andSTAY. Rejecting internal cadence beforeany extraction protects outcomezero andfirst-recall eligibility. New coverage_guardrequiresfirst0, optionaldeclaredinteger60000, maxgap90000 (jittertolerance, not gameplaythreshold), finalshortallowed. Olddatasets fail strict policy equality andarenotprojected. FournewRED/GREENcases, statistics29PASS; sourcefix finalCI/review pendingbelow.
+
+Main cancelledown trustedcollection38726213006 forcodeintegrityfix (not authfailure, not keyexpiry). Offline encryptedPROrecover/extract hadsuccess; cancelledfreshCHraw stream notaccepted. ProviderrequestcountUNKNOWN, nofalse0; publicoldpolicyartifactnotloaded. Newdispatchafterfixmerge willrebuild existingprivatePROcachewithoutlookups andonlythen collectnewboundedCHwith121scooldown. No rerunofcancelledjob, noGemini/paidcalls.
+
+---
+
 된 것: 기존 자동 검토 30개와 공식 한국어 173명 자료는 재검증 없이 재사용합니다.
 된 것: 귀환·저체력 집계·공식 아이템 870개·PC 카드·경기 후 관측 신호를 추가했습니다.
 안 된 것: 새 후보 20개는 전술 근거·반례 때문에 보류이며 확정 조언으로 승격하지 않습니다.
