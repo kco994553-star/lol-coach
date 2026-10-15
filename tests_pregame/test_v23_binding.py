@@ -65,6 +65,18 @@ class QueueV23BindingTests(unittest.TestCase):
         self.tamper('coach_v1/recall_stats.py')
         self.assertFalse(self.v.v23_binding()['checks']['current_bytes'])
 
+    def test_declared_candidate_provenance_generator_is_byte_bound(self):
+        path = 'evidence/queue/v23/candidate-author-build.py'
+        self.assertIn(path, self.binding['current_sha256'])
+        self.tamper(path)
+        self.assertFalse(self.v.v23_binding()['checks']['current_bytes'])
+
+    def test_other_executable_evidence_cannot_expand_source_authority(self):
+        target = self.root / 'evidence/queue/v23/undeclared.py'
+        target.write_text('pass\n')
+        self.addCleanup(target.unlink)
+        self.assertFalse(self.v.v23_binding()['checks']['bounded_changes'])
+
     def test_frozen_user_schema_candidates_packets_and_old_receipts_are_preserved(self):
         for path in ('FREEZE_MANIFEST.json', 'coach_v1/pregame_store.py',
                      'config/practical_review_issues.json', 'knowledge_candidates/practical-review-v1.json',

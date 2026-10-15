@@ -38,6 +38,7 @@ CURRENT_PATHS = MODIFIED_PATHS | {
     'tests_pregame/test_recall_collection_v23.py', 'tests_pregame/test_official_items_v23.py',
     'tests_pregame/test_recall_candidates_v23.py', 'tests_pregame/test_v23_binding.py',
     'knowledge_candidates/recall-v23.json', CONTRACT,
+    'evidence/queue/v23/candidate-author-build.py',
     'docs/superpowers/plans/2026-10-15-queue-v23.md', 'docs/queue/V23_OPERATION.md',
 }
 DELTA_TESTS = [
