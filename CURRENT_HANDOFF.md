@@ -1,3 +1,62 @@
+된 것: 10월17일 텍스트 실제1회에서 본문·JSON·스키마·완전STOP출력 검사가 통과했습니다.
+된 것: 같은 조건3회에서 서버 준비2.73초·첫 카드1.12초·픽 갱신0.46초 중앙값을 기록했습니다.
+유지: 복구108개는89경기의 선정참가자×경기 관측이며 원본시각·패치·누락검사를 보존합니다.
+안 된 것: 영상1회는HTTP400 INVALID_ARGUMENT로 실패했고 내용추출·근거검토·장면평가는0개입니다.
+내가 할 것: 추가 승인·자료 수집은 필요 없습니다. 오늘 추가진단·영상재시도는 하지 않습니다.
+
+# Limited diagnostic actual result — 2026-10-17 KST
+
+Read evidence/actual-evidence/gemini-diagnostic/report.md and report.json, actual
+38977859350 safe phase receipts/reconciliation/import/sourcebinding. PR44 merged
+01294e8e305ae3402b24f49486afc21a5868ff1e/tree4221898f. Required38977693389/
+38977693372 and postmain38977781671/38977781660 all3SUCCESS each. Affected48tests,
+unchangedPC/browser/v2.3 evidence reused. This result-only followup is pending its own
+normal publication CI at capture. Historical setup handoffs below are superseded.
+
+Actual sameproject/key/model3.6/v1beta REST/generateContent urllib, providerSDKnone:
+TEXT1/approvedceiling5; HTTP200, onecandidate/onepart, finishSTOP, no block, strict
+complete nonthought extraction PASS. Input5/output2/thought59/total66 reportedtokens.
+ExactOKliteralmatchfalse is preserved separately; success criterion remains existing
+complete nonempty text, not exact echo or facts. No response/thought/signature originals
+stored. Old actual response absent; 8-token cap truncation is plausible, NOT confirmed
+cause. Existing v2 removal verified live; new diagnostics identify stages/types/usage.
+Two new diagnostic robustness/classification fixes pinned RED2/GREEN46 plus requiredCI.
+
+AdditionalTEXT0 after success; no five-call extension was needed and normal shared
+TEXT1 guard remains. Manual+schedule same ledger; same-day replay rejected. Conditional
+expertVIDEO1 after conservative60s separation: HTTP400/INVALID_ARGUMENT genericmessage,
+rejectedfieldUNKNOWN. VIDEOgeneratedJSON/extraction/schema/factreview NOT_REACHED,
+usageUNKNOWN notzero. Source is configuredL/expertchannel metadata candidate
+brQaUDGnXTs, actuallecture/speaker/context unverified;0–120s from1102s original.
+Full1102s charged, old10row exactprefix+new11throw, processedIDsunchanged, refunds0,
+retries0/fallback0. SamefailedID remains excluded permanently. No claimedvideoquota
+recovery, expertstatement acquisition or coaching effect. Samegame/scenes remain0.
+
+Unchangedconfiguration now BLOCKED_ARG_CONFIGURATION by actualVIDEO400; do not repeat
+same request nextday without identified field/documented incompatibility and a reviewed
+change. Offlinecomparison distinguishes actualv1beta REST from currentInteractions
+video guide; duration/URI descriptions do not identify the generic400cause. Need
+prepared lecturecontext and new cause evidence before another video request. Today
+no moreprovidercalls, and optional remaining4TEXTdiagnostics are not used after success.
+Existing sole active schedule18:00KST retained; first18:00scheduled execution unobserved.
+
+Performance has sameLinux/Chromium154/Python3.12/cgroup4CPU/data/picks Draven→Kalista,
+BOTTOM vsAphelios patch16.20,3repeats. FreshPython/SQLite/browser per trial; authenticated
+statusreadiness warms status path; firstentry manualpreset injection; warm singlepick
+change includes action/debounce/newrevision+semanticDOM/sourcehash. OSfilecache not
+flushed; fullWindowslauncher/LCU/backgroundservices not measured. No direct historic
+0.5–0.9s or1.9s regression/improvement claim. Firstentrymedian1.12s misses1s goal.
+
+Resource108 = selectedparticipant in one match, paired with opposingrole observation,
+89distinctmatches, independently at10/15min. OriginalgoldXP fields + rawtimestamp,
+separateOBSERVED_MINUTE_BIN instead of onlyexact600000/900000 gate; exactresultsstill
+missing108, observedpairs108 each, no interpolation/zero. Prior8175storecomparisons
+mismatch0 and current9sourcehashes reused; no raw reinspection/newRiotcall/fullrerun.
+Q15275/recallCH291 distinct. KeyNOT_TESTED, notexpiredclaim. Advice7ended/AUTO30/HOLD20
+and alloldfailures preserved. ActualWindowsLCU remains BLOCKED_EXTERNAL; no useractionnow.
+
+---
+
 된 것: 원문 응답은 없음을 확인했고 정상·불완전·차단 응답의 구조 진단을 추가했습니다.
 된 것: 같은 조건 3회에서 서버 준비 2.73초·첫 카드 1.12초·픽 갱신 0.46초 중앙값을 기록했습니다.
 유지: 조언 개선 7개 종료·자동 검토 30개·보류 20개와 골드·경험치 복구 이력을 보존합니다.

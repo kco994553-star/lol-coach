@@ -24,7 +24,7 @@ VIDEO charge but API requests and reported token usage are recorded separately.
   preserve URL/date/hash/excerpts. Numeric project dashboard limits unavailable:
   do not invent RPM. First request has >10h since old request; if VIDEO follows,
   use conservatively >=60s separation and report unobserved project quota details.
-- [ ] Independent whole-branch review; affected-only CI/source seal; normal merge.
+- [x] Independent whole-branch review; affected-only CI/source seal; normal merge.
   One actual TEXT tests hypothesis that prior8-token request ended before STOP;
   this remains a hypothesis until observable finishReason. Changed request vs old:
   remove8-token cap only, plus safe diagnostics, unchanged model/project/API route.
@@ -47,3 +47,8 @@ from syntheticMAX_TOKENS alone or claim full quota recovery from HTTP200.
 
 Review fix pass: P2surrogate diagnostics loss and root-array misclassification both
 RED2→GREEN46 affected tests. Existing strict complete parser untouched; no extra API.
+
+Actualrun38977859350 TEXT1 HTTP200/STOP complete, usage66. VIDEO1 HTTP400 generic
+INVALID_ARGUMENT, noextraction, fulloriginal1102s charge kept; no retry. Textdiagnostics
+ended after success, so the five-ceiling extension was not needed. Exact oldcause stays
+UNKNOWN; video rejectedfieldUNKNOWN. Result-only publication follows requiredCI.
