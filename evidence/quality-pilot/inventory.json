@@ -91,7 +91,9 @@
     "expired": false,
     "expires_at": "2027-01-11T14:07:50Z",
     "access": "TRUSTED_RUNNER_EXISTING_SECRET_ONLY",
-    "actual_restoration_this_pilot": "PENDING"
+    "actual_restoration_this_pilot": "SUCCESS_TRUSTED_OFFLINE_RUN_38890469607",
+    "restored_matches": 89,
+    "restored_selected_participant_observations": 108
   },
   "unidentifiable_from_local_aggregates": [
     "actual_first_gank",
@@ -103,13 +105,24 @@
     "recall_start",
     "intent"
   ],
-  "level_event_inventory": "PENDING_OFFLINE_RAW_INSPECTION_LEVEL_UP_NOT_SKILL_LEVEL_UP",
+  "level_event_inventory": {
+    "LEVEL_UP": 11448,
+    "duplicate_LEVEL_UP": 0,
+    "SKILL_LEVEL_UP": 12596,
+    "duplicate_SKILL_LEVEL_UP": 11,
+    "malformed_level_up": 39,
+    "conflicting_same_level_groups": 0,
+    "source": "data/coaching_quality/2026-10-16/observations.json",
+    "level_times_use_actual_champion_events": true
+  },
   "scene_gate": {
     "maximum": 8,
     "eligible": 0,
     "reviewed_individual_scenes": 0,
     "status": "BLOCKED_MISSING_PLAYER_KNOWN_VIEW_AND_MATCHED_VIDEO",
-    "not_reconstructed": true
+    "not_reconstructed": true,
+    "unassessable_scene_count": null,
+    "scene_count_reason": "No individual scenes selected without known-view/POV; do not count89matches as89scenes"
   },
   "coaching_accuracy": null,
   "new_match_requests": 0,
@@ -141,5 +154,158 @@
     "matches": 87,
     "selected_participant_observations": 106,
     "not_same_as_recall89": true
-  }
+  },
+  "inspection": {
+    "events": [
+      {
+        "count": 11448,
+        "duplicate_n": 0,
+        "event_type": "LEVEL_UP"
+      },
+      {
+        "count": 12596,
+        "duplicate_n": 11,
+        "event_type": "SKILL_LEVEL_UP"
+      },
+      {
+        "count": 4501,
+        "duplicate_n": 0,
+        "event_type": "CHAMPION_KILL"
+      },
+      {
+        "count": 21461,
+        "duplicate_n": 257,
+        "event_type": "ITEM_PURCHASED"
+      },
+      {
+        "count": 868,
+        "duplicate_n": 0,
+        "event_type": "ITEM_SOLD"
+      },
+      {
+        "count": 21194,
+        "duplicate_n": 560,
+        "event_type": "ITEM_DESTROYED"
+      },
+      {
+        "count": 741,
+        "duplicate_n": 0,
+        "event_type": "ITEM_UNDO"
+      },
+      {
+        "count": 20062,
+        "duplicate_n": 964,
+        "event_type": "WARD_PLACED"
+      },
+      {
+        "count": 4949,
+        "duplicate_n": 0,
+        "event_type": "WARD_KILL"
+      },
+      {
+        "count": 719,
+        "duplicate_n": 0,
+        "event_type": "ELITE_MONSTER_KILL"
+      },
+      {
+        "count": 947,
+        "duplicate_n": 0,
+        "event_type": "BUILDING_KILL"
+      },
+      {
+        "count": 4441,
+        "duplicate_n": 111,
+        "event_type": "TURRET_PLATE_DESTROYED"
+      },
+      {
+        "count": 89,
+        "duplicate_n": 0,
+        "event_type": "GAME_END"
+      },
+      {
+        "count": 981,
+        "duplicate_n": 0,
+        "event_type": "OTHER"
+      }
+    ],
+    "frames": 2384,
+    "health_present": 23840,
+    "level_present": 23714,
+    "level_up_conflicting_groups_n": 0,
+    "level_up_malformed_n": 39,
+    "participant_frames": 23840,
+    "position_present": 23840,
+    "total_gold_present": 23840
+  },
+  "accumulator_metadata_only": {
+    "artifact_id": 11812186360,
+    "run_id": 38393589558,
+    "size_in_bytes": 2529188,
+    "expired": false,
+    "content_not_downloaded_this_pilot": true,
+    "retained_by_schema": [
+      "anonymous resources gold/xp/cs/jungle_cs/level frames",
+      "ITEM_PURCHASED/ITEM_UNDO"
+    ],
+    "not_retained_by_schema": [
+      "CHAMPION_KILL",
+      "champion LEVEL_UP",
+      "positions",
+      "health",
+      "currentGold"
+    ],
+    "not_original_timeline": true
+  },
+  "observation_classification": [
+    {
+      "item": "Champion LEVEL_UP timestamp",
+      "class": "DIRECT_OBSERVATION",
+      "scope": "Existing PRO cache, valid events only; impossible history UNKNOWN"
+    },
+    {
+      "item": "SKILL_LEVEL_UP",
+      "class": "DIRECT_OBSERVATION",
+      "scope": "Skill investment only, never champion-level timing"
+    },
+    {
+      "item": "Frame champion level/health/totalGold/coordinates",
+      "class": "DIRECT_OBSERVATION",
+      "scope": "Received minute snapshots; not between-frame state or player-known vision"
+    },
+    {
+      "item": "Level arrival from frame bounds",
+      "class": "PROXY_OBSERVATION",
+      "scope": "Fallback intervals only; overlap UNKNOWN. Actual selected samples used events, no frame fallback"
+    },
+    {
+      "item": "First observed lane kill involvement",
+      "class": "DIRECT_EVENT_WITH_GEOMETRY_PROXY",
+      "scope": "Selected jungler kill/assist plus position region; no nonlethal ganks or truefirstgank"
+    },
+    {
+      "item": "First recall",
+      "class": "PROXY_OBSERVATION",
+      "scope": "Existing first-purchase estimate, no-purchase recalls missed; original recall archives reused"
+    },
+    {
+      "item": "10/15 exact-time gold difference",
+      "class": "UNAVAILABLE_EXACT_TIMESTAMP",
+      "scope": "totalGold fields present but no exact shared600000/900000 frames;0valid/108missing, notzero gold"
+    },
+    {
+      "item": "Q15 matchup gold sampled-minute bin",
+      "class": "EXISTING_AGGREGATE_OBSERVATION",
+      "scope": "Absolute gold difference only for actualMATCHUP; missing pair remainsmissing; not pooled rate"
+    },
+    {
+      "item": "First actual gank, wave, player-known enemy position/cooldown/intent",
+      "class": "UNIDENTIFIABLE",
+      "scope": "No source supporting individual decision-known scenes"
+    },
+    {
+      "item": "First matchup kill/new matchup recall refinement",
+      "class": "NOT_COMPUTED_THIS_PILOT",
+      "scope": "No claim of1v1 effect or optimum; rawkill events available but no new firstkill decision rule adopted"
+    }
+  ]
 }

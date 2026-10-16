@@ -25,9 +25,13 @@ verification. Existing source receipts/CI are reused rather than rerun.
 - [x] New scripts/verify_quality_pilot.py binds exact parent hashes/CI and allowed
   delta; required workflows select pilot only. New browser checks revised topic,
   hypothesis label, no inherited auto/duplicate and phase suppression.
-- [ ] Independent final review, affected tests/browser and expected-head CI,
-  normal merge, trusted offline audit, import source-bound public report, final
-  evidence publication and postmerge proof. Only external missing inputs parked.
+- [x] Independent final review, affected29tests/browser and expected-head CI;
+  normal implementation PR39 merge68d6a94, postmain all3jobsSUCCESS. Trusted
+  offline38890469607 inspected existing89/108, safe report/binding imported and
+  independently reconciled. No provider calls or private records downloaded.
+- [ ] Result-only evidence publication and postmerge proof: unchanged pilot tests/
+  browser reused; validate actual imported source/data/preserved bindings. Only
+  missing known-view/POV and game-PC inputs remain external, no whole30 expansion.
 
 Rulings: User's detailed small-pilot directive and inherited autonomous authority
 already authorize implementation/publication/gated merges; no renewed design

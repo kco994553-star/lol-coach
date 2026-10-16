@@ -1,0 +1,398 @@
+﻿2026-10-16T10:54:26.5560723Z Current runner version: '2.337.0'
+2026-10-16T10:54:26.5586394Z ##[group]Runner Image Provisioner
+2026-10-16T10:54:26.5587306Z Hosted Compute Agent
+2026-10-16T10:54:26.5588075Z Version: 20261012.601
+2026-10-16T10:54:26.5588740Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-16T10:54:26.5589533Z Build Date: 2026-10-12T17:48:21Z
+2026-10-16T10:54:26.5590277Z Worker ID: {f9168535-58e2-40c8-949b-d5bbe8c08a38}
+2026-10-16T10:54:26.5590989Z Region: westus
+2026-10-16T10:54:26.5591845Z Cloud: Azure
+2026-10-16T10:54:26.5592438Z ##[endgroup]
+2026-10-16T10:54:26.5593948Z ##[group]Operating System
+2026-10-16T10:54:26.5594731Z Ubuntu
+2026-10-16T10:54:26.5595289Z 24.04.5
+2026-10-16T10:54:26.5595960Z LTS
+2026-10-16T10:54:26.5596500Z ##[endgroup]
+2026-10-16T10:54:26.5597062Z ##[group]Runner Image
+2026-10-16T10:54:26.5597744Z Image: ubuntu-24.04
+2026-10-16T10:54:26.5598344Z Version: 20261012.334.1
+2026-10-16T10:54:26.5599700Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-16T10:54:26.5601293Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-16T10:54:26.5602594Z ##[endgroup]
+2026-10-16T10:54:26.5603754Z ##[group]GITHUB_TOKEN Permissions
+2026-10-16T10:54:26.5605725Z Contents: read
+2026-10-16T10:54:26.5606384Z Metadata: read
+2026-10-16T10:54:26.5607045Z ##[endgroup]
+2026-10-16T10:54:26.5609158Z Secret source: Actions
+2026-10-16T10:54:26.5610286Z Cache mode: write
+2026-10-16T10:54:26.5611101Z Prepare workflow directory
+2026-10-16T10:54:26.5995654Z Prepare all required actions
+2026-10-16T10:54:26.6057561Z Getting action download info
+2026-10-16T10:54:27.0258638Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-16T10:54:27.1257543Z Download action repository 'actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97' (SHA:5fda3b95a4ea91299a34e894583c3862153e4b97)
+2026-10-16T10:54:27.3098359Z Complete job name: pregame
+2026-10-16T10:54:27.3967027Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-10-16T10:54:27.3968079Z with:
+2026-10-16T10:54:27.3968524Z   persist-credentials: false
+2026-10-16T10:54:27.3969031Z   fetch-depth: 0
+2026-10-16T10:54:27.3969486Z   repository: kco994553-star/lol-coach
+2026-10-16T10:54:27.3973723Z   token: ***
+2026-10-16T10:54:27.3974163Z   ssh-strict: true
+2026-10-16T10:54:27.3974590Z   ssh-user: git
+2026-10-16T10:54:27.3975001Z   clean: true
+2026-10-16T10:54:27.3975439Z   sparse-checkout-cone-mode: true
+2026-10-16T10:54:27.3975961Z   fetch-tags: false
+2026-10-16T10:54:27.3976398Z   show-progress: true
+2026-10-16T10:54:27.3976831Z   lfs: false
+2026-10-16T10:54:27.3977239Z   submodules: false
+2026-10-16T10:54:27.3977688Z   set-safe-directory: true
+2026-10-16T10:54:27.3978191Z   allow-unsafe-pr-checkout: false
+2026-10-16T10:54:27.3978970Z ##[endgroup]
+2026-10-16T10:54:27.4987272Z Syncing repository: kco994553-star/lol-coach
+2026-10-16T10:54:27.4989643Z ##[group]Getting Git version info
+2026-10-16T10:54:27.4990731Z Working directory is '/home/runner/work/lol-coach/lol-coach'
+2026-10-16T10:54:27.4992426Z [command]/usr/bin/git version
+2026-10-16T10:54:27.5129011Z git version 2.55.0
+2026-10-16T10:54:27.5152847Z ##[endgroup]
+2026-10-16T10:54:27.5164676Z Temporarily overriding HOME='/home/runner/work/_temp/ed9c7ed1-e053-4da6-8499-c5c88f01c173' before making global git config changes
+2026-10-16T10:54:27.5166868Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T10:54:27.5170594Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/lol-coach/lol-coach
+2026-10-16T10:54:27.5233107Z Deleting the contents of '/home/runner/work/lol-coach/lol-coach'
+2026-10-16T10:54:27.5237515Z ##[group]Determining repository object format
+2026-10-16T10:54:27.5239340Z ##[endgroup]
+2026-10-16T10:54:27.5240805Z ##[group]Initializing the repository
+2026-10-16T10:54:27.5244828Z [command]/usr/bin/git init /home/runner/work/lol-coach/lol-coach
+2026-10-16T10:54:27.5389287Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-16T10:54:27.5391203Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-16T10:54:27.5393320Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-16T10:54:27.5394426Z hint: call:
+2026-10-16T10:54:27.5395157Z hint:
+2026-10-16T10:54:27.5396079Z hint: 	git config --global init.defaultBranch <name>
+2026-10-16T10:54:27.5397212Z hint:
+2026-10-16T10:54:27.5398257Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-16T10:54:27.5399930Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-16T10:54:27.5401234Z hint:
+2026-10-16T10:54:27.5402267Z hint: 	git branch -m <name>
+2026-10-16T10:54:27.5403079Z hint:
+2026-10-16T10:54:27.5404144Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-16T10:54:27.5406142Z Initialized empty Git repository in /home/runner/work/lol-coach/lol-coach/.git/
+2026-10-16T10:54:27.5409293Z [command]/usr/bin/git remote add origin https://github.com/kco994553-star/lol-coach
+2026-10-16T10:54:27.5468740Z ##[endgroup]
+2026-10-16T10:54:27.5470034Z ##[group]Disabling automatic garbage collection
+2026-10-16T10:54:27.5474094Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-16T10:54:27.5508611Z ##[endgroup]
+2026-10-16T10:54:27.5509600Z ##[group]Setting up auth
+2026-10-16T10:54:27.5515652Z Removing SSH command configuration
+2026-10-16T10:54:27.5523256Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T10:54:27.5553968Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T10:54:27.5942798Z Removing HTTP extra header
+2026-10-16T10:54:27.5948306Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T10:54:27.5986003Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T10:54:27.6210406Z Removing includeIf entries pointing to credentials config files
+2026-10-16T10:54:27.6216603Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T10:54:27.6254255Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T10:54:27.6508123Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-70fda91e-676a-4c1a-b891-9c51985f437e.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-16T10:54:27.6555050Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/lol-coach/lol-coach/.git.path /home/runner/work/_temp/git-credentials-70fda91e-676a-4c1a-b891-9c51985f437e.config
+2026-10-16T10:54:27.6675902Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/lol-coach/lol-coach/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-70fda91e-676a-4c1a-b891-9c51985f437e.config
+2026-10-16T10:54:27.6682633Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-70fda91e-676a-4c1a-b891-9c51985f437e.config
+2026-10-16T10:54:27.6696070Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-70fda91e-676a-4c1a-b891-9c51985f437e.config
+2026-10-16T10:54:27.6713544Z ##[endgroup]
+2026-10-16T10:54:27.6714886Z ##[group]Fetching the repository
+2026-10-16T10:54:27.6723194Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +ea899b43b3a077ec384140fe8d2f05ed6bf45c36:refs/remotes/pull/39/merge
+2026-10-16T10:54:29.4071944Z From https://github.com/kco994553-star/lol-coach
+2026-10-16T10:54:29.4074181Z  * [new branch]      chore/riot-txt-verification              -> origin/chore/riot-txt-verification
+2026-10-16T10:54:29.4076825Z  * [new branch]      feat/knowledge-user-review-2026-10-09    -> origin/feat/knowledge-user-review-2026-10-09
+2026-10-16T10:54:29.4079607Z  * [new branch]      feat/manual-draft-capture-2026-10-05     -> origin/feat/manual-draft-capture-2026-10-05
+2026-10-16T10:54:29.4082395Z  * [new branch]      feat/manual-draft-retry-safety-2026-10-05 -> origin/feat/manual-draft-retry-safety-2026-10-05
+2026-10-16T10:54:29.4085041Z  * [new branch]      feat/note-history-draft-recovery-2026-10-05 -> origin/feat/note-history-draft-recovery-2026-10-05
+2026-10-16T10:54:29.4087488Z  * [new branch]      feat/queue-gameplan-v1.1-2026-10-11      -> origin/feat/queue-gameplan-v1.1-2026-10-11
+2026-10-16T10:54:29.4090175Z  * [new branch]      feat/queue-knowledge-expansion-2026-10-11 -> origin/feat/queue-knowledge-expansion-2026-10-11
+2026-10-16T10:54:29.4092744Z  * [new branch]      feat/queue-v1.3-2026-10-11               -> origin/feat/queue-v1.3-2026-10-11
+2026-10-16T10:54:29.4094932Z  * [new branch]      feat/research-note-history-2026-10-05    -> origin/feat/research-note-history-2026-10-05
+2026-10-16T10:54:29.4097625Z  * [new branch]      feat/source-bound-knowledge-proposals-2026-10-05 -> origin/feat/source-bound-knowledge-proposals-2026-10-05
+2026-10-16T10:54:29.4100305Z  * [new branch]      fix/mvp-import-selection-2026-10-05      -> origin/fix/mvp-import-selection-2026-10-05
+2026-10-16T10:54:29.4103053Z  * [new branch]      fix/research-navigation-delete-2026-10-05 -> origin/fix/research-navigation-delete-2026-10-05
+2026-10-16T10:54:29.4105576Z  * [new branch]      fix/research-save-error-scope-2026-10-05 -> origin/fix/research-save-error-scope-2026-10-05
+2026-10-16T10:54:29.4107975Z  * [new branch]      fix/research-source-bytes-2026-10-05     -> origin/fix/research-source-bytes-2026-10-05
+2026-10-16T10:54:29.4110244Z  * [new branch]      main                                     -> origin/main
+2026-10-16T10:54:29.4112336Z  * [new branch]      work/api-diagnostics-20261011            -> origin/work/api-diagnostics-20261011
+2026-10-16T10:54:29.4114448Z  * [new branch]      work/main-execution-claim                -> origin/work/main-execution-claim
+2026-10-16T10:54:29.4116790Z  * [new branch]      work/practical-knowledge-review-20261014 -> origin/work/practical-knowledge-review-20261014
+2026-10-16T10:54:29.4119281Z  * [new branch]      work/pro-reference-results-20261013      -> origin/work/pro-reference-results-20261013
+2026-10-16T10:54:29.4123611Z  * [new branch]      work/pro-reference-resume-20261013       -> origin/work/pro-reference-resume-20261013
+2026-10-16T10:54:29.4125868Z  * [new branch]      work/q15-q19-acquisition                 -> origin/work/q15-q19-acquisition
+2026-10-16T10:54:29.4127889Z  * [new branch]      work/q19-static-segments                 -> origin/work/q19-static-segments
+2026-10-16T10:54:29.4129981Z  * [new branch]      work/quality-pilot-20261016              -> origin/work/quality-pilot-20261016
+2026-10-16T10:54:29.4132453Z  * [new branch]      work/queue-diagnosis-closeout            -> origin/work/queue-diagnosis-closeout
+2026-10-16T10:54:29.4134685Z  * [new branch]      work/queue-diagnosis-final               -> origin/work/queue-diagnosis-final
+2026-10-16T10:54:29.4136895Z  * [new branch]      work/queue-segments-closeout             -> origin/work/queue-segments-closeout
+2026-10-16T10:54:29.4139107Z  * [new branch]      work/queue-v14-closeout                  -> origin/work/queue-v14-closeout
+2026-10-16T10:54:29.4141266Z  * [new branch]      work/queue-v16-closeout                  -> origin/work/queue-v16-closeout
+2026-10-16T10:54:29.4143973Z  * [new branch]      work/queue-v16-evidence                  -> origin/work/queue-v16-evidence
+2026-10-16T10:54:29.4146314Z  * [new branch]      work/queue-v20-20261013                  -> origin/work/queue-v20-20261013
+2026-10-16T10:54:29.4148765Z  * [new branch]      work/queue-v20-closeout-20261013         -> origin/work/queue-v20-closeout-20261013
+2026-10-16T10:54:29.4150895Z  * [new branch]      work/queue-v21-20261015                  -> origin/work/queue-v21-20261015
+2026-10-16T10:54:29.4153511Z  * [new branch]      work/queue-v23-20261015                  -> origin/work/queue-v23-20261015
+2026-10-16T10:54:29.4155695Z  * [new branch]      work/real-aggregate-closeout-20261011    -> origin/work/real-aggregate-closeout-20261011
+2026-10-16T10:54:29.4158068Z  * [new branch]      work/reference-first-20261014            -> origin/work/reference-first-20261014
+2026-10-16T10:54:29.4160261Z  * [new branch]      work/ua-generatecontent-20261011         -> origin/work/ua-generatecontent-20261011
+2026-10-16T10:54:29.4162842Z  * [new ref]         ea899b43b3a077ec384140fe8d2f05ed6bf45c36 -> pull/39/merge
+2026-10-16T10:54:29.4165993Z ##[endgroup]
+2026-10-16T10:54:29.4167312Z ##[group]Determining the checkout info
+2026-10-16T10:54:29.4168812Z ##[endgroup]
+2026-10-16T10:54:29.4169695Z [command]/usr/bin/git sparse-checkout disable
+2026-10-16T10:54:29.4172864Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-16T10:54:29.4182223Z ##[group]Checking out the ref
+2026-10-16T10:54:29.4188095Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/39/merge
+2026-10-16T10:54:30.0270014Z Note: switching to 'refs/remotes/pull/39/merge'.
+2026-10-16T10:54:30.0272552Z 
+2026-10-16T10:54:30.0273760Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-16T10:54:30.0276744Z changes and commit them, and you can discard any commits you make in this
+2026-10-16T10:54:30.0279737Z state without impacting any branches by switching back to a branch.
+2026-10-16T10:54:30.0281060Z 
+2026-10-16T10:54:30.0282130Z If you want to create a new branch to retain commits you create, you may
+2026-10-16T10:54:30.0284260Z do so (now or later) by using -c with the switch command. Example:
+2026-10-16T10:54:30.0285581Z 
+2026-10-16T10:54:30.0286488Z   git switch -c <new-branch-name>
+2026-10-16T10:54:30.0287437Z 
+2026-10-16T10:54:30.0288016Z Or undo this operation with:
+2026-10-16T10:54:30.0288871Z 
+2026-10-16T10:54:30.0289379Z   git switch -
+2026-10-16T10:54:30.0290038Z 
+2026-10-16T10:54:30.0291198Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-16T10:54:30.0293043Z 
+2026-10-16T10:54:30.0294985Z HEAD is now at ea899b4 Merge fb6103fe55b9b393f07c7657dc641e427c58c176 into 9da650ae1ec000f3bb66d90be351174fe3c731f3
+2026-10-16T10:54:30.0325591Z ##[endgroup]
+2026-10-16T10:54:30.0377487Z [command]/usr/bin/git log -1 --format=%H
+2026-10-16T10:54:30.0408457Z ea899b43b3a077ec384140fe8d2f05ed6bf45c36
+2026-10-16T10:54:30.0418606Z ##[group]Removing auth
+2026-10-16T10:54:30.0419571Z Removing SSH command configuration
+2026-10-16T10:54:30.0422916Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T10:54:30.0461707Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T10:54:30.0691787Z Removing HTTP extra header
+2026-10-16T10:54:30.0695430Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T10:54:30.0737416Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T10:54:30.0968818Z Removing includeIf entries pointing to credentials config files
+2026-10-16T10:54:30.0972439Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T10:54:30.1003308Z includeif.gitdir:/home/runner/work/lol-coach/lol-coach/.git.path
+2026-10-16T10:54:30.1007268Z includeif.gitdir:/home/runner/work/lol-coach/lol-coach/.git/worktrees/*.path
+2026-10-16T10:54:30.1010908Z includeif.gitdir:/github/workspace/.git.path
+2026-10-16T10:54:30.1014532Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-16T10:54:30.1021249Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/lol-coach/lol-coach/.git.path
+2026-10-16T10:54:30.1044220Z /home/runner/work/_temp/git-credentials-70fda91e-676a-4c1a-b891-9c51985f437e.config
+2026-10-16T10:54:30.1057985Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/lol-coach/lol-coach/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-70fda91e\-676a\-4c1a\-b891\-9c51985f437e\.config
+2026-10-16T10:54:30.1097896Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/lol-coach/lol-coach/.git/worktrees/*.path
+2026-10-16T10:54:30.1158734Z /home/runner/work/_temp/git-credentials-70fda91e-676a-4c1a-b891-9c51985f437e.config
+2026-10-16T10:54:30.1168581Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/lol-coach/lol-coach/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-70fda91e\-676a\-4c1a\-b891\-9c51985f437e\.config
+2026-10-16T10:54:30.1205071Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-16T10:54:30.1232113Z /github/runner_temp/git-credentials-70fda91e-676a-4c1a-b891-9c51985f437e.config
+2026-10-16T10:54:30.1242466Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-70fda91e\-676a\-4c1a\-b891\-9c51985f437e\.config
+2026-10-16T10:54:30.1300162Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-16T10:54:30.1338027Z /github/runner_temp/git-credentials-70fda91e-676a-4c1a-b891-9c51985f437e.config
+2026-10-16T10:54:30.1403573Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-70fda91e\-676a\-4c1a\-b891\-9c51985f437e\.config
+2026-10-16T10:54:30.1418430Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T10:54:30.1650391Z Removing credentials config '/home/runner/work/_temp/git-credentials-70fda91e-676a-4c1a-b891-9c51985f437e.config'
+2026-10-16T10:54:30.1659255Z ##[endgroup]
+2026-10-16T10:54:30.1908906Z ##[group]Run if [[ -f contracts/coaching-quality-pilot-v1.md ]]; then
+2026-10-16T10:54:30.1911053Z [36;1mif [[ -f contracts/coaching-quality-pilot-v1.md ]]; then[0m
+2026-10-16T10:54:30.1913115Z [36;1m  echo 'mode=pilot' >> "$GITHUB_OUTPUT"[0m
+2026-10-16T10:54:30.1915320Z [36;1melif [[ -f contracts/queue-v23.md || -f contracts/amendments/2026-10-15-queue-v23.json ]]; then[0m
+2026-10-16T10:54:30.1917515Z [36;1m  echo 'mode=v23' >> "$GITHUB_OUTPUT"[0m
+2026-10-16T10:54:30.1918803Z [36;1melse[0m
+2026-10-16T10:54:30.1919892Z [36;1m  echo 'mode=historical' >> "$GITHUB_OUTPUT"[0m
+2026-10-16T10:54:30.1921261Z [36;1mfi[0m
+2026-10-16T10:54:30.2204113Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-16T10:54:30.2205716Z ##[endgroup]
+2026-10-16T10:54:30.2559801Z ##[group]Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+2026-10-16T10:54:30.2561623Z with:
+2026-10-16T10:54:30.2562517Z   python-version: 3.12
+2026-10-16T10:54:30.2563526Z   check-latest: false
+2026-10-16T10:54:30.2573762Z   token: ***
+2026-10-16T10:54:30.2574697Z   update-environment: true
+2026-10-16T10:54:30.2575772Z   allow-prereleases: false
+2026-10-16T10:54:30.2576836Z   freethreaded: false
+2026-10-16T10:54:30.2577793Z ##[endgroup]
+2026-10-16T10:54:30.3779393Z ##[group]Installed versions
+2026-10-16T10:54:30.3869841Z Successfully set up CPython (3.12.15)
+2026-10-16T10:54:30.3873044Z ##[endgroup]
+2026-10-16T10:54:30.4094757Z ##[group]Run python -m pip install --disable-pip-version-check -r requirements-r3.txt -r requirements-private-cache.txt
+2026-10-16T10:54:30.4100328Z [36;1mpython -m pip install --disable-pip-version-check -r requirements-r3.txt -r requirements-private-cache.txt[0m
+2026-10-16T10:54:30.4202477Z shell: /usr/bin/bash -e {0}
+2026-10-16T10:54:30.4203565Z env:
+2026-10-16T10:54:30.4205208Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T10:54:30.4208119Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T10:54:30.4211000Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T10:54:30.4213792Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T10:54:30.4215595Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T10:54:30.4217776Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T10:54:30.4219284Z ##[endgroup]
+2026-10-16T10:54:31.3484121Z Collecting pydantic==2.13.5 (from -r requirements-r3.txt (line 2))
+2026-10-16T10:54:31.3953212Z   Downloading pydantic-2.13.5-py3-none-any.whl.metadata (110 kB)
+2026-10-16T10:54:31.6244434Z Collecting cryptography==50.0.0 (from -r requirements-private-cache.txt (line 1))
+2026-10-16T10:54:31.6274929Z   Downloading cryptography-50.0.0-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (4.3 kB)
+2026-10-16T10:54:31.6386241Z Collecting annotated-types>=0.6.0 (from pydantic==2.13.5->-r requirements-r3.txt (line 2))
+2026-10-16T10:54:31.6412950Z   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+2026-10-16T10:54:32.3105741Z Collecting pydantic-core==2.46.5 (from pydantic==2.13.5->-r requirements-r3.txt (line 2))
+2026-10-16T10:54:32.3133168Z   Downloading pydantic_core-2.46.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+2026-10-16T10:54:32.3282766Z Collecting typing-extensions>=4.14.1 (from pydantic==2.13.5->-r requirements-r3.txt (line 2))
+2026-10-16T10:54:32.3307621Z   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+2026-10-16T10:54:32.3415190Z Collecting typing-inspection>=0.4.2 (from pydantic==2.13.5->-r requirements-r3.txt (line 2))
+2026-10-16T10:54:32.3439159Z   Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+2026-10-16T10:54:32.4448413Z Collecting cffi>=2.0.0 (from cryptography==50.0.0->-r requirements-private-cache.txt (line 1))
+2026-10-16T10:54:32.4476610Z   Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)
+2026-10-16T10:54:32.4595581Z Collecting pycparser (from cffi>=2.0.0->cryptography==50.0.0->-r requirements-private-cache.txt (line 1))
+2026-10-16T10:54:32.4623542Z   Downloading pycparser-3.11-py3-none-any.whl.metadata (8.2 kB)
+2026-10-16T10:54:32.4697182Z Downloading pydantic-2.13.5-py3-none-any.whl (472 kB)
+2026-10-16T10:54:32.4779787Z Downloading cryptography-50.0.0-cp311-abi3-manylinux_2_34_x86_64.whl (4.7 MB)
+2026-10-16T10:54:32.4984507Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.7/4.7 MB 259.8 MB/s  0:00:00
+2026-10-16T10:54:32.5016115Z Downloading pydantic_core-2.46.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+2026-10-16T10:54:32.5130965Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 205.6 MB/s  0:00:00
+2026-10-16T10:54:32.5155545Z Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+2026-10-16T10:54:32.5202683Z Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (221 kB)
+2026-10-16T10:54:32.5252093Z Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+2026-10-16T10:54:32.5297138Z Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+2026-10-16T10:54:32.5341088Z Downloading pycparser-3.11-py3-none-any.whl (51 kB)
+2026-10-16T10:54:32.6200811Z Installing collected packages: typing-extensions, pycparser, annotated-types, typing-inspection, pydantic-core, cffi, pydantic, cryptography
+2026-10-16T10:54:33.2903329Z 
+2026-10-16T10:54:33.2919624Z Successfully installed annotated-types-0.8.0 cffi-2.1.1 cryptography-50.0.0 pycparser-3.11 pydantic-2.13.5 pydantic-core-2.46.5 typing-extensions-4.16.0 typing-inspection-0.4.4
+2026-10-16T10:54:33.3643363Z ##[group]Run python scripts/verify_quality_pilot.py --tests
+2026-10-16T10:54:33.3643836Z [36;1mpython scripts/verify_quality_pilot.py --tests[0m
+2026-10-16T10:54:33.3710321Z shell: /usr/bin/bash -e {0}
+2026-10-16T10:54:33.3710575Z env:
+2026-10-16T10:54:33.3710848Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T10:54:33.3711304Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T10:54:33.3711966Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T10:54:33.3712377Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T10:54:33.3712771Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T10:54:33.3713165Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T10:54:33.3713501Z ##[endgroup]
+2026-10-16T10:54:35.5221842Z test_action_conditions_stops_and_uncertainty_alternative_are_required (tests_pregame.test_pilot_advice.PilotAdviceTests.test_action_conditions_stops_and_uncertainty_alternative_are_required) ... ok
+2026-10-16T10:54:35.5241845Z test_in_game_patch_mismatch_and_unmatched_champion_hide_new_advice (tests_pregame.test_pilot_advice.PilotAdviceTests.test_in_game_patch_mismatch_and_unmatched_champion_hide_new_advice) ... ok
+2026-10-16T10:54:35.5290518Z test_new_versions_never_inherit_approval_or_overwrite_originals (tests_pregame.test_pilot_advice.PilotAdviceTests.test_new_versions_never_inherit_approval_or_overwrite_originals) ... ok
+2026-10-16T10:54:35.5557340Z test_original_objection_or_rejection_cannot_be_bypassed_with_revision (tests_pregame.test_pilot_advice.PilotAdviceTests.test_original_objection_or_rejection_cannot_be_bypassed_with_revision) ... ok
+2026-10-16T10:54:36.4803861Z test_pc_preview_replaces_only_matching_legacy_auto_display_with_hypothesis (tests_pregame.test_pilot_advice.PilotAdviceTests.test_pc_preview_replaces_only_matching_legacy_auto_display_with_hypothesis) ... ok
+2026-10-16T10:54:36.4828207Z test_receipt_mismatch_falls_back_without_hiding_legacy_advice (tests_pregame.test_pilot_advice.PilotAdviceTests.test_receipt_mismatch_falls_back_without_hiding_legacy_advice) ... ok
+2026-10-16T10:54:36.4915992Z test_revision_scope_uses_original_static_draft_conditions_only (tests_pregame.test_pilot_advice.PilotAdviceTests.test_revision_scope_uses_original_static_draft_conditions_only) ... ok
+2026-10-16T10:54:36.4950184Z test_source_fact_cannot_borrow_an_unrelated_quote (tests_pregame.test_pilot_advice.PilotAdviceTests.test_source_fact_cannot_borrow_an_unrelated_quote) ... ok
+2026-10-16T10:54:36.5020151Z test_ambiguous_opposite_role_never_selects_arbitrary_opponent (tests_pregame.test_pilot_observations.PilotObservationTests.test_ambiguous_opposite_role_never_selects_arbitrary_opponent) ... ok
+2026-10-16T10:54:36.5135380Z test_conflicting_or_malformed_level_events_are_unknown_without_frame_fallback (tests_pregame.test_pilot_observations.PilotObservationTests.test_conflicting_or_malformed_level_events_are_unknown_without_frame_fallback) ... ok
+2026-10-16T10:54:36.5230787Z test_counts_use_selected_people_and_match_dedup_and_patch_separation (tests_pregame.test_pilot_observations.PilotObservationTests.test_counts_use_selected_people_and_match_dedup_and_patch_separation) ... ok
+2026-10-16T10:54:36.5346118Z test_cross_level_chronology_and_event_frame_contradiction_are_unknown (tests_pregame.test_pilot_observations.PilotObservationTests.test_cross_level_chronology_and_event_frame_contradiction_are_unknown) ... ok
+2026-10-16T10:54:36.5402437Z test_frame_without_prior_lower_level_is_unknown_and_health_presence_is_validated (tests_pregame.test_pilot_observations.PilotObservationTests.test_frame_without_prior_lower_level_is_unknown_and_health_presence_is_validated) ... ok
+2026-10-16T10:54:36.5509327Z test_gold_requires_same_exact_frame_and_total_gold (tests_pregame.test_pilot_observations.PilotObservationTests.test_gold_requires_same_exact_frame_and_total_gold) ... ok
+2026-10-16T10:54:36.5578003Z test_identity_nonleak_strict_recursive_validator_and_copy (tests_pregame.test_pilot_observations.PilotObservationTests.test_identity_nonleak_strict_recursive_validator_and_copy) ... ok
+2026-10-16T10:54:36.5634500Z test_jungle_only_first_observed_lane_kill_involvement_is_not_first_gank (tests_pregame.test_pilot_observations.PilotObservationTests.test_jungle_only_first_observed_lane_kill_involvement_is_not_first_gank) ... ok
+2026-10-16T10:54:36.5753729Z test_level_arrival_bound_marginals_preserve_frame_and_exact_event_times (tests_pregame.test_pilot_observations.PilotObservationTests.test_level_arrival_bound_marginals_preserve_frame_and_exact_event_times) ... ok
+2026-10-16T10:54:36.5811352Z test_level_up_exact_dedup_and_skill_level_up_never_champion_level (tests_pregame.test_pilot_observations.PilotObservationTests.test_level_up_exact_dedup_and_skill_level_up_never_champion_level) ... ok
+2026-10-16T10:54:36.5869382Z test_level_up_inspection_reports_malformed_and_conflicting_group_counts (tests_pregame.test_pilot_observations.PilotObservationTests.test_level_up_inspection_reports_malformed_and_conflicting_group_counts) ... ok
+2026-10-16T10:54:36.5975785Z test_overlapping_frame_bounds_are_unknown_and_disjoint_bounds_order (tests_pregame.test_pilot_observations.PilotObservationTests.test_overlapping_frame_bounds_are_unknown_and_disjoint_bounds_order) ... ok
+2026-10-16T10:54:36.6042503Z test_schema_valid_report_without_actual_source_binding_is_not_usable (tests_pregame.test_pilot_observations.PilotObservationTests.test_schema_valid_report_without_actual_source_binding_is_not_usable) ... ok
+2026-10-16T10:54:36.6094580Z test_synthetic_source_rejected_and_missing_cache_fails_without_creation (tests_pregame.test_pilot_observations.PilotObservationTests.test_synthetic_source_rejected_and_missing_cache_fails_without_creation) ... ok
+2026-10-16T10:54:36.6212337Z test_touching_intervals_and_equal_event_times_remain_unknown (tests_pregame.test_pilot_observations.PilotObservationTests.test_touching_intervals_and_equal_event_times_remain_unknown) ... ok
+2026-10-16T10:54:36.6273449Z test_unknown_champion_name_fails_closed_instead_of_releasing_arbitrary_strings (tests_pregame.test_pilot_observations.PilotObservationTests.test_unknown_champion_name_fails_closed_instead_of_releasing_arbitrary_strings) ... ok
+2026-10-16T10:54:36.6325888Z test_changed_bytes_are_not_accepted_by_original_hash (tests_pregame.test_quality_pilot_binding.PilotBindingTests.test_changed_bytes_are_not_accepted_by_original_hash) ... ok
+2026-10-16T10:54:36.6327920Z test_new_source_authority_cannot_be_added_by_seal (tests_pregame.test_quality_pilot_binding.PilotBindingTests.test_new_source_authority_cannot_be_added_by_seal) ... ok
+2026-10-16T10:54:36.6334137Z test_paths_cannot_escape_root_or_follow_symlinks (tests_pregame.test_quality_pilot_binding.PilotBindingTests.test_paths_cannot_escape_root_or_follow_symlinks) ... ok
+2026-10-16T10:54:36.6351701Z test_existing_precision_hold_and_unknown_missing_denominator_are_preserved (tests_pregame.test_quality_reporting.QualityReportingTests.test_existing_precision_hold_and_unknown_missing_denominator_are_preserved) ... ok
+2026-10-16T10:54:36.6354226Z test_role_rate_is_never_substituted_for_matchup_absolute_gold (tests_pregame.test_quality_reporting.QualityReportingTests.test_role_rate_is_never_substituted_for_matchup_absolute_gold) ... ok
+2026-10-16T10:54:36.6355392Z 
+2026-10-16T10:54:36.6355650Z ----------------------------------------------------------------------
+2026-10-16T10:54:36.6356208Z Ran 29 tests in 1.117s
+2026-10-16T10:54:36.6356431Z 
+2026-10-16T10:54:36.6356547Z OK
+2026-10-16T10:54:36.6683978Z {
+2026-10-16T10:54:36.6684390Z   "status": "PASS",
+2026-10-16T10:54:36.6684732Z   "checks": {
+2026-10-16T10:54:36.6685053Z     "authority": true,
+2026-10-16T10:54:36.6685395Z     "ancestry": true,
+2026-10-16T10:54:36.6685736Z     "exact_parent": true,
+2026-10-16T10:54:36.6686114Z     "completed_ci_reused": true,
+2026-10-16T10:54:36.6686517Z     "exact_source_authority": true,
+2026-10-16T10:54:36.6686935Z     "current_sources": true,
+2026-10-16T10:54:36.6687779Z     "exact_preserved": true,
+2026-10-16T10:54:36.6688165Z     "preserved_bytes": true,
+2026-10-16T10:54:36.6688557Z     "original_modified_archived": true,
+2026-10-16T10:54:36.6688975Z     "new_data_bound": true,
+2026-10-16T10:54:36.6689559Z     "bounded_changes": true,
+2026-10-16T10:54:36.6689929Z     "no_approval_or_accuracy": true,
+2026-10-16T10:54:36.6690323Z     "new_reviews_bound": true,
+2026-10-16T10:54:36.6690692Z     "offline_reports_valid": true
+2026-10-16T10:54:36.6691049Z   },
+2026-10-16T10:54:36.6691406Z   "commit_sha": "ea899b43b3a077ec384140fe8d2f05ed6bf45c36",
+2026-10-16T10:54:36.6692433Z   "scope": "Pilot-only sources and data; completed v2.3 CI reused, no predecessor tests executed",
+2026-10-16T10:54:36.6693146Z   "coaching_accuracy": null,
+2026-10-16T10:54:36.6693530Z   "pilot_tests_executed": true,
+2026-10-16T10:54:36.6693901Z   "new_tests_exit_code": 0
+2026-10-16T10:54:36.6694225Z }
+2026-10-16T10:54:36.6964499Z ##[group]Run npm install --prefix "$RUNNER_TEMP/pregame-playwright" --no-save --package-lock=false --no-audit --no-fund playwright@1.62.1
+2026-10-16T10:54:36.6965512Z [36;1mnpm install --prefix "$RUNNER_TEMP/pregame-playwright" --no-save --package-lock=false --no-audit --no-fund playwright@1.62.1[0m
+2026-10-16T10:54:36.7030330Z shell: /usr/bin/bash -e {0}
+2026-10-16T10:54:36.7030574Z env:
+2026-10-16T10:54:36.7030835Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T10:54:36.7031282Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T10:54:36.7032047Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T10:54:36.7032435Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T10:54:36.7032820Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T10:54:36.7033203Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T10:54:36.7033592Z   PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+2026-10-16T10:54:36.7033862Z ##[endgroup]
+2026-10-16T10:54:38.7203993Z 
+2026-10-16T10:54:38.7204567Z added 2 packages in 2s
+2026-10-16T10:54:38.7728993Z ##[group]Run python scripts/verify_quality_pilot.py
+2026-10-16T10:54:38.7729426Z [36;1mpython scripts/verify_quality_pilot.py[0m
+2026-10-16T10:54:38.7729846Z [36;1mexport NODE_PATH="$RUNNER_TEMP/pregame-playwright/node_modules"[0m
+2026-10-16T10:54:38.7730300Z [36;1mCHROMIUM_EXECUTABLE="$(command -v google-chrome)"[0m
+2026-10-16T10:54:38.7730644Z [36;1mexport CHROMIUM_EXECUTABLE[0m
+2026-10-16T10:54:38.7730952Z [36;1mpython scripts/browser_quality_pilot.py[0m
+2026-10-16T10:54:38.7796695Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-16T10:54:38.7797042Z env:
+2026-10-16T10:54:38.7797311Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T10:54:38.7797762Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T10:54:38.7798193Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T10:54:38.7798577Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T10:54:38.7799002Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T10:54:38.7799387Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T10:54:38.7799722Z ##[endgroup]
+2026-10-16T10:54:40.2738863Z {
+2026-10-16T10:54:40.2739246Z   "status": "PASS",
+2026-10-16T10:54:40.2739575Z   "checks": {
+2026-10-16T10:54:40.2739902Z     "authority": true,
+2026-10-16T10:54:40.2740306Z     "ancestry": true,
+2026-10-16T10:54:40.2740633Z     "exact_parent": true,
+2026-10-16T10:54:40.2741003Z     "completed_ci_reused": true,
+2026-10-16T10:54:40.2741417Z     "exact_source_authority": true,
+2026-10-16T10:54:40.2742339Z     "current_sources": true,
+2026-10-16T10:54:40.2742705Z     "exact_preserved": true,
+2026-10-16T10:54:40.2743098Z     "preserved_bytes": true,
+2026-10-16T10:54:40.2743479Z     "original_modified_archived": true,
+2026-10-16T10:54:40.2743909Z     "new_data_bound": true,
+2026-10-16T10:54:40.2744282Z     "bounded_changes": true,
+2026-10-16T10:54:40.2744669Z     "no_approval_or_accuracy": true,
+2026-10-16T10:54:40.2745136Z     "new_reviews_bound": true,
+2026-10-16T10:54:40.2745518Z     "offline_reports_valid": true
+2026-10-16T10:54:40.2745889Z   },
+2026-10-16T10:54:40.2746618Z   "commit_sha": "ea899b43b3a077ec384140fe8d2f05ed6bf45c36",
+2026-10-16T10:54:40.2747411Z   "scope": "Pilot-only sources and data; completed v2.3 CI reused, no predecessor tests executed",
+2026-10-16T10:54:40.2748150Z   "coaching_accuracy": null,
+2026-10-16T10:54:40.2748528Z   "pilot_tests_executed": false,
+2026-10-16T10:54:40.2748905Z   "new_tests_exit_code": 0
+2026-10-16T10:54:40.2749224Z }
+2026-10-16T10:54:54.1781931Z {"passed": true, "evidence_directory": "/home/runner/work/lol-coach/lol-coach/evidence/quality-pilot/browser-20261016T105440338067Z"}
+2026-10-16T10:54:54.2312181Z Post job cleanup.
+2026-10-16T10:54:54.3692784Z Post job cleanup.
+2026-10-16T10:54:54.4565665Z [command]/usr/bin/git version
+2026-10-16T10:54:54.4610470Z git version 2.55.0
+2026-10-16T10:54:54.4651752Z Temporarily overriding HOME='/home/runner/work/_temp/90abeec5-8020-4b28-8457-06704c428e0e' before making global git config changes
+2026-10-16T10:54:54.4653220Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T10:54:54.4657894Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/lol-coach/lol-coach
+2026-10-16T10:54:54.4691750Z Removing SSH command configuration
+2026-10-16T10:54:54.4698714Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T10:54:54.4736327Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T10:54:54.4993363Z Removing HTTP extra header
+2026-10-16T10:54:54.5000007Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T10:54:54.5039000Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T10:54:54.5302845Z Removing includeIf entries pointing to credentials config files
+2026-10-16T10:54:54.5310456Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T10:54:54.5359718Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T10:54:54.5764513Z Cleaning up orphan processes
+
