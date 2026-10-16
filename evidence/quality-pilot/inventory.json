@@ -1,0 +1,145 @@
+{
+  "schema_version": "quality-pilot.inventory.v1",
+  "base_main": "9da650ae1ec000f3bb66d90be351174fe3c731f3",
+  "scope": "Existing artifacts only; no original reconstruction from aggregates",
+  "sources": [
+    {
+      "id": "Q15_275",
+      "path": "data/riot/2026-10-13/power-16.20-CHALLENGER.json.gz",
+      "matches": 275,
+      "population": "CHALLENGER_SEED_MATCHES",
+      "patches": [
+        "16.20"
+      ],
+      "local_raw": false,
+      "local_aggregate": true,
+      "fields": [
+        "champion",
+        "position",
+        "minute",
+        "gold/xp/cs ROLE_POPULATION rate difference",
+        "n",
+        "champion_n",
+        "reference_n",
+        "ci95"
+      ],
+      "resolution": "ELAPSED_MINUTE_BIN_LATEST_RECEIVED_FRAME"
+    },
+    {
+      "id": "Q15_275_FULL",
+      "path": "data/riot/2026-10-13/archives/full-power-16.20-CHALLENGER.json.gz",
+      "matches": 275,
+      "population": "SAME_Q15_275_NOT_ADDITIONAL",
+      "patches": [
+        "16.20"
+      ],
+      "local_raw": false,
+      "local_aggregate": true,
+      "fields": [
+        "opponent_champion",
+        "MATCHUP absolute gold/xp/cs difference",
+        "minute",
+        "n",
+        "ci95"
+      ],
+      "resolution": "ELAPSED_MINUTE_BIN_LATEST_RECEIVED_FRAME"
+    },
+    {
+      "id": "RECALL_CH_291",
+      "path": "data/recall/2026-10-15/challenger/recall-data.json",
+      "matches": 291,
+      "participant_observations": 2910,
+      "population": "CHALLENGER_SEED_MATCHES",
+      "patches": [
+        "16.20"
+      ],
+      "local_raw": false,
+      "local_aggregate": true,
+      "fields": [
+        "first_purchase_proxy",
+        "preceding_frame_current_gold",
+        "low_health_first_frame",
+        "outcome_counts",
+        "sensitivity"
+      ],
+      "resolution": "MINUTE_HEALTH_AND_EVENT_TIMESTAMPS_AGGREGATED"
+    },
+    {
+      "id": "RECORDED_PRO_89",
+      "path": "data/recall/2026-10-15/pro/recall-data.json",
+      "matches": 89,
+      "participant_observations": 108,
+      "population": "RECORDED_ROSTER_PARTICIPANTS_NOT_ALL_VERIFIED_PRO",
+      "patches": [
+        "16.19",
+        "16.20"
+      ],
+      "local_raw": false,
+      "local_aggregate": true,
+      "fields": [
+        "first_purchase_proxy",
+        "preceding_frame_current_gold",
+        "low_health_outcomes"
+      ],
+      "resolution": "MINUTE_HEALTH_AND_EVENT_TIMESTAMPS_AGGREGATED"
+    }
+  ],
+  "existing_encrypted_raw": {
+    "artifact_id": 11822391323,
+    "run_id": 38410710876,
+    "source_commit": "b6cdced0c819424e048ec412de6f7e57c5b1c545",
+    "expired": false,
+    "expires_at": "2027-01-11T14:07:50Z",
+    "access": "TRUSTED_RUNNER_EXISTING_SECRET_ONLY",
+    "actual_restoration_this_pilot": "PENDING"
+  },
+  "unidentifiable_from_local_aggregates": [
+    "actual_first_gank",
+    "nonlethal_gank",
+    "individual_decision_scene",
+    "wave_state",
+    "player_known_enemy_vision",
+    "cooldowns_at_decision",
+    "recall_start",
+    "intent"
+  ],
+  "level_event_inventory": "PENDING_OFFLINE_RAW_INSPECTION_LEVEL_UP_NOT_SKILL_LEVEL_UP",
+  "scene_gate": {
+    "maximum": 8,
+    "eligible": 0,
+    "reviewed_individual_scenes": 0,
+    "status": "BLOCKED_MISSING_PLAYER_KNOWN_VIEW_AND_MATCHED_VIDEO",
+    "not_reconstructed": true
+  },
+  "coaching_accuracy": null,
+  "new_match_requests": 0,
+  "paid_calls": 0,
+  "prior_quality_assessment": {
+    "date": "2026-10-16",
+    "random_seed": "dd7dc6fe03d2fd58b7ea0548d4532c2a",
+    "random_ids": [
+      "KR-021",
+      "KR-008",
+      "KR-026",
+      "KR-022",
+      "KR-015"
+    ],
+    "purpose_ids": [
+      "KR-001",
+      "KR-005",
+      "KR-008"
+    ],
+    "overlap": [
+      "KR-008"
+    ],
+    "uncertainty_conditions_old30": 20,
+    "literal_defer_old30": 3,
+    "old_completed_checks_rerun": false
+  },
+  "older_pro_cases": {
+    "path": "data/pro_reference/2026-10-13/reference-cases.json",
+    "matches": 87,
+    "selected_participant_observations": 106,
+    "not_same_as_recall89": true
+  }
+}

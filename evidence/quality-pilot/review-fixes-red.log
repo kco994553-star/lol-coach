@@ -1,0 +1,29 @@
+FFF
+======================================================================
+FAIL: test_cross_level_chronology_and_event_frame_contradiction_are_unknown (tests_pregame.test_pilot_observations.PilotObservationTests.test_cross_level_chronology_and_event_frame_contradiction_are_unknown) (events=[{'type': 'LEVEL_UP', 'participantId': 1, 'level': 3, 'timestamp': 60000}, {'type': 'LEVEL_UP', 'participantId': 1, 'level': 2, 'timestamp': 120000}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_pilot_observations.py", line 75, in test_cross_level_chronology_and_event_frame_contradiction_are_unknown
+    self.assertEqual(cohort['level_2']['own_exact_event_n'],0)
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_cross_level_chronology_and_event_frame_contradiction_are_unknown (tests_pregame.test_pilot_observations.PilotObservationTests.test_cross_level_chronology_and_event_frame_contradiction_are_unknown) (events=[{'type': 'LEVEL_UP', 'participantId': 1, 'level': 2, 'timestamp': 61000}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_pilot_observations.py", line 75, in test_cross_level_chronology_and_event_frame_contradiction_are_unknown
+    self.assertEqual(cohort['level_2']['own_exact_event_n'],0)
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_schema_valid_report_without_actual_source_binding_is_not_usable (tests_pregame.test_pilot_observations.PilotObservationTests.test_schema_valid_report_without_actual_source_binding_is_not_usable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_pilot_observations.py", line 80, in test_schema_valid_report_without_actual_source_binding_is_not_usable
+    self.assertTrue(hasattr(pilot_observations,'load_bound_report'),'bound report loader missing')
+AssertionError: False is not true : bound report loader missing
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.016s
+
+FAILED (failures=3)

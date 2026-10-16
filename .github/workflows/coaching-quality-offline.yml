@@ -1,0 +1,99 @@
+name: Coaching quality existing-cache audit
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: coaching-quality-offline
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    if: github.repository == 'kco994553-star/lol-coach' && github.ref == 'refs/heads/main' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out trusted main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Install existing pinned private-cache runtime
+        run: python -m pip install --disable-pip-version-check -r requirements-r3.txt -r requirements-private-cache.txt
+      - name: Recover existing ciphertext only
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/recover_pro_cache.py --directory "$RUNNER_TEMP/quality-recovery"
+      - name: Decrypt existing cache privately without account lookups
+        env:
+          PRO_REFERENCE_ENCRYPTION_SEED: ${{ secrets.YOUTUBE_API_KEY }}
+        run: |
+          umask 077
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          recovery=json.loads((Path(os.environ['RUNNER_TEMP'])/'quality-recovery/recovery.json').read_text())
+          if recovery.get('run_id')!=38410710876 or recovery.get('artifact_id')!=11822391323:
+              raise ValueError('EXPECTED_EXISTING_89_MATCH_CHECKPOINT_UNAVAILABLE_NO_SUBSTITUTION')
+          PY
+          python scripts/private_pro_bundle.py decrypt --directory "$RUNNER_TEMP/private/quality-reference" --bundle "$RUNNER_TEMP/quality-recovery/pro-private.bundle"
+      - name: Inspect only existing original fields with provider network disabled
+        run: |
+          umask 077
+          python - <<'PY'
+          import hashlib,json,os,socket,subprocess
+          from pathlib import Path
+          from coach_v1.pilot_observations import audit_private_cache,validate_report,load_bound_report
+          attempts=[]
+          def deny(*args,**kwargs):
+              attempts.append(True)
+              raise RuntimeError('OFFLINE_AUDIT_NETWORK_FORBIDDEN')
+          socket.socket.connect=deny
+          socket.create_connection=deny
+          root=Path(os.environ['RUNNER_TEMP'])
+          report=validate_report(audit_private_cache(root/'private/quality-reference'))
+          if report['source']['matches']!=89 or report['source']['participant_observations']!=108:
+              raise ValueError('EXISTING_REFERENCE_SCOPE_CHANGED_NO_SILENT_SUBSTITUTION')
+          if attempts:raise ValueError('OFFLINE_AUDIT_NETWORK_ATTEMPTED')
+          output=root/'quality-public';output.mkdir()
+          body=(json.dumps(report,ensure_ascii=False,sort_keys=True,indent=2,allow_nan=False)+'\n').encode()
+          (output/'observations.json').write_bytes(body)
+          files=['coach_v1/pilot_observations.py','coach_v1/postgame_match.py','coach_v1/recall_stats.py','coach_v1/pro_checkpoint.py','coach_v1/private_pro_bundle.py','scripts/recover_pro_cache.py','scripts/private_pro_bundle.py','.github/workflows/coaching-quality-offline.yml','contracts/coaching-quality-pilot-v1.md']
+          recovery=json.loads((root/'quality-recovery/recovery.json').read_text())
+          binding=dict(schema_version='quality-pilot.offline-binding.v1',actual_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
+              source_sha256={p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in files},
+              checkpoint=dict(run_id=recovery['run_id'],artifact_id=recovery['artifact_id']),
+              report_sha256=hashlib.sha256(body).hexdigest(),source_samples=report['source'],
+              provider_requests=0,network_attempts=0,privacy='ANONYMOUS_ALLOWLIST_AGGREGATES_ONLY',coaching_accuracy=None)
+          (output/'source-binding.json').write_text(json.dumps(binding,sort_keys=True,indent=2)+'\n')
+          load_bound_report(output)
+          print(json.dumps(dict(status='OFFLINE_EXISTING_CACHE_AUDITED',samples=report['source'],provider_requests=0,coaching_accuracy=None)))
+          PY
+      - name: Upload anonymous report and exact source binding only
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: coaching-quality-public-safe
+          path: |
+            ${{ runner.temp }}/quality-public/observations.json
+            ${{ runner.temp }}/quality-public/source-binding.json
+          if-no-files-found: error
+          retention-days: 90
+      - name: Remove ephemeral plaintext and recovered ciphertext
+        if: always()
+        run: |
+          python - <<'PY'
+          import os,shutil
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP'])
+          for name in ('private/quality-reference','quality-recovery'):
+              p=root/name
+              if p.is_dir():shutil.rmtree(p)
+          print('EPHEMERAL_QUALITY_CACHE_REMOVED')
+          PY

@@ -1,3 +1,46 @@
+된 것: 기존 품질 평가의 고유 조언 7개를 별도 가설 버전으로 구체화했습니다.
+된 것: 조건·중단·대안을 나눴고 원문·승인·기존 20개 보류는 보존했습니다.
+보류: 새 7개 전술 해석은 HOLD이며 출처 확인·조건 검토를 효과 검증으로 보지 않습니다.
+진행 중: 기존 암호화 프로 원본의 오프라인 필드 검사를 준비했고 경기 수집은 하지 않습니다.
+내가 할 것: 지금 추가 승인이나 자료 수집은 필요 없습니다.
+
+# Small coaching-quality pilot — 2026-10-16
+
+Intake main9da650ae/tree37729ed. Prior read-only quality audit reused: random seed
+dd7dc6fe03d2fd58b7ea0548d4532c2a, random KR021/008/026/022/015,
+purpose KR001/005/008, overlap008. Exactly seven distinct revisions; no expansion
+until user assesses this pilot. First draft and evidence/counter reviews preserved
+under evidence/quality-pilot/initial/. Five material wording risks corrected:
+mechanic-only entry gate, universal recoil priority, blanket forward pause,
+unconditional separation/visibleenemy exclusion, scouting OR/AND/emergency gate.
+V2 source facts PASS and conditional wording PASS separately; tactical interpretation
+HOLD, real-game effect NOT_ASSESSED. New versions never inherit AUTO/USER approval.
+Existing AUTO30 receipts and old HOLD20 are byte-preserved; matching revised PC
+cards show HYPOTHESIS with separate skill-interaction topic, suppress legacy AUTO
+display only, and honor original user objection/rejection. No USER writes.
+
+Q15 public852/full6090cohorts are the same275matches. Public pooledgold is rate;
+full MATCHUP gold is absolute sampled-bin difference. Existing Ornn/Fiora and
+Ahri/Zed matchup cohorts unavailable; Caitlyn/Ezreal10/15 bins have n5, original
+CI_TOO_WIDE omissions preserved and eligible-total/missing n not recoverable.
+RecallCH291/2910 and recordedPRO89/108 remain separate. OlderPRO87/106 separate.
+CH raw not locally retained; no aggregate scene reconstruction. PRO checkpoint
+11822391323/run38410710876 available by metadata; trusted offline workflow only
+restores existing ciphertext, denies network during audit and emits strict anonymous
+statistics. Actual field/event counts await its first trustedmain audit; no new
+Riot collection or paidcall. LEVEL_UP vsSKILL_LEVEL_UP, duplicate/conflict rejection,
+frame-level arrival bounds and overlapUNKNOWN, exact10/15 totalGold checks covered.
+Jungle metric is firstobservedlane kill involvement, not firstgank; no-killganks absent.
+
+No matched known-view/POV receipt: eligible/evaluated scenes0, individual scene
+exclusion count not fabricated from89matches, agreement/accuracy null. New advice
+instead receives source/condition/counterexample review. Whole-branch review and
+pilot-only required CI precede normal publication; completedv23tests/browser are
+never rerun. Evidence-only followup reuses unchangedpilotchecks. Full before/after:
+evidence/quality-pilot/comparison.md; inventory/report/reviews beside it.
+
+---
+
 된 것: 귀환·저체력 실제 집계를 PC 카드에 연결했습니다.
 된 것: 챌린저 291경기와 사용자 명단의 프로 참고 89경기를 출처·패치별로 보존했습니다.
 안 된 것: 새 전술 후보 20개는 보류이며 실제 Windows 픽창 실증은 외부 대기입니다.
