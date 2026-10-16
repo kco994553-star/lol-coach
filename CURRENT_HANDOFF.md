@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-gemini-format`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/gemini-format-20261017`
+- authority: USER_GEMINI_DIAGNOSTIC_EXCEPTION_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `25b9682cfcdaff7ded97e42887d5f14c9245e5f0`
+- detail: PR44 main01294e8/tree4221898 required+postmain3SUCCESS each; first actual20261017KST request next, same existingfree model/project/key/v1beta path; safe staged diagnostics, max5ceiling with existing1guard; VIDEO1 conditionalexpert only.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261017-gemini-format`
 - status: `CI_PENDING`
