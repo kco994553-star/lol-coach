@@ -9,7 +9,7 @@ than3combined VIDEO calls/day including prior1; preserve every full-duration cha
   valid; generic400cause remainsUNKNOWN. Neutral prompt change documented.
 - [x] TDD pure payload, safe errors, sharedpolicy, v2legacy-prefix/phase recovery,
   trusted phasedCLI and sameexistingworkflow route; no extraTEXT or provider calls.
-- [ ] Independent code/safety review; affected-only checks/normal gatedmerge/postmain.
+- [x] Independent code/safety review; affected-only checks/normal gatedmerge/postmain.
 - [ ] Actualstage1 withmetadata/fullcharge/ACK; import safe actual output and separate
   contentreview beforeany nextstage. Ifstage1passes, stage2URLonly within todaylimit.
   Failureholds and is never converted into a model/project/restriction cause.
