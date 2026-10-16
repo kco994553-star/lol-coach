@@ -1,0 +1,75 @@
+test_changed_head_source_withheld_from_original_video (tests_expert.test_bridge.ExpertBridgeTests.test_changed_head_source_withheld_from_original_video) ... ok
+test_crash_after_proposal_and_user_deletion_never_resurrects (tests_expert.test_bridge.ExpertBridgeTests.test_crash_after_proposal_and_user_deletion_never_resurrects) ... ok
+test_http_budget_preflight_no_writes (tests_expert.test_bridge.ExpertBridgeTests.test_http_budget_preflight_no_writes) ... ok
+test_invalid_artifact_writes_nothing (tests_expert.test_bridge.ExpertBridgeTests.test_invalid_artifact_writes_nothing) ... ok
+test_large_conditions_and_hundred_claims_fit_without_postwrite_failure (tests_expert.test_bridge.ExpertBridgeTests.test_large_conditions_and_hundred_claims_fit_without_postwrite_failure) ... Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/__main__.py", line 18, in <module>
+    main(module=None)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/main.py", line 105, in __init__
+    self.runTests()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/main.py", line 281, in runTests
+    self.result = testRunner.run(self.test)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240, in run
+    test(result)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122, in run
+    test(result)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122, in run
+    test(result)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122, in run
+    test(result)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690, in __call__
+    return self.run(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 634, in run
+    self._callTestMethod(testMethod)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 589, in _callTestMethod
+    if method() is not None:
+       ^^^^^^^^
+  File "/workspace/lol-coach/tests_expert/test_bridge.py", line 88, in test_large_conditions_and_hundred_claims_fit_without_postwrite_failure
+    self.assertEqual(self.import_(a)['new_candidates'],100)
+                     ^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_expert/test_bridge.py", line 31, in import_
+    def import_(self,a=None):return import_expert_artifact(self.store,a or artifact(),max_bytes=self.limit)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/expert_bridge.py", line 142, in import_expert_artifact
+    return _bounded(dict(new_candidates=new,claims=_rows_for_artifact(store,ah,max_bytes)),max_bytes)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/expert_bridge.py", line 207, in _rows_for_artifact
+    result=list_expert_claims(store,max_bytes=max_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/expert_bridge.py", line 182, in list_expert_claims
+    p=store.get_proposal(record['rule_id'],max_bytes=max_bytes)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/knowledge.py", line 486, in get_proposal
+    validate_knowledge_content(db)
+  File "/workspace/lol-coach/coach_v1/knowledge.py", line 273, in validate_knowledge_content
+    binding = _source_binding(db, dict(resource_id=row['resource_id'], anchor=row['anchor'],
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/knowledge.py", line 219, in _source_binding
+    resource = ResearchStore._resource(db, source['resource_id'])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/research.py", line 70, in _resource
+    return dict(id=row['id'], kind=row['kind'], title=row['title'], report=json.loads(row['report']))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py", line 338, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py", line 354, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

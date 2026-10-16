@@ -1,0 +1,21 @@
+test_recovery_accepts_video_only_phase_for_typed_diagnostic_run (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_recovery_accepts_video_only_phase_for_typed_diagnostic_run) ... ERROR
+
+======================================================================
+ERROR: test_recovery_accepts_video_only_phase_for_typed_diagnostic_run (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_recovery_accepts_video_only_phase_for_typed_diagnostic_run)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 53, in test_recovery_accepts_video_only_phase_for_typed_diagnostic_run
+    got,quota=self.f.m.recover_pairs([dict(id=43,run_number=2)],99,lambda n:[artifact],lambda *a:(s,q),lambda n:True,self.f.now+80);self.assertEqual(got,s);self.assertEqual(quota,q)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/gemini_daily.py", line 327, in recover_pairs
+    if 2 in seen:require({0,1}<=seen,'MISSING_DURABLE_DAILY_PHASE')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/gemini_daily.py", line 24, in require
+    if not value:raise ValueError(reason)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: MISSING_DURABLE_DAILY_PHASE
+
+----------------------------------------------------------------------
+Ran 1 test in 0.033s
+
+FAILED (errors=1)

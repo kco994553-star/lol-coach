@@ -1,0 +1,19 @@
+test_normal_cli_date_stop_precedes_external_gate (tests_expert.test_video_diagnostic_cli.VideoCliTests.test_normal_cli_date_stop_precedes_external_gate) ... GEMINI_DAILY_JSON={"accepted_claims": 0, "classification": null, "coaching_accuracy": null, "has_state": true, "http_status": null, "new_provider_requests": 0, "phase": "pretext", "provider_error_code": null, "provider_error_message": null, "provider_error_status": null, "reason": "INVALID_OR_UNAVAILABLE_DAILY_STATE", "review_status": "NOT_REVIEWED", "schema_version": "gemini.daily-receipt.v1", "status": "BLOCKED_EXTERNAL", "text_reserved": false, "text_success": false, "valid_extraction": false, "video_reserved": false}
+FAIL
+
+======================================================================
+FAIL: test_normal_cli_date_stop_precedes_external_gate (tests_expert.test_video_diagnostic_cli.VideoCliTests.test_normal_cli_date_stop_precedes_external_gate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_cli.py", line 62, in test_normal_cli_date_stop_precedes_external_gate
+    self.assertEqual(rc,1);gate.assert_not_called();r=json.loads((root/'normal/receipt.json').read_text());self.assertEqual(r['reason'],'DATE_EXTERNAL_DIAGNOSIS_STOPPED')
+                           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected '_gate' to not have been called. Called 1 times.
+Calls: [call({'schema_version': 'expert.runtime.v1', 'project_name': 'lol-coach', 'confirmation_source': 'USER_QUEUE_V1.6_2026-10-11', 'confirmed_at': '2026-10-11T06:31:52.582043+00:00', 'free_tier_confirmed': True, 'entitlement_checked_at': '2026-10-13', 'quota_exclusive_confirmed': True, 'initial_zero_usage_confirmed': True}, 1792191070, <function verify_free_entitlement at 0x7f4aa7948b80>, None)].
+
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+FAILED (failures=1)

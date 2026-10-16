@@ -36,6 +36,16 @@ jobs:
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: '3.12'
+      - name: Select existing normal or active diagnostic route
+        id: route
+        run: |
+          python - <<'PYROUTE'
+          import json,os
+          from pathlib import Path
+          path=Path('config/video_api_diagnostic.json')
+          active=path.exists() and json.loads(path.read_text()).get('active') is True
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('mode='+('DIAGNOSTIC' if active else 'NORMAL')+'\n')
+          PYROUTE
       - name: Recover both durable ledgers including failed and cancelled runs
         id: recover
         env:
@@ -43,6 +53,7 @@ jobs:
         run: python scripts/run_gemini_daily.py --phase recover --config config/evidence_intake.json --runtime-config config/expert_runtime.json --output-dir "$RUNNER_TEMP/daily/recovery"
       - name: Check free gates and reserve one Seoul-date TEXT slot
         id: pretext
+        if: steps.route.outputs.mode == 'NORMAL'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
@@ -60,7 +71,7 @@ jobs:
           retention-days: 90
       - name: Dispatch one short TEXT without retry or fallback
         id: text
-        if: steps.text-reservation.outcome == 'success'
+        if: steps.route.outputs.mode == 'NORMAL' && steps.text-reservation.outcome == 'success'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
@@ -68,7 +79,7 @@ jobs:
         run: python scripts/run_gemini_daily.py --phase text --config config/evidence_intake.json --runtime-config config/expert_runtime.json --state "$RUNNER_TEMP/daily/pretext/daily-state.json" --ledger "$RUNNER_TEMP/daily/pretext/quota-ledger.json" --reservation-artifact-id "$ACK" --output-dir "$RUNNER_TEMP/daily/text"
       - name: Persist daily TEXT result
         id: text-result
-        if: always() && steps.text-reservation.outcome == 'success'
+        if: always() && steps.route.outputs.mode == 'NORMAL' && steps.text-reservation.outcome == 'success'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: gemini-daily-state-${{ github.run_id }}-TEXT_RESULT
@@ -79,36 +90,51 @@ jobs:
           retention-days: 90
       - name: Select source interval and reserve full original VIDEO charge
         id: preparevideo
-        if: steps.text.outputs.text_success == 'true' && steps.text-result.outcome == 'success'
+        if: steps.route.outputs.mode == 'NORMAL' && steps.text.outputs.text_success == 'true' && steps.text-result.outcome == 'success'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           ACK: ${{ steps.text-result.outputs.artifact-id }}
         run: python scripts/run_gemini_daily.py --phase preparevideo --config config/evidence_intake.json --runtime-config config/expert_runtime.json --state "$RUNNER_TEMP/daily/text/daily-state.json" --ledger "$RUNNER_TEMP/daily/text/quota-ledger.json" --text-result-artifact-id "$ACK" --output-dir "$RUNNER_TEMP/daily/preparevideo"
+      - name: Prepare next reviewed VIDEO diagnostic without TEXT call
+        id: diagnostic-prepare
+        if: steps.route.outputs.mode == 'DIAGNOSTIC'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python scripts/run_video_diagnostic.py --phase prepare --state "$RUNNER_TEMP/daily/recovery/daily-state.json" --ledger "$RUNNER_TEMP/daily/recovery/quota-ledger.json" --recovery-receipt "$RUNNER_TEMP/daily/recovery/recovery.json" --output-dir "$RUNNER_TEMP/daily/preparediagnostic"
       - name: Persist daily VIDEO reservation
         id: video-reservation
-        if: steps.preparevideo.outputs.video_reserved == 'true'
+        if: steps.preparevideo.outputs.video_reserved == 'true' || steps.diagnostic-prepare.outputs.video_reserved == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: gemini-daily-state-${{ github.run_id }}-VIDEO
           path: |
-            ${{ runner.temp }}/daily/preparevideo/daily-state.json
-            ${{ runner.temp }}/daily/preparevideo/quota-ledger.json
+            ${{ runner.temp }}/daily/${{ steps.route.outputs.mode == 'DIAGNOSTIC' && 'preparediagnostic' || 'preparevideo' }}/daily-state.json
+            ${{ runner.temp }}/daily/${{ steps.route.outputs.mode == 'DIAGNOSTIC' && 'preparediagnostic' || 'preparevideo' }}/quota-ledger.json
           if-no-files-found: error
           retention-days: 90
       - name: Separate provider requests by a conservative minute
-        if: steps.video-reservation.outcome == 'success'
+        if: steps.route.outputs.mode == 'NORMAL' && steps.video-reservation.outcome == 'success'
         run: |
           # Project-specific RPM is not exposed here; do not claim a verified quota.
           python -c 'import time; print("Conservative TEXT-to-VIDEO separation: 60s", flush=True); time.sleep(60)'
       - name: Dispatch one bounded VIDEO without retry or alternate model
         id: video
-        if: steps.video-reservation.outcome == 'success'
+        if: steps.route.outputs.mode == 'NORMAL' && steps.video-reservation.outcome == 'success'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           ACK: ${{ steps.video-reservation.outputs.artifact-id }}
         run: python scripts/run_gemini_daily.py --phase video --config config/evidence_intake.json --runtime-config config/expert_runtime.json --state "$RUNNER_TEMP/daily/preparevideo/daily-state.json" --ledger "$RUNNER_TEMP/daily/preparevideo/quota-ledger.json" --reservation-artifact-id "$ACK" --output-dir "$RUNNER_TEMP/daily/video"
+      - name: Dispatch one staged diagnostic VIDEO without retry
+        id: diagnostic-dispatch
+        if: steps.route.outputs.mode == 'DIAGNOSTIC' && steps.video-reservation.outcome == 'success'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          ACK: ${{ steps.video-reservation.outputs.artifact-id }}
+        run: python scripts/run_video_diagnostic.py --phase dispatch --state "$RUNNER_TEMP/daily/preparediagnostic/daily-state.json" --ledger "$RUNNER_TEMP/daily/preparediagnostic/quota-ledger.json" --reservation-artifact-id "$ACK" --output-dir "$RUNNER_TEMP/daily/diagnostic"
       - name: Prepare newest FINAL state without refunds
         id: final
         if: always()
@@ -117,7 +143,7 @@ jobs:
           import os,subprocess
           from pathlib import Path
           root=Path(os.environ['RUNNER_TEMP'])/'daily';selected=None
-          for name in ('pretext','text','preparevideo','video'):
+          for name in ('pretext','text','preparevideo','video','preparediagnostic','diagnostic'):
               p=root/name
               if (p/'daily-state.json').is_file() and (p/'quota-ledger.json').is_file():selected=p
           if selected is not None:
@@ -140,7 +166,7 @@ jobs:
           import hashlib,json,os,subprocess
           from pathlib import Path
           out=Path(os.environ['RUNNER_TEMP'])/'daily';out.mkdir(exist_ok=True)
-          files=['coach_v1/gemini_daily.py','coach_v1/gemini_response_diagnostics.py','contracts/gemini-response-diagnostic-v3.md','scripts/run_gemini_daily.py','config/evidence_intake.json','config/expert_runtime.json','config/expert_channels.json','config/pov_channels.json','.github/workflows/expert-video-collection.yml','contracts/actual-evidence-v1.md']
+          files=['coach_v1/video_diagnostic_payload.py','coach_v1/video_diagnostic_policy.py','scripts/run_video_diagnostic.py','config/video_api_diagnostic.json','contracts/video-step-diagnostic-v4.md','evidence/actual-evidence/video-step-diagnostic/official-reference.json','coach_v1/gemini_daily.py','coach_v1/gemini_response_diagnostics.py','contracts/gemini-response-diagnostic-v3.md','scripts/run_gemini_daily.py','config/evidence_intake.json','config/expert_runtime.json','config/expert_channels.json','config/pov_channels.json','.github/workflows/expert-video-collection.yml','contracts/actual-evidence-v1.md']
           b=dict(schema_version='evidence-daily.source-binding.v1',actual_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),source_sha256={p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in files},run_id=int(os.environ['GITHUB_RUN_ID']),run_attempt=int(os.environ['GITHUB_RUN_ATTEMPT']),coaching_accuracy=None)
           (out/'source-binding.json').write_text(json.dumps(b,indent=2)+'\n')
           PY

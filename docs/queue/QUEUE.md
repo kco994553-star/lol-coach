@@ -1,3 +1,41 @@
+된 것: 실제 API·공식 REST 자료를 대조했고 텍스트 통과와 과거 실패 이력을 보존했습니다.
+된 것: 추가 텍스트 없이 영상 단계별 비교·전체 길이 차감·별도 내용 검토 경로를 준비했습니다.
+유지: 조언 7개 종료·AUTO30/HOLD20·골드/경험치108개 복구·성능·Windows 경로를 보존합니다.
+안 된 것: 이번 단계 실제 영상 호출은 아직0회이며 기존400 거부 필드는 미확인입니다.
+내가 할 것: 독립 검토·필수 CI 뒤 최소 영상 요청부터 실행합니다. 사용자 추가 작업은 없습니다.
+
+# VIDEO API-specific staged diagnosis — 2026-10-17 KST
+
+Authority USER_VIDEO_STEP_DIAGNOSTIC_2026-10-17 supersedes the older same-day
+no-more-VIDEO statement below, solely for the explicit 4-stage diagnosis.
+Intake main0ad505b09a7e378c9a898f4e91208adbd6ce72c1 / treebf3f14f77db00195313dbcff248cd0ba9e186dac;
+branch work/video-api-diagnostic-20261017; shared token main-20261017-video-step.
+PR45 required/postmain all3SUCCESS reused. No conflicting writer/openPR at intake.
+No new TEXT calls. VIDEO combined ceiling3/KSTday includes prior1/HTTP400 on17;
+remaining at intake2. Every new request reserves/charges full original duration.
+No refunds/rewrite/model-key-project-route switch or paid conversion. Date-level
+429/auth/permission stop; failed stage cannot recur without reviewed new evidence.
+
+See contracts/video-step-diagnostic-v4.md, official-reference.json/.md and plan.
+Actual v1beta generateContent, gemini-3.6-flash, urllib/no providerSDK. Interactions
+examples cannot supply wire fields. Official Part.videoMetadata uses protobufDuration
+strings; snake_case aliases are accepted. Neither feature proves old400 cause.
+Pinned official generateContent reference ixRanV-rdAQ, neutral 3-sentence/timestamp
+prompt documented as a change from Sundar-specific official prompt. Stage1 baseline
+also omits interval/schema/extras; it is not one-variable proof against old failure.
+Stage2 URL-only brQaUDGnXTs; stage3 interval-only; stage4 JSONformat-only. Full-video
+stages1/2 explicitly excluded from predecision evaluation. Separate result-bound
+content review before each advancement, never source fact verification/USER approval.
+
+One existing active 18:00KST workflow and shared quota/concurrency retained. Active
+diagnostic route suppresses TEXT, emits one VIDEO/run and parks on review/day/failure.
+Actual stage results still PENDING publication/CI. Source verification, expert claim
+adoption, same-game links and adequate predecision scenes remain0; no HTTP200 promise.
+No new Riot/resource/POV/browser collection. Prior 71 affected tests PASS; interrupted
+accidental discovery exit130 is preserved and is not a passing full-suite claim.
+
+---
+
 된 것: 10월17일 텍스트 실제1회에서 본문·JSON·스키마·완전STOP출력 검사가 통과했습니다.
 된 것: 같은 조건3회에서 서버 준비2.73초·첫 카드1.12초·픽 갱신0.46초 중앙값을 기록했습니다.
 유지: 복구108개는89경기의 선정참가자×경기 관측이며 원본시각·패치·누락검사를 보존합니다.

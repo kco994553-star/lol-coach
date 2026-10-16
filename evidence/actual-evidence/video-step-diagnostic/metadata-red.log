@@ -1,0 +1,43 @@
+test_malformed_metadata_http200_is_durable_failure_not_success (tests_expert.test_video_diagnostic_cli.VideoCliTests.test_malformed_metadata_http200_is_durable_failure_not_success) ... ERROR
+
+======================================================================
+ERROR: test_malformed_metadata_http200_is_durable_failure_not_success (tests_expert.test_video_diagnostic_cli.VideoCliTests.test_malformed_metadata_http200_is_durable_failure_not_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/scripts/run_video_diagnostic.py", line 55, in main
+    video=metadata_video(collector,REFERENCE_ID if stage==1 else TARGET_ID);source=policy.source_from_video(video,stage,plan)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/scripts/run_video_diagnostic.py", line 17, in metadata_video
+    data=collector._youtube('videos',part='snippet,contentDetails,status',id=video_id)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/expert_collector.py", line 423, in _youtube
+    return self._request('GET',YOUTUBE_URL+endpoint+'?'+urllib.parse.urlencode(params))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/expert_collector.py", line 388, in _request
+    except (TypeError,ValueError,UnicodeError,OverflowError,RecursionError):raise fail('MALFORMED_RESPONSE',http_status=code) from None
+                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+coach_v1.expert_collector._External: ('MALFORMED_RESPONSE', 'BLOCKED_EXTERNAL', 200)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_cli.py", line 44, in test_malformed_metadata_http200_is_durable_failure_not_success
+    self.assertEqual(cli.main(['--phase','prepare']+args,**kw),0)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/scripts/run_video_diagnostic.py", line 82, in main
+    safe={k:diagnostic.get(k) for k in ('error_code','error_status')};safe['error_message']='Provider metadata error; message redacted.';reason='AUTHENTICATION' if auth_failure else None;state=d.preparation_failure(state,cfg,now,run,'VIDEO_METADATA',status,reason,safe);receipt.update(http_status=status,classification=d.classify(status,'VIDEO',reason),provider_error=safe)
+                                                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/gemini_daily.py", line 174, in preparation_failure
+    return validate_state(s,now)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/gemini_daily.py", line 59, in validate_state
+    require(event['classification'] in PERSISTENT|{'QUOTA_EXCEEDED','SERVER_FAILURE','NETWORK_TIMEOUT','NETWORK_FAILURE','HTTP_FAILURE'})
+  File "/workspace/lol-coach/coach_v1/gemini_daily.py", line 24, in require
+    if not value:raise ValueError(reason)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: INVALID_DAILY_STATE
+
+----------------------------------------------------------------------
+Ran 1 test in 0.009s
+
+FAILED (errors=1)
