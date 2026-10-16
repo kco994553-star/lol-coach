@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261016-evidence-acquisition`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/evidence-acquisition-20261016`
+- authority: USER_ACTUAL_EVIDENCE_2026-10-16 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `103b8b80c915accba7d7e5c82951d020b17d6e09`
+- detail: New user direction: stop at seven advice; existing free Gemini dailyKST18 oneTEXT+conditionaloneVIDEO with durable shared guard, POV metadata/matching and original goldXP recovery. main103b8b8 clean, no openPR/activewriter/providerjob; existing Actions expert schedule is sole target. No paid/fallback or oldtest repetition.
+
+---
+
 # Latest common execution claim — PARKED_EXTERNAL
 - run_token: `main-20261015-queue-v23`
 - status: `PARKED_EXTERNAL`
