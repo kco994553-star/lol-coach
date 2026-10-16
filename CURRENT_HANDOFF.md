@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261016-evidence-acquisition`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/evidence-acquisition-20261016`
+- authority: USER_ACTUAL_EVIDENCE_2026-10-16 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `103b8b80c915accba7d7e5c82951d020b17d6e09`
+- detail: Actualsource1e261c5 offline38895508259 SUCCESS:89/108 resource recovery,POV2canonical metadata8GET. Daily38895512381 failed beforeprovider0requests: legacy skipped-job proof missing, fixneeded; no TEXT retry consumed. Importsafeaggregateonly, add narrow migrationfix+CI while preserving9resourceboundsourcefiles.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261016-evidence-acquisition`
 - status: `CI_PENDING`
