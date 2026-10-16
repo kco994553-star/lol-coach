@@ -1,0 +1,27 @@
+test_missing_bound_report_does_not_break_existing_cards (tests_pregame.test_resource_view.ResourceViewTests.test_missing_bound_report_does_not_break_existing_cards) ... ok
+test_no_role_pool_fallback_or_patch_substitution (tests_pregame.test_resource_view.ResourceViewTests.test_no_role_pool_fallback_or_patch_substitution) ... ok
+test_observed_bin_card_has_actual_time_n_missing_and_separate_exact (tests_pregame.test_resource_view.ResourceViewTests.test_observed_bin_card_has_actual_time_n_missing_and_separate_exact) ... FAIL
+test_unknown_values_are_not_zero (tests_pregame.test_resource_view.ResourceViewTests.test_unknown_values_are_not_zero) ... ERROR
+
+======================================================================
+ERROR: test_unknown_values_are_not_zero (tests_pregame.test_resource_view.ResourceViewTests.test_unknown_values_are_not_zero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_resource_view.py", line 38, in test_unknown_values_are_not_zero
+    c=view.render_cards(r,self.binding,self.draft)[0]
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+======================================================================
+FAIL: test_observed_bin_card_has_actual_time_n_missing_and_separate_exact (tests_pregame.test_resource_view.ResourceViewTests.test_observed_bin_card_has_actual_time_n_missing_and_separate_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_resource_view.py", line 22, in test_observed_bin_card_has_actual_time_n_missing_and_separate_exact
+    self.assertEqual(len(cards),1);c=cards[0]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.043s
+
+FAILED (failures=1, errors=1)

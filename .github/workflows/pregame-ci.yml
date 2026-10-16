@@ -28,7 +28,9 @@ jobs:
         id: scope
         shell: bash
         run: |
-          if [[ -f contracts/coaching-quality-pilot-v1.md ]]; then
+          if [[ -f contracts/actual-evidence-v1.md ]]; then
+            echo 'mode=evidence' >> "$GITHUB_OUTPUT"
+          elif [[ -f contracts/coaching-quality-pilot-v1.md ]]; then
             echo 'mode=pilot' >> "$GITHUB_OUTPUT"
           elif [[ -f contracts/queue-v23.md || -f contracts/amendments/2026-10-15-queue-v23.json ]]; then
             echo 'mode=v23' >> "$GITHUB_OUTPUT"
@@ -41,6 +43,9 @@ jobs:
           python-version: '3.12'
       - name: Install pinned runtime dependency
         run: python -m pip install --disable-pip-version-check -r requirements-r3.txt -r requirements-private-cache.txt
+      - name: Verify actual evidence delta only; reuse completed pilot checks
+        if: steps.scope.outputs.mode == 'evidence'
+        run: python scripts/verify_actual_evidence.py --tests
       - name: Verify small coaching pilot only; reuse completed v2.3 evidence
         if: steps.scope.outputs.mode == 'pilot'
         run: python scripts/verify_quality_pilot.py --tests
@@ -62,6 +67,15 @@ jobs:
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
         run: npm install --prefix "$RUNNER_TEMP/pregame-playwright" --no-save --package-lock=false --no-audit --no-fund playwright@1.62.1
+      - name: Verify resource observation display and preserved PC path in Chromium
+        if: steps.scope.outputs.mode == 'evidence'
+        shell: bash
+        run: |
+          python scripts/verify_actual_evidence.py
+          export NODE_PATH="$RUNNER_TEMP/pregame-playwright/node_modules"
+          CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
+          export CHROMIUM_EXECUTABLE
+          python scripts/browser_actual_evidence.py
       - name: Verify revised hypothesis cards and separate topic in Chromium
         if: steps.scope.outputs.mode == 'pilot'
         shell: bash

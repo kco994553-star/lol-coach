@@ -1,0 +1,23 @@
+test_missing_bound_report_does_not_break_existing_cards (tests_pregame.test_resource_view.ResourceViewTests.test_missing_bound_report_does_not_break_existing_cards) ... ok
+test_no_role_pool_fallback_or_patch_substitution (tests_pregame.test_resource_view.ResourceViewTests.test_no_role_pool_fallback_or_patch_substitution) ... ok
+test_observed_bin_card_has_actual_time_n_missing_and_separate_exact (tests_pregame.test_resource_view.ResourceViewTests.test_observed_bin_card_has_actual_time_n_missing_and_separate_exact) ... ok
+test_unknown_values_are_not_zero (tests_pregame.test_resource_view.ResourceViewTests.test_unknown_values_are_not_zero) ... ERROR
+
+======================================================================
+ERROR: test_unknown_values_are_not_zero (tests_pregame.test_resource_view.ResourceViewTests.test_unknown_values_are_not_zero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_resource_view.py", line 35, in test_unknown_values_are_not_zero
+    self.store.import_match(b)
+  File "/workspace/lol-coach/coach_v1/postgame_match.py", line 137, in import_match
+    existing,_,_=self._load(summary['id']);_require(existing==b,'MATCH_ALREADY_IMPORTED_WITH_DIFFERENT_CONTENT');return summary
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/postgame_match.py", line 23, in _require
+    if not ok:raise ValueError(message)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: MATCH_ALREADY_IMPORTED_WITH_DIFFERENT_CONTENT
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.034s
+
+FAILED (errors=1)

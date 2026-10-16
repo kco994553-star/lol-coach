@@ -1,41 +1,25 @@
-name: Free expert video collection
+name: Daily free evidence check
 
 on:
   workflow_dispatch:
-    inputs:
-      video_argument_diagnostic:
-        description: Explicit user2026-10-13 official YouTube baseline, then clip, then format once each
-        type: boolean
-        default: false
-      text_schema_only:
-        description: Isolate claim schema; TEXT503 only up to3 retries, no video/quota change
-        type: boolean
-        default: false
-      allow_flash_fallback:
-        description: Main-authorized one-time officially free Flash fallback trial; never scheduled
-        type: boolean
-        default: false
   schedule:
-    - cron: '47 4 * * *'
+    - cron: '0 9 * * *' # 18:00 Asia/Seoul; actual Actions dispatch may be delayed.
 
 permissions:
   contents: read
   actions: read
 
-# All collectors for the same Gemini project must use this group, never run
-# elsewhere concurrently. Unknown external project use blocks via attestation.
 concurrency:
   group: expert-gemini-project-quota
   cancel-in-progress: false
 
 jobs:
-  # User2026-10-13: automatic Q19 remains paused after unsuccessful diagnosis.
-  # A repository variable cannot silently restart provider requests.
   collect:
-    if: github.repository == 'kco994553-star/lol-coach' && github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && (inputs.video_argument_diagnostic != true || github.run_attempt == 1)
+    if: github.repository == 'kco994553-star/lol-coach' && github.ref == 'refs/heads/main' && github.run_attempt == 1 && (github.event_name == 'workflow_dispatch' || github.event_name == 'schedule')
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 20
     env:
+      GH_TOKEN: ${{ github.token }}
       GEMINI_FREE_TIER_CONFIRMED: ${{ vars.GEMINI_FREE_TIER_CONFIRMED }}
       GEMINI_DOCUMENTED_FREE_ENTITLEMENT_CONFIRMED: ${{ vars.GEMINI_DOCUMENTED_FREE_ENTITLEMENT_CONFIRMED }}
       GEMINI_QUOTA_EXCLUSIVE_CONFIRMED: ${{ vars.GEMINI_QUOTA_EXCLUSIVE_CONFIRMED }}
@@ -43,272 +27,128 @@ jobs:
       INITIAL_ZERO_USAGE_CONFIRMED_AT: ${{ vars.INITIAL_ZERO_USAGE_CONFIRMED_AT }}
       GEMINI_PROJECT_BILLING_TIER: ${{ vars.GEMINI_PROJECT_BILLING_TIER }}
     steps:
-      - name: Check out trusted default branch
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Check out trusted main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: main
           persist-credentials: false
+          fetch-depth: 0
       - name: Set up Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: '3.12'
-      - name: Recover newest durable quota including failed and cancelled runs
+      - name: Recover both durable ledgers including failed and cancelled runs
         id: recover
-        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python scripts/collect_expert_claims.py --phase recover --output-dir "$RUNNER_TEMP/expert-recovery"
-      - name: Isolate claim schema with text only without any video reservation
-        if: inputs.text_schema_only == true && inputs.video_argument_diagnostic != true
+        run: python scripts/run_gemini_daily.py --phase recover --config config/evidence_intake.json --runtime-config config/expert_runtime.json --output-dir "$RUNNER_TEMP/daily/recovery"
+      - name: Check free gates and reserve one Seoul-date TEXT slot
+        id: pretext
         env:
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python scripts/collect_expert_claims.py --phase probe-format --runtime-config config/expert_runtime.json --output-dir "$RUNNER_TEMP/expert-format"
-      - name: Diagnose identical curl and Python text concurrently and select at most one official free fallback
-        if: inputs.text_schema_only != true && inputs.video_argument_diagnostic != true
-        env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          EXPERT_ALLOW_FLASH_FALLBACK: ${{ inputs.allow_flash_fallback }}
-        run: |
-          fallback_args=()
-          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" && "$EXPERT_ALLOW_FLASH_FALLBACK" == "true" ]]; then
-            fallback_args+=(--allow-fallback-once)
-          fi
-          python scripts/diagnose_expert_front.py --timeout 120 --runtime-config config/expert_runtime.json --recovery-receipt "$RUNNER_TEMP/expert-recovery/recovery.json" --ledger "$RUNNER_TEMP/expert-recovery/quota-ledger.json" --output "$RUNNER_TEMP/expert-front/front-diagnostics.json" "${fallback_args[@]}"
-      # Reuse the successful paired probe and its exact selected model; no duplicate text.
-      - name: Reuse selected successful text then discover public videos and reserve quota
-        id: reserve
-        if: inputs.text_schema_only != true && inputs.video_argument_diagnostic != true
-        env:
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: |
-          python scripts/collect_expert_claims.py --phase reserve --front-diagnostics "$RUNNER_TEMP/expert-front/front-diagnostics.json" --collection-mode DIAGNOSTIC_FIRST_CLIP --runtime-config config/expert_runtime.json --output-dir "$RUNNER_TEMP/expert-reservation" --ledger "$RUNNER_TEMP/expert-recovery/quota-ledger.json" --recovery-receipt "$RUNNER_TEMP/expert-recovery/recovery.json"
-          python - <<'PY'
-          import json, os
-          from pathlib import Path
-          directory=Path(os.environ['RUNNER_TEMP'])/'expert-reservation'
-          plan=json.loads((directory/'plan.json').read_text())
-          with open(os.environ['GITHUB_OUTPUT'],'a') as output:
-              output.write('reserved='+str(plan['status']=='RESERVED').lower()+'\n')
-              output.write('has_ledger='+str((directory/'quota-ledger.json').is_file()).lower()+'\n')
-          PY
-      # Legacy step name is bound by recovery; quota is durable before any VIDEO request.
-      # The prior text-only probe consumes no video budget.
-      - name: Persist quota before any Gemini request
-        id: durable_reservation
-        if: steps.reserve.outputs.has_ledger == 'true'
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        with:
-          name: expert-quota-reservation-${{ github.run_id }}
-          path: ${{ runner.temp }}/expert-reservation/quota-ledger.json
-          retention-days: 7
-          if-no-files-found: error
-      - name: Process one first video clip only after durable reservation
-        if: steps.reserve.outputs.reserved == 'true' && steps.durable_reservation.outcome == 'success' && steps.durable_reservation.outputs.artifact-id != ''
-        env:
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          RESERVATION_ARTIFACT_ID: ${{ steps.durable_reservation.outputs.artifact-id }}
-        run: python scripts/collect_expert_claims.py --phase process --runtime-config config/expert_runtime.json --plan "$RUNNER_TEMP/expert-reservation/plan.json" --reservation-artifact-id "$RESERVATION_ARTIFACT_ID" --output-dir "$RUNNER_TEMP/expert-final"
-      - name: Require recorded complete prior400 before new diagnostic discovery
-        if: inputs.video_argument_diagnostic == true
-        run: |
-          python - <<'PY'
-          import json
-          from coach_v1.expert_video_diagnostic import validate_complete_error
-          path='evidence/queue/pro-resume/prior-full-video400.json'
-          data=validate_complete_error(json.load(open(path)),prior=True)
-          assert data['message_complete'] and data['recorded_before_new_attempt']
-          print('PRIOR_FULL_SANITIZED_ERROR_RECORDED_BEFORE_NEW_ATTEMPT')
-          PY
-      - name: Discover one fresh public source using metadata only
-        if: inputs.video_argument_diagnostic == true && steps.recover.outcome == 'success'
-        env:
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python scripts/diagnose_expert_video.py --phase discover --authorization USER_PRO_REFERENCE_RESUME_2026-10-13 --ledger "$RUNNER_TEMP/expert-recovery/quota-ledger.json" --prior-error evidence/queue/pro-resume/prior-full-video400.json --output-dir "$RUNNER_TEMP/video-discovery"
-      - name: Reserve full original duration for BASELINE diagnostic
-        id: video_baseline_prepare
-        if: inputs.video_argument_diagnostic == true
-        env:
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python scripts/diagnose_expert_video.py --phase prepare --stage BASELINE --authorization USER_PRO_REFERENCE_RESUME_2026-10-13 --ledger "$RUNNER_TEMP/expert-recovery/quota-ledger.json" --prior-error evidence/queue/pro-resume/prior-full-video400.json --video "$RUNNER_TEMP/video-discovery/selected-video.json" --output-dir "$RUNNER_TEMP/video-baseline-prepare"
-      - name: Persist quota before any Gemini request
-        id: video_baseline_reservation
-        if: steps.video_baseline_prepare.outputs.reserved == 'true'
+        run: python scripts/run_gemini_daily.py --phase pretext --config config/evidence_intake.json --runtime-config config/expert_runtime.json --state "$RUNNER_TEMP/daily/recovery/daily-state.json" --ledger "$RUNNER_TEMP/daily/recovery/quota-ledger.json" --recovery-receipt "$RUNNER_TEMP/daily/recovery/recovery.json" --output-dir "$RUNNER_TEMP/daily/pretext"
+      - name: Persist daily TEXT reservation
+        id: text-reservation
+        if: steps.pretext.outputs.text_reserved == 'true'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: expert-quota-reservation-${{ github.run_id }}
-          path: ${{ runner.temp }}/video-baseline-prepare/quota-ledger.json
-          retention-days: 90
-          if-no-files-found: error
-      - name: Process BASELINE once after durable reservation
-        id: video_baseline_process
-        if: steps.video_baseline_reservation.outcome == 'success' && steps.video_baseline_reservation.outputs.artifact-id != ''
-        env:
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          RESERVATION_ARTIFACT_ID: ${{ steps.video_baseline_reservation.outputs.artifact-id }}
-        run: |
-          python scripts/diagnose_expert_video.py --phase process --authorization USER_PRO_REFERENCE_RESUME_2026-10-13 --plan "$RUNNER_TEMP/video-baseline-prepare/plan.json" --reservation-artifact-id "$RESERVATION_ARTIFACT_ID" --output-dir "$RUNNER_TEMP/video-baseline-process"
-          python - <<'PY'
-          import json,os
-          from pathlib import Path
-          result=json.loads((Path(os.environ['RUNNER_TEMP'])/'video-baseline-process/result.json').read_text())
-          with open(os.environ['GITHUB_OUTPUT'],'a') as output:output.write('ready='+str(result['status']=='READY').lower()+'\n')
-          PY
-      - name: Respect diagnostic stage rate window before CLIPPING
-        if: inputs.video_argument_diagnostic == true && steps.video_baseline_process.outputs.ready == 'true'
-        run: python -c 'import time; time.sleep(15)'
-      - name: Reserve full original duration for CLIPPING diagnostic
-        id: video_clipping_prepare
-        if: inputs.video_argument_diagnostic == true && steps.video_baseline_process.outputs.ready == 'true'
-        env:
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python scripts/diagnose_expert_video.py --phase prepare --stage CLIPPING --authorization USER_PRO_REFERENCE_RESUME_2026-10-13 --ledger "$RUNNER_TEMP/video-baseline-process/quota-ledger.json" --prior-error evidence/queue/pro-resume/prior-full-video400.json --video "$RUNNER_TEMP/video-discovery/selected-video.json" --previous-result "$RUNNER_TEMP/video-baseline-process/result.json" --output-dir "$RUNNER_TEMP/video-clipping-prepare"
-      - name: Persist clipping diagnostic quota
-        id: video_clipping_reservation
-        if: steps.video_clipping_prepare.outputs.reserved == 'true'
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-        with:
-          name: expert-quota-reservation-${{ github.run_id }}-CLIPPING
-          path: ${{ runner.temp }}/video-clipping-prepare/quota-ledger.json
-          retention-days: 90
-          if-no-files-found: error
-      - name: Process CLIPPING once after durable reservation
-        id: video_clipping_process
-        if: steps.video_clipping_reservation.outcome == 'success' && steps.video_clipping_reservation.outputs.artifact-id != ''
-        env:
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          RESERVATION_ARTIFACT_ID: ${{ steps.video_clipping_reservation.outputs.artifact-id }}
-        run: |
-          python scripts/diagnose_expert_video.py --phase process --authorization USER_PRO_REFERENCE_RESUME_2026-10-13 --plan "$RUNNER_TEMP/video-clipping-prepare/plan.json" --reservation-artifact-id "$RESERVATION_ARTIFACT_ID" --output-dir "$RUNNER_TEMP/video-clipping-process"
-          python - <<'PY'
-          import json,os
-          from pathlib import Path
-          result=json.loads((Path(os.environ['RUNNER_TEMP'])/'video-clipping-process/result.json').read_text())
-          with open(os.environ['GITHUB_OUTPUT'],'a') as output:output.write('ready='+str(result['status']=='READY').lower()+'\n')
-          PY
-      - name: Respect diagnostic stage rate window before RESPONSE_FORMAT
-        if: inputs.video_argument_diagnostic == true && steps.video_clipping_process.outputs.ready == 'true'
-        run: python -c 'import time; time.sleep(15)'
-      - name: Reserve full original duration for RESPONSE_FORMAT diagnostic
-        id: video_format_prepare
-        if: inputs.video_argument_diagnostic == true && steps.video_clipping_process.outputs.ready == 'true'
-        env:
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python scripts/diagnose_expert_video.py --phase prepare --stage RESPONSE_FORMAT --authorization USER_PRO_REFERENCE_RESUME_2026-10-13 --ledger "$RUNNER_TEMP/video-clipping-process/quota-ledger.json" --prior-error evidence/queue/pro-resume/prior-full-video400.json --video "$RUNNER_TEMP/video-discovery/selected-video.json" --previous-result "$RUNNER_TEMP/video-clipping-process/result.json" --output-dir "$RUNNER_TEMP/video-format-prepare"
-      - name: Persist format diagnostic quota
-        id: video_format_reservation
-        if: steps.video_format_prepare.outputs.reserved == 'true'
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-        with:
-          name: expert-quota-reservation-${{ github.run_id }}-RESPONSE_FORMAT
-          path: ${{ runner.temp }}/video-format-prepare/quota-ledger.json
-          retention-days: 90
-          if-no-files-found: error
-      - name: Process RESPONSE_FORMAT once after durable reservation
-        id: video_format_process
-        if: steps.video_format_reservation.outcome == 'success' && steps.video_format_reservation.outputs.artifact-id != ''
-        env:
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          RESERVATION_ARTIFACT_ID: ${{ steps.video_format_reservation.outputs.artifact-id }}
-        run: |
-          python scripts/diagnose_expert_video.py --phase process --authorization USER_PRO_REFERENCE_RESUME_2026-10-13 --plan "$RUNNER_TEMP/video-format-prepare/plan.json" --reservation-artifact-id "$RESERVATION_ARTIFACT_ID" --output-dir "$RUNNER_TEMP/video-format-process"
-          python - <<'PY'
-          import json,os
-          from pathlib import Path
-          result=json.loads((Path(os.environ['RUNNER_TEMP'])/'video-format-process/result.json').read_text())
-          with open(os.environ['GITHUB_OUTPUT'],'a') as output:output.write('ready='+str(result['status']=='READY').lower()+'\n')
-          PY
-      - name: Preserve newest prepared or processed diagnostic quota without refund
-        if: always() && inputs.video_argument_diagnostic == true && steps.video_baseline_reservation.outputs.artifact-id != ''
-        run: |
-          python - <<'PY'
-          import os,shutil
-          from pathlib import Path
-          root=Path(os.environ['RUNNER_TEMP']);paths=[]
-          for slug in ('baseline','clipping','format'):
-              for phase in ('prepare','process'):
-                  path=root/('video-'+slug+'-'+phase)/'quota-ledger.json'
-                  if path.is_file():paths.append(path)
-          if not paths:raise RuntimeError('NO_DURABLE_DIAGNOSTIC_LEDGER')
-          target=root/'expert-final/quota-ledger.json';target.parent.mkdir(parents=True,exist_ok=True)
-          shutil.copyfile(paths[-1],target)
-          print('ALL_DIAGNOSTIC_CHARGES_RETAINED')
-          PY
-      - name: Project public-safe stage outcomes and complete errors without raw ledger
-        if: always() && inputs.video_argument_diagnostic == true
-        run: |
-          python - <<'PY'
-          import json,os,shutil
-          from pathlib import Path
-          root=Path(os.environ['RUNNER_TEMP']);out=root/'video-public';out.mkdir(exist_ok=True)
-          for slug in ('baseline','clipping','format'):
-              for phase in ('prepare','process'):
-                  source=root/('video-'+slug+'-'+phase)
-                  for name in ('receipt.json','complete-error.json','entitlement.json'):
-                      path=source/name
-                      if path.is_file():shutil.copyfile(path,out/(slug+'-'+phase+'-'+name))
-                  path=source/'result.json'
-                  if path.is_file():
-                      data=json.loads(path.read_text());safe={k:v for k,v in data.items() if k not in ('ledger','video','prior_error_receipt')}
-                      (out/(slug+'-'+phase+'-result.json')).write_text(json.dumps(safe,ensure_ascii=False)+'\n')
-          shutil.copyfile('evidence/queue/pro-resume/prior-full-video400.json',out/'prior-full-video400.json')
-          discovery=root/'video-discovery/receipt.json'
-          if discovery.is_file():
-              data=json.loads(discovery.read_text());data.pop('video',None)
-              (out/'discovery-receipt.json').write_text(json.dumps(data)+'\n')
-          print('MANUAL_SUMMARY_DEFAULT; NO_AUTOMATIC_RESTORE_FROM_DIAGNOSTIC')
-          PY
-      - name: Retain public-safe video argument diagnostic receipts
-        if: always() && inputs.video_argument_diagnostic == true
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-        with:
-          name: expert-video-argument-public-safe
-          path: ${{ runner.temp }}/video-public/*.json
-          retention-days: 90
-          if-no-files-found: warn
-      - name: Persist final quota without releasing any reservation
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        with:
-          name: expert-quota-final-${{ github.run_id }}
-          path: ${{ runner.temp }}/expert-final/quota-ledger.json
-          retention-days: 7
-          if-no-files-found: ignore
-      - name: Retain bounded public-safe summaries and explicit receipt
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        with:
-          name: expert-public-safe-${{ github.run_id }}
+          name: gemini-daily-state-${{ github.run_id }}-TEXT
           path: |
-            ${{ runner.temp }}/expert-front/front-diagnostics.json
-            ${{ runner.temp }}/expert-format/format-probe.json
-            ${{ runner.temp }}/expert-format/diagnostics.json
-            ${{ runner.temp }}/expert-format/entitlement.json
-            ${{ runner.temp }}/expert-final/artifacts/*.json
-            ${{ runner.temp }}/expert-final/diagnostics.json
-            ${{ runner.temp }}/expert-reservation/diagnostics.json
-            ${{ runner.temp }}/expert-final/receipt.json
-            ${{ runner.temp }}/expert-final/entitlement.json
-            ${{ runner.temp }}/expert-reservation/receipt.json
-            ${{ runner.temp }}/expert-reservation/entitlement.json
-            ${{ runner.temp }}/expert-recovery/recovery.json
-          retention-days: 7
-          if-no-files-found: warn
-      - name: Record deferred publication
+            ${{ runner.temp }}/daily/pretext/daily-state.json
+            ${{ runner.temp }}/daily/pretext/quota-ledger.json
+          if-no-files-found: error
+          retention-days: 90
+      - name: Dispatch one short TEXT without retry or fallback
+        id: text
+        if: steps.text-reservation.outcome == 'success'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          ACK: ${{ steps.text-reservation.outputs.artifact-id }}
+        run: python scripts/run_gemini_daily.py --phase text --config config/evidence_intake.json --runtime-config config/expert_runtime.json --state "$RUNNER_TEMP/daily/pretext/daily-state.json" --ledger "$RUNNER_TEMP/daily/pretext/quota-ledger.json" --reservation-artifact-id "$ACK" --output-dir "$RUNNER_TEMP/daily/text"
+      - name: Persist daily TEXT result
+        id: text-result
+        if: always() && steps.text-reservation.outcome == 'success'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: gemini-daily-state-${{ github.run_id }}-TEXT_RESULT
+          path: |
+            ${{ runner.temp }}/daily/text/daily-state.json
+            ${{ runner.temp }}/daily/text/quota-ledger.json
+          if-no-files-found: error
+          retention-days: 90
+      - name: Select source interval and reserve full original VIDEO charge
+        id: preparevideo
+        if: steps.text.outputs.text_success == 'true' && steps.text-result.outcome == 'success'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          ACK: ${{ steps.text-result.outputs.artifact-id }}
+        run: python scripts/run_gemini_daily.py --phase preparevideo --config config/evidence_intake.json --runtime-config config/expert_runtime.json --state "$RUNNER_TEMP/daily/text/daily-state.json" --ledger "$RUNNER_TEMP/daily/text/quota-ledger.json" --text-result-artifact-id "$ACK" --output-dir "$RUNNER_TEMP/daily/preparevideo"
+      - name: Persist daily VIDEO reservation
+        id: video-reservation
+        if: steps.preparevideo.outputs.video_reserved == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: gemini-daily-state-${{ github.run_id }}-VIDEO
+          path: |
+            ${{ runner.temp }}/daily/preparevideo/daily-state.json
+            ${{ runner.temp }}/daily/preparevideo/quota-ledger.json
+          if-no-files-found: error
+          retention-days: 90
+      - name: Dispatch one bounded VIDEO without retry or alternate model
+        id: video
+        if: steps.video-reservation.outcome == 'success'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          ACK: ${{ steps.video-reservation.outputs.artifact-id }}
+        run: python scripts/run_gemini_daily.py --phase video --config config/evidence_intake.json --runtime-config config/expert_runtime.json --state "$RUNNER_TEMP/daily/preparevideo/daily-state.json" --ledger "$RUNNER_TEMP/daily/preparevideo/quota-ledger.json" --reservation-artifact-id "$ACK" --output-dir "$RUNNER_TEMP/daily/video"
+      - name: Prepare newest FINAL state without refunds
+        id: final
         if: always()
         run: |
           python - <<'PY'
-          import os
-          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as output:
-              output.write('PUBLICATION_DEFERRED: Main publishes validated summaries under the shared owner protocol.\n\nTEXT curl/Python run concurrently with identical body and120s wall bounds. Both timeout means provider/network-side timeout; no key-expiry inference. One officially verified free fallback pair only; successful selected text is reused before one <=600s video clip. Workflow exit status does not establish acquisition. Inspect receipts; no raw video/transcript/model response or credential is retained.\n\nManual timestamped summary: open /experts.html in the authenticated local app, then add a public URL, timestamps and paraphrases. See docs/queue/R4_RECOVERY.md.\n')
+          import os,subprocess
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP'])/'daily';selected=None
+          for name in ('pretext','text','preparevideo','video'):
+              p=root/name
+              if (p/'daily-state.json').is_file() and (p/'quota-ledger.json').is_file():selected=p
+          if selected is not None:
+              subprocess.run(['python','scripts/run_gemini_daily.py','--phase','final','--config','config/evidence_intake.json','--runtime-config','config/expert_runtime.json','--state',str(selected/'daily-state.json'),'--ledger',str(selected/'quota-ledger.json'),'--output-dir',str(root/'final')],check=True)
           PY
+      - name: Persist daily FINAL state
+        if: always() && steps.final.outputs.has_state == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: gemini-daily-state-${{ github.run_id }}-FINAL
+          path: |
+            ${{ runner.temp }}/daily/final/daily-state.json
+            ${{ runner.temp }}/daily/final/quota-ledger.json
+          if-no-files-found: error
+          retention-days: 90
+      - name: Bind public execution sources
+        if: always()
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,subprocess
+          from pathlib import Path
+          out=Path(os.environ['RUNNER_TEMP'])/'daily';out.mkdir(exist_ok=True)
+          files=['coach_v1/gemini_daily.py','scripts/run_gemini_daily.py','config/evidence_intake.json','config/expert_runtime.json','config/expert_channels.json','config/pov_channels.json','.github/workflows/expert-video-collection.yml','contracts/actual-evidence-v1.md']
+          b=dict(schema_version='evidence-daily.source-binding.v1',actual_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),source_sha256={p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in files},run_id=int(os.environ['GITHUB_RUN_ID']),run_attempt=int(os.environ['GITHUB_RUN_ATTEMPT']),coaching_accuracy=None)
+          (out/'source-binding.json').write_text(json.dumps(b,indent=2)+'\n')
+          PY
+      - name: Upload safe phase receipts only
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: evidence-daily-public-safe
+          path: |
+            ${{ runner.temp }}/daily/source-binding.json
+            ${{ runner.temp }}/daily/*/receipt.json
+            ${{ runner.temp }}/daily/*/entitlement.json
+            ${{ runner.temp }}/daily/*/source-plan.json
+            ${{ runner.temp }}/daily/*/extraction.json
+          if-no-files-found: warn
+          retention-days: 90

@@ -1,0 +1,68 @@
+test_ack_rejects_nonexistent_wrong_run_wrong_state_before_dispatch (tests_expert.test_daily_review_fixes.ReviewFixTests.test_ack_rejects_nonexistent_wrong_run_wrong_state_before_dispatch) ... ERROR
+test_claim_root_does_not_change_with_output_or_runner_temp (tests_expert.test_daily_review_fixes.ReviewFixTests.test_claim_root_does_not_change_with_output_or_runner_temp) ... ERROR
+test_empty_expert_and_pov_are_not_nonempty_extractions (tests_expert.test_daily_review_fixes.ReviewFixTests.test_empty_expert_and_pov_are_not_nonempty_extractions) ... ERROR
+test_preparation_permission_payment_arguments_block_next_day_but_not_quota (tests_expert.test_daily_review_fixes.ReviewFixTests.test_preparation_permission_payment_arguments_block_next_day_but_not_quota) ... ERROR
+test_rejected_or_outside_interval_has_no_valid_extraction (tests_expert.test_daily_review_fixes.ReviewFixTests.test_rejected_or_outside_interval_has_no_valid_extraction) ... ERROR
+test_wrong_schema_is_malformed_not_empty (tests_expert.test_daily_review_fixes.ReviewFixTests.test_wrong_schema_is_malformed_not_empty) ... FAIL
+
+======================================================================
+ERROR: test_ack_rejects_nonexistent_wrong_run_wrong_state_before_dispatch (tests_expert.test_daily_review_fixes.ReviewFixTests.test_ack_rejects_nonexistent_wrong_run_wrong_state_before_dispatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_daily_review_fixes.py", line 41, in test_ack_rejects_nonexistent_wrong_run_wrong_state_before_dispatch
+    self.assertTrue(invoke())
+                    ^^^^^^^^
+  File "/workspace/lol-coach/tests_expert/test_daily_review_fixes.py", line 39, in invoke
+    return cli.verify_ack('7','TEXT',state,q,'42',api=lambda p:deepcopy(run if '/actions/runs/' in p else a),download_pair=lambda a:(s,q))
+           ^^^^^^^^^^^^^^
+AttributeError: module 'scripts.run_gemini_daily' has no attribute 'verify_ack'
+
+======================================================================
+ERROR: test_claim_root_does_not_change_with_output_or_runner_temp (tests_expert.test_daily_review_fixes.ReviewFixTests.test_claim_root_does_not_change_with_output_or_runner_temp)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_daily_review_fixes.py", line 47, in test_claim_root_does_not_change_with_output_or_runner_temp
+    with patch.dict(os.environ,{'RUNNER_TEMP':'/tmp/a'}):a=cli.claim_root('42')
+                                                           ^^^^^^^^^^^^^^
+AttributeError: module 'scripts.run_gemini_daily' has no attribute 'claim_root'
+
+======================================================================
+ERROR: test_empty_expert_and_pov_are_not_nonempty_extractions (tests_expert.test_daily_review_fixes.ReviewFixTests.test_empty_expert_and_pov_are_not_nonempty_extractions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_daily_review_fixes.py", line 16, in test_empty_expert_and_pov_are_not_nonempty_extractions
+    self.assertFalse(output['valid_extraction']);self.assertEqual(output['extraction_status'],'EMPTY')
+                     ~~~~~~^^^^^^^^^^^^^^^^^^^^
+KeyError: 'valid_extraction'
+
+======================================================================
+ERROR: test_preparation_permission_payment_arguments_block_next_day_but_not_quota (tests_expert.test_daily_review_fixes.ReviewFixTests.test_preparation_permission_payment_arguments_block_next_day_but_not_quota)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_daily_review_fixes.py", line 29, in test_preparation_permission_payment_arguments_block_next_day_but_not_quota
+    state=self.d.preparation_failure(completed,self.f.config,self.f.now,'42','VIDEO_METADATA',status)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'coach_v1.gemini_daily' has no attribute 'preparation_failure'
+
+======================================================================
+ERROR: test_rejected_or_outside_interval_has_no_valid_extraction (tests_expert.test_daily_review_fixes.ReviewFixTests.test_rejected_or_outside_interval_has_no_valid_extraction)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_daily_review_fixes.py", line 25, in test_rejected_or_outside_interval_has_no_valid_extraction
+    self.assertFalse(output['valid_extraction'])
+                     ~~~~~~^^^^^^^^^^^^^^^^^^^^
+KeyError: 'valid_extraction'
+
+======================================================================
+FAIL: test_wrong_schema_is_malformed_not_empty (tests_expert.test_daily_review_fixes.ReviewFixTests.test_wrong_schema_is_malformed_not_empty)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_daily_review_fixes.py", line 21, in test_wrong_schema_is_malformed_not_empty
+    with self.assertRaises(ValueError):self.d.safe_video_output(self.response({'not_claims':'text'}),self.f.source())
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.005s
+
+FAILED (failures=1, errors=5)

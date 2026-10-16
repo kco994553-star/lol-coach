@@ -1,0 +1,125 @@
+name: Existing resource recovery and POV metadata
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: existing-resource-recovery
+  cancel-in-progress: false
+
+jobs:
+  resources:
+    if: github.repository == 'kco994553-star/lol-coach' && github.ref == 'refs/heads/main' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out trusted main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Install existing pinned private-cache runtime
+        run: python -m pip install --disable-pip-version-check -r requirements-r3.txt -r requirements-private-cache.txt
+      - name: Recover existing ciphertext only
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/recover_resource_checkpoint.py --directory "$RUNNER_TEMP/resource-recovery"
+      - name: Decrypt only pinned existing checkpoint
+        env:
+          PRO_REFERENCE_ENCRYPTION_SEED: ${{ secrets.YOUTUBE_API_KEY }}
+        run: |
+          umask 077
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          r=json.loads((Path(os.environ['RUNNER_TEMP'])/'resource-recovery/recovery.json').read_text())
+          if r.get('run_id')!=38410710876 or r.get('artifact_id')!=11822391323:
+              raise ValueError('PINNED_EXISTING_CHECKPOINT_UNAVAILABLE')
+          PY
+          python scripts/private_pro_bundle.py decrypt --directory "$RUNNER_TEMP/private/resource-reference" --bundle "$RUNNER_TEMP/resource-recovery/pro-private.bundle"
+      - name: Recover observed resources with all provider network disabled
+        run: |
+          umask 077
+          python - <<'PY'
+          import hashlib,json,os,socket,subprocess
+          from pathlib import Path
+          from coach_v1.resource_recovery import audit_private_cache,validate_report,load_bound_report,SOURCE_FILES
+          attempts=[]
+          def deny(*args,**kwargs):
+              attempts.append(True)
+              raise RuntimeError('OFFLINE_RESOURCE_NETWORK_FORBIDDEN')
+          socket.socket.connect=deny
+          socket.create_connection=deny
+          root=Path(os.environ['RUNNER_TEMP'])
+          report=validate_report(audit_private_cache(root/'private/resource-reference'))
+          if report['source']['matches']!=89 or report['source']['participant_observations']!=108:
+              raise ValueError('PINNED_EXISTING_SCOPE_CHANGED')
+          if attempts:raise ValueError('OFFLINE_NETWORK_ATTEMPTED')
+          out=root/'resource-public';out.mkdir()
+          body=(json.dumps(report,ensure_ascii=False,sort_keys=True,indent=2,allow_nan=False)+'\n').encode()
+          (out/'resources.json').write_bytes(body)
+          binding=dict(schema_version='resource-recovery.binding.v1',actual_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
+              source_sha256={p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in SOURCE_FILES},
+              checkpoint=dict(run_id=38410710876,artifact_id=11822391323),report_sha256=hashlib.sha256(body).hexdigest(),
+              source_samples=report['source'],provider_requests=0,network_attempts=0,
+              privacy='ANONYMOUS_ALLOWLIST_AGGREGATES_ONLY',coaching_accuracy=None)
+          (out/'source-binding.json').write_text(json.dumps(binding,sort_keys=True,indent=2)+'\n')
+          load_bound_report(out)
+          print(json.dumps(dict(status='EXISTING_RESOURCE_RECOVERY_COMPLETE',source=report['source'],provider_requests=0,coaching_accuracy=None)))
+          PY
+      - name: Upload anonymous resource report and binding
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: resource-recovery-public-safe
+          path: |
+            ${{ runner.temp }}/resource-public/resources.json
+            ${{ runner.temp }}/resource-public/source-binding.json
+          if-no-files-found: error
+          retention-days: 90
+      - name: Remove ephemeral originals and ciphertext
+        if: always()
+        run: |
+          python - <<'PY'
+          import os,shutil
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP'])
+          for name in ('private/resource-reference','resource-recovery'):
+              p=root/name
+              if p.is_dir():shutil.rmtree(p)
+          print('EPHEMERAL_RESOURCE_CACHE_REMOVED')
+          PY
+  pov-metadata:
+    if: github.repository == 'kco994553-star/lol-coach' && github.ref == 'refs/heads/main' && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out trusted main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Verify public POV channel identity and candidate metadata only
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python scripts/verify_pov_metadata.py --config config/pov_channels.json --output-dir "$RUNNER_TEMP/pov-public"
+      - name: Upload public metadata and independent verification binding
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: pov-metadata-public-safe
+          path: |
+            ${{ runner.temp }}/pov-public/pov-metadata.json
+            ${{ runner.temp }}/pov-public/metadata-binding.json
+          if-no-files-found: warn
+          retention-days: 90

@@ -36,6 +36,8 @@ def main(argv=None,*,entitlement_verifier=None,clock=None):
     parser.add_argument('--stage',choices=STAGES)
     parser.add_argument('--authorization');parser.add_argument('--reservation-artifact-id')
     args=parser.parse_args(argv);directory=args.output_dir;now=clock or time.time
+    atomic_json(directory/'receipt.json',dict(status='BLOCKED_EXTERNAL',reason='DAILY_GUARD_REQUIRED'))
+    print('EXPERT_DAILY_GUARD_REQUIRED');return 1
     valid_ledger=None
     try:
         if args.authorization!=AUTHORIZATION:raise ValueError('explicit diagnostic authority required')
