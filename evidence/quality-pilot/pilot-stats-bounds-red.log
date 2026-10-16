@@ -1,0 +1,21 @@
+.......F.F....
+======================================================================
+FAIL: test_level_arrival_bound_marginals_preserve_frame_and_exact_event_times (tests_pregame.test_pilot_observations.PilotObservationTests.test_level_arrival_bound_marginals_preserve_frame_and_exact_event_times)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_pilot_observations.py", line 163, in test_level_arrival_bound_marginals_preserve_frame_and_exact_event_times
+    self.assertIn('own_interval_bounds_ms',stat)
+AssertionError: 'own_interval_bounds_ms' not found in {'earlier_n': 0, 'later_n': 0, 'unknown_n': 1, 'own_exact_event_n': 0, 'own_frame_interval_n': 1, 'own_interval_width_ms': {'n_valid': 1, 'missing_n': 0, 'minimum': 60000, 'median': 60000, 'maximum': 60000}, 'opponent_exact_event_n': 0, 'opponent_frame_interval_n': 1, 'opponent_interval_width_ms': {'n_valid': 1, 'missing_n': 0, 'minimum': 60000, 'median': 60000, 'maximum': 60000}}
+
+======================================================================
+FAIL: test_level_up_inspection_reports_malformed_and_conflicting_group_counts (tests_pregame.test_pilot_observations.PilotObservationTests.test_level_up_inspection_reports_malformed_and_conflicting_group_counts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_pilot_observations.py", line 190, in test_level_up_inspection_reports_malformed_and_conflicting_group_counts
+    self.assertIn('level_up_malformed_n',r['inspection'])
+AssertionError: 'level_up_malformed_n' not found in {'frames': 6, 'participant_frames': 60, 'level_present': 60, 'total_gold_present': 60, 'position_present': 60, 'health_present': 60, 'events': [{'event_type': 'LEVEL_UP', 'count': 5, 'duplicate_n': 1}, {'event_type': 'SKILL_LEVEL_UP', 'count': 1, 'duplicate_n': 0}, {'event_type': 'CHAMPION_KILL', 'count': 0, 'duplicate_n': 0}, {'event_type': 'ITEM_PURCHASED', 'count': 0, 'duplicate_n': 0}, {'event_type': 'ITEM_SOLD', 'count': 0, 'duplicate_n': 0}, {'event_type': 'ITEM_DESTROYED', 'count': 0, 'duplicate_n': 0}, {'event_type': 'ITEM_UNDO', 'count': 0, 'duplicate_n': 0}, {'event_type': 'WARD_PLACED', 'count': 0, 'duplicate_n': 0}, {'event_type': 'WARD_KILL', 'count': 0, 'duplicate_n': 0}, {'event_type': 'ELITE_MONSTER_KILL', 'count': 0, 'duplicate_n': 0}, {'event_type': 'BUILDING_KILL', 'count': 0, 'duplicate_n': 0}, {'event_type': 'TURRET_PLATE_DESTROYED', 'count': 0, 'duplicate_n': 0}, {'event_type': 'GAME_END', 'count': 0, 'duplicate_n': 0}, {'event_type': 'OTHER', 'count': 0, 'duplicate_n': 0}]}
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.079s
+
+FAILED (failures=2)

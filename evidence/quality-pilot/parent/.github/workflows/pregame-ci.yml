@@ -1,0 +1,190 @@
+name: Pregame queue checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pregame-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pregame:
+    if: github.event.repository.private == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Select source-bound verification scope
+        id: scope
+        shell: bash
+        run: |
+          if [[ -f contracts/queue-v23.md || -f contracts/amendments/2026-10-15-queue-v23.json ]]; then
+            echo 'mode=v23' >> "$GITHUB_OUTPUT"
+          else
+            echo 'mode=historical' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Install pinned runtime dependency
+        run: python -m pip install --disable-pip-version-check -r requirements-r3.txt -r requirements-private-cache.txt
+      - name: Verify expanded candidate source bindings
+        if: steps.scope.outputs.mode != 'v23'
+        shell: bash
+        run: |
+          python evidence/queue/q05-expansion/validate.py
+          PYTHONPATH=. python scripts/verify_queue_extensions.py | tee "$RUNNER_TEMP/pregame-extensions.json"
+      - name: Verify contract, missing inputs, conflicts and immutable storage
+        if: steps.scope.outputs.mode != 'v23'
+        shell: bash
+        run: python scripts/verify_pregame.py | tee "$RUNNER_TEMP/pregame-tests.json"
+      - name: Verify expert source, retry, quota and privacy boundaries
+        if: steps.scope.outputs.mode != 'v23'
+        shell: bash
+        run: python scripts/verify_experts.py | tee "$RUNNER_TEMP/expert-tests.json"
+      - name: Install pinned browser automation
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+        run: npm install --prefix "$RUNNER_TEMP/pregame-playwright" --no-save --package-lock=false --no-audit --no-fund playwright@1.62.1
+      - name: Verify five positions in actual Chromium
+        if: steps.scope.outputs.mode != 'v23'
+        shell: bash
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/pregame-playwright/node_modules"
+          CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
+          export CHROMIUM_EXECUTABLE
+          python scripts/browser_pregame.py | tee "$RUNNER_TEMP/pregame-browser.json"
+      - name: Verify guarded operations, movement and power views in Chromium
+        if: steps.scope.outputs.mode != 'v23'
+        shell: bash
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/pregame-playwright/node_modules"
+          CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
+          export CHROMIUM_EXECUTABLE
+          python scripts/browser_v13.py | tee "$RUNNER_TEMP/pregame-browser-v13.json"
+      - name: Verify manual expert intake and source review in Chromium
+        if: steps.scope.outputs.mode != 'v23'
+        shell: bash
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/pregame-playwright/node_modules"
+          CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
+          export CHROMIUM_EXECUTABLE
+          python scripts/browser_experts.py | tee "$RUNNER_TEMP/expert-browser.json"
+      - name: Verify pending save history races in Chromium
+        if: steps.scope.outputs.mode != 'v23'
+        shell: bash
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/pregame-playwright/node_modules"
+          CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
+          export CHROMIUM_EXECUTABLE
+          node tests_pregame/ui_pregame_pending_save.cjs | tee "$RUNNER_TEMP/pregame-races.json"
+      - name: Verify auxiliary result table accessibility and source gates
+        if: steps.scope.outputs.mode != 'v23'
+        shell: bash
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/pregame-playwright/node_modules"
+          CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
+          export CHROMIUM_EXECUTABLE
+          node tests_pregame/browser_outcome.cjs | tee "$RUNNER_TEMP/pregame-outcome-renderer.json"
+      - name: Verify PC review queue, anonymous pro cases and Challenger reference
+        if: steps.scope.outputs.mode != 'v23'
+        shell: bash
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/pregame-playwright/node_modules"
+          CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
+          export CHROMIUM_EXECUTABLE
+          python scripts/browser_review_queue_v20.py | tee "$RUNNER_TEMP/review-v20-browser.json"
+          python scripts/browser_practical_review.py
+          python scripts/browser_reference_first.py
+          python scripts/browser_postgame_v20.py | tee "$RUNNER_TEMP/postgame-v20-browser.json"
+          python scripts/browser_statistics_v20.py | tee "$RUNNER_TEMP/statistics-v20-browser.json"
+      - name: Verify v2.1 PC cards, automatic grades and input latency in Chromium
+        if: steps.scope.outputs.mode != 'v23'
+        shell: bash
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/pregame-playwright/node_modules"
+          CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
+          export CHROMIUM_EXECUTABLE
+          python scripts/browser_pc_v21.py | tee "$RUNNER_TEMP/pc-v21-browser.json"
+      - name: Verify v2.3 source delta and new affected tests
+        if: steps.scope.outputs.mode == 'v23'
+        shell: bash
+        run: python scripts/verify_mvp_v23.py --tests | tee "$RUNNER_TEMP/queue-v23-binding.json"
+      - name: Verify v2.3 recall and low-health in actual Chromium
+        if: steps.scope.outputs.mode == 'v23'
+        shell: bash
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/pregame-playwright/node_modules"
+          CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
+          export CHROMIUM_EXECUTABLE
+          python scripts/browser_recall_v23.py | tee "$RUNNER_TEMP/queue-v23-browser.json"
+      - name: Print v2.3 delta and reused-baseline receipts
+        if: always() && steps.scope.outputs.mode == 'v23'
+        run: |
+          python - <<'PY_RECEIPT'
+          import json, os
+          from pathlib import Path
+          payload = dict(scope='v2.3 affected verification only', commit_sha=os.environ['GITHUB_SHA'],
+                         run_id=os.environ['GITHUB_RUN_ID'], prior_completed_verification_rerun=False,
+                         reused_baseline_commit='fedc30060259b5eeac4ab2ca096daa6259e354b6',
+                         reused_baseline_ci=[38722880438,38722880374], coaching_accuracy=None)
+          for name in ('binding','browser'):
+              try: payload[name]=json.loads((Path(os.environ['RUNNER_TEMP'])/('queue-v23-'+name+'.json')).read_text())
+              except (OSError,ValueError) as error: payload[name]=dict(status='NOT_PRODUCED',error=str(error))
+          print('PREGAME_V23_DELTA_RECEIPT_JSON='+json.dumps(payload,ensure_ascii=False))
+          with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a') as output:
+              output.write('## Queue v2.3 delta; completed v2.1 CI reused\n\n```json\n'+json.dumps(payload,ensure_ascii=False,indent=2)+'\n```\n')
+          PY_RECEIPT
+      - name: Print exact fresh receipts
+        if: always() && steps.scope.outputs.mode != 'v23'
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          receipts = {}
+          for name, filename, reportfile in [('tests', 'pregame-tests.json', 'verification.json'),
+                                             ('expert_tests', 'expert-tests.json', 'verification.json'),
+                                             ('expert_browser', 'expert-browser.json', 'runner.json'),
+                                             ('extensions', 'pregame-extensions.json', 'verification.json'),
+                                             ('browser', 'pregame-browser.json', 'runner.json'),
+                                             ('browser_v13', 'pregame-browser-v13.json', 'runner.json'),
+                                             ('pc_v21_browser', 'pc-v21-browser.json', 'runner.json')]:
+              try:
+                  launch = json.loads((Path(os.environ['RUNNER_TEMP']) / filename).read_text())
+                  receipts[name] = json.loads((Path(launch['evidence_directory']) / reportfile).read_text())
+              except (OSError, ValueError, KeyError) as error:
+                  receipts[name] = {'status': 'NOT_PRODUCED', 'error': str(error)}
+          payload = {'commit_sha': os.environ['GITHUB_SHA'], 'run_id': os.environ['GITHUB_RUN_ID'],
+                     'run_attempt': os.environ['GITHUB_RUN_ATTEMPT'], 'receipts': receipts,
+                     'real_match_coaching_validation_passed': False, 'coaching_accuracy': None}
+          try:
+              payload['ui_races'] = json.loads((Path(os.environ['RUNNER_TEMP']) / 'pregame-races.json').read_text())
+          except (OSError, ValueError) as error:
+              payload['ui_races'] = {'status': 'NOT_PRODUCED', 'error': str(error)}
+          try:
+              payload['outcome_renderer'] = json.loads((Path(os.environ['RUNNER_TEMP']) / 'pregame-outcome-renderer.json').read_text())
+          except (OSError, ValueError) as error:
+              payload['outcome_renderer'] = {'status': 'NOT_PRODUCED', 'error': str(error)}
+          payload['v20']={}
+          for name in ('review','postgame','statistics'):
+              try:
+                  launch=json.loads((Path(os.environ['RUNNER_TEMP'])/(name+'-v20-browser.json')).read_text())
+                  payload['v20'][name]=json.loads((Path(launch['evidence_directory'])/'runner.json').read_text())
+              except (OSError,ValueError,KeyError) as error:
+                  payload['v20'][name]={'status':'NOT_PRODUCED','error':str(error)}
+          print('PREGAME_RECEIPT_JSON=' + json.dumps(payload, ensure_ascii=False))
+          with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a') as output:
+              output.write('## Five-position pregame verification\n\n```json\n' + json.dumps(payload, ensure_ascii=False, indent=2) + '\n```\n')
+          PY

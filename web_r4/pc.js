@@ -183,6 +183,7 @@
       const label=hypothesis?'미검토 가설(AI 작성, 근거 링크)':card.evidence_label || '근거 미확인';
       const reference=card.evidence_level==='OFFICIAL' && card.patch_status!=='MATCHING_ARCHIVE';
       article.append(node('span',label+(reference?' · 참고용':''),'evidence '+(card.evidence_level || '')));
+      if(card.topic_label)article.append(node('p','주제: '+card.topic_label,'topic'));
       article.append(node('h3',card.title || '경기 전 참고'));
       const lines=node('div',undefined,'card-lines');for(const line of (card.lines || []).slice(0,3))lines.append(node('p',line));article.append(lines);
       const detail=node('details'),summary=node('summary','상세 설명 · 근거 보기');detail.open=expandedCards.has(card.id);

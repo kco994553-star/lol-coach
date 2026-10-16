@@ -53,8 +53,11 @@ def preview(server,body):
         from .pregame_contract import binding_matches
         knowledge=current_knowledge(server.research)
         rejected={item['spec']['rule_id'] for item in knowledge if item.get('spec') and item['proposal']['review_state']=='REJECTED'}
+        from .pilot_advice import cards_for_draft as pilot_cards
+        revised,replaced=pilot_cards(draft,withdrawn=withdrawn,rejected=rejected)
         for row in packet['rows']:
             spec=row['spec'];rid=row['id']
+            if rid in replaced:continue
             if rid in withdrawn or rid in rejected or draft['patch'] not in spec['patches'] or spec['scope']=='POSITION' and position not in spec['positions']:continue
             if any(facts.predicate(p)!='TRUE' for p in spec['conditions']):continue
             if any(facts.predicate(p)!='FALSE' for p in spec['counterconditions']+spec['stop_conditions']):continue
@@ -67,6 +70,7 @@ def preview(server,body):
             if state['reasons']:detail+='\n검토 보류: '+' / '.join(_reason(r) for r in state['reasons'])
             cards.append(_card('advice-'+rid,SECTION_NAMES.get(spec['section'],'경기 전 준비')+' · '+rid,level,
                 [advice['상황'],advice['할 것'],advice['무효 조건']],detail,sources,candidate_id=rid,candidate_sha256=row['candidate_sha256'],section=spec['section']))
+        cards.extend(revised)
         # Source-bound USER cards continue to use the original frozen evaluator.
         from .pregame_v3 import evaluate_gameplan_v3
         plan=evaluate_gameplan_v3(draft,knowledge,server.movement_statistics,server.test_mode)

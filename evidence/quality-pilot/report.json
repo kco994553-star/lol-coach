@@ -1,0 +1,817 @@
+{
+  "schema_version": "quality-pilot.report.v1",
+  "base_main": "9da650ae1ec000f3bb66d90be351174fe3c731f3",
+  "existing_inventory": {
+    "schema_version": "quality-pilot.inventory.v1",
+    "base_main": "9da650ae1ec000f3bb66d90be351174fe3c731f3",
+    "scope": "Existing artifacts only; no original reconstruction from aggregates",
+    "sources": [
+      {
+        "id": "Q15_275",
+        "path": "data/riot/2026-10-13/power-16.20-CHALLENGER.json.gz",
+        "matches": 275,
+        "population": "CHALLENGER_SEED_MATCHES",
+        "patches": [
+          "16.20"
+        ],
+        "local_raw": false,
+        "local_aggregate": true,
+        "fields": [
+          "champion",
+          "position",
+          "minute",
+          "gold/xp/cs ROLE_POPULATION rate difference",
+          "n",
+          "champion_n",
+          "reference_n",
+          "ci95"
+        ],
+        "resolution": "ELAPSED_MINUTE_BIN_LATEST_RECEIVED_FRAME"
+      },
+      {
+        "id": "Q15_275_FULL",
+        "path": "data/riot/2026-10-13/archives/full-power-16.20-CHALLENGER.json.gz",
+        "matches": 275,
+        "population": "SAME_Q15_275_NOT_ADDITIONAL",
+        "patches": [
+          "16.20"
+        ],
+        "local_raw": false,
+        "local_aggregate": true,
+        "fields": [
+          "opponent_champion",
+          "MATCHUP absolute gold/xp/cs difference",
+          "minute",
+          "n",
+          "ci95"
+        ],
+        "resolution": "ELAPSED_MINUTE_BIN_LATEST_RECEIVED_FRAME"
+      },
+      {
+        "id": "RECALL_CH_291",
+        "path": "data/recall/2026-10-15/challenger/recall-data.json",
+        "matches": 291,
+        "participant_observations": 2910,
+        "population": "CHALLENGER_SEED_MATCHES",
+        "patches": [
+          "16.20"
+        ],
+        "local_raw": false,
+        "local_aggregate": true,
+        "fields": [
+          "first_purchase_proxy",
+          "preceding_frame_current_gold",
+          "low_health_first_frame",
+          "outcome_counts",
+          "sensitivity"
+        ],
+        "resolution": "MINUTE_HEALTH_AND_EVENT_TIMESTAMPS_AGGREGATED"
+      },
+      {
+        "id": "RECORDED_PRO_89",
+        "path": "data/recall/2026-10-15/pro/recall-data.json",
+        "matches": 89,
+        "participant_observations": 108,
+        "population": "RECORDED_ROSTER_PARTICIPANTS_NOT_ALL_VERIFIED_PRO",
+        "patches": [
+          "16.19",
+          "16.20"
+        ],
+        "local_raw": false,
+        "local_aggregate": true,
+        "fields": [
+          "first_purchase_proxy",
+          "preceding_frame_current_gold",
+          "low_health_outcomes"
+        ],
+        "resolution": "MINUTE_HEALTH_AND_EVENT_TIMESTAMPS_AGGREGATED"
+      }
+    ],
+    "existing_encrypted_raw": {
+      "artifact_id": 11822391323,
+      "run_id": 38410710876,
+      "source_commit": "b6cdced0c819424e048ec412de6f7e57c5b1c545",
+      "expired": false,
+      "expires_at": "2027-01-11T14:07:50Z",
+      "access": "TRUSTED_RUNNER_EXISTING_SECRET_ONLY",
+      "actual_restoration_this_pilot": "PENDING"
+    },
+    "unidentifiable_from_local_aggregates": [
+      "actual_first_gank",
+      "nonlethal_gank",
+      "individual_decision_scene",
+      "wave_state",
+      "player_known_enemy_vision",
+      "cooldowns_at_decision",
+      "recall_start",
+      "intent"
+    ],
+    "level_event_inventory": "PENDING_OFFLINE_RAW_INSPECTION_LEVEL_UP_NOT_SKILL_LEVEL_UP",
+    "scene_gate": {
+      "maximum": 8,
+      "eligible": 0,
+      "reviewed_individual_scenes": 0,
+      "status": "BLOCKED_MISSING_PLAYER_KNOWN_VIEW_AND_MATCHED_VIDEO",
+      "not_reconstructed": true
+    },
+    "coaching_accuracy": null,
+    "new_match_requests": 0,
+    "paid_calls": 0,
+    "prior_quality_assessment": {
+      "date": "2026-10-16",
+      "random_seed": "dd7dc6fe03d2fd58b7ea0548d4532c2a",
+      "random_ids": [
+        "KR-021",
+        "KR-008",
+        "KR-026",
+        "KR-022",
+        "KR-015"
+      ],
+      "purpose_ids": [
+        "KR-001",
+        "KR-005",
+        "KR-008"
+      ],
+      "overlap": [
+        "KR-008"
+      ],
+      "uncertainty_conditions_old30": 20,
+      "literal_defer_old30": 3,
+      "old_completed_checks_rerun": false
+    },
+    "older_pro_cases": {
+      "path": "data/pro_reference/2026-10-13/reference-cases.json",
+      "matches": 87,
+      "selected_participant_observations": 106,
+      "not_same_as_recall89": true
+    }
+  },
+  "previous_reports_reused": [
+    "evidence/queue/v23/report.json",
+    "evidence/queue/v23/actual-data-audit.json",
+    "evidence/queue/v21/report.json"
+  ],
+  "packet_sha256": "c9645431acbf3dcd66e7fa2c3babe7083f0386f7f469f3364824a52559e5090d",
+  "improvements": [
+    {
+      "id": "QP-20261016-KR-001-v2",
+      "legacy_id": "KR-001",
+      "topic": "SKILL_INTERACTION",
+      "evidence_level": "HYPOTHESIS",
+      "before": {
+        "상황": "오른으로 피오라를 상대하며 벽 근처에서 싸움을 열려는 때",
+        "할 것": "피오라의 응수가 끝났는지 확인한 뒤 벽과 돌진 방향을 정하세요.",
+        "하지 말 것": "응수가 가능한 피오라에게 벽 돌진을 바로 쓰지 마세요.",
+        "상대 권리": "피오라는 응수로 이동 불가 효과를 막으면 찌르기에 맞은 적을 기절시킬 수 있습니다.",
+        "무효 조건": "피오라의 응수 사용 여부나 벽 충돌 경로를 모르면 진입을 보류하세요.",
+        "근거": "공식 설명 확인: 오른의 돌진은 지형 충돌 시 주변 적을 띄웁니다. 피오라의 응수는 피해와 방해 효과를 막고, 이동 불가 효과를 막았을 때 찌르기에 기절을 더합니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "after": {
+        "scenario": "오른으로 피오라를 벽 충돌 띄우기로 노릴지, 돌진 없이 위치를 바꿀지 정하는 때",
+        "actions": [
+          {
+            "text": "응수의 현재 사용 가능 여부와 벽 충돌 위치를 확인한 뒤, 벽 돌진으로 띄우기를 노리는 안과 돌진 없이 대응하는 안을 비교하세요. 응수 확인만으로 진입을 결정하지 마세요.",
+            "choose_if": [
+              "응수 동작이 끝났다는 것과 지금 다시 쓸 수 없다는 것을 구분해 확인했다.",
+              "자기 돌진 사용 가능 여부, 부딪칠 벽, 충돌 지점의 피오라 위치를 직접 확인했다.",
+              "자기 체력·쓸 수 있는 대응 기술·현재 보이는 다른 적과 아군 위치를 확인하고, 벽과 응수 외의 위협도 따로 비교했다."
+            ],
+            "stop_if": [
+              "응수를 지금 쓸 수 있는지 모르거나 응수가 가능하다.",
+              "피오라가 충돌 지점에서 벗어나거나 벽 충돌 경로를 확인할 수 없다.",
+              "체력·다른 적·아군 위치가 달라져 벽 돌진 후 대응을 다시 판단해야 한다."
+            ],
+            "uncertain_alternative": [
+              "벽 돌진 입력을 보류하고, 현재 보이는 피오라와 벽을 기준으로 돌진 없이 옮길 자리를 다시 고르세요. 옮길 자리도 판단할 수 없으면 진입을 보류하세요."
+            ],
+            "source_fact_refs": [
+              0,
+              1
+            ],
+            "id": "A1",
+            "interpretation": "UNVALIDATED_CONDITIONAL_PROPOSAL"
+          },
+          {
+            "text": "응수가 가능하거나 불명확하면 벽 충돌 띄우기로 싸움을 여는 선택을 내려놓고, 현재 위치에서의 대응과 위치 변경을 비교하세요.",
+            "choose_if": [
+              "응수로 띄우기를 막을 수 있는 상황이다.",
+              "돌진 없이 고를 수 있는 위치와 현재 보이는 적 위치를 비교할 여유가 있다."
+            ],
+            "stop_if": [
+              "보이는 적 위치가 달라져 고른 자리로의 이동을 다시 판단해야 한다.",
+              "이미 교전 중이라 이 조언만으로 이동을 결정할 수 없다."
+            ],
+            "uncertain_alternative": [
+              "응수를 유도했다고 가정하거나 응수 동작 종료만 보고 다시 들어가지 마세요. 자기 체력과 쓸 수 있는 기술을 확인한 뒤 새로 결정하세요."
+            ],
+            "source_fact_refs": [
+              0,
+              1
+            ],
+            "id": "A2",
+            "interpretation": "UNVALIDATED_CONDITIONAL_PROPOSAL"
+          }
+        ],
+        "opponent_right": "피오라는 응수로 피해와 방해 효과를 막을 수 있습니다. 이동 불가 효과를 막았다면 찌르기에 처음 맞는 적 챔피언을 기절시킬 수 있습니다."
+      },
+      "change": "기존의 “응수가 끝났는지”를 현재 사용 가능 여부와 분리했습니다. 벽 돌진 선택의 조건, 중단, 돌진 없는 위치 재선택을 적었습니다. 위치 변경의 이득은 입증되지 않았습니다. 초안 반론 뒤 응수·벽 확인만으로 진입시키지 않고 자기 상태와 다른 위협을 함께 비교하도록 제한했습니다.",
+      "source_facts": [
+        {
+          "source_index": 0,
+          "claim": "오른은 돌진 중 지형과 충돌하면 주변 충격파로 적에게 피해를 주고 띄웁니다.",
+          "quote": "Ornn charges, dealing damage to enemies he passes through. If Ornn collides with terrain while charging, the impact creates a shockwave around him which deals damage and knocks up enemies.",
+          "kind": "SOURCE_FACT"
+        },
+        {
+          "source_index": 1,
+          "claim": "피오라는 응수로 피해와 방해 효과를 막고, 이동 불가 효과를 막았다면 찌르기에 처음 맞는 적 챔피언을 기절시킬 수 있습니다.",
+          "quote": "Fiora parries all incoming damage and disables for a short time, then stabs in a direction. This stab slows the first enemy champion hit, or stuns them if Fiora blocked an immobilizing effect with this ability.",
+          "kind": "SOURCE_FACT"
+        }
+      ],
+      "needed_evidence": [
+        "응수의 실제 사용·재사용 가능 상태, 오른 돌진 사용 가능 상태, 벽 충돌 위치와 두 챔피언 위치가 함께 보이는 장면",
+        "위 조건에서 벽 돌진과 돌진 없는 위치 변경의 결과를 비교한 근거"
+      ],
+      "factual_review": "PASS",
+      "conditional_wording_review": "PASS",
+      "tactical_interpretation": "HOLD",
+      "real_game_effect": "NOT_ASSESSED"
+    },
+    {
+      "id": "QP-20261016-KR-005-v2",
+      "legacy_id": "KR-005",
+      "topic": "SKILL_INTERACTION",
+      "evidence_level": "HYPOTHESIS",
+      "before": {
+        "상황": "아리로 제드의 접근에 대응하거나 매혹 뒤에 공격하려는 때",
+        "할 것": "매혹이 맞은 것을 보고 다음 공격을 이어가세요.",
+        "하지 말 것": "매혹을 빗맞힌 뒤에도 같은 거리로 따라 들어가지 마세요.",
+        "상대 권리": "제드는 궁극기를 쓸 때 대상으로 지정되지 않는 상태가 되어 다가오고, 표식 동안 준 피해 일부를 다시 가합니다.",
+        "무효 조건": "매혹이 빗나가거나 제드가 대상으로 지정되지 않으면 계획을 멈추세요.",
+        "근거": "공식 설명 확인: 아리의 매혹은 적에게 맞으면 이동 기술을 멈추고 아리 쪽으로 걷게 만듭니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "after": {
+        "scenario": "아리로 제드의 접근에 대응한 뒤, 매혹 적중만으로 따라갈지 결정하려는 때",
+        "actions": [
+          {
+            "text": "매혹이 맞은 제드가 현재 위치에서 공격 가능한 대상이면, 쓸 수 있는 후속 공격을 그 자리에서 이어갈지 먼저 정하세요.",
+            "choose_if": [
+              "매혹 적중과 제드가 대상으로 지정 가능한 상태임을 직접 확인했다.",
+              "자기 체력, 쓸 수 있는 후속 기술, 현재 위치에서 공격이 닿는지를 확인했다."
+            ],
+            "stop_if": [
+              "후속 공격을 위해 앞으로 따라가야 하는 상황으로 바뀐다.",
+              "제드가 대상으로 지정되지 않거나, 매혹이 끝난 뒤 위치·자기 상태를 다시 확인하지 못했다."
+            ],
+            "uncertain_alternative": [
+              "매혹 적중을 추격 허가로 삼지 말고, 따라가는 입력을 보류한 채 자기 체력과 사용 가능한 기술부터 확인하세요."
+            ],
+            "source_fact_refs": [
+              0,
+              1
+            ],
+            "id": "A1",
+            "interpretation": "UNVALIDATED_CONDITIONAL_PROPOSAL"
+          },
+          {
+            "text": "매혹이 빗나가거나 제드가 대상으로 지정되지 않으면, 매혹 후속 공격 계획을 취소하고 제드가 다시 보이는 위치에 맞춰 대응을 새로 정하세요.",
+            "choose_if": [
+              "매혹 실패 또는 대상 지정 불가 상태를 직접 확인했다."
+            ],
+            "stop_if": [
+              "제드의 현재 위치나 자기 체력을 확인할 수 없다.",
+              "표식 상태와 남은 대응 수단을 모른 채 다시 추격하려 한다."
+            ],
+            "uncertain_alternative": [
+              "보이는 다른 목표를 공격할 수 있는지, 현재 자리에서 대응할지, 위치를 바꿀지를 자기 상태와 함께 비교하세요. 어느 선택도 이 발췌만으로 안전하다고 단정하지 마세요."
+            ],
+            "source_fact_refs": [
+              0,
+              1
+            ],
+            "id": "A2",
+            "interpretation": "UNVALIDATED_CONDITIONAL_PROPOSAL"
+          }
+        ],
+        "opponent_right": "제드는 궁극기로 대상 지정 불가 상태가 되어 접근하고, 표식 동안 대상에게 준 피해 일부를 나중에 다시 가할 수 있습니다."
+      },
+      "change": "“맞은 것을 보고 공격”에 현재 위치에서 공격 가능 여부와 자기 상태 확인을 더했습니다. 매혹 적중과 추격 선택을 분리하고 실패·대상 지정 불가 때 계획을 취소하도록 했습니다.",
+      "source_facts": [
+        {
+          "source_index": 0,
+          "claim": "아리의 매혹은 맞은 적의 이동 기술을 멈추고 아리 쪽으로 걷게 합니다.",
+          "quote": "Ahri blows a kiss that damages and charms an enemy it encounters, instantly stopping movement abilities and causing them to walk harmlessly towards her.",
+          "kind": "SOURCE_FACT"
+        },
+        {
+          "source_index": 1,
+          "claim": "제드는 대상 지정 불가 상태로 접근해 표식을 남기며 표식 동안 가한 피해 일부를 나중에 반복합니다.",
+          "quote": "Zed becomes untargetable and dashes to an enemy champion, marking them. After 3 seconds the mark triggers, repeating a portion of all the damage Zed dealt to the target while they were marked.",
+          "kind": "SOURCE_FACT"
+        }
+      ],
+      "needed_evidence": [
+        "매혹 적중·종료, 제드의 대상 지정 상태와 위치, 아리의 체력·기술 준비·공격 가능 거리가 함께 보이는 장면",
+        "제자리 후속 공격과 전진 추격을 나눠 비교할 수 있는 교전 기록"
+      ],
+      "factual_review": "PASS",
+      "conditional_wording_review": "PASS",
+      "tactical_interpretation": "HOLD",
+      "real_game_effect": "NOT_ASSESSED"
+    },
+    {
+      "id": "QP-20261016-KR-008-v2",
+      "legacy_id": "KR-008",
+      "topic": "SKILL_INTERACTION",
+      "evidence_level": "HYPOTHESIS",
+      "before": {
+        "상황": "케이틀린으로 노틸러스의 접근을 피해 이동하려는 때",
+        "할 것": "투망의 반동으로 밀려날 방향과 착지할 곳을 먼저 보세요.",
+        "하지 말 것": "상대를 맞히는 데만 집중해 위험한 쪽으로 밀려나지 마세요.",
+        "상대 권리": "노틸러스의 닻은 적과 부딪치면 서로를 끌어당기고, 지형에 맞으면 노틸러스가 이동합니다.",
+        "무효 조건": "밀려날 자리가 위험하거나 이동 후에도 닻 경로가 열리면 다른 퇴로를 고르세요.",
+        "근거": "공식 설명 확인: 케이틀린의 투망은 대상을 둔화시키고 반동으로 케이틀린을 뒤로 밀어냅니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "after": {
+        "scenario": "케이틀린으로 노틸러스에게 투망을 쏠 때, 적중과 반동 뒤 위치 중 무엇을 우선할지 정하는 때",
+        "actions": [
+          {
+            "text": "투망을 이동 수단으로 고를 여유가 있다면 적중 각도와 반동 뒤 자리를 함께 비교하세요. 보이는 적·지형과 닻 진행을 기준으로 반동 후보 자리를 고르되 적중보다 언제나 우선한다고 고정하지 마세요.",
+            "choose_if": [
+              "투망 사용 가능 여부와 발사 반대쪽으로 밀려날 후보 자리를 직접 확인했다.",
+              "후보 자리에 보이는 적이 있는지, 노틸러스가 닻으로 향할 지형이 있는지 비교했다.",
+              "즉시 방어 입력이 필요한 순간이 아니라, 적중 각도와 반동 뒤 자리를 비교할 여유가 있다."
+            ],
+            "stop_if": [
+              "반동 후보 자리가 보이지 않거나 그곳의 적 위치를 확인할 수 없다.",
+              "관측한 닻 진행 방향에 반동 뒤 자리가 겹치거나 노틸러스의 지형 접근 지점을 향하게 된다.",
+              "이미 공격이 도착해 비교 절차가 긴급 방어를 늦추는 상황이다. 이 경우 이 사전 선택 절차를 강제하지 않는다."
+            ],
+            "uncertain_alternative": [
+              "비교할 여유가 있을 때만 다른 투망 각도와 보이는 이동 후보를 다시 비교하세요. 긴급 방어가 필요하면 확인 절차 때문에 대응을 늦추지 마세요. 이 자료만으로 최선의 즉시 입력을 정할 수는 없습니다."
+            ],
+            "source_fact_refs": [
+              0,
+              1
+            ],
+            "id": "A1",
+            "interpretation": "UNVALIDATED_CONDITIONAL_PROPOSAL"
+          },
+          {
+            "text": "투망을 쓴 뒤에는 적중 여부와 별도로 자기 위치와 노틸러스의 닻 도착점을 다시 보고 다음 이동을 정하세요.",
+            "choose_if": [
+              "반동 뒤 자기 위치와 닻의 현재 진행 또는 충돌 지점을 볼 수 있다."
+            ],
+            "stop_if": [
+              "반동 전 고른 자리만 믿고 새 닻 경로나 노틸러스 이동을 확인하지 못한다."
+            ],
+            "uncertain_alternative": [
+              "투망 적중을 탈출 성공으로 처리하지 말고 현재 보이는 다른 이동 후보를 비교하세요. 보이지 않는 곳을 퇴로로 확정하지 마세요."
+            ],
+            "source_fact_refs": [
+              0,
+              1
+            ],
+            "id": "A2",
+            "interpretation": "UNVALIDATED_CONDITIONAL_PROPOSAL"
+          }
+        ],
+        "opponent_right": "노틸러스는 닻이 적과 충돌하면 서로를 끌어당기고, 지형과 충돌하면 그 지형 쪽으로 이동할 수 있습니다."
+      },
+      "change": "막연한 “위험한 쪽”을 관측 가능한 적 위치·닻 진행·지형 접근 지점으로 풀었습니다. 발사 각도 선택과 사용 후 재판단을 구분하고, 투망 적중만으로 탈출 성공을 판단하지 않게 했습니다. 반론 뒤 적중보다 반동을 항상 우선하는 문장을 없애고 긴급 방어 때 준비 절차를 강제하지 않도록 했습니다.",
+      "source_facts": [
+        {
+          "source_index": 0,
+          "claim": "케이틀린의 투망은 대상을 둔화시키며 반동은 케이틀린을 뒤로 밀어냅니다.",
+          "quote": "Caitlyn fires a heavy net to slow her target. The recoil knocks Caitlyn back.",
+          "kind": "SOURCE_FACT"
+        },
+        {
+          "source_index": 1,
+          "claim": "노틸러스의 닻은 적 충돌 시 서로를 당기고 지형 충돌 시 노틸러스를 지형 쪽으로 이동시킵니다.",
+          "quote": "Nautilus hurls his anchor forward.  Colliding with an enemy pulls them and Nautilus together, dealing magic damage.  Colliding with terrain pulls Nautilus towards it.",
+          "kind": "SOURCE_FACT"
+        }
+      ],
+      "needed_evidence": [
+        "발사 방향·반동 전후 위치·주변 시야·노틸러스 닻 경로가 함께 보이는 장면",
+        "반동 거리와 닻 판정·지형 충돌을 확인할 추가 근거"
+      ],
+      "factual_review": "PASS",
+      "conditional_wording_review": "PASS",
+      "tactical_interpretation": "HOLD",
+      "real_game_effect": "NOT_ASSESSED"
+    },
+    {
+      "id": "QP-20261016-KR-015-v2",
+      "legacy_id": "KR-015",
+      "topic": "SKILL_INTERACTION",
+      "evidence_level": "HYPOTHESIS",
+      "before": {
+        "상황": "리신의 음파에 맞은 뒤 대응하는 때",
+        "할 것": "리신이 다시 다가올 수 있는 경로와 자기 퇴로를 확인하세요.",
+        "하지 말 것": "첫 피해만 끝났다고 생각하고 그대로 앞으로 가지 마세요.",
+        "상대 권리": "리신은 음파를 맞히면 그 대상에게 다시 이동할 수 있고 대상이 잃은 체력에 따라 피해를 줍니다.",
+        "무효 조건": "음파 적중이나 리신 위치가 불명확하면 후속 접근이 없다고 단정하지 마세요.",
+        "근거": "공식 설명 확인: 음파 적중은 공명의 일격으로 대상에게 이동할 기회를 줍니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "after": {
+        "scenario": "리신의 음파에 맞은 뒤, 추가 공격을 위해 전진할지 이동을 바꿀지 정하는 때",
+        "actions": [
+          {
+            "text": "음파에 맞았다면 리신의 후속 접근을 고려해 추가 공격을 위한 전진, 현재 자리 대응, 보이는 아군 쪽 이동을 비교하세요. 음파 적중 하나만으로 전진 금지나 후퇴를 고정하지 마세요.",
+            "choose_if": [
+              "음파 적중은 확인했지만 리신의 후속 이동 가능 상태가 불명확하여 다음 행동을 다시 비교하려 한다.",
+              "자기 체력과 보이는 아군·적 위치를 함께 확인할 수 있다.",
+              "이 선택들을 비교할 여유가 있으며, 즉시 공격·이동 등 대응을 해야 하는 응급 순간이 아니다."
+            ],
+            "stop_if": [
+              "고른 이동 후보에 새 적이 보이거나 아군 위치가 달라진다.",
+              "리신이 후속 이동을 썼거나 사용 기회가 끝났음을 확인해 이 전제를 다시 판단해야 한다.",
+              "확인 절차가 필요한 즉시 대응을 늦춘다. 이 경우 이 비교 순서를 강제하지 않는다."
+            ],
+            "uncertain_alternative": [
+              "비교할 여유가 있다면 리신 위치와 자기 체력·사용 가능한 대응 기술을 먼저 확인하세요. 바로 대응해야 하면 확인을 기다리라는 뜻은 아닙니다. 뒤로 가면 재접근이 끊긴다고 가정하지 마세요."
+            ],
+            "source_fact_refs": [
+              0
+            ],
+            "id": "A1",
+            "interpretation": "UNVALIDATED_CONDITIONAL_PROPOSAL"
+          },
+          {
+            "text": "리신의 후속 이동이 이미 끝났음을 확인한 뒤에는 원래 공격 목표와 이동 경로를 새로 정하세요.",
+            "choose_if": [
+              "후속 이동 사용 또는 사용 기회의 종료를 직접 확인했다.",
+              "리신의 현재 위치와 자기 상태를 다시 볼 수 있다."
+            ],
+            "stop_if": [
+              "첫 피해가 끝났다는 사실만 있고 후속 이동 상태는 모른다.",
+              "재접근이 끝났다는 이유만으로 다른 위협 확인 없이 전진하려 한다."
+            ],
+            "uncertain_alternative": [
+              "종료 여부가 불명확하면 첫 번째 선택의 조건에서 전진·현재 자리 대응·보이는 이동 후보를 다시 비교하세요. 즉시 대응이 필요한 상황에는 확인 대기를 강제하지 않습니다."
+            ],
+            "source_fact_refs": [
+              0
+            ],
+            "id": "A2",
+            "interpretation": "UNVALIDATED_CONDITIONAL_PROPOSAL"
+          }
+        ],
+        "opponent_right": "리신은 음파를 맞힌 대상에게 공명의 일격으로 이동할 기회를 얻으며, 대상이 잃은 체력에 따라 물리 피해를 줍니다."
+      },
+      "change": "“경로와 퇴로를 확인”하는 알림을 전진 보류와 이동 후보 비교로 바꿨습니다. 후속 이동 가능성이 남은 때와 종료를 직접 확인한 때를 나눴으며, 이동으로 추격이 끊긴다는 주장은 하지 않습니다. 초안의 일괄 전진 보류를 없애고 공격·이동 비교와 긴급 대응 예외를 명시했습니다.",
+      "source_facts": [
+        {
+          "source_index": 0,
+          "claim": "리신은 음파가 맞으면 후속 기술로 맞은 대상에게 이동할 수 있으며 대상이 잃은 체력에 따라 피해를 줍니다.",
+          "quote": "Sonic Wave: Lee Sin projects a discordant wave of sound to locate his enemies, dealing physical damage to the first enemy it encounters. If Sonic Wave hits, Lee Sin can cast Resonating Strike for the next 3 seconds.<br>Resonating Strike: Lee Sin dashes to the enemy hit by Sonic Wave, dealing physical damage based on the target's missing Health.",
+          "kind": "SOURCE_FACT"
+        }
+      ],
+      "needed_evidence": [
+        "음파 적중과 후속 이동 사용·종료, 리신 위치, 자기 체력과 대응 기술, 아군 위치가 함께 보이는 장면",
+        "전진·현재 자리 대응·아군 쪽 이동을 비교할 수 있는 조건별 기록"
+      ],
+      "factual_review": "PASS",
+      "conditional_wording_review": "PASS",
+      "tactical_interpretation": "HOLD",
+      "real_game_effect": "NOT_ASSESSED"
+    },
+    {
+      "id": "QP-20261016-KR-021-v2",
+      "legacy_id": "KR-021",
+      "topic": "SKILL_INTERACTION",
+      "evidence_level": "HYPOTHESIS",
+      "before": {
+        "상황": "노틸러스의 닻이 자신 쪽으로 날아오는 때",
+        "할 것": "닻의 경로와 노틸러스가 지형을 타고 접근할 수 있는 방향을 보세요.",
+        "하지 말 것": "닻이 자신에게 빗나갔다고 노틸러스의 이동도 끝났다고 생각하지 마세요.",
+        "상대 권리": "닻이 지형에 맞으면 노틸러스가 지형 쪽으로 이동할 수 있습니다.",
+        "무효 조건": "주변 지형이나 닻의 도착 지점이 보이지 않으면 접근이 없다고 단정하지 마세요.",
+        "근거": "공식 설명 확인: 닻줄 견인은 적과 부딪치면 서로 끌어당기고 지형과 부딪치면 노틸러스가 이동합니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "after": {
+        "scenario": "노틸러스의 닻이 자신을 지나 지형으로 향할 때, 그 지형 쪽으로 이동을 계속할지 정하는 때",
+        "actions": [
+          {
+            "text": "닻이 향하는 지형 지점 쪽으로 걷고 있었다면 그 이동을 다시 정하세요. 그 지점과 겹치지 않는 보이는 이동 후보를 비교하세요.",
+            "choose_if": [
+              "닻이 자신을 지나간 뒤 향하는 지형 지점을 볼 수 있다.",
+              "자기 이동이 노틸러스의 지형 접근 지점 쪽으로 이어지고 있다."
+            ],
+            "stop_if": [
+              "닻이 다른 적에 맞거나 진행·충돌 지점이 예상과 달라진다.",
+              "다른 후보의 적 위치나 이동 가능 여부를 볼 수 없다."
+            ],
+            "uncertain_alternative": [
+              "빗나갔다는 이유로 앞으로 따라가는 선택을 보류하고, 닻의 실제 충돌과 노틸러스 위치를 먼저 다시 보세요."
+            ],
+            "source_fact_refs": [
+              0
+            ],
+            "id": "A1",
+            "interpretation": "UNVALIDATED_CONDITIONAL_PROPOSAL"
+          },
+          {
+            "text": "닻이 지형에 맞았다면 출발 위치가 아니라 이동한 노틸러스의 현재 위치를 기준으로 다음 공격 목표와 이동을 고르세요.",
+            "choose_if": [
+              "지형 충돌과 그 뒤 노틸러스 위치를 직접 확인했다."
+            ],
+            "stop_if": [
+              "닻 끝이나 노틸러스 이동 후 위치가 보이지 않는다."
+            ],
+            "uncertain_alternative": [
+              "도착 위치를 추측해 공격하거나 이동하지 말고, 현재 보이는 대상과 자기 상태를 확인한 뒤 다시 결정하세요."
+            ],
+            "source_fact_refs": [
+              0
+            ],
+            "id": "A2",
+            "interpretation": "UNVALIDATED_CONDITIONAL_PROPOSAL"
+          }
+        ],
+        "opponent_right": "노틸러스의 닻은 적 충돌 시 서로를 끌어당기며, 지형 충돌 시 노틸러스를 지형 쪽으로 이동시킬 수 있습니다."
+      },
+      "change": "닻 경로를 보라는 알림을, 닻이 향하는 지형 쪽으로 걷던 선택의 재검토와 이동 후 위치 기준 재판단으로 바꿨습니다. 다른 후보가 안전하다고 단정하지 않습니다.",
+      "source_facts": [
+        {
+          "source_index": 0,
+          "claim": "노틸러스의 닻은 적 충돌 시 서로를 당기고 지형 충돌 시 노틸러스를 지형 쪽으로 이동시킵니다.",
+          "quote": "Nautilus hurls his anchor forward.  Colliding with an enemy pulls them and Nautilus together, dealing magic damage.  Colliding with terrain pulls Nautilus towards it.",
+          "kind": "SOURCE_FACT"
+        }
+      ],
+      "needed_evidence": [
+        "닻 진행과 실제 충돌, 지형 접근 지점, 자기 이동 후보, 이동 뒤 노틸러스 위치가 함께 보이는 장면",
+        "지형 접근 지점 쪽 이동을 유지한 경우와 다른 후보를 선택한 경우의 조건별 기록"
+      ],
+      "factual_review": "PASS",
+      "conditional_wording_review": "PASS",
+      "tactical_interpretation": "HOLD",
+      "real_game_effect": "NOT_ASSESSED"
+    },
+    {
+      "id": "QP-20261016-KR-022-v2",
+      "legacy_id": "KR-022",
+      "topic": "SKILL_INTERACTION",
+      "evidence_level": "HYPOTHESIS",
+      "before": {
+        "상황": "노틸러스의 궁극기 대상이 된 아군 근처에 있는 때",
+        "할 것": "궁극기 대상과 충격파의 진행 방향을 보고 서로 겹치지 않을 자리를 찾으세요.",
+        "하지 말 것": "대상 한 명만 영향을 받는다고 생각하고 진행 경로에 모이지 마세요.",
+        "상대 권리": "충격파는 대상을 추적하며 지나가는 경로의 적도 공중에 띄웁니다.",
+        "무효 조건": "진행 방향이나 대상이 보이지 않으면 확정 회피 경로를 제시하지 마세요.",
+        "근거": "공식 설명 확인: 폭뢰는 대상을 향해 추적하고 경로의 적을 띄우며 대상 도착 시 띄우기와 기절을 줍니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "after": {
+        "scenario": "노틸러스의 궁극기 대상이 된 아군 옆에서, 그 아군을 따라갈지 다른 자리를 고를지 정하는 때",
+        "actions": [
+          {
+            "text": "아군 가까이 남아야 할 대응이나 팀 계획이 따로 없고 이동을 비교할 여유가 있다면, 대상 아군과 현재 충격파 구간에 겹치는 이동 대신 다른 보이는 자리를 비교하세요. 아군과 떨어지기를 항상 우선하지 마세요.",
+            "choose_if": [
+              "자신이 대상이 아니며 대상 아군과 현재 충격파 진행 방향을 직접 확인했다.",
+              "자기 이동이 대상 아군 또는 현재 진행 구간과 겹치려 하고, 다른 보이는 이동 후보가 있다.",
+              "아군 가까이 있어야 할 대응 수단·팀 계획을 확인했으며, 이 장면에서는 간격 변경을 비교할 여유가 있다."
+            ],
+            "stop_if": [
+              "대상 아군이 이동해 충격파 진행 방향이 달라진다.",
+              "후보의 적·지형·아군 위치가 새로운 위협을 만들거나, 아군 가까이에 남아야 할 대응을 놓칠 수 있다.",
+              "즉시 대응해야 해서 위치 확인 절차를 기다릴 수 없다. 이 경우 이 준비 순서를 강제하지 않는다."
+            ],
+            "uncertain_alternative": [
+              "한 번 고른 옆자리를 확정 회피 지점으로 삼지 말고, 대상과 현재 진행 방향을 다시 보며 이동 후보를 새로 고르세요."
+            ],
+            "source_fact_refs": [
+              0
+            ],
+            "id": "A1",
+            "interpretation": "UNVALIDATED_CONDITIONAL_PROPOSAL"
+          },
+          {
+            "text": "대상이나 진행 방향을 놓쳤고 이동을 다시 비교할 여유가 있다면, 아군을 따라가는 이유와 대상 표시·충격파를 확인하세요. 즉시 합류나 방어가 필요한 상황에 대기를 일괄 적용하지 마세요.",
+            "choose_if": [
+              "대상 또는 진행 방향이 불명확한데 아군 쪽으로 합류하려 한다.",
+              "아군 쪽으로 이동할 필요와 다른 이동 후보를 비교할 시간 여유가 있다."
+            ],
+            "stop_if": [
+              "다시 보인 대상과 진행 방향이 기존 예상과 다르다.",
+              "합류 보류만으로 다른 위협을 감당할 수 있다고 판단하려 한다."
+            ],
+            "uncertain_alternative": [
+              "자기 체력과 현재 보이는 적·아군 위치를 확인해 다른 이동 후보를 비교하세요. 이 정보만으로 특정 방향 회피를 권하지 않습니다."
+            ],
+            "source_fact_refs": [
+              0
+            ],
+            "id": "A2",
+            "interpretation": "UNVALIDATED_CONDITIONAL_PROPOSAL"
+          }
+        ],
+        "opponent_right": "폭뢰는 대상을 추적하며 경로의 적을 띄우고, 대상에 도착하면 대상을 띄우고 기절시킬 수 있습니다."
+      },
+      "change": "“겹치지 않을 자리”를 대상 아군을 따라가던 이동과 현재 진행 구간의 겹침으로 구체화했습니다. 대상 이동 때 재선택하고 대상·경로 불명 때 합류를 보류하도록 했습니다. 초안의 무조건 간격 벌리기와 보이는 적만으로 후보를 제외하는 표현을 고쳤으며 아군 근접 대응·긴급 행동 예외를 추가했습니다.",
+      "source_facts": [
+        {
+          "source_index": 0,
+          "claim": "노틸러스의 충격파는 대상을 추적하며 경로의 적을 띄우고 대상에 도착하면 대상을 띄우고 기절시킵니다.",
+          "quote": "Nautilus fires a shockwave into the earth that chases an opponent. This shockwave rips up the earth above it, knocking enemies into the air. When it reaches the opponent, the shockwave erupts, knocking his target into the air and stunning them.",
+          "kind": "SOURCE_FACT"
+        }
+      ],
+      "needed_evidence": [
+        "대상 표시, 충격파 경로 변화, 자기 위치·이동과 주변 적·아군 위치가 함께 보이는 장면",
+        "겹치는 이동과 다른 후보 이동을 비교할 수 있는 판정 폭·도착 범위 근거 및 기록"
+      ],
+      "factual_review": "PASS",
+      "conditional_wording_review": "PASS",
+      "tactical_interpretation": "HOLD",
+      "real_game_effect": "NOT_ASSESSED"
+    },
+    {
+      "id": "QP-20261016-KR-026-v2",
+      "legacy_id": "KR-026",
+      "topic": "SKILL_INTERACTION",
+      "evidence_level": "HYPOTHESIS",
+      "before": {
+        "상황": "애쉬로 보이지 않는 경로를 확인하려는 때",
+        "할 것": "매 날리기를 보낼 위치를 정하고 드러난 정보를 보고 이동 여부를 정하세요.",
+        "하지 말 것": "매를 보냈다는 사실만으로 보이지 않는 모든 경로가 안전하다고 생각하지 마세요.",
+        "상대 권리": "리신이 음파를 맞히면 그 대상에게 다시 이동할 수 있습니다.",
+        "무효 조건": "관측한 곳과 시간이 이동 경로를 확인해 주지 못하면 진입을 보류하세요.",
+        "근거": "공식 설명 확인: 매 날리기는 맵의 원하는 곳으로 매를 보내 정찰합니다. 전체 경로의 안전을 보장하는 설명은 아닙니다. 행동 제안은 이 설명을 바탕으로 작성했으며 최적 플레이가 검증된 것은 아닙니다.",
+        "패치": "검토 적용 범위: 16.20. 공식 설명 자료: 16.20.1. 실제 경기 패치가 다르면 다시 검토하세요."
+      },
+      "after": {
+        "scenario": "애쉬로 보이지 않는 다음 이동 구간을 통과할지 결정하기 전에 매 날리기를 쓸지 정하는 때",
+        "actions": [
+          {
+            "text": "지금 통과 여부를 결정할 다음 구간을 먼저 정하고, 그 구간의 진입 지점이나 확인하고 싶은 지점을 매 날리기 목표로 고르세요. 사용 뒤에는 실제로 드러난 곳을 보고 이동 계획을 다시 정하세요.",
+            "choose_if": [
+              "매 날리기를 지금 쓸 수 있음을 자기 화면에서 확인했다.",
+              "막연히 맵 전체가 아니라 지금 결정할 이동 구간과 확인 목적을 정했다.",
+              "다음 구간 이동을 계획하는 상황이며 정찰 때문에 필요한 즉시 대응을 늦추지 않는다."
+            ],
+            "stop_if": [
+              "실제로 드러난 곳이 선택한 이동 구간을 확인해 주지 못한다.",
+              "정보를 본 뒤 시야가 사라지거나 적이 이동해 현재 상태를 확인할 수 없다.",
+              "적이 보였는데 관측 전 이동 계획을 그대로 이어가려 한다."
+            ],
+            "uncertain_alternative": [
+              "확인되지 않은 구간으로의 이동을 보류하고, 현재 보이는 다른 경로로 목적지에 갈 수 있는지 비교하세요. 다른 경로도 판단할 수 없으면 통과 결정을 미루세요."
+            ],
+            "source_fact_refs": [
+              0,
+              1
+            ],
+            "id": "A1",
+            "interpretation": "UNVALIDATED_CONDITIONAL_PROPOSAL"
+          },
+          {
+            "text": "매 날리기를 쓸 수 없거나 관측이 현재 구간에 맞지 않으면, 정찰을 했다고 가정하지 말고 경로 변경·이동 보류 등 현재 확인할 수 있는 선택을 비교하세요. 즉시 방어가 필요할 때 이 확인 순서를 강제하지 마세요.",
+            "choose_if": [
+              "매 날리기 사용 불가·사용 가능 여부 미확인·기존 관측의 현재 구간 부적합 중 하나 이상이 해당한다.",
+              "지금 즉시 방어해야 하는 순간이 아니라 경로 계획을 다시 비교할 여유가 있다."
+            ],
+            "stop_if": [
+              "새로 보인 정보가 생겨 경로와 적 위치를 다시 판단해야 한다.",
+              "보이는 다른 경로가 있다는 이유만으로 안전을 확정하려 한다."
+            ],
+            "uncertain_alternative": [
+              "자기 위치·현재 시야·매 날리기 준비 상태를 다시 확인하세요. 리신의 음파에 맞았다면 정찰과 별도로 후속 이동 가능성과 자기 대응 상태를 확인하세요."
+            ],
+            "source_fact_refs": [
+              0,
+              1
+            ],
+            "id": "A2",
+            "interpretation": "UNVALIDATED_CONDITIONAL_PROPOSAL"
+          }
+        ],
+        "opponent_right": "리신은 음파를 맞힌 대상에게 후속 기술로 이동할 수 있습니다. 매 날리기를 썼다는 사실이 이 후속 접근을 없애지는 않습니다."
+      },
+      "change": "매를 보낼 위치를 현재 결정할 다음 구간과 연결했습니다. 정보가 다른 곳을 비추거나 더는 현재 상태를 보여주지 않을 때, 또는 기술을 쓸 수 없을 때 경로 변경·이동 보류로 나눴습니다. 특정 정찰 지점이나 안전 시간은 만들지 않았습니다. 반론 뒤 대안 선택 조건의 또는/그리고 관계를 분명히 하고 긴급 방어에 정찰 대기를 강제하지 않았습니다.",
+      "source_facts": [
+        {
+          "source_index": 0,
+          "claim": "애쉬는 맵의 원하는 곳으로 매를 보내 정찰합니다.",
+          "quote": "Ashe sends her Hawk Spirit on a scouting mission anywhere on the map.",
+          "kind": "SOURCE_FACT"
+        },
+        {
+          "source_index": 1,
+          "claim": "리신은 음파가 맞으면 후속 기술로 맞은 대상에게 이동할 수 있습니다.",
+          "quote": "Sonic Wave: Lee Sin projects a discordant wave of sound to locate his enemies, dealing physical damage to the first enemy it encounters. If Sonic Wave hits, Lee Sin can cast Resonating Strike for the next 3 seconds.<br>Resonating Strike: Lee Sin dashes to the enemy hit by Sonic Wave, dealing physical damage based on the target's missing Health.",
+          "kind": "SOURCE_FACT"
+        }
+      ],
+      "needed_evidence": [
+        "현재 이동 목적과 구간, 매 날리기 사용 가능 상태, 실제 관측 영역·시점·시야 소실·적 이동이 함께 보이는 장면",
+        "정찰 범위와 지속 시간을 확인할 추가 공식 근거",
+        "정찰 목표별로 이동 결정을 바꿀 수 있었는지 비교한 기록"
+      ],
+      "factual_review": "PASS",
+      "conditional_wording_review": "PASS",
+      "tactical_interpretation": "HOLD",
+      "real_game_effect": "NOT_ASSESSED"
+    }
+  ],
+  "old_hold20": "UNCHANGED; no ranking/wave/recall safety inferred from skill descriptions",
+  "q15_source": {
+    "path": "data/riot/2026-10-13/archives/full-power-16.20-CHALLENGER.json.gz",
+    "sha256": "ea0cd9a5f6f20896511e774e0ebe07b28c8a97ced5b070e61f9677ec65f76a41",
+    "matches": 275
+  },
+  "q15_matchup_bins": [
+    {
+      "champion": "Ornn",
+      "opponent_champion": "Fiora",
+      "position": "TOP",
+      "patch": "16.20",
+      "population": "Q15_CHALLENGER_SEED_275",
+      "status": "UNKNOWN_NO_MATCHUP_COHORT",
+      "unit": "GOLD_ABSOLUTE_DIFFERENCE_SAMPLED_MINUTE_BIN",
+      "points": [],
+      "missing_n": null,
+      "missing_reason": "AGGREGATE_DOES_NOT_RETAIN_MATCHUP_ELIGIBLE_TOTAL",
+      "limitation": "Bin frame times are not exact10:00/15:00. No pooled fallback. Existing precision omissions retained. Not advice efficacy."
+    },
+    {
+      "champion": "Ahri",
+      "opponent_champion": "Zed",
+      "position": "MID",
+      "patch": "16.20",
+      "population": "Q15_CHALLENGER_SEED_275",
+      "status": "UNKNOWN_NO_MATCHUP_COHORT",
+      "unit": "GOLD_ABSOLUTE_DIFFERENCE_SAMPLED_MINUTE_BIN",
+      "points": [],
+      "missing_n": null,
+      "missing_reason": "AGGREGATE_DOES_NOT_RETAIN_MATCHUP_ELIGIBLE_TOTAL",
+      "limitation": "Bin frame times are not exact10:00/15:00. No pooled fallback. Existing precision omissions retained. Not advice efficacy."
+    },
+    {
+      "champion": "Caitlyn",
+      "opponent_champion": "Ezreal",
+      "position": "BOTTOM",
+      "patch": "16.20",
+      "population": "Q15_CHALLENGER_SEED_275",
+      "status": "EXISTING_AGGREGATE_ONLY",
+      "unit": "GOLD_ABSOLUTE_DIFFERENCE_SAMPLED_MINUTE_BIN",
+      "points": [
+        {
+          "ci95": {
+            "high": 2158.3940807436015,
+            "low": -739.9940807436014
+          },
+          "mean": 709.2,
+          "minute": 10,
+          "n": 5,
+          "omission_reason": "CI_TOO_WIDE",
+          "visible": false
+        },
+        {
+          "ci95": {
+            "high": 3058.1550325513563,
+            "low": -1059.355032551356
+          },
+          "mean": 999.4,
+          "minute": 15,
+          "n": 5,
+          "omission_reason": "CI_TOO_WIDE",
+          "visible": false
+        }
+      ],
+      "missing_n": null,
+      "missing_reason": "AGGREGATE_DOES_NOT_RETAIN_MATCHUP_ELIGIBLE_TOTAL",
+      "limitation": "Bin frame times are not exact10:00/15:00. No pooled fallback. Existing precision omissions retained. Not advice efficacy."
+    }
+  ],
+  "q15_to_advice_gap": "Sampled resource differences do not observe parry/charm/net/scouting choices; no action endorsement inferred.",
+  "offline_observations": null,
+  "offline_source_binding": null,
+  "offline_status": "PENDING_TRUSTED_EXISTING_CACHE_AUDIT",
+  "scene_evaluation": {
+    "eligible": 0,
+    "executed": 0,
+    "selected_individual_scenes": 0,
+    "unassessable_scene_count": null,
+    "reason": "No matched player-known-view/POV receipt; do not turn89matches into89identified scenes",
+    "action_agreement": null,
+    "proxy_action_agreement": null,
+    "generator_executed": false,
+    "evaluator_executed": false
+  },
+  "user_decisions_created": 0,
+  "approval_inherited": false,
+  "new_match_requests": 0,
+  "paid_calls": 0,
+  "coaching_accuracy": null
+}

@@ -1,0 +1,211 @@
+{
+  "schema_version": "quality-pilot.review.v1",
+  "role": "TACTICAL",
+  "reviewer": "/root/pilot_tactical_review",
+  "packet_sha256": "c9645431acbf3dcd66e7fa2c3babe7083f0386f7f469f3364824a52559e5090d",
+  "review_scope": "Scoped v2 wording re-review after archived v1 findings. Five changed rows reviewed for the identified conditions/exception risks; unchanged KR-005/KR-021 wording reused. Source facts/archived excerpts confirmed unchanged. No provider call, old test rerun, new collection or scene reconstruction.",
+  "initial_review_path": "evidence/quality-pilot/initial/tactical-review.json",
+  "initial_packet_sha256": "0bf011d5641f44d6921c66f347d880c950a78980f39f8f6f32de561ace3c04d4",
+  "canonical_json": "UTF-8, ensure_ascii=False, sort_keys=True, separators=(comma,colon)",
+  "condition_logic": {
+    "choose_if": "ALL",
+    "stop_if": "ANY",
+    "uncertain_alternative": "OPTIONS_NOT_SAFETY_GUARANTEE"
+  },
+  "eligible_scenes": 0,
+  "actual_effect": null,
+  "coaching_accuracy": null,
+  "rows": [
+    {
+      "id": "QP-20261016-KR-001-v2",
+      "candidate_sha256": "ef8fe2884a11623e2c4120d5b9391d499c99e662033ade70fd981e1eb8a468c8",
+      "tactical_verdict": "HOLD",
+      "conditions_review": "PASS",
+      "reasons": [
+        "V2 resolves the material v1 selection defect: A1 now compares wall E against response without E, explicitly rejects Riposte confirmation as sufficient to enter, and requires own health, available responses, other visible enemies and allies, and non-wall threats.",
+        "Actual Riposte availability and geometry remain manually checked. A2 is a voluntary initiation comparison with time to compare, and stops when already fighting; it is not an emergency peel/escape policy. No bait or automatic cooldown knowledge is supplied.",
+        "The terrain knockup/Riposte facts remain distinct from the unvalidated choice comparison. The newly added observations are inputs a player must check, not claims that they were observed or guarantee a favorable trade.",
+        "HOLD: No matching known-view scene and independently observed action were supplied. Wording/condition review PASS is not factual promotion, tactical validation, expert agreement, real-game effect, coaching accuracy, or USER approval."
+      ],
+      "counterexamples": [
+        "POSSIBLE_NOT_OBSERVED: Riposte is known unavailable and Fiora stands at the selected wall, while Ornn is low and a visible second enemy can punish the commitment. A1 checks can all hold although choosing the dash is harmful. V2 adds comparison/scope limits addressing this wording risk; it does not establish which action would win.",
+        "POSSIBLE_NOT_OBSERVED: Ornn must choose an immediate defensive or ally-protection action. A rule to abandon wall E whenever Riposte is available may remove a necessary option; this review does not claim E would succeed. V2 adds comparison/scope limits addressing this wording risk; it does not establish which action would win."
+      ],
+      "improvements": [
+        "Replaces ambiguous animation-ended check with actual current-use-availability check.",
+        "Adds explicit geometry and movement-change stop conditions and labels the fallback unvalidated.",
+        "Makes E one candidate instead of an instruction justified by mechanic checks alone.",
+        "Adds own-state and other-visible-threat checks with changed-state invalidation."
+      ],
+      "needed_evidence": [
+        "응수의 실제 사용·재사용 가능 상태, 오른 돌진 사용 가능 상태, 벽 충돌 위치와 두 챔피언 위치가 함께 보이는 장면",
+        "위 조건에서 벽 돌진과 돌진 없는 위치 변경의 결과를 비교한 근거",
+        "Matching pre-minute player-known POV, an independently observed action and separated generation/evaluation before any scene-level comparison. Preserve uncertain alternatives and current manual limits."
+      ],
+      "review_basis": "Focused v2 review of changed selection, exception and uncertainty wording; source-fact text and archives reused unchanged from v1."
+    },
+    {
+      "id": "QP-20261016-KR-005-v2",
+      "candidate_sha256": "37d31020efe88317f0a28c12b88097e9d29b4c50e521fd1264fdd6e5168e4766",
+      "tactical_verdict": "HOLD",
+      "conditions_review": "PASS",
+      "reasons": [
+        "A1 asks whether available follow-up can be used at the current position; it does not turn charm hit into permission to chase. Its targetability, health, skill-readiness and reach checks are meaningful restrictions, and forward movement triggers a new decision.",
+        "A2 cancels the charm-follow-up plan on miss/untargetability, rather than asserting all damage or defense is impossible. Comparing another target, remaining or moving is explicitly conditional and makes no safe-route claim.",
+        "The source describes charm and Death Mark mechanics, not stationary follow-up superiority. No kill, bait, poke or fixed Zed reappearance location is invented.",
+        "HOLD: No matching player-known POV/known-view receipt or independently observed action was supplied for this review. Counterexamples below are POSSIBLE_NOT_OBSERVED. Literal mechanics do not establish action utility, expert agreement, real-game accuracy, or USER approval."
+      ],
+      "counterexamples": [
+        "POSSIBLE_NOT_OBSERVED: Charm lands but Ahri is in lethal visible area damage or Death Mark danger; attacking from the same spot can still lose. Health/reach checks must be used to choose, not as proof that stationary follow-up is beneficial.",
+        "POSSIBLE_NOT_OBSERVED: One short forward move could permit a finishing attack while stationary follow-up cannot. The card should not be read as a permanent ban on a separately evaluated chase."
+      ],
+      "improvements": [
+        "Separates hit confirmation, targetability, stationary follow-up and chase.",
+        "Explicitly cancels the failed plan and gives several uncertain alternatives without promising safety."
+      ],
+      "needed_evidence": [
+        "Known-view charm, targetability, own-state, other visible threats and action evidence.",
+        "Compare stationary attack, movement and defense for the same decision conditions; retain HOLD meanwhile."
+      ],
+      "review_basis": "V1 wording review reused: actions unchanged; new v2 id/hash and explicit ALL/ANY/OPTIONS condition logic rechecked. No new tactical evidence."
+    },
+    {
+      "id": "QP-20261016-KR-008-v2",
+      "candidate_sha256": "462dc92eed77ea6e2d7d6b4a30f6f29b0b30f664424757b33d6bc73303c29a90",
+      "tactical_verdict": "HOLD",
+      "conditions_review": "PASS",
+      "reasons": [
+        "V2 removes the universal recoil-over-hit priority and asks to compare both. A1 choose_if requires time to compare; stop_if and fallback explicitly do not enforce the preparation procedure when it delays urgent defense.",
+        "The candidate destination remains a planned option, not a confirmed landing or future-visibility guarantee. Actual post-cast position is reassessed independently of net hit. Unknown recoil/collision/anchor geometry remains a stated limit.",
+        "Within this deliberate setup scope, visible trajectory and terrain are comparison inputs and neither another angle nor another path is promised safe. No net-hit escape or emergency dodge success is claimed.",
+        "HOLD: No matching known-view scene and independently observed action were supplied. Wording/condition review PASS is not factual promotion, tactical validation, expert agreement, real-game effect, coaching accuracy, or USER approval."
+      ],
+      "counterexamples": [
+        "POSSIBLE_NOT_OBSERVED: An anchor is already incoming and there is no time to inspect all candidate landing threats. Waiting to satisfy the post-recoil visibility gate may be worse than choosing an uncertain immediate input; no dodge success is asserted. V2 adds comparison/scope limits addressing this wording risk; it does not establish which action would win.",
+        "POSSIBLE_NOT_OBSERVED: Two angles have comparable recoil exposure but only one can land the slow. An absolute recoil-over-hit hierarchy can suppress relevant offensive/defensive value not evaluated by the card. V2 adds comparison/scope limits addressing this wording risk; it does not establish which action would win."
+      ],
+      "improvements": [
+        "Breaks vague danger into observable enemy, anchor and terrain considerations.",
+        "Separates pre-cast angle choice from post-cast actual-position reassessment.",
+        "Replaces an unsupported priority rule with a joint angle/destination comparison.",
+        "Adds time-available and no-emergency-delay limits while retaining actual post-cast reassessment."
+      ],
+      "needed_evidence": [
+        "발사 방향·반동 전후 위치·주변 시야·노틸러스 닻 경로가 함께 보이는 장면",
+        "반동 거리와 닻 판정·지형 충돌을 확인할 추가 근거",
+        "Matching pre-minute player-known POV, an independently observed action and separated generation/evaluation before any scene-level comparison. Preserve uncertain alternatives and current manual limits."
+      ],
+      "review_basis": "Focused v2 review of changed selection, exception and uncertainty wording; source-fact text and archives reused unchanged from v1."
+    },
+    {
+      "id": "QP-20261016-KR-015-v2",
+      "candidate_sha256": "cc521e0ef9c19211f816045418f1730b01a6aa6637faa5778cd02da181310f70",
+      "tactical_verdict": "HOLD",
+      "conditions_review": "PASS",
+      "reasons": [
+        "V2 resolves the blanket forward-pause defect: A1 now compares forward attack, current response and visible allied-side movement and explicitly forbids fixing retreat or no-forward solely from Sonic Wave hit.",
+        "The comparison requires time; both alternatives say not to wait for confirmation during urgent response. Visible allies remain candidate positions, without invented peel or protection. No movement is said to break the follow-up dash.",
+        "A2 requires actual use/expiry and new location/own-state checks. The quote establishes a conditional follow-up opportunity and missing-health damage, not superiority of any response.",
+        "HOLD: No matching known-view scene and independently observed action were supplied. Wording/condition review PASS is not factual promotion, tactical validation, expert agreement, real-game effect, coaching accuracy, or USER approval."
+      ],
+      "counterexamples": [
+        "POSSIBLE_NOT_OBSERVED: Moving forward reaches immediately available protection while moving toward the visible ally exposes the marked player to another visible threat. A1 lacks a purpose/threat comparison that would retain that forward option. V2 adds comparison/scope limits addressing this wording risk; it does not establish which action would win.",
+        "POSSIBLE_NOT_OBSERVED: An immediately available attack can remove a low-health Lee before a later response, whereas pausing loses that opportunity. This is a hypothetical decision alternative, not an observed kill or validated damage calculation. V2 adds comparison/scope limits addressing this wording risk; it does not establish which action would win."
+      ],
+      "improvements": [
+        "Separates first-hit damage from the remaining follow-up opportunity.",
+        "Requires actual use/expiry confirmation and retains uncertainty about movement breaking pursuit.",
+        "Retains forward attack as a candidate rather than preselecting passivity.",
+        "Adds urgent-response exceptions to both branches; still distinguishes first hit from follow-up opportunity."
+      ],
+      "needed_evidence": [
+        "음파 적중과 후속 이동 사용·종료, 리신 위치, 자기 체력과 대응 기술, 아군 위치가 함께 보이는 장면",
+        "전진·현재 자리 대응·아군 쪽 이동을 비교할 수 있는 조건별 기록",
+        "Matching pre-minute player-known POV, an independently observed action and separated generation/evaluation before any scene-level comparison. Preserve uncertain alternatives and current manual limits."
+      ],
+      "review_basis": "Focused v2 review of changed selection, exception and uncertainty wording; source-fact text and archives reused unchanged from v1."
+    },
+    {
+      "id": "QP-20261016-KR-021-v2",
+      "candidate_sha256": "a3dde5de6d1c8293f56380581d2923f17bdf2ce03c150f3c94d4cf4f7d84c293",
+      "tactical_verdict": "HOLD",
+      "conditions_review": "PASS",
+      "reasons": [
+        "A1 applies only after observing the anchor pass and a visible terrain point while own path heads toward it. It asks to reconsider and compare, rather than declaring every movement toward terrain wrong or another route safe.",
+        "A2 conditions its re-anchoring on actual terrain collision and actual Nautilus position. Unknown endpoints stay unknown; there is no fabricated automatic endpoint, hitbox or follow-up range.",
+        "Comparing current position to future access is an unvalidated tactical interpretation of the terrain-pull fact. Conditions wording is bounded enough for this hypothesis, with utility still on HOLD.",
+        "HOLD: No matching player-known POV/known-view receipt or independently observed action was supplied for this review. Counterexamples below are POSSIBLE_NOT_OBSERVED. Literal mechanics do not establish action utility, expert agreement, real-game accuracy, or USER approval."
+      ],
+      "counterexamples": [
+        "POSSIBLE_NOT_OBSERVED: Continuing toward the terrain point is necessary to reach an ally or avoid another visible threat. Reconsideration must leave that option available rather than treating the alternative as mandatory.",
+        "POSSIBLE_NOT_OBSERVED: A different visible movement candidate avoids Nautilus arrival but is worse against another threat. Mere nonoverlap with terrain access does not establish safety."
+      ],
+      "improvements": [
+        "Turns a generic path reminder into a specific currently chosen movement comparison.",
+        "Uses actual post-collision position and stops on changed collision/visibility."
+      ],
+      "needed_evidence": [
+        "Known-view trajectory, actual collision, own alternatives and other visible threats.",
+        "Independent observed action and conditional comparisons; no scene-derived effect is established."
+      ],
+      "review_basis": "V1 wording review reused: actions unchanged; new v2 id/hash and explicit ALL/ANY/OPTIONS condition logic rechecked. No new tactical evidence."
+    },
+    {
+      "id": "QP-20261016-KR-022-v2",
+      "candidate_sha256": "f1551273b8e980b35044f73f61850956abbce2b9bc7393ddea86bce6dc82fbc0",
+      "tactical_verdict": "HOLD",
+      "conditions_review": "PASS",
+      "reasons": [
+        "V2 resolves the universal-separation defect: A1 applies only when there is no separate proximity-dependent response/team plan and time exists to compare spacing. It explicitly does not prioritize separation in every case.",
+        "The stop_if now concerns new observed threats or lost proximity-dependent response, rather than rejecting mere visible enemies. A1/A2 also exclude imposing preparation/waiting on urgent response.",
+        "Target movement still invalidates a previously judged direction, and no fixed line, exact dodge, extra blast radius or safe endpoint is invented. Path knockup is a source fact; the spacing comparison remains an unvalidated proposal.",
+        "HOLD: No matching known-view scene and independently observed action were supplied. Wording/condition review PASS is not factual promotion, tactical validation, expert agreement, real-game effect, coaching accuracy, or USER approval."
+      ],
+      "counterexamples": [
+        "POSSIBLE_NOT_OBSERVED: The chosen defensive action requires remaining within reach of the targeted ally, and separation would prevent that mitigation. The excerpt cannot rank spreading over that plan. V2 adds comparison/scope limits addressing this wording risk; it does not establish which action would win.",
+        "POSSIBLE_NOT_OBSERVED: The only traversable candidate contains a visible distant enemy unable to threaten during the movement, while remaining overlaps the shockwave. Rejecting the candidate solely because an enemy is visible can be harmful. V2 adds comparison/scope limits addressing this wording risk; it does not establish which action would win."
+      ],
+      "improvements": [
+        "Tracks a moving target and current shockwave rather than assuming a fixed line.",
+        "Separates known target/path from uncertain join and disclaims definite avoidance direction.",
+        "Preserves deliberate ally-proximity mitigation/team-plan options.",
+        "Separates enemy visibility from actual threat and adds no-urgent-delay boundaries."
+      ],
+      "needed_evidence": [
+        "대상 표시, 충격파 경로 변화, 자기 위치·이동과 주변 적·아군 위치가 함께 보이는 장면",
+        "겹치는 이동과 다른 후보 이동을 비교할 수 있는 판정 폭·도착 범위 근거 및 기록",
+        "Matching pre-minute player-known POV, an independently observed action and separated generation/evaluation before any scene-level comparison. Preserve uncertain alternatives and current manual limits."
+      ],
+      "review_basis": "Focused v2 review of changed selection, exception and uncertainty wording; source-fact text and archives reused unchanged from v1."
+    },
+    {
+      "id": "QP-20261016-KR-026-v2",
+      "candidate_sha256": "044cd316c0c3af52bbd59c1a4927090e2fc3e4632c58640f52391587dd188d1c",
+      "tactical_verdict": "HOLD",
+      "conditions_review": "PASS",
+      "reasons": [
+        "V2 resolves the condition-logic defect: A2 has an explicit OR inside its first condition (unavailable, unknown availability, or unsuitable prior/current information) AND a separate time-to-plan condition. Top-level ALL/ANY/OPTIONS semantics are now explicit.",
+        "A1 requires planned next-segment movement without delaying needed immediate response; A2 again disclaims imposing scouting/check order on immediate defense. The conditional planning fallback is not an instruction to freeze in an emergency.",
+        "Actual revealed area, observation loss and changed enemy information are rechecked. No inferred ward coverage, invisibility detection, empty-route certainty, preferred camp, safe duration or guaranteed alternative route is added. Scouting purpose remains a tactical hypothesis, separate from the source scouting fact.",
+        "HOLD: No matching known-view scene and independently observed action were supplied. Wording/condition review PASS is not factual promotion, tactical validation, expert agreement, real-game effect, coaching accuracy, or USER approval."
+      ],
+      "counterexamples": [
+        "POSSIBLE_NOT_OBSERVED: Hawkshot is available but its actual revealed area fails to cover the segment; A2 text applies, but the unavailable/unknown choose_if does not. The list semantics create an uncovered branch. V2 adds comparison/scope limits addressing this wording risk; it does not establish which action would win.",
+        "POSSIBLE_NOT_OBSERVED: Ashe must leave an immediately dangerous current position through an uncertain segment and no visible alternative exists. Deferring all passage can be worse, although no uncertain route becomes safe by necessity. V2 adds comparison/scope limits addressing this wording risk; it does not establish which action would win."
+      ],
+      "improvements": [
+        "Connects scouting target to a concrete current movement purpose.",
+        "Separates actual revealed area, stale information, unavailability and Lee follow-up; no arbitrary safety time.",
+        "Covers information failure independently of skill unavailability with explicit OR/AND semantics.",
+        "Bounds scouting and deferral to planning decisions and preserves urgent response."
+      ],
+      "needed_evidence": [
+        "현재 이동 목적과 구간, 매 날리기 사용 가능 상태, 실제 관측 영역·시점·시야 소실·적 이동이 함께 보이는 장면",
+        "정찰 범위와 지속 시간을 확인할 추가 공식 근거",
+        "정찰 목표별로 이동 결정을 바꿀 수 있었는지 비교한 기록",
+        "Matching pre-minute player-known POV, an independently observed action and separated generation/evaluation before any scene-level comparison. Preserve uncertain alternatives and current manual limits."
+      ],
+      "review_basis": "Focused v2 review of changed selection, exception and uncertainty wording; source-fact text and archives reused unchanged from v1."
+    }
+  ]
+}
