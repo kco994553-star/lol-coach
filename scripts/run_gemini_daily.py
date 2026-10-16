@@ -190,6 +190,7 @@ def main(argv=None,*,entitlement_verifier=None,transport=None,clock=None,ack_ver
                 receipt['new_provider_requests']=1
                 result=state['events'][-1];receipt['reason']=result['classification'];receipt['accepted_claims']=result['safe_output'].get('accepted_claims',0)
                 receipt['http_status']=result['http_status'];receipt['classification']=result['classification']
+                receipt['request_http_success']=result['http_status']==200;receipt['response_shape']=result['safe_output'].get('response_shape')
                 error=result['safe_output'].get('provider_error',{})
                 for name in ('code','status','message'):receipt['provider_error_'+name]=error.get('error_'+name)
                 if stage=='VIDEO' and result['classification']=='VIDEO_SUCCESS_UNREVIEWED':

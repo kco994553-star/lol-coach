@@ -23,14 +23,14 @@ MODIFIED={'coach_v1/pc_coach.py','.github/workflows/private-mvp-ci.yml',
 CURRENT=MODIFIED|{
     'coach_v1/gemini_daily.py','scripts/run_gemini_daily.py','coach_v1/pov_metadata.py',
     'scripts/verify_pov_metadata.py','scripts/recover_resource_checkpoint.py','coach_v1/resource_recovery.py','coach_v1/resource_view.py',
-    'config/evidence_intake.json','config/pov_channels.json','contracts/actual-evidence-v1.md',
+    'config/evidence_intake.json','config/pov_channels.json','contracts/actual-evidence-v1.md','contracts/daily-text-response-v2.md',
     '.github/workflows/resource-recovery-offline.yml','scripts/verify_actual_evidence.py',
     'scripts/browser_actual_evidence.py','tests_expert/test_gemini_daily.py',
-    'tests_expert/test_pov_metadata.py','tests_expert/test_daily_migration.py','tests_expert/test_daily_review_fixes.py','tests_pregame/test_resource_recovery.py',
+    'tests_expert/test_pov_metadata.py','tests_expert/test_text_response_v2.py','tests_expert/test_daily_migration.py','tests_expert/test_daily_review_fixes.py','tests_pregame/test_resource_recovery.py',
     'tests_pregame/test_resource_view.py','tests_pregame/test_fixed_resource_checkpoint.py','tests_pregame/test_actual_evidence_binding.py',
     'docs/superpowers/plans/2026-10-16-actual-evidence.md',
 }
-TESTS=['tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
+TESTS=['tests_expert.test_text_response_v2','tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
        'tests_pregame.test_resource_recovery','tests_pregame.test_resource_view','tests_pregame.test_fixed_resource_checkpoint',
        'tests_pregame.test_actual_evidence_binding']
 DATA_ROOTS=['data/resource_recovery/2026-10-16','data/pov_metadata/2026-10-16']

@@ -24,7 +24,7 @@ no repeated design/permission or completed baseline tests. Main owns integration
   exports89/108 safe aggregates and always removes plaintext.
 - [x] Integrate measured-time resource display while preserving PC launch/LCU/
   fallback paths. New scoped browser checks; no WindowsLCU completion claim.
-- [ ] New delta verifier/source amendment, inherited CI reuse, independent review,
+- [x] New delta verifier/source amendment, inherited CI reuse, independent review,
   required3checks/expectedhead normal merge. Trusted actualdaily/offline dispatch,
   import only safe artifacts; record 200/extraction/review independently.
 - [ ] Publish result followup through requiredCI, verify postmain, report candidates/
@@ -44,3 +44,7 @@ observations may include final received frame<=reportedend; this does not change
 recall interval exclusion. Fixed checkpoint is fetched by exact IDs/source metadata,
 not selected as latest then rejected. Four review P2s addressed before provider
 execution with new RED/GREEN cases; no deferred minor findings.
+
+Actual execution: offline resource/POV metadata run38895508259; first daily pre-request
+recovery failure38895512381 retained; actual TEXT run38897072108 oneHTTP200 malformed,
+VIDEO0. Narrowv2 reviewed/tested for futureday only; no further livecall today.
