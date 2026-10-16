@@ -10,7 +10,7 @@ than3combined VIDEO calls/day including prior1; preserve every full-duration cha
 - [x] TDD pure payload, safe errors, sharedpolicy, v2legacy-prefix/phase recovery,
   trusted phasedCLI and sameexistingworkflow route; no extraTEXT or provider calls.
 - [x] Independent code/safety review; affected-only checks/normal gatedmerge/postmain.
-- [ ] Actualstage1 withmetadata/fullcharge/ACK; import safe actual output and separate
+- [x] Actualstage1 withmetadata/fullcharge/ACK; import safe actual output and separate
   contentreview beforeany nextstage. Ifstage1passes, stage2URLonly within todaylimit.
   Failureholds and is never converted into a model/project/restriction cause.
 - [ ] Publish actualstage/day/token/ledger/results and next unexecuted/review/failed
