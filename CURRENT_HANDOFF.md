@@ -5,6 +5,17 @@
 - owner_branch: `work/gemini-format-20261017`
 - authority: USER_GEMINI_DIAGNOSTIC_EXCEPTION_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
 - intake_main: `25b9682cfcdaff7ded97e42887d5f14c9245e5f0`
+- detail: Actual results independently audited: TEXT1/5completeSTOP usage66,VIDEO1HTTP400unknownarg full1102scharged, no retries. Safe source/archive prefixes checked, performance3matched, resource108/89 evidence reused. Publish result-only PR45; no moreprovider calls.
+
+---
+
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-gemini-format`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/gemini-format-20261017`
+- authority: USER_GEMINI_DIAGNOSTIC_EXCEPTION_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `25b9682cfcdaff7ded97e42887d5f14c9245e5f0`
 - detail: Actual38977859350 finished at01294e8: TEXT1 HTTP200/STOP complete+usage66, diagnosticended normal1guard; VIDEO1 HTTP400 INVALID_ARGUMENT, no retry/refund. Import safe receipts, reconcile prefixes/fulloriginalcharge, investigate video request offline only.
 
 ---
