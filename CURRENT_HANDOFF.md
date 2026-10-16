@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-video-step`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/video-api-diagnostic-20261017`
+- authority: USER_VIDEO_STEP_DIAGNOSTIC_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `0ad505b09a7e378c9a898f4e91208adbd6ce72c1`
+- detail: FinalPR48 required38983213967/38983213897 all3SUCCESS; independentstage2publicationGO; verifyingexpectedhead/tree thennormalmerge; nofurtherprovidercalls.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261017-video-step`
 - status: `CI_PENDING`
