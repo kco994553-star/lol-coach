@@ -1,3 +1,67 @@
+된 것: 조언 7개에 선택 조건·중단 조건·불확실할 때 대안을 붙였습니다.
+된 것: 기존 프로 참고 89경기 원본을 오프라인으로 확인했고 새 경기 수집은 없었습니다.
+보류: 새 7개는 미검토 가설이며 기존 20개 보류도 그대로입니다.
+안 된 것: 판단 당시 화면·시야가 없어 과거 장면 평가와 행동 일치 판정은 0개입니다.
+내가 할 것: 지금 추가 승인이나 자료 수집은 필요 없습니다. 전체 30개 확대는 이번 결과 확인 뒤 정합니다.
+
+# Small coaching-quality pilot — actual existing-cache results (2026-10-16)
+
+Implementation PR39 normally merged as68d6a94acfc27bfcf223372bb950b97422c8dbfb,
+exact tree2313464661a4e3345977ee7bf26abd420dbf0e77. PR required runs38890287880/
+38890288557 and postmain38890469302/38890469300: all3jobsSUCCESS each. These
+pilot-only29tests and actual PC Chromium receipt are reused for this result-only
+publication; completedv2.3tests were not rerun. Independent source/condition and
+whole-branch reviews retained, final review issues addressed without weakening gates.
+
+Exactly7 revisions KR001/005/008/015/021/022/026, selected from prior random5 plus
+purpose3(overlap008). All have separate SKILL_INTERACTION topic and HYPOTHESIS
+evidence level. Seven source-fact checks PASS and seven conditional-wording checks
+PASS; tactical interpretations7HOLD, real-game effect NOT_ASSESSED. No new AUTO or
+USER approval; legacy AUTO30 and HOLD20 unchanged. Original and first-draft text,
+source/counter reviews, objections and prior holds preserved. Full exact before/
+after text: evidence/quality-pilot/comparison.md. Additional wording is a conditional
+choice framework, not demonstrated optimal play. No whole30 expansion yet.
+
+Existing data remain distinct: Q15 same275matches(public852/full6090cohorts),
+recallCH291matches/2910participant observations, recordedPRO89/108. Q15/CH raw not
+locally retained; no aggregate scene reconstruction. Q15 full MATCHUP sampled-bin
+gold is absolute difference, not public ROLE_POPULATION rate. Existing Caitlyn/
+Ezreal10/15 n5 remains omitted CI_TOO_WIDE; Ornn/Fiora and Ahri/Zed matchup cohorts
+unavailable. Position supplementation is not matchup evidence.
+
+Actual offline run38890469607 attempt1 SUCCESS, trustedmain68d6a94, restored ONLY
+existing encrypted checkpoint run38410710876/artifact11822391323. During extraction,
+socket connections denied; provider requests0/network attempts0, no Riot or paid
+calls. Only anonymous allowlisted report/binding downloaded: artifact12041212904.
+Independent offline-audit-review.md reconciles ZIP bytes, report SHA, all9source
+hashes,89distinctmatches/108selected participant observations and output totals.
+Patch16.19:13matches/13selected;16.20:76/95. OlderPRO87/106 is not added.
+
+Direct received observations:2384frames/23840participant frames; LEVEL_UP11448,
+duplicate signatures0; SKILL_LEVEL_UP12596, duplicates11, separately counted.
+Malformed LEVEL_UP39 conservatively invalidate affected participant histories;
+missing does not mean level did not occur. Both level2/3:16.19 own exact10/13,
+opponent11/13;16.20 own92/95 and opponent92/95; no frame fallback used this run.
+Strict disjoint intervals alone establish order; equality/overlap/invalid history
+UNKNOWN. Marginal timing summaries never reconstruct scenes or optimal entry timing.
+Exact paired10/15min totalGold valid0/missing108 EACH; this is unavailable paired
+evidence, not zero difference. Missing reasons are not separately partitioned.
+Selected JUNGLE20, first observed lane kill/assist involvement20(TOP4/MID8/BOTTOM8).
+Kill involvement is observed; lane attribution uses position geometry. Firstgank,
+arrival and nonlethal ganks remain unidentifiable. New first-matchup-kill and recall
+refinement were NOT_COMPUTED here; prior purchase-based recall remains a proxy.
+
+No matched known-view/POV video, wave state, exact cooldowns or player intent.
+Eligible/selected/evaluated individual scenes0; exclusion count is not fabricated
+from89matches, agreement=null rather than0percent. Instead all7 revisions received
+condition/exception/counterexample review. Tactical usefulness and real-game effect
+remain unvalidated; source checks do not establish professional/expert approval.
+Result-only source/data/preserved binding checks and normal expected-head merge
+still apply; future CI success is not asserted here. No READY collection/retry,
+paid call, protected issue write or user review burden is created by this report.
+
+---
+
 된 것: 기존 품질 평가의 고유 조언 7개를 별도 가설 버전으로 구체화했습니다.
 된 것: 조건·중단·대안을 나눴고 원문·승인·기존 20개 보류는 보존했습니다.
 보류: 새 7개 전술 해석은 HOLD이며 출처 확인·조건 검토를 효과 검증으로 보지 않습니다.
