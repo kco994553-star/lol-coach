@@ -1,10 +1,12 @@
 """PC projection of source-bound observed resource samples; never tactical advice."""
 from functools import lru_cache
+from threading import RLock
 from pathlib import Path
 from .resource_recovery import load_bound_report,SOURCE_FILES
 
 ROOT=Path(__file__).resolve().parents[1]
 DEFAULT=ROOT/'data/resource_recovery/2026-10-16'
+_LOAD_LOCK=RLock()
 
 
 def render_cards(report,binding,draft):
@@ -52,6 +54,6 @@ def cards_for_draft(draft,directory=DEFAULT):
     try:
         paths=[folder/'resources.json',folder/'source-binding.json',*[ROOT/p for p in SOURCE_FILES]]
         stamp=tuple((p.stat().st_mtime_ns,p.stat().st_size) for p in paths)
-        report,binding=_snapshot(str(folder),stamp)
+        with _LOAD_LOCK:report,binding=_snapshot(str(folder),stamp)
         return render_cards(report,binding,draft)
     except (OSError,ValueError):return []

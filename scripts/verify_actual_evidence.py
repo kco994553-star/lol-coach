@@ -26,11 +26,11 @@ CURRENT=MODIFIED|{
     'config/evidence_intake.json','config/pov_channels.json','contracts/actual-evidence-v1.md',
     '.github/workflows/resource-recovery-offline.yml','scripts/verify_actual_evidence.py',
     'scripts/browser_actual_evidence.py','tests_expert/test_gemini_daily.py',
-    'tests_expert/test_pov_metadata.py','tests_expert/test_daily_review_fixes.py','tests_pregame/test_resource_recovery.py',
+    'tests_expert/test_pov_metadata.py','tests_expert/test_daily_migration.py','tests_expert/test_daily_review_fixes.py','tests_pregame/test_resource_recovery.py',
     'tests_pregame/test_resource_view.py','tests_pregame/test_fixed_resource_checkpoint.py','tests_pregame/test_actual_evidence_binding.py',
     'docs/superpowers/plans/2026-10-16-actual-evidence.md',
 }
-TESTS=['tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
+TESTS=['tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
        'tests_pregame.test_resource_recovery','tests_pregame.test_resource_view','tests_pregame.test_fixed_resource_checkpoint',
        'tests_pregame.test_actual_evidence_binding']
 DATA_ROOTS=['data/resource_recovery/2026-10-16','data/pov_metadata/2026-10-16']
@@ -114,6 +114,25 @@ def affected_code_changed():
     return bool(changed&(executable|content))
 
 
+def selected_tests():
+    path=os.environ.get('GITHUB_EVENT_PATH')
+    if not path:return TESTS
+    event=json.loads(Path(path).read_text());before=event.get('pull_request',{}).get('base',{}).get('sha') or event.get('before')
+    if not before or set(before)=={'0'}:return TESTS
+    changed=set(git('diff','--name-only',before,'HEAD').decode().splitlines())
+    groups={
+        'tests_expert.test_daily_migration':{'scripts/collect_expert_claims.py'},
+        'tests_expert.test_daily_review_fixes':{'coach_v1/gemini_daily.py','scripts/run_gemini_daily.py'},
+        'tests_expert.test_gemini_daily':{'coach_v1/gemini_daily.py','scripts/run_gemini_daily.py','config/evidence_intake.json','.github/workflows/expert-video-collection.yml'},
+        'tests_expert.test_pov_metadata':{'coach_v1/pov_metadata.py','scripts/verify_pov_metadata.py','config/pov_channels.json','.github/workflows/resource-recovery-offline.yml'},
+        'tests_pregame.test_resource_recovery':{'coach_v1/resource_recovery.py','.github/workflows/resource-recovery-offline.yml'},
+        'tests_pregame.test_resource_view':{'coach_v1/resource_view.py','coach_v1/pc_coach.py'},
+        'tests_pregame.test_fixed_resource_checkpoint':{'scripts/recover_resource_checkpoint.py'},
+        'tests_pregame.test_actual_evidence_binding':{'scripts/verify_actual_evidence.py'},
+    }
+    return [t for t in TESTS if changed & (groups.get(t,set())|{t.replace('.','/')+'.py'})]
+
+
 def verify():
     b=json.loads((ROOT/SEAL).read_text());parent=base_hashes()
     inventory=set(git('ls-files','--cached','--others','--exclude-standard','-z').decode().split('\0'))-{''}
@@ -157,8 +176,9 @@ def main():
     report=verify();code=0;report['new_tests_executed']=False
     if report['status']=='PASS' and args.tests:
         if affected_code_changed():
-            report['new_tests_executed']=True
-            code=subprocess.run([sys.executable,'-m','unittest','-v',*TESTS],cwd=ROOT).returncode
+            report['selected_test_modules']=selected_tests()
+            report['new_tests_executed']=bool(report['selected_test_modules'])
+            if report['new_tests_executed']:code=subprocess.run([sys.executable,'-m','unittest','-v',*report['selected_test_modules']],cwd=ROOT).returncode
         else:report['unchanged_evidence_tests_reused']=True
     report['new_tests_exit_code']=code
     print(json.dumps(report,indent=2));return 0 if report['status']=='PASS' and code==0 else 1
