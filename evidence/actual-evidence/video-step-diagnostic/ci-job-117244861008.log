@@ -1,0 +1,412 @@
+﻿2026-10-16T23:33:12.4586348Z Current runner version: '2.337.0'
+2026-10-16T23:33:12.4606552Z ##[group]Runner Image Provisioner
+2026-10-16T23:33:12.4607363Z Hosted Compute Agent
+2026-10-16T23:33:12.4607849Z Version: 20261012.601
+2026-10-16T23:33:12.4608441Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-16T23:33:12.4609035Z Build Date: 2026-10-12T17:48:21Z
+2026-10-16T23:33:12.4609566Z Worker ID: {85dc58c4-ac2a-4139-9d06-f14e10349060}
+2026-10-16T23:33:12.4610224Z Region: westus
+2026-10-16T23:33:12.4610671Z Cloud: Azure
+2026-10-16T23:33:12.4611133Z ##[endgroup]
+2026-10-16T23:33:12.4612484Z ##[group]Operating System
+2026-10-16T23:33:12.4613002Z Ubuntu
+2026-10-16T23:33:12.4613530Z 24.04.5
+2026-10-16T23:33:12.4614079Z LTS
+2026-10-16T23:33:12.4614561Z ##[endgroup]
+2026-10-16T23:33:12.4615025Z ##[group]Runner Image
+2026-10-16T23:33:12.4615513Z Image: ubuntu-24.04
+2026-10-16T23:33:12.4616042Z Version: 20261012.334.1
+2026-10-16T23:33:12.4617066Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-16T23:33:12.4618316Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-16T23:33:12.4619082Z ##[endgroup]
+2026-10-16T23:33:12.4620020Z ##[group]GITHUB_TOKEN Permissions
+2026-10-16T23:33:12.4621515Z Contents: read
+2026-10-16T23:33:12.4622309Z Metadata: read
+2026-10-16T23:33:12.4622792Z ##[endgroup]
+2026-10-16T23:33:12.4624461Z Secret source: Actions
+2026-10-16T23:33:12.4625318Z Cache mode: write
+2026-10-16T23:33:12.4625854Z Prepare workflow directory
+2026-10-16T23:33:12.4883227Z Prepare all required actions
+2026-10-16T23:33:12.4921140Z Getting action download info
+2026-10-16T23:33:12.8286916Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-16T23:33:12.9553174Z Download action repository 'actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97' (SHA:5fda3b95a4ea91299a34e894583c3862153e4b97)
+2026-10-16T23:33:13.1726734Z Complete job name: regression
+2026-10-16T23:33:13.2560023Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-10-16T23:33:13.2561345Z with:
+2026-10-16T23:33:13.2562211Z   persist-credentials: false
+2026-10-16T23:33:13.2562680Z   fetch-depth: 0
+2026-10-16T23:33:13.2563266Z   repository: kco994553-star/lol-coach
+2026-10-16T23:33:13.2568094Z   token: ***
+2026-10-16T23:33:13.2568835Z   ssh-strict: true
+2026-10-16T23:33:13.2569400Z   ssh-user: git
+2026-10-16T23:33:13.2569778Z   clean: true
+2026-10-16T23:33:13.2570172Z   sparse-checkout-cone-mode: true
+2026-10-16T23:33:13.2570602Z   fetch-tags: false
+2026-10-16T23:33:13.2571443Z   show-progress: true
+2026-10-16T23:33:13.2572088Z   lfs: false
+2026-10-16T23:33:13.2572445Z   submodules: false
+2026-10-16T23:33:13.2572946Z   set-safe-directory: true
+2026-10-16T23:33:13.2573590Z   allow-unsafe-pr-checkout: false
+2026-10-16T23:33:13.2574282Z ##[endgroup]
+2026-10-16T23:33:13.3421137Z Syncing repository: kco994553-star/lol-coach
+2026-10-16T23:33:13.3423623Z ##[group]Getting Git version info
+2026-10-16T23:33:13.3424556Z Working directory is '/home/runner/work/lol-coach/lol-coach'
+2026-10-16T23:33:13.3425897Z [command]/usr/bin/git version
+2026-10-16T23:33:13.3703664Z git version 2.55.0
+2026-10-16T23:33:13.3706196Z ##[endgroup]
+2026-10-16T23:33:13.3713947Z Temporarily overriding HOME='/home/runner/work/_temp/bace682a-5c67-419f-9e2f-b028be899f8b' before making global git config changes
+2026-10-16T23:33:13.3715728Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T23:33:13.3717184Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/lol-coach/lol-coach
+2026-10-16T23:33:13.3755799Z Deleting the contents of '/home/runner/work/lol-coach/lol-coach'
+2026-10-16T23:33:13.3775119Z ##[group]Determining repository object format
+2026-10-16T23:33:13.3776635Z ##[endgroup]
+2026-10-16T23:33:13.3803314Z ##[group]Initializing the repository
+2026-10-16T23:33:13.3817627Z [command]/usr/bin/git init /home/runner/work/lol-coach/lol-coach
+2026-10-16T23:33:13.3853999Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-16T23:33:13.3857312Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-16T23:33:13.3858823Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-16T23:33:13.3859744Z hint: call:
+2026-10-16T23:33:13.3860238Z hint:
+2026-10-16T23:33:13.3860868Z hint: 	git config --global init.defaultBranch <name>
+2026-10-16T23:33:13.3861642Z hint:
+2026-10-16T23:33:13.3862505Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-16T23:33:13.3863681Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-16T23:33:13.3864623Z hint:
+2026-10-16T23:33:13.3865136Z hint: 	git branch -m <name>
+2026-10-16T23:33:13.3865732Z hint:
+2026-10-16T23:33:13.3866503Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-16T23:33:13.3867797Z Initialized empty Git repository in /home/runner/work/lol-coach/lol-coach/.git/
+2026-10-16T23:33:13.3869957Z [command]/usr/bin/git remote add origin https://github.com/kco994553-star/lol-coach
+2026-10-16T23:33:13.3920042Z ##[endgroup]
+2026-10-16T23:33:13.3921268Z ##[group]Disabling automatic garbage collection
+2026-10-16T23:33:13.3922950Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-16T23:33:13.3955975Z ##[endgroup]
+2026-10-16T23:33:13.3956917Z ##[group]Setting up auth
+2026-10-16T23:33:13.3957568Z Removing SSH command configuration
+2026-10-16T23:33:13.3960768Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T23:33:13.3991368Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T23:33:13.4263172Z Removing HTTP extra header
+2026-10-16T23:33:13.4267916Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T23:33:13.4298925Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T23:33:13.4496840Z Removing includeIf entries pointing to credentials config files
+2026-10-16T23:33:13.4500608Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T23:33:13.4535635Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T23:33:13.4723462Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-382f5e43-7fa0-4300-ab65-50e650ff7c8f.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-16T23:33:13.4756229Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/lol-coach/lol-coach/.git.path /home/runner/work/_temp/git-credentials-382f5e43-7fa0-4300-ab65-50e650ff7c8f.config
+2026-10-16T23:33:13.4784718Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/lol-coach/lol-coach/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-382f5e43-7fa0-4300-ab65-50e650ff7c8f.config
+2026-10-16T23:33:13.4815353Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-382f5e43-7fa0-4300-ab65-50e650ff7c8f.config
+2026-10-16T23:33:13.4844573Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-382f5e43-7fa0-4300-ab65-50e650ff7c8f.config
+2026-10-16T23:33:13.4870755Z ##[endgroup]
+2026-10-16T23:33:13.4871388Z ##[group]Fetching the repository
+2026-10-16T23:33:13.4876736Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +bb601a8602b6dd9e646e636eb32f9d1ad6a8509e:refs/remotes/pull/46/merge
+2026-10-16T23:33:17.0442736Z From https://github.com/kco994553-star/lol-coach
+2026-10-16T23:33:17.0443914Z  * [new branch]      chore/riot-txt-verification              -> origin/chore/riot-txt-verification
+2026-10-16T23:33:17.0445056Z  * [new branch]      feat/knowledge-user-review-2026-10-09    -> origin/feat/knowledge-user-review-2026-10-09
+2026-10-16T23:33:17.0446221Z  * [new branch]      feat/manual-draft-capture-2026-10-05     -> origin/feat/manual-draft-capture-2026-10-05
+2026-10-16T23:33:17.0447359Z  * [new branch]      feat/manual-draft-retry-safety-2026-10-05 -> origin/feat/manual-draft-retry-safety-2026-10-05
+2026-10-16T23:33:17.0449664Z  * [new branch]      feat/note-history-draft-recovery-2026-10-05 -> origin/feat/note-history-draft-recovery-2026-10-05
+2026-10-16T23:33:17.0451365Z  * [new branch]      feat/queue-gameplan-v1.1-2026-10-11      -> origin/feat/queue-gameplan-v1.1-2026-10-11
+2026-10-16T23:33:17.0452837Z  * [new branch]      feat/queue-knowledge-expansion-2026-10-11 -> origin/feat/queue-knowledge-expansion-2026-10-11
+2026-10-16T23:33:17.0453938Z  * [new branch]      feat/queue-v1.3-2026-10-11               -> origin/feat/queue-v1.3-2026-10-11
+2026-10-16T23:33:17.0454981Z  * [new branch]      feat/research-note-history-2026-10-05    -> origin/feat/research-note-history-2026-10-05
+2026-10-16T23:33:17.0456235Z  * [new branch]      feat/source-bound-knowledge-proposals-2026-10-05 -> origin/feat/source-bound-knowledge-proposals-2026-10-05
+2026-10-16T23:33:17.0457480Z  * [new branch]      fix/mvp-import-selection-2026-10-05      -> origin/fix/mvp-import-selection-2026-10-05
+2026-10-16T23:33:17.0458629Z  * [new branch]      fix/research-navigation-delete-2026-10-05 -> origin/fix/research-navigation-delete-2026-10-05
+2026-10-16T23:33:17.0459811Z  * [new branch]      fix/research-save-error-scope-2026-10-05 -> origin/fix/research-save-error-scope-2026-10-05
+2026-10-16T23:33:17.0461032Z  * [new branch]      fix/research-source-bytes-2026-10-05     -> origin/fix/research-source-bytes-2026-10-05
+2026-10-16T23:33:17.0462587Z  * [new branch]      main                                     -> origin/main
+2026-10-16T23:33:17.0463457Z  * [new branch]      work/api-diagnostics-20261011            -> origin/work/api-diagnostics-20261011
+2026-10-16T23:33:17.0464502Z  * [new branch]      work/evidence-acquisition-20261016       -> origin/work/evidence-acquisition-20261016
+2026-10-16T23:33:17.0465527Z  * [new branch]      work/gemini-format-20261017              -> origin/work/gemini-format-20261017
+2026-10-16T23:33:17.0466518Z  * [new branch]      work/main-execution-claim                -> origin/work/main-execution-claim
+2026-10-16T23:33:17.0467603Z  * [new branch]      work/practical-knowledge-review-20261014 -> origin/work/practical-knowledge-review-20261014
+2026-10-16T23:33:17.0468750Z  * [new branch]      work/pro-reference-results-20261013      -> origin/work/pro-reference-results-20261013
+2026-10-16T23:33:17.0469834Z  * [new branch]      work/pro-reference-resume-20261013       -> origin/work/pro-reference-resume-20261013
+2026-10-16T23:33:17.0470850Z  * [new branch]      work/q15-q19-acquisition                 -> origin/work/q15-q19-acquisition
+2026-10-16T23:33:17.0472308Z  * [new branch]      work/q19-static-segments                 -> origin/work/q19-static-segments
+2026-10-16T23:33:17.0473348Z  * [new branch]      work/quality-pilot-20261016              -> origin/work/quality-pilot-20261016
+2026-10-16T23:33:17.0474273Z  * [new branch]      work/queue-diagnosis-closeout            -> origin/work/queue-diagnosis-closeout
+2026-10-16T23:33:17.0475154Z  * [new branch]      work/queue-diagnosis-final               -> origin/work/queue-diagnosis-final
+2026-10-16T23:33:17.0476032Z  * [new branch]      work/queue-segments-closeout             -> origin/work/queue-segments-closeout
+2026-10-16T23:33:17.0476969Z  * [new branch]      work/queue-v14-closeout                  -> origin/work/queue-v14-closeout
+2026-10-16T23:33:17.0477993Z  * [new branch]      work/queue-v16-closeout                  -> origin/work/queue-v16-closeout
+2026-10-16T23:33:17.0479065Z  * [new branch]      work/queue-v16-evidence                  -> origin/work/queue-v16-evidence
+2026-10-16T23:33:17.0479860Z  * [new branch]      work/queue-v20-20261013                  -> origin/work/queue-v20-20261013
+2026-10-16T23:33:17.0480723Z  * [new branch]      work/queue-v20-closeout-20261013         -> origin/work/queue-v20-closeout-20261013
+2026-10-16T23:33:17.0482209Z  * [new branch]      work/queue-v21-20261015                  -> origin/work/queue-v21-20261015
+2026-10-16T23:33:17.0483483Z  * [new branch]      work/queue-v23-20261015                  -> origin/work/queue-v23-20261015
+2026-10-16T23:33:17.0484817Z  * [new branch]      work/real-aggregate-closeout-20261011    -> origin/work/real-aggregate-closeout-20261011
+2026-10-16T23:33:17.0486404Z  * [new branch]      work/reference-first-20261014            -> origin/work/reference-first-20261014
+2026-10-16T23:33:17.0487923Z  * [new branch]      work/ua-generatecontent-20261011         -> origin/work/ua-generatecontent-20261011
+2026-10-16T23:33:17.0489544Z  * [new branch]      work/video-api-diagnostic-20261017       -> origin/work/video-api-diagnostic-20261017
+2026-10-16T23:33:17.0490982Z  * [new ref]         bb601a8602b6dd9e646e636eb32f9d1ad6a8509e -> pull/46/merge
+2026-10-16T23:33:17.0493824Z ##[endgroup]
+2026-10-16T23:33:17.0494767Z ##[group]Determining the checkout info
+2026-10-16T23:33:17.0495806Z ##[endgroup]
+2026-10-16T23:33:17.0496461Z [command]/usr/bin/git sparse-checkout disable
+2026-10-16T23:33:17.0543873Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-16T23:33:17.0575070Z ##[group]Checking out the ref
+2026-10-16T23:33:17.0575846Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/46/merge
+2026-10-16T23:33:17.5864812Z Note: switching to 'refs/remotes/pull/46/merge'.
+2026-10-16T23:33:17.5865666Z 
+2026-10-16T23:33:17.5866125Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-16T23:33:17.5867523Z changes and commit them, and you can discard any commits you make in this
+2026-10-16T23:33:17.5868593Z state without impacting any branches by switching back to a branch.
+2026-10-16T23:33:17.5869174Z 
+2026-10-16T23:33:17.5869603Z If you want to create a new branch to retain commits you create, you may
+2026-10-16T23:33:17.5870605Z do so (now or later) by using -c with the switch command. Example:
+2026-10-16T23:33:17.5889827Z 
+2026-10-16T23:33:17.5890295Z   git switch -c <new-branch-name>
+2026-10-16T23:33:17.5890927Z 
+2026-10-16T23:33:17.5891255Z Or undo this operation with:
+2026-10-16T23:33:17.5891736Z 
+2026-10-16T23:33:17.5892169Z   git switch -
+2026-10-16T23:33:17.5892564Z 
+2026-10-16T23:33:17.5893208Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-16T23:33:17.5894017Z 
+2026-10-16T23:33:17.5895102Z HEAD is now at bb601a8 Merge 06d20881b8b4a56d9122c8246b3df81d64a1005a into 0ad505b09a7e378c9a898f4e91208adbd6ce72c1
+2026-10-16T23:33:17.5898421Z ##[endgroup]
+2026-10-16T23:33:17.5934153Z [command]/usr/bin/git log -1 --format=%H
+2026-10-16T23:33:17.5958024Z bb601a8602b6dd9e646e636eb32f9d1ad6a8509e
+2026-10-16T23:33:17.6020626Z ##[group]Removing auth
+2026-10-16T23:33:17.6021649Z Removing SSH command configuration
+2026-10-16T23:33:17.6023414Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T23:33:17.6028263Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T23:33:17.6197137Z Removing HTTP extra header
+2026-10-16T23:33:17.6199670Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T23:33:17.6232043Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T23:33:17.6423690Z Removing includeIf entries pointing to credentials config files
+2026-10-16T23:33:17.6426177Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T23:33:17.6450692Z includeif.gitdir:/home/runner/work/lol-coach/lol-coach/.git.path
+2026-10-16T23:33:17.6453799Z includeif.gitdir:/home/runner/work/lol-coach/lol-coach/.git/worktrees/*.path
+2026-10-16T23:33:17.6456412Z includeif.gitdir:/github/workspace/.git.path
+2026-10-16T23:33:17.6458650Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-16T23:33:17.6463846Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/lol-coach/lol-coach/.git.path
+2026-10-16T23:33:17.6483295Z /home/runner/work/_temp/git-credentials-382f5e43-7fa0-4300-ab65-50e650ff7c8f.config
+2026-10-16T23:33:17.6491115Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/lol-coach/lol-coach/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-382f5e43\-7fa0\-4300\-ab65\-50e650ff7c8f\.config
+2026-10-16T23:33:17.6522786Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/lol-coach/lol-coach/.git/worktrees/*.path
+2026-10-16T23:33:17.6545360Z /home/runner/work/_temp/git-credentials-382f5e43-7fa0-4300-ab65-50e650ff7c8f.config
+2026-10-16T23:33:17.6559918Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/lol-coach/lol-coach/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-382f5e43\-7fa0\-4300\-ab65\-50e650ff7c8f\.config
+2026-10-16T23:33:17.6589661Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-16T23:33:17.6610941Z /github/runner_temp/git-credentials-382f5e43-7fa0-4300-ab65-50e650ff7c8f.config
+2026-10-16T23:33:17.6619157Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-382f5e43\-7fa0\-4300\-ab65\-50e650ff7c8f\.config
+2026-10-16T23:33:17.6656192Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-16T23:33:17.6677566Z /github/runner_temp/git-credentials-382f5e43-7fa0-4300-ab65-50e650ff7c8f.config
+2026-10-16T23:33:17.6688480Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-382f5e43\-7fa0\-4300\-ab65\-50e650ff7c8f\.config
+2026-10-16T23:33:17.6718109Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T23:33:17.6905747Z Removing credentials config '/home/runner/work/_temp/git-credentials-382f5e43-7fa0-4300-ab65-50e650ff7c8f.config'
+2026-10-16T23:33:17.6912723Z ##[endgroup]
+2026-10-16T23:33:17.7123664Z ##[group]Run if [[ -f contracts/actual-evidence-v1.md ]]; then
+2026-10-16T23:33:17.7125442Z [36;1mif [[ -f contracts/actual-evidence-v1.md ]]; then[0m
+2026-10-16T23:33:17.7127004Z [36;1m  echo 'mode=evidence' >> "$GITHUB_OUTPUT"[0m
+2026-10-16T23:33:17.7128648Z [36;1melif [[ -f contracts/coaching-quality-pilot-v1.md ]]; then[0m
+2026-10-16T23:33:17.7130324Z [36;1m  echo 'mode=pilot' >> "$GITHUB_OUTPUT"[0m
+2026-10-16T23:33:17.7132529Z [36;1melif [[ -f contracts/queue-v23.md || -f contracts/amendments/2026-10-15-queue-v23.json ]]; then[0m
+2026-10-16T23:33:17.7134628Z [36;1m  echo 'mode=v23' >> "$GITHUB_OUTPUT"[0m
+2026-10-16T23:33:17.7135874Z [36;1melse[0m
+2026-10-16T23:33:17.7136916Z [36;1m  echo 'mode=historical' >> "$GITHUB_OUTPUT"[0m
+2026-10-16T23:33:17.7138203Z [36;1mfi[0m
+2026-10-16T23:33:17.7329091Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-16T23:33:17.7330537Z ##[endgroup]
+2026-10-16T23:33:17.7612982Z ##[group]Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+2026-10-16T23:33:17.7614274Z with:
+2026-10-16T23:33:17.7614971Z   python-version: 3.12
+2026-10-16T23:33:17.7615757Z   check-latest: false
+2026-10-16T23:33:17.7623300Z   token: ***
+2026-10-16T23:33:17.7624046Z   update-environment: true
+2026-10-16T23:33:17.7625052Z   allow-prereleases: false
+2026-10-16T23:33:17.7625859Z   freethreaded: false
+2026-10-16T23:33:17.7626635Z ##[endgroup]
+2026-10-16T23:33:17.8570834Z ##[group]Installed versions
+2026-10-16T23:33:17.8932696Z Successfully set up CPython (3.12.15)
+2026-10-16T23:33:17.8934409Z ##[endgroup]
+2026-10-16T23:33:17.9100856Z ##[group]Run python -m pip install --disable-pip-version-check -r requirements-r3.txt
+2026-10-16T23:33:17.9102968Z [36;1mpython -m pip install --disable-pip-version-check -r requirements-r3.txt[0m
+2026-10-16T23:33:17.9184379Z shell: /usr/bin/bash -e {0}
+2026-10-16T23:33:17.9185438Z env:
+2026-10-16T23:33:17.9186517Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T23:33:17.9188101Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T23:33:17.9189663Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T23:33:17.9191111Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T23:33:17.9192732Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T23:33:17.9194204Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T23:33:17.9195462Z ##[endgroup]
+2026-10-16T23:33:19.4442569Z Collecting pydantic==2.13.5 (from -r requirements-r3.txt (line 2))
+2026-10-16T23:33:19.5055820Z   Downloading pydantic-2.13.5-py3-none-any.whl.metadata (110 kB)
+2026-10-16T23:33:19.5677142Z Collecting annotated-types>=0.6.0 (from pydantic==2.13.5->-r requirements-r3.txt (line 2))
+2026-10-16T23:33:19.5787713Z   Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+2026-10-16T23:33:20.1426446Z Collecting pydantic-core==2.46.5 (from pydantic==2.13.5->-r requirements-r3.txt (line 2))
+2026-10-16T23:33:20.1537515Z   Downloading pydantic_core-2.46.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+2026-10-16T23:33:20.1819789Z Collecting typing-extensions>=4.14.1 (from pydantic==2.13.5->-r requirements-r3.txt (line 2))
+2026-10-16T23:33:20.1927597Z   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+2026-10-16T23:33:20.2174740Z Collecting typing-inspection>=0.4.2 (from pydantic==2.13.5->-r requirements-r3.txt (line 2))
+2026-10-16T23:33:20.2285931Z   Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+2026-10-16T23:33:20.2432095Z Downloading pydantic-2.13.5-py3-none-any.whl (472 kB)
+2026-10-16T23:33:20.3034492Z Downloading pydantic_core-2.46.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+2026-10-16T23:33:20.4459115Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 15.1 MB/s  0:00:00
+2026-10-16T23:33:20.4568024Z Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+2026-10-16T23:33:20.4688698Z Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+2026-10-16T23:33:20.5228154Z Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+2026-10-16T23:33:20.5811233Z Installing collected packages: typing-extensions, annotated-types, typing-inspection, pydantic-core, pydantic
+2026-10-16T23:33:20.8917275Z 
+2026-10-16T23:33:20.8927013Z Successfully installed annotated-types-0.8.0 pydantic-2.13.5 pydantic-core-2.46.5 typing-extensions-4.16.0 typing-inspection-0.4.4
+2026-10-16T23:33:20.9537078Z ##[group]Run python scripts/verify_actual_evidence.py --tests
+2026-10-16T23:33:20.9537481Z [36;1mpython scripts/verify_actual_evidence.py --tests[0m
+2026-10-16T23:33:20.9596628Z shell: /usr/bin/bash -e {0}
+2026-10-16T23:33:20.9596833Z env:
+2026-10-16T23:33:20.9597061Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T23:33:20.9597416Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-16T23:33:20.9597770Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T23:33:20.9598096Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T23:33:20.9598397Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-16T23:33:20.9598694Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-16T23:33:20.9598951Z ##[endgroup]
+2026-10-16T23:33:23.8462457Z test_allowlisted_error_symbols_still_redact_credential_substrings (tests_expert.test_video_diagnostic_payload.VideoDiagnosticPayloadTests.test_allowlisted_error_symbols_still_redact_credential_substrings) ... ok
+2026-10-16T23:33:23.8465495Z test_body_sequence_changes_exactly_url_then_offsets_then_json_config (tests_expert.test_video_diagnostic_payload.VideoDiagnosticPayloadTests.test_body_sequence_changes_exactly_url_then_offsets_then_json_config) ... ok
+2026-10-16T23:33:23.8467338Z test_error_details_preserve_only_typed_safe_fields (tests_expert.test_video_diagnostic_payload.VideoDiagnosticPayloadTests.test_error_details_preserve_only_typed_safe_fields) ... ok
+2026-10-16T23:33:23.8471172Z test_errors_are_robust_to_malformed_nested_data_and_credentials (tests_expert.test_video_diagnostic_payload.VideoDiagnosticPayloadTests.test_errors_are_robust_to_malformed_nested_data_and_credentials) ... ok
+2026-10-16T23:33:23.8473305Z test_generic_invalid_argument_does_not_infer_rejected_field (tests_expert.test_video_diagnostic_payload.VideoDiagnosticPayloadTests.test_generic_invalid_argument_does_not_infer_rejected_field) ... ok
+2026-10-16T23:33:23.8480521Z test_invalid_or_refusal_response_fails_closed (tests_expert.test_video_diagnostic_payload.VideoDiagnosticPayloadTests.test_invalid_or_refusal_response_fails_closed) ... ok
+2026-10-16T23:33:23.8484148Z test_invalid_source_fails_closed (tests_expert.test_video_diagnostic_payload.VideoDiagnosticPayloadTests.test_invalid_source_fails_closed) ... ok
+2026-10-16T23:33:23.8496372Z test_plain_response_is_bounded_unreviewed_content_not_extraction (tests_expert.test_video_diagnostic_payload.VideoDiagnosticPayloadTests.test_plain_response_is_bounded_unreviewed_content_not_extraction) ... ok
+2026-10-16T23:33:23.8498445Z test_schema_is_small_strict_and_uses_only_documented_keywords (tests_expert.test_video_diagnostic_payload.VideoDiagnosticPayloadTests.test_schema_is_small_strict_and_uses_only_documented_keywords) ... ok
+2026-10-16T23:33:23.8501954Z test_source_is_strict_detached_and_keeps_original_duration (tests_expert.test_video_diagnostic_payload.VideoDiagnosticPayloadTests.test_source_is_strict_detached_and_keeps_original_duration) ... ok
+2026-10-16T23:33:23.8515810Z test_stage4_checks_exact_json_shape_and_local_bounds (tests_expert.test_video_diagnostic_payload.VideoDiagnosticPayloadTests.test_stage4_checks_exact_json_shape_and_local_bounds) ... ok
+2026-10-16T23:33:23.8517482Z test_thought_and_signature_are_never_retained (tests_expert.test_video_diagnostic_payload.VideoDiagnosticPayloadTests.test_thought_and_signature_are_never_retained) ... ok
+2026-10-16T23:33:23.8586115Z test_distinct_legacy_video_rows_with_same_id_digest_still_count (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_distinct_legacy_video_rows_with_same_id_digest_still_count) ... ok
+2026-10-16T23:33:23.8616251Z test_durable_unknown_result_blocks_new_diagnosis (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_durable_unknown_result_blocks_new_diagnosis) ... ok
+2026-10-16T23:33:23.8664687Z test_http_success_needs_separate_content_review_and_then_url_stage (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_http_success_needs_separate_content_review_and_then_url_stage) ... ok
+2026-10-16T23:33:23.8686224Z test_normal_route_cannot_bypass_same_day_failure_from_other_revision (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_normal_route_cannot_bypass_same_day_failure_from_other_revision) ... ok
+2026-10-16T23:33:23.8713407Z test_old_video_counts_and_new_reservation_charges_full_origin (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_old_video_counts_and_new_reservation_charges_full_origin) ... ok
+2026-10-16T23:33:23.8747524Z test_provider_auth_status_in_generic_http_failure_also_stops_date (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_provider_auth_status_in_generic_http_failure_also_stops_date) ... ok
+2026-10-16T23:33:23.8791430Z test_quota_auth_permission_halt_across_configuration_changes (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_quota_auth_permission_halt_across_configuration_changes) ... ok
+2026-10-16T23:33:23.8819770Z test_recovery_accepts_video_only_phase_for_typed_diagnostic_run (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_recovery_accepts_video_only_phase_for_typed_diagnostic_run) ... ok
+2026-10-16T23:33:23.8836546Z test_recovery_never_uses_video_only_exception_for_old_normal_run (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_recovery_never_uses_video_only_exception_for_old_normal_run) ... ok
+2026-10-16T23:33:23.8871469Z test_same_failed_stage_is_not_replayed_on_new_day (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_same_failed_stage_is_not_replayed_on_new_day) ... ok
+2026-10-16T23:33:23.8888050Z test_shared_daily_budget_counts_legacy_ledger_rows (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_shared_daily_budget_counts_legacy_ledger_rows) ... ok
+2026-10-16T23:33:23.8927567Z test_unreviewed_or_forged_ticket_never_advances (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_unreviewed_or_forged_ticket_never_advances) ... ok
+2026-10-16T23:33:23.9053614Z VIDEO_DIAGNOSTIC_JSON={"classification": null, "coaching_accuracy": null, "expert_claims_adopted": 0, "has_state": true, "http_status": null, "new_provider_requests": 0, "phase": "prepare", "reason": "DATE_EXTERNAL_DIAGNOSIS_STOPPED", "schema_version": "gemini.video-diagnostic-receipt.v1", "source_review": "NOT_REVIEWED", "stage": null, "status": "BLOCKED_EXTERNAL", "text_requests": 0, "video_reserved": false}
+2026-10-16T23:33:23.9061683Z test_429_holds_before_any_new_external_request (tests_expert.test_video_diagnostic_cli.VideoCliTests.test_429_holds_before_any_new_external_request) ... ok
+2026-10-16T23:33:23.9148853Z VIDEO_DIAGNOSTIC_JSON={"classification": null, "coaching_accuracy": null, "expert_claims_adopted": 0, "full_original_seconds_charged": 1102, "has_state": true, "http_status": null, "new_provider_requests": 0, "phase": "prepare", "reason": "VIDEO_RESERVED", "request_sha256": "f5f79c6eb426ed80f85172351243c5828ee94169dd846bb4f2874c856a4d7939", "request_structure": {"contents": [{"parts": [{"text": "Summarize this video in three sentences and include timestamps for concrete details."}, {"fileData": {"fileUri": "https://www.youtube.com/watch?v=ixRanV-rdAQ"}}]}]}, "requested_end_seconds": 1102, "requested_start_seconds": 0, "schema_version": "gemini.video-diagnostic-receipt.v1", "source_metadata_verified": true, "source_review": "NOT_REVIEWED", "stage": 1, "status": "READY", "text_requests": 0, "video_reserved": true}
+2026-10-16T23:33:23.9193632Z VIDEO_DIAGNOSTIC_JSON={"classification": "ARGUMENT_CONFIGURATION", "coaching_accuracy": null, "diagnostic_content": null, "error_details": {"error_code": null, "error_details": [{"fieldViolations": [{"description_category": "INVALID_VALUE", "field": "contents[0].parts[1].fileData.fileUri"}], "type": "google.rpc.BadRequest"}], "error_message": "Request contains an invalid argument.", "error_status": "INVALID_ARGUMENT", "rejected_field": "contents[0].parts[1].fileData.fileUri"}, "expert_claims_adopted": 0, "full_original_seconds_charged": 1102, "has_state": true, "http_status": 400, "new_provider_requests": 1, "phase": "dispatch", "provider_error": {"error_code": null, "error_message": "Request contains an invalid argument.", "error_status": "INVALID_ARGUMENT", "http_status": 400}, "reason": "ARGUMENT_CONFIGURATION", "request_sha256": "f5f79c6eb426ed80f85172351243c5828ee94169dd846bb4f2874c856a4d7939", "response_diagnostics": null, "schema_version": "gemini.video-diagnostic-receipt.v1", "source_review": "NOT_REVIEWED", "stage": 1, "status": "BLOCKED_EXTERNAL", "text_requests": 0, "video_reserved": false}
+2026-10-16T23:33:23.9208151Z test_dispatch_once_preserves_typed_error_and_no_secret (tests_expert.test_video_diagnostic_cli.VideoCliTests.test_dispatch_once_preserves_typed_error_and_no_secret) ... ok
+2026-10-16T23:33:23.9272928Z VIDEO_DIAGNOSTIC_JSON={"classification": "MALFORMED_RESPONSE", "coaching_accuracy": null, "expert_claims_adopted": 0, "has_state": true, "http_status": 200, "new_provider_requests": 0, "phase": "prepare", "provider_error": {"error_code": null, "error_message": "Provider metadata error; message redacted.", "error_status": null}, "reason": "INVALID_OR_UNAVAILABLE_DIAGNOSTIC_STATE", "schema_version": "gemini.video-diagnostic-receipt.v1", "source_review": "NOT_REVIEWED", "stage": 1, "status": "BLOCKED_EXTERNAL", "text_requests": 0, "video_reserved": false}
+2026-10-16T23:33:23.9281652Z test_malformed_metadata_http200_is_durable_failure_not_success (tests_expert.test_video_diagnostic_cli.VideoCliTests.test_malformed_metadata_http200_is_durable_failure_not_success) ... ok
+2026-10-16T23:33:23.9340155Z VIDEO_DIAGNOSTIC_JSON={"classification": "AUTHENTICATION", "coaching_accuracy": null, "expert_claims_adopted": 0, "has_state": true, "http_status": 400, "new_provider_requests": 0, "phase": "prepare", "provider_error": {"error_code": null, "error_message": "Provider metadata error; message redacted.", "error_status": "UNAUTHENTICATED"}, "reason": "INVALID_OR_UNAVAILABLE_DIAGNOSTIC_STATE", "schema_version": "gemini.video-diagnostic-receipt.v1", "source_review": "NOT_REVIEWED", "stage": 1, "status": "BLOCKED_EXTERNAL", "text_requests": 0, "video_reserved": false}
+2026-10-16T23:33:23.9352835Z test_metadata_auth_status_overrides_http400_and_stops_date (tests_expert.test_video_diagnostic_cli.VideoCliTests.test_metadata_auth_status_overrides_http400_and_stops_date) ... ok
+2026-10-16T23:33:23.9397952Z GEMINI_DAILY_JSON={"accepted_claims": 0, "classification": null, "coaching_accuracy": null, "has_state": true, "http_status": null, "new_provider_requests": 0, "phase": "pretext", "provider_error_code": null, "provider_error_message": null, "provider_error_status": null, "reason": "DATE_EXTERNAL_DIAGNOSIS_STOPPED", "review_status": "NOT_REVIEWED", "schema_version": "gemini.daily-receipt.v1", "status": "BLOCKED_EXTERNAL", "text_reserved": false, "text_success": false, "valid_extraction": false, "video_reserved": false}
+2026-10-16T23:33:23.9404635Z test_normal_cli_date_stop_precedes_external_gate (tests_expert.test_video_diagnostic_cli.VideoCliTests.test_normal_cli_date_stop_precedes_external_gate) ... ok
+2026-10-16T23:33:23.9475231Z VIDEO_DIAGNOSTIC_JSON={"classification": null, "coaching_accuracy": null, "expert_claims_adopted": 0, "full_original_seconds_charged": 1102, "has_state": true, "http_status": null, "new_provider_requests": 0, "phase": "prepare", "reason": "VIDEO_RESERVED", "request_sha256": "f5f79c6eb426ed80f85172351243c5828ee94169dd846bb4f2874c856a4d7939", "request_structure": {"contents": [{"parts": [{"text": "Summarize this video in three sentences and include timestamps for concrete details."}, {"fileData": {"fileUri": "https://www.youtube.com/watch?v=ixRanV-rdAQ"}}]}]}, "requested_end_seconds": 1102, "requested_start_seconds": 0, "schema_version": "gemini.video-diagnostic-receipt.v1", "source_metadata_verified": true, "source_review": "NOT_REVIEWED", "stage": 1, "status": "READY", "text_requests": 0, "video_reserved": true}
+2026-10-16T23:33:23.9484143Z test_preflight_only_metadata_no_text_and_full_charge (tests_expert.test_video_diagnostic_cli.VideoCliTests.test_preflight_only_metadata_no_text_and_full_charge) ... ok
+2026-10-16T23:33:23.9516306Z test_actual_dispatch_retains_safe_failure_gate_and_token_usage (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_actual_dispatch_retains_safe_failure_gate_and_token_usage) ... ok
+2026-10-16T23:33:23.9518191Z test_blocked_prompt_and_missing_parts_are_identified_without_raw_values (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_blocked_prompt_and_missing_parts_are_identified_without_raw_values) ... ok
+2026-10-16T23:33:23.9519903Z test_complete_text_excludes_thoughts_but_reports_usage_and_types (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_complete_text_excludes_thoughts_but_reports_usage_and_types) ... ok
+2026-10-16T23:33:23.9520957Z test_duplicate_json_fails_parse_not_transport_or_schema (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_duplicate_json_fails_parse_not_transport_or_schema) ... ok
+2026-10-16T23:33:23.9533797Z test_http200_json_array_is_format_failure_not_network_failure (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_http200_json_array_is_format_failure_not_network_failure) ... ok
+2026-10-16T23:33:23.9535105Z test_lone_surrogate_is_reported_without_losing_pipeline_or_usage (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_lone_surrogate_is_reported_without_losing_pipeline_or_usage) ... ok
+2026-10-16T23:33:23.9536381Z test_max_tokens_is_incomplete_with_precise_gate_and_usage (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_max_tokens_is_incomplete_with_precise_gate_and_usage) ... ok
+2026-10-16T23:33:23.9537397Z test_unsupported_part_is_not_silently_coerced_or_leaked (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_unsupported_part_is_not_silently_coerced_or_leaked) ... ok
+2026-10-16T23:33:23.9553153Z test_dispatch_uses_the_reserved_legacy_body_and_exports_only_shape (tests_expert.test_text_response_v2.TextV2Tests.test_dispatch_uses_the_reserved_legacy_body_and_exports_only_shape) ... ok
+2026-10-16T23:33:23.9560418Z test_legacy_actual_reservation_hash_remains_valid_and_same_day_consumed (tests_expert.test_text_response_v2.TextV2Tests.test_legacy_actual_reservation_hash_remains_valid_and_same_day_consumed) ... ok
+2026-10-16T23:33:23.9562342Z test_next_text_uses_the_previously_successful_exact_request_shape (tests_expert.test_text_response_v2.TextV2Tests.test_next_text_uses_the_previously_successful_exact_request_shape) ... ok
+2026-10-16T23:33:23.9583953Z test_unresolved_response_format_blocks_unchanged_next_day (tests_expert.test_text_response_v2.TextV2Tests.test_unresolved_response_format_blocks_unchanged_next_day) ... ok
+2026-10-16T23:33:23.9593533Z test_ack_rejects_nonexistent_wrong_run_wrong_state_before_dispatch (tests_expert.test_daily_review_fixes.ReviewFixTests.test_ack_rejects_nonexistent_wrong_run_wrong_state_before_dispatch) ... ok
+2026-10-16T23:33:23.9630564Z test_claim_root_does_not_change_with_output_or_runner_temp (tests_expert.test_daily_review_fixes.ReviewFixTests.test_claim_root_does_not_change_with_output_or_runner_temp) ... ok
+2026-10-16T23:33:23.9655131Z test_empty_expert_and_pov_are_not_nonempty_extractions (tests_expert.test_daily_review_fixes.ReviewFixTests.test_empty_expert_and_pov_are_not_nonempty_extractions) ... ok
+2026-10-16T23:33:23.9677162Z test_preparation_permission_payment_arguments_block_next_day_but_not_quota (tests_expert.test_daily_review_fixes.ReviewFixTests.test_preparation_permission_payment_arguments_block_next_day_but_not_quota) ... ok
+2026-10-16T23:33:23.9682157Z test_rejected_or_outside_interval_has_no_valid_extraction (tests_expert.test_daily_review_fixes.ReviewFixTests.test_rejected_or_outside_interval_has_no_valid_extraction) ... ok
+2026-10-16T23:33:23.9683617Z test_wrong_schema_is_malformed_not_empty (tests_expert.test_daily_review_fixes.ReviewFixTests.test_wrong_schema_is_malformed_not_empty) ... ok
+2026-10-16T23:33:23.9689994Z test_changed_revision_unblocks_next_day (tests_expert.test_gemini_daily.DailyTests.test_changed_revision_unblocks_next_day) ... ok
+2026-10-16T23:33:23.9696562Z test_charged_id_never_reused (tests_expert.test_gemini_daily.DailyTests.test_charged_id_never_reused) ... ok
+2026-10-16T23:33:23.9697467Z test_classification (tests_expert.test_gemini_daily.DailyTests.test_classification) ... ok
+2026-10-16T23:33:23.9728527Z GEMINI_DAILY_JSON={"accepted_claims": 0, "classification": null, "coaching_accuracy": null, "has_state": true, "http_status": null, "new_provider_requests": 0, "phase": "pretext", "provider_error_code": null, "provider_error_message": null, "provider_error_status": null, "reason": null, "review_status": "NOT_REVIEWED", "schema_version": "gemini.daily-receipt.v1", "status": "READY", "text_reserved": true, "text_success": false, "valid_extraction": false, "video_reserved": false}
+2026-10-16T23:33:23.9765377Z GEMINI_DAILY_JSON={"accepted_claims": 0, "classification": "TEXT_ONLY_SUCCESS", "coaching_accuracy": null, "has_state": true, "http_status": 200, "new_provider_requests": 1, "phase": "text", "provider_error_code": null, "provider_error_message": null, "provider_error_status": null, "reason": "TEXT_ONLY_SUCCESS", "request_http_success": true, "response_diagnostics": {"block_reason": "MISSING", "body_bytes": null, "body_kind": "object", "candidate_count": 1, "complete_text": true, "content_types": ["object"], "failed_check": null, "finish_reasons": ["STOP"], "invalid_utf8_parts": 0, "nonthought_text_bytes": 2, "observed_nonthought_text_bytes": 2, "part_kind_counts": {"codeExecutionResult": 0, "executableCode": 0, "fileData": 0, "functionCall": 0, "functionResponse": 0, "inlineData": 0, "text": 1}, "parts_count": [1], "parts_inspection_truncated": false, "parts_types": ["array"], "pipeline": {"content_review": "TEXT_PROBE_ONLY_NOT_FACT_REVIEW", "json_parse": "PASS", "response_body_extraction": "PASS", "schema_validation": "PASS", "text_extraction": "PASS"}, "probe_answer_matches_ok": true, "root_type": "object", "safety_blocked_n": 0, "schema_version": "gemini.safe-response-diagnostics.v1", "signature_parts": 0, "thought_false_parts": 0, "thought_invalid_parts": 0, "thought_true_parts": 0, "thought_unmarked_parts": 1, "transport": "HTTP200", "unknown_part_key_count": 0, "usage": {"cachedContentTokenCount": null, "candidatesTokenCount": null, "promptTokenCount": null, "thoughtsTokenCount": null, "toolUsePromptTokenCount": null, "totalTokenCount": null}, "usage_available": false}, "response_shape": {"candidate_count": 1, "finish_reasons": ["STOP"], "shape": "CANDIDATE_LIST", "text_part_count": 1}, "review_status": "NOT_REVIEWED", "schema_version": "gemini.daily-receipt.v1", "status": "SUCCESS", "text_reserved": false, "text_success": true, "valid_extraction": false, "video_reserved": false}
+2026-10-16T23:33:23.9799448Z GEMINI_DAILY_JSON={"accepted_claims": 0, "classification": null, "coaching_accuracy": null, "has_state": true, "http_status": null, "new_provider_requests": 0, "phase": "preparevideo", "provider_error_code": null, "provider_error_message": null, "provider_error_status": null, "reason": null, "review_status": "NOT_REVIEWED", "schema_version": "gemini.daily-receipt.v1", "status": "READY", "text_reserved": false, "text_success": false, "valid_extraction": false, "video_reserved": true}
+2026-10-16T23:33:23.9850067Z GEMINI_DAILY_JSON={"accepted_claims": 0, "classification": "VIDEO_SUCCESS_UNREVIEWED", "coaching_accuracy": null, "extraction_status": "EMPTY", "has_state": true, "http_status": 200, "new_provider_requests": 1, "phase": "video", "provider_error_code": null, "provider_error_message": null, "provider_error_status": null, "reason": "VIDEO_SUCCESS_UNREVIEWED", "request_http_success": true, "response_diagnostics": {"block_reason": "MISSING", "body_bytes": null, "body_kind": "object", "candidate_count": 1, "complete_text": true, "content_types": ["object"], "failed_check": null, "finish_reasons": ["STOP"], "invalid_utf8_parts": 0, "nonthought_text_bytes": 13, "observed_nonthought_text_bytes": 13, "part_kind_counts": {"codeExecutionResult": 0, "executableCode": 0, "fileData": 0, "functionCall": 0, "functionResponse": 0, "inlineData": 0, "text": 1}, "parts_count": [1], "parts_inspection_truncated": false, "parts_types": ["array"], "pipeline": {"content_review": "PENDING_INDEPENDENT_SOURCE_REVIEW", "extraction_schema": "PASS", "json_parse": "PASS", "model_output_json_parse": "PASS", "response_body_extraction": "PASS", "schema_validation": "PASS", "text_extraction": "PASS"}, "probe_answer_matches_ok": false, "root_type": "object", "safety_blocked_n": 0, "schema_version": "gemini.safe-response-diagnostics.v1", "signature_parts": 0, "thought_false_parts": 0, "thought_invalid_parts": 0, "thought_true_parts": 0, "thought_unmarked_parts": 1, "transport": "HTTP200", "unknown_part_key_count": 0, "usage": {"cachedContentTokenCount": null, "candidatesTokenCount": null, "promptTokenCount": null, "thoughtsTokenCount": null, "toolUsePromptTokenCount": null, "totalTokenCount": null}, "usage_available": false}, "response_shape": {"candidate_count": 1, "finish_reasons": ["STOP"], "shape": "CANDIDATE_LIST", "text_part_count": 1}, "review_status": "EXPLORATORY", "schema_version": "gemini.daily-receipt.v1", "status": "SUCCESS", "text_reserved": false, "text_success": false, "valid_extraction": false, "video_reserved": false}
+2026-10-16T23:33:23.9859052Z test_cli_phases_use_one_text_and_one_video_with_durable_acks (tests_expert.test_gemini_daily.DailyTests.test_cli_phases_use_one_text_and_one_video_with_durable_acks) ... ok
+2026-10-16T23:33:23.9898687Z GEMINI_DAILY_JSON={"accepted_claims": 0, "classification": "QUOTA_EXCEEDED", "coaching_accuracy": null, "has_state": true, "http_status": 429, "new_provider_requests": 1, "phase": "text", "provider_error_code": 429, "provider_error_message": "quota exceeded [REDACTED_KEY]", "provider_error_status": "RESOURCE_EXHAUSTED", "reason": "QUOTA_EXCEEDED", "request_http_success": false, "response_diagnostics": null, "response_shape": null, "review_status": "NOT_REVIEWED", "schema_version": "gemini.daily-receipt.v1", "status": "BLOCKED_EXTERNAL", "text_reserved": false, "text_success": false, "valid_extraction": false, "video_reserved": false}
+2026-10-16T23:33:23.9906491Z test_cli_text_failure_receipt_reports_quota_without_video (tests_expert.test_gemini_daily.DailyTests.test_cli_text_failure_receipt_reports_quota_without_video) ... ok
+2026-10-16T23:33:23.9919431Z test_dispatch_503_never_retries (tests_expert.test_gemini_daily.DailyTests.test_dispatch_503_never_retries) ... ok
+2026-10-16T23:33:23.9935534Z test_dispatch_requires_ack_and_exclusive_claim (tests_expert.test_gemini_daily.DailyTests.test_dispatch_requires_ack_and_exclusive_claim) ... ok
+2026-10-16T23:33:23.9936713Z test_explicit_source_requires_current_public_matching_metadata (tests_expert.test_gemini_daily.DailyTests.test_explicit_source_requires_current_public_matching_metadata) ... ok
+2026-10-16T23:33:23.9944001Z test_forged_reservation_and_success_receipt_rejected (tests_expert.test_gemini_daily.DailyTests.test_forged_reservation_and_success_receipt_rejected) ... ok
+2026-10-16T23:33:24.0043130Z test_legacy_cli_live_paths_are_guarded (tests_expert.test_gemini_daily.DailyTests.test_legacy_cli_live_paths_are_guarded) ... ok
+2026-10-16T23:33:24.0056283Z test_migration_allows_completed_zero_job_scheduled_run (tests_expert.test_gemini_daily.DailyTests.test_migration_allows_completed_zero_job_scheduled_run) ... ok
+2026-10-16T23:33:24.0056938Z test_module_exists (tests_expert.test_gemini_daily.DailyTests.test_module_exists) ... ok
+2026-10-16T23:33:24.0060531Z test_pending_blocks_next_day_unchanged_configuration (tests_expert.test_gemini_daily.DailyTests.test_pending_blocks_next_day_unchanged_configuration) ... ok
+2026-10-16T23:33:24.0065661Z test_persistent_auth_blocks_new_day (tests_expert.test_gemini_daily.DailyTests.test_persistent_auth_blocks_new_day) ... ok
+2026-10-16T23:33:24.0070339Z test_pov_channel_allowlist_is_separate (tests_expert.test_gemini_daily.DailyTests.test_pov_channel_allowlist_is_separate) ... ok
+2026-10-16T23:33:24.0084420Z test_provider_error_redacted_and_classified (tests_expert.test_gemini_daily.DailyTests.test_provider_error_redacted_and_classified) ... ok
+2026-10-16T23:33:24.0089837Z test_purpose_switch_cannot_clear_persistent_authentication (tests_expert.test_gemini_daily.DailyTests.test_purpose_switch_cannot_clear_persistent_authentication) ... ok
+2026-10-16T23:33:24.0097328Z test_quota_failure_allows_next_day (tests_expert.test_gemini_daily.DailyTests.test_quota_failure_allows_next_day) ... ok
+2026-10-16T23:33:24.0100965Z test_recover_cancelled_reservation_and_reject_expiration (tests_expert.test_gemini_daily.DailyTests.test_recover_cancelled_reservation_and_reject_expiration) ... ok
+2026-10-16T23:33:24.0106526Z test_recover_final_only_noop_prefix (tests_expert.test_gemini_daily.DailyTests.test_recover_final_only_noop_prefix) ... ok
+2026-10-16T23:33:24.0107338Z test_recover_missing_newer_expected_snapshot_blocks (tests_expert.test_gemini_daily.DailyTests.test_recover_missing_newer_expected_snapshot_blocks) ... ok
+2026-10-16T23:33:24.0110399Z test_recovery_rejects_dropped_prefix (tests_expert.test_gemini_daily.DailyTests.test_recovery_rejects_dropped_prefix) ... ok
+2026-10-16T23:33:24.0114020Z test_same_day_is_consumed_even_other_purpose_revision (tests_expert.test_gemini_daily.DailyTests.test_same_day_is_consumed_even_other_purpose_revision) ... ok
+2026-10-16T23:33:24.0114689Z test_seoul_day_boundary (tests_expert.test_gemini_daily.DailyTests.test_seoul_day_boundary) ... ok
+2026-10-16T23:33:24.0115784Z test_source_bounds_and_purpose (tests_expert.test_gemini_daily.DailyTests.test_source_bounds_and_purpose) ... ok
+2026-10-16T23:33:24.0127618Z test_video_pair_requires_durable_full_duration_charge (tests_expert.test_gemini_daily.DailyTests.test_video_pair_requires_durable_full_duration_charge) ... ok
+2026-10-16T23:33:24.0132813Z test_video_purpose_cannot_change_after_text_reservation (tests_expert.test_gemini_daily.DailyTests.test_video_purpose_cannot_change_after_text_reservation) ... ok
+2026-10-16T23:33:24.0147699Z test_video_requires_text_and_real_offsets_and_original_charge (tests_expert.test_gemini_daily.DailyTests.test_video_requires_text_and_real_offsets_and_original_charge) ... ok
+2026-10-16T23:33:24.0148807Z test_exact_source_authority_rejects_unregistered_source (tests_pregame.test_actual_evidence_binding.EvidenceBindingTests.test_exact_source_authority_rejects_unregistered_source) ... ok
+2026-10-16T23:33:24.0251563Z test_new_file_inventory_has_no_broad_executable_exception (tests_pregame.test_actual_evidence_binding.EvidenceBindingTests.test_new_file_inventory_has_no_broad_executable_exception) ... ok
+2026-10-16T23:33:24.0252680Z 
+2026-10-16T23:33:24.0252868Z ----------------------------------------------------------------------
+2026-10-16T23:33:24.0253277Z Ran 78 tests in 0.180s
+2026-10-16T23:33:24.0253457Z 
+2026-10-16T23:33:24.0253548Z OK
+2026-10-16T23:33:24.0253765Z EXPERT_DAILY_GUARD_REQUIRED
+2026-10-16T23:33:24.0254054Z EXPERT_DAILY_GUARD_REQUIRED
+2026-10-16T23:33:24.0254309Z EXPERT_DAILY_GUARD_REQUIRED
+2026-10-16T23:33:24.0397450Z {
+2026-10-16T23:33:24.0397710Z   "status": "PASS",
+2026-10-16T23:33:24.0397977Z   "checks": {
+2026-10-16T23:33:24.0398215Z     "authority": true,
+2026-10-16T23:33:24.0398457Z     "ancestry": true,
+2026-10-16T23:33:24.0398705Z     "exact_parent": true,
+2026-10-16T23:33:24.0398977Z     "completed_ci_reused": true,
+2026-10-16T23:33:24.0399270Z     "exact_source_authority": true,
+2026-10-16T23:33:24.0399560Z     "current_sources": true,
+2026-10-16T23:33:24.0399824Z     "exact_preserved": true,
+2026-10-16T23:33:24.0400094Z     "preserved_bytes": true,
+2026-10-16T23:33:24.0400383Z     "original_modified_archived": true,
+2026-10-16T23:33:24.0400691Z     "new_data_bound": true,
+2026-10-16T23:33:24.0400961Z     "bounded_changes": true,
+2026-10-16T23:33:24.0401240Z     "no_approval_or_accuracy": true,
+2026-10-16T23:33:24.0401552Z     "resource_reports_bound": true,
+2026-10-16T23:33:24.0402045Z     "pov_reports_bound": true
+2026-10-16T23:33:24.0402312Z   },
+2026-10-16T23:33:24.0402898Z   "commit_sha": "bb601a8602b6dd9e646e636eb32f9d1ad6a8509e",
+2026-10-16T23:33:24.0403530Z   "scope": "Actual evidence sources/data only; completed pilot/v2.3 CI reused, no predecessor tests executed",
+2026-10-16T23:33:24.0404093Z   "coaching_accuracy": null,
+2026-10-16T23:33:24.0404364Z   "new_tests_executed": true,
+2026-10-16T23:33:24.0404630Z   "selected_test_modules": [
+2026-10-16T23:33:24.0404924Z     "tests_expert.test_video_diagnostic_payload",
+2026-10-16T23:33:24.0405580Z     "tests_expert.test_video_diagnostic_policy",
+2026-10-16T23:33:24.0426215Z     "tests_expert.test_video_diagnostic_cli",
+2026-10-16T23:33:24.0426612Z     "tests_expert.test_gemini_response_diagnostics",
+2026-10-16T23:33:24.0426974Z     "tests_expert.test_text_response_v2",
+2026-10-16T23:33:24.0427295Z     "tests_expert.test_daily_review_fixes",
+2026-10-16T23:33:24.0427613Z     "tests_expert.test_gemini_daily",
+2026-10-16T23:33:24.0428154Z     "tests_pregame.test_actual_evidence_binding"
+2026-10-16T23:33:24.0428453Z   ],
+2026-10-16T23:33:24.0428664Z   "new_tests_exit_code": 0
+2026-10-16T23:33:24.0428904Z }
+2026-10-16T23:33:24.0700308Z Post job cleanup.
+2026-10-16T23:33:24.1728520Z Post job cleanup.
+2026-10-16T23:33:24.2395631Z [command]/usr/bin/git version
+2026-10-16T23:33:24.2431533Z git version 2.55.0
+2026-10-16T23:33:24.2463728Z Temporarily overriding HOME='/home/runner/work/_temp/abf78085-a878-4b36-9bd4-045e4902e14d' before making global git config changes
+2026-10-16T23:33:24.2464791Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T23:33:24.2466441Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/lol-coach/lol-coach
+2026-10-16T23:33:24.2490059Z Removing SSH command configuration
+2026-10-16T23:33:24.2496497Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T23:33:24.2525757Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T23:33:24.2737822Z Removing HTTP extra header
+2026-10-16T23:33:24.2743743Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T23:33:24.2778476Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T23:33:24.2992064Z Removing includeIf entries pointing to credentials config files
+2026-10-16T23:33:24.2998307Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T23:33:24.3029244Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T23:33:24.3350771Z Cleaning up orphan processes
