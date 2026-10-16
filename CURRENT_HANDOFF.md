@@ -5,6 +5,17 @@
 - owner_branch: `work/video-api-diagnostic-20261017`
 - authority: USER_VIDEO_STEP_DIAGNOSTIC_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
 - intake_main: `0ad505b09a7e378c9a898f4e91208adbd6ce72c1`
+- detail: Four independent review findings fixed with RED/GREEN regressions;76 affected tests PASS plus binding2; preparing PR, no new provider calls.
+
+---
+
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-video-step`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/video-api-diagnostic-20261017`
+- authority: USER_VIDEO_STEP_DIAGNOSTIC_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `0ad505b09a7e378c9a898f4e91208adbd6ce72c1`
 - detail: Independent video-stage review in progress; no new provider calls; preparing required CI publication.
 
 ---
