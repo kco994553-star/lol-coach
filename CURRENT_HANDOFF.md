@@ -5,6 +5,17 @@
 - owner_branch: `work/evidence-acquisition-20261016`
 - authority: USER_ACTUAL_EVIDENCE_2026-10-16 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
 - intake_main: `103b8b80c915accba7d7e5c82951d020b17d6e09`
+- detail: Publish actual89/108 resource and2canonicalPOV metadata with independentaudit. Narrow fix proved skipped/pre-request jobs contain no dispatch, keepsunknownhistoryclosed; new10impacttests PASS. First daily still0TEXT/0VIDEO, setupfailurepreserved. PCactualcardvisible butcold~1.9s targetmiss recorded; no advice expansion.
+
+---
+
+# Latest common execution claim — RUNNING
+- run_token: `main-20261016-evidence-acquisition`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/evidence-acquisition-20261016`
+- authority: USER_ACTUAL_EVIDENCE_2026-10-16 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `103b8b80c915accba7d7e5c82951d020b17d6e09`
 - detail: Actualsource1e261c5 offline38895508259 SUCCESS:89/108 resource recovery,POV2canonical metadata8GET. Daily38895512381 failed beforeprovider0requests: legacy skipped-job proof missing, fixneeded; no TEXT retry consumed. Importsafeaggregateonly, add narrow migrationfix+CI while preserving9resourceboundsourcefiles.
 
 ---
