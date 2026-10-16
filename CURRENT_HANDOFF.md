@@ -1,3 +1,14 @@
+# Latest common execution claim — PARKED_EXTERNAL
+- run_token: `main-20261017-gemini-format`
+- status: `PARKED_EXTERNAL`
+- writer_active: false
+- owner_branch: `work/gemini-format-20261017`
+- authority: USER_GEMINI_DIAGNOSTIC_EXCEPTION_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `25b9682cfcdaff7ded97e42887d5f14c9245e5f0`
+- detail: Completed PR44+45; main0ad505b09a7 treebf3f14f77 required/postmain3SUCCESS each. /workspace/gemini-diagnostic-final-result.json contains exact proofs. 20261017KST actualTEXT1/5HTTP200 STOP complete usage66; diagnostics ended normal1cap. VIDEO1HTTP400 INVALID_ARGUMENT unknownfield, original1102s charged for120s, no retry/refund; unchangedconfig futureblocked pending diagnosed change/preparedlecture. Newexpertfacts/scenes0. Matched3phase medians2.728/1.123/0.464s; PRO108observations/89matches evidence reused. Advice7ended/AUTO30/HOLD20 preserved; WindowsLCUexternal. No further currentdaycalls or user action; no remaining READY request within current limits.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261017-gemini-format`
 - status: `CI_PENDING`
