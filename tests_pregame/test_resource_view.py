@@ -38,5 +38,22 @@ class ResourceViewTests(unittest.TestCase):
         c=view.render_cards(r,self.binding,self.draft)[0]
         self.assertEqual(c['evidence_level'],'UNKNOWN')
         self.assertIn('미확인',c['lines'][1]);self.assertNotIn('차이 0',c['details'])
+    def test_concurrent_first_previews_share_one_bound_report_validation(self):
+        from concurrent.futures import ThreadPoolExecutor
+        from unittest.mock import patch
+        import threading,time
+        folder=Path(self.temp.name)/'public';folder.mkdir()
+        (folder/'resources.json').write_text('{}');(folder/'source-binding.json').write_text('{}')
+        gate=threading.Barrier(2);calls=[];view._snapshot.cache_clear()
+        def load(_):
+            calls.append(True);time.sleep(.1);return self.report,self.binding
+        def preview(_):
+            gate.wait();return view.cards_for_draft(self.draft,folder)
+        with patch.object(view,'load_bound_report',load),ThreadPoolExecutor(max_workers=2) as pool:
+            cards=list(pool.map(preview,range(2)))
+        view._snapshot.cache_clear()
+        self.assertEqual([len(c) for c in cards],[1,1])
+        self.assertEqual(len(calls),1)
+
     def test_missing_bound_report_does_not_break_existing_cards(self):
         self.assertEqual(view.cards_for_draft(self.draft,Path(self.temp.name)/'missing'),[])

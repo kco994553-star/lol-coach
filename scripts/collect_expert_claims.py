@@ -33,6 +33,26 @@ def gh_json(path):
     return _json(result.stdout)
 
 
+DAILY_UPLOAD_STEPS={'Persist daily TEXT reservation','Persist daily TEXT result','Persist daily VIDEO reservation','Persist daily FINAL state'}
+DAILY_DISPATCH_STEPS={'Dispatch one short TEXT without retry or fallback','Dispatch one bounded VIDEO without retry or alternate model'}
+
+
+def reservation_expected_from_jobs(jobs):
+    if not isinstance(jobs,list):return None
+    if not jobs:return False
+    if all(j.get('status')=='completed' and j.get('conclusion')=='skipped' and j.get('steps')==[] for j in jobs):return False
+    steps=[s for job in jobs for s in job.get('steps',[])]
+    states=[s.get('conclusion') for s in steps if s.get('name') in
+        {'Persist quota before any Gemini request','Persist clipping diagnostic quota','Persist format diagnostic quota'}]
+    if 'success' in states:return True
+    if states and all(v in ('skipped','failure','cancelled') for v in states):return False
+    uploads=[s for s in steps if s.get('name') in DAILY_UPLOAD_STEPS]
+    dispatches=[s for s in steps if s.get('name') in DAILY_DISPATCH_STEPS]
+    if len(uploads)==len(DAILY_UPLOAD_STEPS) and len(dispatches)==len(DAILY_DISPATCH_STEPS) and {s['name'] for s in uploads}==DAILY_UPLOAD_STEPS and {s['name'] for s in dispatches}==DAILY_DISPATCH_STEPS:
+        if all(s.get('conclusion') in ('skipped','failure','cancelled') for s in uploads) and all(s.get('conclusion')=='skipped' for s in dispatches):return False
+    return None
+
+
 def recovery(directory):
     repository=os.environ.get('GITHUB_REPOSITORY','');run=os.environ.get('GITHUB_RUN_ID','')
     if re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+',repository) is None or not run.isdigit():raise ValueError('trusted Actions context required')
@@ -52,13 +72,7 @@ def recovery(directory):
         data=gh_json('/repos/'+repository+'/actions/runs/'+str(run_id)+'/jobs?per_page=100')
         jobs=data.get('jobs')
         if not isinstance(jobs,list) or data.get('total_count',101)>100:return None
-        if not jobs:return False
-        states=[step.get('conclusion') for job in jobs for step in job.get('steps',[])
-                if step.get('name') in ('Persist quota before any Gemini request',
-                    'Persist clipping diagnostic quota','Persist format diagnostic quota')]
-        if 'success' in states:return True
-        if states and all(state in ('skipped','failure','cancelled') for state in states):return False
-        return None
+        return reservation_expected_from_jobs(jobs)
     ledger,receipt=recover_ledger_snapshot(runs,current_run_id=int(run),list_artifacts=artifacts,download_artifact=download,
         reservation_expected=expected,now=int(time.time()))
     if ledger is not None:atomic_json(directory/'quota-ledger.json',ledger)

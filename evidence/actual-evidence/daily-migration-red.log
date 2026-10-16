@@ -1,0 +1,35 @@
+test_completed_skipped_empty_step_job_is_proven_no_reservation (tests_expert.test_daily_migration.MigrationTests.test_completed_skipped_empty_step_job_is_proven_no_reservation) ... ERROR
+test_legacy_success_unknown_and_interruption_remain_closed (tests_expert.test_daily_migration.MigrationTests.test_legacy_success_unknown_and_interruption_remain_closed) ... ERROR
+test_new_pre_request_failed_run_requires_both_dispatches_skipped (tests_expert.test_daily_migration.MigrationTests.test_new_pre_request_failed_run_requires_both_dispatches_skipped) ... ERROR
+
+======================================================================
+ERROR: test_completed_skipped_empty_step_job_is_proven_no_reservation (tests_expert.test_daily_migration.MigrationTests.test_completed_skipped_empty_step_job_is_proven_no_reservation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_daily_migration.py", line 6, in test_completed_skipped_empty_step_job_is_proven_no_reservation
+    self.assertIs(old.reservation_expected_from_jobs([{'status':'completed','conclusion':'skipped','steps':[]}]),False)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'scripts.collect_expert_claims' has no attribute 'reservation_expected_from_jobs'
+
+======================================================================
+ERROR: test_legacy_success_unknown_and_interruption_remain_closed (tests_expert.test_daily_migration.MigrationTests.test_legacy_success_unknown_and_interruption_remain_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_daily_migration.py", line 13, in test_legacy_success_unknown_and_interruption_remain_closed
+    self.assertIsNone(old.reservation_expected_from_jobs([{'status':'completed','conclusion':'failure','steps':[]}]))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'scripts.collect_expert_claims' has no attribute 'reservation_expected_from_jobs'
+
+======================================================================
+ERROR: test_new_pre_request_failed_run_requires_both_dispatches_skipped (tests_expert.test_daily_migration.MigrationTests.test_new_pre_request_failed_run_requires_both_dispatches_skipped)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_daily_migration.py", line 8, in test_new_pre_request_failed_run_requires_both_dispatches_skipped
+    steps=[dict(name=n,conclusion='skipped') for n in old.DAILY_UPLOAD_STEPS|old.DAILY_DISPATCH_STEPS]
+                                                      ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'scripts.collect_expert_claims' has no attribute 'DAILY_UPLOAD_STEPS'
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+FAILED (errors=3)

@@ -1,3 +1,44 @@
+된 것: 기존 89경기의 골드·경험치를 실제 관측 시각으로 108개씩 복구했습니다.
+된 것: POV 두 채널의 ID·핸들과 공개 영상 후보 6개의 메타데이터를 확인했습니다.
+진행 중: Gemini는 호출 전 원장 복구에서 멈췄고 요청 0건이며 복구 조건을 수정했습니다.
+미확인: 실제 영상·같은 경기 연결·장면 평가는 없고 PC 첫 표시 1초 목표는 미달입니다.
+내가 할 것: 추가 승인이나 자료 수집은 필요 없습니다. 문장 개선은 7개에서 종료합니다.
+
+# Actual existing resource and channel results; first TEXT still pending
+
+PR41 normallymerged1e261c55897d21303052eeef6d1fe7c4d631acdc/tree4bc72646,
+required38895316267/38895316319 andpostmain38895465596/38895465458 all3jobsSUCCESS.
+Scoped66tests/actualChromium firstpath passed, originalpilot/v2.3 evidence reused.
+Trusted38895508259 actualexisting checkpoint restored89/108 withoutproviderrequests;
+resourceartifact12043129466/POVmetadata12044195188 imported safeonly, exactbytes and
+source9+4hashes independently audited. Readrecovery-findings.md andactual-safe-audit.md.
+
+GoldXPcomplete original/store, exacttimestampmiss notfieldloss:10minoffset68–317ms,
+15min169–405ms. Exactresultsremain0/missing108; actualobservedbinpairs108each recovered,
+patches16.19/16.20 and99cohorts separate. PCshows boundstrictmatchup/patchevidence;
+no positionfallback/adviceeffectclaim. Futurecollectionpreservationauditadded, no
+newRiotrequest/keycheck or falseexpiredclaim. Q15275/CH291 untouched.
+
+POV2canonicalchannels/8metadata200/6uploadcandidates; userconfigpending unchanged,
+independentproof separate; footage/view/continuity/actualgamedate/gameconnectionUNKNOWN.
+Q19channels unchanged, noexpertstatements acquired. Scenes0, agreementnull.
+
+Initialdaily38895512381 recoveryFAILED beforeprovider0calls. Threeprior scheduled
+skipped jobs containedsteps=[] and blocked conservativelegacyrecovery. Explicit
+no-dispatchproof handling fixed; source/quota safety not relaxed. Thissetupfix is
+not same-day requestretry: firstTEXTstillnotattempted. Failedrun/source/receipt
+retained. RequiredCI/normalmerge precede first actualTEXT once; nofallback/paidcalls.
+
+Existing soleActions workflow381076541 active: Daily free evidence check,
+cron09:00UTC=18:00Asia/Seoul. No duplicateChatGPTschedulecreated. Cronactivation
+verified; actualscheduled18:00executionNOT_YET_OBSERVED, initialmanualrunfailedbefore
+request. GitHubAPIexposesnoauthoritativenext_run_time; nextnominalcron2026-10-17
+18:00KST is schedulingcalculation, not guaranteeddispatch. ActualWindowsLCU remains
+BLOCKED_EXTERNAL. ColdPCfirstresourcecard~1.9seconds,1secondgoalNOTmet; preserve
+slow/diagnosticreceipts, no claimofliveclientorcoachingaccuracy.
+
+---
+
 된 것: 문장 개선은 7개에서 종료하고 기존 원문·검토·보류·실패 이력을 보존합니다.
 진행 중: 기존 Gemini 예약을 하루 텍스트 1회·조건부 영상 1회로 통합했습니다.
 진행 중: 사용자 POV 설정과 독립 채널 확인을 분리했고 골드·경험치 원본 복구를 준비했습니다.
