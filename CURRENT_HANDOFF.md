@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261016-evidence-acquisition`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/evidence-acquisition-20261016`
+- authority: USER_ACTUAL_EVIDENCE_2026-10-16 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `103b8b80c915accba7d7e5c82951d020b17d6e09`
+- detail: PR43 all3SUCCESS at f6d4b880, testedmerge181e59b tree9889a6d equal head; independent review no blockers, normal merge next
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261016-evidence-acquisition`
 - status: `CI_PENDING`
