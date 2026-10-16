@@ -1,3 +1,14 @@
+# Latest common execution claim — PARKED_EXTERNAL
+- run_token: `main-20261016-evidence-acquisition`
+- status: `PARKED_EXTERNAL`
+- writer_active: false
+- owner_branch: `work/evidence-acquisition-20261016`
+- authority: USER_ACTUAL_EVIDENCE_2026-10-16 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `103b8b80c915accba7d7e5c82951d020b17d6e09`
+- detail: Completed PR41/42/43; main25b9682c tree9889a6dc required/postmain all3SUCCESS; receipt /workspace/actual-evidence-final-result.json. Today1TEXT200malformed/VIDEO0, no retries. PRO89/108 goldXP recovered; POV2/metadata6 but links/scenes0. Advice7 ended, AUTO30/HOLD20 preserved. Wait next18KST Gemini/actual POV-link+predecision isolation/WindowsLCU; coldPC1.9s limitation. No further READY scoped work or user action now.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261016-evidence-acquisition`
 - status: `CI_PENDING`
