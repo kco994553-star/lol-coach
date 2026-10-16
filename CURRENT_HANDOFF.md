@@ -5,6 +5,17 @@
 - owner_branch: `work/evidence-acquisition-20261016`
 - authority: USER_ACTUAL_EVIDENCE_2026-10-16 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
 - intake_main: `103b8b80c915accba7d7e5c82951d020b17d6e09`
+- detail: Finalize actual receipts and next-day text response repair; today TEXT consumed, no further provider calls
+
+---
+
+# Latest common execution claim — RUNNING
+- run_token: `main-20261016-evidence-acquisition`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/evidence-acquisition-20261016`
+- authority: USER_ACTUAL_EVIDENCE_2026-10-16 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `103b8b80c915accba7d7e5c82951d020b17d6e09`
 - detail: Actualdaily38897072108 recoveredquota and submitted exactly1TEXT:HTTP200 but MALFORMED_RESPONSE,0VIDEO; no further calls today. Preserveactualstate/hash, restore previouslysuccessful plainrequestshape fornextday with legacybodycompatibility, add safe response-shape diagnostics and persistent unresolvedformat stop. Resource/POV actualdata complete andnotrerun.
 
 ---
