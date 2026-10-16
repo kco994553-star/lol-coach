@@ -1,3 +1,14 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261015-queue-v23`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `work/quality-pilot-20261016`
+- authority: USER_QUEUE_V2.3_2026-10-15 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `9da650ae1ec000f3bb66d90be351174fe3c731f3`
+- detail: PR39 merged; offlineexistingcacheaudit dispatched ontrustedmain withnetworkdenied, checkpointpinned, no newRiotmatches/paidcalls. Waiting postmergeCI+audit.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261015-queue-v23`
 - status: `RUNNING`
