@@ -1,3 +1,14 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261016-evidence-acquisition`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `work/evidence-acquisition-20261016`
+- authority: USER_ACTUAL_EVIDENCE_2026-10-16 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `103b8b80c915accba7d7e5c82951d020b17d6e09`
+- detail: PR41 normallymerged1e261c55897d21303052eeef6d1fe7c4d631acdc/tree4bc72646; actualfixed89/108 offline+independentPOVmetadata and exactlyone dailyGemini workflow dispatched. Existing skipped old schedule today had0provider; no same-purpose runningjob beforedispatch. Await actualoutputs/postmainCI; no retry/fallback or newRiot. Ownerinactive duringActions.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261016-evidence-acquisition`
 - status: `RUNNING`
