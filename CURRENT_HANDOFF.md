@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261015-queue-v23`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/queue-v23-20261015`
+- authority: USER_QUEUE_V2.3_2026-10-15 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `fedc30060259b5eeac4ab2ca096daa6259e354b6`
+- detail: User2026-10-16 small coaching-quality improvement: max8newversion advice, offline existing-data inventory only, no newmatches or paidcalls; preserve allold evidence and verify onlydelta.
+
+---
+
 # Latest common execution claim — PARKED_EXTERNAL
 - run_token: `main-20261015-queue-v23`
 - status: `PARKED_EXTERNAL`
