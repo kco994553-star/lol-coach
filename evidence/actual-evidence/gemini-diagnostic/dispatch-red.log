@@ -1,0 +1,15 @@
+test_actual_dispatch_retains_safe_failure_gate_and_token_usage (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_actual_dispatch_retains_safe_failure_gate_and_token_usage) ... FAIL
+
+======================================================================
+FAIL: test_actual_dispatch_retains_safe_failure_gate_and_token_usage (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_actual_dispatch_retains_safe_failure_gate_and_token_usage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 30, in test_actual_dispatch_retains_safe_failure_gate_and_token_usage
+    out=s['events'][-1];self.assertEqual(out['classification'],'MALFORMED_RESPONSE');self.assertIn('response_diagnostics',out['safe_output']);self.assertEqual(out['safe_output']['response_diagnostics']['failed_check'],'FINISH_REASON_STOP');self.assertNotIn('SECRET_',json.dumps(s))
+                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'response_diagnostics' not found in {'response_shape': {'candidate_count': 1, 'finish_reasons': ['MAX_TOKENS'], 'text_part_count': 2, 'shape': 'CANDIDATE_LIST'}}
+
+----------------------------------------------------------------------
+Ran 1 test in 0.030s
+
+FAILED (failures=1)

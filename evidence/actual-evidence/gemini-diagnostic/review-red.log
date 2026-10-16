@@ -1,0 +1,42 @@
+test_lone_surrogate_is_reported_without_losing_pipeline_or_usage (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_lone_surrogate_is_reported_without_losing_pipeline_or_usage) ... FAIL
+test_http200_json_array_is_format_failure_not_network_failure (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_http200_json_array_is_format_failure_not_network_failure) ... FAIL
+
+======================================================================
+FAIL: test_lone_surrogate_is_reported_without_losing_pipeline_or_usage (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_lone_surrogate_is_reported_without_losing_pipeline_or_usage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 33, in test_lone_surrogate_is_reported_without_losing_pipeline_or_usage
+    try:d=self.inspect(r)
+          ^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 8, in inspect
+    return inspect_response(response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/coach_v1/gemini_response_diagnostics.py", line 51, in inspect_response
+    if isinstance(p.get('text'),str) and p.get('thought',False) is False:d['observed_nonthought_text_bytes']+=len(p['text'].encode())
+                                                                                                                  ^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'utf-8' codec can't encode character '\ud800' in position 0: surrogates not allowed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 34, in test_lone_surrogate_is_reported_without_losing_pipeline_or_usage
+    except UnicodeError:self.fail('Invalid UTF8 text must retain safe failure diagnostics')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Invalid UTF8 text must retain safe failure diagnostics
+
+======================================================================
+FAIL: test_http200_json_array_is_format_failure_not_network_failure (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_http200_json_array_is_format_failure_not_network_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 42, in test_http200_json_array_is_format_failure_not_network_failure
+    out=s['events'][-1];self.assertEqual(out['classification'],'MALFORMED_RESPONSE');self.assertEqual(out['safe_output']['response_diagnostics']['failed_check'],'RESPONSE_OBJECT')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NETWORK_FAILURE' != 'MALFORMED_RESPONSE'
+- NETWORK_FAILURE
++ MALFORMED_RESPONSE
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.030s
+
+FAILED (failures=2)

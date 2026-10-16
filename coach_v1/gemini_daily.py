@@ -232,10 +232,21 @@ def dispatch(state,stage,now,run_id,artifact_id,claim_dir,key,transport):
         require(type(code) is int and 100<=code<=599)
         if code!=200:safe=dict(provider_error=safe_http_error('GEMINI',code,raw,secrets=(key,)))
         if code==200:
+            from .gemini_response_diagnostics import inspect_response
+            safe=dict(response_shape=response_shape(raw),response_diagnostics=inspect_response(raw))
+            response=raw if isinstance(raw,dict) else _json(raw)
+            require(isinstance(response,dict),'RESPONSE_OBJECT')
             if stage=='TEXT':
-                safe=dict(response_shape=response_shape(raw))
                 _generated_text(raw if isinstance(raw,dict) else _json(raw))
-            else:safe=safe_video_output(raw,row['source'])
+            else:
+                pipeline=safe['response_diagnostics']['pipeline']
+                pipeline['model_output_json_parse']='NOT_REACHED';pipeline['extraction_schema']='NOT_REACHED'
+                if safe['response_diagnostics']['complete_text']:
+                    try:_json(_generated_text(raw if isinstance(raw,dict) else _json(raw)))
+                    except (ValueError,TypeError,KeyError,UnicodeError):pipeline['model_output_json_parse']='FAIL';raise
+                    pipeline['model_output_json_parse']='PASS';pipeline['extraction_schema']='FAIL'
+                output=safe_video_output(raw,row['source']);safe.update(output)
+                pipeline['extraction_schema']='PASS';pipeline['content_review']='PENDING_INDEPENDENT_SOURCE_REVIEW'
     except TimeoutError:reason='NETWORK_TIMEOUT'
     except urllib.error.URLError as error:reason='NETWORK_TIMEOUT' if isinstance(error.reason,TimeoutError) else 'NETWORK_FAILURE'
     except (ValueError,TypeError,KeyError,UnicodeError,RecursionError,OverflowError):reason='MALFORMED_RESPONSE'

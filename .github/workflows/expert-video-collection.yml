@@ -96,6 +96,11 @@ jobs:
             ${{ runner.temp }}/daily/preparevideo/quota-ledger.json
           if-no-files-found: error
           retention-days: 90
+      - name: Separate provider requests by a conservative minute
+        if: steps.video-reservation.outcome == 'success'
+        run: |
+          # Project-specific RPM is not exposed here; do not claim a verified quota.
+          python -c 'import time; print("Conservative TEXT-to-VIDEO separation: 60s", flush=True); time.sleep(60)'
       - name: Dispatch one bounded VIDEO without retry or alternate model
         id: video
         if: steps.video-reservation.outcome == 'success'
@@ -135,7 +140,7 @@ jobs:
           import hashlib,json,os,subprocess
           from pathlib import Path
           out=Path(os.environ['RUNNER_TEMP'])/'daily';out.mkdir(exist_ok=True)
-          files=['coach_v1/gemini_daily.py','scripts/run_gemini_daily.py','config/evidence_intake.json','config/expert_runtime.json','config/expert_channels.json','config/pov_channels.json','.github/workflows/expert-video-collection.yml','contracts/actual-evidence-v1.md']
+          files=['coach_v1/gemini_daily.py','coach_v1/gemini_response_diagnostics.py','contracts/gemini-response-diagnostic-v3.md','scripts/run_gemini_daily.py','config/evidence_intake.json','config/expert_runtime.json','config/expert_channels.json','config/pov_channels.json','.github/workflows/expert-video-collection.yml','contracts/actual-evidence-v1.md']
           b=dict(schema_version='evidence-daily.source-binding.v1',actual_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),source_sha256={p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in files},run_id=int(os.environ['GITHUB_RUN_ID']),run_attempt=int(os.environ['GITHUB_RUN_ATTEMPT']),coaching_accuracy=None)
           (out/'source-binding.json').write_text(json.dumps(b,indent=2)+'\n')
           PY
