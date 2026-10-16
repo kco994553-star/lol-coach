@@ -21,7 +21,7 @@ MODIFIED={'coach_v1/pc_coach.py','.github/workflows/private-mvp-ci.yml',
     'scripts/diagnose_expert_front.py','scripts/diagnose_expert_video.py',
     'CURRENT_HANDOFF.md','docs/queue/QUEUE.md'}
 CURRENT=MODIFIED|{
-    'coach_v1/gemini_daily.py','coach_v1/gemini_response_diagnostics.py','scripts/run_gemini_daily.py','coach_v1/pov_metadata.py',
+    'coach_v1/video_diagnostic_payload.py','coach_v1/video_diagnostic_policy.py','scripts/run_video_diagnostic.py','config/video_api_diagnostic.json','contracts/video-step-diagnostic-v4.md','docs/superpowers/plans/2026-10-17-video-step-diagnostic.md','tests_expert/test_video_diagnostic_payload.py','tests_expert/test_video_diagnostic_policy.py','tests_expert/test_video_diagnostic_cli.py','coach_v1/gemini_daily.py','coach_v1/gemini_response_diagnostics.py','scripts/run_gemini_daily.py','coach_v1/pov_metadata.py',
     'scripts/verify_pov_metadata.py','scripts/recover_resource_checkpoint.py','coach_v1/resource_recovery.py','coach_v1/resource_view.py',
     'config/evidence_intake.json','config/pov_channels.json','contracts/actual-evidence-v1.md','contracts/daily-text-response-v2.md',
     '.github/workflows/resource-recovery-offline.yml','scripts/verify_actual_evidence.py',
@@ -30,7 +30,7 @@ CURRENT=MODIFIED|{
     'tests_pregame/test_resource_view.py','tests_pregame/test_fixed_resource_checkpoint.py','tests_pregame/test_actual_evidence_binding.py',
     'docs/superpowers/plans/2026-10-16-actual-evidence.md','docs/superpowers/plans/2026-10-17-gemini-diagnostic.md','contracts/gemini-response-diagnostic-v3.md',
 }
-TESTS=['tests_expert.test_gemini_response_diagnostics','tests_expert.test_text_response_v2','tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
+TESTS=['tests_expert.test_video_diagnostic_payload','tests_expert.test_video_diagnostic_policy','tests_expert.test_video_diagnostic_cli','tests_expert.test_gemini_response_diagnostics','tests_expert.test_text_response_v2','tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
        'tests_pregame.test_resource_recovery','tests_pregame.test_resource_view','tests_pregame.test_fixed_resource_checkpoint',
        'tests_pregame.test_actual_evidence_binding']
 DATA_ROOTS=['data/resource_recovery/2026-10-16','data/pov_metadata/2026-10-16']
@@ -110,7 +110,7 @@ def affected_code_changed():
     if not before or set(before)=={'0'}:return True
     changed=set(git('diff','--name-only',before,'HEAD').decode().splitlines())
     executable={p for p in CURRENT if p.endswith(('.py','.js','.yml'))}
-    content={'config/evidence_intake.json','config/pov_channels.json'}
+    content={'config/evidence_intake.json','config/pov_channels.json','config/video_api_diagnostic.json'}
     return bool(changed&(executable|content))
 
 
@@ -121,6 +121,9 @@ def selected_tests():
     if not before or set(before)=={'0'}:return TESTS
     changed=set(git('diff','--name-only',before,'HEAD').decode().splitlines())
     groups={
+        'tests_expert.test_video_diagnostic_payload':{'coach_v1/video_diagnostic_payload.py','coach_v1/gemini_daily.py','scripts/run_video_diagnostic.py'},
+        'tests_expert.test_video_diagnostic_policy':{'coach_v1/video_diagnostic_policy.py','coach_v1/gemini_daily.py','config/video_api_diagnostic.json','scripts/run_video_diagnostic.py'},
+        'tests_expert.test_video_diagnostic_cli':{'scripts/run_video_diagnostic.py','coach_v1/video_diagnostic_policy.py','coach_v1/gemini_daily.py','.github/workflows/expert-video-collection.yml','config/video_api_diagnostic.json'},
         'tests_expert.test_gemini_response_diagnostics':{'coach_v1/gemini_response_diagnostics.py','coach_v1/gemini_daily.py','scripts/run_gemini_daily.py'},
         'tests_expert.test_text_response_v2':{'coach_v1/gemini_daily.py','scripts/run_gemini_daily.py','config/evidence_intake.json'},
         'tests_expert.test_daily_migration':{'scripts/collect_expert_claims.py'},

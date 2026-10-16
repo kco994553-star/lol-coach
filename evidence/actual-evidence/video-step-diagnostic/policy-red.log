@@ -1,0 +1,152 @@
+test_durable_unknown_result_blocks_new_diagnosis (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_durable_unknown_result_blocks_new_diagnosis) ... FAIL
+test_http_success_needs_separate_content_review_and_then_url_stage (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_http_success_needs_separate_content_review_and_then_url_stage) ... FAIL
+test_old_video_counts_and_new_reservation_charges_full_origin (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_old_video_counts_and_new_reservation_charges_full_origin) ... FAIL
+test_quota_auth_permission_halt_across_configuration_changes (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_quota_auth_permission_halt_across_configuration_changes) ... FAIL
+test_same_failed_stage_is_not_replayed_on_new_day (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_same_failed_stage_is_not_replayed_on_new_day) ... FAIL
+test_shared_daily_budget_counts_legacy_ledger_rows (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_shared_daily_budget_counts_legacy_ledger_rows) ... FAIL
+test_unreviewed_or_forged_ticket_never_advances (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_unreviewed_or_forged_ticket_never_advances) ... FAIL
+
+======================================================================
+FAIL: test_durable_unknown_result_blocks_new_diagnosis (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_durable_unknown_result_blocks_new_diagnosis)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 11, in module
+    try:from coach_v1 import video_diagnostic_policy as p
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'video_diagnostic_policy' from 'coach_v1' (/workspace/lol-coach/coach_v1/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 40, in test_durable_unknown_result_blocks_new_diagnosis
+    p=self.module();s,q=self.old_failure();s,q=self.reserve(s,q)
+      ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 12, in module
+    except ImportError:self.fail('Shared staged-video policy not implemented')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Shared staged-video policy not implemented
+
+======================================================================
+FAIL: test_http_success_needs_separate_content_review_and_then_url_stage (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_http_success_needs_separate_content_review_and_then_url_stage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 11, in module
+    try:from coach_v1 import video_diagnostic_policy as p
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'video_diagnostic_policy' from 'coach_v1' (/workspace/lol-coach/coach_v1/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 27, in test_http_success_needs_separate_content_review_and_then_url_stage
+    p=self.module();s,q=self.old_failure();s,q=self.reserve(s,q);s=self.f.m.complete(s,'VIDEO',self.f.now+70,200,safe_output=dict(diagnostic_content=dict(content_candidate_valid=True)))
+      ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 12, in module
+    except ImportError:self.fail('Shared staged-video policy not implemented')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Shared staged-video policy not implemented
+
+======================================================================
+FAIL: test_old_video_counts_and_new_reservation_charges_full_origin (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_old_video_counts_and_new_reservation_charges_full_origin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 11, in module
+    try:from coach_v1 import video_diagnostic_policy as p
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'video_diagnostic_policy' from 'coach_v1' (/workspace/lol-coach/coach_v1/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 25, in test_old_video_counts_and_new_reservation_charges_full_origin
+    p=self.module();s,q=self.old_failure();self.assertEqual(p.choose_stage(s,q,self.plan,self.f.now+70),1);a,b=self.reserve(s,q);self.assertEqual(a['schema_version'],'gemini.daily-state.v2');self.assertEqual(a['events'][:len(s['events'])],s['events']);self.assertEqual(b['reservations'][:-1],q['reservations']);self.assertEqual(b['reservations'][-1]['seconds'],1102)
+      ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 12, in module
+    except ImportError:self.fail('Shared staged-video policy not implemented')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Shared staged-video policy not implemented
+
+======================================================================
+FAIL: test_quota_auth_permission_halt_across_configuration_changes (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_quota_auth_permission_halt_across_configuration_changes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 11, in module
+    try:from coach_v1 import video_diagnostic_policy as p
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'video_diagnostic_policy' from 'coach_v1' (/workspace/lol-coach/coach_v1/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 32, in test_quota_auth_permission_halt_across_configuration_changes
+    p=self.module()
+      ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 12, in module
+    except ImportError:self.fail('Shared staged-video policy not implemented')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Shared staged-video policy not implemented
+
+======================================================================
+FAIL: test_same_failed_stage_is_not_replayed_on_new_day (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_same_failed_stage_is_not_replayed_on_new_day)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 11, in module
+    try:from coach_v1 import video_diagnostic_policy as p
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'video_diagnostic_policy' from 'coach_v1' (/workspace/lol-coach/coach_v1/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 37, in test_same_failed_stage_is_not_replayed_on_new_day
+    p=self.module();s,q=self.old_failure();s,q=self.reserve(s,q);s=self.f.m.complete(s,'VIDEO',self.f.now+70,400)
+      ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 12, in module
+    except ImportError:self.fail('Shared staged-video policy not implemented')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Shared staged-video policy not implemented
+
+======================================================================
+FAIL: test_shared_daily_budget_counts_legacy_ledger_rows (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_shared_daily_budget_counts_legacy_ledger_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 11, in module
+    try:from coach_v1 import video_diagnostic_policy as p
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'video_diagnostic_policy' from 'coach_v1' (/workspace/lol-coach/coach_v1/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 43, in test_shared_daily_budget_counts_legacy_ledger_rows
+    p=self.module();s,q=self.old_failure()
+      ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 12, in module
+    except ImportError:self.fail('Shared staged-video policy not implemented')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Shared staged-video policy not implemented
+
+======================================================================
+FAIL: test_unreviewed_or_forged_ticket_never_advances (tests_expert.test_video_diagnostic_policy.VideoPolicyTests.test_unreviewed_or_forged_ticket_never_advances)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 11, in module
+    try:from coach_v1 import video_diagnostic_policy as p
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'video_diagnostic_policy' from 'coach_v1' (/workspace/lol-coach/coach_v1/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 47, in test_unreviewed_or_forged_ticket_never_advances
+    p=self.module();s,q=self.old_failure();s,q=self.reserve(s,q);s=self.f.m.complete(s,'VIDEO',self.f.now+70,200,safe_output=dict(diagnostic_content=dict(content_candidate_valid=True)))
+      ^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_expert/test_video_diagnostic_policy.py", line 12, in module
+    except ImportError:self.fail('Shared staged-video policy not implemented')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Shared staged-video policy not implemented
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.024s
+
+FAILED (failures=7)

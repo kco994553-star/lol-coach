@@ -171,6 +171,7 @@ def main(argv=None,*,entitlement_verifier=None,transport=None,clock=None,ack_ver
             daily.require(args.state is not None and args.ledger is not None,'STATE_PAIR_REQUIRED')
             state,quota=daily.validate_pair(read_json(args.state,32_000_000),read_json(args.ledger,32_000_000),now)
             daily.require(state['project_name']==runtime['project_name'],'PROJECT_STATE_MISMATCH')
+            if args.phase in ('pretext','text','preparevideo','video'):daily.assert_date_external_allowed(state,now)
             if args.phase=='pretext':
                 recovery=read_json(args.recovery_receipt) if args.recovery_receipt else {}
                 daily.require(recovery.get('status')=='FOUND','RECOVERY_REQUIRED')
@@ -227,7 +228,7 @@ def main(argv=None,*,entitlement_verifier=None,transport=None,clock=None,ack_ver
         receipt['has_state']=state is not None and quota is not None
         _write(directory,state,quota,receipt);return 0
     except Exception as error:
-        known={'DAILY_TEXT_CONSUMED','PERSISTENT_CONFIGURATION_BLOCK','FREE_PROOF_NOT_FRESH','DAILY_VIDEO_CONSUMED','VIDEO_ALREADY_CHARGED','ROLLING_VIDEO_BUDGET_EXHAUSTED','NO_ELIGIBLE_VIDEOS','TEXT_SUCCESS_REQUIRED','SOURCE_CHANNEL_NOT_ALLOWLISTED','RESERVATION_PERSISTENCE_NOT_CONFIRMED','DISPATCH_ALREADY_COMPLETED','TEXT_RESULT_PERSISTENCE_REQUIRED','RECOVERY_REQUIRED','TRUSTED_FIRST_ATTEMPT_REQUIRED','MISSING_DURABLE_DAILY_STATE','EXPIRED_DURABLE_DAILY_STATE','LEGACY_QUOTA_HISTORY_UNKNOWN'}
+        known={'DATE_EXTERNAL_DIAGNOSIS_STOPPED','DAILY_TEXT_CONSUMED','PERSISTENT_CONFIGURATION_BLOCK','FREE_PROOF_NOT_FRESH','DAILY_VIDEO_CONSUMED','VIDEO_ALREADY_CHARGED','ROLLING_VIDEO_BUDGET_EXHAUSTED','NO_ELIGIBLE_VIDEOS','TEXT_SUCCESS_REQUIRED','SOURCE_CHANNEL_NOT_ALLOWLISTED','RESERVATION_PERSISTENCE_NOT_CONFIRMED','DISPATCH_ALREADY_COMPLETED','TEXT_RESULT_PERSISTENCE_REQUIRED','RECOVERY_REQUIRED','TRUSTED_FIRST_ATTEMPT_REQUIRED','MISSING_DURABLE_DAILY_STATE','EXPIRED_DURABLE_DAILY_STATE','LEGACY_QUOTA_HISTORY_UNKNOWN'}
         receipt['reason']=str(error) if isinstance(error,ValueError) and str(error) in known else 'INVALID_OR_UNAVAILABLE_DAILY_STATE'
         receipt['has_state']=state is not None and quota is not None
         # Preserve configuration failures occurring before a provider reservation.
