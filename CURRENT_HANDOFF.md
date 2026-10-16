@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-gemini-format`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/gemini-format-20261017`
+- authority: USER_GEMINI_DIAGNOSTIC_EXCEPTION_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `25b9682cfcdaff7ded97e42887d5f14c9245e5f0`
+- detail: Intake main25b9682, no active writer/open PR; user allows max5TEXT on20261017KST combined schedule/manual, stop429/auth, same free project/key/model/route; VIDEO1 unchanged. Diagnose original unavailable, safe structure only; measure3PC phases; reuse resource evidence.
+
+---
+
 # Latest common execution claim — PARKED_EXTERNAL
 - run_token: `main-20261016-evidence-acquisition`
 - status: `PARKED_EXTERNAL`
