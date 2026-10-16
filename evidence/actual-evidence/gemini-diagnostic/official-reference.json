@@ -1,0 +1,84 @@
+{
+  "schema_version": "gemini.official-reference.v1",
+  "actual_api": {
+    "provider": "Gemini Developer API",
+    "method": "POST generateContent",
+    "version": "v1beta",
+    "model": "gemini-3.6-flash",
+    "sdk": "NONE",
+    "transport": "Python stdlib urllib in bounded subprocess",
+    "text_request_settings": {
+      "candidateCount": 1,
+      "responseMimeType": null,
+      "responseJsonSchema": null,
+      "maxOutputTokens": null
+    }
+  },
+  "sources": [
+    {
+      "url": "https://ai.google.dev/api/generate-content",
+      "checked_at": "2026-10-17 Asia/Seoul",
+      "html_sha256": "9bb2c1cd38fc4a4c1fce3611a78d1294950a1e0c87302ccc543a076c95577255",
+      "excerpts": [
+        {
+          "search_term": "MAX_TOKENS The maximum",
+          "excerpt": "MAX_TOKENS The maximum number of tokens as specified in the request was reached. SAFETY The response candidate content was flagged for safety reasons. RECITATION The response candidate content was flagged for recitation reasons. LANGUAGE The response candidate content was flagged for using an unsupported language. OTHER Unknown reason. BLOCKLIST Token generation stopped because the content contains forbidden terms. PROHIBITED_"
+        },
+        {
+          "search_term": "thought boolean",
+          "excerpt": "thought boolean Optional. Indicates if the part is thought from the model. thoughtSignature string ( bytes format) Optional. An opaque signature for the thought so it can be reused in subsequent requests. A base64-encoded string. partMetadata object ( Struct format) Custom metadata associated with the Part. Agents using genai.Part as content representation may need to keep track of the additional information. For example it ca"
+        },
+        {
+          "search_term": "thoughtSignature string",
+          "excerpt": "thoughtSignature string ( bytes format) Optional. An opaque signature for the thought so it can be reused in subsequent requests. A base64-encoded string. partMetadata object ( Struct format) Custom metadata associated with the Part. Agents using genai.Part as content representation may need to keep track of the additional information. For example it can be name of a file/source from which the Part originates or a way to multi"
+        },
+        {
+          "search_term": "UsageMetadata Metadata",
+          "excerpt": "UsageMetadata Metadata on the generation request's token usage. Fields promptTokenCount integer Number of tokens in the prompt. When cachedContent is set, this is still the total effective prompt size meaning this includes the number of tokens in the cached content. cachedContentTokenCount integer Number of tokens in the cached part of the prompt (the cached content) candidatesTokenCount integer Total number of tokens across a"
+        },
+        {
+          "search_term": "v1beta/models",
+          "excerpt": "v1beta/models/gemini-2.0-flash:generateContent?key= $GEMINI_API_KEY \" \\ -H 'Content-Type: application/json' \\ -X POST \\ -d '{ \"contents\": [{ \"parts\":[{\"text\": \"Write a story about a magic backpack.\"}] }] }' 2 > /dev/null text_generation.sh Java Client client = new Client (); GenerateContentResponse response = client . models . generateContent ( \"gemini-3.8-flash\" , \"Write a story about a magic backpack.\" , null ); System . out"
+        }
+      ],
+      "use": "REST/schema reference"
+    },
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/thinking",
+      "checked_at": "2026-10-17 Asia/Seoul",
+      "html_sha256": "5e4a58d57c578d5c39aeaaa1b8dcb369e051735107ebadc662582a19ebd3eaa2",
+      "excerpts": [
+        {
+          "search_term": "thought step",
+          "excerpt": "thought steps, dedicated steps that appear chronologically alongside function calls, user inputs or model outputs in the steps array. Every thought step contains two fields: Field Required Description signature ✅ Yes An encrypted representation of the model's internal reasoning state. Always present, even when the model performs minimal reasoning. summary ❌ No An array of content (text and/or images) summarizing the reasoning."
+        }
+      ],
+      "use": "Interactions thought format is distinct from this REST API"
+    },
+    {
+      "url": "https://ai.google.dev/gemini-api/docs/rate-limits",
+      "checked_at": "2026-10-17 Asia/Seoul",
+      "html_sha256": "e3859dee51a034a34f50ef88250ccda0dd7b2fe3db5e847d2d699749eb34df1d",
+      "excerpts": [
+        {
+          "search_term": "Rate limits are applied per project",
+          "excerpt": "Rate limits are applied per project, not per API key. Requests per day ( RPD )\nquotas reset at midnight Pacific time. Limits vary depending on the specific model being used, and some limits only\napply to specific models. For example, Images per minute, or IPM, is only\ncalculated for models capable of generating images (Nano Banana), but is\nconceptually similar to TPM. Other models might have a token per day limit (TPD). Rate l"
+        },
+        {
+          "search_term": "Requests per minute",
+          "excerpt": "Requests per minute ( RPM ) Tokens per minute (input) ( TPM ) Requests per day ( RPD ) Your usage is evaluated against each limit, and exceeding any of them will\ntrigger a rate limit error. For example, if your RPM limit is 20, making 21\nrequests within a minute will result in an error, even if you haven't exceeded\nyour TPM or other limits. Rate limits are applied per project, not per API key. Requests per day ( RPD )\nquotas r"
+        },
+        {
+          "search_term": "AI Studio",
+          "excerpt": "AI Studio Quickstart Google AI plans Vibe code in Build mode Developing full-stack apps Build Android apps Deploying your app Agents in AI Studio Playground Try out LearnLM Troubleshooting Access for Workspace users Google Cloud Platform Gemini Enterprise Agent Platform Gemini API OAuth authentication Policies Terms of service Available regions Abuse monitoring Feedback information Gemini 4 Argon is now available. Try it out ."
+        }
+      ],
+      "use": "Project limits vary; account-specific RPM/RPD not visible"
+    }
+  ],
+  "original_actual_response_available": false,
+  "prior_failure_exact_cause": "UNKNOWN",
+  "local_reproductions_are_synthetic": true,
+  "rate_limit_numeric_project_value": null,
+  "separation_policy": "One first diagnostic >10h after old call; conservative60s before conditionalVIDEO; stop429/auth/permission, no SDK retry"
+}

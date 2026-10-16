@@ -190,7 +190,9 @@ def main(argv=None,*,entitlement_verifier=None,transport=None,clock=None,ack_ver
                 receipt['new_provider_requests']=1
                 result=state['events'][-1];receipt['reason']=result['classification'];receipt['accepted_claims']=result['safe_output'].get('accepted_claims',0)
                 receipt['http_status']=result['http_status'];receipt['classification']=result['classification']
-                receipt['request_http_success']=result['http_status']==200;receipt['response_shape']=result['safe_output'].get('response_shape')
+                receipt['request_http_success']=result['http_status']==200;receipt['response_shape']=result['safe_output'].get('response_shape');receipt['response_diagnostics']=result['safe_output'].get('response_diagnostics')
+                if stage=='TEXT' and daily.seoul_day(now)=='2026-10-17':
+                    receipt['diagnostic_request_context']=dict(hypothesis='H1_PRIOR_8_TOKEN_CAP_MAY_TRUNCATE_NOT_PROVEN',baseline_run=38897072108,change_from_baseline='REMOVE_8_TOKEN_CAP_ONLY_PLUS_SAFE_DIAGNOSTICS',request_sha256=row['request_sha256'],model=daily.MODEL,api_version='v1beta',api_method='generateContent',provider_sdk='NONE_STDLIB_URLLIB',format='PLAIN_TEXT_IN_JSON_REST_ENVELOPE',candidate_count=1,response_mime_type=None,response_schema_configured=False)
                 error=result['safe_output'].get('provider_error',{})
                 for name in ('code','status','message'):receipt['provider_error_'+name]=error.get('error_'+name)
                 if stage=='VIDEO' and result['classification']=='VIDEO_SUCCESS_UNREVIEWED':

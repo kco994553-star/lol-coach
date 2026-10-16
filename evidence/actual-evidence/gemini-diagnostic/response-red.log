@@ -1,0 +1,110 @@
+test_blocked_prompt_and_missing_parts_are_identified_without_raw_values (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_blocked_prompt_and_missing_parts_are_identified_without_raw_values) ... FAIL
+test_complete_text_excludes_thoughts_but_reports_usage_and_types (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_complete_text_excludes_thoughts_but_reports_usage_and_types) ... FAIL
+test_duplicate_json_fails_parse_not_transport_or_schema (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_duplicate_json_fails_parse_not_transport_or_schema) ... FAIL
+test_max_tokens_is_incomplete_with_precise_gate_and_usage (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_max_tokens_is_incomplete_with_precise_gate_and_usage) ... FAIL
+test_unsupported_part_is_not_silently_coerced_or_leaked (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_unsupported_part_is_not_silently_coerced_or_leaked) ... FAIL
+
+======================================================================
+FAIL: test_blocked_prompt_and_missing_parts_are_identified_without_raw_values (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_blocked_prompt_and_missing_parts_are_identified_without_raw_values)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 6, in inspect
+    try:from coach_v1.gemini_response_diagnostics import inspect_response
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'coach_v1.gemini_response_diagnostics'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 20, in test_blocked_prompt_and_missing_parts_are_identified_without_raw_values
+    r=self.normal();r['promptFeedback']={'blockReason':'SAFETY','blockReasonMessage':'PRIVATE_BLOCK_EXPLANATION'};d=self.inspect(r);self.assertEqual(d['failed_check'],'PROMPT_NOT_BLOCKED');self.assertNotIn('PRIVATE_',json.dumps(d))
+                                                                                                                    ^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 7, in inspect
+    except ImportError:self.fail("Staged response diagnostics are not implemented")
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Staged response diagnostics are not implemented
+
+======================================================================
+FAIL: test_complete_text_excludes_thoughts_but_reports_usage_and_types (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_complete_text_excludes_thoughts_but_reports_usage_and_types)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 6, in inspect
+    try:from coach_v1.gemini_response_diagnostics import inspect_response
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'coach_v1.gemini_response_diagnostics'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 12, in test_complete_text_excludes_thoughts_but_reports_usage_and_types
+    d=self.inspect(self.normal());self.assertTrue(d['complete_text']);self.assertEqual(d['pipeline']['schema_validation'],'PASS');self.assertEqual(d['nonthought_text_bytes'],2);self.assertEqual(d['usage']['totalTokenCount'],10);self.assertEqual(d['thought_true_parts'],1)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 7, in inspect
+    except ImportError:self.fail("Staged response diagnostics are not implemented")
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Staged response diagnostics are not implemented
+
+======================================================================
+FAIL: test_duplicate_json_fails_parse_not_transport_or_schema (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_duplicate_json_fails_parse_not_transport_or_schema)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 6, in inspect
+    try:from coach_v1.gemini_response_diagnostics import inspect_response
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'coach_v1.gemini_response_diagnostics'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 18, in test_duplicate_json_fails_parse_not_transport_or_schema
+    d=self.inspect(b'{"candidates":[],"candidates":[]}');self.assertEqual(d['pipeline']['json_parse'],'FAIL');self.assertEqual(d['pipeline']['schema_validation'],'NOT_REACHED');self.assertFalse(d['complete_text'])
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 7, in inspect
+    except ImportError:self.fail("Staged response diagnostics are not implemented")
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Staged response diagnostics are not implemented
+
+======================================================================
+FAIL: test_max_tokens_is_incomplete_with_precise_gate_and_usage (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_max_tokens_is_incomplete_with_precise_gate_and_usage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 6, in inspect
+    try:from coach_v1.gemini_response_diagnostics import inspect_response
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'coach_v1.gemini_response_diagnostics'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 15, in test_max_tokens_is_incomplete_with_precise_gate_and_usage
+    r=self.normal();r['candidates'][0]['finishReason']='MAX_TOKENS';d=self.inspect(r)
+                                                                      ^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 7, in inspect
+    except ImportError:self.fail("Staged response diagnostics are not implemented")
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Staged response diagnostics are not implemented
+
+======================================================================
+FAIL: test_unsupported_part_is_not_silently_coerced_or_leaked (tests_expert.test_gemini_response_diagnostics.ResponseDiagnosticTests.test_unsupported_part_is_not_silently_coerced_or_leaked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 6, in inspect
+    try:from coach_v1.gemini_response_diagnostics import inspect_response
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'coach_v1.gemini_response_diagnostics'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 23, in test_unsupported_part_is_not_silently_coerced_or_leaked
+    r=self.normal();r['candidates'][0]['content']['parts']=[{'text':'OK','partMetadata':{'PRIVATE_IDENTIFIER':'PRIVATE_VALUE'}}];d=self.inspect(r);self.assertEqual(d['failed_check'],'TEXT_PART_KEYS');self.assertNotIn('PRIVATE_',json.dumps(d));self.assertFalse(d['complete_text'])
+                                                                                                                                   ^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_expert/test_gemini_response_diagnostics.py", line 7, in inspect
+    except ImportError:self.fail("Staged response diagnostics are not implemented")
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Staged response diagnostics are not implemented
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.001s
+
+FAILED (failures=5)

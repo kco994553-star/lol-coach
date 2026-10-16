@@ -1,3 +1,49 @@
+된 것: 원문 응답은 없음을 확인했고 정상·불완전·차단 응답의 구조 진단을 추가했습니다.
+된 것: 같은 조건 3회에서 서버 준비 2.73초·첫 카드 1.12초·픽 갱신 0.46초 중앙값을 기록했습니다.
+유지: 조언 개선 7개 종료·자동 검토 30개·보류 20개와 골드·경험치 복구 이력을 보존합니다.
+진행 중: 10월17일 KST 실제 진단은 아직 0회이며 필수 CI·게시 뒤 첫 요청을 실행합니다.
+내가 할 것: 추가 승인이나 자료 수집은 필요 없습니다. 무료·동일 모델·영상 하루1회 제한을 유지합니다.
+
+# Limited Gemini diagnostic intake — 2026-10-17 KST
+
+Authority USER_GEMINI_DIAGNOSTIC_EXCEPTION_2026-10-17; intake main25b9682, priorPR43
+required+postmain3SUCCESS each reused. Main shared token main-20261017-gemini-format,
+branchwork/gemini-format-20261017. No active writer/openPR/providerjob at intake.
+
+User ceiling5TEXT combined manual/schedule/already-used today, stop429/auth/permission,
+stop diagnostics on usable complete text and return normal1. First call intentionally
+uses existing stricter TEXT1 protocol; do not use extra calls without diagnosed need
+and durable shared cap enforcement. Sameproject/key/model/v1beta generateContent route,
+stdliburllib, no providerSDK, fallback/retry/paid switch. ExistingVIDEO1 and complete
+original-duration ledger preserved; text consumes API/token usage but no VIDEO charge.
+
+Original38897072108 response absent, exact old cause UNKNOWN. Official REST reference
+URL/date/hash/excerpts and synthetic fixtures are separate evidence. Prior8-token cap
+may truncate (H1), not proven actual cause. First request tests already merged restored
+priorHTTP200 shape, cap removed only; safe response diagnostics added. No parser
+relaxation: STOP/unblocked/onecandidate/nonthought complete text still required.
+Transport/body/JSON/schema/extraction/content-review stages plus type/count/finish/
+thought-presence/usage kept; generated originals/thoughts/signatures/private IDs absent.
+VIDEO generated JSON/schema and independent source fact review remain distinct.
+
+Independent review found surrogate encoding could erase diagnostics; related root-array
+HTTP200 was mislabelled NETWORK_FAILURE. Both pinned RED2 then GREEN46 affected tests;
+complete-output parser unchanged. See gemini-diagnostic/independent-review.md and
+review-green.log. CI source selector includes new response tests and old v2 compatibility.
+Old original/report bindings and raw goldXP recovery sources remain unchanged.
+
+Performance receipt: evidence/actual-evidence/gemini-diagnostic/pc-phases-20261017.md.
+3matched actualChromium repeats, Draven→Kalista BOTTOM vsAphelios patch16.20. Fresh
+Python/SQLite+browser/context per repeat, status readiness warms local status; warm
+pickchange includes action/debounce/newdraft+matchingDOM. OSfilesystemcache uncontrolled.
+IsolatedLinuxserver omits fullWindowslauncher/PCServices/LCU/background maintenance;
+manualpreset injected before firstpreview. Do not compare old0.5–0.9s as regression.
+WindowsLCU remains BLOCKED_EXTERNAL. Resource108 = selectedparticipant×match paired
+observation, across89matches, separately per10/15min target; no interpolation/zero,
+patch/participant/time/missing guards preserved. No raw reinspection or Riot requests.
+
+---
+
 된 것: 문장 개선은 7개에서 종료하고 기존 원문·검토·보류 20개·실패 이력을 보존했습니다.
 된 것: 기존 프로 참고 89경기에서 10·15분대 골드·경험치 비교값을 각각 108개 복구했습니다.
 된 것: POV 두 채널의 ID·핸들과 공개 영상 후보 6개의 메타데이터를 확인했습니다.
