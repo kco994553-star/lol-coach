@@ -22,6 +22,9 @@ def main(argv=None):
     parser.add_argument('--timeout',type=int,default=120)
     parser.add_argument('--allow-fallback-once',action='store_true')
     args=parser.parse_args(argv)
+    atomic_json(args.output,dict(status='BLOCKED_EXTERNAL',reason='DAILY_GUARD_REQUIRED'))
+    print('EXPERT_DAILY_GUARD_REQUIRED');return 1
+
     if not 1<=args.timeout<=120:parser.error('timeout must be between1 and120 seconds')
     runtime=read_json(args.runtime_config,200000) if args.runtime_config else None
     recovery=read_json(args.recovery_receipt)

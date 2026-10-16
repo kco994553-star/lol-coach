@@ -1,0 +1,123 @@
+name: Private pro timeline reference collection
+
+on:
+  workflow_dispatch:
+    inputs:
+      key_renewed:
+        description: Renewed KR Riot key confirmed by user
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  actions: read
+
+# Serialize every Riot client, including the Challenger job.
+concurrency:
+  group: riot-power-collection-main
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    if: github.repository == 'kco994553-star/lol-coach' && github.ref == 'refs/heads/main' && inputs.key_renewed == true && github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out trusted main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Install pinned private cache runtime
+        run: python -m pip install --disable-pip-version-check -r requirements-r3.txt -r requirements-private-cache.txt
+      - name: Recover newest trusted encrypted cache including interrupted runs
+        id: recover
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/recover_pro_cache.py --directory "$RUNNER_TEMP/pro-recovery"
+      - name: Restore private cache or validate first-use encryption key
+        id: restore
+        env:
+          PRO_REFERENCE_ENCRYPTION_SEED: ${{ secrets.YOUTUBE_API_KEY }}
+          CACHE_FOUND: ${{ steps.recover.outputs.found }}
+        run: |
+          umask 077
+          if [[ "$CACHE_FOUND" == true ]]; then
+            python scripts/private_pro_bundle.py decrypt --directory "$RUNNER_TEMP/private/pro-reference" --bundle "$RUNNER_TEMP/pro-recovery/pro-private.bundle"
+          else
+            python - <<'PY'
+          import os
+          from pathlib import Path
+          from coach_v1.private_pro_bundle import _key
+          _key(os.environ.get('PRO_REFERENCE_ENCRYPTION_SEED',''))
+          Path(os.environ['RUNNER_TEMP'],'private/pro-reference').mkdir(parents=True,mode=0o700)
+          print('PRIVATE_FIRST_USE_READY; NO_SECRET_OR_ID_OUTPUT')
+          PY
+          fi
+      - name: Clear prior job rolling Riot rate window before fresh client
+        run: |
+          # Independent clients cannot carry timestamps across jobs. Wait121s
+          # before starting, outside the collector's own900s deadline.
+          python - <<'PY'
+          import time
+          time.sleep(60)
+          time.sleep(60)
+          time.sleep(1)
+          PY
+      - name: Bind actual checked out source without private identities
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,subprocess
+          from pathlib import Path
+          out=Path(os.environ['RUNNER_TEMP'])/'pro-public';out.mkdir(exist_ok=True)
+          paths=['coach_v1/pro_reference.py','coach_v1/pro_reference_cases.py','coach_v1/riot_collector.py','scripts/collect_pro_reference.py','config/pro_reference_players.json','.github/workflows/pro-reference-collection.yml','coach_v1/pro_checkpoint.py','coach_v1/private_pro_bundle.py']
+          receipt=dict(actual_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),source_sha256={p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in paths},privacy='SOURCE_ONLY_NO_RAW_OR_IDENTIFIERS')
+          (out/'source-binding.json').write_text(json.dumps(receipt,indent=2)+'\n')
+          print('ACTUAL_SOURCE_BOUND')
+          PY
+      - name: Collect user-selected pro timelines privately
+        id: collect
+        env:
+          RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
+        run: |
+          umask 077
+          python scripts/collect_pro_reference.py --config config/pro_reference_players.json --private-directory "$RUNNER_TEMP/private/pro-reference" --public-output-directory "$RUNNER_TEMP/pro-public" --matches-per-account 5 --max-requests 500 --max-matches 180 --deadline-seconds 900
+      - name: Encrypt private cache even after a partial or authentication-stopped collection
+        id: encrypt
+        if: always() && steps.restore.outcome == 'success' && steps.collect.outcome != 'skipped'
+        env:
+          PRO_REFERENCE_ENCRYPTION_SEED: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python scripts/private_pro_bundle.py encrypt --directory "$RUNNER_TEMP/private/pro-reference" --bundle "$RUNNER_TEMP/pro-private.bundle"
+      - name: Persist encrypted private pro cache
+        if: always() && steps.encrypt.outcome == 'success'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: pro-reference-private-encrypted
+          path: ${{ runner.temp }}/pro-private.bundle
+          retention-days: 90
+          if-no-files-found: error
+      - name: Publish anonymous reference cases and safe receipt only
+        if: always() && steps.collect.outcome != 'skipped' && steps.restore.outcome == 'success'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: pro-reference-public-safe
+          path: |
+            ${{ runner.temp }}/pro-public/reference-cases.json
+            ${{ runner.temp }}/pro-public/collection-receipt.json
+            ${{ runner.temp }}/pro-public/source-binding.json
+          retention-days: 90
+          if-no-files-found: warn
+      - name: Remove ephemeral private originals and cache
+        if: always()
+        run: |
+          python - <<'PY'
+          import os, shutil
+          from pathlib import Path
+          path=Path(os.environ['RUNNER_TEMP'])/'private/pro-reference'
+          if path.is_dir():shutil.rmtree(path)
+          print('EPHEMERAL_PRIVATE_DIRECTORY_REMOVED')
+          PY

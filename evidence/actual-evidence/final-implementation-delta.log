@@ -1,0 +1,103 @@
+test_ack_rejects_nonexistent_wrong_run_wrong_state_before_dispatch (tests_expert.test_daily_review_fixes.ReviewFixTests.test_ack_rejects_nonexistent_wrong_run_wrong_state_before_dispatch) ... ok
+test_claim_root_does_not_change_with_output_or_runner_temp (tests_expert.test_daily_review_fixes.ReviewFixTests.test_claim_root_does_not_change_with_output_or_runner_temp) ... ok
+test_empty_expert_and_pov_are_not_nonempty_extractions (tests_expert.test_daily_review_fixes.ReviewFixTests.test_empty_expert_and_pov_are_not_nonempty_extractions) ... ok
+test_preparation_permission_payment_arguments_block_next_day_but_not_quota (tests_expert.test_daily_review_fixes.ReviewFixTests.test_preparation_permission_payment_arguments_block_next_day_but_not_quota) ... ok
+test_rejected_or_outside_interval_has_no_valid_extraction (tests_expert.test_daily_review_fixes.ReviewFixTests.test_rejected_or_outside_interval_has_no_valid_extraction) ... ok
+test_wrong_schema_is_malformed_not_empty (tests_expert.test_daily_review_fixes.ReviewFixTests.test_wrong_schema_is_malformed_not_empty) ... ok
+test_changed_revision_unblocks_next_day (tests_expert.test_gemini_daily.DailyTests.test_changed_revision_unblocks_next_day) ... ok
+test_charged_id_never_reused (tests_expert.test_gemini_daily.DailyTests.test_charged_id_never_reused) ... ok
+test_classification (tests_expert.test_gemini_daily.DailyTests.test_classification) ... ok
+test_cli_phases_use_one_text_and_one_video_with_durable_acks (tests_expert.test_gemini_daily.DailyTests.test_cli_phases_use_one_text_and_one_video_with_durable_acks) ... GEMINI_DAILY_JSON={"accepted_claims": 0, "classification": null, "coaching_accuracy": null, "has_state": true, "http_status": null, "new_provider_requests": 0, "phase": "pretext", "provider_error_code": null, "provider_error_message": null, "provider_error_status": null, "reason": null, "review_status": "NOT_REVIEWED", "schema_version": "gemini.daily-receipt.v1", "status": "READY", "text_reserved": true, "text_success": false, "valid_extraction": false, "video_reserved": false}
+GEMINI_DAILY_JSON={"accepted_claims": 0, "classification": "TEXT_ONLY_SUCCESS", "coaching_accuracy": null, "has_state": true, "http_status": 200, "new_provider_requests": 1, "phase": "text", "provider_error_code": null, "provider_error_message": null, "provider_error_status": null, "reason": "TEXT_ONLY_SUCCESS", "review_status": "NOT_REVIEWED", "schema_version": "gemini.daily-receipt.v1", "status": "SUCCESS", "text_reserved": false, "text_success": true, "valid_extraction": false, "video_reserved": false}
+GEMINI_DAILY_JSON={"accepted_claims": 0, "classification": null, "coaching_accuracy": null, "has_state": true, "http_status": null, "new_provider_requests": 0, "phase": "preparevideo", "provider_error_code": null, "provider_error_message": null, "provider_error_status": null, "reason": null, "review_status": "NOT_REVIEWED", "schema_version": "gemini.daily-receipt.v1", "status": "READY", "text_reserved": false, "text_success": false, "valid_extraction": false, "video_reserved": true}
+GEMINI_DAILY_JSON={"accepted_claims": 0, "classification": "VIDEO_SUCCESS_UNREVIEWED", "coaching_accuracy": null, "extraction_status": "EMPTY", "has_state": true, "http_status": 200, "new_provider_requests": 1, "phase": "video", "provider_error_code": null, "provider_error_message": null, "provider_error_status": null, "reason": "VIDEO_SUCCESS_UNREVIEWED", "review_status": "EXPLORATORY", "schema_version": "gemini.daily-receipt.v1", "status": "SUCCESS", "text_reserved": false, "text_success": false, "valid_extraction": false, "video_reserved": false}
+ok
+test_cli_text_failure_receipt_reports_quota_without_video (tests_expert.test_gemini_daily.DailyTests.test_cli_text_failure_receipt_reports_quota_without_video) ... GEMINI_DAILY_JSON={"accepted_claims": 0, "classification": "QUOTA_EXCEEDED", "coaching_accuracy": null, "has_state": true, "http_status": 429, "new_provider_requests": 1, "phase": "text", "provider_error_code": 429, "provider_error_message": "quota exceeded [REDACTED_KEY]", "provider_error_status": "RESOURCE_EXHAUSTED", "reason": "QUOTA_EXCEEDED", "review_status": "NOT_REVIEWED", "schema_version": "gemini.daily-receipt.v1", "status": "BLOCKED_EXTERNAL", "text_reserved": false, "text_success": false, "valid_extraction": false, "video_reserved": false}
+ok
+test_dispatch_503_never_retries (tests_expert.test_gemini_daily.DailyTests.test_dispatch_503_never_retries) ... ok
+test_dispatch_requires_ack_and_exclusive_claim (tests_expert.test_gemini_daily.DailyTests.test_dispatch_requires_ack_and_exclusive_claim) ... ok
+test_explicit_source_requires_current_public_matching_metadata (tests_expert.test_gemini_daily.DailyTests.test_explicit_source_requires_current_public_matching_metadata) ... ok
+test_forged_reservation_and_success_receipt_rejected (tests_expert.test_gemini_daily.DailyTests.test_forged_reservation_and_success_receipt_rejected) ... ok
+test_legacy_cli_live_paths_are_guarded (tests_expert.test_gemini_daily.DailyTests.test_legacy_cli_live_paths_are_guarded) ... ok
+test_migration_allows_completed_zero_job_scheduled_run (tests_expert.test_gemini_daily.DailyTests.test_migration_allows_completed_zero_job_scheduled_run) ... ok
+test_module_exists (tests_expert.test_gemini_daily.DailyTests.test_module_exists) ... ok
+test_pending_blocks_next_day_unchanged_configuration (tests_expert.test_gemini_daily.DailyTests.test_pending_blocks_next_day_unchanged_configuration) ... ok
+test_persistent_auth_blocks_new_day (tests_expert.test_gemini_daily.DailyTests.test_persistent_auth_blocks_new_day) ... ok
+test_pov_channel_allowlist_is_separate (tests_expert.test_gemini_daily.DailyTests.test_pov_channel_allowlist_is_separate) ... ok
+test_provider_error_redacted_and_classified (tests_expert.test_gemini_daily.DailyTests.test_provider_error_redacted_and_classified) ... ok
+test_purpose_switch_cannot_clear_persistent_authentication (tests_expert.test_gemini_daily.DailyTests.test_purpose_switch_cannot_clear_persistent_authentication) ... ok
+test_quota_failure_allows_next_day (tests_expert.test_gemini_daily.DailyTests.test_quota_failure_allows_next_day) ... ok
+test_recover_cancelled_reservation_and_reject_expiration (tests_expert.test_gemini_daily.DailyTests.test_recover_cancelled_reservation_and_reject_expiration) ... ok
+test_recover_final_only_noop_prefix (tests_expert.test_gemini_daily.DailyTests.test_recover_final_only_noop_prefix) ... ok
+test_recover_missing_newer_expected_snapshot_blocks (tests_expert.test_gemini_daily.DailyTests.test_recover_missing_newer_expected_snapshot_blocks) ... ok
+test_recovery_rejects_dropped_prefix (tests_expert.test_gemini_daily.DailyTests.test_recovery_rejects_dropped_prefix) ... ok
+test_same_day_is_consumed_even_other_purpose_revision (tests_expert.test_gemini_daily.DailyTests.test_same_day_is_consumed_even_other_purpose_revision) ... ok
+test_seoul_day_boundary (tests_expert.test_gemini_daily.DailyTests.test_seoul_day_boundary) ... ok
+test_source_bounds_and_purpose (tests_expert.test_gemini_daily.DailyTests.test_source_bounds_and_purpose) ... ok
+test_video_pair_requires_durable_full_duration_charge (tests_expert.test_gemini_daily.DailyTests.test_video_pair_requires_durable_full_duration_charge) ... ok
+test_video_purpose_cannot_change_after_text_reservation (tests_expert.test_gemini_daily.DailyTests.test_video_purpose_cannot_change_after_text_reservation) ... ok
+test_video_requires_text_and_real_offsets_and_original_charge (tests_expert.test_gemini_daily.DailyTests.test_video_requires_text_and_real_offsets_and_original_charge) ... ok
+test_cli_binds_actual_report_bytes_and_sources_without_config_mutation (tests_expert.test_pov_metadata.PovMetadataTests.test_cli_binds_actual_report_bytes_and_sources_without_config_mutation) ... ok
+test_cli_config_hash_binds_the_bytes_actually_used_for_discovery (tests_expert.test_pov_metadata.PovMetadataTests.test_cli_config_hash_binds_the_bytes_actually_used_for_discovery) ... ok
+test_failures_are_safe_typed_no_retries_and_other_channel_still_runs (tests_expert.test_pov_metadata.PovMetadataTests.test_failures_are_safe_typed_no_retries_and_other_channel_still_runs) ... ok
+test_handle_mismatch_empty_and_malformed_fail_without_playlist_lookup (tests_expert.test_pov_metadata.PovMetadataTests.test_handle_mismatch_empty_and_malformed_fail_without_playlist_lookup) ... ok
+test_missing_key_and_invalid_or_excess_channels_make_zero_requests (tests_expert.test_pov_metadata.PovMetadataTests.test_missing_key_and_invalid_or_excess_channels_make_zero_requests) ... ok
+test_nonpublic_unprocessed_foreign_and_live_videos_are_excluded (tests_expert.test_pov_metadata.PovMetadataTests.test_nonpublic_unprocessed_foreign_and_live_videos_are_excluded) ... ok
+test_request_size_and_upload_count_are_bounded (tests_expert.test_pov_metadata.PovMetadataTests.test_request_size_and_upload_count_are_bounded) ... ok
+test_verified_canonical_metadata_retains_only_public_allowlist (tests_expert.test_pov_metadata.PovMetadataTests.test_verified_canonical_metadata_retains_only_public_allowlist) ... ok
+test_ambiguous_opponent_does_not_erase_own_observation (tests_pregame.test_resource_recovery.ResourceRecoveryTests.test_ambiguous_opponent_does_not_erase_own_observation) ... ok
+test_binding_uses_real_git_ancestry_and_rejects_tampered_bytes_or_sources (tests_pregame.test_resource_recovery.ResourceRecoveryTests.test_binding_uses_real_git_ancestry_and_rejects_tampered_bytes_or_sources) ... ok
+test_conflicting_originals_for_same_match_fail_closed (tests_pregame.test_resource_recovery.ResourceRecoveryTests.test_conflicting_originals_for_same_match_fail_closed) ... ok
+test_diagnostic_original_frame_interval_and_origin_are_explicit (tests_pregame.test_resource_recovery.ResourceRecoveryTests.test_diagnostic_original_frame_interval_and_origin_are_explicit) ... ok
+test_does_not_borrow_previous_or_next_bin_or_interpolate_gap (tests_pregame.test_resource_recovery.ResourceRecoveryTests.test_does_not_borrow_previous_or_next_bin_or_interpolate_gap) ... ok
+test_exact_timestamp_and_latest_same_bin_are_separate_same_frame_pairs (tests_pregame.test_resource_recovery.ResourceRecoveryTests.test_exact_timestamp_and_latest_same_bin_are_separate_same_frame_pairs) ... ok
+test_match_counts_deduplicate_distinct_selected_people (tests_pregame.test_resource_recovery.ResourceRecoveryTests.test_match_counts_deduplicate_distinct_selected_people) ... ok
+test_missing_own_xp_is_not_zero_or_inferred_from_level (tests_pregame.test_resource_recovery.ResourceRecoveryTests.test_missing_own_xp_is_not_zero_or_inferred_from_level) ... ok
+test_offset_observation_recovers_gold_xp_level_without_claiming_exact (tests_pregame.test_resource_recovery.ResourceRecoveryTests.test_offset_observation_recovers_gold_xp_level_without_claiming_exact) ... ok
+test_point_observation_includes_final_received_frame_at_end (tests_pregame.test_resource_recovery.ResourceRecoveryTests.test_point_observation_includes_final_received_frame_at_end) ... ok
+test_quantiles_and_patches_do_not_pool_cohort_identity (tests_pregame.test_resource_recovery.ResourceRecoveryTests.test_quantiles_and_patches_do_not_pool_cohort_identity) ... ok
+test_short_game_and_post_end_frame_have_distinct_diagnostics (tests_pregame.test_resource_recovery.ResourceRecoveryTests.test_short_game_and_post_end_frame_have_distinct_diagnostics) ... ok
+test_strict_allowlist_rejects_identity_nonfinite_and_inconsistent_missing (tests_pregame.test_resource_recovery.ResourceRecoveryTests.test_strict_allowlist_rejects_identity_nonfinite_and_inconsistent_missing) ... ok
+test_summary_counts_and_means_reconcile_with_patch_and_cohort_partitions (tests_pregame.test_resource_recovery.ResourceRecoveryTests.test_summary_counts_and_means_reconcile_with_patch_and_cohort_partitions) ... ok
+test_unbound_report_and_wrong_pinned_checkpoint_rejected (tests_pregame.test_resource_recovery.ResourceRecoveryTests.test_unbound_report_and_wrong_pinned_checkpoint_rejected) ... ok
+test_missing_bound_report_does_not_break_existing_cards (tests_pregame.test_resource_view.ResourceViewTests.test_missing_bound_report_does_not_break_existing_cards) ... ok
+test_no_role_pool_fallback_or_patch_substitution (tests_pregame.test_resource_view.ResourceViewTests.test_no_role_pool_fallback_or_patch_substitution) ... ok
+test_observed_bin_card_has_actual_time_n_missing_and_separate_exact (tests_pregame.test_resource_view.ResourceViewTests.test_observed_bin_card_has_actual_time_n_missing_and_separate_exact) ... ok
+test_unknown_values_are_not_zero (tests_pregame.test_resource_view.ResourceViewTests.test_unknown_values_are_not_zero) ... ok
+test_fixed_pair_does_not_select_newest (tests_pregame.test_fixed_resource_checkpoint.FixedCheckpointTests.test_fixed_pair_does_not_select_newest) ... ok
+test_untrusted_source_attempt_or_branch_rejected (tests_pregame.test_fixed_resource_checkpoint.FixedCheckpointTests.test_untrusted_source_attempt_or_branch_rejected) ... ok
+test_wrong_run_artifact_and_expired_rejected (tests_pregame.test_fixed_resource_checkpoint.FixedCheckpointTests.test_wrong_run_artifact_and_expired_rejected) ... ok
+test_exact_source_authority_rejects_unregistered_source (tests_pregame.test_actual_evidence_binding.EvidenceBindingTests.test_exact_source_authority_rejects_unregistered_source) ... ok
+test_new_file_inventory_has_no_broad_executable_exception (tests_pregame.test_actual_evidence_binding.EvidenceBindingTests.test_new_file_inventory_has_no_broad_executable_exception) ... ok
+
+----------------------------------------------------------------------
+Ran 66 tests in 0.830s
+
+OK
+EXPERT_DAILY_GUARD_REQUIRED
+EXPERT_DAILY_GUARD_REQUIRED
+EXPERT_DAILY_GUARD_REQUIRED
+{
+  "status": "PASS",
+  "checks": {
+    "authority": true,
+    "ancestry": true,
+    "exact_parent": true,
+    "completed_ci_reused": true,
+    "exact_source_authority": true,
+    "current_sources": true,
+    "exact_preserved": true,
+    "preserved_bytes": true,
+    "original_modified_archived": true,
+    "new_data_bound": true,
+    "bounded_changes": true,
+    "no_approval_or_accuracy": true,
+    "resource_reports_bound": true,
+    "pov_reports_bound": true
+  },
+  "commit_sha": "103b8b80c915accba7d7e5c82951d020b17d6e09",
+  "scope": "Actual evidence sources/data only; completed pilot/v2.3 CI reused, no predecessor tests executed",
+  "coaching_accuracy": null,
+  "new_tests_executed": true,
+  "new_tests_exit_code": 0
+}

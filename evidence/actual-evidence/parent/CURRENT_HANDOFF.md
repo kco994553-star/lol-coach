@@ -1,0 +1,1145 @@
+된 것: 조언 7개에 선택 조건·중단 조건·불확실할 때 대안을 붙였습니다.
+된 것: 기존 프로 참고 89경기 원본을 오프라인으로 확인했고 새 경기 수집은 없었습니다.
+보류: 새 7개는 미검토 가설이며 기존 20개 보류도 그대로입니다.
+안 된 것: 판단 당시 화면·시야가 없어 과거 장면 평가와 행동 일치 판정은 0개입니다.
+내가 할 것: 지금 추가 승인이나 자료 수집은 필요 없습니다. 전체 30개 확대는 이번 결과 확인 뒤 정합니다.
+
+# Small coaching-quality pilot — actual existing-cache results (2026-10-16)
+
+Implementation PR39 normally merged as68d6a94acfc27bfcf223372bb950b97422c8dbfb,
+exact tree2313464661a4e3345977ee7bf26abd420dbf0e77. PR required runs38890287880/
+38890288557 and postmain38890469302/38890469300: all3jobsSUCCESS each. These
+pilot-only29tests and actual PC Chromium receipt are reused for this result-only
+publication; completedv2.3tests were not rerun. Independent source/condition and
+whole-branch reviews retained, final review issues addressed without weakening gates.
+
+Exactly7 revisions KR001/005/008/015/021/022/026, selected from prior random5 plus
+purpose3(overlap008). All have separate SKILL_INTERACTION topic and HYPOTHESIS
+evidence level. Seven source-fact checks PASS and seven conditional-wording checks
+PASS; tactical interpretations7HOLD, real-game effect NOT_ASSESSED. No new AUTO or
+USER approval; legacy AUTO30 and HOLD20 unchanged. Original and first-draft text,
+source/counter reviews, objections and prior holds preserved. Full exact before/
+after text: evidence/quality-pilot/comparison.md. Additional wording is a conditional
+choice framework, not demonstrated optimal play. No whole30 expansion yet.
+
+Existing data remain distinct: Q15 same275matches(public852/full6090cohorts),
+recallCH291matches/2910participant observations, recordedPRO89/108. Q15/CH raw not
+locally retained; no aggregate scene reconstruction. Q15 full MATCHUP sampled-bin
+gold is absolute difference, not public ROLE_POPULATION rate. Existing Caitlyn/
+Ezreal10/15 n5 remains omitted CI_TOO_WIDE; Ornn/Fiora and Ahri/Zed matchup cohorts
+unavailable. Position supplementation is not matchup evidence.
+
+Actual offline run38890469607 attempt1 SUCCESS, trustedmain68d6a94, restored ONLY
+existing encrypted checkpoint run38410710876/artifact11822391323. During extraction,
+socket connections denied; provider requests0/network attempts0, no Riot or paid
+calls. Only anonymous allowlisted report/binding downloaded: artifact12041212904.
+Independent offline-audit-review.md reconciles ZIP bytes, report SHA, all9source
+hashes,89distinctmatches/108selected participant observations and output totals.
+Patch16.19:13matches/13selected;16.20:76/95. OlderPRO87/106 is not added.
+
+Direct received observations:2384frames/23840participant frames; LEVEL_UP11448,
+duplicate signatures0; SKILL_LEVEL_UP12596, duplicates11, separately counted.
+Malformed LEVEL_UP39 conservatively invalidate affected participant histories;
+missing does not mean level did not occur. Both level2/3:16.19 own exact10/13,
+opponent11/13;16.20 own92/95 and opponent92/95; no frame fallback used this run.
+Strict disjoint intervals alone establish order; equality/overlap/invalid history
+UNKNOWN. Marginal timing summaries never reconstruct scenes or optimal entry timing.
+Exact paired10/15min totalGold valid0/missing108 EACH; this is unavailable paired
+evidence, not zero difference. Missing reasons are not separately partitioned.
+Selected JUNGLE20, first observed lane kill/assist involvement20(TOP4/MID8/BOTTOM8).
+Kill involvement is observed; lane attribution uses position geometry. Firstgank,
+arrival and nonlethal ganks remain unidentifiable. New first-matchup-kill and recall
+refinement were NOT_COMPUTED here; prior purchase-based recall remains a proxy.
+
+No matched known-view/POV video, wave state, exact cooldowns or player intent.
+Eligible/selected/evaluated individual scenes0; exclusion count is not fabricated
+from89matches, agreement=null rather than0percent. Instead all7 revisions received
+condition/exception/counterexample review. Tactical usefulness and real-game effect
+remain unvalidated; source checks do not establish professional/expert approval.
+Result-only source/data/preserved binding checks and normal expected-head merge
+still apply; future CI success is not asserted here. No READY collection/retry,
+paid call, protected issue write or user review burden is created by this report.
+
+---
+
+된 것: 기존 품질 평가의 고유 조언 7개를 별도 가설 버전으로 구체화했습니다.
+된 것: 조건·중단·대안을 나눴고 원문·승인·기존 20개 보류는 보존했습니다.
+보류: 새 7개 전술 해석은 HOLD이며 출처 확인·조건 검토를 효과 검증으로 보지 않습니다.
+진행 중: 기존 암호화 프로 원본의 오프라인 필드 검사를 준비했고 경기 수집은 하지 않습니다.
+내가 할 것: 지금 추가 승인이나 자료 수집은 필요 없습니다.
+
+# Small coaching-quality pilot — 2026-10-16
+
+Intake main9da650ae/tree37729ed. Prior read-only quality audit reused: random seed
+dd7dc6fe03d2fd58b7ea0548d4532c2a, random KR021/008/026/022/015,
+purpose KR001/005/008, overlap008. Exactly seven distinct revisions; no expansion
+until user assesses this pilot. First draft and evidence/counter reviews preserved
+under evidence/quality-pilot/initial/. Five material wording risks corrected:
+mechanic-only entry gate, universal recoil priority, blanket forward pause,
+unconditional separation/visibleenemy exclusion, scouting OR/AND/emergency gate.
+V2 source facts PASS and conditional wording PASS separately; tactical interpretation
+HOLD, real-game effect NOT_ASSESSED. New versions never inherit AUTO/USER approval.
+Existing AUTO30 receipts and old HOLD20 are byte-preserved; matching revised PC
+cards show HYPOTHESIS with separate skill-interaction topic, suppress legacy AUTO
+display only, and honor original user objection/rejection. No USER writes.
+
+Q15 public852/full6090cohorts are the same275matches. Public pooledgold is rate;
+full MATCHUP gold is absolute sampled-bin difference. Existing Ornn/Fiora and
+Ahri/Zed matchup cohorts unavailable; Caitlyn/Ezreal10/15 bins have n5, original
+CI_TOO_WIDE omissions preserved and eligible-total/missing n not recoverable.
+RecallCH291/2910 and recordedPRO89/108 remain separate. OlderPRO87/106 separate.
+CH raw not locally retained; no aggregate scene reconstruction. PRO checkpoint
+11822391323/run38410710876 available by metadata; trusted offline workflow only
+restores existing ciphertext, denies network during audit and emits strict anonymous
+statistics. Actual field/event counts await its first trustedmain audit; no new
+Riot collection or paidcall. LEVEL_UP vsSKILL_LEVEL_UP, duplicate/conflict rejection,
+frame-level arrival bounds and overlapUNKNOWN, exact10/15 totalGold checks covered.
+Jungle metric is firstobservedlane kill involvement, not firstgank; no-killganks absent.
+
+No matched known-view/POV receipt: eligible/evaluated scenes0, individual scene
+exclusion count not fabricated from89matches, agreement/accuracy null. New advice
+instead receives source/condition/counterexample review. Whole-branch review and
+pilot-only required CI precede normal publication; completedv23tests/browser are
+never rerun. Evidence-only followup reuses unchangedpilotchecks. Full before/after:
+evidence/quality-pilot/comparison.md; inventory/report/reviews beside it.
+
+---
+
+된 것: 귀환·저체력 실제 집계를 PC 카드에 연결했습니다.
+된 것: 챌린저 291경기와 사용자 명단의 프로 참고 89경기를 출처·패치별로 보존했습니다.
+안 된 것: 새 전술 후보 20개는 보류이며 실제 Windows 픽창 실증은 외부 대기입니다.
+진행 상태: 실제 자료 화면의 1초 목표를 확인했고 결과 커밋은 필수 CI와 정상 병합으로 게시합니다.
+내가 할 것: 지금 추가 승인이나 키 전송은 필요 없습니다.
+
+# Queue v2.3 — actual anonymous data and PC projection completed locally (2026-10-15)
+
+PR37 normally merged f4fa37a501fe78679d3a11e39162437c89f58cab after three required checks, postmerge38728119948/38728119978 allSUCCESS. Completed v2.1 evidence remains reused without rerunning its tests, verifier, or browser. New real collection38728134121, attempt1, trusted main f4fa37a; public-only artifact11969029431. Independently audited16/16 source hashes and both dataset digests, strict cadencev2/schema and privacy allowlists. Raw/private cache was not downloaded into this workspace. Original source-binding remains to f4fa37a; subsequent projection-only changes do not rewrite extraction lineage.
+
+PRO_REFERENCE:89distinctmatches/108recorded participant observations,16.19/16.20 separate,0providerrequests from reused private envelopes. Includes user-recorded roster candidates before final selection; not verified every participant pro. CHALLENGER:291distinctmatches/2910participantobservations,16.20,600requests/1retry. Workflow ended failure/DEADLINE_EXHAUSTED; accepted partial observations remain valid, not a completed300match acquisition. No additional provider retry. Challenger seed does not establish every participant's rank.
+
+Actual archive exposed two integration bugs:12MB cap rejected12,366,272byte CH; repeated Q15 validation/copying caused3–7second cards. Loader now bounds at32MB with strict startup validation; private recall snapshots cache digest/index, and PC Q15 snapshots reuse unchanged selector on validated narrow cohorts with original full dataset/source/sample bindings. Cached views copy outputs, bounded eviction tolerates concurrent HTTP requests. Replacement data disables Q15 fast path. Actual Chromium+localHTTP, synthetic manual Caitlyn/Ezreal picks with both REAL datasets: latest named receipts in evidence/queue/v23/actual-browser-*;1second goal measured, no actualWindowsLCU or coachingaccuracy claim. Earlier slow receipts retained.
+
+AUTO_VERIFIED existing30PASS reused; new20HOLD after separate evidence/counter reviews. USER decisions0, no protectedissue writes or REVIEWED promotion. Golden10 synthetic full drafts across5positions:146filledcards (OFFICIAL50,STATISTICS30,AUTO_VERIFIED62,HYPOTHESIS4,USER0), UNKNOWN3. BOTTOM35/36filled:OFFICIAL10/STATISTICS7/AUTO14/HYPOTHESIS4/USER0/UNKNOWN1. Counts are repeated card instances acrossviews, not distinct tactics or accuracy. report.json is the detailed output.
+
+Only external game-PC/WindowsLCU proof is BLOCKED_EXTERNAL. Wave/intent/exact recall/instant gold remain UNKNOWN; new tactical classifications remain hypotheses. No READY provider retry, paid/Gemini request, mobile static app or in-game automatic instruction is authorized by these results. This result commit still receives its own affected CI/expected-head normal merge; future CI success is not asserted in advance.
+
+---
+
+된 것: 누락 구간과 마지막 프레임 경계를 차단하는 보완을 끝냈습니다.
+된 것: 새 통계 31개·수집 연결 11개·실제 브라우저 8개 검사를 확인했습니다.
+안 된 것: 수정 전 자료는 카드에서 제외하며 실제 Windows 픽창 연결은 아직 외부 대기입니다.
+진행 중: 수정 코드의 필수 CI·병합 후 실제 집계를 다시 수집합니다.
+내가 할 것: 추가 승인이나 키 전송은 필요 없습니다.
+
+# V2.3 final cadence contract ready — 2026-10-15
+
+Final FRAME_ORIGIN_AND_CADENCE.v2: first0, optionaldeclaredinteger60000, maxgap65000 with5000msanalysisjitter; lastreceivedframeexcluded fromeffectiveframes andeventtimestampcoverage. This handles missingpenultimate240before270 ANDbefore241final. Endintervalwithheld explicitly inKoreanPC/postgameUI. Oldpolicydatasets failstrictvalidation. Fulloriginalframeeventbuckets are gathered chronologically then timestampclipped; no observedgapinterpolation.
+
+Newstats31PASS (old25/29 andredcounterexamples preserved); newcollection11PASS withnewtestfixture explicitregular0/60/120/180seconds, oldfixtureuntouched. Browsernew8cases finalsource browser-20261015T112737600708Z:589.8/377.5/517ms PC,146.4ms private2contexts, finalintervalwarning/selectedowner/opposite0; noerrors/unexpectedwrites/USERapprovals. Scoped independentcadence-review PASS. Onlychangednewv2.3scope isrechecked, completedv2.1notrerun. FinaldeltaCI/reacquisition next, no priorrunrerun.
+
+---
+
+된 것: 기존 완료 증거와 새 PC 귀환·저체력 기능의 병합 증거를 보존했습니다.
+된 것: 중간 프레임 누락을 0건으로 오인하는 결함을 재현하고 차단 코드를 추가했습니다.
+안 된 것: 이전 추출 계약의 실제 자료는 현재 카드에 넣지 않습니다.
+진행 중: 수정 CI·정상 병합 후 프로 원본을 다시 추출하고 새 코드로 챌린저를 수집합니다.
+내가 할 것: 추가 승인이나 키 전송은 필요 없습니다. 실제 Windows 픽창 실증만 외부 대기입니다.
+
+# V2.3 sampling integrity correction — 2026-10-15
+
+PR36 merged97f9217, exacttree1a2265a; PR38725863271/38725862912 andpostmerge38726194734/38726194841 all3jobsSUCCESS withsource/current/preservedchecks. Completedv2.1neverrerun. All initialfailures retained, including boundedchanges omittedcandidateauthorgenerator corrected with exactpathhash, local74newtestsPASS.
+
+New adversarial scratch case deletedrawframe240000 containingdeath220000 butkeptfinal600000: old extractor falselyproducedknown0andSTAY. Rejecting internal cadence beforeany extraction protects outcomezero andfirst-recall eligibility. New coverage_guardrequiresfirst0, optionaldeclaredinteger60000, maxgap90000 (jittertolerance, not gameplaythreshold), finalshortallowed. Olddatasets fail strict policy equality andarenotprojected. FournewRED/GREENcases, statistics29PASS; sourcefix finalCI/review pendingbelow.
+
+Main cancelledown trustedcollection38726213006 forcodeintegrityfix (not authfailure, not keyexpiry). Offline encryptedPROrecover/extract hadsuccess; cancelledfreshCHraw stream notaccepted. ProviderrequestcountUNKNOWN, nofalse0; publicoldpolicyartifactnotloaded. Newdispatchafterfixmerge willrebuild existingprivatePROcachewithoutlookups andonlythen collectnewboundedCHwith121scooldown. No rerunofcancelledjob, noGemini/paidcalls.
+
+---
+
+된 것: 기존 자동 검토 30개와 공식 한국어 173명 자료는 재검증 없이 재사용합니다.
+된 것: 귀환·저체력 집계·공식 아이템 870개·PC 카드·경기 후 관측 신호를 추가했습니다.
+안 된 것: 새 후보 20개는 전술 근거·반례 때문에 보류이며 확정 조언으로 승격하지 않습니다.
+진행 중: 필수 변경 CI·정상 병합 후 기존 비공개 원본과 갱신 키로 실제 통계를 수집합니다.
+내가 할 것: 지금 필요한 승인은 없습니다. 실제 Windows 픽창 실증만 PC 사용 가능할 때 남습니다.
+
+# Queue v2.3 — new delta integrated, actual acquisition pending (2026-10-15)
+
+Main intake fedc30060259b5eeac4ab2ca096daa6259e354b6 (PR35 completed v2.1). Existing completed reports/CI/source bytes reused without rerunning old verifiers, tests or browsers. Parent exact3936-path source archive and CI38722880438/38722880374 are evidence/queue/v23/parent/. Main claim token main-20261015-queue-v23, implementation branch work/queue-v23-20261015.
+
+V6 added source/patch-separated anonymous recall and low-health extractors, survivor/death/undo/missingness checks, match-weighted outcomes, valid-first-recall min5 exact->role->UNKNOWN, sensitivity20/30/40percent and60/120/180seconds. These are analytical definitions, never recommended health/timing thresholds. First purchases proxy recall; currentGold preceding frame, not purchase instant. Wave and intent UNKNOWN. Individual postgame signals use selected original participant, never label own player CHALLENGER/pro; post-purchase roam requires event after purchase within original window. Real cache/fresh acquisition remains pending trusted main.
+
+New official item archive16.20.1/870 records; source URL/version/hash immutable. Different patch suppresses prices. Nominal purchase bundle full costs disclosed with owned components/discounts/exactrequiredgold UNKNOWN. Four preferred champions have12 classification +8recall/lowhealth sevenfield candidates, exact source packet201d3421e7899ba6aae0296f1bfbedd1097284bceeba63893da16638f0fceedf. IndependentEVIDENCE8mechanicsgroundingPASS/12HOLD, COUNTER0PASS/20HOLD with actualQ15 comparison; combined newAUTO0/HOLD20. ExistingAUTO30 reused, USERdecision0; no protectedissue writes, no REVIEWED promotion.
+
+New realChromium8case proof browser-20261015T110957120440Z: synthetic input realHTTP, no response mocks; PC682.5/708.1/495.0ms, postgame import-to-two-signals163.87ms; noerrors/unexpectedwrites/USERapproval;2isolatedSYNTHETICprivateimports. This timing is fixture-scoped, not full actualdataset or actualWindowsLCU proof. Earlier failed runner assertion retained; corrected open-state assumption, product patch warning correct. Earlier v21 evidence remains untouched.
+
+Current example5roles sum OFFICIAL50/STATISTICS2/USER0/AUTO62/HYPOTHESIS4/UNKNOWN26; filled118cards across5views, not distinct advice count and not old45conclusion slots. Actual recall dataset currentlynone; later real collection updates this additive report. Coachingaccuracy=null, no live coaching/cooldowntracking, paid0. ActualWindowsLCU BLOCKED_EXTERNAL only. New delta verification plus normal gated publication and trusted collection continue without reconfirmation.
+
+---
+
+된 것: PC 지식 검토 큐에서 후보10개 결정·재조회를 확인했습니다.
+된 것: 챌린저275경기로 5포지션 기본 곡선15개가 실제 화면에 표시됩니다.
+된 것: 프로87경기의 위치·막힘 신호 기준 사례를 본인 정보 없이 볼 수 있습니다.
+안 된 것: Gemini 예시 요청은429 할당량 초과로 실패했고 자동 요약은 보류합니다.
+내가 할 것: 지식을 직접 검토합니다. PC 원본·영상은 준비되면 선택적으로 제공합니다.
+
+# Queue v2 — user-decisions continuation actual results (2026-10-13)
+
+PR28 implementation normally merged into main b6cdced0c819424e048ec412de6f7e57c5b1c545 at14:07:07UTC. Required38409767081/38409766412 and postmerge38410614883/38410614946 allthreeSUCCESS. Each14source groups/464paths independentlymatched; published/tested/main treee018c6f376ae93faec2772b17b2d8498f1fb56ba. Earlier first CI failure was a GOLD synthetic fixture incompatible with newlyfixedCHALLENGER UI; fixture corrected, all120v13browser assertions retained andpassed. This results branch must receive its own requiredCI/normalmerge; that future outcome is not asserted here.
+
+| Task | Current | Actual result / limits |
+| --- | --- | --- |
+| R1 | DONE | PC wide source/conditions/statistics; stable20checks and10sequential fixture decisions/requeries. ActualUSER_WEB0 and REVIEWEDknowledge0; approvals remain exclusively user actions. |
+| R2 | DONE | Fresh275REAL16.20CHALLENGER; PC basic15curves/495eligiblepoints and champion3resourcecharts visible. All5roles have33READYminute bins perresource,4lateESTIMATED and4UNKNOWN bins. Overall100% is not claimed. Remaining sample estimates stayvisible. GM38399585294 first200 butjob-time-limitCANCELLED, no newGMpublicsample; no tierpool/user-tier comparison. Separate37REAL16.19 and prior50legacy16.20 retained, never naivelymerged. |
+| R3 | DONE (pro reference scope) | Trusted38410710876:260requests,87distinctmatches,106selectedchampion-rolematches,25selectedplayers,2backupreplacements,0failedaccounts. Current16.20 hasall5roles ×3operationstages;24cohorts across16.19/16.20 separately. Q18grid distributions and Q16recorded contexts shown. Only8coordinate intervals pass precision; wider onesUNKNOWN. No deviation judgment, wave/hiddenenemy/cooldown/video facts remainUNKNOWN. |
+| R4 | DONE_WITH_FAILURE_RECORD | Trusted38410728980 usedliteralofficialYouTubeexample once, sameknownfree3.6Interactions,1metadata/1video request. HTTP429 providererror explicitly saysprojectquota exceeded; exactquota metricUNKNOWN. Complete sanitizedmessage archived, no clipping/format/retry calls. Earlier400invalidfield remainsUNKNOWN. AutomaticQ19PAUSED; manualtimestampedsummary default, acceptedclaims0. |
+| R5 | BLOCKED_EXTERNAL | ExistingWindows/OBS/HUD/import/gameclockalignment guide ready; actualPCoriginals/POVvideo absent. |
+
+Progress: v2completion4/5 by the queue's accepted explicit-failure-record alternative forR4; this is not recovered automatic video summary. Closedv2blockers4: reviewtooling1 plusremovedownIDdependency1, removedown-tierdependency1 andrestoredkeyaccess1. Knowledgecontent-review and automatic-summaryquota blockers remain open. Legacy10/19 and4oldclosedblockers unchanged. Ownmatches0, actualUSER_WEB0, REVIEWED0, acceptedvideocandidates0, coaching_accuracy=null, paidservices0.
+
+ActualPC Chromium22checks passed onREALanonymous275/87data at1600px, with390pxno-overflow. Native endpoints, source85paths unchanged,5rolecases/3stages each and15basiccurves verified. Evidence/queue/pro-resume/actual-browser/runner.json and screenshots. Baselinemeans use unanimous exactrole-population means withretainedmatch-cluster SD/Student-tCI; no invention fromSDalone. The main default dataset is the exactROLE_POPULATION cohortprojection (852of6090cohorts, unchangedvalues andsame275matches) forresponsive2.35s observedcatalog; fulloriginalanonymoussnapshotarchived andhashed, MATCHUPfullarchive remains separatelyavailable. Allpoints are descriptive/noncausal.
+
+Privacy: onlyanonymousreference-cases/safereceipt/source-binding downloaded/published. PUUID andrawmatchJSON remainin authenticatedAES256GCM runnercache artifact11822391323 (notdownloaded/decrypted tocloud). StableAccount-V1 cache, firstauthfailurestop, checkpoint/rerun guards retained. ExistingSecret-derived HKDF encryptionseed neverexported; privatecache restore onseedrotation/missinginterruptedcheckpoint failsclosed. Proownership/tier/seasoncounts remain userreported ratherthan independentlyverified.
+
+Riot firstrenewedHTTP200, bounded20/second100/120seconds, sharedjobconcurrency+121sstartupwindow. Automaticcollection onlyduring user-confirmed KRkey24h window (approx2026-10-13T10:00Z to14T10:00Z);401/403 stops thatexecution andrecords userkey-expiry attribution separately fromobservedstatus. No ownID/tierpendinginput. Currentofficialpatch selection preserved. Proreference andChallenger groups neverpooled.
+
+Gemini priorfull400 preservedbeforethistrial. Quota9priorrows exactprefix plus150second full-original reservation =>10historicalrows/10862seconds, reservation/finalbyte-identical; no refund/reset. Bothdurableartifacts retained; rawledgers/modeltext notcommitted. Currentfailureerror.message is “Your project has exceeded a quota. See [REDACTED_URL] to manage your rate limits.” Complete afteridentifierredaction. No furtherprovidertrial authorized/needed; manualdefault meets user'sstopdecision, auto doesnotresumeonworkflowSUCCESS.
+
+Usage docs/queue/V20_LOCAL_USE.md. Startlocalapp toopen /review-queue, /statistics, /postgame, /experts. Newanonymousdataautoloads; localapptoken required, ownRiotID/tiernotrequired. Pregame9cards showconditional opponentrights onlyfromcontributingactiveREVIEWED +explicitreviewedassertion +eligiblematchingstatistics. Current45examplelabelsUNKNOWN, asrequired. No livegamecoaching or cooldowntracking.
+
+---
+
+된 것: 본인 ID·티어 입력 대기를 해제하고 갱신 키의 Riot200을 확인했습니다.
+된 것: PC 검토 큐·CHALLENGER 우선 통계·프로 기준 사례 화면을 준비했습니다.
+진행 중: 16.20 통계 추가 수집과 프로 비공개 수집·상대 권리 표시를 통합합니다.
+진행 중: 이전400 메시지 전문을 보존하고 공식 영상 예시의 단계별 시험을 준비합니다.
+내가 할 것: 지식을 직접 검토합니다. 본인 Riot ID·티어는 보내지 않아도 됩니다.
+
+# User decisions2026-10-13 — pro reference continuation RUNNING
+
+Authority: explicit user decisions replace U1/U2 with the supplied pro roster and CHALLENGER primary; refreshed KR RIOT_API_KEY reported around19:00KST,24h validity. PC layout/verification first. New Gemini official-example baseline ->clipping ->response-format test authorized once perstage; prior alternative-model trial remains consumed. No approval reconfirmation needed. Main branch work/pro-reference-resume-20261013; common token main-20261013-pro-reference-resume.
+
+Actual first renewed-key collection run38391353214 returned firstHTTP200,598requests/0retries/37newREALmatches on16.19. Patch remains separate from retained50REAL16.20; no summary/SD mixing. Followup38393589558 pinned16.20 and completed:601requests/0retries/275newREALmatches; allfive observed role baseline segmentsREADY with0estimatedremaining. Late observed tails stillUNKNOWN; overall completion percentageUNKNOWN. GRANDMASTER run38399585294 firstHTTP200 but was cancelled at job time limit; no newGMpublicaggregate was produced and retained275CHis unchanged. Current official DDragon versions read first16.20.1; new scheduled policy pins current officialpatch rather than firstinactive seed's older match. Current collector remains bounded20/1s100/120s and stops first401/403, recording userkey-expiry attribution separately.
+
+R1 PC layout completed20browser checks and10simulatedfixture decisions with actualUSER_WEB0, including sharedtoken/logout, on stable sources. R2 primaryCH+insufficient-only GM samepoint provenance and remainingCHsample requirement implemented, no usertier selectors. R3 anonymouspro case default page prepared with operational stages/Q16 observed contexts/Q18 grid distributions, all tacticalphaseUNKNOWN; own import is optional. No real procollection yet; trustedmain workflow awaits source-boundCI/normalmerge. RawPUUID/originals stay runnerprivate/encrypted, publicsafe projector only. Long-livedYouTubeSecret HKDF domain separation avoids credential export; keyrotation/unresolved interruptedcache blocks newlookups, reruns forbidden. SharedRiotconcurrency+121s startupwait addresses crossjob rolling limits.
+
+Pregame ninecards each show opponentright risk/safety/UNKNOWN. Only contributing active REVIEWED claim, exact source/version/spec, explicit manually reviewed rightassertion and visible matchingstatistics canclassify. No sidecar bydefault; reviewedknowledge0 means all45example labelsUNKNOWN. Challenger/pro preference is not automatic tacticalproof. No AIUSER_WEB approvals or live/cooldowntracking.
+
+Priorcomplete sanitized400saved before anynewdiagnostic: evidence/queue/pro-resume/prior-full-video400.json, literal “Request contains an invalid argument.” (observedlength belowold512limit,no truncation); rawerrorbody notretained. NewofficialInteractions baseline has no clipping/format; sameknown free3.6model, notanotheralternative trial. Eachrequest hasdurablefull-durationcharge andordered15s spacedcontinuation; stopfailure/no retries. Ifcauseunlocalized, manualsummary remainsdefault/ordinaryautomatic schedules paused. Actualnewdiagnostic notyetdispatched.
+
+Status v2 R1/R2software-and-sampleDONE2/5; R3/R4 READY integration/verification/acquisition underway, R5PC/POVstillBLOCKED_EXTERNAL. Legacy10/19 and4oldclosedblockers maintained. Earlier v2toolingblocker1 closed; U1/U2 dependencies now removed and U3 access restored (newlyclosed3 input/accessblockers). RealUSER_WEB0/ownmatches0/procases0/accuracy=null/paid0. Test counts describe implementation only. Design/plan docs/superpowers/*/2026-10-13-pro-reference-resume*.md; final runtimecontract contracts/queue-v20.md; all earlier evidence preserved below.
+
+---
+
+된 것: 모바일 지식 검토 큐를 구현하고 브라우저에서 10개 후보 결정·재조회를 확인했습니다.
+된 것: 표본 진행률·비공개 복기·프로 25명 명단·PC 준비 안내를 연결했습니다.
+안 된 것: 본인 경기와 새 통계 수집은 Riot ID·티어·키 갱신 입력을 기다립니다.
+안 된 것: Gemini 대체 모델 텍스트는 200이지만 영상은 400으로 실패해 요약은 0건입니다.
+내가 할 것: 후보를 직접 검토하고, 본인 Riot ID·티어·키 갱신 여부를 알려주세요.
+
+# Queue v2.0 — implementation published; actual-data blockers recorded (2026-10-13)
+
+Main implemented and normally merged PR #26 from `9d8de274e8b385135de7c2c3163b6f91cc2e063b` into main `bdc7e3a891c3cb8b08dd98832482761cf5053f90`, tree `55391771b1320ee6036328dbb909299344c9430f`. Required PR runs `38386604901`/`38386604920` and postmerge runs `38387425422`/`38387425433` each passed all three checks. Both publication and postmerge receipts independently match 14 source groups / 440 paths. The original-index regression initially failed; original bytes were restored and the required check passed. No verification gate was weakened.
+
+This closeout branch publishes documentation and safe diagnostic evidence only. Its own required CI and normal merge are verified separately in the durable `work/main-execution-claim` handoff; this immutable snapshot does not predict their result. Authority is the user's v2.0 queue and supplied pro roster, inheriting v1.6 free implementation/publication/normal merge. No READY implementation remains.
+
+| ID | Current | Completed preparation / remaining criterion |
+| --- | --- | --- |
+| R1 | DONE | One-candidate review, mobile layout, priority, conditions/excerpts/links/patch/counterexamples/statistics/conditional card preview, user-only versioned approval/edit/reject/later, progress and safe top-20 export. Actual Chromium opened and decided/requeried 10 sequential synthetic candidates at mobile and desktop widths. The isolated runner uses TEST_FIXTURE; actual USER_WEB decisions and approved knowledge remain 0. |
+| R2 | BLOCKED_EXTERNAL (U2/U3) | Exact anonymous same-patch/tier accumulation, match-hash dedup, high-tier/user-tier comparison, confidence targets and remaining sample counts, bounded schedule and authentication stop prepared. Existing 50 real patch16.20 CHALLENGER matches reused. New user-tier sample and live enlargement await approximate tier and renewed key. |
+| R3 | BLOCKED_EXTERNAL (U1/U3) | Private own-match curves/level-item markers, timeline-only suspected contexts, minute-position limits and explicit UNKNOWN, dependency/premise/execution/effect view prepared. Supplied `config/pro_reference_players.json` saved: 25 primary players, 9 backups, ShowMaker alternate. Stable private account cache and separate pro overlay prepared. Roster is a reference cohort, not the user's identity; actual own matches and pro lookups remain 0. |
+| R4 | BLOCKED_EXTERNAL (video HTTP400) | 120-second paired text and one official free Flash alternative actually attempted, followed by exactly one <=600-second clip after text success. Primary3.8 curl/Python503; fallback3.6 curl/Python200. Video400 `INVALID_ARGUMENT`, accepted candidates0. Exact rejected field UNKNOWN after official-document audit. Alternative trial consumed; no further enabled trial or charged-video retry. Manual timestamped-summary intake ready. |
+| R5 | BLOCKED_EXTERNAL (PC/POV files) | Existing Windows command, OBS/HUD settings, app import and first game-clock alignment procedure documented. Actual Windows originals and POV video absent. |
+
+Progress: v2.0 full completion **1/5 (R1)**; **1 newly closed blocker (review-queue tooling)**. User-reviewed knowledge is still0; the content-review bottleneck is not declared closed. Legacy Q01–Q09 and Q15 remain10/19 complete with4 previously closed blockers. Test counts are implementation evidence only. Coaching accuracy remains unassessed (`null`), real own-match count0, new Riot calls0, paid services0.
+
+The read-only inspection of today's existing Riot run `38342732100` / artifact `11786929206` found curl401 and Python401; collection was skipped. Record user-reported key-expiry attribution separately from the observed authentication failure; exact server authorization cause is UNKNOWN. The User-Agent diagnosis and old successful50-match evidence are preserved. Routine collection is gated on renewed-key confirmation and stops the affected execution at the first401/403.
+
+Actual Gemini run [38387587260](https://github.com/kco994553-star/lol-coach/actions/runs/38387587260) ran trusted merged main. Workflow success does not establish acquisition success. There were4 text requests,1 video request,0 accepted claims and no subsequent provider request. Recovery used the freshest available ledger from run38349297786/artifact11790310968:8 reservations/9575 seconds, not the older6/7396 snapshot. All8 prior entries are preserved; one conservative full-original-duration reservation adds1137 seconds, yielding9/10712. Reservation/final ledgers are byte-identical. Clip length<=600 seconds does not refund full-duration charge; video `lSy9NeB5Ue4` remains charged and excluded. Raw ledgers, model output and video text are not committed.
+
+Resume only affected inputs: U1 own Riot ID and server; U2 approximate current tier; U3 Secret renewal confirmation (never paste the key). Personal/pro raw collection runs locally with the key in the local environment; PUUID and original JSON stay private. The supplied roster's ownership/tier/game counts remain user-reported, not independently verified. R4 needs field-specific provider evidence or an explicitly authorized source-grounded changed diagnostic; the sole model trial is already consumed. Manual expert summary and user knowledge review work now. R5 awaits PC originals/POV video; minute position never identifies wave, hidden enemies or cooldowns.
+
+Usage: [V20_LOCAL_USE.md](https://github.com/kco994553-star/lol-coach/blob/main/docs/queue/V20_LOCAL_USE.md). Actual Gemini receipt: [actual-receipt.json](https://github.com/kco994553-star/lol-coach/blob/main/evidence/queue/v20/actual-gemini/actual-receipt.json); [official video-argument audit](https://github.com/kco994553-star/lol-coach/blob/main/docs/queue/R4_VIDEO_ARGUMENT_AUDIT_2026-10-13.md). Source-bound CI: [PR26](https://github.com/kco994553-star/lol-coach/blob/main/evidence/queue/v20/ci-pr26-source-binding.json), [postmerge](https://github.com/kco994553-star/lol-coach/blob/main/evidence/queue/v20/ci-main-pr26-source-binding.json). Design/plan and contract are under `docs/superpowers/` and `contracts/queue-v20.md`. Earlier evidence and failed attempts remain below and under `evidence/queue/v20/`.
+
+---
+
+된 것: Riot curl·파이썬 모두200과 실제50경기 수집·그래프 연결을 확인했습니다.
+된 것: 예시의5개 포지션에서 저장·재조회·9개 카드·근거 조회가 통과했습니다.
+안 된 것: Gemini 텍스트 확인이 타임아웃이어서 영상 요약은0건입니다.
+안 된 것: 게임 PC 원본·본인 시점 영상·독립 참조가 없어 실경기 복기는 대기입니다.
+내가 검토할 것: 웹 지식 후보의 원문·조건·패치이며, 승인은 사용자가 직접 합니다.
+
+# Actual cause diagnosis and Q15 complete — additive closeout
+
+Fresh trusted implementation main79c863d072190e088c889b132441edbd553bbee2, PR24 merged frome94d4c13ed05f57c4b9f9dde8749f2f65eeafd42, exacttreeb17110d771db67adda95d460b01cebbe4ac9384d. PR24 requiredCI38135347761/38135347719 all3SUCCESS,13groups406sourcepaths checked (ci-pr24.json); postmerge38135580028/38135580021 all3metadataSUCCESS. Main source-bound scoped70Riot/76expert and required199pregame/142expert checks reused; local or synthetic checks do not measure coaching effectiveness. Main archive branchwork/real-aggregate-closeout-20261011 owns new data snapshot/docs/receipts only; production source unchanged since validated PR24. Fresh archivepublication CI/normalmerge are separate from PR24 evidence. Exact final publication HEAD/CI/normalmerge and terminalstate are verified on shared work/main-execution-claim CURRENT_HANDOFF.md; no future CI is asserted in this immutable snapshot.
+
+Observed Riot run38135582016 (artifact11700808186): shapeRGAPI-prefixtrue/raw=normalized42/noouterspace/nolinebreak; same-secret same-job explicitUA curl200/Python200 (2preflightrequests). Full collectorfirst200/132requests/retry0/errorsnone,50REAL/SYNTH0,patch16.20,CHALLENGER current seed-cohort, not all historicalparticipant ranks. User success criterion met, access restored afterUA change. Prior403 preserved; UA as exclusive cause UNKNOWN without identical-key controlled old-UA comparison, no credential/fingerprint retained. Data validators/privacy/independent review CLEAR. Exact deterministic gzip+original/encodedSHA/canonicaldigest in data/riot/2026-10-11/manifest.json; no PUUID/name/RiotID/rawmatchJSON. Public matchhashes are dedup only, not reidentification protection. All5positions represented;45930resource points/6963eligible; all insufficient points remain withheld. Minute movement has no stage annotations and ending-duration outcome is not strength.
+
+Fresh actualproduction Chromium detail proof14/14 and Golden5-role36/36 PASS withsourceunchanged76productionfiles+2runnerfiles+3datasets, noerrors/noUSERWEBwrites/no live API/approval requests. Golden10manual fixture uses observed datasetpatch16.20 and CHALLENGER source, currentlobby/gamephaseUNKNOWN. Five9CURRENTcards saved/requeried/openedevidence; common①–③identical, personal④–⑥honestlyUNKNOWN without REVIEWED knowledge, contextual selectedposition/champion differ. Prior approvedsynthetic positioning assertions retained in mandatory CI. Caitlyn ROLE_POPULATION27eligible goldpoints; other Golden personal viewsUNKNOWN. Detailed Braum/Nautilus proof checks mixed unit conversion/zero-minute omission, n/95%CI/source, opponentunknownfallback andmissingpatch. Main prior harness minute0 miscount plus3 UI harness errors preserved as verifier failures; onlyscratch harness corrected, product unchanged. Native runners, hashes,10Golden screenshots and failure history are preserved in cause-real-browser/ and cause-real-five-role-browser/.
+
+Observed Gemini run38135584145: officialgenerateContent ordinaryTEXT1 → NETWORK_TIMEOUT at<=60s, noHTTP/error.status/error.message response(null), retry0/METADATA0/VIDEO0/newreservation0/newseconds0/acceptedclaims0. Workflowcompleted != modelacquisitionsuccess. Only TEXT literal503 gets up to3 spaced15s retries; this timeout does not qualify. User600s bound remainsVIDEO only. Newroute/400exactargument correctness stillUNKNOWN; prior Interactions video400 and separateoldTEXT503 staydistinct. Fresh documentedfreeproofVERIFIED_FREE; recoveryFOUND prior11699780505/38131597343. Durableartifact11700818021 exactly matches oldserializedledger,6rows7396seconds/processedempty; norefund/charged-IDrepeat/Billingchange. Receipts expert-generatecontent-actual.json and expert-ledger-byte-conservation.json. No actualexpert-source browser withoutacceptedclaims.
+
+Progress fullDONE10/19: Q01–Q09 plusQ15. Closedblockers4: priorQ19_CHANNEL_ALLOWLIST/Q19_FREE_PROJECT/Q19_EXCLUSIVE_INITIAL_USAGE plusQ15_REAL_ACQUISITION. Q15collector/graphs/sample/CI/fallback/item&level/canonicallineage/actualbrowser connected; source coverage and insufficiency displayed, not acquisitionfailures. PRE_GAME Q16/Q17/Q18 connected; their postgame and Q18 phaseknowledge remain external. Q19 code connected but actualcandidateintake blocked by observed TEXTtimeout. Q05 candidate expansion preserved350items/173roster; reviewedknowledge0/coachingN0/accuracy=null/paidservices0. Parallelactive0; all independentREADY implementation/evidence work exhausted after bounded actual verification. Newarchivepublication alone awaits required source-boundCI/normalmerge before terminalrelease.
+
+Resume affectedinputs only: Q19 requires evidenced provider/network access recovery or user-directed changeddiagnostic, then freshrepo/quota/freeproof intake and boundedTEXT beforeoneunchargedfirstVIDEOclip; no blind timeout retry/charged-IDrepeat/modelguess/paidtransition. Manualtimestamped expert import remains available immediately asEXPLORATORY. Q10 needs own gamePCofficialcapture+phase/mode fieldreceipt; Q11actualownoriginals, Q12matchedPOV/clockanchors, Q13then-knownevidence, Q14independentreference. REALpeeraggregate data do not supply own-player known-wave/vision/cooldown observations. PostgameQ16–Q18 followthose dependencies. Userweb reviewedsource/patchscope is needed for factual tactical content; never AIapproval. Routine trustedRiot collection inputs remainfree and usable whilekeyvalid; first401/403stop retained. Execution/nextresume state is saved; do not ask for free continuation approval.
+
+---
+
+된 것: 최신 main·기존 병합과 완료된 CI를 다시 확인했습니다.
+진행 중: Riot User-Agent·curl/파이썬 비교 진단을 구현합니다.
+진행 중: Gemini generateContent 전환과 텍스트 503 재시도를 구현합니다.
+안 된 것: 새 실제 응답과 실제 통계·영상 요약은 아직 없습니다.
+내가 검토할 것: 수집된 근거와 웹 지식 후보이며, 추가 승인은 필요하지 않습니다.
+
+# User cause diagnosis RUNNING — additive continuation
+
+Intake main1ea54c77a528ce941b51df674f7f803de69be903; noopenPR/activeotherwriter; postmergeCI38133123103/38133123080SUCCESS. Sameowner token main-20261011-queue-v13-050952 reopened terminalclaim. Mainbranchwork/ua-generatecontent-20261011 ownscontracts/workflows/CLI/receipts/integration. q15_stats work/riot-front-ua ownsRiotcollector/pairmodule/tests; v14_server work/generatecontent-probe ownsGemcollector/tests; q16_source_audit officialscratchonly. Contracts frozen beforeconsumerimplementation. Implementation Main70Riot/76expert scopedPASS; fullpregame199/expert142PASS, Frozen/golden prior proof reused pendingrequiredfreshCI. Independent requestbudgetP2/escapedJSONP2 CLEARED; privateRED/GREEN preserved and safe cause-implementation.json receipt. No actualproviderdispatchyet; allpriorobservations/failedledger6rows7396preserved. DONEQ01–Q09=9/19, originalinputblockersclosed3; coachingN0/accuracy=null, noAIapproval/paidchange. Next scopedRED/GREEN, independentreview, sourceboundrequiredCI/normalmerge, thenonepairedRiotdiagnostic andonegenerateContent pipeline withTEXT503-only boundedretries.
+
+---
+
+된 것: 진단 코드·텍스트 전용 원인 격리를 PR #21·#22로 병합했습니다.
+된 것: Riot 키 모양 정상과 Gemini 일반 텍스트 200을 실제로 확인했습니다.
+안 된 것: Riot 첫 403으로 실제 통계가 없고 status.message도 미확인입니다.
+안 된 것: 영상 400 뒤 별도 텍스트 진단 503으로 정확한 영상 인자를 특정하지 못했습니다.
+내가 검토할 것: Riot 접근 상태·Gemini 정상 응답과 웹 지식 후보의 근거입니다.
+
+# Diagnosis-first complete; affected features BLOCKED_EXTERNAL; final closure
+
+Freshmain ef17003a44258bb5267a28bc6d05570e93fc3dc7; PR22 merged from4435611274e8dc6a9cb7b955d484a5e19b41583f, exacttree515fe7c35d21d74c3ed651483938f3eb54554f18. PR21 merge/source/actualproof belowpreserved. RequiredPR22CI38132220761/38132220781all3PASS;13groups399sourcepaths matchpublishedhead/PRmergetesttree. Evidence ci-pr22.json. Main63scopedchecksPASS; independent18plusstaleREADY recheck5PASS. Dedicatedformatprobe removesoldREADY/proofafterfailednewdiagnostic. Source/publicschemas/Frozenhistoryunchanged; docs-onlyfinalclosure mainowned work/queue-diagnosis-final requiresnormalCI/merge beforeterminalclaim.
+
+Observed Riot38131594748: RGAPIprefixtrue/raw=normalized42/noouterwhitespace/nolinebreak/shapevalid; first403/request1/retry0/status.message unavailable(null). Shapealonecannotestablishkeyauthorization; noexpiry/unsupportedendpointguess, nofurtherRiotcall. Usablematches0; actualgraphbrowserNOT_RUN. Receipt riot-diagnosis-first.json.
+
+Observed expert38131597343: ordinarytext200READY, videofirstclip400/invalid_request/Request contains an invalid argument./error.statusnull. Exactbadfield remainsUNKNOWN despite source/API/SDK agreement. Onevideo/oneclip/752fullsecondsnewcharge; prior5rows6644exactlypreserved→6rows7396, finalledger==durableledger, processed[]. FreshfreeproofVERIFIED_FREE, acceptedclaims0. No earlier400totimeout/servicehighdemandrewrite. Receipt expert-diagnosis-first.json.
+
+Distincttext-only38132468093 onPR22main: oneTEXT withunchangedvideoJSONschema returns503/service_unavailable/error.statusnull, message explicitlygemini-3.8-flash highdemand. URI0/METADATA0/VIDEO0/newreservations0/newcharges0; reserve/durable/VIDEOstepsSKIPPED. RecoveryFOUND11699780505/38131597343; old6rows7396 retained. FreshfreeproofVERIFIED_FREE; nofinal/quotaartifactcreated. Receipt expert-format-actual.json. This establishescurrentproviderunavailability only; schemaacceptance and earlier400fieldcause remainUNKNOWN. No repeatedsame-text/video request, changedmodel/endpoint/offsettype, paidtransition/refund/charged-IDretry. No actualsourcebrowser withoutacceptedclaims.
+
+ProgressfullDONEQ01–Q09=9/19; originalinputblockersclosed3; newacquisitionblockersclosed0. Parallelrunning0. Q15statistics/graphs, Q19candidateintake, PRE_GAMEQ16/Q17/Q18 implementationconnected; realstatistics/expertsummaries/postgameextensions unfulfilled. Reviewedknowledge0/coachingN0/accuracy=null/paidservices0. AllindependentREADYworkexhausted. FeaturestatesBLOCKED_EXTERNAL areobserved. Publicationowner RUNNING/CI_PENDING atthisimmutablepresuccesssnapshot; finalverifiedmerge/HEAD/CI/terminalstate resideonthecommon work/main-execution-claim CURRENT_HANDOFF.md ref. FinalPARKED_EXTERNAL requiresclosureCI/normalmerge.
+
+ResumeQ15 withcurrentkey/projectauthorization thatallows trustedActionsKRLeagueV4; current403stop persists. ResumeQ19 separateone-textschema check onlyafterevidencedfreeprovideravailability; do notincreasevideoacquisition orrepeat chargedsource untilconfirmedcausefix orrecordedsource-groundedchangeddiagnostic. Preserve6rows7396 andrecoverallconclusions. Usercanmanualimportshorttimestampedsummary asEXPLORATORY immediately; AIcreatesnouserapproval. Q10needs ownPCofficialcapture/fieldreceipt, Q11actualoriginals, Q12matchingPOV+anchors, Q13then-knownevidence, Q14independentreference. PostgameQ16–Q18 followtheseinputs. Noautomaticexternalresume/successpromise; freshintake required. Sourcepatch/runtime gameplaypatch andapprovedknowledge remainunknown.
+
+---
+
+된 것: PR #21을 병합하고 Riot·Gemini 실제 진단을 각각 한 번 실행했습니다.
+된 것: Riot 키 모양은 정상이며 Gemini 텍스트 확인은 200으로 성공했습니다.
+안 된 것: Riot 첫 응답은 403이고 읽을 수 있는 status.message가 없었습니다.
+안 된 것: 영상 한 구간은 400 invalid_request로 실패해 잘못된 인자를 조사합니다.
+내가 검토할 것: 추가 영상 없이 같은 JSON 출력 형식을 텍스트로 확인한 결과입니다.
+
+# Actual diagnosis recorded; distinct text-format isolation RUNNING
+
+PR21 mergedfc5b29e39be8fd1cd844cb676a27fa743d171eaf fromccc0687faa36dfc66ca10c262a69351f84855201; exacttreematch5d01e63a46f4d8cd6458b1ce2a7e182e027814ea. RequiredCI38131360877/38131360883all3PASS;13sourcegroups398paths matched publishedhead/PRmergetesttree. Evidence ci-pr21.json. Maintargeted92/localpregame179/expert125PASS; independent86core/23integrationPASS; twoRED/GREEN diagnosticbugs fixed. Userdiagnosis-first scope preserved, noSecretvalues/fingerprints/rawresponsesretained.
+
+Riot run38131594748 first403/request1/retry0. Raw/trimmedlength42/prefixtrue/noouterwhitespace/nolinebreak/validshape, no selectedstatus.messageavailable(null). Shapeacceptance isnotkeyvalidity; expiry/whichauthorizationcauseUNKNOWN. Stopauthfailure nofurtherRiotcollection. StrictvalidatedBLOCKEDdataset usablematches0, actualgraphbrowserNOT_RUN. Receipt riot-diagnosis-first.json.
+
+Expert run38131597343 actualTEXT200READY (samejobSecret/model), METADATA3 then VIDEO_CLIP1 returns400/invalid_request/Request contains an invalid argument./error.statusnull; acceptedclaims0. This failure isnottypedtimeout. RecoveryFOUND prior11695664409/38123631101; finalledger==durableledger; old5rows6644exactlypreserved,new752seconds,6rows7396total, processed[]. FreshfreeproofVERIFIED_FREE; noBillingtransition/refund/charged-IDretry. Receipt expert-diagnosis-first.json. No realsourcebrowser because noacceptedclaims.
+
+Fresh6officialdoc+4pinnedSDKsource audit matches typed fields/schema; no wrongfield/prohibitedcomboidentified. Additional explicitdispatchtext_schema_only=true isolates unchangedresponse_format/schema inone <=60s TEXT_ONLY request withsameSecret/model/freegates, URI0/metadata0/video0/newcharge0. Ordinaryflow/plainprobe1+firstclip1 untouched. MainownsCLI/workflow/contract/receipts; expertworkerstructuredprobe fd07e8f accepted onlyexactownedfiles; Maintargeted63PASS afterCLIRED; independentstaleREADY P2fixedRED/GREEN; finalindependentreview/requiredCI beforeexplicittext-onlydispatch. Generic400 cannotjustifyoffset/model/endpointguess. Diagnostic200 wouldverifytextformatonly;400 narrowsformatrequestonly. Followupconfirmedcausefixcontinuesfree; realQ10–Q14/postgameinputsremainexternal.
+
+ProgressDONEQ01–Q09=9/19fullIDs, originalinputblockersclosed3, noacquisitionblockerclosed. ActualcoachingN0/accuracy=null, reviewedknowledge0. Nexttext-formatdiagnostic; then recordprecise externalresumeconditionsifnoconfirmedinternalcause. Historicalobservationsbelowunchanged.
+
+---
+
+된 것: 최신 main·필수 CI·수집 실패와 예약 이력을 다시 확인했습니다.
+된 것: Interactions의 YouTube URL·구간 지원을 공식 문서에서 재확인했습니다.
+진행 중: Riot 키 모양·401/403 메시지와 Gemini 오류 코드를 안전하게 기록합니다.
+진행 중: 같은 키·모델의 텍스트 확인 후 영상 한 구간만 요청하도록 바꿉니다.
+내가 검토할 것: 실제 진단 결과가 나온 뒤 원인에 맞는 대응을 확인합니다.
+
+# User diagnosis-first resume RUNNING
+
+Fresh mainbb543a52b0edd5f24834aae748142298358fbd9b, PR20merged, noopenPR; postmerge38124345608/38124345604all3metadataSUCCESS. Prior failures and5durablevideoreservations6644seconds preserved. User reports RIOT_API_KEY recopied via dashboardbutton; noSecretvalue read. PARKED_EXTERNAL reopened by explicituserdecision, diagnosticbeforeanotheracquisition. Mainwork/api-diagnostics-20261011 owns sharedsafe diagnostic helper/contracts/CLIexpert/workflows/schema reason/integration. Riotwork/riot-diagnostics and expertwork/expert-diagnostics own isolatedcollector/tests; officialsourceauditcompletedwithoutprovidercalls.
+
+Safehelper inspects raw/trimmedlength/prefix/outerwhitespace/linebreak booleans, uses trimmed42-charactercurrentRGAPIUUID, rejectsbadshapezeroHTTPcalls. Authstatus.message andGoogleerror.status/error.code/error.message are bounded/redactedbeforepublication; no rawresponse/key/hashfingerprint/credentialURL. This is separate diagnosticartifact, publicdata/source/ledger shapes unchanged. New INVALID_API_KEY_SHAPE aggregateenum explicit, no invalidkeyacquisition. Diagnosis doesnotinferexpiryfromgeneric403.
+
+FreshofficialYouTube section explicitlysupportsInteractionsURI/gemini3.8flash/staticstringoffsets; nofallbackconditionmet. API-errorsdocumentusesstringerror.code/message, preserveerror.statusseparatelyifpresent. Samekey/model text-only probeonce beforemetadata/reservation; failurecannotrequestorchargevideo. Newinternalplanv3bindsfreshprobe/mode; actualdiagnostic first[0,min600,D]only/fullorigdurationprecharge; partialvideo neverfullyprocessed. SixofficialsourceURL/hashrecords in q19-diagnosis-sources.json and Q19_DIAGNOSIS_SOURCES.md. Main targeted92checksPASS, independent86corechecks/23integrationchecksPASS; authschemeprivacyP2 andHTTP200oversizeclassification fixed withRED/GREEN. CLI default/Actions explicitDIAGNOSTIC_FIRST_CLIP, separate typeddiagnostics artifacts, samejobSecret and legacy recoveryname preserved. No newactualdispatchyet; requiredCI/normalmergebeforetrusteddiagnosticrun. No paidfallback, userapprovalimpersonation or livecoaching.
+
+Progress9/19fullIDs, closedoriginalinputblockers3; actualcoachingN0/accuracy=null. Next: scopedRED/GREEN/Mainreview/requiredCI/merge, oneRiotdiagnostic withvalidshape, oneexperttextcheckthenoneclip onlyiftextsuccess; reportliteraldiagnosisinKorean thenfixconfirmedcausesautonomously. Old observationsbelowunchanged.
+
+---
+
+된 것: Riot 첫 응답 기록·포지션 변환과 Gemini 구간 처리를 병합했습니다.
+된 것: 5개 포지션·9개 카드와 필수 CI를 통과했습니다.
+안 된 것: Riot 첫 응답 403으로 실제 통계·그래프 연결은 대기입니다.
+안 된 것: Gemini 한 편 시험도 HTTP 실패로 요약을 얻지 못했습니다.
+내가 검토할 것: 무료 API 접근 상태와 웹 지식 후보의 출처·조건입니다.
+
+# Q15/Q19 resumed implementation merged; actual inputs BLOCKED_EXTERNAL
+
+PR18 merged4e1836e7722719c7da6db0dbfe963fc4caf37570 (published62bdd394e9d260d3231a833e87ff79c4da1d8507, exacttree397d5db908c7174a4070771e07aa99ef32f65c45). PR19 merged298cf739fa5f91190418fb96583776df1d528f4a (published2707dcb92eadc74adfb9b8ac5f2b8a621710c5ea, exacttree0b6aa9a44f8362d7ebcd7618896b51e549129768). Required3jobs PASS for each; source390/392paths and13groups verified. Receipts ci-pr18.json/ci-pr19.json in evidence/queue/resume-20261011. Main expert110PASS including17segmenttests and independent final P1/P2 cleared; golden five-role, guarded extension and expert source Chromium passed in actual CI. Tests establish implementation behavior, not coaching accuracy. Frozen/public artifact/ledger shapes and prior source history unchanged.
+
+Riot exactlyONE renewed-key CHALLENGERrun38123211940 first403/request1/retry0, BLOCKED_EXTERNAL, usablematches0. User-directed KEY_EXPIRED attribution kept separate from transport UNAUTHORIZED_OR_EXPIRED_OR_UNSUPPORTED_PATH/key_kindUNKNOWN. The portal200 is user testimony; Actions403 is observed. No further Riot dispatch in this session. Safe artifact strictvalidated; no REAL graphs or partial stats fabricated. Receipt riot-renewed-key-first.json.
+
+Gemini official8source audit supports static video processing with string offsets.600second modelbound, <=600secondclips, initial1video<=1200seconds, video-first prompt+absolute timestamp interval validation, workflow30minutes. Known BLOCKED_PAYMENT takes priority; malformed/partial outputs cannot mark source processed. New internal planv2, oldexpert.claims.v1/expert.quota-ledger.v1 and archivedplanv1 unchanged. Conservative fulloriginalduration-perclip reserves before modelcalls; no documented clipping discount assumed.
+
+Trusted initial segmented run38123631101 onPR19main completedworkflow but acquisitionBLOCKED_EXTERNAL/PROVIDER_HTTP_FAILURE, modelcalls1/metadatacalls3, no usableclaims; secondplannedclip notcalled. This is not a typedNETWORK_TIMEOUT; exactHTTPcode wasn't emitted by existing safe receipt and is unknown. No inference of expiredGeminikey, paidtier or unsupportedclipping. Fresh documented freeproofVERIFIED_FREE; project free/exclusive user attestation preserved. One1173secondvideo/two plannedclips added2346chargedseconds; old4rows4298 preserved byte-equivalently, now5rows6644seconds, finalledger exactly equals durable reservation. No refunds/charged-ID retry/Billing/newproviderdispatch. Receipts expert-segments-reservation.json and expert-segments-actual-first.json include strictvalidated safequota/entitlement/status data only. No originalproviderresponse/transcript/video/Secret or player rawJSON retained. Initial success notestablished, so video limit staysone and no increase follows.
+
+Prior four failed reservations retain source observation: firstrun20sdefault/NETWORK_FAILURE, secondrun60s/NETWORK_TIMEOUT, two actualmodelcalls. User-reported60srestrictioncause recorded separately; never turn fourreservations into fourobservedtimeouts. 이브 ADC channel exactID stays enabled/gradeUNKNOWN, 클템excluded, Pgrade블루리쉬disabled;16channels15enabled. Uploader never inferred asclipspeaker or RiotID.
+
+Progress DONE Q01–Q09=9/19fullIDs; closedoriginalinputblockers3, no new acquisition blocker closed. Q15statistics/graphs and PRE_GAME Q16/Q17/Q18 implemented; real statistics, verified movementstages, postgame Q16–Q18 and Q10–Q14 remain external. Approvedknowledge0/automatedusableexpertclaims0/coachingN0/accuracy=null/paidservices0. All independent agent tasks completed; no READY implementation remains after this additivecloseoutpublication. No actual-source browser run can be made without accepted data; scratch REAL-data runners are prepared but NOT_RUN.
+
+Resume Q15: provide working Riot developmentkey/project access via GitHubSecret and freshly re-intake before authorized one-run check; user401403stop persists. Resume Q19: freeprovider can accept documented publicYouTube static request, with durable quota available; preserve chargedIDs and failedhistory, capture only safe status and validate actualshort summaries before publication. No blind reattempt of this source or free→paid transition. Q10needs ownPCcapture/fieldreceipt, Q11actualraw samples, Q12matchingPOVanchors, Q13then-knownreview, Q14independentreference. User manual web review is optional content approval, never impersonated by AI. Next external change resumes only its affected queue task. Finalcloseoutbranch work/queue-segments-closeout owns evidence/handoff only; actual final HEAD/CI/normalmerge and PARKED_EXTERNAL are recorded on commonclaim.
+
+---
+
+된 것: PR #18을 병합했고 새 키로 Riot 수집을 한 번 실행했습니다.
+된 것: 첫 응답 403을 기록했고 요청 1회·재시도 0회로 멈췄습니다.
+된 것: Gemini 구간 지원을 확인하고 600초 대기·한 편 처리로 수정했습니다.
+안 된 것: 실제 Riot 통계·그래프와 새 Gemini 구간 요청 결과는 아직 없습니다.
+내가 검토할 것: Riot 키/프로젝트 접근과 웹 지식 후보의 출처·조건입니다.
+
+# Q15 actual repeat403; Q19 segmented implementation VERIFYING
+
+PR18 merged as4e1836e7722719c7da6db0dbfe963fc4caf37570; published62bdd394e9d260d3231a833e87ff79c4da1d8507 and merge share tree397d5db908c7174a4070771e07aa99ef32f65c45. Required three jobs PASS, exact390 source paths/13groups validated in evidence/queue/resume-20261011/ci-pr18.json. Main Riot target52PASS and independent official-role/first-status boundary review reused.
+
+Exactly ONE trusted CHALLENGER run38123211940 firstHTTP403 at2026-10-11T07:59:18.7969919Z. request_count1/retry_count0, no real matches/cohorts. STOP/BLOCKED_EXTERNAL; KEY_EXPIRED attributed to user's repeat401/403 decision, original UNAUTHORIZED_OR_EXPIRED_OR_UNSUPPORTED_PATH and key_kindUNKNOWN preserved. Portal200 remains user report, not this Actions result. Strict blocked aggregate passed validation; no actual graph browser run. Receipt: evidence/queue/resume-20261011/riot-renewed-key-first.json. No key values inspected; no more Riot dispatches.
+
+Main branchwork/q19-static-segments owns config/contracts/workflow/integration. Isolated collector fixes accepted, official8-source audit completed. Static strings start_offset/end_offset; video before text, original absolute timestamps independently interval-checked. Initialone video<=1200seconds, clips<=600seconds, modeltimeout600/metadatamax20, workflow30minutes. Full ORIGINAL duration precharged per clip; old4charges4298seconds preserved and never refunded. Public artifact/ledger schemas and Frozen history unchanged; internal planv2 rejects archivedv1 dispatch. Incomplete/invalid clips retain bounded partial source without processed marker; known payment status remains explicit. Main source-bound expert functional110PASS (17 new segment tests); independent final f71d798 boundary review clear. RequiredCI and one actual expert run pending.
+
+Progress still DONE Q01–Q09=9/19 fullIDs/closedoriginalblockers3. PRE_GAME Q16–Q18 implemented; postgame PC/POV/independent reference external. Actual reviewed knowledge0, expert factual verification0, coachingN0/accuracy=null, paidservices0. Next: source-bound expertCI/normalmerge, one trusted run, validate only safe summaries and preserve all charges. All old outcomes below remain unchanged.
+
+---
+
+된 것: 최신 main/PR17 병합 상태와 기존 검증을 재사용했습니다.
+된 것: Riot 첫 응답 코드 기록과 실제 역할명 변환 결함을 보완했습니다.
+진행 중: 갱신 키의 Q15 수집 1회와 Gemini600초·구간 처리 구현을 준비합니다.
+안 된 것: 새 키의 Actions 응답과 구간 모델 요청 성공은 아직 미측정입니다.
+내가 검토할 것: 새 실제 자료가 들어오면 웹 후보·출처·표본 한계를 검토합니다.
+
+# Q15/Q19 user-directed acquisition resume RUNNING
+
+Freshintake main dc355e6e8f63402d56f74f162bbd8e22eba6f208, PR17merged, noopenPR; latestpostmergeCI38121539621/38121539737success. User2026-10-11 16:40KST reports prior403 expired24hdevkey/newCHALLENGER portal200/GitHubRIOT_API_KEYupdated. NoSecretvalue read. NewfirstHTTPcode diagnostic andrawMIDDLE/UTILITY rolealiasfix independentlyverified: Main targeted suitesPASS (see riot-role-main-green.log for exactcount), noactualcalls yet. Raw/publicschema/Frozen preserved. PublishsmallRiotfix/requiredCI beforeONEtrustedCHALLENGERcollection; stop401403 andrecord userdecisionexpiry attribution withoriginalgenerictransportreason.
+
+Mainownscontracts/config/workflow/integration; Riotagentfinishedcollector/roles; sourceauditcompletedofficial8pages; expertcollectoragent implementssegmentedpolicy inisolatedbranch. Q19contractsupportsinputvideo.processing static/start_offset/end_offset stringseconds; timestamporiginUNKNOWN, originalabsoluteMM:SS +clipboundscheck/noautomaticoffset. Initial1video<=1200seconds/eachclip<=600/modelwait600/metadata20, workflow30minutes. Conservativefulloriginalduration prechargedPERclip becauseofficialclipquotadiscount unknown;old4charges4298seconds remain. Newplanv2 policy, legacyartifact/ledger shapes andsourcebytes unchanged. FirstNETWORK_FAILURE default20s, secondNETWORK_TIMEOUT60s preserved; userreported60srestrictioncause recordedseparatelyfromobserved2modelattempts/4reservedvideos.
+
+Progressremains9/19fullIDs/closedoriginalblockers3 until actualresults. Q10ownPC/Q12POV/Q14independentreview external. Oldstate below preserved; nextRiotactualgraphs andexpertonevideo actualrequest follows sourceboundmerge anddurablequota. NoUSER_WEB/noBilling/no realtimecoaching.
+
+---
+
+된 것: 이브를 원딜 전문가 채널로 추가했고 클템 제외를 유지했습니다.
+된 것: PR #16을 병합해 350개 후보와 5개 포지션·9개 카드 검증을 연결했습니다.
+된 것: 무료 수집의 기존 예약 복구와 실패 예약 보존을 실제 실행으로 확인했습니다.
+안 된 것: Gemini 응답 시간 초과·Riot403·본인 PC/영상 부족으로 실제 자료는 대기입니다.
+내가 검토할 것: 웹 지식 후보, Riot 접근 권한, Gemini 응답 가능 상태와 본인 경기 자료입니다.
+
+# v1.6 source/channel implementation merged; actual acquisition BLOCKED_EXTERNAL
+
+Fresh main55de29d6b3d96376ae0387fb857c88875da5a7a3 merged PR16 on2026-10-11T07:21:47Z. Published831030ca3332e6106cb6bcd9c1605a50f3f148a1, main treecbc28331a2b7c5fbc483452e9b9a2fb4dfdcdfe6 equals exacttested/publishedtree. Required PR CI38120908999/38120908989 all3jobsPASS,13receiptgroups/389sourcepaths matched exacthead orPRmergetest lineage; evidence/queue/v16/ci-pr16.json. PR15source/CI/actualfirstattempt proofs preserved. Closeout work/queue-v16-closeout owns additive receipts/handoff only; root tokenmain-20261011-queue-v13-050952. Postmerge CI38121110537/38121110543 all3PASS with389sourcepaths; evidence/queue/v16/ci-post16.json. This additivecloseoutchanges no runtime source. Exactcloseoutpublicationstatus and ownerstate are recorded in commonclaim; finalPARKED_EXTERNAL followsrequiredCI/normalmerge.
+
+User ADCexpert 이브 URL canonically UCerhqgFd8dnypewC3yjAlbg is enabled/BOTTOM.16authorizedchannels/15enabled; 클템 remains excluded, 블루리쉬(P)disabled. GradeUNKNOWN because user supplies no L/Cclassification; landing title alone cannot establish grade, clipspeaker, RiotID or patch. Additivechannelcontract preserves initial15-channeldecision. Independent4cases clear; Main40collector/bridge and93expertchecksPASS, finalCI binds exactaddition. Unknowngrade doesnotpromoteL/Ccontent. Existing50requestcap covers45metadata+2model calls, noquota increase.
+
+Q05 all173 roster champions have source-linked supplemental records; initial190candidatebytes preserved +160new =350unique EXPLORATORYcandidates.119partialinitiativeannotations/54UNKNOWN. All174newexactexcerpts/hashes/locators independently reviewed, ZaccontrolbasisR correction retains priorGit/REDGREEN. Unsupportedactualpatch/phasechanges/mandatoryallyneeds remainunknown. Main157functional+12semantic and104freshChromiumPASS; exactfinalCI included guarded120browser/expert42/legacy124 suites. No userdecisioncreated; actualreviewedknowledge0; graph/dataabsence staysunknown.
+
+Second trusted expert run38121117903 onmain55de29d completedworkflow, acquisitionBLOCKED_EXTERNAL/NETWORK_TIMEOUT onfirstGemini request. Metadata3requests;2neweligiblevideos reserved. OfficialfreshfreeproofVERIFIED_FREE; recoveryFOUND priorfinalartifact11695440018/run38119795194. Finalledger exactly equals durable reservation; allpreviousreservations preserved,4videos/4298secondscharged, usableclaims0. Safeartifacts strictvalidated, no rawvideo/transcript/providerresponse/Secretretained. Receipt evidence/queue/v16/expert-collection-second.json; first NETWORK_FAILURE receipt retained. No further blind retry, reservationreset/refund or inference of expiredkey/paidstatus.
+
+Progress DONE Q01–Q09 =9/19 fullIDs, closedoriginalinputblockers3 (channels/freeproject/exclusiveinitialusage); 이브 identity clarification resolved separately, not counted as another fullqueuecompletion. Q15collector/statistics/graph/outcome implementation and PRE_GAME Q16/Q17/Q18 are implemented; actualdata/postgameextensions and Q19actualsummaries remainblocked. CoachingN0/accuracy=null; automatedexpertacceptedclaims0; paidservices0. No active subagents after independent recheck.
+
+Resume Q19 when freeproject provider transport can return a response within the bounded request, while durable rollingquota history is available. Use trustedmainActions and inspect acquisitionreceipt beforepublishing onlystrictvalidsafe summaries; never reset missingexpectedhistory, guesskeyexpiry orenableBilling. Manualshorttimestampedsummary remainsavailable immediately and staysEXPLORATORY. Resume Q15 with valid Riotkey/projectaccess throughSecretUI; priorrun38116217243 firstrequest403/keykindUNKNOWN remainsauthoritative. Q10needs actualowngamePCofficialcapture+fieldreceipt; Q11 followsactualoriginals; Q12matchingPOVandanchors; Q13 then-knownreview; Q14independentreference. Postgame Q16suspectedinterval/recurrence, Q17dependencyfeedback, Q18verifiedstagepositioncomparison follow thoseinputs. Actualgamepatch andstatisticalstageannotations absent; user approval staysmanualwebonly.
+
+Next: when provider/Riot/PCinputs arrive, re-intakefreshGitHub and resume corresponding feature. Main publishes thesecloseoutreceipts viarequiredCI/normalmerge then markscommonclaim PARKED_EXTERNAL. No independentREADY implementation remains after publication. Old history below is retained and superseded only by this latest outcome.
+
+---
+
+된 것: PR #15를 병합했고 5개 포지션·9개 카드와 전문가 발언 입력 흐름을 검증했습니다.
+된 것: Q19 무료 조건·할당량 보존·수동 입력·출처 조회·후보·통계 대조를 연결했습니다.
+된 것: 남은 160명 후보를 확장해 총 350개 후보의 저장·조회 흐름을 검증했습니다.
+안 된 것: 실제 Riot403, 전문가 첫 호출 네트워크 실패, PC·영상 복기는 대기입니다.
+내가 검토할 것: 웹 후보 원문·조건·패치와 Riot 접근 권한을 확인합니다.
+
+# v1.6 source expansion verified; publication RUNNING
+
+PR15 merged2026-10-11T06:58:08Z as7bf5f3ffdabcefd13a769475d9a89466e276fef5. Publisheda6e5a221d2410a9cc91310123be988b36752574d, actual PR merge-test495da1d2c628e589e729c4c51cabf51580bad633 and main sharetree662319ae7be467ee571787da15fe3be5db794a8f. Required PR jobs pregame/regression/browser-regressionPASS at38119465607/38119465598; all386sourcepaths verified, exactrun/head-parent/tree lineage checked, metadataCLI log fallback via connector. Source receipts evidence/queue/v16/ci-pr15.json. Existing Frozen27, originalMVPverifier, originaltestsets and all old source/approval history preserved; new Korean amendment bindsexactoriginal/currentsha and admits onlyauthorizedpath.
+
+Actual expert collection38119795194 ontrustedmain completedworkflow butacquisitionBLOCKED_EXTERNAL/NETWORK_FAILURE onfirstGemini request; metadata3requestsfound2publiceligiblevideos. Free documentationproofVERIFIED_FREE anddurablequotareservation succeeded. Safeartifacts downloaded/strictvalidated; quota final equalsreservation,2videos/2152secondsremaincharged, processedvideoIDs[]/usableclaims0. No rawproviderbody/transcript/video/Secretretained. This failure doesnotprovekeyexpiry, payment or timeout. Receipt evidence/queue/v16/expert-collection-first.json. Operational50-requestfullallowlist/60-secondsocketwait/typedtimeout safeguards independentlyreviewed beforeone subsequenttrustedrun; noautomaticretry/refund.
+
+Remaining Q05 source-ready work was completed and Mainverified: all160existingexpansionarchivesareSOURCE_VERIFIED withmatchinghashes; newinitiative-expansion-v2 catalog fromc78c03d preservesold190exactbytes; all160covered/174sourceexcerpts,119of173conditionalinitiativeannotated/54UNKNOWN. IndependentreviewcorrectedZac movement-onlyE basis toRexplicitenemycontrol; originaliterationretainedinGit/REDGREEN. Final functional157+semantic12PASS and freshChromium104PASS (actual52/synthetic52), five roles/ninecards with350candidates and noapproval. Combined350HTTP953KB underactual1,000,000bytecap withunchangedencoding. Staticabilityclauses supportconditionalEXPLORATORYinitiative/protection/ownaction; unsupportedclassification stays[]; phasechanges/currentgamepatch/needsunsupported UNKNOWN. Mainowns additivefourthloader/boundedHTTP/integration. No source-prose execution, no autoapproval or USER_WEBimpersonation. Current rootbranchwork/queue-v16-evidence, sharedtokenmain-20261011-queue-v13-050952. DONE9/19,closedinputblockers3 remain; actualcoachingN0/accuracy=null.
+
+User supplies exactADCexpert 이브 UCerhqgFd8dnypewC3yjAlbg; additiveallowlist16/15enabled, gradeUNKNOWN/speakerunverified. Original15-channel decision preserved; 클템 stays excluded. Main15-channeltail45metadata+2model under50cap regression; noquotareset. UNKNOWNgradeRED/GREEN and40targeted/93expertfunctionalPASS; finalremoteCIbinds addition. Next: requiredCI/smallPR/merge, inspect subsequentactualcollection, persistlatestoutcome. Q15validRiotaccess/Q10ownPC/Q11–Q14POVandindependentreview remainexternal; postgameQ16–Q18 followdependencies. Do not stop whileindependentREADY remains.
+
+---
+
+된 것: 5개 포지션·9개 카드와 기존 병합 증거를 재사용하고 Q15 보조 결과 표를 추가했습니다.
+된 것: Q19 한국어 색인·수동 입력·출처 노트·후보·통계 대조·무료 수집기를 구현했습니다.
+진행 중: 마지막 결함 수정·통합 검증·GitHub 게시 후 실제 전문가 수집을 진행합니다.
+안 된 것: 실제 Riot 수집403과 PC·본인 영상이 필요한 복기·코칭 정확도는 대기입니다.
+내가 검토할 것: 웹 후보의 원문·조건·패치를 검토하며 Riot 접근 권한을 확인합니다.
+
+# Queue v1.6 — integrated expert pipeline VERIFYING
+
+Authority USER_QUEUE_V1.6_2026-10-11 replaces earlier directives; five chosen roles remain supported. Fresh remote main72718963ac10f5e78f638138c63828499276f546 (PR14), openPR15 head4439187874de6cb460baeb0c0a6d7116b069698b with first pregame failure preserved. Completed PR11/12/14 code and source-bound evidence reused. Main branch work/queue-v14-closeout, shared owner tokenmain-20261011-queue-v13-050952. Only Main writes shared contracts/schema/integration/GitHub; agents isolated disjoint files. No independent concurrent schema edits.
+
+DONE Q01–Q09=9/19 full IDs. Closed external input blockers3: Q19_CHANNEL_ALLOWLIST, Q19_FREE_PROJECT, Q19_EXCLUSIVE_INITIAL_USAGE. User approved15exactchannelIDs after클템exclusion;14enabled, 블루리쉬Pdisabledpendingactivity. User confirms lol-coach BillingdisconnectedFreeTier/no paidupgrade, exclusive collector project and no video processing in previous24h. Detailed JSON attachment NOT_RECEIVED; exact user text reconstructed, never claim file read. RiotIDs UNKNOWN and user confirmation required before use. Repository variables API403 does not imply absent Secrets; committed safe runtime attestation fallback exists. Secret values never read or logged.
+
+Q15 auxiliary ending-duration result companion: deduplicated whole matches, patch/tier separation, consistent official duration/result, Wilson95 CI, opponent complement validation and resource-private no-extra-call collection. Authenticated bounded endpoint plus collapsed table, REAL-only actual data and TEST-only synthetic fixture. Current actual Riot acquisition remains38116217243 / firstrequest403 / UNAUTHORIZED_OR_EXPIRED_OR_UNSUPPORTED_PATH / keykindUNKNOWN; usable real samples0. Failure never becomes empty usable statistics or known expiry.
+
+Q19 additive frozen expert contracts define strict bounded timestamped short paraphrases, automatic speakerUNKNOWN/video-specific identity, same-video independence group, explicit context, no upload-to-patch inference and no raw video/transcript/provider response. Manual friendly form and advanced JSON→immutable VIDEO source/first note→EXPLORATORY proposal; original SHA/count metadata, separate original fetch, source/head mismatch withheld. Private import journal is separate from unchanged schema2/backupformat1. Crash uncertainty withheld rather than resurrected; up to100claims within200KB, listing1MB preflight before writes.
+
+Comparison requires explicit source-backed numerical criterion plus verified phase/patch/tier/cohort/precision. No prose-derived near-body radius or tactical assertion. SYNTHETIC values require explicit TEST and never affect real prioritization. User L/C/Pgrades retained; C actual statistical AGREES prioritized after L. Statistics agreement never approves a rule. Current reviewed real knowledge0, expert claims fact-verified0, N0 coaching_accuracy=null.
+
+Trustedmain-only manual+daily collector uses allowlisted public uploads metadata and Gemini3.8-flash documented Interactions/store=false/short JSON. Every reservation/process checks fresh bounded official pricing/public-preview/stable-model proof. UNKNOWN blocks external; PAID_REQUIRED blocks payment. User free project assertion separate from documented entitlement. Durable rolling8h ledger persisted before model calls, retains failed/cancelled reservations, includes dispatch-delay allowance; lost expected history never reset by initialzero. Max2videos and operational length/API limits. Actions retains only safe summary/quota/proof artifacts7days; Main publishes verified summaries under common owner. Publication/real acquisition pending, never report workflow green as acquisition.
+
+Independent review found and fixed quota delayed-dispatch/uncertain-history defects, bridge100claim listing/restart/source races and legacy browser import synchronization. Stale collector output (including CLI exceptions) and known speech-patch mismatch corrected with RED/GREEN and independent recheck. Final MVP exposed missing authorized Korean source-version linkage; original verifier preserved, new exact baseline/current/Freeze hash amendment and delegated verifier admit only that path; old test file set restored. Latest Main expert90PASS (single JSON launcher), pregame151+semantic12PASS, Golden five-role104 and guarded extensions120 ChromiumPASS, friendly expert42PASS. Original source-preservation wrapper3+Korean5PASS; full MVP delegated run ongoing; exact published-head CI pending. Prior source-bound receipts retained; final authoritative remote CI will refresh all source bindings. Unauthenticated official free documentation verified; no provider call yet. These are implementation tests, no coaching performance claim.
+
+Q10–Q14/postgame Q16–Q18 remain BLOCKED_EXTERNAL on actual own-PC samples, matching POV and independent review. Q15 actual collection needs valid Riot access; Q18 verified stage annotations/review missing. Next: finish narrow fixes, fresh Main tests/Chromium/Frozen proof, update PR15/requiredCI/merge exact tree, then trusted expert collection and safe publication. No additional free-action permission required. Park only after independent READY exhausted; actual acquisition failures preserve explicit reasons and resume inputs.
+
+---
+
+된 것: 5개 포지션의 9개 카드·저장·근거 조회를 구현하고 PR #14를 병합했습니다.
+된 것: Q05 후보·Q15 수집/그래프·Q16 경기 전 신호·Q17 의존도·Q18 조건부 움직임을 연결했습니다.
+된 것: 필수 GitHub CI와 병합 후 검증을 통과했고 원문·승인 이력을 보존했습니다.
+안 된 것: Riot API 첫 요청이 403으로 막혔으며 개인 PC·영상이 필요한 복기는 대기입니다.
+내가 검토할 것: Riot 키/프로젝트 접근 권한, 실제 경기 패치, 웹 지식 후보를 확인합니다.
+
+# Queue v1.4 — implementation merged; real collection blocked
+
+PR14 https://github.com/kco994553-star/lol-coach/pull/14 merged2026-10-11T05:52:17Z as72718963ac10f5e78f638138c63828499276f546. Published headc4766775d2462119cad1358353fe6617edb041ed and main share exact tree799cca91b2a7463d61c6621c9aec9e7130887d51. Actual PR CI38116071036/38116070994 and postmerge CI38116191991/38116192017 passed all three jobs; exact344 source paths match. Additive receipts evidence/queue/v14/ci-pr14.json and ci-post14.json supplement immutable local evidence/queue/v13/final.json. Runtime bound code/contract/browser sources are unchanged by this closeout.
+
+Trusted main-only collection38116217243 completed, but first Riot request returned403 and acquisition is BLOCKED_EXTERNAL / UNAUTHORIZED_OR_EXPIRED_OR_UNSUPPORTED_PATH; request_count1, retry_count0, key_kindUNKNOWN, acquired matches0. This proves a failed acquisition, not usable empty statistics or known key expiry. No key value was read/logged/published. Safe status/source binding: evidence/queue/v14/riot-collection-first.json. The anonymous artifact was uploaded with seven-day retention; CLI blob download failedHTTP403; connector fallback succeeded and strict power-data validation confirmed a blocked receipt with no usable cohorts. No raw payload/artifact is published.
+
+Progress remains DONE Q01–Q09 =9/18 full IDs, closed external blockers0. Q15 actual acquisition now BLOCKED_EXTERNAL; collector/statistics/graph implementation and synthetic arithmetic/browser validation remain complete. PRE_GAME Q16/Q17/Q18 subparts are complete; postgame/recurrence/real dependency and phase support remain external. No coaching performance is calculated: N0, accuracy=null. User-approved current knowledge0; candidates190 remain EXPLORATORY. No AI approval/USER_WEB impersonation; no live coaching/cooldown tracking; paid services0.
+
+Resume Q15: check developer portal key/project access, register valid RIOT_API_KEY through GitHub Secrets UI, rerun Riot power aggregate collection on main; no further implementation approval required. Inspect real status and exact patch/tier before loading --power-data/--movement-data. Do not convert failure to zeros. Q10 needs own game-PC official capture receipt/fields/environment; Q11 follows actual originals, Q12 own matching POV, Q13 then-known evidence, Q14 independent evaluation. Q16 postgame suspected intervals, Q17 feedback and Q18 position comparison follow these dependencies. Actual phase annotations/review and gameplay patch remain unavailable.
+
+No independent READY implementation remains. Closeout branch work/queue-v14-closeout owns only this additive handoff/queue/run instructions and public-safe receipts, common claim tokenmain-20261011-queue-v13-050952. Existing intake/history retained below; the common coordination ref records CI_PENDING while remote checks run and PARKED_EXTERNAL after final publication.
+
+---
+
+된 것: 5개 포지션의 9개 카드·저장·근거 조회와 Q16 경기 전 전제·무효 신호를 구현했습니다.
+된 것: Q05 후보190개, Q15 통계·그래프·수집기, Q17 의존도, Q18 조건부 움직임을 연결했습니다.
+된 것: 기능124·의미12·브라우저208·기존 브라우저124·저장 경합3 검사 통과; AI 승인0입니다.
+안 된 것: 실제 Riot 수집은 GitHub 병합 후 Secret으로 실행 예정이며 개인 PC·영상 복기는 대기입니다.
+내가 검토할 것: 실제 경기 패치와 웹 지식 후보를 확인합니다. 근거가 없는 칸은 미확인입니다.
+
+# Queue v1.4 integration verified — publication/CI/merge pending
+
+Authority USER_QUEUE_V1.4_2026-10-11 supersedes earlier queue directives. All five selected positions replace2026-10-09 ADC restriction. Frequent Yunara/Ashe/Kaisa/Caitlyn are preferences. Intake main708dc737ca4cd70eff86e6a4c6a2ceba039430f3; PR11StageA/PR12Q05 reused. Branch feat/queue-v1.3-2026-10-11 keeps its initial name after v1.4 steering. Common claim token main-20261011-queue-v13-050952 / work/main-execution-claim latest1ca6e2b2b72ff3a9f8cbd9782d3a6ccf1f596df4. No other open PR or source writer at latest intake.
+
+Progress: base DONE Q01–Q09 (9/18 stable IDs); closed external blockers0. Additive pregame subparts Q16/Q17/Q18 and Q15 code complete, full tasks retain external dependencies below. Paid services0; BLOCKED_PAYMENT0. No independent READY runtime implementation remains after verification/publication. Actual coaching N0,accuracy=null. Actual Riot acquired matches still0 before trusted collection; TEST matches only prove arithmetic/routes.
+
+Contracts: pregame-v2.md, pregame-v3.md, pregame-v3-amendment.md and pregame-history-v1.md preserve older serialized rules and immutable evidence. Source-aware REVIEWED exact bindings execute; unknown/conflicting fields withheld. Plan guards describe visible-category user checks, no real-time signal detector. Prose meaning is verified during source/knowledge review, never inferred as code by AI. No hidden-position availability, enemy cooldown tracker, manual timer or live instructions. Current gameplay patch remainsnull; static16.20.1 does not decide it.
+
+Implemented: supplemental13 EXPLORATORY profiles with28 exact source excerpts (173 roster/190 candidate specs overall); others' initiative/phase fields remainUNKNOWN. Q17 current reviewed templates drive opener/pressure/win-condition links, teammate plays/request originals, solo alternative and shortage warnings; missing initiatives notzero. Q18 independent stage role layers require reviewed sources+exact statistics digest/cohort/condition support; explicit override elseCONFLICTING. Actual phase statistics/knowledge absent meansUNKNOWN. Raw minute median-distance distributions are descriptive proxies, not observed main-body tactics.
+
+Q15: bounded official KR League-V4→ASIA Match-V5, patch/tier separation, Student-t95 precision, exact pooled same-role reference rate / independent match-cluster contributions, per-minute fallback, CI/zero/sign labels, both-side level and nonboot completed-item candidate pair median/IQR markers; unknown actual core/build disclosed. Jitter uses elapsed-minute floor/latest frame with explicit uncertainty. Trusted main-only manual+daily Actions binds RIOT_API_KEY; fork/PR code cannot use it. Public7-day artifacts contain only validated anonymous aggregates; raw players/responses remain ephemeral memory and are never uploaded.401/403 stops BLOCKED_EXTERNAL, keykindUNKNOWN; failure never an empty usable statistic. Auth/real collection awaits actual job result after merge.
+
+Fresh final receipts: evidence/queue/q09-verifier-20261011T054037235594Z-81c57cf1; browser-v13-20261011T054048339330Z-ac39b30e and browser-20261011T054048323297Z-0d02ab76 (104each); adapter-v3-20261011T054219514298Z-3fe4be72 (original6/currentamended6/version2); evidence/mvp/20261011T054330351015Z-52ec8e5a (preserved regression/Frozen27PASS); browser legacy evidence/mvp/browser-20261011T053531663742Z-3f477080 (124PASS). Source-bound source validator and all old raw/catalog/adapter bytes preserved. New browser actual knowledge rows0; synthetic28 EXPLORATORY rows with readonly fixture-reviewed view; decisions/USER_WEB actors0. No browser/page/console/HTTP errors in final runs. New history metadata avoids multi-plan413 under unchanged1MB cap, individual saved rows remain exact.
+
+Independent reviewer reproduced and then cleared framejitter/unitmixing/expiredforged-display/v3profile/Unicode-blame/phase/source/tier/CI defects via11Python+4Node checks; final Chromium confirms integration. First RED/failed-GREEN fixtures and observed harness/duration faults retained. MVP conservation failed twice due concurrent generation of new evidence, not changed prior source; subsequent isolated runPASS with historical/inputchanged=[]; original environment browser-launch failure retained followed by configured ChromiumPASS. Full repository final result recorded in aggregate receipt before publication.
+
+Owners/branches/file scopes: Main common contracts/schema/evaluator/store/workflow/integration; work/q05-v13 catalogs+source tests+adapter amendment/CI; work/q15-v13 collector/statistics; work/q18-v14 movement module; work/ui-v13 screen/newbrowser; work/server-v14 server/newHTTP; independent audit read-only. Main inspected every change/commit/receipt and ran final checks on integrated source.
+
+External tasks: Q10 actual own Windows PC capture; Q11 actual source-linked converter; Q12 matching own POV time alignment; Q13 then-known evidence review; Q14 independent reference evaluation. Q16 suspected intervals/recurrence, Q17 dependency behavior/result feedback, Q18 actual-position comparison need Q11–Q13 and remain BLOCKED_EXTERNAL. Q18 approved phase support needs verified source annotations/current game patch and user review. No unsupported tactical rule filled in to replace missing evidence.
+
+Next: verify full final source/receipts, publish PR, run required CI, merge exact reviewed tree, then dispatch trusted collection and persist real anonymous outcome/blocker. No further user approval needed for this free work. Terminal handoff will report actual commit/tree/CI/collection result; publication pending is not success.
+
+---
+
+된 것: 선택한5개 포지션의 입력→저장→7영역 계획→근거 조회를 구현하고 PR11을 병합했습니다.
+된 것: 공식173명 원문과 검토 후보177개를 연결했고 기능50·의미12·브라우저104 검사를 통과했습니다.
+된 것: Q01–Q09 완료9/14입니다. AI 승인0이며 근거·패치가 부족한 칸은 미확인입니다.
+안 된 것: 실제 게임 PC 원본·본인 영상·독립 검토가 없어 Q10–Q14와 코칭 정확도는 대기입니다.
+내가 검토할 것: 실제 경기 패치와 추천 후보10개를 웹에서 확인합니다. 수집 재개에는 게임 PC 자료가 필요합니다.
+
+# Queue v1.1 Stage A merged; Q05 expansion verified — 2026-10-11
+
+Authority: USER_QUEUE_V1.1_2026-10-11; all five selected positions supersede the old
+2026-10-09 ADC-only scope. Frequent champions are preferences, not scope restrictions.
+No authoritative gameplay patch was found. Archived static build16.20.1 never fills
+runtime patch automatically. Real-match N0, accuracy=null; paid services0.
+
+DONE Q01,Q02,Q03,Q04,Q05,Q06,Q07,Q08,Q09 (9/14); Q10–Q14 BLOCKED_EXTERNAL.
+Closed external blockers0. No independent READY implementation remains. Source/adapter,
+UI/evaluator and verification agents used isolated branches/file scopes; Main inspected
+commits, corrections, source hashes and receipts before accepting their work.
+
+Stage A PR11 https://github.com/kco994553-star/lol-coach/pull/11 merged as
+main e12fc5e05c49cd4af9d32f88b9b5c4394a7d2361. Published head
+96d497e3e3d5b403fc1aba0fd556039a9aa50b05 and actual merged checkout share tree
+90335044d9cc2b71096eb5e12621d3ada6db55f9. Actual PR Actions38111430829/38111430739
+and postmerge38111562459/38111562501 all SUCCESS: pregame, regression and
+browser-regression. Receipts evidence/queue/ci-pr11.json and ci-post11.json bind exact
+25pregame/298MVP/29legacy-browser source hashes, not merely job labels.
+
+Q05 expansion branch feat/queue-knowledge-expansion-2026-10-11; intake main e12fc5e.
+Common claim work/main-execution-claim, run_token main-20261011-queue-v11-root.
+Q05 follow-up publication/remote CI/merge PENDING; local PASS is not remote CI success.
+Original13 profiles and17typed candidates preserved. Remaining160official skill kits,
+800exact excerpts and434mechanism interpretations are archived with URL/hash/locator;
+173roster profiles and177typed candidate specs are now exposed in /pregame.
+All actual candidates remain EXPLORATORY; AI/user-impersonated approvals0. Nine expanded
+champions have no supported mechanism classifications. Strong timing, jungle growth,
+new role/lane assumptions and confirmed cooldowns remain unknown; patch scopes=[];
+actual reviewed current knowledge0. The Sylas self-pull/control misclassification was
+removed; raw source and first RED/corrected GREEN audit evidence are preserved.
+
+Final Q05 evidence: evidence/queue/q09-q05-final.json;
+browser-20261011T043349191111Z-21756889 and
+q09-verifier-20261011T043349232080Z-2836d088. Main matched all34bound source hashes.
+50backend/12semantic/104Chromium PASS, no browser/HTTP/console errors or review requests;
+expanded list177/roster173 and corrected Sylas preview checked in both modes.
+Source validator confirms160documents/800excerpts/434features and unchanged initial13;
+typed adapter6checks PASS. Independent content review: q05-independent-review.json.
+Unchanged legacy124browser and pending-save races3 have source-bound prior evidence;
+required GitHub checks will run again on publication. Frozen27/protected core unchanged.
+
+Golden actual flow: five positions save/reopen declared10champions; common1–3 equal,
+personal4–6 carry role context with unknown reasons. Actual patch=null and no reviewed
+knowledge means UNKNOWN with no tactical filler. Separate read-only SYNTHETIC fixture
+view checks role-specific dispatch; persisted proposals remain EXPLORATORY and decision/
+USER_WEB actor rows0. This verifies routing, not actual approval persistence or coaching.
+
+Run /pregame via coach_v1.pregame_server; docs/queue/RUNNING.md and API.md.
+Original engine/server/web/PR10 approval/backupformat1 remain unchanged. Pregame sidecar
+export must accompany the existing two-DB backup. Typed exact bindings execute only
+current REVIEWED knowledge with three-valued conditions and immutable revisions;
+input/knowledge changes expire old plans, exact retry stays stable.
+No live enemy/own/allied cooldown trackers or in-game action coaching. Pregame base
+values require two sources, patch/type confirmation and reviewed condition binding;
+confirmed actual cooldown candidates0; remaining always NOT_AVAILABLE.
+
+Next: publish and verify Q05 follow-up, then park without holding a writer lock.
+External prerequisites: docs/queue/Q10_GAME_PC_CAPTURE.md and QUEUE.md.
+Q10 genuine Windows game-PC capture package→Q11 source-linked observations→Q12 matching
+own POV alignment→Q13 review using then-known evidence→Q14 independent evaluation.
+
+---
+
+된 것: 원딜 PRE_GAME 방향 전환을 반영하고 이 작업의 외부 영상 대기를 해제했습니다.
+된 것: 웹 사용자 승인·거절, 불변 버전과 출처 해시 보존, 자동 승격 차단을 구현했습니다.
+된 것: 기존 회귀·새 승인 검사·브라우저124개가 통과했고 PR10을 병합했습니다.
+안 된 것: 게임플랜 생성은 아직 제공하지 않으며 다음 작업입니다.
+내가 결정할 것: 이번 범위에서 추가 사용자 결정은 없습니다.
+
+2026-10-09 COMPLETE: PR10 https://github.com/kco994553-star/lol-coach/pull/10
+head deb0cf285ebf66e7c82ade6f0ffd3f2ed20cb260, normal merge main
+9c0f18f03f9d3d17610c93470470a4d22474ca4a; tested and merged tree
+f1ea8dc4c2372e4d2be67b01c58a6997f14b07a5 exactly equal.
+PR Actions37883193561 and postmerge Actions37883365777 completed SUCCESS,
+regression and browser-regression jobs SUCCESS. Exact285 regression inputs and
+all current browser source hashes matched local verification. Actual postmerge
+Chrome124/124 includes old111 and new13; new real HTTP/SQLite review13 PASS.
+Frozen27/protected9/old111/backup23 and every required existing scoped suite PASS.
+Remote receipts: evidence/mvp/knowledge-review-pr10-ci.json and
+knowledge-review-postmerge-ci.json. Local receipts and first failures remain
+preserved; no test IDs/expectations/timeouts were weakened.
+D3 amendment and bounded browser trust limits: docs/MVP_KNOWLEDGE_REVIEW.md.
+No outstanding material code-review finding. This closeout adds status/receipts
+only; verification input hashes are unchanged, so it uses [skip ci] and claims
+no fresh code CI for the closeout documentation commit itself.
+
+Disposition: COMPLETED for knowledge decision flow; READY_FOR_NEXT_TASK,
+not PARKED_EXTERNAL for PRE_GAME. Next scope preview: gameplan v0 from manual
+pick-window record plus REVIEWED knowledge only; unsupported cells “미확인”;
+AI free-form text and invented numbers prohibited. Do not activate gameplan
+within this completed approval-flow scope. Real Player/Decision/Coach evidence
+remains N=0, accuracy=null; POST_GAME real-match review remains lower priority.
+
+---
+
+된 것: 원딜 PRE_GAME을 최우선 목표로 전환하고 이 범위의 PARKED_EXTERNAL을 해제했습니다.
+된 것: 웹에서 정확한 후보 버전을 REVIEWED/REJECTED로 결정하고 새 불변 버전에 보존합니다.
+된 것: 전체 로컬 회귀와 실제 브라우저 124/124(기존111+신규13)가 통과했습니다.
+안 된 것: 원격 PR/CI/병합은 아직 대기이며 게임플랜 생성은 다음 작업입니다.
+내가 결정할 것: 이번 흐름에 추가 사용자 결정은 없습니다.
+
+2026-10-09 user authority: PRE_GAME ADC Yunara/Ashe/Kaisa/Caitlyn;
+POST_GAME real-match review is lower priority. This work delivers knowledge review only.
+New actual HTTP/SQLite13 tests pass; existing Frozen27/protected9/old111 and all
+existing MVP suites pass. Final local full receipt:
+`evidence/mvp/20261009T041257197551Z-c7c24983/verification.json` (285 exact inputs).
+Final actual browser receipt:
+`evidence/mvp/browser-20261009T041255836347Z-80c30de7/runner.json` (Chromium151,124/124).
+Independent code review found and verified one save-controls defect, now fixed;
+no outstanding material findings. Source-bound v1.1 amendment:
+`contracts/amendments/2026-10-09-knowledge-review.json`; original Frozen bytes preserved.
+First failures, original parent sources and harness repair are preserved in
+`evidence/mvp/knowledge-review-*` and timestamped browser directories.
+The harness repair only defers route cleanup, retaining original case IDs,
+expectations, request/response bytes and timeouts. New review delayed-ACK test
+pauses an actual browser response through CDP; no redispatched spoofed metadata.
+Source/selected payload hashes, latest CAS, immutable chain, restart/backup and
+source deletion invariants are verified. Generic/AI propose cannot promote;
+UI requires trusted active gesture+native confirmation; server requires authorized
+same-origin browser metadata. This trusts browser/local server control, without
+claiming cryptographic human attestation.
+Gameplan v0 next: manual draft record + REVIEWED knowledge only; unsupported cells
+“미확인”; no AI free-form sentences/numbers. No Player video prerequisite for that
+PRE_GAME work. Real-match Player/Decision/Coach evidence stays N=0, accuracy=null.
+Remote publication/CI/merge currently PENDING; do not infer them from local PASS.
+
+---
+
+# Latest verified checkpoint(최신 검증 체크포인트) — PR9 retry-safe save(재시도 안전 저장)
+
+2026-10-05 KST. PR9 head `ffe3b3d3c1ce0ee9c800cfb03395db2710e42999`
+was normally merged as main `e006b3124f74604e257851c781fa1317e4c6936a`.
+The resulting tree `e36fa03b1e01ca68955dba3acebdb57961df5ddc` exactly
+matches the published implementation tree and has parents `6f5c2c30` / `ffe3b3d3`.
+Actual PR Actions `37292198759` and post-merge Actions `37293206383` both
+completed SUCCESS(성공); both regression(회귀) and browser-regression(브라우저
+회귀) jobs passed. The post-merge browser receipt binds `GITHUB_SHA=e006b312`,
+run/attempt `37293206383/1`, exact current source hashes and 111/111 actual
+Chrome checks. The final scoped regression receipt is PASS with exact 269 input
+hashes, old111, protected9, Frozen27, backup23, draft31+17+19 and UI7+4+1.
+
+Manual draft POST/PUT now requires one valid Idempotency-Key(멱등성 키). Same
+key plus the same normalized request replays the original immutable response
+across restart without another row/revision; changed payload conflicts; a new
+key keeps CAS(버전 비교 저장). The browser retains the exact attempted key/body
+after a committed response loss and rotates only after an acknowledged success.
+Manual records remain UNVERIFIED(미검증), NOT_GENERATED(미생성), coaching false.
+The local missing-browser executable failure and the first verifier-routing
+failure remain preserved and are not counted as PASS.
+
+The documented independent internal sequence—Research byte/navigation
+integrity, immutable note history and recovery, source-bound EXPLORATORY
+Knowledge proposals, structured manual draft capture and retry-safe capture
+saves—is now remotely verified. No currently evidenced independent regression,
+integrity, acceptance or private-Web usability gap remains that can be fixed
+without inventing game facts or building unused framework. Windows/macOS runtime
+execution remains an unexecuted platform validation, not a Linux code failure.
+
+Current disposition is PARKED_EXTERNAL(외부 입력 대기) only after exhausting
+those internal tasks. The required resume input is an independent source-backed
+Player reference plus decision-preceding Player-visible context; a reviewed,
+patch/applicability-bounded Knowledge source is additionally required before a
+real gameplan/decision can be activated. Actual PLAYER_DIRECT0, PLAYER_DERIVED0,
+complete reference0, same-match Player/Truth pair0, DecisionN0, CoachingN0 and
+accuracy=null remain unchanged. Source-level 26 direct / 2 derived fields are
+not added to the Player denominator. Resume on new qualifying evidence, a new
+regression/CI failure, or a material repository acceptance change; do not create
+filler features or relabel synthetic/browser receipts as real coaching evidence.
+
+---
+
+# Latest checkpoint(최신 체크포인트) — retry-safe manual draft saves(안전한 재시도 저장)
+
+2026-10-05 KST. Common owner(공통 소유자) `work/main-execution-claim`, token
+`main-20261005T0842-draft-retry-safety-root`, branch
+`feat/manual-draft-retry-safety-2026-10-05`, intake main
+`6f5c2c30db54f962ac5881a8d628336ca62cd7e5`. Status RUNNING(실행 중) until
+publication(게시); token must be rechecked before every remote mutation.
+
+Implemented bounded idempotent(멱등) POST/PUT for manual draft saves without a
+schema/Frozen/expected-result change. Exactly one valid `Idempotency-Key` is
+required over HTTP. Same key + same normalized request returns the original
+immutable snapshot across restart; same key + different request is
+`IDEMPOTENCY_CONFLICT`; a new key retains existing CAS(버전 비교 저장). UI keeps
+the exact attempted key/body after an ambiguous network loss, preserves edits
+made while saving, and rotates the key only after an acknowledged success.
+Manual records remain UNVERIFIED(미검증), NOT_GENERATED(미생성), coaching false.
+
+TDD(검사 주도 개발) history preserved: HTTP duplicate/replay/missing-key tests
+first failed 3/3 then pass. UI response-loss case 0/1→1/1. Existing test fixture
+adaptation initially exposed 15 missing-header failures, then draft Python
+storage31 + backup19 + HTTP17 = 67/67 PASS. First required full verifier run
+`evidence/mvp/20261005T092328111444Z-9024c8d4` FAIL retained: product case was
+1/1 PASS but new case ID was routed to legacy SAVE IDs. Routing-only repair,
+no expected/product change. A later same-method test added the explicit duplicate-header
+boundary; final required local `evidence/mvp/20261005T092851299783Z-65f066ea`
+PASS: exact269 inputs unchanged,
+historical153 unchanged, old111, protected9, Frozen27, backup23, draft31+17+19,
+UI7+4+1, postgame schema13 PASS.
+
+Local actual-browser attempt
+`evidence/mvp/browser-20261005T091351459385Z-7c8d2305` is an explicit
+`BROWSER_LAUNCH_FAILURE`: this runtime has no Playwright Chromium executable.
+It is not a product PASS. GitHub Actions actual Chrome now requires 111 checks,
+including genuine real-server PUT commit followed by dropped response, exact
+key/body replay with no extra revision, then key rotation after ACK. Publish,
+PR, Actions and gated merge are still PENDING(대기) at this checkpoint.
+
+Actual Player direct0/derived0/complete0/truth_pair0/DecisionN0/CoachN0,
+accuracy=null. Independent source-backed Player reference and pre-action
+context remain `PARKED_EXTERNAL` dependency only; they did not become synthetic
+evidence and do not stop this independent integrity work.
+
+---
+
+# Latest checkpoint(최신 검증) — PR8 native workflow repair(실제 사용자 순서 보완)
+
+Actual PR8/run37276347795 attempt1FAIL(실패), testedmerge9b5850e7/tree5edb656,
+parents0f2b333e/066f444, regressionPASS/all257inputs. ActualChrome87 prior checks
+passed; manual stage fill of hidden d-pick-ALLY-1 stopped before new checks.
+Full actual firstfailure and originalf251 testbytes preserved. Test now clicks
+native summary to unfold ally/enemy inputs before typing and after opening a
+saved record. Same19literalIDs/total108, unchangedfixtures/expected/timeouts,
+no DOM-open assignment. All production source bytes remain identical.
+
+Fresh required local071931/cb7b5c40 PASS with new strict failed-run/tree/source/
+case-identity binding. Actual repaired Chrome108 still PENDING(대기). Common
+RUNNING token main-20261005T071452087-draft-ci-repair-root; same PR8/branch,
+no duplicate implementation. Only Player/preaction dependency parkedN0/null.
+Retry-safe save correctness remains next executable task after actual verify.
+
+---
+
+# Latest verified local checkpoint(최신 로컬 검증)
+
+2026-10-05. Required full regression(필수 전체 회귀)
+evidence/mvp/20261005T070629748821Z-0f0b7f60/verification.json PASS(통과),
+257 exact inputs(정확한 입력), historical evidence(과거 근거)153 unchanged.
+Frozen27/protected9/old111/backup23/current31+14+19/currentUI7+4 and every prior
+guard pass. Original first full070325/40566e2e FAIL(실패) retained: new7+4
+actually passed but missing new-suite ID routing compared old SAVE_CASE_IDS.
+Verifier routing repaired with exact new literal identities, no expected/product
+change. Source bound fe02bea5; independent narrow review blocker0, original null
+counterexample and extra scalar/ACK checks pass. Synthetic scheduling only.
+Actual Chrome108 / PR publication(게시) / gatedmerge(조건 충족 병합) /
+postmerge(병합 후) verification remain PENDING(대기) at this checkpoint.
+
+Next identified executable integrity gap: retry-safe saves(안전한 재시도 저장).
+Actual isolated HTTP identical POST/key duplicates and successful PUT replay409
+were reproduced. This dev/v1 bounded capture does not claim canonical /v1
+idempotency(같은 요청의 중복 방지) completion. Continue that narrow correction
+after actual current publication; do not stop whole Work for realCoachN0.
+
+---
+
+# CURRENT HANDOFF — Manual draft capture(수동 픽창 기록) / current execution(현재 실행)
+
+2026-10-05 KST. Actual main(실제 기준)0f2b333e44c1918e7a2a9dd7d9f6fce67d1d76a2.
+PR7 head83b7718/tree9a7d08 normalmerged0f2b333e; actual PR37271933712 and
+postmerge37272079828 SUCCESS(성공), exact tree/parents/all194inputs/Chrome89.
+First37270809307FAIL and verifier-only completed-delete repair remain archived.
+These are historical verified parent results, not current manual capture CI.
+
+Current scope(범위): existing Frozen TEAM_DRAFT REC-REQ013 / bounded input
+portion of SC011. Risk CRITICAL(중대한 변경) retained. Manual operator inputs
+have isolated main-schema2 tables, immutable snapshots(불변 저장본), strict
+raw null/UNKNOWN(알 수 없음) provenance(출처), transactional CAS(버전 비교 저장),
+actual validated private pre-migration v1 recovery copy and compatible two-DB
+backup format1. Original Store/legacy TEST engine/tables and Research/Knowledge
+bytes remain unchanged. Dedicated authenticated HTTP/UI records cannot become
+legacy analysis sessions/cases/jobs. No automatic collector/gameplan activation.
+
+Fresh targeted storage31 + unchangedStore11, HTTP14, backup19 + unchanged23 +
+Knowledge19 PASS(통과). Initial missing capability, backup support/fixture
+failures and corrected metadata remain additive(이력 보존 추가). Storage's
+huge corrupted revision MemoryError counterexample is retained and repaired.
+Initial UI7PASS did not detect explicit-null row reconstruction loss; independent
+review reproduced genuine no-edit loss at b9784c66. This BLOCKING(병합 차단)
+issue has separate actual RED/GREEN(실패 후 수리) tests and source archives.
+Current final source binding/full regression/actual browser are still required.
+The prior89 checks plus manual19 require native Chrome108(실제 브라우저 검사).
+No current Chrome/Actions PASS is claimed before completed run evidence.
+
+Common ownership(공통 소유권) ref work/main-execution-claim, RUNNING(실행 중)
+token main-20261005T0630-manual-draft-capture-root; separate implementation
+branch feat/manual-draft-capture-2026-10-05. Latest token/ref must match before
+mutations; no competing PR(검토 요청) or owner observed. Plan/docs are
+MVP_DRAFT_CAPTURE.md and docs/superpowers/plans/2026-10-05-manual-draft-capture.md.
+
+Actual Player direct0/derived0/complete0/truth_pair0/DecisionN0/CoachN0,
+accuracy(정확도)=null. Only independent Player reference(플레이어 기준) and
+pre-action context(행동 전 문맥) dependency is PARKED_EXTERNAL(외부 입력 대기).
+Whole Work continues through required verification/publication and then the
+next grounded executable requirement. No paid dependency/service/database/
+design/deploy or automation expansion. Tool record docs/TOOL_USAGE.md.
+
+Previous handoff(인수 기록) remains historical below.
+
+---
+
+# CURRENT HANDOFF — PR7 actual browser completion-boundary repair
+
+2026-10-05 KST. Fresh exact main594ef3c / PR7b3bd758d and actual Actions
+37270809307 attempt1 FAILURE tested merge256b4ba2/treeae357a1 with parents
+594ef3c/b3bd758d. Required regression PASS, all189 inputs matched; browser
+84 executed with only current-delete snapshot equality failing. Original test
+bytes and full actual failure are preserved. Independent VM reproduction
+found only notice changing during normal DELETE->await list refresh->completed
+notice. Completed state plus late genuine pre-delete history GET/recovery stays
+unchanged. Verifier now waits existing completed-delete notice, retaining whole
+editor/history equality, actual404/source/CAS/Unicode/privacy gates and required
+89 count. Production Research39ae97ef unchanged. Risk CRITICAL retained.
+
+Fresh local required evidence/mvp/20261005T061833866467Z-1db93441/verification.json
+PASS, no actual repaired Chrome PASS before new Actions. Frozen27, old111,
+protected9, backup23 and current5+3/prior guards preserved. Existing PR7 only,
+common work/main-execution-claim token main-20261005T0613-note-recovery-ci-repair-root.
+Only independent Player/preaction dependency PARKED_EXTERNAL; realCoachN0/null.
+After actual retest/gatedmerge/postmerge, continue manual draft capture requirement.
+
+---
+
+# CURRENT HANDOFF — Note-history draft recovery / local gates verified
+
+2026-10-05 KST. Fresh actual main594ef3cf6138421de8a8c77c7ec1c390e7cfedea.
+PR6 head25ff68b/treea36cdda0 normalmerged594ef3c; actualPR37268750816 and
+postmerge37268897569 SUCCESS, exactSHA/tree/parents/all176hashes, Chrome79,
+old111/protected9/Frozen27/backup23/history19+5/Knowledge42+19+5/Node8 allPASS.
+First actual browser37268245767 failure and verifier-only serialization repair
+are preserved. Immutable actual terminal receipts knowledge-ci-*.json added.
+
+Current independent executable requirement is explicit saved-note history
+recovery to an unsaved draft. Native dirtyconfirmation/cancel; exact4fields
+with native LF newline normalization; originalCRLF history/download/Knowledge
+hashes preserved. Current loaded rNote revision remains CAS, no automaticPUT,
+newSave appends; actualexternalupdate conflicts retain draft. No schema/API/core
+change; Source-version binds only Research/index. Test-first0/5→5/5→final5/5.
+
+Independent privacy counterexample at intermediatebbe60: DELETEA→otheranchorA
+kept deleted saved note exportable; pending sameA resurrected it; pendingB kept
+inactiveA cache. CRITICAL escalation retained. Fixed3 cases before0/3→3/3;
+rPendingResource ownership suppresses deleted pending target and purges matching
+source/cache while preserving different pendingB and unknownnewcreate. Exact
+parent63b517 and intermediatebbe60 actualJS archived, historical receipts unchanged.
+Independent final review39ae97ef: fixed3+5PASS plus8 one-off pendingA/currentB
+and new-create assertions PASS; these remain explicitly synthetic scheduling.
+
+Required local regression evidence/mvp/20261005T060326207258Z-8c75a9cf/
+verification.json PASS, all189 inputs current: old111/protected9/Frozen27/
+backup23/history19+5/Knowledge42+19+5/priorUI/KnowledgeNode8/recovery5+delete3.
+Actual Chrome89 (previous79+new10) is required; localPASS is not browser/Actions
+PASS and current remote publication is pending. Private archive4 NOT_RUN stays
+separate. Browser covers genuine CAS409/source-linked history immutability,
+CRLF old bytes vs LF editor, nativeconfirmation/noautomaticwrites, pendingreads/
+delete/view/logout and390px. Known scope single-tab native source events only.
+
+Owner token main-20261005T0545-note-history-recovery-root on common
+work/main-execution-claim; branchfeat/note-history-draft-recovery-2026-10-05
+is separate. Newtoolpolicy applied/recorded docs/TOOL_USAGE.md. No Context7
+needed (no package/lib/API addition), no Figma/MagicPath/Linear/DB/deploy target
+assumed orcreated, no payment. GitHub remains authoritative.
+
+Next independently executable acceptance: structured manual pre-game draft
+capture REC-REQ013/SC011, not gameplan generation. Current TEST/SYNTHETIC paths
+cannot truthfully accept actual manual drafts. Plan a CRITICAL additive mode/
+mainDB typed-record migration with actual prebackup/compatiblebackup/CAS/history/
+sourceparentFK/deletion and actualbrowser validation. Keep unknownphase/roles/
+patch/time explicit, auto collectionUNAVAILABLE, gameplanNOT_GENERATED; reviewed
+knowledge/playerdecision remain dependent. ActualPlayer/Decision/CoachN0/null;
+only independentreference/preaction dependency PARKED_EXTERNAL. Whole Workcontinues.
+
+Prior handoff fully preserved below.
+
+---
+
+# CURRENT HANDOFF — PR6 actual browser verifier repair / remote retest pending
+
+2026-10-05 KST. Exact PR6 fdf4b157/tree86cccef is published. Actual Actions
+37268245767 attempt1 regression PASS at merge-refe36a954f tree86cccef with parents
+d92ded9/fdf4b157; all173 inputs match. Browser had65 executed rows,64PASS and
+knowledge-old-version-authentic-download-exact-saved-object FAIL. Full first
+receipt and exact original browser test bytes are retained.
+
+REPLAN: actual authenticated HTTP/SQLite reproduction confirms POST and stored
+GET are semantically equal but have different property serialization order.
+Verifier now checks exact authentic download bytes against the actual viewed
+GET plus independent immutable GET, keeps POST semantic equality, strengthens
+Unicode/file-name/dirty-draft guards. Product source2011b3 remains unchanged;
+16 Knowledge /79 required browser count unchanged. New local required receipt
+evidence/mvp/20261005T053751974692Z-0002714a/verification.json PASS, no actual
+repaired-browser PASS claimed before fresh CI. Frozen/protected/history intact.
+
+Common current claim token main-20261005T0534-knowledge-ci-repair-root,
+work/main-execution-claim, exact PR6 owner branch; implementation ref is notlock.
+New tool-use instruction adopted at safe publication checkpoint, recorded in
+docs/TOOL_USAGE.md. No external project/DB/design/deploy/payment introduced.
+Next remains existing explicit note-history draft recovery after PR6 actual
+CI/gated merge/postmerge. Only independent player/preaction dependency parked;
+actual Player/Decision/CoachN0/accuracy null, whole Main Work continues.
+
+---
+
+# CURRENT HANDOFF — Source-bound Knowledge proposals / local gates verified
+
+## 2026-10-05 KST
+
+- Fresh actual intake main d92ded9743b591030a55e355e914ab238589e447. PR5 code4ca365f6950b81894069ee8917693407c4559e68 merged d92ded9; actual PR37264041430 and postmerge37264322615 SUCCESS, Chrome63/63 and145 exact input hashes. Immutable actual receipts research-error-ci-*.json included here. Historical handoffs below are preserved, not current ownership.
+- Single writer uses common work/main-execution-claim token main-20261005T0444-knowledge-proposal-root, owner branch feat/source-bound-knowledge-proposals-2026-10-05; the implementation branch is not a lock. Risk CRITICAL for personal-data migration/deletion/recovery; authority already granted. Scope Frozen KNOWLEDGE/PERSISTENCE REC-REQ-012/REC-SC-015 bounded to one exact saved source note per immutable EXPLORATORY rule version; no engine/review activation.
+- Actual research schema2 physical knowledge_rules(id,version,status,payload) plus source-note and predecessor compound FKs. Original ResearchStore bytes and original two tables/rows preserved; main schema1 unchanged. UUID version tokens, latest CAS, exact server-computed stored source/note hashes, lists/read/download/newversion/delete. UNKNOWN remains operator text, not applicability wildcard or fabricated facts. No inferred author/time/numeric confidence.
+- Independent Frozen review found missing pre-migration recovery. Repaired actual private v1 SQLite snapshot before DDL under writer exclusion, schema/content/exact-row/hash/size verification,0600/nooverwrite, transaction rollback. Snapshot failure503 leavesv1; later DDL failure preserves valid recovery copy. Snapshot/ZIP archival retention remains separate from live deletion and is documented. Two-DB ZIP format1 admits actualresearch1/2 and checks manifest-versus-actual version before publication; no constructors/job reexecution inbackuprestore.
+- Independent UI privacy counterexamples retained: first0/3→3/3, cached exactACK0/1→1/1, explicitlysynthetic stale4010/1→1/1, cachedopen/list0/2→2/2, proposalDELETE cachedsame-ruleopen0/1→1/1. Latest deletion generation binds save/open/list/reconciliation and is advanced before a successful stale proposalDELETE can return; pending deletion blocks download immediately. Source-middle cascade deletes descendants even when their own source survives, retaining earlier ancestors. Current single-tab UI reconciliation is not global cross-tab/direct-API cache invalidation. Actual saved reports remain exact and cannot be downloaded from unsaved draft. Initialtwo developmentJS byte snapshots were notretained; their real execution/hash/failure receipts remain. Later parent/currentactualJS archives are preserved, never reconstructed.
+- Local final evidence evidence/mvp/20261005T052343958609Z-6c010746/verification.json PASS, all173 boundinputs unchanged; old111/protected9/Frozen27/backup23, notehistory19/HTTP5, KnowledgeStore42/backup19/HTTP5, currentNodeKnowledge8 and earlierUIguards allPASS. Earlier localPASS receipts remain scoped to their earlier source/test bytes. Fresh independent final currentNode8/8/process0 and focused criticalreview found no blocking defect. Actual browser79/Actions required and currentlypending; localPASS is not remotePASS. Pinnedprivatearchive4 remain NOT_RUN separately.
+- Frozen27/core/oldtests/fixtures/expected/history preserved; additive source versions and no real evidence promotion. Source26direct/2derived stay separate; Player0/DecisionN0/CoachN0/accuracy null, Product NOT_COMPLETE. Only actual independent Player/pre-action dependency PARKED_EXTERNAL. No payments/newdependencies/externalmessages.
+- Next independentlyexecutable documented gap afterpublication: explicit saved-note recovery into a new unsaved editor draft, using existing history/source/CAS without automaticPUT or oldrevision reuse. Subsequent manualdraft capture is separately implementable; actualgameplan/KnowledgeREVIEWED/playerdecision retain their genuine knowledge/phase/evidence gates. No arbitrary framework or feature filler. Main Work continues.
+
+Prior handoff fully preserved below.
+
+# CURRENT HANDOFF — Research error integrity execution / note history remotely verified
+
+## 2026-10-05 KST
+
+- Actual PR4 code d870874a3b34813c02d1cd779a327f81b7cf45b7 → mergedmain c1b777f52c1c90d611753264a767e96ef943aeed. PR Actions37262887752 SUCCESS at merge-ref5ebe258c3182bc3d14ee31d576831839ced3da1e, exactpublishedtree13fbb784 andexpectedparents; postmerge37263078939 SUCCESS exactc1b777f. All137input hashes bound. Actual Chrome61/61 including authentic saved-note download/Unicode/read-only draft/CAS/history/navigation/deletion tests, storage19/HTTP5/old111/protected9/Frozen27/backup23 PASS. Fullactualreceipts note-history-ci-*.json preserved; privatearchive4 NOT_RUN separately, notPASS. No Frozen/Core/DBschema change or realCoach Npromotion.
+- Next actual integrity gap reproduced and repaired: oldA save401 clearsdirtyB; old409 changesBnotice. Nodebefore2/4, intermediate4/4 source23a72 retained. Same unscopedUIcatch independently reproduced on resource/anchor/list callbacks: before3/6, stale401allFAIL. One tiny post-invocationepoch-bound UIcatch for directUIrequests, current rSave ownresource/anchor guard; rAdd/fileeligibility unchanged. Final4/4 and6/6 e14c5fbf PASS, exacttest/fixture/childexit/source binding; allinitialfailures preserved. 401onlyexplicitsynthetic Node inputs, not realtoken expiry. Two actualrealHTTP409 browser checks planned, prior61 retained→63 required; remoteCIpending.
+- DEEP; independent read-only repair review foundno materialissue in installed async-call ownership. Scope is epoch-changing resource/anchor/logout transitions; no claimof generalizedsame-epoch request scheduling. Currenterrors/auth remainhandled. Sourceversion history is additive; Frozen27/old111/Protected9/backup23 remainmandatory.
+- Whole Main Work continues under autonomousauthority. Next independentlyexecutable requirement aftererrorrepair: source-backed EXPLORATORY Knowledgeproposal creation/version/download andsource-deletion lifecycle; actual reviewedrules/playerdecision stillgated. ExistingpinnedpostgameCLI is specificarchiveonly andoutputsPlayerState/GroundTruth null; exposingprivateschemahelper wouldbypassgate. AduplicatearchiveWebexample wasnotchosen toinflatefeatures.
+- Rootsinglewriter tokenmain-20261005T0422-research-save-errors-root via commonref; branchfix/research-save-error-scope-2026-10-05 distinct. Playerreference/pre-action context dependency onlyPARKED_EXTERNAL; PLAYER0/DecisionN0/CoachN0/accuracynull, ProductNOT_COMPLETE. Payment0/newdeps0; no externalmessages.
+
+Prior handoff fully preserved below.
+
+# CURRENT HANDOFF — Note history implementation / PR3 remotely verified
+
+## 2026-10-05 KST
+
+- Actual continuation intake mainccd3a3f23869966bdbbe8288a29e9f4b43d25687 → PR3 code01a6b80c62c47ddc4f1d14d124d0dafe058f512d → mergedmain321ecbd9515fa50a3ef8bff67dd0cbdd322d9fe4. Real PRCI37261674093 SUCCESS testedmerge915062a6f4f94931b3217195a76c51c4905d3d88 exactownertree/parents; postmerge37262029506 SUCCESS exactmain321ecbd. Actual Chrome154.0.8037.57 50/50, old111/protected9/Frozen27/backup23 and priorguards PASS, source-input hashes matched. Recorded immutable navigation-ci receipts, first1/4 and repaired4/4 retained.
+- Highest remaining independent usability gap now executing: existing stored Research note revisions were inaccessible through API/UI. Read-only index/exact preview/download uses existing SQLite note_history without schema change. No restoration/write endpoint, inferred timestamps/authors or validation promotion. Preview never alters current dirty editor, rNote or latest save target. Loading/current selection/view/logout/save invalidates superseded preview; UTF-8 response cap uses explicit existing operational body_bytes.
+- DEEP; two independent implementation scopes (new storage helper/tests and actual browser history tests), one read-only integrity reviewer. Initial view-navigation invalidation finding repaired; full affected regression/browser/remote results pending. New authorization is exact versioned source hashes only; all Frozen/oldtests/fixtures/evidence remain unchanged. Whole Work continues beyond external Player reference, as user requested; next task re-evaluated from actual requirements/gaps.
+- Shared root claim token main-20261005T0410-note-history-root on work/main-execution-claim; implementation branch feat/research-note-history-2026-10-05 distinct. Paid dependency0, no remote user game data or external messages. PLAYER0/DecisionN0/CoachN0/accuracy null; only Player reference/pre-action context PARKED_EXTERNAL, Product NOT_COMPLETE.
+
+Prior handoff fully preserved below.
+
+# CURRENT HANDOFF — Broader product continuation / navigation repair CI pending
+
+## 2026-10-05 KST
+
+- User reopened acceptance/integration/usability gaps under Autonomous Execution Authority. Fresh mainccd3a3f23869966bdbbe8288a29e9f4b43d25687; PR0, branches/current shared terminal claim84935655… and existing applicable CI37258742782 confirmed. Whole work did not stop for external Player reference; additive gap assessment docs/MVP_EXECUTABLE_GAPS.md, canonical24 requirement status/Frozen files untouched.
+- Selected actual integrity defect: B navigation leaves A displayed and delete enabled, DELETE A captures B's epoch, B completes and receives dirty draft, delayedA success clearsB. Before same4case1/4 and original36a96452 hash preserved. Fix disables/rejects loading deletion and ties completion/errors to target resource plus own clear/refresh phase. First/final4/4; previous byte9/request4 guards still required. Intermediate sources and first failures retained; current scoped source allowance extends strict previous-chain binding, old exact R7 verifier remainsFAIL.
+- New actual browser50 suite retains46 and adds4 genuine GET/DELETE/SQLite/confirmation checks. One response-identity case explicitly re-enables the historical-control window as an adversarial check; actual backend execution is real, not a mocked result. Local required baseline111/protected9/Frozen27/backup23 plus affected checks pass; fresh remote browser/CI not yet claimed. Root continues exact tree/API publication→PR/CI→gated merge→postmerge→closeout.
+- Next independently executable gap selected: stored note revision index/exact version read-only preview/download; existing note_history schema and complete2DB backup reused. Initial scope does not invent saved timestamp/author or turn notes into Knowledge/Player gold. Knowledge proposal lifecycle remains OPEN_INTERNAL beyond duplicate freeform notes; manualdraft/actualstrategy still gated by applicable input/knowledge/phase dependencies.
+- Player independent reference/pre-action context alone PARKED_EXTERNAL; PLAYER/Decision/Coach N0, accuracy null unchanged. Source26direct/2derived separate. No paid service/dependency/authentication/external messages. Root common ref is single writer; before/after evidence additive.
+
+Prior handoff fully preserved below.
+
+# CURRENT HANDOFF — Research integrity repair remotely verified
+
+## 2026-10-05 KST
+
+- Actual intake main c30bb2ca553e1346e00aebd9871283101ca51950 → implementation d07000255265e82e429ba6d184c43681921f8e44 → PR2 normal merge main ed533fd980f47313014b7874e171ca4c5f1a2d6b. No force/history rewrite. Local/remote tree a9e28ed33f377228cb01d6af70f2f32b2133a6ec matched; code sources preserved through merge. Root used shared common claim throughout, released while CI pending, reacquired closeout; no duplicate writer.
+- Research File upload now preserves original valid UTF-8 BOM/multibyte/literal U+FFFD bytes, explicitly rejects invalid encoding before POST, retains current resource/note/dirty draft and ignores superseded reads/requests. Current post-save resource/note lookup failures remain visible. Source integrity counterexamples5/9→9/9 and introduced own-epoch request routing2/4→4/4 are preserved, including intermediate byte receipts; final accepted source36a96452… binds both final suites. No later PASS deletes earlier failure.
+- PR Actions37258576190 SUCCESS: actual tested merge ref5a2c70ff2f5da9a0e5353184c07832a7d0b7f04f, identical owner tree/expected parents. Postmerge Actions37258742782 SUCCESS at exact ed533fd9. Fresh actual Chrome154.0.8037.57 browser46/46, regression111/111(skip0), protected9/9, Frozen27, backup23/23, save7/import7/delete2, Research9+4, synthetic postgame13 allPASS. CI private exact archive4 NOT_RUN, not countedPASS. Real Coaching N remains0.
+- Canonical remote receipts evidence/mvp/research-ci-37258576190.json and research-ci-37258742782.json include actual jobs/log receipts/commit/tree/source/run bindings. Local final run evidence/mvp/20261005T031207351928Z-0f4fc369/verification.json. All126 CI input hashes and14 browser inputs match tested/current sources. This final record commit only adds handoff/status/observed evidence, uses [skip ci], and does not claim its own fresh CI.
+- DEEP; minimal deterministic verifier + one independent correctness lens/independent actual-browser implementation. Frozen design semantics/core/old expected/test files/evidence unchanged. Historical R7 exact byte identity remains FAIL as recorded; new scoped exemptions require exact source/case/test/fixture/failure/exit history, no gate relaxation. Original R6 A-first expectations re-executed in ArrayBuffer-capable harness with original text-only test preserved.
+- Product NOT_COMPLETE. Source-only26direct/2derived are not Player denominator. PLAYER DIRECT0/DERIVED0/complete0/independent same-match same-time pair0; DecisionN0/CoachN0/accuracy null. Source-backed independent Player reference and pre-action context PARKED_EXTERNAL. Existing clip static HUD may be independently reviewed without new clip/known patch; actual decision requires its pre-action information and reviewed knowledge. Existing reference protocol/minimum input reused. New importer/package/OCR framework not justified by actual intake need; none added.
+- Final independent review found no remaining introduced defect after repair. No open blocking conflict/review. Next authorized work resumes only on real new input/blocker change/regression; same receipts/self-doc changes are deduplicated. One Main executor configuration remains enabled; old3 watches remain paused. No payment/new dependency/authentication/external message.
+
+Prior implementation and complete historical handoff preserved below.
+
+# CURRENT HANDOFF — Research source-byte repair awaiting remote CI
+
+## 2026-10-05 KST
+
+- Intake actual main c30bb2ca553e1346e00aebd9871283101ca51950; root single writer acquired common work/main-execution-claim. Scope DEEP: Research File.text silently strips BOM/replaces invalid UTF-8 before original-source hash. Minimal ArrayBuffer/fatal UTF-8 decoder preserves valid bytes and rejects corruption before POST; current resource/dirty note retained, stale reads and requests suppressed.
+- Preserved same9 test/fixture initial5/9→first9/9→request-guard refinement9/9→final9/9. Independent verifier found introduced current resource/note GET errors hidden after own rOpen epoch; separate same4 cases initial2/4→final4/4. All original failures/receipts retained; final binding bridges old R6 research source to exact current bytes, no historical PASS rewritten.
+- Frozen27/core/old fixture/expected/test-file bytes unchanged. Historical R7 exact identity FAIL preserved. Original R6 text-only Node harness preserved; its exact A-first expectations are executed in the current ArrayBuffer-capable9case harness. No Evidence Gate loosened. Decision record docs/MVP_RESEARCH_BYTES_DECISION.md; current validation docs/MVP_VALIDATION.md.
+- Required actual browser suite extends38→46, including original file hashes/BOM JSON+transcript/multibyte literal U+FFFD, invalid UTF-8 noPOST/noresource/old dirty note, both stale invalid read orders/logout. Static syntax PASS. This entry records implementation and local checks only; fresh actual Actions/browser result is not yet established. Root continues publication→remote source/tree/SHA→CI→repair if needed→gated merge→postmerge checks→closeout.
+- Source26direct/2derived unchanged; PLAYER DIRECT0/DERIVED0/complete0/truthpair0, DecisionN0/CoachN0/accuracy null. Real reference/context PARKED_EXTERNAL. Independent intake audit rejected speculative new package software; existing source-backed reference protocol and minimum input path reused. No paid service/dependency/credentials/external messages.
+
+Prior handoff fully preserved below.
+
+# CURRENT HANDOFF — verified import repair / autonomous continuation configured
+
+## 2026-10-05 11:15 KST closeout
+
+- status: PARKED_EXTERNAL; active implementation writer: none after this record and coordination release. Intake main `f3f0b38e2c751c40ca7851474e30914cd3e2abc2`→repair90916356→PR1 merge `377a1065ea54a0a597a5805a46571d35be9a3266`. Final documentation-only record HEAD is read from remote after publication; do not substitute the code-tested SHA for that record SHA.
+- PR #1 MERGED under user-authorized hard gates. Current push Actions37254286657 SUCCESS at exact377a1065, regression111587974213/browser111587974329 SUCCESS. Previous PR run37254080596 SUCCESS tested GitHub merge-ref94e1d702; exact tree/parents and current push117 input hashes verified. Receipts `evidence/mvp/import-ci-37254080596.json`, `import-ci-37254286657.json`.
+- Fresh current CI: old111/111(skip0), protected9/9, Frozen27, backup23/23, save7/import7/delete-import2/research1, synthetic postgame13 PASS. Actual Chrome154.0.8037.57 browser38/38 PASS, including original32 plus six native File read ordering/selection-clearing checks. Pinned archive4 NOT_RUN in this CI; actual coachingN stays0.
+- File selection repair minimal; first import3/7 failure and repaired7/7 retained. Old save receipts/old tests/expected/Frozen/Core/source-history unchanged. New verifier's source-hash chain preserves old evidence rather than rewriting it. Protected identity of historical verify_r7 remains FAIL for authorized app bytes as previously recorded; do not claim that old verifier freshly passed.
+- Final automation read found the old three Watchdogs already PAUSED (updated01:57UTC); root did not re-enable them. One **LoL Coach Main 자동 재개** is enabled as hourly condition check in Asia/Seoul, with read-only progress/CI/evidence intake separated from authorized execution. Its saved prompt applies dependency/owner/fingerprint checks, narrow validation, repair, publication and gated merge. No duplicate monitors/Executors. This is polling for general main/CI/evidence state, not unsupported instant main-push/CI webhooks. Configuration success is not a claim that a future implementation run has already completed.
+- Shared coordination ref `work/main-execution-claim` initialized and used by root. Actual same-parent non-force sibling test: winner accepted, loser HTTP422 not-fast-forward, winner ref rechecked. Evidence `evidence/mvp/main-claim-cas.json`. No second writer/framework created. Unknown RUNNING termination must never be inferred from elapsed time. Terminal claim release accompanies this record; future executor must freshly inspect claim/main/Handoff before writing.
+- Independent completeness review found no other justified internal critical-path work after this repair. Additional same-clip OCR would only repeat diagnostics and was not implemented. Current actual Player reference/state/Decision/Coach remains PARKED_EXTERNAL: PLAYERdirect0/derived0/complete0/same-time independent pair0, DecisionN0/CoachN0/accuracy null. Product NOT_COMPLETE; do not invent progress percentage or count synthetic/browser checks as coaching accuracy.
+- Required next input can be source-backed independent review of existing HUD fields, or contextual Player POV/reference. Existing minimum package reused; HUD-only review needs no new clip or known patch. Actual decision needs pre-action context and applicable knowledge. Library/local game PC/credential/payment not required for current completed repair; inaccessible PC/local inputs are not automatically visible to the executor.
+- Next automatic step on an accessible relevant state change: fresh intake→shared claim→Reference-first/affected task→State/no-hindsight/Knowledge→Decision/Coach gates when actually eligible. Same unchanged state has no full re-audit/tests/notification. No unresolved code/integration/review conflict identified; no actual spending.
+
+## Earlier repair checkpoint preserved
+
+# CURRENT HANDOFF — import selection repair / remote verification pending
+
+## 2026-10-05 Main delta
+
+- status: IN_PROGRESS; owner: this Main Work root; owner branch: `fix/mvp-import-selection-2026-10-05`. Shared claim ref `work/main-execution-claim`, token `main-20261005T0203-import-selection-root`; remote claim c23ce00b verified. Scheduled same-scope writers must inspect that ref and must not create a second claim on a separate implementation branch.
+- Fresh main intake `f3f0b38e2c751c40ca7851474e30914cd3e2abc2`, default main, open PR0, no rulesets. Prior working-code CI at915f2 is Historical for this changed app and is not the current change's CI.
+- Reproduced stale synthetic JSON import: choosing A then B can apply old A and discard latest B. Minimal app change adds read generation/current-file/epoch checks before parsing and stale-error guards. Dirty draft confirmation and TEST/SYNTHETIC gate remain intact.
+- Original execution `evidence/mvp/import-race-before.json`: actual3/7, exit1, four failures. Separate after7/7, exit0. Existing save before/after bytes unchanged; verifier binds save-after→import-before→current import-after and reruns both sets.
+- Fresh local scoped verification `evidence/mvp/20261005T020328456751Z-51152ab1/verification.json`: old111(skip0), protected9, Frozen27, backup23, save7+import7+delete/import2+research1, postgame synthetic13 PASS; pinned archive4 NOT_RUN. Previous original archive evidence is reused only in its unchanged scope. Node browser-script syntax PASS; six actual-browser cases added (existing32 preserved, total38). New Actions/browser NOT_RUN at this checkpoint.
+- DEEP; no Frozen meaning/Core/old expected changes. Independent lenses found import flaw and separately rejected redundant same-clip OCR as no new reference gold. Shared-ref ambiguity in the draft operating policy was repaired before executor activation. Current policy: `docs/AUTONOMOUS_EXECUTION.md`.
+- Existing three Watchdogs are read-only and do not prove automatic implementation. Separate single Main conditional executor configuration is pending this publication/CI closeout; do not claim it is active yet. Exposed GitHub webhook covers PR events, not arbitrary main pushes/CI completion/PC files; general state resume uses an explicit condition check.
+- Actual Player/Decision/Coach remains PARKED_EXTERNAL: PLAYERdirect0/derived0/complete0/same-time independent pair0, DecisionN0/CoachN0/accuracy null. Static existing HUD review can start without patch/new clip; another AI/OCR agreement is not independent gold. Product NOT_COMPLETE. No paid use or credentials needed for this repair.
+- Automatic next step: API publication→exact remote ref/tree verification→PR CI/browser38→repair if needed→gated merge/post-merge check→release claim and finalize continuation configuration. Historical evidence/handoff below retained intact.
+
+## Previous handoff preserved
+
+# CURRENT HANDOFF — Main Work verified code / external evidence park
+
+## 2026-10-05 최종 원격 확인
+
+- 시작 main47a5→R7 evidence30c36→MVP repairb30c9→CI configfc81→검사 가정 수정915f2a17ae4c6b4cf4d28841c12c6cc4ff91c4d2. 각 단계는 fresh main/ref/tree를 확인하고 nonforce GitHub API publication했다. Root가 유일한 통합 writer였고 open PR0/main branch1이다.
+- 실제 Actions run37251321530 **SUCCESS**, regression job111579375717/browser job111579375829 SUCCESS. 원격 logs의 full fresh receipts를 추출·head/source/hash/run binding 검증했다. Canonical receipt `evidence/mvp/github-ci-37251321530.json`, closeout `evidence/mvp/CLOSEOUT.json`.
+- Fresh CI: 기존111/111(skip0), protected9/9, Frozen27, backup23/23, Node VM7+2+1, postgame synthetic13 PASS. CI의 private archive4는 NOT_RUN이며 로컬 exact-byte preserved inputs를 준17/17 PASS와 구분한다. 옛 R7 verifier identity는 앱 수정으로 FAIL인 채 보존한다.
+- 실제 Chrome154.0.8037.57 **32/32 PASS**: 실제 서버/SQLite의 PUT commitv2를 지연 전달하며 편집→버전 ACK/초안 보존→expected2/v3저장→재열람→native cancel→합성 분석1→390px overflow/pageerror 확인. 실제 게임 코칭 N으로 합산하지 않는다. 최초 CI 설정 FAIL과 브라우저 JSON key-order 검사 FAIL, 수정 근거/원본 hashes 모두 보존했다.
+- 현재 검증 입력114개 해시가 CI tested915f2와 동일하다. 마지막 기록 commit은 handoff/status/new observed evidence만 담고 `[skip ci]`로 같은 검사를 중복 실행하지 않는다. 그 기록 HEAD 자체의 fresh CI PASS를 주장하지 않으며, 정확한 tested SHA와 scope/hash 적용 근거를 유지한다. 마지막 main SHA는 publication 후 remote ref에서 읽는다.
+- 전체 Private Web MVP는 **NOT_COMPLETE**. Source26direct/2derived, 새 POV partial sequence1/clip Vision1은 보존. PLAYER DIRECT0/DERIVED0/complete0/same-match independent same-time pair0, DecisionN0/CoachN0/accuracy null. Future51제외/no hindsight guard 유지, real Engine0, source postgame→Player 승격0.
+- 실제 Player state/Coach의 독립 reference·행동 문맥 의존성은 PARKED_EXTERNAL. 기존 clip의 source-backed 독립 HUD 검수로 정적 변수부터 진행 가능하다. 모든 HUD 검수에 새 clip/확정 patch를 필수로 요구하지 않는다. 실제 행동 평가에는 결정 전 문맥이 필요하다. 기존 minimum input 문서 재사용, 계정/API key/결제 불필요. LoL process/endpoint 부재 blocker는 historical 적용 근거 유지/retry0.
+- DEEP 유지/Frozen 의미 변경0/새 D3없음. 좁은 completeness critic에서 현재 원격검증 외 더 높은 가치의 독립 실행 작업을 입증하지 못했다. 무관한 새 기능은 만들지 않는다. Progress/CI/Evidence hourly read-only Watchdog enabled. 새 관련 reference/blocker해소 event 때 dependency/owner/hash를 확인하고 Reference-first→State→No-hindsight→Knowledge/Decision/Coach로 자동 재개한다. 자료가 같은 동안 반복 audit/알림/병렬 writer없음.
+
+## 아래는 이전 작업 기록 전체 보존
+
+# Actual browser run continuation — 2026-10-05
+
+- Repaired workflow published at `fc81e06834cc67c75906054fd20c64c3c3611470`, fresh remote316blobs verified. Actions37250989049 created both jobs; regression SUCCESS, browser FAILURE. Actual Chrome154.0.8037.57 launched against isolated synthetic server. First browser receipt preserved `evidence/mvp/browser-first-failure.json` with source hashes, real backend versions and first failure.
+- Core affected path passed: savev1→actual PUT commitsv2 while response held→new textarea draft preserved→next PUT expected_revision2→savev3. Reload had version3/objective preserved and analyze enabled, but test compared ACK JSON key order to persisted sorted-key JSON. New test uses independent stored GET serialization and semantic deep equality; original draft byte checks/32 check count unchanged. Failure/repair classification is verifier serialization assumption, not a changed Golden Expected or claimed game error. Separate repair receipt to follow.
+- Production app/server/Core/Frozen/old tests unchanged sinceb30c9. Workflow now prints the fresh full scoped regression receipt to logs so test counts/input hashes are remotely reviewable. Root continues remote re-execution before any browser PASS claim.
+
+# Remote CI repair continuation — 2026-10-05
+
+- Main publication `b30c9c7a9b5aa265477b1337c220ecea721b9957` fresh-ref/commit/tree verified315/315blobs. Branch main only, open PR0.
+- First Actions run37250757334 was FAILURE before jobs (jobs0/check-runs0). Record `evidence/mvp/ci-first-failure.json` preserves actual parent API observation and the repair's documented context-rule diagnosis. Specific live error annotation unavailable; cause is a documented-rule inference, not a fabricated annotation.
+- Minimal workflow repair moves runner temp path evaluation into executing shell/Python steps. Public/free/pinned/no-upload configuration and all app/test source bytes unchanged. Fifteen targeted static checks PASS; new Actions execution still pending remote confirmation. Original111+23+protected9+Frozen27 evidence remains hash-applicable to unchanged app/test sources, not a current old-R7 identity PASS.
+- Sole root writer continues automatically to publish→fresh CI/browser run→repair if needed→handoff.
+
+# CURRENT HANDOFF — LoL Coach Main Work
+
+## 最新 Private Web MVP correctness/recovery — 2026-10-05
+
+- Actual GitHub main fresh-read parent `30c36de871de4ab7ac190d0f3f876f577994698a` (tree c057244c…). Earlier user reference47a5 was superseded by the published R7 player-grounded evidence. Materialized local tree is not a Git checkout. Main Work root is the sole integration/publication writer; parallel scopes are new backup/verifier/test files only.
+- Objective: private personal Web workflow with actual-match validated coaching. Product is **NOT_COMPLETE**. Risk DEEP; new Autonomous Execution Authority v1.0 applies. Frozen27/old expected/Core unchanged. Status/run path: `docs/MVP_STATUS.md`, repair decision: `docs/MVP_SAVE_DECISION.md`, backup: `docs/MVP_BACKUP.md`, current verification: `docs/MVP_VALIDATION.md`.
+- Proven actual JS save/edit bug repaired: server version2 ACK now survives intervening edits, exact newer draft preserved, next PUT expects2, stale selected-session ACK ignored. Dirty reopen/load/import can be cancelled. Before3/7 and after7/7 receipts preserved separately; new actual browser test awaits remote CI, not counted as executed here.
+- Additive complete backup/restore CLI snapshots **both** main/research DBs, histories and saved results under shared writer exclusion. Strict schema/content/hash, bounded copy, no-overwrite publication, source/failed-run preservation. Fresh focused23/23; agent combined existing storage/research43/43. Linux atomic publication exercised, Windows/macOS not run.
+- Fresh scoped root verification: `evidence/mvp/20261005T011303368811Z-a5a61a74/verification.json`: old111/111 skip0, protected9/9, Frozen27 PASS, backup23/23, Node VM7+2+1 PASS, postgame13 synthetic+4 exact-byte preserved archive tests PASS. Historical153 evidence files unchanged; input hashes unchanged. Pinned raw bytes are private and not committed.
+- Historical `scripts/verify_r7.py` and exact old baseline stay unchanged. Its identity gate on current app bytes is FAIL due to this authorized repair (other protected byte differences0). New scoped verifier binds immutable before/after repair receipts and protects the other bytes. Do not claim a fresh old-verifier PASS.
+- New CI has two public-only standard ubuntu-latest jobs: current regression and actual browser against isolated TEST server/SQLite. Verified documented free scope, pinned official actions/Playwright, preinstalled Chrome, no browser downloads/artifact uploads/secrets/paid services. At this publication point Actions/browser **NOT_RUN**; commit/run/result are to be independently fresh-read. Work local Chromium download failed bounded attempts; no network control changes. Failure/repair history: `evidence/mvp/execution-checkpoint.json` plus backup/save receipts.
+- Source-level26direct/2derived unchanged. New original uploader POV sequence1/clip Vision1 remains PARTIAL. PLAYER VERIFIED_DIRECT0/DERIVED0, complete Player reference0, same-match independent same-time Player/Truthpair0, DecisionN0/CoachN0/accuracy null. AI agreement is not gold. Prior no-hindsight future51 exclusion/state guards remain valid; no REAL→SYNTHETIC conversion or real Engine activation.
+- Actual Player quality/Decision/Coach is PARKED_EXTERNAL: needs independent reference validation and usable decision context. Existing `docs/r7-continuation/MINIMUM_INPUT_PACKAGE.md` reused. Local game process/2999 blocker unchanged with retry0. Preserve existing old C3 proposal as historical; new authority does not supply missing real evidence.
+- Progress/CI/Evidence hourly read-only Watchdogs created/enabled, deduplicating same state and avoiding another writer. Main Work next automatic step: publish→remote SHA/blob verification→fresh Actions/job/browser receipt verification→repair if required→append handoff. All justified independent correctness/recovery work continues while actual player state gate is parked. No payment/user credential required.
+
+## Prior30c36 handoff preserved below
+
+# CURRENT HANDOFF — LoL Coach
+
+## 최신 R7 Player-grounded 추가 근거 — 2026-10-05 KST
+
+- 실제 시작 main HEAD `47a5ebc60dcdb7182cc1aef791c3c8814566ad61`를 GitHub fresh-read했다. 시작240/240blob 일치. 이번 Work 로컬은 materialized tree이며 Git checkout이 아니다. 종료HEAD는 이 section을 포함한 commit을 remote ref에서 확인한다.
+- 현재 보고: `docs/r7-player-grounded/PLAYER_GROUNDED_REPORT.md`; public audit/schema impact도 같은 경로. 새 evidence/fixtures는 `r7-player-grounded/`. 기존 R7/real/continuation/Frozen27/expected는 보존했다.
+- 새 원 업로더 Player-style native POV sequence1: Vimeo651298214,15.033333s/1080p/30fps,clock16:43→16:57,Tristana HUD. hash `94ee285b5270ea0157170645d4a8d845b9e14205fbc55b0a11d393d7210f4372`. patch/matchId 미인증, 외부 overlay 제외. HF2024pair와 join0. 전체 인터넷 Player POV 획득 불가라고 주장하지 않는다.
+- Operator Reference를 먼저 lock한 후 blind AI Vision1run/7frames. 고정4frames64/64 진단 일치(null6포함). Human0/AI일치≠gold accuracy. 원 Reference hash 보존. 새 exploratory sequenceReference1, completePlayerDecisionReference0.
+- PLAYER DIRECT0/DERIVED0, same-match 독립 같은시각 Player/Truthpair0, DecisionN0/CoachingN0/accuracy null. Primary acceptance 미충족. Source-level26direct/2derived 유지·재계수 없음. 29variable pending12/Vision12/inference3/manual2 유지, 부분 관찰 범위만 추가.
+- `scripts/audit_player_pov_r7.py` canonical 최신run: `evidence/r7-player-grounded/audit-20261005T093928987561KST.json`. future51제외, F1kills1/level9유지, 다른HFsessionjoin거절. MANUAL은 CONDITIONAL/UNKNOWN, derivedHPfractionCONDITIONAL, KNOWN0. REALschema는 evidence_kind에서 거절, SYNTHETIC재라벨/Engine실행0.
+- additive archive diagnostic `coach_audit/postgame.py`는 기존 exactHFpair만 지원한다. 13raw+2derived진단, cutoff/strictjoins/BSON/bytehash 검사, POST_GAME_ONLY/visibilityUNKNOWN. Player/TruthNone, emptydecisioncandidate, realcoachdisabled. 기존LiveClient의 pair0/17은 UNSUPPORTED_SOURCE_SCHEMA이며 데이터없음이 아니다.
+- fresh baseline111/111+protected9/9, 새 targeted17/17(skip0). Frozen27 integrity 최종 확인. R6 browser/mobile는 Historical. UI기능 추가0/기존guard완화0. mutable CURRENT_HANDOFF 외 기존240blob 보존.
+- Local 환경 blocker 재시도0; 다른 Evidence 경로는 진행했다. 원 capture의 결정 전5–10s/독립truth/patch·matchidentity는 이번 공개publisher 연결 감사에서 미발견. Bounded gap으로 기록했다. 남은 공개후보도 각각1회 요청했고 botchallenge 우회0.
+- 최소 자료 문서는 기존 `docs/r7-continuation/MINIMUM_INPUT_PACKAGE.md` 재사용. 한장면 Player POV15–30s(결정 전5–10s,clock/minimap/HP/level/skills)+sidecar, 또는 source-backed 독립 operatorreview부터 가능. Screenshot은 정적 검증만. credential/payment 불필요.
+- DEEP 유지/이번 새D3없음. 기존C3 proposal 미승인·미구현을 보존하며 D1/D2추가근거 작업을 막는 이유로 사용하지 않았다. realEngine계약변경은 하지 않았다. 자료 확보 후 Reference-first→State quality→No-hindsight→Knowledge→Decision/Coach gate 순서. 자동대기/백그라운드수집 없음.
+
+## 아래는47a5ebc handoff 원문(완전 보존)
+
+# CURRENT HANDOFF — LoL Coach
+
+## 최신 R7 추가 근거 — 2026-10-04 UTC
+
+- 실제 시작 main HEAD는 `16adaf60753663c95d236e586c34b466fc929f43`였다. 보고된6951f5c보다 앞선 기존 R7-real을 먼저 읽고 이어서 진행했다. 작업은 실제 Git checkout이며, 변경 전201 tracked blobs 일치.
+- 현재 보고: `docs/r7-continuation/CONTINUATION_REPORT.md`; 최소 입력: `docs/r7-continuation/MINIMUM_INPUT_PACKAGE.md`; 실행 근거: `evidence/r7-continuation/`.
+- 신규 같은 경기 Match/Timeline pair1: `EUW1_7095952008`, version14.17.613.973, timeline31frames. pinned HF revision·exact HTTP206 ranges·hash·참가자10명 연결 확인. publisher BSON-JSON export이며 Riot 수집은 publisher assertion이다.
+- 선동결26개 source field26/26, source-only HP비율/CS 파생 기준2개. ESTABLISHED_SOURCE_FIELD_REFERENCE1은 POST_GAME_DATASET 범위이며 PLAYER reference가 아니다. 기존 LiveClient extractor는 각각0/17 PRESENT, schema 미지원. `scripts/verify_r7_source_reference.py`는 offline 재검사만 하고 importer/coach를 추가하지 않는다.
+- 기존 화면5hash fresh 복구와 감사 재실행. 새 GameStar 교전 후보1개를 선동결 후 blind Vision14/14 선택 전사 일치. Garen HUD12:26이나 own champion 주 화면 없음; camera center를 own position으로 바꾸지 않았다. Teamfight/소규모 교전 분류 contested, Bot 표기 관찰. AI 일치를 정확도/gold로 쓰지 않음.
+- 29개 PLAYER 변수 DIRECT0/DERIVED0, 완전한 player Replay reference0, 같은 경기 player/truth pair0, Coaching N0/accuracy null. 기존10slots와3partial 유지, C partial 후보1 추가. Source-level26direct/2derived 및7행 subfield 경로는 별도로 집계.
+- Frozen27·기존111expected·보호9·R6/R7/R7-real evidence 보존. fresh111/111 + 보호9/9 PASS. 새 source bytes 변조/기존evidence 덮어쓰기 거절2/2; 새 manual snapshot KNOWN0, derivedCONDITIONAL,4required UNKNOWN. R6 browser/mobile는 Historical.
+- Local EXTERNAL_ENVIRONMENT_BLOCKER fresh 재확인: game/client process0,2999listener0,TCP거절,TLS이전실패. retry0. 전체 공개 Source 획득 불가로 확대하지 않음.
+- A미충족/B전체미입증을 그대로 보고했다. 실제 State/Decision acceptance는 미완료. 동일 경기 player POV와 행동 문맥을 확보하면 Reference-first 비교부터 이어간다. source 경로/공개 링크를 optional로 요청했으며 자동 대기·백그라운드 수집은 없음.
+- 이번 D1/D2 범위에서 Frozen 의미 변경 필요 없음/D3불필요. 기존 C3 proposal은 미승인·미구현으로 보존하지만, 그것을 추가 evidence 검증의 일괄 중단 사유로 사용하지 않는다. 합성 guard를 완화하거나 REAL을 SYNTHETIC으로 바꾸지 않았다. 실제 평가 연결 전에 기존 계약 보존 여부를 영향분석한다.
+
+## 아래는16adaf6에 기록된 이전 인수인계
+
+2026-10-04 KST. Design v1.0 동결 유지. **R7 real-evidence 후속: 실제 공개 화면 진단 완료, Decision/Coach 엔진 연결은 D3/Core Contract 경계에서 중단. R8 아님.**
+
+- 시작 실제 GitHub main HEAD `6951f5cafbc360c4637107fe3a3fb4dc0eed0d25`: remote165/local165 blob 일치. 로컬은 materialized tree, Git checkout 아님.
+- 상세 결과 `docs/r7-real/REAL_EVIDENCE_REPORT.md`. C3 제안 `docs/r7-real/C3_REAL_AUDIT_PROPOSAL.md`는 **미승인/미구현**. 최소 자료 조건 `docs/r7-real/MINIMUM_INPUT_PACKAGE.md`.
+- R7 baseline fresh111/111·보호9/9·Frozen27 PASS. `evidence/r7-real/r7-fresh/` 및 binding receipt. R6 browser/mobile는 hash 동일한 Historical evidence 재사용이며 이번 fresh browser PASS 아님.
+- 실제 원본5화면 확보: player-style4 + observer1. 기존10 슬롯 유지, lane trade/CS access/jungle uncertainty3 슬롯은 PARTIAL reference. fully verified real replay0, authenticated match0, human annotator0.
+- 먼저 고정한 AI operator reference vs blind AI Vision: player53/53 선택 필드 일치. 최초 전체56/58; observer HP/maxHP 오독2필드는 원본 재확인 후 별도 revision. 원본 lock/불일치 history 보존. 이는 human-gold/state accuracy 아님.
+- Selective Vision RUN: HUD·정지 geometry 관찰, sequence/흡수/damage window/intent 미확인. Observer NOT_PLAYER_KNOWN 제외 및 실제 cross-session 거절 PASS; 같은 경기 player/ground-truth pair0.
+- public Match/Timeline 파일 취득·23경로 전사 확인; 서로 다른 matchId join 거절. 기존 LiveClient extractor는 두 파일 모두0/17 present(미지원 schema). 실제 원천 인증·patch/player visibility 연결 미완료.
+- source overlay29: pending12/Vision-required12/inference3/manual2, VERIFIED_DIRECT0/DERIVED0. Timeline x/y로 사후 position의 비영상 경로 후보 확인; player-known 승격 없음. 원본 R7 matrix/evidence/fixture 그대로.
+- Local EXTERNAL_ENVIRONMENT_BLOCKER: Linux Work에서 LoL/Riot process0/listener0, 한 TCP refused. CA 검증 완료·TLS handshake 전 실패. YouTube frame 획득 실패 후 공개 원본 PDF/blog 이미지로 대체 성공.
+- 재현 `python3 scripts/audit_real_r7.py --media-dir <original-assets-directory>`. 공개 URL/hash와 PDF page/image 순번은 `evidence/r7-real/visual-source-manifest.json`; 최종 run은 `AUDIT_INDEX.json`. media와 전체 publisher raw JSON을 Git에 재게시하지 않음.
+- 기존 엔진은 `ReviewInput.evidence_kind=SYNTHETIC` 및 `run_review` TEST guard. 실제 REAL 요청5개 schema 거절; 합성으로 바꾸지 않음. 실제 Coach N0/Accuracy null. Frozen27/core/old111 expected 변경0.
+- Stop A/B 미충족: 3완전한 실제 Decision Reference가 아니며 공개 화면 확보 불가는 아님. D1/D2 evidence work는 완료했고 실제 엔진 평가 계약 변경만 D3 요청한다. 승인 후 별도 offline REAL_AUDIT 계약/adapter/회귀를 구현하되 자료·Knowledge 미검증 사례는 계속 차단한다.
+- 결제/credential/외부 메시지/백그라운드 수집/사용자 PC 연결 없음. C3 승인 전 실제 평가 경로를 구현하거나 기존 mode guard를 완화하지 않는다.

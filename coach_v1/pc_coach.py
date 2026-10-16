@@ -84,6 +84,8 @@ def preview(server,body):
         cards.extend(cards_for_draft(server,draft))
         from .recall_candidates import cards_for_draft as candidate_cards
         cards.extend(candidate_cards(server,draft))
+        from .resource_view import cards_for_draft as resource_cards
+        cards.extend(resource_cards(draft))
     if not cards:cards.append(_card('unknown','경기 전 준비','UNKNOWN',['내 챔피언부터 입력하세요.'],'근거가 없는 항목은 미확인으로 남습니다.',[],section='PROFILE'))
     rank={'USER':0,'AUTO_VERIFIED':1,'HYPOTHESIS':2,'STATISTICS':3,'OFFICIAL':4,'UNKNOWN':5}
     cards.sort(key=lambda c:(rank[c['evidence_level']],c.get('champion')!=champion))

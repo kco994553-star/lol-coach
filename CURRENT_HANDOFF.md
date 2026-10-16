@@ -1,3 +1,52 @@
+된 것: 문장 개선은 7개에서 종료하고 기존 원문·검토·보류·실패 이력을 보존합니다.
+진행 중: 기존 Gemini 예약을 하루 텍스트 1회·조건부 영상 1회로 통합했습니다.
+진행 중: 사용자 POV 설정과 독립 채널 확인을 분리했고 골드·경험치 원본 복구를 준비했습니다.
+미확인: 실제 예약 실행·영상 성공·같은 경기 연결·장면 평가는 아직 확인하지 않았습니다.
+내가 할 것: 추가 승인이나 자료 수집은 필요 없습니다. 실제 Windows 픽창만 외부 대기입니다.
+
+# Actual evidence direction — implementation ready, actual execution pending
+
+Authority USER_ACTUAL_EVIDENCE_2026-10-16, intake main103b8b80. Main owns shared
+claim main-20261016-evidence-acquisition, branchwork/evidence-acquisition-20261016.
+No openPR/activewriter/providerjob at intake. All ChatGPT LoL automations were
+observed disabled; no new one created. Existing sole GitHub workflow381076541 /
+expert-video-collection.yml active, legacycron04:47UTC but job schedule gatedoff;
+latest scheduled38854574094 skipped with no provider calls. Modified sameworkflow
+to09:00UTC/18:00Asia/Seoul, normal+manual share durable budget and concurrency.
+Schedule activation is not claimed before merge or first execution. API does not
+expose authoritative next run; nominal next slot is computed separately.
+
+Daily existing free model3.6/generateContent, fresh public entitlement+existing
+lol-coach free/exclusive/project gates. OneTEXT/day max, oneVIDEO onlyafterTEXT200,
+no fallback/retry. Historical quota10rows10862s must remain exactprefix; fullasset
+charge evenfor<=600sclip, failedIDneverretry. Public200text/video/nonemptyextraction/
+review separately tracked; persistent config/auth/permission/payment errors stop
+future unchanged revision. All supported legacylive CLIentrypoints fenced; original
+libraryschemas/contracts/receipts preserved. Three review-found P2s fixed REDGREEN
+before livecall: actualartifact binding/stableclaim, emptyextraction false, persistent
+metadatafailure stop. Independent reportdaily-safety-review.md retained.
+
+Exact user POV configpending unchanged; independentmetadata checks and public-index
+candidate discovery separate. Existing expertchannels remain Q19 only; POV cannot
+enter Q19. No media/audio/subtitles stored. Clock/view/continuity/linkageUNKNOWN;
+APIoffsetsrequested do not prove hard provider isolation. Blind evaluation disabled,
+scenes0 until confirmedmatch+playerknownpredecision inputs and separated evaluation.
+
+PRO89/108 originalfield recovery is additive, does not alter prior pilot reports or
+bindings. Prior exact600000/900000 gate caused unavailable pair results; XP omitted
+fromoldinspection. New trusted offlineworkflow restores ONLY38410710876/11822391323,
+denies providernetwork, exports actualtimestamp/field/missing diagnostics and separate
+latestOBSERVED_MINUTE_BIN gold/XP/level. No interpolation/zero/adjacentbin borrowing;
+Q15275 and recallCH291 remain separate. Futureprocollection audits preserved fields
+before encryption without discarding encrypted partials. PCshows sourcebound strict
+matchup/patchevidence with actualtime/n/missing; no position-pool substitution.
+
+Required changed-scopeCI/review/normalmerge precede actualfree daily/offline runs.
+Completedpilot/v2.3 evidence reused, no newRiotcollection needed if rawfields recover.
+Start-LoL-Coach.cmd/WindowsLCU/manualfallback unchanged; actualWindowsBLOCKED_EXTERNAL.
+
+---
+
 된 것: 조언 7개에 선택 조건·중단 조건·불확실할 때 대안을 붙였습니다.
 된 것: 기존 프로 참고 89경기 원본을 오프라인으로 확인했고 새 경기 수집은 없었습니다.
 보류: 새 7개는 미검토 가설이며 기존 20개 보류도 그대로입니다.

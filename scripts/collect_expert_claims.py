@@ -96,6 +96,9 @@ def main(argv=None,*,entitlement_verifier=None):
     parser.add_argument('--reservation-artifact-id')
     parser.add_argument('--collection-mode',choices=COLLECTION_MODES,default='DIAGNOSTIC_FIRST_CLIP')
     args=parser.parse_args(argv);directory=Path(args.output_dir);collector=None;plan=None;model=MODEL
+    if args.phase!='recover':
+        atomic_json(directory/'receipt.json',dict(status='BLOCKED_EXTERNAL',reason='DAILY_GUARD_REQUIRED'))
+        print('EXPERT_DAILY_GUARD_REQUIRED');return 1
     def emit_diagnostic(event):
         print('EXPERT_PROVIDER_DIAGNOSTIC_JSON='+json.dumps(event,sort_keys=True),flush=True)
     def retain_diagnostics(failure=False,probe=None):

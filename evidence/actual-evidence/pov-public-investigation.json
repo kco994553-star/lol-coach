@@ -1,0 +1,314 @@
+{
+  "schema_version": "pov.public_channel_investigation.v1",
+  "checked_at_utc": "2026-10-16T11:23:42Z",
+  "timestamp_note": "Source checks occurred during the same investigation session; this timestamp is the clock receipt during that session, not each page's publication date.",
+  "repository_context": {
+    "path": "/workspace/lol-coach",
+    "parent_provided_main": "103b8b80",
+    "instructions_read": "/workspace/lol-coach/AGENTS.md",
+    "scope": "Read-only public channel/video metadata; this file is new scratch evidence only.",
+    "q19_user_channel_config_status": "UNCHANGED_BY_THIS_INVESTIGATION; independent check receipt only. This scratch evidence is not configuration approval or a checked_at update."
+  },
+  "limits": {
+    "provider_inference_calls": 0,
+    "gemini_calls": 0,
+    "api_keys_used": 0,
+    "media_audio_transcript_downloads": 0,
+    "html_retained": false,
+    "repo_source_config_edits": 0,
+    "commits": 0,
+    "tests_run": 0,
+    "private_raw_recovered": false
+  },
+  "user_provided_channels": [
+    {
+      "channel_name": "Proview Lol",
+      "handle": "@ProviewLol4U",
+      "channel_id": "UC60AsIDujUw3zd4k4Hz_4vA",
+      "content_claim": "Edited clips and playlist, user-provided claim",
+      "observed_name_at_provided_channel_id": "Proview Lol - YouTube",
+      "observed_handle_binding": "UNKNOWN",
+      "observed_content_type": "UNKNOWN",
+      "official_status": "UNKNOWN",
+      "expert_source": false,
+      "notes": "Channel-ID page title corroborates name. Public handle/about/playlists pages were throttled. No upload or playlist contents independently obtained.",
+      "independent_claim_status": {
+        "provided_channel_id_page_name": "NAME_TITLE_CORROBORATED_ONLY",
+        "handle_to_id_binding": "UNCONFIRMED",
+        "edited_clip_claim": "UNCONFIRMED",
+        "playlist_claim": "UNCONFIRMED",
+        "official_affiliation": "UNCONFIRMED"
+      }
+    },
+    {
+      "channel_name": "LPL LCK Pros",
+      "handle": "@LPLlive",
+      "channel_id": "UCck3GtfaB356euYQPXvMPhw",
+      "content_claim": "Streaming POV, user-provided claim",
+      "observed_name_at_provided_channel_id": "LPL LCK Pros - YouTube",
+      "observed_handle_binding": "UNCONFIRMED_BY_PRIMARY_SOURCE: both primary handle and channel-ID pages have matching name-title metadata, but no primary canonical link was exposed. Secondary index links @lpllive to the provided channel ID for discovery only.",
+      "observed_content_type": "Titles advertise proview; actual footage unobserved",
+      "official_status": "UNKNOWN",
+      "expert_source": false,
+      "notes": "Name containing league acronyms and proview titles do not establish league/team/player affiliation, official status, ownership, or player-known view.",
+      "independent_claim_status": {
+        "provided_channel_id_page_name": "NAME_TITLE_CORROBORATED_ONLY",
+        "primary_handle_page_name": "NAME_TITLE_CORROBORATED_ONLY",
+        "handle_to_id_binding": "UNCONFIRMED_BY_PRIMARY_SOURCE",
+        "streaming_pov_claim": "UNCONFIRMED_FOOTAGE_UNOBSERVED",
+        "official_affiliation": "UNCONFIRMED"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "proview_channel_id",
+      "url": "https://www.youtube.com/channel/UC60AsIDujUw3zd4k4Hz_4vA",
+      "method": "public search-service open",
+      "result": "Page title only; rendered content is generic YouTube footer",
+      "cache_crawl_label": "1.5 years ago",
+      "excerpt": "Proview Lol - YouTube",
+      "source_hash_scope": "SHA256 of retained UTF-8 excerpt only; raw HTML unavailable",
+      "excerpt_sha256": "81742762925f7e6c45a9d95ef6308991b3d42f98f5fab34313ef782495582c51"
+    },
+    {
+      "id": "lpl_handle",
+      "url": "https://www.youtube.com/@LPLlive",
+      "method": "public search-service open",
+      "result": "Page title only; rendered content is generic YouTube footer",
+      "cache_crawl_label": "1.5 years ago",
+      "excerpt": "LPL LCK Pros - YouTube",
+      "source_hash_scope": "SHA256 of retained UTF-8 excerpt only; raw HTML unavailable",
+      "excerpt_sha256": "d7e7cc86ee3efbee18dd11d2b738701c6315e76c5f286b1dddd1497b8ba7f622"
+    },
+    {
+      "id": "lpl_channel_id",
+      "url": "https://www.youtube.com/channel/UCck3GtfaB356euYQPXvMPhw",
+      "method": "public search-service open and secondary-link click",
+      "result": "Page title corroborates provided channel ID; footer-only content",
+      "cache_crawl_label": "1.5 years ago",
+      "excerpt": "LPL LCK Pros - YouTube",
+      "source_hash_scope": "SHA256 of retained UTF-8 excerpt only; raw HTML unavailable",
+      "excerpt_sha256": "d7e7cc86ee3efbee18dd11d2b738701c6315e76c5f286b1dddd1497b8ba7f622"
+    },
+    {
+      "id": "lpl_public_index",
+      "url": "https://open.subsub.io/channels/lpllive/view/content?page=1&perPage=15&sortBy=date",
+      "method": "public search-service open; separately anonymous HTTPS GET",
+      "result": "Search-service metadata includes channel name/handle and linked watch candidates; direct GET HTTP200 provided bounded metadata.",
+      "cache_crawl_label": "yesterday for open; today for search result",
+      "excerpt": "LPL LCK Pros @lpllive",
+      "response_body_sha256": "fe516513d25ed693493ca7df342573d9497bd3be630adfda45355a109c36ca89",
+      "response_body_bytes": 234770,
+      "body_retained": false,
+      "source_hash_scope": "Raw response SHA256 computed transiently for direct GET; retained excerpt has separate SHA256.",
+      "freshness_warning": "Third-party data may lag. Its publication columns were blank; title dates are not upload/game date.",
+      "excerpt_sha256": "e26303147066b5f47a929364097ced57a5e0895b9b516ceff6808cbd7bbf2280"
+    },
+    {
+      "id": "showmaker_primary_metadata",
+      "url": "https://www.youtube.com/watch?v=mNXmMYASSQU",
+      "method": "public search-service search result",
+      "result": "Indexed YouTube title, channel label and publication date; opening watch page was throttled.",
+      "cache_crawl_label": "Published 2 months ago",
+      "excerpt": "By: LPL LCK Pros (66100 followers)\nPublished: 2026-08-03, 2795 views, 21 likes",
+      "source_hash_scope": "SHA256 of retained UTF-8 excerpt only; raw HTML unavailable",
+      "excerpt_sha256": "8c0dccf1cf622614d2fd6f4a4e8b4a8275d630d5c829d85aae5caa5819f9d582"
+    }
+  ],
+  "candidates": [
+    {
+      "candidate_id": "lpl-pyosik-20261012-title",
+      "url": "https://www.youtube.com/watch?v=ul8pE8JyucI",
+      "title": "Pyosik proview 2026/10/12 leesin Korea challenger | Pyosik 第一视角",
+      "duration_text": "43:38",
+      "duration_seconds": 2618,
+      "upload_date": "UNKNOWN",
+      "title_date_text": "2026/10/12",
+      "game_date": "UNKNOWN",
+      "metadata_source_id": "lpl_public_index",
+      "metadata_confidence": "SECONDARY_INDEX_ONLY",
+      "search_keys": {
+        "player_label": "Pyosik",
+        "champion_title_tokens": [
+          "leesin"
+        ],
+        "opponent": "UNKNOWN"
+      },
+      "view_type": "UNKNOWN",
+      "continuity": "UNKNOWN",
+      "game_id": "UNKNOWN",
+      "patch": "UNKNOWN",
+      "same_game_anchor": "NONE_OBSERVED",
+      "watch_page_observation": "Online fetch throttled",
+      "footage_observed": false
+    },
+    {
+      "candidate_id": "lpl-showmaker-20261011-title",
+      "url": "https://www.youtube.com/watch?v=hvaHDF1rpyg",
+      "title": "Showmaker proview 2026/10/11 cassiopeia milio Korea challenger | Showmaker第一视角",
+      "duration_text": "52:56",
+      "duration_seconds": 3176,
+      "upload_date": "UNKNOWN",
+      "title_date_text": "2026/10/11",
+      "game_date": "UNKNOWN",
+      "metadata_source_id": "lpl_public_index",
+      "metadata_confidence": "SECONDARY_INDEX_ONLY",
+      "search_keys": {
+        "player_label": "Showmaker",
+        "champion_title_tokens": [
+          "cassiopeia",
+          "milio"
+        ],
+        "opponent": "UNKNOWN"
+      },
+      "view_type": "UNKNOWN",
+      "continuity": "UNKNOWN",
+      "game_id": "UNKNOWN",
+      "patch": "UNKNOWN",
+      "same_game_anchor": "NONE_OBSERVED",
+      "watch_page_observation": "Online fetch throttled",
+      "footage_observed": false
+    },
+    {
+      "candidate_id": "lpl-ruler-20261002-title",
+      "url": "https://www.youtube.com/watch?v=ng7bEhcTmQU",
+      "title": "Ruler proview 2026/10/02 caitlyn kaisa Korea challenger | Ruler 第一视角",
+      "duration_text": "51:36",
+      "duration_seconds": 3096,
+      "upload_date": "UNKNOWN",
+      "title_date_text": "2026/10/02",
+      "game_date": "UNKNOWN",
+      "metadata_source_id": "lpl_public_index",
+      "metadata_confidence": "SECONDARY_INDEX_ONLY",
+      "search_keys": {
+        "player_label": "Ruler",
+        "champion_title_tokens": [
+          "caitlyn",
+          "kaisa"
+        ],
+        "opponent": "UNKNOWN"
+      },
+      "view_type": "UNKNOWN",
+      "continuity": "UNKNOWN",
+      "game_id": "UNKNOWN",
+      "patch": "UNKNOWN",
+      "same_game_anchor": "NONE_OBSERVED",
+      "watch_page_observation": "Online fetch throttled",
+      "footage_observed": false,
+      "notes": "Listed and linked by search-service index snapshot; the later direct GET's current 15-row sample did not include this older row. Source lag/sample-window differences do not establish deletion."
+    },
+    {
+      "candidate_id": "lpl-showmaker-20260804-title",
+      "url": "https://www.youtube.com/watch?v=mNXmMYASSQU",
+      "title": "Showmaker proview 2026/08/04 galio cassiopeia Korea challenger | Showmaker第一视角",
+      "duration_text": "UNKNOWN",
+      "duration_seconds": null,
+      "upload_date": "2026-08-03",
+      "upload_date_basis": "Public YouTube search-result Published metadata; not game date",
+      "title_date_text": "2026/08/04",
+      "game_date": "UNKNOWN",
+      "metadata_source_id": "showmaker_primary_metadata",
+      "metadata_confidence": "INDEXED_PRIMARY_METADATA_ONLY",
+      "search_keys": {
+        "player_label": "Showmaker",
+        "champion_title_tokens": [
+          "galio",
+          "cassiopeia"
+        ],
+        "opponent": "UNKNOWN"
+      },
+      "view_type": "UNKNOWN",
+      "continuity": "UNKNOWN",
+      "game_id": "UNKNOWN",
+      "patch": "UNKNOWN",
+      "same_game_anchor": "NONE_OBSERVED",
+      "watch_page_observation": "Online fetch throttled",
+      "footage_observed": false,
+      "notes": "Observed upload-date metadata and title date differ by one day; neither proves actual match date, timezone, or same-game identity."
+    }
+  ],
+  "candidate_policy": {
+    "status": "DISCOVERY_ONLY_NOT_MATCHED_POV",
+    "multiple_champion_titles": "Treat every champion token as a search key. Do not infer champion belongs to player/opponent or that upload contains exactly one match.",
+    "durations": "Upload asset duration from secondary metadata; not game duration or a continuity observation.",
+    "expert_route": "Keep separate from config/expert_channels.json (expert.channels.v1). No Q19 expert channel changes or expert approval claims."
+  },
+  "matching_findings": {
+    "reliable_same_game_anchors_available_in_observed_metadata": false,
+    "matched_pairs": 0,
+    "evaluated_scenes": 0,
+    "agreement": null,
+    "reason": "No game identifier, uniquely reconciled roster/scoreboard, actual game clock/visual sequence, opponent identity, or verified capture/upload chronology observed. Public metadata alone cannot link these uploads to PRO89/108.",
+    "name_champion_upload_date_join_permitted": false,
+    "required_next_evidence": "A source-backed game-ID receipt or independently corroborated roster/result/clock anchors followed by actual view/continuity observation and same-time reference. Public video names alone are search keys.",
+    "existing_private_boundary": "PRO89 distinct matches /108 recorded selected participants remain anonymous public-safe aggregates. Never reconstruct individual scenes from them. Existing encrypted raw may be inspected only by separately authorized trusted Actions; no raw files or identities were accessed here."
+  },
+  "existing_local_sources": [
+    {
+      "path": "docs/queue/QUEUE.md",
+      "scope": "Current pilot preserves PRO89/108, Q15 and CH populations separately; matched known-view scenes0."
+    },
+    {
+      "path": "evidence/quality-pilot/offline-audit-review.md",
+      "scope": "Public-safe output contains anonymous allowlisted aggregates, no raw match/account identifiers; no matched video or gameplay-effect estimate."
+    },
+    {
+      "path": "config/expert_channels.json",
+      "scope": "Read-only confirmation of distinct Q19 expert schema."
+    }
+  ],
+  "failures": [
+    {
+      "method": "anonymous direct HTTPS GET",
+      "urls": [
+        "https://www.youtube.com/@ProviewLol4U/videos",
+        "https://www.youtube.com/@LPLlive/videos",
+        "https://www.youtube.com/feeds/videos.xml?channel_id=UC60AsIDujUw3zd4k4Hz_4vA",
+        "https://www.youtube.com/feeds/videos.xml?channel_id=UCck3GtfaB356euYQPXvMPhw",
+        "https://www.youtube.com/@ProviewLol4U",
+        "https://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3Dul8pE8JyucI&format=json"
+      ],
+      "excerpt": "Tunnel connection failed: 403 Forbidden",
+      "classification": "Environment network tunnel refusal; origin HTTP status not observed. Do not report this as YouTube channel forbidden/private/deleted.",
+      "source_hash_scope": "SHA256 of retained UTF-8 error excerpt only",
+      "excerpt_sha256": "53a6867cbe9985f6d340208adf979e5e7422e01e24fcb158640f89a03d55b6c1"
+    },
+    {
+      "method": "public search-service open",
+      "urls": [
+        "https://www.youtube.com/@ProviewLol4U",
+        "https://www.youtube.com/@ProviewLol4U/videos",
+        "https://www.youtube.com/@ProviewLol4U/about",
+        "https://www.youtube.com/@ProviewLol4U/playlists",
+        "https://www.youtube.com/@ProviewLol4U?hl=en",
+        "https://www.youtube.com/channel/UC60AsIDujUw3zd4k4Hz_4vA/playlists",
+        "https://www.youtube.com/@LPLlive/playlists",
+        "https://www.youtube.com/channel/UCck3GtfaB356euYQPXvMPhw/playlists",
+        "https://www.youtube.com/feeds/videos.xml?channel_id=UC60AsIDujUw3zd4k4Hz_4vA",
+        "https://www.youtube.com/feeds/videos.xml?channel_id=UCck3GtfaB356euYQPXvMPhw",
+        "https://www.youtube.com/watch?v=mNXmMYASSQU",
+        "https://www.youtube.com/watch?v=-gqdozNw8i0",
+        "https://www.youtube.com/watch?v=ul8pE8JyucI",
+        "https://www.youtube.com/watch?v=ng7bEhcTmQU",
+        "https://www.youtube.com/watch?v=hvaHDF1rpyg"
+      ],
+      "excerpt": "Online fetch throttled",
+      "classification": "Tool access limitation. Not evidence of channel/video removal or content type.",
+      "source_hash_scope": "SHA256 of retained UTF-8 error excerpt only",
+      "excerpt_sha256": "20433a4427d95b2fb92472068145d3cd0c7f82ee1cd97e814042d684e84e3945"
+    },
+    {
+      "method": "public search-service open",
+      "urls": [
+        "https://open.subsub.io/channels/proviewlol4u/view/content?page=1&perPage=15&sortBy=date"
+      ],
+      "excerpt": "URL is not accessible via this tool.",
+      "classification": "Could not independently obtain ProviewLol4U secondary index.",
+      "source_hash_scope": "SHA256 of retained UTF-8 error excerpt only",
+      "excerpt_sha256": "55d6ee709044e577d9236a44bfcb9a68d2349b2b39df85b8858d75f8e0845793"
+    }
+  ],
+  "conclusion": "Both provided channel IDs and the LPL handle have name-title corroboration only. A secondary index helps discover LPL candidates and links to the provided LPL channel ID, but primary handle-ID canonical binding is unconfirmed. Proview handle/content/playlist unconfirmed. No official affiliation, actual POV, continuous sequence, game date/patch, opponent, or PRO89/108 match linkage established. Free public metadata acquisition is partly possible; this bounded route does not prove all public routes exhausted.",
+  "receipt_created_at_utc": "2026-10-16T11:26:03.867296+00:00"
+}

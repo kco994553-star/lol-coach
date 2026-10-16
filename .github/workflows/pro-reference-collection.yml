@@ -86,6 +86,25 @@ jobs:
         run: |
           umask 077
           python scripts/collect_pro_reference.py --config config/pro_reference_players.json --private-directory "$RUNNER_TEMP/private/pro-reference" --public-output-directory "$RUNNER_TEMP/pro-public" --matches-per-account 5 --max-requests 500 --max-matches 180 --deadline-seconds 900
+      - name: Audit preserved resource fields before encrypted checkpoint
+        if: always() && steps.restore.outcome == 'success' && steps.collect.outcome != 'skipped'
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,socket
+          from pathlib import Path
+          from coach_v1.resource_recovery import audit_private_cache,validate_report
+          def deny(*args,**kwargs):raise RuntimeError('PRESERVATION_AUDIT_NETWORK_FORBIDDEN')
+          socket.socket.connect=deny;socket.create_connection=deny
+          root=Path(os.environ['RUNNER_TEMP'])
+          report=validate_report(audit_private_cache(root/'private/pro-reference'))
+          safe=dict(schema_version='resource-preservation.audit.v1',source=report['source'],
+              source_sha256={p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in
+                  ['coach_v1/resource_recovery.py','coach_v1/postgame_match.py','coach_v1/pro_reference.py','.github/workflows/pro-reference-collection.yml']},
+              inspection=report['inspection'],measurement_policy=report['measurement_policy'],
+              missing_values_preserved=True,provider_requests=0,coaching_accuracy=None)
+          (root/'pro-public/resource-preservation.json').write_text(json.dumps(safe,sort_keys=True,indent=2)+'\n')
+          print('RESOURCE_PRESERVATION_AUDITED_NO_IDENTIFIERS')
+          PY
       - name: Encrypt private cache even after a partial or authentication-stopped collection
         id: encrypt
         if: always() && steps.restore.outcome == 'success' && steps.collect.outcome != 'skipped'
@@ -109,6 +128,7 @@ jobs:
             ${{ runner.temp }}/pro-public/reference-cases.json
             ${{ runner.temp }}/pro-public/collection-receipt.json
             ${{ runner.temp }}/pro-public/source-binding.json
+            ${{ runner.temp }}/pro-public/resource-preservation.json
           retention-days: 90
           if-no-files-found: warn
       - name: Remove ephemeral private originals and cache
