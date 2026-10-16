@@ -1,3 +1,60 @@
+된 것: 문장 개선은 7개에서 종료하고 기존 원문·검토·보류 20개·실패 이력을 보존했습니다.
+된 것: 기존 프로 참고 89경기에서 10·15분대 골드·경험치 비교값을 각각 108개 복구했습니다.
+된 것: POV 두 채널의 ID·핸들과 공개 영상 후보 6개의 메타데이터를 확인했습니다.
+안 된 것: 오늘 텍스트 1회는 HTTP200 뒤 형식 검사 실패, 영상 0회·경기 연결 0개·장면 평가 0개입니다.
+내가 할 것: 추가 승인·자료 수집은 필요 없습니다. 오늘 재호출 없이 다음 정기 확인을 기다립니다.
+
+# Actual evidence results — one actual TEXT, no VIDEO, no verified scene
+
+Authoritative detailed results: evidence/actual-evidence/report.json, recovery-findings.md,
+actual-safe-audit.md, daily-38897072108/reconciliation.json and text-v2-review.md.
+The earlier intake/setup-only handoffs below are historical, superseded by this section.
+PR41 main1e261c55 and PR42 main73cb1274 have required3SUCCESS and postmain3SUCCESS.
+This final narrow TEXT v2/result followup still requires normal publication CI at capture.
+
+Trusted manual38897072108 at73cb127: recovery READY, exactly1TEXT HTTP200 followed by
+MALFORMED_RESPONSE, usabletextfalse, VIDEO0/extraction0/review0. Workflow success is
+not evidence-acquisition success. Exact invalid field/finishReason/cause UNKNOWN;
+original reply not saved. Oldquota10rows/10862seconds unchanged, no refunds or new
+video charges. Actualreservation historicalhash stays valid; same-day replay rejected
+across revisions. Today is consumed: NO further provider request/retry/fallback.
+
+Next-day-only v2 removes newly introduced8-token parameter, restores priorHTTP200
+plaintextshape and adds safe typedshape/allowlistedfinishReason diagnostics. This is
+not proof of root-cause correction or live retest. Unresolved malformed/config/auth/
+permission/payment stops unchanged configuration on later days. Revision.2 is an
+explicit reviewed repair, never an automatic retry-bump. New4tests + affected34 pass;
+completed checks are reused, and requiredCI selects only affected modules.
+
+Sole existing active workflow381076541, Daily free evidence check, cron0 9 * * *UTC
+=18:00Asia/Seoul, sharedmanual/schedule allowance. Manual actual execution observed;
+first18:00 scheduled execution NOT_YET_OBSERVED. GitHub has no exposed next_run_time.
+Next nominal2026-10-17 18:00KST is cron calculation, not guaranteed dispatch. No duplicate
+ChatGPT schedule. Existing documented-free model/project/route, no paid calls.
+
+POV actual38895508259:2canonicalchannels,8metadataGET200,6uploadcandidates. Exact user
+config remains pending; dated primary verification is separate. Secondary4indexhits
+are search candidates only. Footage/view/continuity/gameclock/intent/patch/actualgame
+unverified. Q19 expertchannels unchanged, expertstatements0, POVframeobservations0,
+linkpairs0/confirmed0, eligible/evaluatedscenes0, agreementnull. No rawmedia saved.
+Video offsets requested do not prove hard inputisolation; blind evaluation disabled.
+Do not turn missingminimap enemies into absence or upload date into game date.
+
+PRO89/108 raw goldXP complete,8175store comparisons mismatch0. Exact timestamp gate
+was the missingpoint:10min observed600068–600317ms,15min900169–900405ms. Exactpoint
+valid0/missing108 remains unchanged; separately labelled observedbin goldXP pairs108
+at each target,89distinctmatches, patches16.19/16.20 and99cohorts separated. No
+interpolation/zero/positionfallback. Q15275 and recallCH291 unchanged. Futurecollection
+preservationaudit added before encrypted storage. NewRiotrequests0/keyNOT_TESTED;
+never infer expiry from collection time limit. Safe sourcebound aggregates only.
+
+PC resourcecard visible with patch/matchup/n/missing/actualtimes. Cold input-to-card
+1916.644376ms:1secondgoalNOTmet. Instrumentedtimeout retained as diagnostic, not
+acceptance. Start-LoL-Coach.cmd/Windows prep/LCU/manualfallback preserved. RealWindows
+LCU remains BLOCKED_EXTERNAL. No accuracy/effect claim or newUSER decisions.
+
+---
+
 된 것: 기존 89경기의 골드·경험치를 실제 관측 시각으로 108개씩 복구했습니다.
 된 것: POV 두 채널의 ID·핸들과 공개 영상 후보 6개의 메타데이터를 확인했습니다.
 진행 중: Gemini는 호출 전 원장 복구에서 멈췄고 요청 0건이며 복구 조건을 수정했습니다.

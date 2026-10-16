@@ -1,0 +1,40 @@
+test_dispatch_uses_the_reserved_legacy_body_and_exports_only_shape (tests_expert.test_text_response_v2.TextV2Tests.test_dispatch_uses_the_reserved_legacy_body_and_exports_only_shape) ... ERROR
+test_legacy_actual_reservation_hash_remains_valid_and_same_day_consumed (tests_expert.test_text_response_v2.TextV2Tests.test_legacy_actual_reservation_hash_remains_valid_and_same_day_consumed) ... ok
+test_next_text_uses_the_previously_successful_exact_request_shape (tests_expert.test_text_response_v2.TextV2Tests.test_next_text_uses_the_previously_successful_exact_request_shape) ... FAIL
+test_unresolved_response_format_blocks_unchanged_next_day (tests_expert.test_text_response_v2.TextV2Tests.test_unresolved_response_format_blocks_unchanged_next_day) ... FAIL
+
+======================================================================
+ERROR: test_dispatch_uses_the_reserved_legacy_body_and_exports_only_shape (tests_expert.test_text_response_v2.TextV2Tests.test_dispatch_uses_the_reserved_legacy_body_and_exports_only_shape)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_text_response_v2.py", line 31, in test_dispatch_uses_the_reserved_legacy_body_and_exports_only_shape
+    self.assertEqual(result['events'][-1]['safe_output']['response_shape']['finish_reasons'],['MAX_TOKENS'])
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'response_shape'
+
+======================================================================
+FAIL: test_next_text_uses_the_previously_successful_exact_request_shape (tests_expert.test_text_response_v2.TextV2Tests.test_next_text_uses_the_previously_successful_exact_request_shape)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_text_response_v2.py", line 14, in test_next_text_uses_the_previously_successful_exact_request_shape
+    self.assertEqual(self.d.text_body(),dict(contents=[dict(role='user',parts=[dict(text='Reply with OK.')])],generationConfig=dict(candidateCount=1)))
+AssertionError: {'con[68 chars]generationConfig': {'candidateCount': 1, 'maxOutputTokens': 8}} != {'con[68 chars]generationConfig': {'candidateCount': 1}}
+  {'contents': [{'parts': [{'text': 'Reply with OK.'}], 'role': 'user'}],
+-  'generationConfig': {'candidateCount': 1, 'maxOutputTokens': 8}}
+?                                          ----------------------
+
++  'generationConfig': {'candidateCount': 1}}
+
+======================================================================
+FAIL: test_unresolved_response_format_blocks_unchanged_next_day (tests_expert.test_text_response_v2.TextV2Tests.test_unresolved_response_format_blocks_unchanged_next_day)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_expert/test_text_response_v2.py", line 21, in test_unresolved_response_format_blocks_unchanged_next_day
+    with self.assertRaisesRegex(ValueError,'PERSISTENT_CONFIGURATION_BLOCK'):self.f.reserve(state,now=self.f.now+86400)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.030s
+
+FAILED (failures=2, errors=1)

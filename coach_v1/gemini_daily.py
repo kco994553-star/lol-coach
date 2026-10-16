@@ -17,7 +17,7 @@ from .expert_collector import (_digest, _canonical, _generated_text, _json, _seg
 
 MODEL='gemini-3.6-flash'
 URL='https://generativelanguage.googleapis.com/v1beta/models/'+MODEL+':generateContent'
-PERSISTENT={'AUTHENTICATION','PERMISSION','ARGUMENT_CONFIGURATION','PAYMENT_REQUIRED'}
+PERSISTENT={'AUTHENTICATION','PERMISSION','ARGUMENT_CONFIGURATION','PAYMENT_REQUIRED','MALFORMED_RESPONSE'}
 CONFIG_KEYS={'schema_version','model','timezone','configuration_revision','purpose','expert_channels','pov_channels','max_clip_seconds','clip_seconds','blind_evaluation_enabled'}
 
 def require(value,reason='INVALID_DAILY_STATE'):
@@ -73,7 +73,7 @@ def validate_state(value,now):
             else:require(isinstance(event['source'],dict))
             require(_digest({k:v for k,v in event.items() if k!='reservation_id'})==rid,'RESERVATION_BINDING_INVALID')
             require(event['proof']['checked_at']==datetime.fromtimestamp(event['created_at'],timezone.utc).date().isoformat())
-            require(event['request_sha256']==_digest(text_body() if event['stage']=='TEXT' else video_body(event['source'])))
+            require(event['request_sha256'] in {_digest(b) for b in known_text_bodies()} if event['stage']=='TEXT' else event['request_sha256']==_digest(video_body(event['source'])))
             reservations[rid]=event;slots.add((event['day'],event['stage']))
         else:
             require(set(event)=={'kind','stage','created_at','reservation_id','http_status','classification','request_count','safe_output'})
@@ -87,7 +87,38 @@ def validate_state(value,now):
     return s
 
 def text_body():
-    return dict(contents=[dict(role='user',parts=[dict(text='Reply with OK.')])],generationConfig=dict(candidateCount=1,maxOutputTokens=8))
+    # Restore the exact prior HTTP200 plain-text request shape.
+    return dict(contents=[dict(role='user',parts=[dict(text='Reply with OK.')])],generationConfig=dict(candidateCount=1))
+
+
+def known_text_bodies():
+    current=text_body()
+    legacy=dict(contents=[dict(role='user',parts=[dict(text='Reply with OK.')])],generationConfig=dict(candidateCount=1,maxOutputTokens=8))
+    return [current,legacy]
+
+
+def text_body_for_digest(digest):
+    rows=[b for b in known_text_bodies() if _digest(b)==digest]
+    require(bool(rows),'UNKNOWN_HISTORICAL_TEXT_BODY')
+    return rows[0]
+
+
+def response_shape(raw):
+    # Typed diagnostics only. No generated text, thoughts, transcript or arbitrary strings.
+    try:
+        value=raw if isinstance(raw,dict) else _json(raw)
+        candidates=value.get('candidates') if isinstance(value,dict) else None
+        if not isinstance(candidates,list):return dict(candidate_count=None,finish_reasons=[],text_part_count=0,shape='NO_CANDIDATE_LIST')
+        allowed={'STOP','MAX_TOKENS','SAFETY','RECITATION','OTHER','FINISH_REASON_UNSPECIFIED','BLOCKLIST','PROHIBITED_CONTENT','SPII','MALFORMED_FUNCTION_CALL'}
+        reasons=[];parts=0
+        for candidate in candidates[:10]:
+            if not isinstance(candidate,dict):continue
+            reason=candidate.get('finishReason');reasons.append(reason if reason in allowed else 'OTHER')
+            content=candidate.get('content');rows=content.get('parts',[]) if isinstance(content,dict) else []
+            if isinstance(rows,list):parts+=sum(isinstance(p,dict) and isinstance(p.get('text'),str) for p in rows[:100])
+        return dict(candidate_count=min(len(candidates),10),finish_reasons=reasons,text_part_count=parts,shape='CANDIDATE_LIST')
+    except (ValueError,TypeError,UnicodeError):return dict(candidate_count=None,finish_reasons=[],text_part_count=0,shape='UNPARSEABLE_JSON')
+
 
 def _reserve(state,config,now,run_id,stage,proof,source=None):
     c=validate_config(config);s=validate_state(state,now)
@@ -191,7 +222,7 @@ def dispatch(state,stage,now,run_id,artifact_id,claim_dir,key,transport):
     require(re.fullmatch('[1-9][0-9]*',str(artifact_id or '')) is not None,'RESERVATION_PERSISTENCE_NOT_CONFIRMED')
     require(row['run_id']==str(run_id) and row['day']==seoul_day(now) and 0<=now-row['created_at']<=MAX_DISPATCH_DELAY,'DISPATCH_CONTEXT_INVALID')
     require(isinstance(key,str) and bool(key.strip()),'MISSING_API_KEYS')
-    body=text_body() if stage=='TEXT' else video_body(row['source']);require(_digest(body)==row['request_sha256'])
+    body=text_body_for_digest(row['request_sha256']) if stage=='TEXT' else video_body(row['source']);require(_digest(body)==row['request_sha256'])
     path=Path(claim_dir);path.mkdir(parents=True,exist_ok=True)
     descriptor=os.open(path/(row['reservation_id']+'.claim'),os.O_CREAT|os.O_EXCL|os.O_WRONLY,0o600)
     with os.fdopen(descriptor,'w') as stream:stream.write(row['reservation_id']);stream.flush();os.fsync(stream.fileno())
@@ -201,7 +232,9 @@ def dispatch(state,stage,now,run_id,artifact_id,claim_dir,key,transport):
         require(type(code) is int and 100<=code<=599)
         if code!=200:safe=dict(provider_error=safe_http_error('GEMINI',code,raw,secrets=(key,)))
         if code==200:
-            if stage=='TEXT':_generated_text(raw if isinstance(raw,dict) else _json(raw))
+            if stage=='TEXT':
+                safe=dict(response_shape=response_shape(raw))
+                _generated_text(raw if isinstance(raw,dict) else _json(raw))
             else:safe=safe_video_output(raw,row['source'])
     except TimeoutError:reason='NETWORK_TIMEOUT'
     except urllib.error.URLError as error:reason='NETWORK_TIMEOUT' if isinstance(error.reason,TimeoutError) else 'NETWORK_FAILURE'
