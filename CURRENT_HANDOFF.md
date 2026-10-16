@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261016-evidence-acquisition`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/evidence-acquisition-20261016`
+- authority: USER_ACTUAL_EVIDENCE_2026-10-16 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `103b8b80c915accba7d7e5c82951d020b17d6e09`
+- detail: PR42 all3required SUCCESS;10changedtests selected, prior66reused; actualresource Chromium passed. Reacquire for expectedheadb8ee84a2d5ce931579cbf40d5677d78b51697473 normalmerge then firstactualTEXT once. Initialrequestcount0 verified.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261016-evidence-acquisition`
 - status: `CI_PENDING`
