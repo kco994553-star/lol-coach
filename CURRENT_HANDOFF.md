@@ -1,3 +1,11 @@
+# Art refresh — actual public completion
+- PR75 source64eb52fbe4723301adbbae540fb76d006050a525, artifact1dfb4a3d62e772761dfeb7b579a86f955b836e68, Pages39078923918 actualSUCCESS. Feature/main all3 requiredCI PASS; HTTPS51files+root/buildinfo/nojekyll hashes; actual PC/mobile hero5/state/card3destinations/guest10pick/map PASS.
+- User-visible AI badges/footer label removed; operations strategic movement and fight dragon-pit battle, lane art retained. Mixed base2/officialskin2/generatedtheme1. Actual provenance/raw/hash preserved in config/hero catalog, no false official attribution. First-only/session/input/focus/scroll/failure guards retained.
+- Evidence screenshots/report/CI: evidence/actual-evidence/art-refresh/publication/result.md. InitialCIdecode-race failure retained and same criterion fixed; no runtime/criteria relaxation. Old image/source/history intact.
+- No coaching/provider/Windows/manual changes. Gemini/game0, authorized imagegen2, paidplan0. AUTO30HOLD20USER0/advice7/Frozen350/videoledgers/N0/30secunmeasured/Windowsblocked retained. Results-only followup has no product republish.
+
+---
+
 # Image-load browser check correction
 - PR75 initial browser CI117530390166 caught legacy homeDesignFlow immediate complete/naturalWidth assertion after changing src. New uncached background decoding was not awaited. Await decode then retain original complete/naturalWidth criterion; no image error bypass or runtime change. Failed log preserved. Changed local home+card+5hero PC/mobile flow passes; rerun exact amended CI before merge.
 

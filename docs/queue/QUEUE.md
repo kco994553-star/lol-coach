@@ -1,3 +1,10 @@
+# Latest art refresh public result
+- DONE: PR75 source64eb52f, artifact1dfb4a3, actualPages/HTTPS/PCmobile proofs. Publication result.md.
+- READY: evidence/Handoff-only normal merge and exact remote/main required gates; no repeated product/browser/source collection.
+- SEPARATE: existing source questions/video allowed window/privateAPI/realWindows dependencies; no new user review burden.
+
+---
+
 # Current decorative art refresh
 - READY: requiredCI→normalPR→postmainCI→Pages→actualHTTPS PC/mobile, source/asset metadata preserved. No unrelated coaching or provider work.
 - Prior shared design/public workflow and tactical sources reused; old labels/source records preserved historically, user-visible labels removed by latest instruction.
