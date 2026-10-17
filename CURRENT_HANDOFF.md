@@ -1,3 +1,23 @@
+# Latest common execution claim — PARKED_EXTERNAL
+- run_token: `main-20261017-exchange-preference`
+- status: `PARKED_EXTERNAL`
+- writer_active: false
+- final_main: `58ad8e389142016d7c9a06d8746778f64b762770`
+- product_source_main: `64eb52fbe4723301adbbae540fb76d006050a525`
+- artifact: `1dfb4a3d62e772761dfeb7b579a86f955b836e68`
+- completed_prs: 75,76
+- product_feature_and_main_required_ci: all3 SUCCESS
+- results_main_required_ci: `39079100766`, `39079100783` — all3 SUCCESS, unchanged source/tests/browser reused
+- native_pages_run: `39078923918` — build/report/deploy SUCCESS
+- public_proof: actual HTTPS51 manifest files+root/build-info/.nojekyll hashes; PC1440/mobile3905hero/session/cycle/focus/input/failure/retry/guest10pick/card3destinations/map/textzoom PASS, pageerror0/HTTPerror0/provider0. Source registry/pro5 preserved.
+- user_request: no visible AI illustration labels; operations strategy and teamfight dragon-pit battle; basic2/officialskin2/generatedtheme1. Prior lane art, source/raw/history/tactics/Windows/manual unchanged.
+- handoff: `evidence/actual-evidence/art-refresh/publication/result.md`
+- final_receipt: `/workspace/art-refresh-final-receipt.json`
+- receipt_sha256: `9fd33636eec4b777a7bd56ebd741d03d9d7628a22e6dff9ed36ee66ef3c98a00`
+- remaining: preexisting source/video allowed-window/privateAPI/realWindows external dependencies; no ready art/frontend task left. Gemini/game0, authorized imagegen2, paidplan0; AUTO30HOLD20USER0/advice7/Frozen350/videoledgers/N0/30secunmeasured/WindowsBLOCKED_EXTERNAL retained.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
