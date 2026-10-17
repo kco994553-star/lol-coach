@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-loading-strategy`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-results-20261017`
+- authority: USER_LOADING_STRATEGY_MVP_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `ffe52ef624bd9d96691053cc0a614dea9253ed09`
+- detail: PR52 all3 required+postmain checks SUCCESS; Pages39001496401 artifact0d8fdfa actually deployed;25public hashes+live HTTPS mobile390/manual10pick/details/map/status PASS. Recording observed results only, no functional or provider changes.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261017-loading-strategy`
 - status: `CI_PENDING`
