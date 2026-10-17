@@ -2,6 +2,17 @@
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
 - writer_active: true
+- owner_branch: `work/home-lane-entry-20261017`
+- current_main: `89c35e85a82c85974eac116c3d1c2fbd2a9f3db9`
+- active_pr: 71
+- scope: PR69/70 and actual Pages/43-file/HTTPS PC-mobile gates passed; final lane-card destination follows wave-first priority. Preserve all prior public proof and quotas; no provider/model requests.
+
+---
+
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
 - owner_branch: `work/home-design-20261017`
 - current_main: `08b1975d19e9901eedb1d21b54d62bd30d391d0e`
 - scope: Exchange PR69 required gates passed and merged; new user-approved reference home design and remembered card destinations next. No provider/video/paid calls; preserve prior holds/history/N0/Windows.
