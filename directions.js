@@ -456,6 +456,9 @@
       if (!response.ok) throw new Error('학습 장면을 불러오지 못했습니다. 페이지를 새로고침해 주세요.');
       catalog = await response.json();
       input = window.DirectionEngine.defaultInput(catalog);
+      const linkedId = new URLSearchParams(location.hash.slice(1)).get('scene');
+      const linkedScene = catalog.presets.find(scene => scene.id === linkedId);
+      if (linkedScene) { input = structuredClone(linkedScene.input); activeScene = linkedScene.id; }
       renderScenes();
       renderForm();
       bindEvents();

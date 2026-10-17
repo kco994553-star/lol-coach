@@ -1,0 +1,331 @@
+/* Shared pure analysis, manual picks, and an explicitly requested loopback import. */
+(function () {
+  'use strict';
+  const roles = { TOP: '탑', JUNGLE: '정글', MID: '미드', BOTTOM: '바텀', SUPPORT: '서포터' };
+  const $ = id => document.getElementById(id);
+  const node = (tag, cls, value) => { const el = document.createElement(tag); if (cls) el.className = cls; if (value != null) el.textContent = String(value); return el; };
+  const entries = value => Array.isArray(value) ? value : value == null ? [] : [value];
+  let catalog = null;
+  let report = null;
+  let filling = false;
+  let importing = false;
+
+  function readable(value) {
+    if (value == null) return '';
+    if (typeof value === 'string' || typeof value === 'number') return String(value);
+    if (Array.isArray(value)) return value.map(readable).filter(Boolean).join(' · ');
+    return ['text', 'description', 'message', 'label', 'name', 'role', 'status', 'reason', 'note', 'summary'].map(key => value[key]).filter(v => typeof v === 'string').join(' · ');
+  }
+  function message(value, state) {
+    $('loading-message').textContent = value;
+    $('loading-message').classList.toggle('is-error', state === 'error');
+    $('loading-message').classList.toggle('is-stale', state === 'stale');
+  }
+  function resolve(value) { return catalog ? window.LoadingStrategy.resolveChampion(value, catalog) : null; }
+  function champion(value) { return catalog && catalog.champions[resolve(value) || value] || null; }
+  function name(value) { const item = champion(value); return item ? item.name : String(value || '미확인'); }
+  function text(id, value) { $(id).textContent = readable(value); }
+  function list(items, cls, ordered) {
+    const ul = node(ordered ? 'ol' : 'ul', cls);
+    entries(items).forEach(item => { const copy = readable(item); if (copy) ul.append(node('li', '', copy)); });
+    return ul;
+  }
+  function block(title, value, cls) {
+    const wrap = node('div', 'copy-block' + (cls ? ' ' + cls : ''));
+    wrap.append(node('h4', '', title));
+    if (Array.isArray(value)) wrap.append(list(value));
+    else wrap.append(node('p', '', readable(value) || '자료 미확인'));
+    return wrap;
+  }
+  function details(title, content) {
+    const el = node('details', 'evidence-details'), body = node('div');
+    el.append(node('summary', '', title)); body.append(content); el.append(body); return el;
+  }
+  function options(select, values, placeholder, current) {
+    const items = [node('option', '', placeholder)]; items[0].value = '';
+    values.forEach(value => { const option = node('option', '', name(value)); option.value = value; items.push(option); });
+    select.replaceChildren(...items); select.value = values.includes(current) ? current : '';
+  }
+  function buildPicks() {
+    ['ALLY', 'ENEMY'].forEach(team => {
+      const target = $(team === 'ALLY' ? 'allied-picks' : 'enemy-picks');
+      for (let index = 0; index < 5; index += 1) {
+        const row = node('div', 'pick-row'); row.dataset.team = team; row.dataset.slot = index;
+        const image = window.LoadingMap.portrait(null); image.id = 'portrait-' + team + '-' + index;
+        const pickLabel = node('label'), input = node('input');
+        input.type = 'text'; input.id = 'pick-' + team + '-' + index; input.setAttribute('list', 'champion-names'); input.setAttribute('aria-label', (team === 'ALLY' ? '아군 ' : '적군 ') + (index + 1) + ' 챔피언'); input.placeholder = '챔피언 이름'; input.required = true; input.maxLength = 80; input.autocomplete = 'off'; input.spellcheck = false;
+        pickLabel.append(input);
+        const positionLabel = node('label'), select = node('select'); select.id = 'position-' + team + '-' + index; select.setAttribute('aria-label', (team === 'ALLY' ? '아군 ' : '적군 ') + (index + 1) + ' 포지션');
+        const unknown = node('option', '', '미확인'); unknown.value = ''; select.append(unknown);
+        Object.entries(roles).forEach(([key, label]) => { const option = node('option', '', label); option.value = key; select.append(option); }); positionLabel.append(select); row.append(image, pickLabel, positionLabel); target.append(row);
+      }
+    });
+  }
+  function updateRosterOptions() {
+    if (!catalog) return;
+    const ids = team => [...Array(5)].map((_, i) => resolve($('pick-' + team + '-' + i).value)).filter(Boolean);
+    const allies = [...new Set(ids('ALLY'))], enemies = [...new Set(ids('ENEMY'))];
+    options($('own-champion'), allies, '아군 픽에서 선택', $('own-champion').value);
+    $('own-champion').disabled = !allies.length;
+    options($('lane-opponent'), enemies, '적군 픽에서 선택', $('lane-opponent').value);
+    $('lane-opponent').disabled = $('opponent-mode').value !== 'MANUAL';
+    $('lane-opponent').required = $('opponent-mode').value === 'MANUAL';
+    ['ALLY', 'ENEMY'].forEach(team => {
+      for (let index = 0; index < 5; index += 1) {
+        const pick = champion($('pick-' + team + '-' + index).value), own = team === 'ALLY' && pick && pick.id === $('own-champion').value;
+        const image = window.LoadingMap.portrait(pick, own); image.id = 'portrait-' + team + '-' + index; $('portrait-' + team + '-' + index).replaceWith(image);
+      }
+    });
+    const complete = allies.length === 5 && enemies.length === 5;
+    $('input-state').textContent = complete ? '10개 픽 입력됨 · 포지션은 선택 입력' : '아군 ' + allies.length + '/5 · 적군 ' + enemies.length + '/5';
+  }
+  function fillForm(input) {
+    filling = true;
+    ['ALLY', 'ENEMY'].forEach(team => entries(team === 'ALLY' ? input.allies : input.enemies).slice(0, 5).forEach((pick, index) => {
+      $('pick-' + team + '-' + index).value = name(pick.champion);
+      $('position-' + team + '-' + index).value = pick.position || '';
+      $('pick-' + team + '-' + index).removeAttribute('aria-invalid');
+    }));
+    updateRosterOptions();
+    $('own-champion').value = input.own_champion || '';
+    $('own-position').value = input.own_position || '';
+    $('side').value = input.side || 'BLUE';
+    $('patch').value = input.patch || '';
+    $('opponent-mode').value = input.opponent_mode || 'ASSIGNED';
+    $('lane-opponent').value = input.lane_opponent || '';
+    updateRosterOptions(); filling = false;
+  }
+  function readInput() {
+    const picks = team => [...Array(5)].map((_, index) => ({ champion: $('pick-' + team + '-' + index).value.trim(), position: $('position-' + team + '-' + index).value || null }));
+    return { allies: picks('ALLY'), enemies: picks('ENEMY'), own_champion: $('own-champion').value, own_position: $('own-position').value, side: $('side').value, patch: $('patch').value.trim() || null, opponent_mode: $('opponent-mode').value, lane_opponent: $('opponent-mode').value === 'MANUAL' ? $('lane-opponent').value || null : null };
+  }
+  function stale() {
+    if (filling) return;
+    updateRosterOptions();
+    if (report) message('입력이 바뀌었습니다. ‘이번 판 방향 보기’를 눌러 새 픽과 조건을 반영하세요.', 'stale');
+    else message('10개 픽과 내 챔피언·포지션을 선택하면 분석할 수 있습니다.');
+  }
+  function roster(picks, enemy, own) {
+    const wrap = node('div', 'report-team' + (enemy ? ' enemy' : ''));
+    wrap.append(node('span', '', enemy ? '적군' : '아군'));
+    const row = node('div', 'team-roster');
+    picks.forEach(pick => {
+      const self = !enemy && pick.champion === own, item = node('div', 'roster-pick' + (self ? ' is-self' : ''));
+      item.title = name(pick.champion) + ' · ' + (roles[pick.position] || '포지션 미확인') + (self ? ' · 나' : '');
+      item.append(window.LoadingMap.portrait(champion(pick.champion), self), node('span', '', (self ? '나 · ' : '') + name(pick.champion))); row.append(item);
+    });
+    wrap.append(row); return wrap;
+  }
+  function renderComposition() {
+    const target = $('composition-content'); target.replaceChildren();
+    [['allies', '우리 팀', false], ['enemies', '상대 팀', true]].forEach(([key, title, enemy]) => {
+      const item = report.composition[key] || {}, card = node('article', 'panel composition-card' + (enemy ? ' enemy' : ''));
+      card.append(node('h3', '', title), block('활용할 강점', item.strengths || []), block('조심할 빈틈', item.weaknesses || []), block('이 조건이 갖춰져야', item.conditions || [], 'is-conditions'));
+      const signals = entries(item.signals);
+      if (signals.length) {
+        const detail = node('details', 'evidence-details'), body = node('div'); detail.append(node('summary', '', '이 해석에 연결한 실제 픽'));
+        signals.forEach(signal => {
+          const signalName = typeof signal === 'string' ? '' : name(signal.champion || signal.champion_id);
+          const copy = typeof signal === 'string' ? signal : [readable(signal.means), readable(signal.condition)].filter(Boolean).join(' · ');
+          const p = node('p', 'source-note', [signalName !== '미확인' ? signalName : '', copy].filter(Boolean).join(' · '));
+          if (signal.evidence_ids) p.append(node('code', 'fact-hash', '자료 식별자 · ' + entries(signal.evidence_ids).join(' · ')));
+          body.append(p);
+        }); detail.append(body); card.append(detail);
+      }
+      target.append(card);
+    });
+  }
+  function renderGameplan() {
+    const plan = report.gameplan || {}, target = $('gameplan-content'); target.replaceChildren();
+    target.append(node('p', 'lead-copy', readable(plan.base)));
+    const grid = node('div', 'content-grid'); grid.append(block('싸움 전에 준비', plan.prepare || []), block('조건이 부족하면', plan.fallback), block('이때 방향을 바꿔요', plan.switch_when || []), block('사이드와 합류의 선택', plan.side_vs_group)); target.append(grid);
+    if (entries(plan.stages).length) {
+      const stages = node('ol', 'stage-list');
+      entries(plan.stages).forEach(stage => { const item = node('li'); const label = { LANE: '라인전', EARLY: '초반', MID: '중반', LATE: '후반', TRANSITION: '라인전 이후', TEAMFIGHT: '한타', OBJECTIVE: '목표 경합' }[stage.stage] || stage.stage; item.append(node('h4', '', label), node('p', '', readable(stage.role)), list(stage.conditions || [])); stages.append(item); }); target.append(stages);
+    }
+    target.append(block('목표물 경합', plan.objectives), block('교전 뒤 이득으로 연결', plan.conversion));
+  }
+  function renderLane() {
+    const lane = report.lane || {};
+    const status = typeof lane.status === 'string' ? ({ UNKNOWN: '상대 미확인', ASSIGNED: '포지션 기준 상대', MANUAL: '직접 지정한 상대', KNOWN: '상대 지정됨' }[lane.status] || lane.status) : readable(lane.status);
+    text('lane-status', status);
+    text('lane-opponent-copy', lane.opponent ? '내 챔피언 ' + name(report.input.own_champion) + ' · 상대 ' + (lane.opponent.name || name(lane.opponent.id)) + (lane.opponent.position ? ' · ' + (roles[lane.opponent.position] || '포지션 미확인') : '') : '라인 상대 미확인 · 확정할 수 있는 기술의 성질과, 상대가 정해져야 판단할 내용을 구분합니다.');
+    const tbody = $('lane-table').querySelector('tbody'); tbody.replaceChildren();
+    entries(lane.rows).forEach(row => {
+      const tr = node('tr'); tr.dataset.milestone = row.id;
+      const th = node('th', '', row.period); th.scope = 'row';
+      const level = typeof row.level === 'string' ? ({ UNKNOWN: '상성 미확인', OFFICIAL_FACT: '공식 기술 참고', DESIGN_HYPOTHESIS: '조건부 해석', EXPLORATORY: '탐색 해석' }[row.level] || '') : '';
+      if (level) th.append(node('span', 'lane-level', level)); tr.append(th);
+      [['판단', row.judgment], ['이유', row.why], ['내 행동', row.action], ['달라지는 조건', row.changes]].forEach(([label, value]) => { const td = node('td'); td.dataset.label = label; td.append(Array.isArray(value) ? list(value) : node('span', '', readable(value))); tr.append(td); });
+      if (entries(row.evidence_ids).length) tr.dataset.evidenceIds = row.evidence_ids.join(' ');
+      tbody.append(tr);
+    });
+    const target = $('lane-context'); target.replaceChildren();
+    const grid = node('div', 'content-grid'); grid.append(block('미니언 흐름', lane.wave), block('정글과의 연결', lane.jungle), block('귀환과 다른 라인 이동', lane.reset_roam), block('어려워졌을 때 복구', lane.recovery)); target.append(grid);
+    if (entries(lane.interactions).length) target.append(block('맞부딪히는 기술과 조건', lane.interactions));
+  }
+  function fightConnections(items, threats) {
+    const ul = node('ul', 'fight-link-list' + (threats ? ' threats' : ''));
+    entries(items).forEach(item => {
+      const li = node('li');
+      if (typeof item === 'string') li.append(node('p', '', item));
+      else {
+        const who = champion(item.champion || item.id), body = node('div');
+        li.append(window.LoadingMap.portrait(who)); body.append(node('strong', '', item.name || (who && who.name) || name(item.champion)), node('p', '', readable(item.means)));
+        if (item.condition) body.append(node('small', '', '조건 · ' + readable(item.condition))); li.append(body);
+      }
+      ul.append(li);
+    }); return ul;
+  }
+  function renderFight() {
+    const fight = report.teamfight || {}, target = $('fight-content'); target.replaceChildren(node('p', 'lead-copy', readable(fight.role)));
+    const columns = node('div', 'fight-columns'), allies = node('div', 'copy-block'), threats = node('div', 'copy-block'); allies.append(node('h4', '', '함께 연결할 아군'), fightConnections(fight.partners, false)); threats.append(node('h4', '', '내 행동을 끊을 상대'), fightConnections(fight.threats, true)); columns.append(allies, threats); target.append(columns);
+    if (fight.map) {
+      const scenario = { map: fight.map, plan: { steps: entries(fight.actions).map((action, i) => ({ number: i + 1, text: readable(action) })) } };
+      target.append(window.LoadingMap.create(scenario, catalog, report.input));
+    }
+    const grid = node('div', 'content-grid'); grid.append(block('진입 전 점검', fight.setup || []));
+    if (!fight.map) grid.append(block('싸움 중 순서', fight.actions || []));
+    grid.append(block('역할을 바꿀 조건', fight.switch_when || []), block('퇴로와 이탈 기준', fight.exit || []), block('교전이 끝난 뒤', fight.after || [])); target.append(grid);
+  }
+  function renderScenarios() {
+    const target = $('scenario-content'); target.replaceChildren();
+    if (!entries(report.scenarios).length) { target.append(node('p', 'empty-state', '현재 내 챔피언과 역할에 바로 연결할 기존 지도 장면이 없습니다. 위의 조합·라인전·한타 조건부터 확인하세요. 다른 챔피언으로 바꾼 지도를 대신 표시하지 않습니다.')); return; }
+    report.scenarios.forEach((scenario, index) => {
+      const card = node('article', 'panel scenario-card'); card.dataset.scenario = scenario.id;
+      const heading = node('div', 'scenario-heading'); heading.append(node('h3', '', String(index + 1).padStart(2, '0') + ' · ' + scenario.title));
+      const link = node('a', '', '기존 상황 연습에서 열기 ↗'); link.href = './directions.html#scene=' + encodeURIComponent(scenario.id); heading.append(link); card.append(heading);
+      const assumptions = node('div', 'scenario-conditions'); assumptions.append(node('h4', '', '앞으로 이 조건이 갖춰진 상황을 가정합니다'), list(scenario.assumptions || [])); card.append(assumptions);
+      card.append(window.LoadingMap.create(scenario, catalog, report.input));
+      const lower = node('div', 'content-grid'); lower.append(block('먼저 확인할 전제', scenario.requirements || []), block('이때는 적용하지 않아요', scenario.exceptions || [])); card.append(lower); target.append(card);
+    });
+  }
+  function officialFacts(facts) {
+    const wrap = node('div');
+    entries(facts).forEach(fact => {
+      const article = node('article', 'fact-card'); article.dataset.factId = fact.id || '';
+      const who = fact.champion || fact.champion_id || (typeof fact.id === 'string' ? fact.id.split(':')[1] : null);
+      article.append(node('h4', '', [who ? name(who) : '', fact.slot === 'P' ? '기본 지속 효과' : fact.slot, fact.name].filter(Boolean).join(' · ')), node('blockquote', '', fact.text || fact.raw_excerpt || fact.excerpt));
+      const meta = node('div', 'fact-meta'); meta.append(node('span', '', '공식 자료 패치 · ' + (fact.patch || catalog.source_patch || '미확인')));
+      try { const url = new URL(fact.url); if (url.protocol === 'https:') { const link = node('a', '', '공식 원문 ↗'); link.href = url.href; link.target = '_blank'; link.rel = 'noopener noreferrer'; meta.append(link); } } catch (_) { /* Source data stays inert if its URL is malformed. */ }
+      article.append(meta);
+      if (fact.raw_excerpt && fact.raw_excerpt !== fact.text) { const raw = node('details', 'evidence-details'); raw.append(node('summary', '', '보관한 원문 발췌'), node('blockquote', '', fact.raw_excerpt)); article.append(raw); }
+      if (fact.id) article.append(node('code', 'fact-hash', '자료 식별자 · ' + fact.id));
+      if (fact.sha256) article.append(node('code', 'fact-hash', 'SHA-256 · ' + fact.sha256));
+      if (fact.local_source || fact.locator) article.append(node('code', 'fact-hash', '보관 위치 · ' + [fact.local_source, readable(fact.locator)].filter(Boolean).join(' · ')));
+      wrap.append(article);
+    });
+    if (!wrap.childNodes.length) wrap.append(node('p', 'source-note', '연결된 공식 기술 자료가 없습니다.'));
+    return wrap;
+  }
+  function renderEvidence() {
+    const evidence = report.evidence || {}, target = $('evidence-content'); target.replaceChildren();
+    target.append(node('p', 'evidence-intro', '공식 원문은 기술의 성질을 확인하는 참고 자료입니다. 조합 해석과 행동 제안은 조건부 설계 가설이며 전술 효과 검증이나 사용자 승인을 뜻하지 않습니다.'));
+    const status = readable(evidence.patch_status);
+    if (status) target.append(node('p', 'source-note', '패치 적용 범위 · ' + ({ UNKNOWN: '입력 패치 미확인', MATCH: '공식 자료와 주 패치 일치 · 전술 검증과 별개', SOURCE_MAJOR_MATCH: '공식 자료와 주 패치 일치 · 전술 검증과 별개', MISMATCH: '입력 패치와 공식 자료 버전이 다름' }[status] || status)));
+    target.append(details('공식 챔피언 기술 원문 · 출처와 해시', officialFacts(evidence.facts)));
+    const ruleWrap = node('div'); ruleWrap.append(node('p', 'source-note', '기존 규칙은 탐색 단계입니다. 빈 분류는 해당 능력이 없다는 뜻이 아니며, 모든 조합 상호작용을 분류한 자료가 아닙니다.'));
+    const ruleList = node('ul', 'rules-list');
+    entries(evidence.rules).forEach(rule => { const li = node('li'); if (typeof rule === 'string') li.append(node('code', 'fact-hash', rule)); else { li.append(node('strong', '', rule.interpretation || readable(rule) || rule.id || '기존 탐색 규칙')); if (rule.id || rule.version) li.append(node('code', 'fact-hash', '규칙 식별자 / 버전 · ' + [rule.id, rule.version].filter(Boolean).join(' / '))); if (rule.sha256) li.append(node('code', 'fact-hash', 'SHA-256 · ' + rule.sha256)); if (rule.local_source) li.append(node('code', 'fact-hash', '보관 위치 · ' + rule.local_source)); if (entries(rule.limitations).length) li.append(list(rule.limitations)); if (entries(rule.counterexamples).length) li.append(list(rule.counterexamples)); } ruleList.append(li); });
+    ruleWrap.append(ruleList); target.append(details('조합 해석에 사용한 탐색 규칙 · 분류 미완성', ruleWrap));
+    const stats = node('div');
+    if (!entries(evidence.statistics).length) stats.append(node('p', 'source-note', '이 입력에 연결된 통계 근거가 없습니다. 승률·상성 점수·효과를 추정하지 않습니다.'));
+    else {
+      stats.append(node('p', 'source-note', '기존 익명 표본의 관찰 정보입니다. 표본의 패치·포지션·상대 범위와 누락을 함께 읽어야 하며, 라인 상성이나 다음 교전 승률로 바꾸지 않습니다.'));
+      entries(evidence.statistics).forEach(stat => {
+        const item = node('article', 'fact-card'); item.append(node('h4', '', typeof stat === 'string' ? stat : readable(stat) || '기존 익명 통계'));
+        if (typeof stat === 'object') {
+          const population = { PRO_REFERENCE: '프로 참고 표본 · 선택된 참가자', CHALLENGER: '챌린저 시드 경기 표본 · 모든 참가자의 등급을 뜻하지 않음' }[stat.population] || '범위 미확인';
+          const fields = [['패치', stat.patch], ['챔피언', stat.champion ? name(stat.champion) : null], ['포지션', roles[stat.position]], ['표본 범위', population], ['경기 / 참가자 관측', [stat.matches, stat.participant_observations].filter(v => v != null).join(' / ')], ['상대 범위', stat.opponent ? name(stat.opponent) : '상대 챔피언별 통계 아님']];
+          fields.forEach(([label, value]) => { const copy = readable(value); if (copy) item.append(node('p', 'source-note', label + ' · ' + copy)); });
+          const recall = stat.first_recall || {};
+          [['timing', '첫 구매 기반 귀환 시각'], ['current_gold', '구매 직전 관측 골드']].forEach(([key, title]) => {
+            const metric = recall[key]; if (!metric) return;
+            const format = value => key === 'timing' ? (Math.round(value / 1000) / 60).toFixed(1) + '분' : Math.round(value) + '골드';
+            const value = metric.status === 'AVAILABLE' && Number.isFinite(metric.median) ? '중앙값 ' + format(metric.median) + (Number.isFinite(metric.q1) && Number.isFinite(metric.q3) ? ' · 중간 50% ' + format(metric.q1) + '–' + format(metric.q3) : '') : '미확인 · 유효 경기 부족 또는 결측';
+            item.append(node('p', 'source-note', title + ' · ' + value + ' · 유효 경기 ' + (metric.match_n ?? '미확인') + ' / 관측 ' + (metric.n ?? '미확인') + ' · 누락 ' + (metric.missing_n ?? '미확인')));
+          });
+          item.append(node('p', 'source-note', '구매 기록으로 추정하므로 구매 없는 귀환·정확한 귀환 시작과 완료·당시 미니언 흐름과 의도는 모릅니다. 시각·금액은 권장값이 아니며, 경기 표본이 겹칠 수 있습니다.'));
+          if (stat.source) item.append(node('code', 'fact-hash', '보관 위치 · ' + stat.source.local_source), node('code', 'fact-hash', 'SHA-256 · ' + stat.source.sha256));
+          if (stat.id) item.append(node('code', 'fact-hash', '자료 식별자 · ' + stat.id));
+        }
+        stats.append(item);
+      });
+    }
+    target.append(details('기존 익명 통계 · 적용 범위와 한계', stats));
+    const unknowns = node('div'); unknowns.append(block('아직 모르는 것', evidence.unknowns || []), block('이 안내의 한계', evidence.limits || []), node('p', 'source-note', '현재 체력·마나·아이템·기술 사용 가능 여부·적의 의도는 입력된 픽에서 추론하지 않습니다. 레벨 점검 시점이 기술 습득이나 준비 완료를 보장하지 않습니다.'));
+    target.append(details('미확인 정보와 적용 한계', unknowns));
+    const assets = node('div'); assets.append(node('p', 'source-note', '챔피언 초상화와 지도는 로컬에 보관한 Riot Games 공식 자료입니다.'));
+    entries(catalog.assets).forEach(asset => { const item = node('div', 'fact-card'); item.append(node('p', 'source-note', readable(asset.path || asset.local_path || asset.id || asset.name)), node('code', 'fact-hash', '원본 URL · ' + (asset.url || asset.source_url || asset.requested_url || '자료 목록 참조')), node('code', 'fact-hash', 'SHA-256 · ' + (asset.sha256 || '미확인'))); assets.append(item); });
+    target.append(details('지도·초상화 자산의 자료 기록', assets));
+  }
+  function renderReport() {
+    const summary = report.summary || {};
+    ['our_plan', 'enemy_plan', 'collision', 'my_role', 'lane_key', 'fight_key'].forEach(key => text(key.replaceAll('_', '-'), summary[key]));
+    $('remember').replaceChildren(...entries(summary.remember).slice(0, 3).map(item => node('li', '', readable(item))));
+    const uncertainties = [...entries(summary.uncertainties)];
+    if (!uncertainties.some(item => /체력|준비|사용 가능/.test(readable(item)))) uncertainties.push('현재 체력·자원과 기술 사용 가능 여부는 경기 안에서 별도 확인하세요.');
+    $('uncertainties').replaceChildren(...uncertainties.map(item => node('li', '', readable(item))));
+    text('report-patch', '입력 패치 ' + (report.input.patch || '미확인') + ' · 자료 ' + catalog.source_patch);
+    $('report-teams').replaceChildren(roster(report.input.allies, false, report.input.own_champion), roster(report.input.enemies, true));
+    renderComposition(); renderGameplan(); renderLane(); renderFight(); renderScenarios(); renderEvidence();
+    $('loading-results').hidden = false;
+  }
+  function analyze() {
+    try {
+      document.querySelectorAll('[id^="pick-"]').forEach(input => input.removeAttribute('aria-invalid'));
+      const input = readInput();
+      ['ALLY', 'ENEMY'].forEach(team => { for (let i = 0; i < 5; i += 1) { const el = $('pick-' + team + '-' + i); if (!resolve(el.value)) el.setAttribute('aria-invalid', 'true'); } });
+      const next = window.LoadingStrategy.analyze(input, catalog);
+      report = next; fillForm(next.input); renderReport(); $('input-panel').open = false;
+      message('입력한 10개 픽을 반영했습니다. 먼저 핵심 요약과 미확인 조건을 읽어보세요.');
+      $('loading-summary').focus({ preventScroll: true }); $('loading-summary').scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    } catch (error) {
+      $('loading-results').hidden = true;
+      $('input-panel').open = true;
+      message((error && error.message) || '픽과 포지션 입력을 확인해 주세요.', 'error');
+      const invalid = document.querySelector('#loading-form [aria-invalid="true"]');
+      if (invalid) invalid.focus();
+    }
+  }
+  function localImportAvailable() { return location.protocol === 'http:' && ['localhost', '127.0.0.1', '::1', '[::1]'].includes(location.hostname); }
+  async function importDraft() {
+    if (!localImportAvailable() || importing) return;
+    importing = true; $('pc-import').disabled = true;
+    try {
+      let token = '';
+      try { token = sessionStorage.getItem('lol-coach-dev-token') || ''; } catch (_) { /* Manual input remains available. */ }
+      if (!token) throw new Error('기존 PC 연결 인증이 없습니다. PC 화면에서 연결한 뒤 가져오거나 직접 입력해 주세요.');
+      const response = await fetch('/dev/v1/pregame/pc-status', { method: 'GET', headers: { Authorization: 'Bearer ' + token }, cache: 'no-store', credentials: 'same-origin', redirect: 'error' });
+      token = '';
+      if (!response.ok) throw new Error('기존 PC 연결을 확인할 수 없습니다. 직접 입력해 주세요.');
+      const data = await response.json(), connection = data && data.connection;
+      if (!connection || connection.status !== 'CONNECTED' || connection.phase !== 'ChampSelect' || !connection.input) throw new Error('챔피언 선택 중인 연결된 PC 픽이 없습니다. 직접 입력해 주세요.');
+      const input = window.LoadingStrategy.fromDraft(connection.input, catalog);
+      fillForm(input); $('input-panel').open = true;
+      if (!$('loading-form').checkValidity()) { message('PC 픽을 가져왔습니다. 빈 픽과 내 챔피언·포지션을 확인한 뒤 방향을 살펴보세요.'); return; }
+      analyze();
+    } catch (error) { message(error && error.message || 'PC 픽 가져오기를 완료하지 못했습니다. 직접 입력해 주세요.', 'error'); }
+    finally { importing = false; $('pc-import').disabled = false; }
+  }
+  async function init() {
+    buildPicks(); window.LoadingMap.init();
+    $('loading-form').addEventListener('submit', event => { event.preventDefault(); analyze(); });
+    $('loading-form').addEventListener('input', stale);
+    $('loading-form').addEventListener('change', stale);
+    $('pc-import').hidden = !localImportAvailable(); $('pc-import').addEventListener('click', importDraft);
+    try {
+      const response = await fetch('./loading-data.json', { cache: 'no-store', credentials: 'same-origin', redirect: 'error' });
+      if (!response.ok) throw new Error('자료 응답을 확인할 수 없습니다.');
+      catalog = await response.json();
+      if (!catalog || !catalog.champions || Array.isArray(catalog.champions) || !window.LoadingStrategy) throw new Error('챔피언 자료와 분석 엔진을 함께 불러오지 못했습니다.');
+      const values = new Set();
+      const searchOptions = [];
+      Object.values(catalog.champions).sort((a, b) => a.name.localeCompare(b.name, 'ko')).forEach(item => [item.name, item.id, ...entries(item.aliases)].forEach(alias => { if (typeof alias !== 'string' || values.has(alias)) return; values.add(alias); const option = node('option'); option.value = alias; option.label = item.name + ' · ' + item.id; searchOptions.push(option); }));
+      $('champion-names').replaceChildren(...searchOptions);
+      [0, 1].forEach(index => { const button = $('example-' + index); button.disabled = false; button.addEventListener('click', () => { fillForm(window.LoadingStrategy.exampleInput(catalog, index)); $('input-panel').open = true; if (report) message('예시 픽을 입력했습니다. ‘이번 판 방향 보기’를 누르면 요약이 바뀝니다.', 'stale'); else message('예시 픽을 입력했습니다. 내 챔피언과 포지션을 확인하고 ‘이번 판 방향 보기’를 눌러보세요.'); }); });
+      $('analyze').disabled = false; updateRosterOptions(); message('10개 픽과 내 챔피언·포지션을 선택하세요. 예시를 바꿔 조합별 방향을 비교할 수도 있습니다.');
+    } catch (error) { message('자료를 불러오지 못했습니다. 페이지를 새로고침해 주세요. ' + (error && error.message || ''), 'error'); }
+  }
+  init();
+})();
