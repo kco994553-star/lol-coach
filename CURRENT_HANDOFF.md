@@ -1,3 +1,14 @@
+# Latest common execution claim — PARKED_EXTERNAL
+- run_token: `main-20261017-loading-strategy`
+- status: `PARKED_EXTERNAL`
+- writer_active: false
+- owner_branch: `work/loading-results-20261017`
+- authority: USER_LOADING_STRATEGY_MVP_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `ffe52ef624bd9d96691053cc0a614dea9253ed09`
+- detail: Loading Strategy MVP COMPLETE: implementationPR52 mainffe52ef/treec1ee46e, resultsPR53 finalmainb9cb5ed/tree1f18a215; both PR and postmain required3 each SUCCESS/exact logs. Existing Pages artifact0d8fdfa run39001496401 SUCCESS,25SHA-match/liveHTTPSmobile390 actualmanual10pick→summary/details/6rows/changedcomposition/maps200%/legacy/status PASS, JS/HTTP0; currentmain public functional bytes identical, clean tree. Durable main Handoff/publication receipts plus local loading-final-result.json. AUTO30/HOLD20/USER0/advice7/Frozen350/Windows/VIDEO3/3 preserved; no newprovider/game/video/paidcall. No READY loading P0 remains; nextP0 source-supported lane/transition knowledge and independent evaluation gated on Oct18③→review/CI→④, source fact adoption and actualWindows external access. RealcoachingN0/null, expertadoption/confirmedlinks/adequate/evaluatedscenes0; do not request user data/review or expand old23.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261017-loading-strategy`
 - status: `RUNNING`
