@@ -1,3 +1,13 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/exchange-preference-20261017`
+- intake_main: `3b02b886bc32e839a20cf6dc294ba00bab68dbc0`
+- detail: Latest user adds relative short/repeated exchange preference for both duos, separate from matchupwinner and riskpreference. Fresh main/AGENTS/FrozenDesign/contracts/handoff and parkedclaim read; no activewriter. Reuse previous validation; bounded additive model/view/eventsequence and wavecost gates, no providers/video/paidcalls, preserve history/AUTO30HOLD20N0Windows and unresolved post6 hypothesis. Required CI/normal merge/Pages/Handoff authorized.
+
+---
+
 # Latest common execution claim — PARKED_EXTERNAL
 - run_token: `main-20261017-lane-engagement`
 - status: `PARKED_EXTERNAL`
