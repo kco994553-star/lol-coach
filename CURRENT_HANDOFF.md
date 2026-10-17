@@ -1,3 +1,12 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-loading-interactive`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-interactive-20261017`
+- detail: PR60 required39015861516/39015861461 all3SUCCESS; exactmerge/source gate then normalmerge/postmain/Pages.45 affectedchecks and freshinteractivePC/mobile browser. No provider calls, original histories/grades/windows retained; hypotheses stayhypotheses.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261017-loading-interactive`
 - status: `CI_PENDING`
