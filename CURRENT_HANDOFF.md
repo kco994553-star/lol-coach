@@ -1,3 +1,49 @@
+된 것: 바텀·정글개입·운영·한타 문맥을 분리하고 대표 매치업 여섯 구간을 공개 웹에 반영했습니다.
+된 것: 스킬 표시를 공식 이름(키)와 소유자로 통일했고 기존 PC·프리게임·검토 큐에도 연결했습니다.
+확인: PR56 필수3개·병합후3개·Pages실제배포 성공, 공개27파일 일치와 PC1440/모바일390 동작을 확인했습니다.
+미확인: 전략은 설계 가설·실전 코칭 N=0이며 실제 Windows 연결은 BLOCKED_EXTERNAL입니다.
+사용자 할 일: 추가 승인·자료 수집 없이 사용하면 됩니다. 기존 근거 질문과 허용일 영상 진단은 대기열에 보존했습니다.
+
+# Skill display actually published — 2026-10-17
+
+Open https://kco994553-star.github.io/lol-coach/ → manual10picks+ownchampion/position → summary
+→sixlane rows/operations/fight/conditionalmaps/evidence. Sourcepatch16.20.1. Skill names/slots/
+owners use retainedofficial mappings; no source/history/approval mutation, no generalword inference.
+
+PR56 headcba9170bf811bbe659dd578e46a041dbe107d0a5, testedmergeb4db30591e4c7d1183ff3fd25544e1c33c96fa55,
+normalmainc5501b5cc8f330e5b1204cfc30b1ef4c31bdce3e share tree050980c5a6a41839cb35accab4fc810118226eeb.
+Required39007877627/39007877600 and postmain39008010053/39008010146 all3SUCCESS. Exactlogs
+verifycheckout/current_sources/24affectedchecks and fresh PC/loading/directions browsers.
+Prior wholecollection/Frozen/pilot/v2.3 evidence reused. Finalformatter6c5b236c rare-name and
+whitespace fixes included in fresh CI; prior local browser receipts retain original hashes.
+
+Existing Pages nonforceCAScf3ee5b→935e27253c79265f15a6f187a9818d0be9edc3bf, nativeactual
+run39008108154 SUCCESS. Public27files/root/buildinfo/.nojekyll match verifiedexport. ActualHTTPS
+Chromium1440/390 manual10pick→owner/name(key)/sixrows→distantTOP laneunchanged→unknowncarry
+retainsNaut→relatedscene/mapnumber/200%zoom/status PASS, JS/HTTP0, publicPCrequests0, TLSretained.
+Receipts/fullactualdisplaytext/screens: evidence/actual-evidence/skill-display/publication/.
+Original context before/after/6row tacticaltext/reasons/counterexamples/questions remain in
+loading-context/report.md; no tactical engine/data or original approval inheritance.
+
+Resolved reviewfindings: commonword/controleffect mistakenforskill; duplicate owner-key suffix;
+official skillname already beginswithchampion, retained whitespace. Ambiguous AniviaE/BraumQ,
+barekeys/unownedreferences, SUMMONER/ITEM, contradictorycooldownkeys are not guessed into
+verifiedslots. Typedflag limited to exactskillnamelist; knownrepresentative shorthand binds
+specific matchup/decision/field. Rawquotes/editor/JSON/locators/hash/grades remain original.
+
+This results-only work/skill-display-results-20261017 changes evidence/handoff/queue/seal;
+no functional/sourceasset/provider/workflowchange. Its future CI/merge is not predicted here;
+commonclaim finalreceipt is authoritative. CLI401 and app/public-read fallback preserved,
+not Riot/Gemini expiry. Existinghistory/failedattempts preserved, intermediatePNG retained byhash.
+
+Existing AUTO30/HOLD20/USER0/advice7/Frozen350/Windowslauncher/manualfallback unchanged.
+RealcoachingN0/accuracy=null; actualWindowsLCU BLOCKED_EXTERNAL; no in-game policy upgrade.
+Oct17VIDEO3/3 and additionalTEXT/VIDEO/game/asset/paidcalls0, originalOct18③→separatereview/
+gatedpublish→④ thennormal1/day/sharedledger/no unchangedretry remain. NextP0 sixsourcequestions
+and independent predecision/realplay evidence; no23rewriteexpansion or userfullreview burden.
+
+---
+
 된 것: 사용자 화면의 스킬을 공식 이름(키)와 소유자로 통일하는 표시 어댑터를 추가했습니다.
 된 것: 로딩·여섯 구간·운영/한타·지도/확대·PC/프리게임/검토 큐에서 PC·모바일 표시를 확인했습니다.
 보존: 원문 인용·저장 JSON·출처 해시·기존 전술 엔진/자료·승인/보류 이력은 그대로입니다.

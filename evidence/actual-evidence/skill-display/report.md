@@ -23,3 +23,16 @@ GitHub CLI는 이후 401을 반환했다. 실행 환경 진단에서 현재 설�
 실제 코칭 N=0/정확도 null, 신규 전략 설계 가설, AUTO30/HOLD20/USER0·조언7·Frozen350, Windows BLOCKED_EXTERNAL, Oct17 VIDEO3/3·추가 호출0·기존 Oct18③→별도 검토/CI 게시→④·진단 후1/일 정책은 그대로다.
 
 최종 공식명 순회에서 나르!/드레이븐의 리그/킨드레드의 표식처럼 이름 자체에 챔피언이 들어가는 경우와 벨베스 원문 끝 공백을 찾았다. 원문 전체 이름을 먼저 대조하고 표시용 공백만 정규화하도록 수정했다. 전체865의 이름/이름(키)/소유자명 표시 매핑과 반복 적용을 대조했으며 원본 이름은 그대로다. 추가 RED 원문은 skill-official-name-red.log에 보존했다.
+
+## 실제 공개 반영 결과
+
+[웹 열기](https://kco994553-star.github.io/lol-coach/) — 수동10픽→이번 판 방향 보기→라인전·운영·한타·지도 상세. PR56 정상병합 mainc5501b5, 필수3개/병합후3개 모두SUCCESS. 정확한checkout·current_sources·변경24검사 및 최종코드의 fresh PC/로딩/상황 브라우저 실행을 로그로 대조했다. 최종formatter6c5b236c의 성공 근거이며 이전 local source해시를 바꾸지 않았다.
+
+기존 Pages의935e272 artifact, native실제run39008108154 SUCCESS. 공개27파일·root/build-info/.nojekyll이검증본과일치한다. 실제 HTTPS Chromium1440/390에서 표시 이름·키·소유자, 수동10픽/6구간/멀리있는탑변경시라인불변/원딜미확인시노틸유지/관련6장면/번호·200%확대를 확인했다. JS/HTTP오류0·외부provider/공개PC요청0·TLS검증유지.
+
+새로 표시된 요약과6구간 원문은 publication/public-browser.json의 displayed_summary/displayed_lane_rows이다. 원본 전술 문자열은 ../loading-context/after.json 그대로다. 통계/전문가/승인 등급을 새로 만들지 않았다. 이번 결과 기록 자체의 미래CI/병합은예측하지않으며 최종 공통claim에서확인한다.
+
+![실제 공개 PC](publication/public-desktop-summary.png)
+![실제 공개 모바일](publication/public-mobile-summary.png)
+![실제 공개 여섯 구간](publication/public-mobile-lane.png)
+![실제 공개 지도](publication/public-mobile-map.png)
