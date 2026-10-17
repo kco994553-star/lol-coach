@@ -308,6 +308,8 @@ class PregameHandler(Handler):
             '/loading':('loading.html','text/html; charset=utf-8'),
             '/loading.html':('loading.html','text/html; charset=utf-8'),
             '/loading.js':('loading.js','text/javascript; charset=utf-8'),
+            '/loading-exploration.js':('loading-exploration.js','text/javascript; charset=utf-8'),
+            '/loading-interactive.js':('loading-interactive.js','text/javascript; charset=utf-8'),
             '/loading-engine.js':('loading-engine.js','text/javascript; charset=utf-8'),
             '/loading-map.js':('loading-map.js','text/javascript; charset=utf-8'),
             '/loading.css':('loading.css','text/css; charset=utf-8'),

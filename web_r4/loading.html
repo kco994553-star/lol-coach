@@ -10,10 +10,12 @@
   <link rel="icon" href="./pregame-icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./loading.css">
   <script src="./directions-engine.js" defer></script>
+  <script src="./loading-exploration.js" defer></script>
   <script src="./loading-engine.js" defer></script>
   <script src="./skill-data.js" defer></script>
   <script src="./skill-display.js" defer></script>
   <script src="./loading-map.js" defer></script>
+  <script src="./loading-interactive.js" defer></script>
   <script src="./loading.js" defer></script>
 </head>
 <body>
@@ -53,6 +55,7 @@
         <article class="remember-block"><h4>입장 전, 이것만 기억</h4><ol id="remember"></ol></article>
       </section>
       <aside class="uncertainty-strip" aria-labelledby="uncertainty-title"><span class="notice-icon" aria-hidden="true">!</span><div><h3 id="uncertainty-title">아직 확인해야 할 것</h3><ul id="uncertainties"></ul></div></aside>
+      <section id="interactive-flow" class="panel interactive-flow" aria-label="가상 조건과 전략 선택"></section>
       <nav class="detail-nav" aria-label="분석 자세히 보기"><a href="#loading-composition">조합</a><a href="#loading-gameplan">운영</a><a href="#loading-lane">라인전</a><a href="#teamfight">한타</a><a href="#loading-scenarios">움직임 예시</a><a href="#loading-evidence">근거</a></nav>
       <section id="loading-composition" class="detail-section" aria-labelledby="composition-title"><div class="section-heading"><span class="section-number">02</span><div><p class="eyebrow">어떤 조건에서 힘을 낼까</p><h2 id="composition-title">조합의 강점과 빈틈</h2></div></div><div id="composition-content" class="two-column"></div></section>
       <section id="loading-gameplan" class="detail-section" aria-labelledby="gameplan-title"><div class="section-heading"><span class="section-number">03</span><div><p class="eyebrow">한 번의 싸움에서 다음 목표까지</p><h2 id="gameplan-title">경기 전체의 방향</h2></div></div><div id="gameplan-content" class="panel detail-content"></div></section>
@@ -63,6 +66,6 @@
     </section>
     <footer class="site-footer"><p>LoL Coach · 경기 전 학습 / 경기 후 복기</p><a href="./directions.html">기존 6개 상황 연습 ↗</a><a href="./status.html">작업 상태와 현재 한계 ↗</a><p class="riot-disclaimer">LoL Coach는 Riot Games의 공식 서비스가 아니며 Riot Games의 견해를 반영하지 않습니다. Riot Games 및 관련 자산은 Riot Games, Inc.의 상표 또는 등록 상표입니다.</p></footer>
   </main>
-  <dialog id="loading-map-dialog" aria-labelledby="zoom-title"><div class="dialog-heading"><div><p class="eyebrow">전술 설명용 예시</p><h2 id="zoom-title">움직임 지도 크게 보기</h2></div><button id="map-close" class="icon-button" type="button" aria-label="지도 닫기">×</button></div><div id="zoom-step-controls"></div><label class="zoom-label" for="map-scale">지도 확대 <output id="map-scale-value" for="map-scale">100%</output></label><input id="map-scale" type="range" min="100" max="250" value="100" step="25"><div id="map-zoom-stage" class="map-zoom-stage" data-zoom="100" tabindex="0" aria-label="확대 지도 스크롤 영역"><div id="zoom-map"></div></div><p class="map-note">내 시작 예시는 금색 테두리, 목표는 점선입니다. 번호는 같은 번호의 행동과 연결됩니다. 적 위치는 표시하지 않습니다.</p></dialog>
+  <dialog id="loading-map-dialog" aria-labelledby="zoom-title"><div class="dialog-heading"><div><p class="eyebrow">전술 설명용 예시</p><h2 id="zoom-title">움직임 지도 크게 보기</h2></div><button id="map-close" class="icon-button" type="button" aria-label="지도 닫기">×</button></div><div id="zoom-step-controls"></div><p id="zoom-selected-action" class="selected-action" role="status" aria-live="polite"></p><label class="zoom-label" for="map-scale">지도 확대 <output id="map-scale-value" for="map-scale">100%</output></label><input id="map-scale" type="range" min="100" max="250" value="100" step="25"><div id="map-zoom-stage" class="map-zoom-stage" data-zoom="100" tabindex="0" aria-label="확대 지도 스크롤 영역"><div id="zoom-map"></div></div><p class="map-note">내 시작 예시는 금색 테두리, 목표는 점선입니다. 번호는 같은 번호의 행동과 연결됩니다. 적 위치는 표시하지 않습니다.</p></dialog>
 </body>
 </html>

@@ -6,7 +6,7 @@ from pathlib import Path
 import subprocess,sys,tempfile,threading
 
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
-SOURCES=['web_r4/'+p for p in ['loading.html','loading.js','loading.css','loading-engine.js','loading-map.js','loading-data.json','skill-data.js','skill-display.js','directions-engine.js','directions.js']]+['coach_v1/pregame_server.py','scripts/build_directions_web.py','scripts/browser_loading.py']
+SOURCES=['web_r4/'+p for p in ['loading-exploration.js','loading-interactive.js','loading.html','loading.js','loading.css','loading-engine.js','loading-map.js','loading-data.json','skill-data.js','skill-display.js','directions-engine.js','directions.js']]+['coach_v1/pregame_server.py','scripts/build_directions_web.py','scripts/browser_loading.py']
 
 def affected():
     event_path=os.environ.get('GITHUB_EVENT_PATH')
@@ -20,7 +20,7 @@ JS=r'''
 const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=require('playwright');
 (async()=>{
  const browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_EXECUTABLE?{executablePath:process.env.CHROMIUM_EXECUTABLE}:{}),args:['--no-sandbox']});
- const page=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'}),errors=[],bad=[],requests=[];
+ const page=await browser.newPage({viewport:{width:1440,height:1000},hasTouch:true,reducedMotion:'reduce'}),errors=[],bad=[],requests=[];
  page.on('pageerror',e=>errors.push(e.message));
  page.on('request',r=>{requests.push(r.url());assert([process.env.LOADING_PC,process.env.LOADING_WEB].some(b=>r.url().startsWith(b+'/')),'unexpected external request');assert.equal(r.method(),'GET');});
  page.on('response',r=>{if(r.status()>=400)bad.push({path:new URL(r.url()).pathname,status:r.status()});});
@@ -29,6 +29,28 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
  const example=async i=>{await page.locator('#input-panel').evaluate(e=>e.open=true);await page.locator('#example-'+i).click();await analyze();};
  const capture=async(selector,file)=>page.locator(selector).screenshot({path:process.env.LOADING_OUT+'/'+file});
  const summary=async()=>page.locator('#loading-summary').innerText();
+ const interactiveFlow=async(label)=>{
+  const flow=page.locator('#interactive-flow');await flow.waitFor({state:'visible'});
+  const selected=async()=>flow.getAttribute('data-selected-plan');
+  assert.equal(await selected(),'PREPARE_WINDOW');await page.locator('#risk-OPPORTUNITY').check();assert.equal(await selected(),'PREPARE_WINDOW');assert.match(await page.locator('#exploration-summary').innerText(),/현재 조건에서는 선택이 같습니다/);assert(await page.locator('#preview-SHORT_FOLLOW').isDisabled());
+  await page.locator('#assumptions-ready').click();assert.equal(await selected(),'SHORT_FOLLOW');assert.equal(await page.locator('#active-plan').getAttribute('data-plan'),'SHORT_FOLLOW');
+  const shortCosts=await flow.locator('[data-plan-id="SHORT_FOLLOW"]').innerText(),receiveCosts=await flow.locator('[data-plan-id="RECEIVE_WITH_LUX"]').innerText();assert.match(shortCosts,/소모|전진 노출/);assert.match(receiveCosts,/CS|주도권|미니언/);
+  const beforePath=await page.locator('#active-plan .strategy-map').innerHTML();await page.locator('#risk-LOSS_LIMIT').check();assert.equal(await selected(),'RECEIVE_WITH_LUX');assert.equal(await page.locator('#active-plan').getAttribute('data-plan'),'RECEIVE_WITH_LUX');assert.notEqual(await page.locator('#active-plan .strategy-map').innerHTML(),beforePath);assert.match(await page.locator('#selected-action').innerText(),/포기할 미니언/);
+  await page.locator('#risk-OPPORTUNITY').check();assert.equal(await selected(),'SHORT_FOLLOW');
+  const map=page.locator('#active-plan .scenario-grid');await map.locator('[data-map-step="ALL"]').click();await map.locator('[data-map-action="3"]').first().focus();await page.keyboard.press('Enter');assert.equal(await map.locator('.strategy-map').getAttribute('data-active-step'),'3');assert.equal(await page.locator('#selected-action').getAttribute('data-step'),'3');
+  await map.locator('.scenario-steps [data-step="2"] button').click();assert.equal(await map.locator('.strategy-map').getAttribute('data-active-step'),'2');assert.equal(await page.locator('#selected-action').getAttribute('data-step'),'2');
+  await map.locator('.map-header button').click();await page.waitForSelector('#loading-map-dialog[open]');await page.locator('#zoom-step-controls [data-map-step="ALL"]').click();await page.locator('#zoom-map [data-map-action="1"]').first().focus();await page.keyboard.press(' ');assert.equal(await map.locator('.strategy-map').getAttribute('data-active-step'),'1');assert.equal(await page.locator('#selected-action').getAttribute('data-step'),'1');assert.match(await page.locator('#zoom-selected-action').innerText(),/럭스의 빛의 속박\(Q\)/);await page.locator('#map-scale').fill('200');await page.locator('#map-scale').dispatchEvent('input');assert(await page.locator('#map-zoom-stage').evaluate(e=>e.scrollWidth>e.clientWidth));await page.keyboard.press('Escape');
+  if(label==='mobile'){await map.locator('[data-map-step="ALL"]').click();const target=await map.locator('[data-map-action="2"] circle').first().boundingBox();await page.touchscreen.tap(target.x+target.width/2,target.y+target.height/2);assert.equal(await page.locator('#selected-action').getAttribute('data-step'),'2');}
+  await page.locator('#assumption-binding').selectOption('MISS');assert.equal(await selected(),'RECEIVE_WITH_LUX');assert.equal(await page.locator('#condition-change').getAttribute('data-action-changed'),'true');assert(await page.locator('#preview-SHORT_FOLLOW').isDisabled());
+  await page.locator('#assumption-binding').selectOption('UNKNOWN');assert.equal(await selected(),'RECEIVE_WITH_LUX');assert(await page.locator('#preview-SHORT_FOLLOW').isDisabled());
+  await page.locator('#assumption-exit_cover').selectOption('UNKNOWN');assert.equal(await selected(),'PREPARE_WINDOW');assert.equal(await page.locator('#active-plan .strategy-map path[marker-end]').count(),0);assert.equal(await page.locator('#active-plan [data-team="ENEMY"]').count(),0);
+  await page.locator('#assumptions-ready').click();await page.locator('#why-SHORT_FOLLOW > summary').click();assert.match(await page.locator('#why-SHORT_FOLLOW').innerText(),/설계 가설|조건부/);assert(await page.locator('#why-SHORT_FOLLOW a[href^="https:"]').count()>=5);assert.match(await page.locator('#why-SHORT_FOLLOW').innerText(),/DUO-L2/);
+  await capture('#active-plan',label+'-interactive-plan.png');await capture('#plan-comparison',label+'-interactive-comparison.png');
+  await page.locator('#period-LEVEL6').click();assert.equal(await selected(),'UNSUPPORTED');assert.match(await page.locator('#selected-lane-row').innerText(),/폭뢰\(R\)/);assert.equal(await flow.locator('#active-plan').count(),0);
+  await page.locator('#explore-tab-OPERATIONS').click();assert.match(await flow.innerText(),/운영 기본안/);await page.locator('#explore-tab-FIGHT').click();assert.match(await flow.innerText(),/한타에서 내 역할/);await page.locator('#explore-tab-LANE').click();await page.locator('#period-LEVEL2').click();await page.locator('#assumptions-reset').click();assert.equal(await selected(),'PREPARE_WINDOW');assert.equal(await page.locator('#assumption-followup').inputValue(),'UNKNOWN');
+  await page.locator('#risk-BALANCED').check();await page.locator('#input-panel').evaluate(e=>e.open=true);await page.locator('#pick-ALLY-0').fill('Malphite');assert(await page.locator('#loading-results').isHidden());assert.equal(await flow.locator('.strategy-map').count(),0);await analyze();assert.match(await page.locator('#fight-content').innerText(),/말파이트/);await example(0);
+  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'interactive horizontal overflow');
+ };
  const skillPresentation=async()=>{
   const row=id=>page.locator('[data-milestone="'+id+'"]'),cell=(id,index)=>row(id).locator('td').nth(index);
   assert.match(await summary(),/럭스의 빛의 속박\(Q\)/);assert.match(await summary(),/케이틀린의 요들잡이 덫\(W\)/);
@@ -99,6 +121,7 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
   assert.equal(await page.locator('#scenario-content [data-scenario]').count(),2);
   assert.equal(await page.locator('[data-team="ENEMY"][data-entity]').count(),0);
   await skillPresentation();
+  await interactiveFlow('desktop');
   await mapSkillPresentation();
   await capture('#loading-summary','desktop-summary.png');await capture('#loading-lane','desktop-lane.png');await capture('#teamfight','desktop-teamfight.png');
   snapshots.push({input:'example-0 manual Korean/English',summary:original,lane_rows:await page.locator('#lane-table tbody').innerText()});
@@ -161,6 +184,7 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
   assert.match(await page.locator('#loading-message').innerText(),/직접 입력/);
   // The exact public allowlist works under /lol-coach/, with mobile steps/zoom/details.
   await page.setViewportSize({width:390,height:844});await ready(process.env.LOADING_WEB+'/lol-coach/index.html');await example(0);
+  await interactiveFlow('mobile');
   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
   await skillPresentation();
   await mapSkillPresentation();
