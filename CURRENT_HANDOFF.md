@@ -1,3 +1,61 @@
+된 것: 공개 웹에서 성향→미래조건→행동·비용 비교→설명·미니맵 연결을 끝까지 사용할 수 있습니다.
+된 것: 대표 바텀 레벨2의 실제 선택 변화·같은선택 이유·미확인 차단·키보드/터치를 PC·모바일에서 확인했습니다.
+확인: PR60·61 필수/병합후 각3개·Pages실제배포 성공, 공개29파일 일치와 실제HTTPS 흐름이 통과했습니다.
+한계: 다른구간·운영/한타의 새 성향비교는 미지원이며 전략은 가설·30초이해 미측정·실전N=0입니다.
+보존: Windows BLOCKED_EXTERNAL·기존자료/등급/실패·질문3개·영상3/3 유지, 추가호출0·사용자할일없음입니다.
+
+# Interactive loading actually published — 2026-10-17
+
+Use https://kco994553-star.github.io/lol-coach/ → manual10picks or example1 → 이번판방향보기
+→ preference3choices → Lv2 → 후속가능가정예시 → changebindingonly → comparecosts/actions
+→ map/card/zoomsteps → eachWhy/source. Allfutureassumptions NOT_OBSERVED; defaultunknown
+keeps PREPARE_WINDOW for allpreferences and explains samechoice. No economy prerequisite.
+
+Exact example Ornn/Sejuani/Ahri/Caitlyn/Lux vs Fiora/LeeSin/Zed/Kaisa/Nautilus,
+selfCaitBOT, input16.20/source16.20.1. bindingHIT+followupREADY+exitAVAILABLE:
+LOSS_LIMIT selects RECEIVE_WITH_LUX; BALANCED/OPPORTUNITY select SHORT_FOLLOW. BindingonlyMISS
+changes OPPORTUNITY to RECEIVE_WITH_LUX; exitUNKNOWN/BROKEN prevents confirmedreceiving/
+attack and keeps information/resource-target preparation. Six qualitativecostdimensions
+separate from userpreference and evidence. Waiting/receiving costsCS/pressure/opportunity;
+attackcoststrap/resources/exposure. No risk/win/dominance/optimality scores or grade changes.
+
+Inputv2 prefers legacyBALANCED; UI selection/futureassumptions/report separate. Existing
+summary/full6rowtable/6scenes/role/context/gameplan/fight preserved.6periods plusquicklane/
+operations/fight and row/planWhy/exactsource/trace connected. Newcandidatecomparison and
+newmap only exactduoLv2+matchingpatch/requiredfacts; othercases explicitlyunsupported.
+Unknown conditions don'tbecome known through preference/buttons. Dirtypicks hide/destroy
+oldresult/zoom. Map onlyalliedCait/Lux, redbottomstaysbottom, informationmarkers aren'tmoves;
+card/native/SVG/insidezoomactiontext sharestate; keyboard/touch/200%zoom and officialskill
+owner/name(key) verified. No drag/privateenemypositions/livefeed/productionR3adapter.
+
+PR60 headc5bd15d9 tested6aaad0e7 maina4b25a33 sharetree1a53dd42. Required39015861516/
+39015861461 and postmain39015982313/39015982014 all3SUCCESS,45changedchecks/freshbrowsers.
+PR61 officialauthoredaliasfollowup headbd5055c9 tested0e1e2e95 main4e373bbd sharetree0bf52848.
+Required39016214800/39016214840 and postmain39016328831/39016328895 all3SUCCESS;26changedchecks
+and freshloadingbrowser including insidezoomstep3. Counts overlap, not independentcoaching
+samples. Review2importantfindings fixed RED→GREEN; displayRED and allfailedhistory retained.
+
+Pages nonforceCAS096234e8→34d141fafd1da4265f15381d2e8e5042d13be9a2, tree76f5043e,
+actualnative39016494997SUCCESS. Public29files/root/buildinfo/.nojekyll exact. ActualHTTPS
+Chromium1440/390 manual10picks→preference/onecondition/actions+costs→unknown/reset→6periods/
+why→card/SVG/zoom/keyboard/touch→dirtypickshide→oldscene/status PASS; errors0,publicPC/provider
+requests0,TLSretained. Evidence/logs/publicscreens/casecomparison:
+evidence/actual-evidence/loading-interactive/publication/ and report.md onelevel above.
+Statuspage stilldatedsnapshot, not livemonitor. Deploymentinitialpendingvsactualsuccess
+storedseparately. ThisresultsonlyPR'sfutureCI/merge aren'tpredicted; commonclaim finalreceipt
+willrecord actualfinalSHA/CI and product29filesidentical to publishedsource4e373bbd.
+
+Original advice7/AUTO30/HOLD20/USER0/Frozen350/official865/quotes/history/Windowslauncher/
+manualfallback unchanged. New interpretations DESIGN_HYPOTHESIS, realcoachingN0/accuracy=null,
+human30scomprehensionNOT_MEASURED, actualWindowsLCU BLOCKED_EXTERNAL. No expertclaimadoption.
+ExtraTEXT/VIDEO/game/asset/paidcalls0; Oct17VIDEO3/3. Existing sourcequestion3/diagnosis separate:
+Oct18stage3clip→separatereview/requiredCIpublish→stage4JSON, normal1video/day afterdiagnosis,
+samefree/sharedledger/fulloriginalcharges/no refund/no unchangedretry; no new schedule.
+No userapproval/fullreview/collection burden. Nextsourceboundcomparison extension staysqueued,
+not automaticnewchampions/scenes/23rewrites or inferredrealplayaccuracy.
+
+---
+
 된 것: PR60 인터랙티브 흐름이 병합됐고 필수·병합후3개 검사가 모두 통과했습니다.
 보완: 새 행동·비용·지도/확대 설명의 덫 약칭을 공식 이름(키)으로 연결하는 표시 수정입니다.
 보존: 입력v2·조건게이트·실제 행동선택·원문·기존 요약/전체표/6장면·Windows 경로는 그대로입니다.

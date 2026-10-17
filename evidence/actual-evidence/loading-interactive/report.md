@@ -77,3 +77,14 @@ Next: question-backed representative tacticaldecisions, onlyexpandcomparison sco
 boundedconditions/costs/maprules; no automatic23rewrite/champion/scene expansion.
 Rollback priorPages096234e8 + revertadditiveinput/module/DOM/staticbinding changes; raw
 knowledge/quotas/source/history neverremoved. No userapproval or collection burden.
+
+## Actual publication confirmation
+
+PR60 maina4b25a33 and displayfollowupPR61 main4e373bbd passed required+postmain3jobs each.
+NativePages39016494997SUCCESS,artifact34d141fa,29publicfiles exact and actualHTTPS1440/390
+interactiveflow PASS, including officialname(key) insidezoom. Fullreceipts/screens in publication/.
+The same10pick comparison above changed actual actionIDs andmap, not justwording. These are
+functionalresults; tacticsremainhypotheses, realcoachingN0,30seccomprehensionunmeasured.
+
+Patch gate reuses existing SOURCE_MAJOR_MATCH(first two segments); full version pair stays
+visible. DataDragon revision/hotfix equivalence is not independently established.
