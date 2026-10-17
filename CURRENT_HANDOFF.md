@@ -1,3 +1,41 @@
+된 것: 로딩 요약의 후보 반복·스킬 소유자 중복을 줄이고 상세 조건·여섯 구간을 보존했습니다.
+된 것: 기존 질문6개 중 행동을 바꿀 세 질문을 별도 연결하고 반례·필요 장면을 기록했습니다.
+확인: 변경 검사32개·PC1440/모바일390 및 공유 표시 회귀 통과, 독립 검토 지적 수정.
+미확인: 새 강의 채택0·코칭N=0·30초 이해 미측정·실제Windows BLOCKED_EXTERNAL입니다.
+다음: 오늘 영상3/3 추가호출0. 필수CI·정상병합·Pages 확인 후 결과를 별도 기록합니다.
+
+# Loading readability + prioritized evidence questions — 2026-10-17
+
+Authority USER_LOADING_SUMMARY_READABILITY_AND_THREE_EVIDENCE_QUESTIONS.
+Base maina698bb9d3aa7ca5ba94f1d8f57d702249dd0b519; branch work/loading-readability-20261017;
+common token main-20261017-loading-readability. Bounded summary + display owner normalization,
+no scene/champion/advice23 expansion. Full gameplan/teamfight/contexts/roles/lane reports
+byte-equivalent as parsed fields except summary. Original six-question file untouched; new
+selected DUO-L2/L3_5/L6 artifact references its exact hash, current advice/fact gaps/needed
+lecture scenes/revision counterexamples. See evidence/actual-evidence/loading-readability/report.md.
+
+Original facts/quotes/sourcehash/history/grades/Auto30/Hold20/User0/advice7/Frozen350 and Windows
+launcher/LCU/manual fallback unchanged. No new tactical approval inheritance. Real coachingN0,
+accuracy=null; human30s comprehension NOT_MEASURED. Adjacent same champion subject identifies
+skillowner after omitting repeated possessive; official owner-like skillnames retained.
+
+TodayVIDEO3/3, extraTEXT/VIDEO/game/sourceasset/paidcalls0. Existing stage2 Hecarim diagnostic
+is not a relevant lecture segment/adopted fact/predecision scene; all3 questions HOLD.
+Scheduler381076541 active UTC09=KST18, recent5 runs manual; scheduled actualexecution unobserved.
+Next eligible nominal video slot Oct18KST18;③clip→separate review/requiredCI publish→④JSON,
+then normal1/day, sharedoriginaldurationquota/no refunds/no unchangedretry/freeconditions.
+No reservation/ledger/diagnostic/workflow change. Sources registered only, no matching segment
+or expert statement newly adopted. No user approval/full review/collection burden.
+
+RED reproduced summary enumeration/ownerduplicate.32 focused checks pass; browser local
+loading073408, directions073347719, protectedPC073347969 +PCskill1440/390 pass. Loading first
+073342failed obsolete phrase expectation retained; changed browser assertions still check
+name/key/owner plus trap activation/followup/conditions. Review P2 strengthened objective
+conversion fixed by remainingplayers/wave/recall condition. Existing unrelated CI reused.
+RemoteCI/merge/Pages success is not predicted; actual receipts will be recorded after gates.
+
+---
+
 된 것: 바텀·정글개입·운영·한타 문맥을 분리하고 대표 매치업 여섯 구간을 공개 웹에 반영했습니다.
 된 것: 스킬 표시를 공식 이름(키)와 소유자로 통일했고 기존 PC·프리게임·검토 큐에도 연결했습니다.
 확인: PR56 필수3개·병합후3개·Pages실제배포 성공, 공개27파일 일치와 PC1440/모바일390 동작을 확인했습니다.

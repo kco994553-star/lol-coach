@@ -32,10 +32,10 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
  const skillPresentation=async()=>{
   const row=id=>page.locator('[data-milestone="'+id+'"]'),cell=(id,index)=>row(id).locator('td').nth(index);
   assert.match(await summary(),/럭스의 빛의 속박\(Q\)/);assert.match(await summary(),/케이틀린의 요들잡이 덫\(W\)/);
-  assert.match(await page.locator('#lane-key').innerText(),/케이틀린의 요들잡이 덫\(W\) 발동/);
-  assert.match(await page.locator('#remember li').first().innerText(),/확정 케이틀린의 요들잡이 덫\(W\) 연계/);
+  assert.match(await page.locator('#lane-key').innerText(),/설치·발동·후속 거리/);
+  assert.match(await page.locator('#remember li').first().innerText(),/케이틀린의 요들잡이 덫\(W\) 후속이 확정되지는/);
   assert.match(await cell('LEVEL1',0).innerText(),/케이틀린의 필트오버 피스메이커\(Q\).*럭스의 광휘의 특이점\(E\)/);
-  assert.match(await cell('LEVEL1',2).innerText(),/노틸러스가 노틸러스의 닻줄 견인\(Q\)로/);
+  assert.match(await cell('LEVEL1',2).innerText(),/노틸러스가 닻줄 견인\(Q\)로/);
   assert.match(await cell('LEVEL1',2).innerText(),/카이사가.*카이사의 이케시아 폭우\(Q\) 피해/);
   assert.match(await cell('LEVEL2',2).innerText(),/케이틀린의 요들잡이 덫\(W\)와 짧은/);
   assert.match(await cell('LEVEL2',2).innerText(),/노틸러스의 닻줄 견인\(Q\) 접근/);

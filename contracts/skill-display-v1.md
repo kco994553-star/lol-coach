@@ -13,3 +13,9 @@ Rendering is idempotent: an existing correct `(Q)` is not duplicated. Multiple c
 Expected checks: all official slot/name mappings; multi-owner equal keys; repeated names; already formatted keys; passive; unknown/invalid/mismatched locator; summoner/item exclusion; same bare E with explicit different bindings; no input mutation; raw/source/engine bytes unchanged. Browser checks cover PC and 390px loading summary/six rows/fight/scenario/map/zoom and existing PC/reference displays. Changed-only tests and required CI run; completed unrelated evidence is reused. Real coaching N=0 and Windows client BLOCKED_EXTERNAL remain.
 
 Rollback: revert only the display adapter, generated name table, consumers, export/static additions and their bounded verification changes. Original facts/engine reports/grades are never rewritten.
+
+2026-10-17 readability addition: when a skill label immediately follows the same explicit
+champion subject (`노틸러스가 노틸러스의 닻줄 견인(Q)`), omit only the redundant display
+possessive (`노틸러스가 닻줄 견인(Q)`). The adjacent subject identifies the owner. Other-owner
+skills retain their possessive. Compare complete official labels, so an owner-like substring
+inside `드레이븐의 리그(P)` remains intact. Raw facts/quotes/JSON remain untouched.
