@@ -1,0 +1,61 @@
+test_alias_does_not_corrupt_canonical_name_or_repeat (tests_pregame.test_skill_display.SkillDisplayTests.test_alias_does_not_corrupt_canonical_name_or_repeat) ... ok
+test_bare_key_not_defaulted_to_own (tests_pregame.test_skill_display.SkillDisplayTests.test_bare_key_not_defaulted_to_own) ... ok
+test_display_input_objects_unchanged (tests_pregame.test_skill_display.SkillDisplayTests.test_display_input_objects_unchanged) ... ok
+test_exact_locator_and_no_item_or_summoner_slots (tests_pregame.test_skill_display.SkillDisplayTests.test_exact_locator_and_no_item_or_summoner_slots) ... ok
+test_existing_key_is_idempotent (tests_pregame.test_skill_display.SkillDisplayTests.test_existing_key_is_idempotent) ... ok
+test_explicit_mention_bindings_preserve_different_e_owners (tests_pregame.test_skill_display.SkillDisplayTests.test_explicit_mention_bindings_preserve_different_e_owners) ... ok
+test_explicit_owner_key_with_existing_key_is_idempotent (tests_pregame.test_skill_display.SkillDisplayTests.test_explicit_owner_key_with_existing_key_is_idempotent) ... FAIL
+test_five_caitlyn_slots_and_explicit_owners (tests_pregame.test_skill_display.SkillDisplayTests.test_five_caitlyn_slots_and_explicit_owners) ... ok
+test_generic_effects_and_common_words_are_not_skill_mentions (tests_pregame.test_skill_display.SkillDisplayTests.test_generic_effects_and_common_words_are_not_skill_mentions) ... FAIL
+test_multiple_champions_same_key_and_group (tests_pregame.test_skill_display.SkillDisplayTests.test_multiple_champions_same_key_and_group) ... ok
+test_offline_name_table_is_exact (tests_pregame.test_skill_display.SkillDisplayTests.test_offline_name_table_is_exact) ... ok
+test_real_duplicate_name_needs_owner (tests_pregame.test_skill_display.SkillDisplayTests.test_real_duplicate_name_needs_owner) ... ok
+test_unqualified_name_only_in_explicitly_typed_name_field (tests_pregame.test_skill_display.SkillDisplayTests.test_unqualified_name_only_in_explicitly_typed_name_field) ... FAIL
+
+======================================================================
+FAIL: test_explicit_owner_key_with_existing_key_is_idempotent (tests_pregame.test_skill_display.SkillDisplayTests.test_explicit_owner_key_with_existing_key_is_idempotent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 42, in test_explicit_owner_key_with_existing_key_is_idempotent
+    self.assertEqual(actual,['럭스의 빛의 속박(Q)','럭스의 빛의 속박(Q)'])
+AssertionError: Lists differ: ['럭스의 빛의 속박(Q)(Q)', '럭스의 빛의 속박(Q)'] != ['럭스의 빛의 속박(Q)', '럭스의 빛의 속박(Q)']
+
+First differing element 0:
+'럭스의 빛의 속박(Q)(Q)'
+'럭스의 빛의 속박(Q)'
+
+- ['럭스의 빛의 속박(Q)(Q)', '럭스의 빛의 속박(Q)']
+?               ---
+
++ ['럭스의 빛의 속박(Q)', '럭스의 빛의 속박(Q)']
+
+======================================================================
+FAIL: test_generic_effects_and_common_words_are_not_skill_mentions (tests_pregame.test_skill_display.SkillDisplayTests.test_generic_effects_and_common_words_are_not_skill_mentions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 38, in test_generic_effects_and_common_words_are_not_skill_mentions
+    self.assertEqual(actual,'교전 준비와 상대의 반격·매혹·공포를 확인합니다.')
+AssertionError: '교전 카타리나의 준비(W)와 상대의 잭스의 반격(E)·아리의 매혹(E)·피들스틱의 공포(Q)를 확인합니다.' != '교전 준비와 상대의 반격·매혹·공포를 확인합니다.'
+- 교전 카타리나의 준비(W)와 상대의 잭스의 반격(E)·아리의 매혹(E)·피들스틱의 공포(Q)를 확인합니다.
++ 교전 준비와 상대의 반격·매혹·공포를 확인합니다.
+
+
+======================================================================
+FAIL: test_unqualified_name_only_in_explicitly_typed_name_field (tests_pregame.test_skill_display.SkillDisplayTests.test_unqualified_name_only_in_explicitly_typed_name_field)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 46, in test_unqualified_name_only_in_explicitly_typed_name_field
+    self.assertEqual(actual,['빛의 속박','럭스의 빛의 속박(Q)'])
+AssertionError: Lists differ: ['럭스의 빛의 속박(Q)', '럭스의 빛의 속박(Q)'] != ['빛의 속박', '럭스의 빛의 속박(Q)']
+
+First differing element 0:
+'럭스의 빛의 속박(Q)'
+'빛의 속박'
+
+- ['럭스의 빛의 속박(Q)', '럭스의 빛의 속박(Q)']
++ ['빛의 속박', '럭스의 빛의 속박(Q)']
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.725s
+
+FAILED (failures=3)

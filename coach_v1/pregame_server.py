@@ -303,6 +303,8 @@ class PregameHandler(Handler):
         # Public, manual learning examples only. No account/live-game adapter or
         # private workbench export is reachable from this explicit asset list.
         learning_assets={
+            '/skill-data.js':('skill-data.js','text/javascript; charset=utf-8'),
+            '/skill-display.js':('skill-display.js','text/javascript; charset=utf-8'),
             '/loading':('loading.html','text/html; charset=utf-8'),
             '/loading.html':('loading.html','text/html; charset=utf-8'),
             '/loading.js':('loading.js','text/javascript; charset=utf-8'),

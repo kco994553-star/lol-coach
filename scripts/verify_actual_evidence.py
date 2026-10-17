@@ -19,8 +19,13 @@ MODIFIED={'coach_v1/pc_coach.py','.github/workflows/private-mvp-ci.yml',
     '.github/workflows/pregame-ci.yml','.github/workflows/expert-video-collection.yml',
     '.github/workflows/pro-reference-collection.yml','scripts/collect_expert_claims.py',
     'scripts/diagnose_expert_front.py','scripts/diagnose_expert_video.py',
-    'CURRENT_HANDOFF.md','docs/queue/QUEUE.md','coach_v1/pregame_server.py','web_r4/pc.html'}
+    'CURRENT_HANDOFF.md','docs/queue/QUEUE.md','coach_v1/pregame_server.py','web_r4/pc.html',
+    'web_r4/pc.js','web_r4/pregame.js','web_r4/pregame.html','web_r4/official_reference.js',
+    'web_r4/review_queue.js','web_r4/review_queue.html'}
 CURRENT=MODIFIED|{
+    'contracts/skill-display-v1.md','scripts/build_skill_display.py',
+    'web_r4/skill-data.js','web_r4/skill-display.js',
+    'tests_pregame/test_skill_display.py','tests_pregame/test_skill_pc_display.py','scripts/browser_skill_pc.py',
     'contracts/loading-context-v2.md','tests_pregame/test_loading_context.py',
     'contracts/loading-strategy-v1.md','docs/superpowers/plans/2026-10-17-loading-strategy.md',
     'scripts/build_loading_catalog.py','scripts/browser_loading.py',
@@ -45,8 +50,12 @@ CURRENT=MODIFIED|{
 TESTS=['tests_expert.test_video_diagnostic_payload','tests_expert.test_video_diagnostic_policy','tests_expert.test_video_diagnostic_cli','tests_expert.test_gemini_response_diagnostics','tests_expert.test_text_response_v2','tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
        'tests_pregame.test_resource_recovery','tests_pregame.test_resource_view','tests_pregame.test_fixed_resource_checkpoint',
        'tests_pregame.test_actual_evidence_binding','tests_pregame.test_directions','tests_pregame.test_directions_http',
-       'tests_pregame.test_loading_catalog','tests_pregame.test_loading_strategy','tests_pregame.test_loading_http','tests_pregame.test_loading_context']
+       'tests_pregame.test_loading_catalog','tests_pregame.test_loading_strategy','tests_pregame.test_loading_http','tests_pregame.test_loading_context',
+       'tests_pregame.test_skill_display','tests_pregame.test_skill_pc_display']
 DATA_ROOTS=['data/resource_recovery/2026-10-16','data/pov_metadata/2026-10-16']
+SKILL_COMMON={'web_r4/skill-data.js','web_r4/skill-display.js','scripts/build_skill_display.py','contracts/skill-display-v1.md'}
+SKILL_PC={'web_r4/pc.js','web_r4/pc.html','web_r4/pregame.js','web_r4/pregame.html',
+    'web_r4/official_reference.js','web_r4/review_queue.js','web_r4/review_queue.html','scripts/browser_skill_pc.py'}
 
 
 
@@ -95,7 +104,17 @@ def affected_browser_changed():
     if not before or set(before)=={'0'}:return True
     changed=set(git('diff','--name-only',before,'HEAD').decode().splitlines())
     watched={'coach_v1/pc_coach.py','coach_v1/resource_view.py','coach_v1/resource_recovery.py','scripts/browser_actual_evidence.py'}
-    return bool(changed & watched or any(p.startswith('data/resource_recovery/') for p in changed))
+    return bool(changed & (watched|SKILL_COMMON|SKILL_PC) or any(p.startswith('data/resource_recovery/') for p in changed))
+
+
+def affected_skill_browser_changed():
+    path=os.environ.get('GITHUB_EVENT_PATH')
+    if not path:return True
+    event=json.loads(Path(path).read_text())
+    before=event.get('pull_request',{}).get('base',{}).get('sha') or event.get('before')
+    if not before or set(before)=={'0'}:return True
+    changed=set(git('diff','--name-only',before,'HEAD').decode().splitlines())
+    return bool(changed & (SKILL_COMMON|SKILL_PC))
 
 
 def prepare():
@@ -126,7 +145,8 @@ def affected_code_changed():
     content={'config/evidence_intake.json','config/pov_channels.json','config/video_api_diagnostic.json',
         'web_r4/directions-data.json','config/direction_asset_sources.json','web_r4/directions.html',
         'web_r4/directions.css','web_r4/directions-status.json','web_r4/status.html',
-        'web_r4/loading.html','web_r4/loading.css','web_r4/loading-data.json'}
+        'web_r4/loading.html','web_r4/loading.css','web_r4/loading-data.json',
+        'web_r4/pregame.html','web_r4/review_queue.html','web_r4/pc.html'}
     return bool(changed&(executable|content))
 
 
@@ -137,6 +157,8 @@ def selected_tests():
     if not before or set(before)=={'0'}:return TESTS
     changed=set(git('diff','--name-only',before,'HEAD').decode().splitlines())
     groups={
+        'tests_pregame.test_skill_display':SKILL_COMMON|SKILL_PC|{'web_r4/loading.js','web_r4/directions.js','web_r4/loading-map.js','web_r4/loading-data.json'},
+        'tests_pregame.test_skill_pc_display':SKILL_COMMON|SKILL_PC,
         'tests_pregame.test_loading_context':{'web_r4/loading-engine.js','web_r4/loading-data.json','scripts/build_loading_catalog.py','contracts/loading-context-v2.md'},
         'tests_pregame.test_loading_catalog':{'scripts/build_loading_catalog.py','web_r4/loading-data.json','web_r4/directions-data.json'},
         'tests_pregame.test_loading_strategy':{'web_r4/loading-engine.js','web_r4/loading-data.json','web_r4/directions-engine.js','web_r4/directions-data.json'},

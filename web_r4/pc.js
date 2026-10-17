@@ -15,6 +15,24 @@
   const expandedCards=new Set();let moreExpanded=false;
   const patchLabel=value=>({MATCHING_ARCHIVE:'입력 패치와 일치',GAME_PATCH_UNKNOWN:'게임 패치 미확인 · 참고용',GAME_PATCH_MISMATCH:'게임 패치와 다름 · 참고용'})[value] || '패치 미확인 · 참고용';
   const connectionReason=value=>({GAME_PC_NOT_CONNECTED:'로컬 클라이언트 연결을 기다립니다.',LCU_NOT_AVAILABLE:'클라이언트가 실행 중인지 확인하세요.',LOCAL_PAIRING_UNAVAILABLE:'로컬 연결 확인이 필요합니다. 수동 입력을 사용할 수 있습니다.',PHASE_CHANGED:'챔피언 선택 단계가 바뀌었습니다.',PHASE_UNKNOWN:'클라이언트 단계를 확인하지 못했습니다.',NOT_CHAMP_SELECT:'현재 챔피언 선택 단계가 아닙니다.',SESSION_CHANGED:'클라이언트 연결이 바뀌어 다시 확인합니다.',CERTIFICATE_PIN_MISMATCH:'클라이언트 인증서가 바뀌어 연결을 보류했습니다.',SCHEMA_UNSUPPORTED:'현재 클라이언트 형식을 확인하지 못했습니다.',LCU_REQUEST_FAILED:'클라이언트가 응답하지 않아 수동 입력을 사용합니다.',LOCKFILE_UNAVAILABLE:'클라이언트 연결 파일을 찾지 못했습니다.',LOCKFILE_INVALID:'클라이언트 연결 파일을 확인하지 못했습니다.'})[value] || '자동 연결을 확인하지 못해 수동 입력을 사용합니다.';
+  function skillOptions(owner) {
+    const champion=window.SkillDisplay.resolve(owner);
+    return {champions:currentInput?.slots?.map(slot=>slot.champion),own:currentInput?.my_champion,owner:champion,
+      aliases:champion==='Caitlyn'?[{text:'덫',champion,slot:'W'},{text:'투망',champion,slot:'E'}]:[]};
+  }
+  function prose(value, owner) {return window.SkillDisplay.format(value,skillOptions(owner));}
+  function cardText(value, card) {
+    const owner=window.SkillDisplay.resolve(card.champion);
+    if(owner && ['OFFICIAL','OFFICIAL_FACT','OFFICIAL_REFERENCE'].includes(card.evidence_level)) {
+      // An official card combines a heading and its source body. Only the heading changes.
+      return String(value ?? '').split('\n').map(line=>{
+        const match=/^([^:]+):(.*)$/.exec(line);
+        const slot=match && window.SkillDisplay.resolveSlot(owner,match[1]);
+        return slot?window.SkillDisplay.factLabel(owner,{name:match[1],slot})+':'+match[2]:line;
+      }).join('\n');
+    }
+    return prose(value,owner);
+  }
   const local = location.protocol==='http:' && ['127.0.0.1','localhost','[::1]'].includes(location.hostname);
   // Consume the fragment before any request; no token enters an HTTP request URL.
   const fragment = new URLSearchParams(location.hash.slice(1));
@@ -131,8 +149,8 @@
     const x=minute=>left+(minute-minimumX)/(maximumX-minimumX)*(width-left-right);
     const y=value=>height-bottom-(value-minimumY)/(maximumY-minimumY)*(height-top-bottom);
     const number=value=>new Intl.NumberFormat('ko-KR',{maximumFractionDigits:2}).format(value);
-    const title=String(graph.title || '관측된 자원 변화'),unit=String(graph.units || '관측값');
-    const xLabel=String(graph.x_label || '경과 시간 (분)'),yLabel=String(graph.y_label || '자원 변화 차이')+' ('+unit+')';
+    const title=prose(graph.title || '관측된 자원 변화'),unit=String(graph.units || '관측값');
+    const xLabel=prose(graph.x_label || '경과 시간 (분)'),yLabel=prose(graph.y_label || '자원 변화 차이')+' ('+unit+')';
     const id='pc-resource-graph-'+(++graphSequence),figure=node('figure',undefined,'resource-graph');
     figure.append(node('figcaption',title));
     const svg=svgNode('svg',{viewBox:'0 0 '+width+' '+height,role:'img','aria-labelledby':id+'-title '+id+'-description'});
@@ -154,7 +172,7 @@
     for(const point of points){const dot=svgNode('circle',{cx:x(point.minute),cy:y(point.value),r:3,class:'graph-point'});dot.append(svgNode('title',{},number(point.minute)+'분 · '+number(point.value)+' '+unit));svg.append(dot);}
     const legend=node('ul',undefined,'graph-legend');
     for(const marker of markers){
-      const own=marker.who==='OWN',label=(own?'내 챔피언':'맞라이너')+' · '+String(marker.label || '첫 구매 대리 관측')+' · '+number(marker.minute)+'분';
+      const own=marker.who==='OWN',label=(own?'내 챔피언':'맞라이너')+' · '+prose(marker.label || '첫 구매 대리 관측')+' · '+number(marker.minute)+'분';
       const line=svgNode('line',{x1:x(marker.minute),y1:top,x2:x(marker.minute),y2:height-bottom,class:'graph-marker '+(own?'own':'opponent'),tabindex:0,role:'img','aria-label':label});
       line.append(svgNode('title',{},label));svg.append(line);
       legend.append(node('li',label,own?'own':'opponent'));
@@ -183,13 +201,13 @@
       const label=hypothesis?'미검토 가설(AI 작성, 근거 링크)':card.evidence_label || '근거 미확인';
       const reference=card.evidence_level==='OFFICIAL' && card.patch_status!=='MATCHING_ARCHIVE';
       article.append(node('span',label+(reference?' · 참고용':''),'evidence '+(card.evidence_level || '')));
-      if(card.topic_label)article.append(node('p','주제: '+card.topic_label,'topic'));
-      article.append(node('h3',card.title || '경기 전 참고'));
-      const lines=node('div',undefined,'card-lines');for(const line of (card.lines || []).slice(0,3))lines.append(node('p',line));article.append(lines);
+      if(card.topic_label)article.append(node('p','주제: '+cardText(card.topic_label,card),'topic'));
+      article.append(node('h3',cardText(card.title || '경기 전 참고',card)));
+      const lines=node('div',undefined,'card-lines');for(const line of (card.lines || []).slice(0,3))lines.append(node('p',cardText(line,card)));article.append(lines);
       const detail=node('details'),summary=node('summary','상세 설명 · 근거 보기');detail.open=expandedCards.has(card.id);
       const syncGraph=()=>{detail.querySelector('.resource-graph')?.remove();if(detail.open){const graph=resourceGraph(card.graph);if(graph)detail.append(graph);}};
       detail.addEventListener('toggle',()=>{if(detail.open)expandedCards.add(card.id);else expandedCards.delete(card.id);syncGraph();});detail.append(summary);
-      if(card.details)detail.append(node('p',card.details));
+      if(card.details)detail.append(node('p',cardText(card.details,card)));
       detail.append(node('p',patchLabel(card.patch_status)));sources(detail,card.sources);article.append(detail);
       syncGraph();
       if(card.evidence_level==='AUTO_VERIFIED' && card.candidate_id && card.candidate_sha256){
@@ -255,7 +273,7 @@
         const week=/^(\d{4})-W(\d+)$/.exec(report.week || '');
         $('pc-weekly-title').textContent=(week?week[1]+'년 '+Number(week[2])+'주':'이번 주')+' 로컬 점검 · 검토 선택사항';
         $('pc-weekly-items').replaceChildren();
-        for(const item of (report.items || []).slice(0,5))$('pc-weekly-items').append(node('li',item.summary || '자동 검토 기록'));
+        for(const item of (report.items || []).slice(0,5))$('pc-weekly-items').append(node('li',prose(item.summary || '자동 검토 기록')));
         if(!$('pc-weekly-items').children.length)$('pc-weekly-items').append(node('li','이번 주 점검 항목을 준비하고 있습니다.'));
       }
     } catch(error){
@@ -272,7 +290,7 @@
     for(const champion of matches){
       const item=node('details',undefined,'reference-item');item.append(node('summary',(champion.name || champion.champion_name || champion.champion)+' · '+champion.champion+' · '+patchLabel(champion.patch_status)));
       for(const fact of champion.facts || []){
-        item.append(node('p',(fact.name || fact.ability || '')+(fact.text?' · '+fact.text:'')));
+        item.append(node('p',window.SkillDisplay.factLabel(champion.champion,fact)+(fact.text?' · '+fact.text:'')));
         if(fact.source)sources(item,[fact.source]);
       }
       $('pc-reference-list').append(item);

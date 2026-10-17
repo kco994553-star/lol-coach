@@ -1,0 +1,48 @@
+{
+  "reviewer": "separate context_review agent",
+  "open_blockers": 0,
+  "scope": "display/source/consumer/CI/export; not expert or real-play validation",
+  "source_sha256": {
+    "contracts/skill-display-v1.md": "917eb179fba6cc1750d3e4c4149fb8ab9f465631f662167d8c61fff5b1e29c8f",
+    "scripts/build_skill_display.py": "c45452ec7ddfcd6366ff452e369c3cecc85434b0fdec9194f091191624a11b35",
+    "web_r4/skill-data.js": "da56f395ad93b556cccb81a38d09afd518af9c8866d6904696de07391edb8cb1",
+    "web_r4/skill-display.js": "6c5b236cf3a571b8b4bb5dd6cccf4b1fd6e33bda59d53d96799235316366509b",
+    "tests_pregame/test_skill_display.py": "a6209ac6efccaabbf152dc70ec377e729e271288b544a2af188aee54c302ec26",
+    "tests_pregame/test_skill_pc_display.py": "ba6b561183b31d0ff7871ecbaf2928b9b229eefd47529064fb2b4a781415a815",
+    "scripts/browser_skill_pc.py": "daea9b61e77b4cc51ca1d4d8b910226f388682d4a0f1cf90073de8d49a5e7b1f",
+    "scripts/browser_loading.py": "04107b4787642dde6dd2282945e5e7e59fe9fecbaa4512e98200d992229c0b83",
+    "scripts/browser_directions.py": "99b33718e8db73b7a5eb3b6ff3faface4830384900aff28a3546cacde8b4c0f8",
+    "scripts/browser_actual_evidence.py": "708e35ff31a65c3e4eef06209d3df82e75a8beab6b4d3f17466382ec2f2bf272",
+    "scripts/verify_actual_evidence.py": "9161de1140b9f474416069cb3b80dc3280551932ee9214938ddf34c8b1fe3bdb",
+    "scripts/build_directions_web.py": "aca6b2a7a874b981b2bfc91c01fb8c76c4acdb66b4a01e093056ab6f647b6959",
+    "coach_v1/pregame_server.py": "cfae974e2eb5fd6ff8536a4dfbd51244a236c5d5df495d188e5f60b0837ec5df",
+    "web_r4/loading.js": "ea2acdd91eba26bc3555a96929c8e9b61cd39560310bcc1f2c188a928a7bb114",
+    "web_r4/loading-map.js": "393317f0bf8b44e8c9ca331ac22c00e92c0d45604507f0f7ac622ac1200f82e8",
+    "web_r4/loading.html": "1867975370f2c28a57a994c5f9bd68c66887df0b115a576ceafafb066962fcc2",
+    "web_r4/directions.js": "674579b18b97303991e4af249d512479b9ce379239be700aade1513600ebf383",
+    "web_r4/directions.html": "4cade86ec242bc4c7b320e2d90fffccf806d15a68dcd2678f8733483af0811f8",
+    "web_r4/pc.js": "f973c5cd8086728b6f46b54d9782d836a0038a507022a0a28b8b97c1c7e8bfed",
+    "web_r4/pc.html": "b14f9ba8d50470361033610e2461978177f5d1e88ff1e21aba27ae25725e9751",
+    "web_r4/pregame.js": "0710efc7981564d9a53014ce9e4cb17d5037f6e8f54748cef78c26cf22f36e1d",
+    "web_r4/pregame.html": "46e39a5f685dfd14c3713c2266df20c6820e49125dc76869af5efdcd0f159a10",
+    "web_r4/official_reference.js": "dc66664706f57deafbe9ce891a5aeb2e81d854eca3a8928ca86c57bffd97c151",
+    "web_r4/review_queue.js": "a74e7d05c5d7d3ae89395e1cee752070ac772bae82e6ab14fdf391c7f65d264a",
+    "web_r4/review_queue.html": "238ab0b30b3fd9946ff8f07e31f0d3f6ae301365677e7081a0fd9b1fafdc0dd7"
+  },
+  "findings_fixed": [
+    "P1 ordinary prose mistaken for skill names",
+    "P2 owner-key duplicate suffix",
+    "P2 official name starts with champion name or has retained whitespace"
+  ],
+  "independent_checks": [
+    "865 official labels/locators and normalized-name comparison",
+    "2595 raw/name-key/qualified-name slot resolutions",
+    "all-roster repeated format idempotence",
+    "owner/slot conflict rejection and ordinary-word preservation",
+    "raw source/input object immutability",
+    "PC auth/manual/decision paths unchanged"
+  ],
+  "browser_boundary": "Previous local UI receipts precede final rare-name fix; final source-bound CI must confirm browser paths separately.",
+  "real_coaching_n": 0,
+  "coaching_accuracy": null
+}

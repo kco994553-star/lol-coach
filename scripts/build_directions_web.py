@@ -9,6 +9,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = {
+    'skill-data.js':'skill-data.js','skill-display.js':'skill-display.js',
     'loading.html':'index.html', 'loading.js':'loading.js',
     'loading.css':'loading.css', 'loading-engine.js':'loading-engine.js',
     'loading-map.js':'loading-map.js', 'loading-data.json':'loading-data.json',
