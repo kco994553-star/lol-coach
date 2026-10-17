@@ -1,3 +1,30 @@
+된 것: 웨이브 목표·처리·응징·이득 전환·대안이 같은 카드와 라인 도식·미니맵으로 연결됐습니다.
+된 것: Riot ID 검색·대시보드·계정 없이10픽 준비가 공개 PC·모바일 웹에서 작동합니다.
+자료: 확인된 Faker 계정의 실제 솔로랭크5경기·티어·LP를8회 요청으로 조회해 프로 참고로 표시했습니다.
+미연결: 공개 개인 계정API·개인 코칭노트·실제 Windows는 미확인이고 새 전술은 가설·실전N=0입니다.
+다음: 원격 필수·공개배포 검증 증거를 보존하고 기존 질문3개·영상3/3·AUTO30/HOLD20·원문을 유지합니다.
+
+# Wave-first dashboard public completion — 2026-10-17
+
+Product maind96cecd42f639a7c8cc247c5660178cc9564706e (PR64/65), artifact933adc60af9f16b53f42bf0979caa828fa358179,
+Pages39022711250 SUCCESS; exact35files/root/build-info/.nojekyll and actual HTTPS PC/mobile flow passed.
+URL https://kco994553-star.github.io/lol-coach/ ; loading.html remains manual10pick entry.
+Riot ID→guest dashboard→prepare→10pick→wave period/preferences/futureconditions→costs→same-state
+line/macro map/why. Exactduo only; existing exchange/rows/history retained subordinate. Newplans
+hypotheses, unknownfirstpush/freezeunsupported, fast≠crash/receive≠freeze. AUTO30/HOLD20/USER0,
+7advice/Frozen350/quotas/rawquotes preserved. CoachingN0/30secunmeasured/Windowsblocked.
+PublicaccountAPI unavailable honest guest; privateauthPC KR backend protocolverified only.
+Pro actualrun39022335829 push SUCCESS: sourceconfirmed Faker account,8requests/5solo420games,
+rankLP/recent/champion records public; safeartifact reused no secondquery. Daily18:30KST active,
+next2026-10-18 scheduled event unobserved. Future source exports must retain validated existing
+proJSON, not reset placeholder. AUTHSTOP/statefailure durable; no expiry assertion. Newcohort
+separate from Q15275/recall291/pro89; positionuserroster not matchrole. Personal notes unconnected.
+RequiredPR/postmain gates pass; result-only PR pending beforefinalclaim. Full details/screens/CI
+in evidence/actual-evidence/loading-wave/publication/result.md. No Gemini/video/paidcalls.
+Ready frontend gaps handled; remaining source/Windows/publicbackend dependencies explicit.
+
+---
+
 구현: 대표 매치업의 라인전을 웨이브 목표 → 처리 → 응징 → 이득 전환 → 대안으로 연결했습니다.
 구현: Riot ID 검색·개인 대시보드·계정 없이 10픽 준비 진입을 PC·모바일로 연결했습니다.
 검증: 새 규칙·개인정보 경계·브라우저 변경 검사를 통과했고 독립 코드 검토 지적을 수정했습니다.
