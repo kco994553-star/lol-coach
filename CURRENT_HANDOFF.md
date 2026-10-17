@@ -2,6 +2,17 @@
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
 - writer_active: true
+- owner_branch: `work/art-refresh-results-20261017`
+- current_main: `64eb52fbe4723301adbbae540fb76d006050a525`
+- active_pr: 76
+- scope: PR75 feature/main required3 PASS; actual Pages1dfb4a3/run39078923918 and public51-file hashes/PCmobile5hero/card3/map PASS. Evidence/Handoff-only PR76; no product republish or provider calls. Preserve provenance and no visible image labels per user.
+
+---
+
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
 - owner_branch: `work/art-refresh-20261017`
 - current_main: `7f686b3466e7d208e8418fee0006b9c6f82f782e`
 - scope: User directs no AI illustration labels, strategic operations art, dragon/baron teamfight art, mixed base/skin/generated backgrounds. Preserve source metadata/history, tactical engines, provider budgets and source-bound checks; publish through normal required gates.
