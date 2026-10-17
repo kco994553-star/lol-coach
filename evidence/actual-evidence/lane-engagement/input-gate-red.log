@@ -1,0 +1,40 @@
+...F.
+======================================================================
+FAIL: test_review_negative_gate_unknown_assignment_and_separate_ultimates (tests_pregame.test_lane_engagement.LaneEngagementTests.test_review_negative_gate_unknown_assignment_and_separate_ultimates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_lane_engagement.py", line 36, in test_review_negative_gate_unknown_assignment_and_separate_ultimates
+    self.run_node(self.prefix+"""
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_strategy.py", line 16, in run_node
+    self.assertEqual(result.returncode,0,result.stderr)
+AssertionError: 1 != 0 : node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+'DENIED' !== 'READY'
+
+    at [eval]:10:446
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'DENIED',
+  expected: 'READY',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.664s
+
+FAILED (failures=1)
