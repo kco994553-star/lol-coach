@@ -28,7 +28,7 @@ class LoadingHTTPTests(unittest.TestCase):
         return r.status,body,headers
 
     def test_loading_assets_and_original_pc_access_boundary(self):
-        for path in ['/home-assets/Ahri.jpg','/home-assets/Caitlyn.jpg','/home-assets/lane.jpg','/home-assets/fight.jpg','/loading','/loading.html','/loading-engine.js','/loading-exploration.js','/loading-interactive.js','/dashboard.html','/dashboard.js','/dashboard.css','/pro-dashboard.json','/loading-exchange.js','/loading-exchange-view.js','/loading-engagement.js','/loading-engagement-view.js','/loading-wave.js','/loading-wave-view.js','/loading-map.js','/loading-data.json','/loading-assets/champion0.png','/skill-data.js','/skill-display.js']:
+        for path in ['/coach-theme.css','/coach-shell.js','/hero-art.json','/home-assets/strategy-panels.webp','/home-assets/Ahri.jpg','/home-assets/Caitlyn.jpg','/home-assets/lane.jpg','/home-assets/fight.jpg','/loading','/loading.html','/loading-engine.js','/loading-exploration.js','/loading-interactive.js','/dashboard.html','/dashboard.js','/dashboard.css','/pro-dashboard.json','/loading-exchange.js','/loading-exchange-view.js','/loading-engagement.js','/loading-engagement-view.js','/loading-wave.js','/loading-wave-view.js','/loading-map.js','/loading-data.json','/loading-assets/champion0.png','/skill-data.js','/skill-display.js']:
             status,body,headers=self.get(path);self.assertEqual(status,200,path)
             self.assertGreater(len(body),0);self.assertIn("img-src 'self'",headers['Content-Security-Policy'])
         self.assertEqual(self.get('/dev/v1/pregame/pc-status')[0],401)
@@ -49,6 +49,21 @@ class LoadingHTTPTests(unittest.TestCase):
             self.assertNotIn('pc.js',names)
             self.assertFalse(any('token' in p or 'sqlite' in p or 'ledger' in p for p in names))
             self.assertFalse(result['live_game_connection'])
+
+    def test_public_art_sources_separate_official_splashes_from_ai_decoration(self):
+        import hashlib
+        catalog=json.loads(Path('web_r4/hero-art.json').read_text())
+        registry=json.loads(Path('config/home_design_assets.json').read_text())
+        official={r['path']:r for r in registry['assets']}
+        for row in catalog['assets']:
+            path='web_r4/'+row['src'].removeprefix('./')
+            self.assertEqual(row['sha256'],hashlib.sha256(Path(path).read_bytes()).hexdigest())
+            self.assertEqual(row['source_url'],official[path]['source_url'])
+            self.assertEqual(row['kind'],'OFFICIAL_STATIC_SPLASH')
+        ai=json.loads(Path('config/shared_theme_assets.json').read_text())
+        self.assertFalse(ai['official_riot_asset']);self.assertFalse(ai['tactical_evidence'])
+        self.assertEqual(ai['sha256'],hashlib.sha256(Path(ai['public_path']).read_bytes()).hexdigest())
+        self.assertLess(ai['public_webp_bytes'],ai['original_png_bytes'])
 
     def test_private_account_route_auth_and_missing_configuration(self):
         from coach_v1.account_dashboard import AccountDashboardService
