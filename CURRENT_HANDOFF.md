@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-loading-strategy`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-strategy-mvp-20261017`
+- authority: USER_LOADING_STRATEGY_MVP_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `00b40926e72a198a6143a8b6ffae97dadfac50bf`
+- detail: PR52 mainffe52ef/treec1ee46e postmerge all3SUCCESS and exact logs verified; updating existing gh-pages6c950ca via non-force parent CAS, then public HTTPS/hash/mobile check.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261017-loading-strategy`
 - status: `CI_PENDING`
