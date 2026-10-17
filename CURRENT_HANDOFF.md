@@ -1,3 +1,14 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261017-directions`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `work/directions-prototype-20261017`
+- authority: USER_SITUATIONAL_MINIMAP_PROTOTYPE_AND_MOBILE_WEB_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `15e0e21a53d46e1b9368b93e6ea0963faf767440`
+- detail: PR50 head e684c8dbc724efd832382f13ea61ad34e2ba3ce3;7affected checks+PC/public-subpath/mobile Chromium+independent review passed. Await required3jobs; then exact-head normal merge/postmain and free allowlisted Pages deployment. No provider calls; VIDEO3/3 preserved.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261017-directions`
 - status: `RUNNING`
