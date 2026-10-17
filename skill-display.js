@@ -111,7 +111,15 @@
         const rendered = label(binding.champion, binding.slot);
         if (rendered) text = text.split(binding.text).join(protect(rendered));
       });
-    return text.replace(/\uE000(\d+)\uE001/g, (_, index) => tokens[Number(index)]);
+    text = text.replace(/\uE000(\d+)\uE001/g, (_, index) => tokens[Number(index)]);
+    // An immediately adjacent explicit subject already identifies this skill's owner.
+    // Match complete official labels so owner-like words inside a skill name stay intact.
+    active.forEach(who => {
+      const skills = Object.keys(who.slots).map(slot => escape(label(who.id, slot).slice((who.name + '의 ').length)));
+      const adjacent = new RegExp('(' + escape(who.name) + '(?:가|이|는|은)\\s+)' + escape(who.name) + '의 (?=(?:' + skills.join('|') + '))', 'g');
+      text = text.replace(adjacent, '$1');
+    });
+    return text;
   }
 
   const api = Object.freeze({ format, label, factLabel, slotFromFact, resolveSlot, resolve, source_patch: data && data.source_patch });
