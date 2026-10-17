@@ -303,9 +303,17 @@ class PregameHandler(Handler):
         # Public, manual learning examples only. No account/live-game adapter or
         # private workbench export is reachable from this explicit asset list.
         learning_assets={
+            '/loading':('loading.html','text/html; charset=utf-8'),
+            '/loading.html':('loading.html','text/html; charset=utf-8'),
+            '/loading.js':('loading.js','text/javascript; charset=utf-8'),
+            '/loading-engine.js':('loading-engine.js','text/javascript; charset=utf-8'),
+            '/loading-map.js':('loading-map.js','text/javascript; charset=utf-8'),
+            '/loading.css':('loading.css','text/css; charset=utf-8'),
+            '/loading-data.json':('loading-data.json','application/json; charset=utf-8'),
+            **{'/loading-assets/champion'+str(i)+'.png':('loading-assets/champion'+str(i)+'.png','image/png') for i in range(6)},
             '/directions':('directions.html','text/html; charset=utf-8'),
             '/directions.html':('directions.html','text/html; charset=utf-8'),
-            '/index.html':('directions.html','text/html; charset=utf-8'),
+            '/index.html':('loading.html','text/html; charset=utf-8'),
             '/directions.js':('directions.js','text/javascript; charset=utf-8'),
             '/directions-engine.js':('directions-engine.js','text/javascript; charset=utf-8'),
             '/directions.css':('directions.css','text/css; charset=utf-8'),

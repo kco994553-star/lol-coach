@@ -9,7 +9,12 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = {
-    'directions.html':'index.html', 'directions.js':'directions.js',
+    'loading.html':'index.html', 'loading.js':'loading.js',
+    'loading.css':'loading.css', 'loading-engine.js':'loading-engine.js',
+    'loading-map.js':'loading-map.js', 'loading-data.json':'loading-data.json',
+    'pregame-icon.svg':'pregame-icon.svg',
+    **{'loading-assets/champion'+str(i)+'.png':'loading-assets/champion'+str(i)+'.png' for i in range(6)},
+    'directions.html':'directions.html', 'directions.js':'directions.js',
     'directions.css':'directions.css', 'directions-engine.js':'directions-engine.js',
     'directions-data.json':'directions-data.json', 'directions-status.json':'directions-status.json',
     'status.html':'status.html', 'directions-status.js':'directions-status.js',
@@ -28,9 +33,9 @@ def build(output):
         target=output/destination;target.parent.mkdir(parents=True,exist_ok=True)
         shutil.copyfile(p,target);hashes[destination]=hashlib.sha256(target.read_bytes()).hexdigest()
     commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
-    manifest=dict(format='lol-coach-directions-public-export-v1',source_commit=commit,
+    manifest=dict(format='lol-coach-loading-public-export-v1',source_commit=commit,
         built_at=datetime.now(timezone.utc).isoformat(),sha256=hashes,
-        inputs='Manual hypothetical learning examples only; no persistent inputs',
+        inputs='Manual ten-pick loading analysis and optional hypothetical scenarios; no persistent inputs or public PC service',
         strategy_level='DESIGN_HYPOTHESIS',live_game_connection=False,coaching_accuracy=None)
     (output/'build-info.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
     (output/'.nojekyll').write_text('')
