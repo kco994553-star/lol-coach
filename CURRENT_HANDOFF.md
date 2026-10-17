@@ -2,6 +2,17 @@
 - run_token: `main-20261017-loading-context`
 - status: `RUNNING`
 - writer_active: true
+- owner_branch: `work/skill-display-20261017`
+- authority: USER_LOADING_CONTEXT_QUALITY_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `75a4543c23b1f06f215986ab8ca4036ac6d199b7`
+- detail: PR55 old individual pregame metadata resolved; all three success, normal merge main75a4543. New user skill display work isolated on work/skill-display-20261017 with prior uncommitted display changes retained. Existing PR54 public result reused. No provider calls.
+
+---
+
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-loading-context`
+- status: `RUNNING`
+- writer_active: true
 - owner_branch: `work/loading-context-results-20261017`
 - authority: USER_LOADING_CONTEXT_QUALITY_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
 - intake_main: `f411f624dd62f96ad2f825c8e8626bf37419404b`
