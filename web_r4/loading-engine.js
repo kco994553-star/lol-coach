@@ -1,8 +1,8 @@
 /* Shared PC/mobile pre-game analysis. Source facts and tactical hypotheses differ. */
 (function(root,factory){
-  if(typeof module==='object'&&module.exports)module.exports=factory(require('./directions-engine.js'));
-  else root.LoadingStrategy=factory(root.DirectionEngine);
-})(typeof globalThis!=='undefined'?globalThis:this,function(DirectionEngine){
+  if(typeof module==='object'&&module.exports)module.exports=factory(require('./directions-engine.js'),require('./loading-exploration.js'));
+  else root.LoadingStrategy=factory(root.DirectionEngine,root.LoadingExploration);
+})(typeof globalThis!=='undefined'?globalThis:this,function(DirectionEngine,LoadingExploration){
   'use strict';
   const POSITIONS=['TOP','JUNGLE','MID','BOTTOM','SUPPORT'];
   const POSITION_NAMES={TOP:'탑',JUNGLE:'정글',MID:'미드',BOTTOM:'바텀',SUPPORT:'서포터'};
@@ -24,7 +24,10 @@
     if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).sort().join('|')!==[...keys].sort().join('|'))throw Error('입력 항목을 확인해 주세요.');
   }
   function validate(raw,catalog){
-    exact(raw,['allies','enemies','own_champion','own_position','side','patch','opponent_mode','lane_opponent']);
+    const legacyKeys=['allies','enemies','own_champion','own_position','side','patch','opponent_mode','lane_opponent'];
+    const versioned=raw&&raw.schema_version==='lol-coach-loading-input-v2';
+    exact(raw,versioned?[...legacyKeys,'schema_version','preferences']:legacyKeys);
+    if(versioned){exact(raw.preferences,['risk']);if(!['LOSS_LIMIT','BALANCED','OPPORTUNITY'].includes(raw.preferences.risk))throw Error('리스크 성향을 목록에서 선택해 주세요.');}
     const out={};
     for(const side of ['allies','enemies']){
       if(!Array.isArray(raw[side])||raw[side].length!==5)throw Error('아군과 상대 챔피언을 각각 5명 입력해 주세요.');
@@ -55,6 +58,7 @@
     if(raw.opponent_mode==='MANUAL'){
       if(!out.lane_opponent||!out.enemies.some(s=>s.champion===out.lane_opponent))throw Error('직접 고른 라인 상대는 상대 5명 중에서 선택해 주세요.');
     }else if(raw.lane_opponent!==null)throw Error('라인 상대 직접 선택 값과 선택 방법을 맞춰 주세요.');
+    out.schema_version='lol-coach-loading-input-v2';out.preferences={risk:versioned?raw.preferences.risk:'BALANCED'};
     return out;
   }
   function exampleInput(catalog,index=0){
@@ -273,7 +277,9 @@
     for(const f of catalog.context_facts||[])if(usedIds.has(f.id)||(f.id==='official-detail:Kaisa:R'&&input.own_champion==='Kaisa'))facts.push(f);
     const rules=[...new Map(input.allies.concat(input.enemies).flatMap(p=>catalog.champions[p.champion].profile?.rule_refs||[]).map(r=>[r.id,{...r,level:'EXISTING_RULE',review_state:'EXPLORATORY',interpretation:'기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다.'}])).values()].sort((a,b)=>a.id<b.id?-1:1);
     const evidence={facts:[...new Map(facts.map(f=>[f.id,f])).values()].sort((a,b)=>a.id<b.id?-1:1),rules,statistics:relevantStats,lectures:[],unknowns:[...uncertainty,'레벨별 매치업 우열·피해량·최적 스킬/구매·미확인 충돌 규칙'],limits:['공식 기술/아이템 사실과 신규 조건부 전략 해석은 별도입니다.','기존 유형 분류는 EXPLORATORY이며 미부여 유형은 능력 부재가 아닙니다.','라인전/운영/한타 대상은 문맥별 후보로 선정합니다. 배열 표시 순서가 중요도를 뜻하지 않습니다.','상황 가정은 실제 습득·위치·합류·아이템 관측이 아닙니다.','귀환 통계는 챔피언/포지션 관측이며 매치업/최적 시점 근거가 아닙니다.','경기 전 학습/경기 후 복기용. 실시간 지시·비공개 정보·게임 조작 없음.'],patch_status,strategy_level:'DESIGN_HYPOTHESIS',real_coaching_n:0,accuracy:null};
-    return {schema_version:'lol-coach-loading-report-v2',input,summary,composition:{allies,enemies},roles,contexts,gameplan,lane,teamfight,scenarios:scenarioLinks(input,catalog,contexts),evidence};
+    const result={schema_version:'lol-coach-loading-report-v3',input,summary,composition:{allies,enemies},roles,contexts,gameplan,lane,teamfight,scenarios:scenarioLinks(input,catalog,contexts),evidence};
+    result.exploration=LoadingExploration.evaluate(result,catalog,LoadingExploration.defaultState());
+    return result;
   }
   return {resolveChampion,exampleInput,fromDraft,analyze};
 });

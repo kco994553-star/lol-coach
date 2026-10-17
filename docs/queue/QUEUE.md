@@ -1,3 +1,35 @@
+된 것: 사용자 성향과 미래 조건을 실제 행동·비용 비교에 연결하는 대표 바텀 레벨2 흐름을 구현했습니다.
+된 것: 여섯 구간 탐색·주장별왜·카드/지도/확대창 단계 동기화를 PC·모바일에서 확인했습니다.
+보존: 기존 요약·전체표·6장면·원문/보류·조언7/AUTO30/HOLD20·Windows 경로를 유지했습니다.
+미확인: 신규전술은 가설·30초이해 미측정·실전N=0·Windows BLOCKED_EXTERNAL입니다.
+다음: 필수CI·정상병합·공개Pages 실증을 진행합니다. 영상3/3 추가호출0·근거질문3개는 별도대기입니다.
+
+# Interactive loading implementation — 2026-10-17
+
+Base latestfa22713, branchwork/loading-interactive-20261017, tokenmain-20261017-loading-interactive.
+Contract contracts/loading-interactive-v3.md; plan docs/superpowers/plans/2026-10-17-loading-interactive.md.
+Audit/report/comparisons/failures/review/screens evidence/actual-evidence/loading-interactive/.
+Inputv2 preference defaults legacyBALANCED, futureassumptions separate, gates before preference.
+Exact representative Lv2/matchingpatch/facts supports SHORT_FOLLOW/RECEIVE_WITH_LUX/PREPARE_WINDOW;
+other periods/champions preserve existinganalysis but no newcompare/map. Sixdimensions qualitative,
+no importance/risk/win score. Samechoice explainsreason. Staleinputs hide/destroyoldresults.
+All6periods/quicklane-ops-fight/row+planwhy/exactfacts/trace/fulltable/old6scenes retained.
+Selected actions ↔ card/SVG/zoom controls; keyboard/touch and inside-modal steptext verified.
+No unknownenemy portraits or top/bottom rotation in redbottom example. Informationsteps don't
+become movementarrows. R3 synthetic-only adapter remainsblocked; vocabulary reuse only.
+
+43affected tests+2bindingchecks, local loading075737/directions075814 pass, independentreview
+found othermatchupduoWhy leakage and missingzoomtext: focusedRED→GREEN fixed. Initialhidden
+marker testfailure and oldsnapshots preserved; final requiredCI/publication not predicted.
+Existing summaryPR58/59 proof reused, no broadrewriting. Oldsources/grades/history/350Frozen/
+launchers/manualfallback and queued6/priority3questions intact. Provider/game/asset/paidcalls0,
+Oct17VIDEO3/3, existingOct18stage3→separatereview/CIpublish→stage4 thennormal1/day unchanged.
+Newstrategy DESIGN_HYPOTHESIS, realcoachingN0/accuracy=null,30seccomprehensionNOT_MEASURED,
+WindowsBLOCKED_EXTERNAL. Public URL remains https://kco994553-star.github.io/lol-coach/;
+actualnewdeployment awaits gates. Rollback priorPages096234e8; no knowledge/ledger deletion.
+
+---
+
 된 것: 로딩 요약의 반복·소유자 중복을 정리하고 상세 조건·후보·여섯 구간을 보존했습니다.
 된 것: 기존 질문6개 중 후속 공격·이탈 자원·궁극기 대응 세 질문의 근거 요구와 반례를 연결했습니다.
 확인: PR58 필수3개·병합후3개·실제Pages 배포 성공, 공개27파일 일치·PC/모바일 입력 흐름 통과.

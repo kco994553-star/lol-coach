@@ -23,6 +23,8 @@ MODIFIED={'coach_v1/pc_coach.py','.github/workflows/private-mvp-ci.yml',
     'web_r4/pc.js','web_r4/pregame.js','web_r4/pregame.html','web_r4/official_reference.js',
     'web_r4/review_queue.js','web_r4/review_queue.html'}
 CURRENT=MODIFIED|{
+    'contracts/loading-interactive-v3.md','docs/superpowers/plans/2026-10-17-loading-interactive.md',
+    'web_r4/loading-exploration.js','web_r4/loading-interactive.js','tests_pregame/test_loading_interactive.py',
     'contracts/skill-display-v1.md','scripts/build_skill_display.py',
     'web_r4/skill-data.js','web_r4/skill-display.js',
     'tests_pregame/test_skill_display.py','tests_pregame/test_skill_pc_display.py','scripts/browser_skill_pc.py',
@@ -47,7 +49,7 @@ CURRENT=MODIFIED|{
     'tests_pregame/test_resource_view.py','tests_pregame/test_fixed_resource_checkpoint.py','tests_pregame/test_actual_evidence_binding.py',
     'docs/superpowers/plans/2026-10-16-actual-evidence.md','docs/superpowers/plans/2026-10-17-gemini-diagnostic.md','contracts/gemini-response-diagnostic-v3.md',
 }
-TESTS=['tests_expert.test_video_diagnostic_payload','tests_expert.test_video_diagnostic_policy','tests_expert.test_video_diagnostic_cli','tests_expert.test_gemini_response_diagnostics','tests_expert.test_text_response_v2','tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
+TESTS=['tests_pregame.test_loading_interactive','tests_expert.test_video_diagnostic_payload','tests_expert.test_video_diagnostic_policy','tests_expert.test_video_diagnostic_cli','tests_expert.test_gemini_response_diagnostics','tests_expert.test_text_response_v2','tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
        'tests_pregame.test_resource_recovery','tests_pregame.test_resource_view','tests_pregame.test_fixed_resource_checkpoint',
        'tests_pregame.test_actual_evidence_binding','tests_pregame.test_directions','tests_pregame.test_directions_http',
        'tests_pregame.test_loading_catalog','tests_pregame.test_loading_strategy','tests_pregame.test_loading_http','tests_pregame.test_loading_context',
@@ -157,6 +159,7 @@ def selected_tests():
     if not before or set(before)=={'0'}:return TESTS
     changed=set(git('diff','--name-only',before,'HEAD').decode().splitlines())
     groups={
+        'tests_pregame.test_loading_interactive':{'web_r4/loading-exploration.js','web_r4/loading-interactive.js','web_r4/loading-engine.js','web_r4/loading.js','web_r4/loading.html','web_r4/loading-map.js','contracts/loading-interactive-v3.md','tests_pregame/test_loading_interactive.py'},
         'tests_pregame.test_skill_display':SKILL_COMMON|SKILL_PC|{'web_r4/loading.js','web_r4/directions.js','web_r4/loading-map.js','web_r4/loading-data.json'},
         'tests_pregame.test_skill_pc_display':SKILL_COMMON|SKILL_PC,
         'tests_pregame.test_loading_context':{'web_r4/loading-engine.js','web_r4/loading-data.json','scripts/build_loading_catalog.py','contracts/loading-context-v2.md'},

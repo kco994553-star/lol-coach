@@ -1,0 +1,2664 @@
+{
+  "LOSS_LIMIT": {
+    "schema_version": "loading-exploration-v1",
+    "supported": true,
+    "unsupported_reason": null,
+    "state": {
+      "milestone": "LEVEL2",
+      "assumptions": {
+        "binding": "HIT",
+        "followup": "READY",
+        "exit_cover": "AVAILABLE"
+      }
+    },
+    "row": {
+      "id": "LEVEL2",
+      "period": "레벨 2",
+      "decision_id": "FOLLOW_BIND_WITH_EXIT",
+      "judgment": "럭스 Q·내 W를 배운 가정: 속박 적중 뒤 제한된 후속",
+      "assumptions": [
+        "럭스 Q와 케이틀린 W가 실제로 배워져 가용함",
+        "양쪽 실제 레벨·거리·체력을 확인했으며 노틸러스의 대응을 감당할 퇴로가 있음"
+      ],
+      "why": "럭스 Q는 최대 두 적 유닛을 속박하고 케이틀린 W는 발동해야 적 챔피언을 묶습니다. 둘을 배운 경우에만 제어 후속이라는 선택지가 생깁니다. 레벨 2 도달만으로 이 스킬 조합·선점·유리함이 확인되지는 않습니다.",
+      "action": "럭스 Q의 실제 챔피언 적중을 본 뒤, 설치 위치·덫 발동과 후속 거리까지 맞는 경우 W와 짧은 공격을 검토합니다. 속박을 보았다는 이유만으로 덫 발동이나 확정 연계/킬을 가정하지 않습니다.",
+      "opponent_response": "노틸러스는 럭스 Q가 빠진 틈에 Q 접근 또는 기본 공격 속박으로 역대응할 수 있습니다. 카이사도 계속 공격할 권리가 있으므로 한 명의 속박만으로 상대 둘의 대응이 사라지지는 않습니다.",
+      "alternative": "럭스 Q가 빗나가거나 덫 연결이 불명확하면 추가 전진을 접고 럭스와 같은 수급선으로 돌아옵니다. 상대가 기술을 쓰도록 억지로 몸을 내주는 행동은 권하지 않습니다.",
+      "changes": [
+        "럭스 Q 빗나감/가용성 상실",
+        "노틸러스 접근·카이사 후속이 열림",
+        "추가 인원·레벨 또는 웨이브 조건이 바뀜"
+      ],
+      "evidence_ids": [
+        "official:Lux:Q",
+        "official:Caitlyn:W",
+        "official:Nautilus:Q",
+        "official:Nautilus:P",
+        "official:Kaisa:Q"
+      ],
+      "action_ids": [
+        "OBSERVE_BIND_HIT",
+        "CONDITIONAL_TRAP_FOLLOW",
+        "END_ADVANCE_AFTER_MISS"
+      ],
+      "actors": {
+        "self": "Caitlyn",
+        "ally": "Lux",
+        "enemies": [
+          "Kaisa",
+          "Nautilus"
+        ]
+      },
+      "assumption_status": "NOT_OBSERVED",
+      "fact_scope": "공식: 연결된 기술/아이템의 명시한 성질. 가정: 위 스킬·자원·인원 조건을 갖춘 미래 장면. 행동 선택·연계 타이밍·우열은 설계 가설이며 실전 검증 없음.",
+      "level": "DESIGN_HYPOTHESIS"
+    },
+    "preference": {
+      "risk": "LOSS_LIMIT",
+      "label": "손실 제한 우선",
+      "source": "USER_PREFERENCE"
+    },
+    "assumption_status": "NOT_OBSERVED",
+    "plans": [
+      {
+        "evidence_ids": [
+          "official:Lux:Q",
+          "official:Caitlyn:W",
+          "official:Nautilus:Q",
+          "official:Nautilus:P",
+          "official:Kaisa:Q"
+        ],
+        "opponent_response": [
+          "노틸러스의 닻줄 견인(Q) 또는 기본 공격 속박과 카이사 후속이 열리면 전진을 끝내고 받을 위치를 바꿉니다."
+        ],
+        "next_if_unknown": [
+          "실제 적중·스킬 가용성·동료 거리·상대 대응을 화면에서 다시 보고, 확인하려고 혼자 앞으로 나가지 않습니다."
+        ],
+        "scope": "HYPOTHETICAL_NOT_OBSERVED",
+        "level": "DESIGN_HYPOTHESIS",
+        "id": "SHORT_FOLLOW",
+        "title": "짧은 후속 공격",
+        "objective": "적중한 제어를 제한된 공격 기회로 바꾸기",
+        "gain": "적중한 제어를 제한된 공격 기회로 바꾸기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "OBSERVE_BIND_AND_EXIT",
+            "text": "럭스의 빛의 속박(Q) 실제 적중과 럭스 연결·상대 두 명의 대응·퇴로를 함께 봅니다."
+          },
+          {
+            "number": 2,
+            "action_id": "SET_TRAP_FOLLOW",
+            "text": "케이틀린의 요들잡이 덫(W) 설치 위치·발동·공격 거리가 맞는 경우만 짧은 후속을 잇습니다."
+          },
+          {
+            "number": 3,
+            "action_id": "END_FOLLOW",
+            "text": "덫 연결·동료 거리·퇴로가 끊기면 추격을 접고 럭스 쪽 받을 위치로 돌아옵니다."
+          }
+        ],
+        "requirements": [
+          "속박이 적 챔피언에게 적중한 가정",
+          "덫 습득·가용성·설치·발동·거리·자원·웨이브가 맞는 가정",
+          "상대 대응을 감당할 동료 연결·퇴로가 있는 가정"
+        ],
+        "abort": [
+          "속박 빗나감·덫 발동 불명확",
+          "노틸러스 접근·카이사 후속 또는 추가 인원",
+          "럭스 연결이나 퇴로 상실"
+        ],
+        "costs": [
+          "덫과 공격 시간·자원을 소모하며 전진 노출이 생깁니다.",
+          "교환하는 동안 미니언·복귀 기회를 놓칠 수 있고 피해 우열은 모릅니다."
+        ],
+        "dimensions": {
+          "survival_exposure": {
+            "text": "전진 노출과 상대 역대응 가능; 생존 보장 없음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "resources": {
+            "text": "덫과 후속 공격 자원 소모",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "growth": {
+            "text": "CS 손실과 교환 이득 크기는 미확인",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "position_wave": {
+            "text": "전진 뒤 동료 연결·복귀선 필요",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "time_objectives": {
+            "text": "추격으로 시간/목표물을 더 잃을 수 있음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "options": {
+            "text": "덫 소모 후 다른 접근 대응 선택권 감소",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          }
+        },
+        "feasibility": "POSSIBLE"
+      },
+      {
+        "evidence_ids": [
+          "official:Lux:Q",
+          "official:Caitlyn:W",
+          "official:Nautilus:Q",
+          "official:Nautilus:P",
+          "official:Kaisa:Q"
+        ],
+        "opponent_response": [
+          "노틸러스의 닻줄 견인(Q) 또는 기본 공격 속박과 카이사 후속이 열리면 전진을 끝내고 받을 위치를 바꿉니다."
+        ],
+        "next_if_unknown": [
+          "실제 적중·스킬 가용성·동료 거리·상대 대응을 화면에서 다시 보고, 확인하려고 혼자 앞으로 나가지 않습니다."
+        ],
+        "scope": "HYPOTHETICAL_NOT_OBSERVED",
+        "level": "DESIGN_HYPOTHESIS",
+        "id": "RECEIVE_WITH_LUX",
+        "title": "동료와 수급선 유지",
+        "objective": "교환을 늘리기보다 접근 가능한 자원과 다음 연결을 남기기",
+        "gain": "교환을 늘리기보다 접근 가능한 자원과 다음 연결을 남기기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "LIMIT_RESOURCE_TARGET",
+            "text": "럭스와 연결되는 받을 위치를 고르고 이번에 포기할 미니언을 정합니다."
+          },
+          {
+            "number": 2,
+            "action_id": "CLAIM_NEAR_RESOURCE",
+            "text": "상대 둘의 대응·자원을 보며 접근 가능한 미니언만 받고 억지 견제나 전진은 하지 않습니다."
+          },
+          {
+            "number": 3,
+            "action_id": "REASSESS_NEXT_WINDOW",
+            "text": "상대 기술 사용·동료 연결·웨이브가 달라지면 다음 후속 또는 귀환 조건을 다시 비교합니다."
+          }
+        ],
+        "requirements": [
+          "럭스 연결과 상대 대응을 감당할 받을 위치·퇴로가 있는 가정"
+        ],
+        "abort": [
+          "노틸러스가 수급선에 접근하거나 동료/퇴로 연결이 끊김",
+          "체력·자원/웨이브 변화로 같은 자리에서 받을 수 없음"
+        ],
+        "costs": [
+          "속박 적중 기회를 공격으로 바꾸지 못할 수 있습니다.",
+          "상대에게 공간·웨이브 주도권을 내주거나 일부 CS를 잃을 수 있습니다."
+        ],
+        "dimensions": {
+          "survival_exposure": {
+            "text": "전진은 줄이지만 수급선도 안전 보장 없음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "resources": {
+            "text": "공격용 스킬 소모를 줄이는 선택; 회복량 미확인",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "growth": {
+            "text": "일부 미니언과 교환 기회를 포기할 수 있음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "position_wave": {
+            "text": "럭스와 같은 수급선 필요; 무조건 뒤로 걷는 지시 아님",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "time_objectives": {
+            "text": "상대가 이동/준비할 시간을 가질 수 있음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "options": {
+            "text": "다음 연결에 쓸 기술/복귀 선택권을 남김",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          }
+        },
+        "feasibility": "POSSIBLE"
+      },
+      {
+        "evidence_ids": [
+          "official:Lux:Q",
+          "official:Caitlyn:W",
+          "official:Nautilus:Q",
+          "official:Nautilus:P",
+          "official:Kaisa:Q"
+        ],
+        "opponent_response": [
+          "노틸러스의 닻줄 견인(Q) 또는 기본 공격 속박과 카이사 후속이 열리면 전진을 끝내고 받을 위치를 바꿉니다."
+        ],
+        "next_if_unknown": [
+          "실제 적중·스킬 가용성·동료 거리·상대 대응을 화면에서 다시 보고, 확인하려고 혼자 앞으로 나가지 않습니다."
+        ],
+        "scope": "HYPOTHETICAL_NOT_OBSERVED",
+        "level": "DESIGN_HYPOTHESIS",
+        "id": "PREPARE_WINDOW",
+        "title": "조건 확인·수급 목표 조정",
+        "objective": "불확실한 교환 대신 다음에 확인할 정보와 받을 자원 범위를 정하기",
+        "gain": "불확실한 교환 대신 다음에 확인할 정보와 받을 자원 범위를 정하기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "CHECK_OBSERVABLE_WINDOW",
+            "text": "실제 속박 적중·덫 가용성·럭스 거리·상대 대응 중 모르는 항목을 화면에서 구분합니다."
+          },
+          {
+            "number": 2,
+            "action_id": "REDUCE_RESOURCE_TARGET",
+            "text": "모르는 구역으로 확인하러 가지 않고 보이는 아군 쪽 받을 위치와 포기할 자원을 비교합니다."
+          },
+          {
+            "number": 3,
+            "action_id": "REOPEN_OR_RESET",
+            "text": "후속·퇴로 조건이 확인되면 다시 비교하고, 불충족이면 위치·회복·귀환 준비로 목표를 바꿉니다."
+          }
+        ],
+        "requirements": [
+          "확인 계획이며 이동/교환 성공을 전제하지 않음"
+        ],
+        "abort": [
+          "정보가 더 없거나 추가 적 접근이 드러나면 같은 수급 위치를 고집하지 않음"
+        ],
+        "costs": [
+          "기다리는 동안 CS·압박 기회와 시간을 잃을 수 있습니다.",
+          "대기·후퇴 자체도 상대 접근·다이브를 막는다는 보장은 없습니다."
+        ],
+        "dimensions": {
+          "survival_exposure": {
+            "text": "미확인 공간에 직접 진입하지 않음; 현재 자리 안전 미확인",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "resources": {
+            "text": "교환 자원 소모를 미루되 체력 손실 가능",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "growth": {
+            "text": "지연 중 CS/경험치 포기 가능",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "position_wave": {
+            "text": "현재 위치 고정이 아니라 관측 가능한 받을 위치 재비교",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "time_objectives": {
+            "text": "지연 중 상대 이동/목표 준비 가능",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "options": {
+            "text": "교환·수급·회복 선택을 다시 열기 위한 정보 확보",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          }
+        },
+        "feasibility": "POSSIBLE"
+      }
+    ],
+    "selected_plan_id": "RECEIVE_WITH_LUX",
+    "selection_reason": "두 안의 실행 조건을 충족한 가정입니다. 공격 기회 일부를 포기하고 수급·남는 기술 선택권을 먼저 남깁니다.",
+    "same_choice_across_preferences": false,
+    "required_checks": [
+      "실행 전에 가정한 기술·거리·자원을 실제 화면에서 다시 확인해야 합니다."
+    ],
+    "unchanged_conditions": [
+      "상대 둘의 대응·내 체력/자원·웨이브와 추가 인원을 함께 확인해야 합니다.",
+      "성향·가상 조건 선택은 실제 관측이나 전략 검증이 아닙니다."
+    ],
+    "evidence": {
+      "level": "DESIGN_HYPOTHESIS",
+      "sufficiency": "CONDITIONAL",
+      "assessment": "UNDETERMINED",
+      "official_scope": "공식: 연결된 기술/아이템의 명시한 성질. 가정: 위 스킬·자원·인원 조건을 갖춘 미래 장면. 행동 선택·연계 타이밍·우열은 설계 가설이며 실전 검증 없음.",
+      "question_id": "DUO-L2",
+      "counterexamples": [
+        "속박은 맞아도 덫 발동 전에 벗어나거나 노틸러스 역대응 때문에 후속이 끊길 수 있습니다.",
+        "수급선 유지도 동료 연결·퇴로가 없으면 안전한 대안이 아닙니다."
+      ],
+      "real_coaching_n": 0,
+      "accuracy": null
+    },
+    "map_scenario": {
+      "plan": {
+        "id": "RECEIVE_WITH_LUX",
+        "direction": "교환을 늘리기보다 접근 가능한 자원과 다음 연결을 남기기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "LIMIT_RESOURCE_TARGET",
+            "text": "럭스와 연결되는 받을 위치를 고르고 이번에 포기할 미니언을 정합니다."
+          },
+          {
+            "number": 2,
+            "action_id": "CLAIM_NEAR_RESOURCE",
+            "text": "상대 둘의 대응·자원을 보며 접근 가능한 미니언만 받고 억지 견제나 전진은 하지 않습니다."
+          },
+          {
+            "number": 3,
+            "action_id": "REASSESS_NEXT_WINDOW",
+            "text": "상대 기술 사용·동료 연결·웨이브가 달라지면 다음 후속 또는 귀환 조건을 다시 비교합니다."
+          }
+        ]
+      },
+      "map": {
+        "context": "LANE",
+        "asset": "direction-assets/map11.png",
+        "caption": "전술 설명용 예시 · 케이틀린·럭스 레벨 2 · 전 위치는 가정이며 현재 관측 아님",
+        "entities": [
+          {
+            "id": "self",
+            "team": "ALLY",
+            "self": true,
+            "champion": "Caitlyn",
+            "start": {
+              "x": 77,
+              "y": 83
+            },
+            "target": {
+              "x": 70,
+              "y": 84
+            }
+          },
+          {
+            "id": "lane-peer",
+            "team": "ALLY",
+            "self": false,
+            "champion": "Lux",
+            "start": {
+              "x": 73,
+              "y": 79
+            },
+            "target": null
+          }
+        ],
+        "arrows": [
+          {
+            "step": 2,
+            "kind": "MOVE",
+            "from": {
+              "x": 77,
+              "y": 83
+            },
+            "to": {
+              "x": 70,
+              "y": 84
+            }
+          }
+        ],
+        "landmarks": [
+          {
+            "id": "receiving",
+            "label": "1 받을 위치 후보 · 실제 웨이브 미확인",
+            "x": 70,
+            "y": 84,
+            "step": 1
+          },
+          {
+            "id": "reassess",
+            "label": "3 다음 연결 재비교",
+            "x": 73,
+            "y": 79,
+            "step": 3
+          }
+        ],
+        "notes": [
+          "적 위치는 미확인이므로 적 초상화를 표시하지 않습니다.",
+          "숫자는 행동 순서입니다. 점검 표시는 이동 지시가 아닙니다. 화살표는 안전 경로·정확한 스킬 사거리나 전술 효과의 검증이 아닙니다.",
+          "이 배치는 대표 매치업의 조건부 선택을 설명하는 설계 가설입니다."
+        ]
+      }
+    }
+  },
+  "BALANCED": {
+    "schema_version": "loading-exploration-v1",
+    "supported": true,
+    "unsupported_reason": null,
+    "state": {
+      "milestone": "LEVEL2",
+      "assumptions": {
+        "binding": "HIT",
+        "followup": "READY",
+        "exit_cover": "AVAILABLE"
+      }
+    },
+    "row": {
+      "id": "LEVEL2",
+      "period": "레벨 2",
+      "decision_id": "FOLLOW_BIND_WITH_EXIT",
+      "judgment": "럭스 Q·내 W를 배운 가정: 속박 적중 뒤 제한된 후속",
+      "assumptions": [
+        "럭스 Q와 케이틀린 W가 실제로 배워져 가용함",
+        "양쪽 실제 레벨·거리·체력을 확인했으며 노틸러스의 대응을 감당할 퇴로가 있음"
+      ],
+      "why": "럭스 Q는 최대 두 적 유닛을 속박하고 케이틀린 W는 발동해야 적 챔피언을 묶습니다. 둘을 배운 경우에만 제어 후속이라는 선택지가 생깁니다. 레벨 2 도달만으로 이 스킬 조합·선점·유리함이 확인되지는 않습니다.",
+      "action": "럭스 Q의 실제 챔피언 적중을 본 뒤, 설치 위치·덫 발동과 후속 거리까지 맞는 경우 W와 짧은 공격을 검토합니다. 속박을 보았다는 이유만으로 덫 발동이나 확정 연계/킬을 가정하지 않습니다.",
+      "opponent_response": "노틸러스는 럭스 Q가 빠진 틈에 Q 접근 또는 기본 공격 속박으로 역대응할 수 있습니다. 카이사도 계속 공격할 권리가 있으므로 한 명의 속박만으로 상대 둘의 대응이 사라지지는 않습니다.",
+      "alternative": "럭스 Q가 빗나가거나 덫 연결이 불명확하면 추가 전진을 접고 럭스와 같은 수급선으로 돌아옵니다. 상대가 기술을 쓰도록 억지로 몸을 내주는 행동은 권하지 않습니다.",
+      "changes": [
+        "럭스 Q 빗나감/가용성 상실",
+        "노틸러스 접근·카이사 후속이 열림",
+        "추가 인원·레벨 또는 웨이브 조건이 바뀜"
+      ],
+      "evidence_ids": [
+        "official:Lux:Q",
+        "official:Caitlyn:W",
+        "official:Nautilus:Q",
+        "official:Nautilus:P",
+        "official:Kaisa:Q"
+      ],
+      "action_ids": [
+        "OBSERVE_BIND_HIT",
+        "CONDITIONAL_TRAP_FOLLOW",
+        "END_ADVANCE_AFTER_MISS"
+      ],
+      "actors": {
+        "self": "Caitlyn",
+        "ally": "Lux",
+        "enemies": [
+          "Kaisa",
+          "Nautilus"
+        ]
+      },
+      "assumption_status": "NOT_OBSERVED",
+      "fact_scope": "공식: 연결된 기술/아이템의 명시한 성질. 가정: 위 스킬·자원·인원 조건을 갖춘 미래 장면. 행동 선택·연계 타이밍·우열은 설계 가설이며 실전 검증 없음.",
+      "level": "DESIGN_HYPOTHESIS"
+    },
+    "preference": {
+      "risk": "BALANCED",
+      "label": "균형",
+      "source": "USER_PREFERENCE"
+    },
+    "assumption_status": "NOT_OBSERVED",
+    "plans": [
+      {
+        "evidence_ids": [
+          "official:Lux:Q",
+          "official:Caitlyn:W",
+          "official:Nautilus:Q",
+          "official:Nautilus:P",
+          "official:Kaisa:Q"
+        ],
+        "opponent_response": [
+          "노틸러스의 닻줄 견인(Q) 또는 기본 공격 속박과 카이사 후속이 열리면 전진을 끝내고 받을 위치를 바꿉니다."
+        ],
+        "next_if_unknown": [
+          "실제 적중·스킬 가용성·동료 거리·상대 대응을 화면에서 다시 보고, 확인하려고 혼자 앞으로 나가지 않습니다."
+        ],
+        "scope": "HYPOTHETICAL_NOT_OBSERVED",
+        "level": "DESIGN_HYPOTHESIS",
+        "id": "SHORT_FOLLOW",
+        "title": "짧은 후속 공격",
+        "objective": "적중한 제어를 제한된 공격 기회로 바꾸기",
+        "gain": "적중한 제어를 제한된 공격 기회로 바꾸기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "OBSERVE_BIND_AND_EXIT",
+            "text": "럭스의 빛의 속박(Q) 실제 적중과 럭스 연결·상대 두 명의 대응·퇴로를 함께 봅니다."
+          },
+          {
+            "number": 2,
+            "action_id": "SET_TRAP_FOLLOW",
+            "text": "케이틀린의 요들잡이 덫(W) 설치 위치·발동·공격 거리가 맞는 경우만 짧은 후속을 잇습니다."
+          },
+          {
+            "number": 3,
+            "action_id": "END_FOLLOW",
+            "text": "덫 연결·동료 거리·퇴로가 끊기면 추격을 접고 럭스 쪽 받을 위치로 돌아옵니다."
+          }
+        ],
+        "requirements": [
+          "속박이 적 챔피언에게 적중한 가정",
+          "덫 습득·가용성·설치·발동·거리·자원·웨이브가 맞는 가정",
+          "상대 대응을 감당할 동료 연결·퇴로가 있는 가정"
+        ],
+        "abort": [
+          "속박 빗나감·덫 발동 불명확",
+          "노틸러스 접근·카이사 후속 또는 추가 인원",
+          "럭스 연결이나 퇴로 상실"
+        ],
+        "costs": [
+          "덫과 공격 시간·자원을 소모하며 전진 노출이 생깁니다.",
+          "교환하는 동안 미니언·복귀 기회를 놓칠 수 있고 피해 우열은 모릅니다."
+        ],
+        "dimensions": {
+          "survival_exposure": {
+            "text": "전진 노출과 상대 역대응 가능; 생존 보장 없음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "resources": {
+            "text": "덫과 후속 공격 자원 소모",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "growth": {
+            "text": "CS 손실과 교환 이득 크기는 미확인",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "position_wave": {
+            "text": "전진 뒤 동료 연결·복귀선 필요",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "time_objectives": {
+            "text": "추격으로 시간/목표물을 더 잃을 수 있음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "options": {
+            "text": "덫 소모 후 다른 접근 대응 선택권 감소",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          }
+        },
+        "feasibility": "POSSIBLE"
+      },
+      {
+        "evidence_ids": [
+          "official:Lux:Q",
+          "official:Caitlyn:W",
+          "official:Nautilus:Q",
+          "official:Nautilus:P",
+          "official:Kaisa:Q"
+        ],
+        "opponent_response": [
+          "노틸러스의 닻줄 견인(Q) 또는 기본 공격 속박과 카이사 후속이 열리면 전진을 끝내고 받을 위치를 바꿉니다."
+        ],
+        "next_if_unknown": [
+          "실제 적중·스킬 가용성·동료 거리·상대 대응을 화면에서 다시 보고, 확인하려고 혼자 앞으로 나가지 않습니다."
+        ],
+        "scope": "HYPOTHETICAL_NOT_OBSERVED",
+        "level": "DESIGN_HYPOTHESIS",
+        "id": "RECEIVE_WITH_LUX",
+        "title": "동료와 수급선 유지",
+        "objective": "교환을 늘리기보다 접근 가능한 자원과 다음 연결을 남기기",
+        "gain": "교환을 늘리기보다 접근 가능한 자원과 다음 연결을 남기기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "LIMIT_RESOURCE_TARGET",
+            "text": "럭스와 연결되는 받을 위치를 고르고 이번에 포기할 미니언을 정합니다."
+          },
+          {
+            "number": 2,
+            "action_id": "CLAIM_NEAR_RESOURCE",
+            "text": "상대 둘의 대응·자원을 보며 접근 가능한 미니언만 받고 억지 견제나 전진은 하지 않습니다."
+          },
+          {
+            "number": 3,
+            "action_id": "REASSESS_NEXT_WINDOW",
+            "text": "상대 기술 사용·동료 연결·웨이브가 달라지면 다음 후속 또는 귀환 조건을 다시 비교합니다."
+          }
+        ],
+        "requirements": [
+          "럭스 연결과 상대 대응을 감당할 받을 위치·퇴로가 있는 가정"
+        ],
+        "abort": [
+          "노틸러스가 수급선에 접근하거나 동료/퇴로 연결이 끊김",
+          "체력·자원/웨이브 변화로 같은 자리에서 받을 수 없음"
+        ],
+        "costs": [
+          "속박 적중 기회를 공격으로 바꾸지 못할 수 있습니다.",
+          "상대에게 공간·웨이브 주도권을 내주거나 일부 CS를 잃을 수 있습니다."
+        ],
+        "dimensions": {
+          "survival_exposure": {
+            "text": "전진은 줄이지만 수급선도 안전 보장 없음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "resources": {
+            "text": "공격용 스킬 소모를 줄이는 선택; 회복량 미확인",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "growth": {
+            "text": "일부 미니언과 교환 기회를 포기할 수 있음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "position_wave": {
+            "text": "럭스와 같은 수급선 필요; 무조건 뒤로 걷는 지시 아님",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "time_objectives": {
+            "text": "상대가 이동/준비할 시간을 가질 수 있음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "options": {
+            "text": "다음 연결에 쓸 기술/복귀 선택권을 남김",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          }
+        },
+        "feasibility": "POSSIBLE"
+      },
+      {
+        "evidence_ids": [
+          "official:Lux:Q",
+          "official:Caitlyn:W",
+          "official:Nautilus:Q",
+          "official:Nautilus:P",
+          "official:Kaisa:Q"
+        ],
+        "opponent_response": [
+          "노틸러스의 닻줄 견인(Q) 또는 기본 공격 속박과 카이사 후속이 열리면 전진을 끝내고 받을 위치를 바꿉니다."
+        ],
+        "next_if_unknown": [
+          "실제 적중·스킬 가용성·동료 거리·상대 대응을 화면에서 다시 보고, 확인하려고 혼자 앞으로 나가지 않습니다."
+        ],
+        "scope": "HYPOTHETICAL_NOT_OBSERVED",
+        "level": "DESIGN_HYPOTHESIS",
+        "id": "PREPARE_WINDOW",
+        "title": "조건 확인·수급 목표 조정",
+        "objective": "불확실한 교환 대신 다음에 확인할 정보와 받을 자원 범위를 정하기",
+        "gain": "불확실한 교환 대신 다음에 확인할 정보와 받을 자원 범위를 정하기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "CHECK_OBSERVABLE_WINDOW",
+            "text": "실제 속박 적중·덫 가용성·럭스 거리·상대 대응 중 모르는 항목을 화면에서 구분합니다."
+          },
+          {
+            "number": 2,
+            "action_id": "REDUCE_RESOURCE_TARGET",
+            "text": "모르는 구역으로 확인하러 가지 않고 보이는 아군 쪽 받을 위치와 포기할 자원을 비교합니다."
+          },
+          {
+            "number": 3,
+            "action_id": "REOPEN_OR_RESET",
+            "text": "후속·퇴로 조건이 확인되면 다시 비교하고, 불충족이면 위치·회복·귀환 준비로 목표를 바꿉니다."
+          }
+        ],
+        "requirements": [
+          "확인 계획이며 이동/교환 성공을 전제하지 않음"
+        ],
+        "abort": [
+          "정보가 더 없거나 추가 적 접근이 드러나면 같은 수급 위치를 고집하지 않음"
+        ],
+        "costs": [
+          "기다리는 동안 CS·압박 기회와 시간을 잃을 수 있습니다.",
+          "대기·후퇴 자체도 상대 접근·다이브를 막는다는 보장은 없습니다."
+        ],
+        "dimensions": {
+          "survival_exposure": {
+            "text": "미확인 공간에 직접 진입하지 않음; 현재 자리 안전 미확인",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "resources": {
+            "text": "교환 자원 소모를 미루되 체력 손실 가능",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "growth": {
+            "text": "지연 중 CS/경험치 포기 가능",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "position_wave": {
+            "text": "현재 위치 고정이 아니라 관측 가능한 받을 위치 재비교",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "time_objectives": {
+            "text": "지연 중 상대 이동/목표 준비 가능",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "options": {
+            "text": "교환·수급·회복 선택을 다시 열기 위한 정보 확보",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          }
+        },
+        "feasibility": "POSSIBLE"
+      }
+    ],
+    "selected_plan_id": "SHORT_FOLLOW",
+    "selection_reason": "두 안의 실행 조건을 충족한 가정입니다. 전진 노출·덫 소모를 감수하는 짧은 후속을 먼저 살펴봅니다. 최적 행동으로 검증된 것은 아닙니다.",
+    "same_choice_across_preferences": false,
+    "required_checks": [
+      "실행 전에 가정한 기술·거리·자원을 실제 화면에서 다시 확인해야 합니다."
+    ],
+    "unchanged_conditions": [
+      "상대 둘의 대응·내 체력/자원·웨이브와 추가 인원을 함께 확인해야 합니다.",
+      "성향·가상 조건 선택은 실제 관측이나 전략 검증이 아닙니다."
+    ],
+    "evidence": {
+      "level": "DESIGN_HYPOTHESIS",
+      "sufficiency": "CONDITIONAL",
+      "assessment": "UNDETERMINED",
+      "official_scope": "공식: 연결된 기술/아이템의 명시한 성질. 가정: 위 스킬·자원·인원 조건을 갖춘 미래 장면. 행동 선택·연계 타이밍·우열은 설계 가설이며 실전 검증 없음.",
+      "question_id": "DUO-L2",
+      "counterexamples": [
+        "속박은 맞아도 덫 발동 전에 벗어나거나 노틸러스 역대응 때문에 후속이 끊길 수 있습니다.",
+        "수급선 유지도 동료 연결·퇴로가 없으면 안전한 대안이 아닙니다."
+      ],
+      "real_coaching_n": 0,
+      "accuracy": null
+    },
+    "map_scenario": {
+      "plan": {
+        "id": "SHORT_FOLLOW",
+        "direction": "적중한 제어를 제한된 공격 기회로 바꾸기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "OBSERVE_BIND_AND_EXIT",
+            "text": "럭스의 빛의 속박(Q) 실제 적중과 럭스 연결·상대 두 명의 대응·퇴로를 함께 봅니다."
+          },
+          {
+            "number": 2,
+            "action_id": "SET_TRAP_FOLLOW",
+            "text": "케이틀린의 요들잡이 덫(W) 설치 위치·발동·공격 거리가 맞는 경우만 짧은 후속을 잇습니다."
+          },
+          {
+            "number": 3,
+            "action_id": "END_FOLLOW",
+            "text": "덫 연결·동료 거리·퇴로가 끊기면 추격을 접고 럭스 쪽 받을 위치로 돌아옵니다."
+          }
+        ]
+      },
+      "map": {
+        "context": "LANE",
+        "asset": "direction-assets/map11.png",
+        "caption": "전술 설명용 예시 · 케이틀린·럭스 레벨 2 · 전 위치는 가정이며 현재 관측 아님",
+        "entities": [
+          {
+            "id": "self",
+            "team": "ALLY",
+            "self": true,
+            "champion": "Caitlyn",
+            "start": {
+              "x": 77,
+              "y": 83
+            },
+            "target": {
+              "x": 80,
+              "y": 78
+            }
+          },
+          {
+            "id": "lane-peer",
+            "team": "ALLY",
+            "self": false,
+            "champion": "Lux",
+            "start": {
+              "x": 73,
+              "y": 79
+            },
+            "target": null
+          }
+        ],
+        "arrows": [
+          {
+            "step": 2,
+            "kind": "PRESSURE",
+            "from": {
+              "x": 77,
+              "y": 83
+            },
+            "to": {
+              "x": 80,
+              "y": 78
+            }
+          },
+          {
+            "step": 3,
+            "kind": "RETREAT",
+            "from": {
+              "x": 80,
+              "y": 78
+            },
+            "to": {
+              "x": 70,
+              "y": 84
+            }
+          }
+        ],
+        "landmarks": [
+          {
+            "id": "check",
+            "label": "1 적중·연결 점검 예시",
+            "x": 77,
+            "y": 83,
+            "step": 1
+          }
+        ],
+        "notes": [
+          "적 위치는 미확인이므로 적 초상화를 표시하지 않습니다.",
+          "숫자는 행동 순서입니다. 점검 표시는 이동 지시가 아닙니다. 화살표는 안전 경로·정확한 스킬 사거리나 전술 효과의 검증이 아닙니다.",
+          "이 배치는 대표 매치업의 조건부 선택을 설명하는 설계 가설입니다."
+        ]
+      }
+    }
+  },
+  "OPPORTUNITY": {
+    "schema_version": "loading-exploration-v1",
+    "supported": true,
+    "unsupported_reason": null,
+    "state": {
+      "milestone": "LEVEL2",
+      "assumptions": {
+        "binding": "HIT",
+        "followup": "READY",
+        "exit_cover": "AVAILABLE"
+      }
+    },
+    "row": {
+      "id": "LEVEL2",
+      "period": "레벨 2",
+      "decision_id": "FOLLOW_BIND_WITH_EXIT",
+      "judgment": "럭스 Q·내 W를 배운 가정: 속박 적중 뒤 제한된 후속",
+      "assumptions": [
+        "럭스 Q와 케이틀린 W가 실제로 배워져 가용함",
+        "양쪽 실제 레벨·거리·체력을 확인했으며 노틸러스의 대응을 감당할 퇴로가 있음"
+      ],
+      "why": "럭스 Q는 최대 두 적 유닛을 속박하고 케이틀린 W는 발동해야 적 챔피언을 묶습니다. 둘을 배운 경우에만 제어 후속이라는 선택지가 생깁니다. 레벨 2 도달만으로 이 스킬 조합·선점·유리함이 확인되지는 않습니다.",
+      "action": "럭스 Q의 실제 챔피언 적중을 본 뒤, 설치 위치·덫 발동과 후속 거리까지 맞는 경우 W와 짧은 공격을 검토합니다. 속박을 보았다는 이유만으로 덫 발동이나 확정 연계/킬을 가정하지 않습니다.",
+      "opponent_response": "노틸러스는 럭스 Q가 빠진 틈에 Q 접근 또는 기본 공격 속박으로 역대응할 수 있습니다. 카이사도 계속 공격할 권리가 있으므로 한 명의 속박만으로 상대 둘의 대응이 사라지지는 않습니다.",
+      "alternative": "럭스 Q가 빗나가거나 덫 연결이 불명확하면 추가 전진을 접고 럭스와 같은 수급선으로 돌아옵니다. 상대가 기술을 쓰도록 억지로 몸을 내주는 행동은 권하지 않습니다.",
+      "changes": [
+        "럭스 Q 빗나감/가용성 상실",
+        "노틸러스 접근·카이사 후속이 열림",
+        "추가 인원·레벨 또는 웨이브 조건이 바뀜"
+      ],
+      "evidence_ids": [
+        "official:Lux:Q",
+        "official:Caitlyn:W",
+        "official:Nautilus:Q",
+        "official:Nautilus:P",
+        "official:Kaisa:Q"
+      ],
+      "action_ids": [
+        "OBSERVE_BIND_HIT",
+        "CONDITIONAL_TRAP_FOLLOW",
+        "END_ADVANCE_AFTER_MISS"
+      ],
+      "actors": {
+        "self": "Caitlyn",
+        "ally": "Lux",
+        "enemies": [
+          "Kaisa",
+          "Nautilus"
+        ]
+      },
+      "assumption_status": "NOT_OBSERVED",
+      "fact_scope": "공식: 연결된 기술/아이템의 명시한 성질. 가정: 위 스킬·자원·인원 조건을 갖춘 미래 장면. 행동 선택·연계 타이밍·우열은 설계 가설이며 실전 검증 없음.",
+      "level": "DESIGN_HYPOTHESIS"
+    },
+    "preference": {
+      "risk": "OPPORTUNITY",
+      "label": "기회 추구 우선",
+      "source": "USER_PREFERENCE"
+    },
+    "assumption_status": "NOT_OBSERVED",
+    "plans": [
+      {
+        "evidence_ids": [
+          "official:Lux:Q",
+          "official:Caitlyn:W",
+          "official:Nautilus:Q",
+          "official:Nautilus:P",
+          "official:Kaisa:Q"
+        ],
+        "opponent_response": [
+          "노틸러스의 닻줄 견인(Q) 또는 기본 공격 속박과 카이사 후속이 열리면 전진을 끝내고 받을 위치를 바꿉니다."
+        ],
+        "next_if_unknown": [
+          "실제 적중·스킬 가용성·동료 거리·상대 대응을 화면에서 다시 보고, 확인하려고 혼자 앞으로 나가지 않습니다."
+        ],
+        "scope": "HYPOTHETICAL_NOT_OBSERVED",
+        "level": "DESIGN_HYPOTHESIS",
+        "id": "SHORT_FOLLOW",
+        "title": "짧은 후속 공격",
+        "objective": "적중한 제어를 제한된 공격 기회로 바꾸기",
+        "gain": "적중한 제어를 제한된 공격 기회로 바꾸기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "OBSERVE_BIND_AND_EXIT",
+            "text": "럭스의 빛의 속박(Q) 실제 적중과 럭스 연결·상대 두 명의 대응·퇴로를 함께 봅니다."
+          },
+          {
+            "number": 2,
+            "action_id": "SET_TRAP_FOLLOW",
+            "text": "케이틀린의 요들잡이 덫(W) 설치 위치·발동·공격 거리가 맞는 경우만 짧은 후속을 잇습니다."
+          },
+          {
+            "number": 3,
+            "action_id": "END_FOLLOW",
+            "text": "덫 연결·동료 거리·퇴로가 끊기면 추격을 접고 럭스 쪽 받을 위치로 돌아옵니다."
+          }
+        ],
+        "requirements": [
+          "속박이 적 챔피언에게 적중한 가정",
+          "덫 습득·가용성·설치·발동·거리·자원·웨이브가 맞는 가정",
+          "상대 대응을 감당할 동료 연결·퇴로가 있는 가정"
+        ],
+        "abort": [
+          "속박 빗나감·덫 발동 불명확",
+          "노틸러스 접근·카이사 후속 또는 추가 인원",
+          "럭스 연결이나 퇴로 상실"
+        ],
+        "costs": [
+          "덫과 공격 시간·자원을 소모하며 전진 노출이 생깁니다.",
+          "교환하는 동안 미니언·복귀 기회를 놓칠 수 있고 피해 우열은 모릅니다."
+        ],
+        "dimensions": {
+          "survival_exposure": {
+            "text": "전진 노출과 상대 역대응 가능; 생존 보장 없음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "resources": {
+            "text": "덫과 후속 공격 자원 소모",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "growth": {
+            "text": "CS 손실과 교환 이득 크기는 미확인",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "position_wave": {
+            "text": "전진 뒤 동료 연결·복귀선 필요",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "time_objectives": {
+            "text": "추격으로 시간/목표물을 더 잃을 수 있음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "options": {
+            "text": "덫 소모 후 다른 접근 대응 선택권 감소",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          }
+        },
+        "feasibility": "POSSIBLE"
+      },
+      {
+        "evidence_ids": [
+          "official:Lux:Q",
+          "official:Caitlyn:W",
+          "official:Nautilus:Q",
+          "official:Nautilus:P",
+          "official:Kaisa:Q"
+        ],
+        "opponent_response": [
+          "노틸러스의 닻줄 견인(Q) 또는 기본 공격 속박과 카이사 후속이 열리면 전진을 끝내고 받을 위치를 바꿉니다."
+        ],
+        "next_if_unknown": [
+          "실제 적중·스킬 가용성·동료 거리·상대 대응을 화면에서 다시 보고, 확인하려고 혼자 앞으로 나가지 않습니다."
+        ],
+        "scope": "HYPOTHETICAL_NOT_OBSERVED",
+        "level": "DESIGN_HYPOTHESIS",
+        "id": "RECEIVE_WITH_LUX",
+        "title": "동료와 수급선 유지",
+        "objective": "교환을 늘리기보다 접근 가능한 자원과 다음 연결을 남기기",
+        "gain": "교환을 늘리기보다 접근 가능한 자원과 다음 연결을 남기기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "LIMIT_RESOURCE_TARGET",
+            "text": "럭스와 연결되는 받을 위치를 고르고 이번에 포기할 미니언을 정합니다."
+          },
+          {
+            "number": 2,
+            "action_id": "CLAIM_NEAR_RESOURCE",
+            "text": "상대 둘의 대응·자원을 보며 접근 가능한 미니언만 받고 억지 견제나 전진은 하지 않습니다."
+          },
+          {
+            "number": 3,
+            "action_id": "REASSESS_NEXT_WINDOW",
+            "text": "상대 기술 사용·동료 연결·웨이브가 달라지면 다음 후속 또는 귀환 조건을 다시 비교합니다."
+          }
+        ],
+        "requirements": [
+          "럭스 연결과 상대 대응을 감당할 받을 위치·퇴로가 있는 가정"
+        ],
+        "abort": [
+          "노틸러스가 수급선에 접근하거나 동료/퇴로 연결이 끊김",
+          "체력·자원/웨이브 변화로 같은 자리에서 받을 수 없음"
+        ],
+        "costs": [
+          "속박 적중 기회를 공격으로 바꾸지 못할 수 있습니다.",
+          "상대에게 공간·웨이브 주도권을 내주거나 일부 CS를 잃을 수 있습니다."
+        ],
+        "dimensions": {
+          "survival_exposure": {
+            "text": "전진은 줄이지만 수급선도 안전 보장 없음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "resources": {
+            "text": "공격용 스킬 소모를 줄이는 선택; 회복량 미확인",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "growth": {
+            "text": "일부 미니언과 교환 기회를 포기할 수 있음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "position_wave": {
+            "text": "럭스와 같은 수급선 필요; 무조건 뒤로 걷는 지시 아님",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "time_objectives": {
+            "text": "상대가 이동/준비할 시간을 가질 수 있음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "options": {
+            "text": "다음 연결에 쓸 기술/복귀 선택권을 남김",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          }
+        },
+        "feasibility": "POSSIBLE"
+      },
+      {
+        "evidence_ids": [
+          "official:Lux:Q",
+          "official:Caitlyn:W",
+          "official:Nautilus:Q",
+          "official:Nautilus:P",
+          "official:Kaisa:Q"
+        ],
+        "opponent_response": [
+          "노틸러스의 닻줄 견인(Q) 또는 기본 공격 속박과 카이사 후속이 열리면 전진을 끝내고 받을 위치를 바꿉니다."
+        ],
+        "next_if_unknown": [
+          "실제 적중·스킬 가용성·동료 거리·상대 대응을 화면에서 다시 보고, 확인하려고 혼자 앞으로 나가지 않습니다."
+        ],
+        "scope": "HYPOTHETICAL_NOT_OBSERVED",
+        "level": "DESIGN_HYPOTHESIS",
+        "id": "PREPARE_WINDOW",
+        "title": "조건 확인·수급 목표 조정",
+        "objective": "불확실한 교환 대신 다음에 확인할 정보와 받을 자원 범위를 정하기",
+        "gain": "불확실한 교환 대신 다음에 확인할 정보와 받을 자원 범위를 정하기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "CHECK_OBSERVABLE_WINDOW",
+            "text": "실제 속박 적중·덫 가용성·럭스 거리·상대 대응 중 모르는 항목을 화면에서 구분합니다."
+          },
+          {
+            "number": 2,
+            "action_id": "REDUCE_RESOURCE_TARGET",
+            "text": "모르는 구역으로 확인하러 가지 않고 보이는 아군 쪽 받을 위치와 포기할 자원을 비교합니다."
+          },
+          {
+            "number": 3,
+            "action_id": "REOPEN_OR_RESET",
+            "text": "후속·퇴로 조건이 확인되면 다시 비교하고, 불충족이면 위치·회복·귀환 준비로 목표를 바꿉니다."
+          }
+        ],
+        "requirements": [
+          "확인 계획이며 이동/교환 성공을 전제하지 않음"
+        ],
+        "abort": [
+          "정보가 더 없거나 추가 적 접근이 드러나면 같은 수급 위치를 고집하지 않음"
+        ],
+        "costs": [
+          "기다리는 동안 CS·압박 기회와 시간을 잃을 수 있습니다.",
+          "대기·후퇴 자체도 상대 접근·다이브를 막는다는 보장은 없습니다."
+        ],
+        "dimensions": {
+          "survival_exposure": {
+            "text": "미확인 공간에 직접 진입하지 않음; 현재 자리 안전 미확인",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "resources": {
+            "text": "교환 자원 소모를 미루되 체력 손실 가능",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "growth": {
+            "text": "지연 중 CS/경험치 포기 가능",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "position_wave": {
+            "text": "현재 위치 고정이 아니라 관측 가능한 받을 위치 재비교",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "time_objectives": {
+            "text": "지연 중 상대 이동/목표 준비 가능",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "options": {
+            "text": "교환·수급·회복 선택을 다시 열기 위한 정보 확보",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          }
+        },
+        "feasibility": "POSSIBLE"
+      }
+    ],
+    "selected_plan_id": "SHORT_FOLLOW",
+    "selection_reason": "두 안의 실행 조건을 충족한 가정입니다. 전진 노출·덫 소모를 감수하는 짧은 후속을 먼저 살펴봅니다. 최적 행동으로 검증된 것은 아닙니다.",
+    "same_choice_across_preferences": false,
+    "required_checks": [
+      "실행 전에 가정한 기술·거리·자원을 실제 화면에서 다시 확인해야 합니다."
+    ],
+    "unchanged_conditions": [
+      "상대 둘의 대응·내 체력/자원·웨이브와 추가 인원을 함께 확인해야 합니다.",
+      "성향·가상 조건 선택은 실제 관측이나 전략 검증이 아닙니다."
+    ],
+    "evidence": {
+      "level": "DESIGN_HYPOTHESIS",
+      "sufficiency": "CONDITIONAL",
+      "assessment": "UNDETERMINED",
+      "official_scope": "공식: 연결된 기술/아이템의 명시한 성질. 가정: 위 스킬·자원·인원 조건을 갖춘 미래 장면. 행동 선택·연계 타이밍·우열은 설계 가설이며 실전 검증 없음.",
+      "question_id": "DUO-L2",
+      "counterexamples": [
+        "속박은 맞아도 덫 발동 전에 벗어나거나 노틸러스 역대응 때문에 후속이 끊길 수 있습니다.",
+        "수급선 유지도 동료 연결·퇴로가 없으면 안전한 대안이 아닙니다."
+      ],
+      "real_coaching_n": 0,
+      "accuracy": null
+    },
+    "map_scenario": {
+      "plan": {
+        "id": "SHORT_FOLLOW",
+        "direction": "적중한 제어를 제한된 공격 기회로 바꾸기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "OBSERVE_BIND_AND_EXIT",
+            "text": "럭스의 빛의 속박(Q) 실제 적중과 럭스 연결·상대 두 명의 대응·퇴로를 함께 봅니다."
+          },
+          {
+            "number": 2,
+            "action_id": "SET_TRAP_FOLLOW",
+            "text": "케이틀린의 요들잡이 덫(W) 설치 위치·발동·공격 거리가 맞는 경우만 짧은 후속을 잇습니다."
+          },
+          {
+            "number": 3,
+            "action_id": "END_FOLLOW",
+            "text": "덫 연결·동료 거리·퇴로가 끊기면 추격을 접고 럭스 쪽 받을 위치로 돌아옵니다."
+          }
+        ]
+      },
+      "map": {
+        "context": "LANE",
+        "asset": "direction-assets/map11.png",
+        "caption": "전술 설명용 예시 · 케이틀린·럭스 레벨 2 · 전 위치는 가정이며 현재 관측 아님",
+        "entities": [
+          {
+            "id": "self",
+            "team": "ALLY",
+            "self": true,
+            "champion": "Caitlyn",
+            "start": {
+              "x": 77,
+              "y": 83
+            },
+            "target": {
+              "x": 80,
+              "y": 78
+            }
+          },
+          {
+            "id": "lane-peer",
+            "team": "ALLY",
+            "self": false,
+            "champion": "Lux",
+            "start": {
+              "x": 73,
+              "y": 79
+            },
+            "target": null
+          }
+        ],
+        "arrows": [
+          {
+            "step": 2,
+            "kind": "PRESSURE",
+            "from": {
+              "x": 77,
+              "y": 83
+            },
+            "to": {
+              "x": 80,
+              "y": 78
+            }
+          },
+          {
+            "step": 3,
+            "kind": "RETREAT",
+            "from": {
+              "x": 80,
+              "y": 78
+            },
+            "to": {
+              "x": 70,
+              "y": 84
+            }
+          }
+        ],
+        "landmarks": [
+          {
+            "id": "check",
+            "label": "1 적중·연결 점검 예시",
+            "x": 77,
+            "y": 83,
+            "step": 1
+          }
+        ],
+        "notes": [
+          "적 위치는 미확인이므로 적 초상화를 표시하지 않습니다.",
+          "숫자는 행동 순서입니다. 점검 표시는 이동 지시가 아닙니다. 화살표는 안전 경로·정확한 스킬 사거리나 전술 효과의 검증이 아닙니다.",
+          "이 배치는 대표 매치업의 조건부 선택을 설명하는 설계 가설입니다."
+        ]
+      }
+    }
+  },
+  "ONE_CONDITION_MISS": {
+    "schema_version": "loading-exploration-v1",
+    "supported": true,
+    "unsupported_reason": null,
+    "state": {
+      "milestone": "LEVEL2",
+      "assumptions": {
+        "binding": "MISS",
+        "followup": "READY",
+        "exit_cover": "AVAILABLE"
+      }
+    },
+    "row": {
+      "id": "LEVEL2",
+      "period": "레벨 2",
+      "decision_id": "FOLLOW_BIND_WITH_EXIT",
+      "judgment": "럭스 Q·내 W를 배운 가정: 속박 적중 뒤 제한된 후속",
+      "assumptions": [
+        "럭스 Q와 케이틀린 W가 실제로 배워져 가용함",
+        "양쪽 실제 레벨·거리·체력을 확인했으며 노틸러스의 대응을 감당할 퇴로가 있음"
+      ],
+      "why": "럭스 Q는 최대 두 적 유닛을 속박하고 케이틀린 W는 발동해야 적 챔피언을 묶습니다. 둘을 배운 경우에만 제어 후속이라는 선택지가 생깁니다. 레벨 2 도달만으로 이 스킬 조합·선점·유리함이 확인되지는 않습니다.",
+      "action": "럭스 Q의 실제 챔피언 적중을 본 뒤, 설치 위치·덫 발동과 후속 거리까지 맞는 경우 W와 짧은 공격을 검토합니다. 속박을 보았다는 이유만으로 덫 발동이나 확정 연계/킬을 가정하지 않습니다.",
+      "opponent_response": "노틸러스는 럭스 Q가 빠진 틈에 Q 접근 또는 기본 공격 속박으로 역대응할 수 있습니다. 카이사도 계속 공격할 권리가 있으므로 한 명의 속박만으로 상대 둘의 대응이 사라지지는 않습니다.",
+      "alternative": "럭스 Q가 빗나가거나 덫 연결이 불명확하면 추가 전진을 접고 럭스와 같은 수급선으로 돌아옵니다. 상대가 기술을 쓰도록 억지로 몸을 내주는 행동은 권하지 않습니다.",
+      "changes": [
+        "럭스 Q 빗나감/가용성 상실",
+        "노틸러스 접근·카이사 후속이 열림",
+        "추가 인원·레벨 또는 웨이브 조건이 바뀜"
+      ],
+      "evidence_ids": [
+        "official:Lux:Q",
+        "official:Caitlyn:W",
+        "official:Nautilus:Q",
+        "official:Nautilus:P",
+        "official:Kaisa:Q"
+      ],
+      "action_ids": [
+        "OBSERVE_BIND_HIT",
+        "CONDITIONAL_TRAP_FOLLOW",
+        "END_ADVANCE_AFTER_MISS"
+      ],
+      "actors": {
+        "self": "Caitlyn",
+        "ally": "Lux",
+        "enemies": [
+          "Kaisa",
+          "Nautilus"
+        ]
+      },
+      "assumption_status": "NOT_OBSERVED",
+      "fact_scope": "공식: 연결된 기술/아이템의 명시한 성질. 가정: 위 스킬·자원·인원 조건을 갖춘 미래 장면. 행동 선택·연계 타이밍·우열은 설계 가설이며 실전 검증 없음.",
+      "level": "DESIGN_HYPOTHESIS"
+    },
+    "preference": {
+      "risk": "OPPORTUNITY",
+      "label": "기회 추구 우선",
+      "source": "USER_PREFERENCE"
+    },
+    "assumption_status": "NOT_OBSERVED",
+    "plans": [
+      {
+        "evidence_ids": [
+          "official:Lux:Q",
+          "official:Caitlyn:W",
+          "official:Nautilus:Q",
+          "official:Nautilus:P",
+          "official:Kaisa:Q"
+        ],
+        "opponent_response": [
+          "노틸러스의 닻줄 견인(Q) 또는 기본 공격 속박과 카이사 후속이 열리면 전진을 끝내고 받을 위치를 바꿉니다."
+        ],
+        "next_if_unknown": [
+          "실제 적중·스킬 가용성·동료 거리·상대 대응을 화면에서 다시 보고, 확인하려고 혼자 앞으로 나가지 않습니다."
+        ],
+        "scope": "HYPOTHETICAL_NOT_OBSERVED",
+        "level": "DESIGN_HYPOTHESIS",
+        "id": "SHORT_FOLLOW",
+        "title": "짧은 후속 공격",
+        "objective": "적중한 제어를 제한된 공격 기회로 바꾸기",
+        "gain": "적중한 제어를 제한된 공격 기회로 바꾸기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "OBSERVE_BIND_AND_EXIT",
+            "text": "럭스의 빛의 속박(Q) 실제 적중과 럭스 연결·상대 두 명의 대응·퇴로를 함께 봅니다."
+          },
+          {
+            "number": 2,
+            "action_id": "SET_TRAP_FOLLOW",
+            "text": "케이틀린의 요들잡이 덫(W) 설치 위치·발동·공격 거리가 맞는 경우만 짧은 후속을 잇습니다."
+          },
+          {
+            "number": 3,
+            "action_id": "END_FOLLOW",
+            "text": "덫 연결·동료 거리·퇴로가 끊기면 추격을 접고 럭스 쪽 받을 위치로 돌아옵니다."
+          }
+        ],
+        "requirements": [
+          "속박이 적 챔피언에게 적중한 가정",
+          "덫 습득·가용성·설치·발동·거리·자원·웨이브가 맞는 가정",
+          "상대 대응을 감당할 동료 연결·퇴로가 있는 가정"
+        ],
+        "abort": [
+          "속박 빗나감·덫 발동 불명확",
+          "노틸러스 접근·카이사 후속 또는 추가 인원",
+          "럭스 연결이나 퇴로 상실"
+        ],
+        "costs": [
+          "덫과 공격 시간·자원을 소모하며 전진 노출이 생깁니다.",
+          "교환하는 동안 미니언·복귀 기회를 놓칠 수 있고 피해 우열은 모릅니다."
+        ],
+        "dimensions": {
+          "survival_exposure": {
+            "text": "전진 노출과 상대 역대응 가능; 생존 보장 없음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "resources": {
+            "text": "덫과 후속 공격 자원 소모",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "growth": {
+            "text": "CS 손실과 교환 이득 크기는 미확인",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "position_wave": {
+            "text": "전진 뒤 동료 연결·복귀선 필요",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "time_objectives": {
+            "text": "추격으로 시간/목표물을 더 잃을 수 있음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "options": {
+            "text": "덫 소모 후 다른 접근 대응 선택권 감소",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          }
+        },
+        "feasibility": "IMPOSSIBLE"
+      },
+      {
+        "evidence_ids": [
+          "official:Lux:Q",
+          "official:Caitlyn:W",
+          "official:Nautilus:Q",
+          "official:Nautilus:P",
+          "official:Kaisa:Q"
+        ],
+        "opponent_response": [
+          "노틸러스의 닻줄 견인(Q) 또는 기본 공격 속박과 카이사 후속이 열리면 전진을 끝내고 받을 위치를 바꿉니다."
+        ],
+        "next_if_unknown": [
+          "실제 적중·스킬 가용성·동료 거리·상대 대응을 화면에서 다시 보고, 확인하려고 혼자 앞으로 나가지 않습니다."
+        ],
+        "scope": "HYPOTHETICAL_NOT_OBSERVED",
+        "level": "DESIGN_HYPOTHESIS",
+        "id": "RECEIVE_WITH_LUX",
+        "title": "동료와 수급선 유지",
+        "objective": "교환을 늘리기보다 접근 가능한 자원과 다음 연결을 남기기",
+        "gain": "교환을 늘리기보다 접근 가능한 자원과 다음 연결을 남기기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "LIMIT_RESOURCE_TARGET",
+            "text": "럭스와 연결되는 받을 위치를 고르고 이번에 포기할 미니언을 정합니다."
+          },
+          {
+            "number": 2,
+            "action_id": "CLAIM_NEAR_RESOURCE",
+            "text": "상대 둘의 대응·자원을 보며 접근 가능한 미니언만 받고 억지 견제나 전진은 하지 않습니다."
+          },
+          {
+            "number": 3,
+            "action_id": "REASSESS_NEXT_WINDOW",
+            "text": "상대 기술 사용·동료 연결·웨이브가 달라지면 다음 후속 또는 귀환 조건을 다시 비교합니다."
+          }
+        ],
+        "requirements": [
+          "럭스 연결과 상대 대응을 감당할 받을 위치·퇴로가 있는 가정"
+        ],
+        "abort": [
+          "노틸러스가 수급선에 접근하거나 동료/퇴로 연결이 끊김",
+          "체력·자원/웨이브 변화로 같은 자리에서 받을 수 없음"
+        ],
+        "costs": [
+          "속박 적중 기회를 공격으로 바꾸지 못할 수 있습니다.",
+          "상대에게 공간·웨이브 주도권을 내주거나 일부 CS를 잃을 수 있습니다."
+        ],
+        "dimensions": {
+          "survival_exposure": {
+            "text": "전진은 줄이지만 수급선도 안전 보장 없음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "resources": {
+            "text": "공격용 스킬 소모를 줄이는 선택; 회복량 미확인",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "growth": {
+            "text": "일부 미니언과 교환 기회를 포기할 수 있음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "position_wave": {
+            "text": "럭스와 같은 수급선 필요; 무조건 뒤로 걷는 지시 아님",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "time_objectives": {
+            "text": "상대가 이동/준비할 시간을 가질 수 있음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "options": {
+            "text": "다음 연결에 쓸 기술/복귀 선택권을 남김",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          }
+        },
+        "feasibility": "POSSIBLE"
+      },
+      {
+        "evidence_ids": [
+          "official:Lux:Q",
+          "official:Caitlyn:W",
+          "official:Nautilus:Q",
+          "official:Nautilus:P",
+          "official:Kaisa:Q"
+        ],
+        "opponent_response": [
+          "노틸러스의 닻줄 견인(Q) 또는 기본 공격 속박과 카이사 후속이 열리면 전진을 끝내고 받을 위치를 바꿉니다."
+        ],
+        "next_if_unknown": [
+          "실제 적중·스킬 가용성·동료 거리·상대 대응을 화면에서 다시 보고, 확인하려고 혼자 앞으로 나가지 않습니다."
+        ],
+        "scope": "HYPOTHETICAL_NOT_OBSERVED",
+        "level": "DESIGN_HYPOTHESIS",
+        "id": "PREPARE_WINDOW",
+        "title": "조건 확인·수급 목표 조정",
+        "objective": "불확실한 교환 대신 다음에 확인할 정보와 받을 자원 범위를 정하기",
+        "gain": "불확실한 교환 대신 다음에 확인할 정보와 받을 자원 범위를 정하기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "CHECK_OBSERVABLE_WINDOW",
+            "text": "실제 속박 적중·덫 가용성·럭스 거리·상대 대응 중 모르는 항목을 화면에서 구분합니다."
+          },
+          {
+            "number": 2,
+            "action_id": "REDUCE_RESOURCE_TARGET",
+            "text": "모르는 구역으로 확인하러 가지 않고 보이는 아군 쪽 받을 위치와 포기할 자원을 비교합니다."
+          },
+          {
+            "number": 3,
+            "action_id": "REOPEN_OR_RESET",
+            "text": "후속·퇴로 조건이 확인되면 다시 비교하고, 불충족이면 위치·회복·귀환 준비로 목표를 바꿉니다."
+          }
+        ],
+        "requirements": [
+          "확인 계획이며 이동/교환 성공을 전제하지 않음"
+        ],
+        "abort": [
+          "정보가 더 없거나 추가 적 접근이 드러나면 같은 수급 위치를 고집하지 않음"
+        ],
+        "costs": [
+          "기다리는 동안 CS·압박 기회와 시간을 잃을 수 있습니다.",
+          "대기·후퇴 자체도 상대 접근·다이브를 막는다는 보장은 없습니다."
+        ],
+        "dimensions": {
+          "survival_exposure": {
+            "text": "미확인 공간에 직접 진입하지 않음; 현재 자리 안전 미확인",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "resources": {
+            "text": "교환 자원 소모를 미루되 체력 손실 가능",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "growth": {
+            "text": "지연 중 CS/경험치 포기 가능",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "position_wave": {
+            "text": "현재 위치 고정이 아니라 관측 가능한 받을 위치 재비교",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "time_objectives": {
+            "text": "지연 중 상대 이동/목표 준비 가능",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "options": {
+            "text": "교환·수급·회복 선택을 다시 열기 위한 정보 확보",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          }
+        },
+        "feasibility": "POSSIBLE"
+      }
+    ],
+    "selected_plan_id": "RECEIVE_WITH_LUX",
+    "selection_reason": "현재 조건에서는 선택이 같습니다. 실행 조건이 맞는 후속이 없어 동료와 수급선을 다시 보는 선택을 유지합니다.",
+    "same_choice_across_preferences": true,
+    "required_checks": [
+      "실행 전에 가정한 기술·거리·자원을 실제 화면에서 다시 확인해야 합니다."
+    ],
+    "unchanged_conditions": [
+      "상대 둘의 대응·내 체력/자원·웨이브와 추가 인원을 함께 확인해야 합니다.",
+      "성향·가상 조건 선택은 실제 관측이나 전략 검증이 아닙니다."
+    ],
+    "evidence": {
+      "level": "DESIGN_HYPOTHESIS",
+      "sufficiency": "CONDITIONAL",
+      "assessment": "UNDETERMINED",
+      "official_scope": "공식: 연결된 기술/아이템의 명시한 성질. 가정: 위 스킬·자원·인원 조건을 갖춘 미래 장면. 행동 선택·연계 타이밍·우열은 설계 가설이며 실전 검증 없음.",
+      "question_id": "DUO-L2",
+      "counterexamples": [
+        "속박은 맞아도 덫 발동 전에 벗어나거나 노틸러스 역대응 때문에 후속이 끊길 수 있습니다.",
+        "수급선 유지도 동료 연결·퇴로가 없으면 안전한 대안이 아닙니다."
+      ],
+      "real_coaching_n": 0,
+      "accuracy": null
+    },
+    "map_scenario": {
+      "plan": {
+        "id": "RECEIVE_WITH_LUX",
+        "direction": "교환을 늘리기보다 접근 가능한 자원과 다음 연결을 남기기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "LIMIT_RESOURCE_TARGET",
+            "text": "럭스와 연결되는 받을 위치를 고르고 이번에 포기할 미니언을 정합니다."
+          },
+          {
+            "number": 2,
+            "action_id": "CLAIM_NEAR_RESOURCE",
+            "text": "상대 둘의 대응·자원을 보며 접근 가능한 미니언만 받고 억지 견제나 전진은 하지 않습니다."
+          },
+          {
+            "number": 3,
+            "action_id": "REASSESS_NEXT_WINDOW",
+            "text": "상대 기술 사용·동료 연결·웨이브가 달라지면 다음 후속 또는 귀환 조건을 다시 비교합니다."
+          }
+        ]
+      },
+      "map": {
+        "context": "LANE",
+        "asset": "direction-assets/map11.png",
+        "caption": "전술 설명용 예시 · 케이틀린·럭스 레벨 2 · 전 위치는 가정이며 현재 관측 아님",
+        "entities": [
+          {
+            "id": "self",
+            "team": "ALLY",
+            "self": true,
+            "champion": "Caitlyn",
+            "start": {
+              "x": 77,
+              "y": 83
+            },
+            "target": {
+              "x": 70,
+              "y": 84
+            }
+          },
+          {
+            "id": "lane-peer",
+            "team": "ALLY",
+            "self": false,
+            "champion": "Lux",
+            "start": {
+              "x": 73,
+              "y": 79
+            },
+            "target": null
+          }
+        ],
+        "arrows": [
+          {
+            "step": 2,
+            "kind": "MOVE",
+            "from": {
+              "x": 77,
+              "y": 83
+            },
+            "to": {
+              "x": 70,
+              "y": 84
+            }
+          }
+        ],
+        "landmarks": [
+          {
+            "id": "receiving",
+            "label": "1 받을 위치 후보 · 실제 웨이브 미확인",
+            "x": 70,
+            "y": 84,
+            "step": 1
+          },
+          {
+            "id": "reassess",
+            "label": "3 다음 연결 재비교",
+            "x": 73,
+            "y": 79,
+            "step": 3
+          }
+        ],
+        "notes": [
+          "적 위치는 미확인이므로 적 초상화를 표시하지 않습니다.",
+          "숫자는 행동 순서입니다. 점검 표시는 이동 지시가 아닙니다. 화살표는 안전 경로·정확한 스킬 사거리나 전술 효과의 검증이 아닙니다.",
+          "이 배치는 대표 매치업의 조건부 선택을 설명하는 설계 가설입니다."
+        ]
+      }
+    }
+  },
+  "UNKNOWN_EXIT": {
+    "schema_version": "loading-exploration-v1",
+    "supported": true,
+    "unsupported_reason": null,
+    "state": {
+      "milestone": "LEVEL2",
+      "assumptions": {
+        "binding": "MISS",
+        "followup": "READY",
+        "exit_cover": "UNKNOWN"
+      }
+    },
+    "row": {
+      "id": "LEVEL2",
+      "period": "레벨 2",
+      "decision_id": "FOLLOW_BIND_WITH_EXIT",
+      "judgment": "럭스 Q·내 W를 배운 가정: 속박 적중 뒤 제한된 후속",
+      "assumptions": [
+        "럭스 Q와 케이틀린 W가 실제로 배워져 가용함",
+        "양쪽 실제 레벨·거리·체력을 확인했으며 노틸러스의 대응을 감당할 퇴로가 있음"
+      ],
+      "why": "럭스 Q는 최대 두 적 유닛을 속박하고 케이틀린 W는 발동해야 적 챔피언을 묶습니다. 둘을 배운 경우에만 제어 후속이라는 선택지가 생깁니다. 레벨 2 도달만으로 이 스킬 조합·선점·유리함이 확인되지는 않습니다.",
+      "action": "럭스 Q의 실제 챔피언 적중을 본 뒤, 설치 위치·덫 발동과 후속 거리까지 맞는 경우 W와 짧은 공격을 검토합니다. 속박을 보았다는 이유만으로 덫 발동이나 확정 연계/킬을 가정하지 않습니다.",
+      "opponent_response": "노틸러스는 럭스 Q가 빠진 틈에 Q 접근 또는 기본 공격 속박으로 역대응할 수 있습니다. 카이사도 계속 공격할 권리가 있으므로 한 명의 속박만으로 상대 둘의 대응이 사라지지는 않습니다.",
+      "alternative": "럭스 Q가 빗나가거나 덫 연결이 불명확하면 추가 전진을 접고 럭스와 같은 수급선으로 돌아옵니다. 상대가 기술을 쓰도록 억지로 몸을 내주는 행동은 권하지 않습니다.",
+      "changes": [
+        "럭스 Q 빗나감/가용성 상실",
+        "노틸러스 접근·카이사 후속이 열림",
+        "추가 인원·레벨 또는 웨이브 조건이 바뀜"
+      ],
+      "evidence_ids": [
+        "official:Lux:Q",
+        "official:Caitlyn:W",
+        "official:Nautilus:Q",
+        "official:Nautilus:P",
+        "official:Kaisa:Q"
+      ],
+      "action_ids": [
+        "OBSERVE_BIND_HIT",
+        "CONDITIONAL_TRAP_FOLLOW",
+        "END_ADVANCE_AFTER_MISS"
+      ],
+      "actors": {
+        "self": "Caitlyn",
+        "ally": "Lux",
+        "enemies": [
+          "Kaisa",
+          "Nautilus"
+        ]
+      },
+      "assumption_status": "NOT_OBSERVED",
+      "fact_scope": "공식: 연결된 기술/아이템의 명시한 성질. 가정: 위 스킬·자원·인원 조건을 갖춘 미래 장면. 행동 선택·연계 타이밍·우열은 설계 가설이며 실전 검증 없음.",
+      "level": "DESIGN_HYPOTHESIS"
+    },
+    "preference": {
+      "risk": "BALANCED",
+      "label": "균형",
+      "source": "USER_PREFERENCE"
+    },
+    "assumption_status": "NOT_OBSERVED",
+    "plans": [
+      {
+        "evidence_ids": [
+          "official:Lux:Q",
+          "official:Caitlyn:W",
+          "official:Nautilus:Q",
+          "official:Nautilus:P",
+          "official:Kaisa:Q"
+        ],
+        "opponent_response": [
+          "노틸러스의 닻줄 견인(Q) 또는 기본 공격 속박과 카이사 후속이 열리면 전진을 끝내고 받을 위치를 바꿉니다."
+        ],
+        "next_if_unknown": [
+          "실제 적중·스킬 가용성·동료 거리·상대 대응을 화면에서 다시 보고, 확인하려고 혼자 앞으로 나가지 않습니다."
+        ],
+        "scope": "HYPOTHETICAL_NOT_OBSERVED",
+        "level": "DESIGN_HYPOTHESIS",
+        "id": "SHORT_FOLLOW",
+        "title": "짧은 후속 공격",
+        "objective": "적중한 제어를 제한된 공격 기회로 바꾸기",
+        "gain": "적중한 제어를 제한된 공격 기회로 바꾸기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "OBSERVE_BIND_AND_EXIT",
+            "text": "럭스의 빛의 속박(Q) 실제 적중과 럭스 연결·상대 두 명의 대응·퇴로를 함께 봅니다."
+          },
+          {
+            "number": 2,
+            "action_id": "SET_TRAP_FOLLOW",
+            "text": "케이틀린의 요들잡이 덫(W) 설치 위치·발동·공격 거리가 맞는 경우만 짧은 후속을 잇습니다."
+          },
+          {
+            "number": 3,
+            "action_id": "END_FOLLOW",
+            "text": "덫 연결·동료 거리·퇴로가 끊기면 추격을 접고 럭스 쪽 받을 위치로 돌아옵니다."
+          }
+        ],
+        "requirements": [
+          "속박이 적 챔피언에게 적중한 가정",
+          "덫 습득·가용성·설치·발동·거리·자원·웨이브가 맞는 가정",
+          "상대 대응을 감당할 동료 연결·퇴로가 있는 가정"
+        ],
+        "abort": [
+          "속박 빗나감·덫 발동 불명확",
+          "노틸러스 접근·카이사 후속 또는 추가 인원",
+          "럭스 연결이나 퇴로 상실"
+        ],
+        "costs": [
+          "덫과 공격 시간·자원을 소모하며 전진 노출이 생깁니다.",
+          "교환하는 동안 미니언·복귀 기회를 놓칠 수 있고 피해 우열은 모릅니다."
+        ],
+        "dimensions": {
+          "survival_exposure": {
+            "text": "전진 노출과 상대 역대응 가능; 생존 보장 없음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "resources": {
+            "text": "덫과 후속 공격 자원 소모",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "growth": {
+            "text": "CS 손실과 교환 이득 크기는 미확인",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "position_wave": {
+            "text": "전진 뒤 동료 연결·복귀선 필요",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "time_objectives": {
+            "text": "추격으로 시간/목표물을 더 잃을 수 있음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "options": {
+            "text": "덫 소모 후 다른 접근 대응 선택권 감소",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          }
+        },
+        "feasibility": "IMPOSSIBLE"
+      },
+      {
+        "evidence_ids": [
+          "official:Lux:Q",
+          "official:Caitlyn:W",
+          "official:Nautilus:Q",
+          "official:Nautilus:P",
+          "official:Kaisa:Q"
+        ],
+        "opponent_response": [
+          "노틸러스의 닻줄 견인(Q) 또는 기본 공격 속박과 카이사 후속이 열리면 전진을 끝내고 받을 위치를 바꿉니다."
+        ],
+        "next_if_unknown": [
+          "실제 적중·스킬 가용성·동료 거리·상대 대응을 화면에서 다시 보고, 확인하려고 혼자 앞으로 나가지 않습니다."
+        ],
+        "scope": "HYPOTHETICAL_NOT_OBSERVED",
+        "level": "DESIGN_HYPOTHESIS",
+        "id": "RECEIVE_WITH_LUX",
+        "title": "동료와 수급선 유지",
+        "objective": "교환을 늘리기보다 접근 가능한 자원과 다음 연결을 남기기",
+        "gain": "교환을 늘리기보다 접근 가능한 자원과 다음 연결을 남기기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "LIMIT_RESOURCE_TARGET",
+            "text": "럭스와 연결되는 받을 위치를 고르고 이번에 포기할 미니언을 정합니다."
+          },
+          {
+            "number": 2,
+            "action_id": "CLAIM_NEAR_RESOURCE",
+            "text": "상대 둘의 대응·자원을 보며 접근 가능한 미니언만 받고 억지 견제나 전진은 하지 않습니다."
+          },
+          {
+            "number": 3,
+            "action_id": "REASSESS_NEXT_WINDOW",
+            "text": "상대 기술 사용·동료 연결·웨이브가 달라지면 다음 후속 또는 귀환 조건을 다시 비교합니다."
+          }
+        ],
+        "requirements": [
+          "럭스 연결과 상대 대응을 감당할 받을 위치·퇴로가 있는 가정"
+        ],
+        "abort": [
+          "노틸러스가 수급선에 접근하거나 동료/퇴로 연결이 끊김",
+          "체력·자원/웨이브 변화로 같은 자리에서 받을 수 없음"
+        ],
+        "costs": [
+          "속박 적중 기회를 공격으로 바꾸지 못할 수 있습니다.",
+          "상대에게 공간·웨이브 주도권을 내주거나 일부 CS를 잃을 수 있습니다."
+        ],
+        "dimensions": {
+          "survival_exposure": {
+            "text": "전진은 줄이지만 수급선도 안전 보장 없음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "resources": {
+            "text": "공격용 스킬 소모를 줄이는 선택; 회복량 미확인",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "growth": {
+            "text": "일부 미니언과 교환 기회를 포기할 수 있음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "position_wave": {
+            "text": "럭스와 같은 수급선 필요; 무조건 뒤로 걷는 지시 아님",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "time_objectives": {
+            "text": "상대가 이동/준비할 시간을 가질 수 있음",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "options": {
+            "text": "다음 연결에 쓸 기술/복귀 선택권을 남김",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          }
+        },
+        "feasibility": "UNKNOWN"
+      },
+      {
+        "evidence_ids": [
+          "official:Lux:Q",
+          "official:Caitlyn:W",
+          "official:Nautilus:Q",
+          "official:Nautilus:P",
+          "official:Kaisa:Q"
+        ],
+        "opponent_response": [
+          "노틸러스의 닻줄 견인(Q) 또는 기본 공격 속박과 카이사 후속이 열리면 전진을 끝내고 받을 위치를 바꿉니다."
+        ],
+        "next_if_unknown": [
+          "실제 적중·스킬 가용성·동료 거리·상대 대응을 화면에서 다시 보고, 확인하려고 혼자 앞으로 나가지 않습니다."
+        ],
+        "scope": "HYPOTHETICAL_NOT_OBSERVED",
+        "level": "DESIGN_HYPOTHESIS",
+        "id": "PREPARE_WINDOW",
+        "title": "조건 확인·수급 목표 조정",
+        "objective": "불확실한 교환 대신 다음에 확인할 정보와 받을 자원 범위를 정하기",
+        "gain": "불확실한 교환 대신 다음에 확인할 정보와 받을 자원 범위를 정하기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "CHECK_OBSERVABLE_WINDOW",
+            "text": "실제 속박 적중·덫 가용성·럭스 거리·상대 대응 중 모르는 항목을 화면에서 구분합니다."
+          },
+          {
+            "number": 2,
+            "action_id": "REDUCE_RESOURCE_TARGET",
+            "text": "모르는 구역으로 확인하러 가지 않고 보이는 아군 쪽 받을 위치와 포기할 자원을 비교합니다."
+          },
+          {
+            "number": 3,
+            "action_id": "REOPEN_OR_RESET",
+            "text": "후속·퇴로 조건이 확인되면 다시 비교하고, 불충족이면 위치·회복·귀환 준비로 목표를 바꿉니다."
+          }
+        ],
+        "requirements": [
+          "확인 계획이며 이동/교환 성공을 전제하지 않음"
+        ],
+        "abort": [
+          "정보가 더 없거나 추가 적 접근이 드러나면 같은 수급 위치를 고집하지 않음"
+        ],
+        "costs": [
+          "기다리는 동안 CS·압박 기회와 시간을 잃을 수 있습니다.",
+          "대기·후퇴 자체도 상대 접근·다이브를 막는다는 보장은 없습니다."
+        ],
+        "dimensions": {
+          "survival_exposure": {
+            "text": "미확인 공간에 직접 진입하지 않음; 현재 자리 안전 미확인",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "resources": {
+            "text": "교환 자원 소모를 미루되 체력 손실 가능",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "growth": {
+            "text": "지연 중 CS/경험치 포기 가능",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "position_wave": {
+            "text": "현재 위치 고정이 아니라 관측 가능한 받을 위치 재비교",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "time_objectives": {
+            "text": "지연 중 상대 이동/목표 준비 가능",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          },
+          "options": {
+            "text": "교환·수급·회복 선택을 다시 열기 위한 정보 확보",
+            "evidence_ids": [
+              "official:Lux:Q",
+              "official:Caitlyn:W",
+              "official:Nautilus:Q",
+              "official:Nautilus:P",
+              "official:Kaisa:Q"
+            ],
+            "level": "DESIGN_HYPOTHESIS"
+          }
+        },
+        "feasibility": "POSSIBLE"
+      }
+    ],
+    "selected_plan_id": "PREPARE_WINDOW",
+    "selection_reason": "현재 조건에서는 선택이 같습니다. 후속·수급의 필수 조건이 미확인/불충족이라 성향으로 실행 가능하게 바꾸지 않습니다.",
+    "same_choice_across_preferences": true,
+    "required_checks": [
+      "동료 연결·상대 대응·퇴로 가정",
+      "실행 전에 가정한 기술·거리·자원을 실제 화면에서 다시 확인해야 합니다."
+    ],
+    "unchanged_conditions": [
+      "상대 둘의 대응·내 체력/자원·웨이브와 추가 인원을 함께 확인해야 합니다.",
+      "성향·가상 조건 선택은 실제 관측이나 전략 검증이 아닙니다."
+    ],
+    "evidence": {
+      "level": "DESIGN_HYPOTHESIS",
+      "sufficiency": "CONDITIONAL",
+      "assessment": "UNDETERMINED",
+      "official_scope": "공식: 연결된 기술/아이템의 명시한 성질. 가정: 위 스킬·자원·인원 조건을 갖춘 미래 장면. 행동 선택·연계 타이밍·우열은 설계 가설이며 실전 검증 없음.",
+      "question_id": "DUO-L2",
+      "counterexamples": [
+        "속박은 맞아도 덫 발동 전에 벗어나거나 노틸러스 역대응 때문에 후속이 끊길 수 있습니다.",
+        "수급선 유지도 동료 연결·퇴로가 없으면 안전한 대안이 아닙니다."
+      ],
+      "real_coaching_n": 0,
+      "accuracy": null
+    },
+    "map_scenario": {
+      "plan": {
+        "id": "PREPARE_WINDOW",
+        "direction": "불확실한 교환 대신 다음에 확인할 정보와 받을 자원 범위를 정하기",
+        "steps": [
+          {
+            "number": 1,
+            "action_id": "CHECK_OBSERVABLE_WINDOW",
+            "text": "실제 속박 적중·덫 가용성·럭스 거리·상대 대응 중 모르는 항목을 화면에서 구분합니다."
+          },
+          {
+            "number": 2,
+            "action_id": "REDUCE_RESOURCE_TARGET",
+            "text": "모르는 구역으로 확인하러 가지 않고 보이는 아군 쪽 받을 위치와 포기할 자원을 비교합니다."
+          },
+          {
+            "number": 3,
+            "action_id": "REOPEN_OR_RESET",
+            "text": "후속·퇴로 조건이 확인되면 다시 비교하고, 불충족이면 위치·회복·귀환 준비로 목표를 바꿉니다."
+          }
+        ]
+      },
+      "map": {
+        "context": "LANE",
+        "asset": "direction-assets/map11.png",
+        "caption": "전술 설명용 예시 · 케이틀린·럭스 레벨 2 · 전 위치는 가정이며 현재 관측 아님",
+        "entities": [
+          {
+            "id": "self",
+            "team": "ALLY",
+            "self": true,
+            "champion": "Caitlyn",
+            "start": {
+              "x": 77,
+              "y": 83
+            },
+            "target": null
+          },
+          {
+            "id": "lane-peer",
+            "team": "ALLY",
+            "self": false,
+            "champion": "Lux",
+            "start": {
+              "x": 73,
+              "y": 79
+            },
+            "target": null
+          }
+        ],
+        "arrows": [],
+        "landmarks": [
+          {
+            "id": "check",
+            "label": "1 화면 정보 점검",
+            "x": 77,
+            "y": 83,
+            "step": 1
+          },
+          {
+            "id": "resource",
+            "label": "2 받을 위치 후보 비교 · 이동 지시 아님",
+            "x": 70,
+            "y": 84,
+            "step": 2
+          },
+          {
+            "id": "reassess",
+            "label": "3 연결·회복 재비교",
+            "x": 73,
+            "y": 79,
+            "step": 3
+          }
+        ],
+        "notes": [
+          "적 위치는 미확인이므로 적 초상화를 표시하지 않습니다.",
+          "숫자는 행동 순서입니다. 점검 표시는 이동 지시가 아닙니다. 화살표는 안전 경로·정확한 스킬 사거리나 전술 효과의 검증이 아닙니다.",
+          "이 배치는 대표 매치업의 조건부 선택을 설명하는 설계 가설입니다."
+        ]
+      }
+    }
+  }
+}
