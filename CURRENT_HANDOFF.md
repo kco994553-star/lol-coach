@@ -1,3 +1,56 @@
+된 것: 로딩 요약의 반복·소유자 중복을 정리하고 상세 조건·후보·여섯 구간을 보존했습니다.
+된 것: 기존 질문6개 중 후속 공격·이탈 자원·궁극기 대응 세 질문의 근거 요구와 반례를 연결했습니다.
+확인: PR58 필수3개·병합후3개·실제Pages 배포 성공, 공개27파일 일치·PC/모바일 입력 흐름 통과.
+미확인: 새 강의 채택0·실전코칭N=0·30초 이해 미측정·실제Windows BLOCKED_EXTERNAL입니다.
+다음: 오늘 영상3/3 추가호출0. 기존10/18KST18시 예약과③→별도검토/게시→④ 순서를 유지합니다.
+
+# Loading readability actually published — 2026-10-17
+
+Open https://kco994553-star.github.io/lol-coach/ → manual10picks+ownchampion/position
+→compact summary→sixlane rows/operations/fight/conditionalmaps/evidence.
+Public27allowlist files/root/build-info/.nojekyll matched; actualHTTPSChromium1440/390 manual
+Korean/English10picks→summary/name(key)→detail→distantTOP laneunchanged→unknowncarry retainsNaut
+→maps/zoom/legacy directions/status PASS. No browser/HTTPerrors or publicPC/provider requests.
+Status page remains a dated snapshot, not live runtime monitoring.
+
+PR58 head409667dea4b4ebc04cfedbd0aa578b5e2dec5678, testedmergef1c9501f8c4534f01b050e8bb829e7b1072e5a6a,
+normalmain4a88150c60478e0cf6a889343a849acb10da5685 sharetree21044a149d359c1122a639f0baf1d0f3ddf0dedd.
+Required39014233647/39014233602 and postmain39014345913/39014345810 all3SUCCESS; exactcheckout/
+current_sources and34 affectedchecks/fresh browsers verified. Pages nonforceCAS935e272→
+096234e8d94b9ead707f0eaef33915bfc184fbc5; actualnative39014451779SUCCESS. Initialpending and
+actualsuccess are separate fields. Fullreceipts/logs/publicscreens/text:
+evidence/actual-evidence/loading-readability/publication/. Originalbefore/after/failedhistory/
+review/threequestions/report remain onelevel above; oldsixquestions/sourcequotes unchanged.
+
+Summary uses functions, no arbitraryranking/firsttwo candidates; full contextual candidates and
+reasons in details. Important control/followup/cover/exit and remainingplayers/wave/recall
+conditions retained. Independentreview P2 objectiveconversion overstatement resolved.
+Adjacent explicitsubject already identifies sameowner; redundant possessive removed only
+before complete officialname(key), preserving otherowners and officialowner-like names.
+No lane/role/contexts/gameplan/teamfight reportfield changes beyond summary. No more23rewrites.
+
+Selected DUO-L2/L3_5/L6 all HOLD_NO_MATCHING_LECTURE_SEGMENT. Neededfacts/sceneconditions/
+revisioncounterexamples are explicit; remaining3 originalquestions queued. Existing stage2
+source https://www.youtube.com/watch?v=brQaUDGnXTs full0..1102seconds is API diagnostic,
+content usable but sourcefactreview NOT_COMPLETED; speakerunverified and no relevantduo
+lecture/adoptedclaim. No new visualobservation or expertstatement, no evidence-driven
+advicechange. Fullvideo output excluded from predecision evaluation inputs.
+
+Oct17VIDEO3/3 extraTEXT/VIDEO/game/sourceasset/paidcalls0. Workflow381076541 active UTC09=KST18,
+recent5 manual runs only; actualscheduledexecution NOT_OBSERVED. Oct18eligible nominal18KST
+is calculated, not platformguaranteed. Existing③clip→separatereview/requiredCIpublish→④JSON,
+then normal1video/day/free/sharedledger/originaldurationcharges/no refunds/no unchangedretry.
+No quota/config/workflow change, no channelroundtrip or newsourcecollection to fillcount.
+Original advice7/AUTO30/HOLD20/USER0/Frozen350/Windowslauncher/LCU/manualfallback remain.
+RealcoachingN0/accuracy=null, human30s comprehension NOT_MEASURED; Windows BLOCKED_EXTERNAL.
+
+This results-only branch changes receipts/Handoff/queue/seal, not product/provider/workflow.
+Its CI/merge are separate futuregates; finalcommonclaim holds actualfinalSHA/CIstatus.
+NextP0 requires question-matched lecture evidence and independent predecision/realplay data,
+not addedchampions/scenes or broadrewriting. No user collection/fullreview/newapproval needed.
+
+---
+
 된 것: 로딩 요약의 후보 반복·스킬 소유자 중복을 줄이고 상세 조건·여섯 구간을 보존했습니다.
 된 것: 기존 질문6개 중 행동을 바꿀 세 질문을 별도 연결하고 반례·필요 장면을 기록했습니다.
 확인: 변경 검사32개·PC1440/모바일390 및 공유 표시 회귀 통과, 독립 검토 지적 수정.
