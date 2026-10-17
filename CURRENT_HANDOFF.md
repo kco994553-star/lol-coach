@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-loading-context`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/skill-display-20261017`
+- authority: USER_SKILL_DISPLAY_FORMAT + inherited approved publication
+- intake_main: `75a4543c23b1f06f215986ab8ca4036ac6d199b7`
+- detail: PR56 exact-head required jobs117323951365/117323951213/117323951294 all SUCCESS; source checkout/current bindings,24 changed checks and fresh loading/directions/PC display browsers verified. Acquire writer for normal expected-head merge and existing Pages publication. No provider calls.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261017-loading-context`
 - status: `CI_PENDING`
