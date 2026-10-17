@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-loading-context`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/skill-display-results-20261017`
+- authority: USER_SKILL_DISPLAY_FORMAT + inherited approved publication
+- intake_main: `c5501b5cc8f330e5b1204cfc30b1ef4c31bdce3e`
+- detail: Results-only PR57 exact-head required jobs117325366878/117325366729/117325366914 SUCCESS with current source bindings, no new tests and all unchanged-browser reuse markers. Acquire Main for normal expected-head merge/final remote closure; live935e272 artifact and publicPC/mobile proof unchanged.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261017-loading-context`
 - status: `CI_PENDING`
