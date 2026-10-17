@@ -1,3 +1,14 @@
+# Latest common execution claim — PARKED_EXTERNAL
+- run_token: `main-20261017-directions`
+- status: `PARKED_EXTERNAL`
+- writer_active: false
+- owner_branch: `work/directions-results-20261017`
+- authority: USER_SITUATIONAL_MINIMAP_PROTOTYPE_AND_MOBILE_WEB_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `0ec550d823936118f86487626467e3d01060de42`
+- detail: COMPLETE user3decisions/6scenes+mobileweb. PR50 head e684c8d/main0ec550d testedtreea1902e95 required38997499760/772+post38997627833/836 all3SUCCESS. DocsPR51 headec453cf/tested2543189/treef02ab4f/main00b40926e72a198a6143a8b6ffae97dadfac50bf required38998023440/515+post38998115434/442 all3SUCCESS, completedchecks reused andfunctionalhashes unchanged. Publichttps://kco994553-star.github.io/lol-coach/ and /status.html LIVE; gh-pages6c950ca6/source0ec550d; Pages38997722411/deploy7134020088 SUCCESS,12fileSHA match+actual390pxChromium/zoom/statusPASS/TLSretained. Main evidence/actual-evidence/directions/publication contains safeproof/screens. Clean; no furtherREADY withinprototype scope. AllnewstrategyDESIGN_HYPOTHESIS, old7/AUTO30/HOLD20/USER0+Windows/manual preserved. NewTEXT/VIDEO/RiotMatch/paid0; todayVIDEO3/3. WindowsLCU/in-gamepolicy/effectiveness external. Retain Oct18③→separate review+gatedpublish→④ and1/dayafterdiagnosis; existingresumeconfigured/actualexecutionUNOBSERVED.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261017-directions`
 - status: `CI_PENDING`
