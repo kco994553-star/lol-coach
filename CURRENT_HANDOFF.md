@@ -1,3 +1,12 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-loading-readability`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-readability-results-20261017`
+- detail: PR59 results-only required39014584372/39014584323 all3SUCCESS; exact source/reuse/normal merge gate next. Product27files identical to actual published096234e8, PR58 verification preserved. No providercalls/N0/comprehensionunmeasured; next lecture gate remains external.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261017-loading-readability`
 - status: `CI_PENDING`
