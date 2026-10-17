@@ -6,7 +6,7 @@ from pathlib import Path
 import subprocess,sys,tempfile,threading
 
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
-SOURCES=['web_r4/'+p for p in ['loading.html','loading.js','loading.css','loading-engine.js','loading-map.js','loading-data.json','directions-engine.js','directions.js']]+['coach_v1/pregame_server.py','scripts/build_directions_web.py','scripts/browser_loading.py']
+SOURCES=['web_r4/'+p for p in ['loading.html','loading.js','loading.css','loading-engine.js','loading-map.js','loading-data.json','skill-data.js','skill-display.js','directions-engine.js','directions.js']]+['coach_v1/pregame_server.py','scripts/build_directions_web.py','scripts/browser_loading.py']
 
 def affected():
     event_path=os.environ.get('GITHUB_EVENT_PATH')
@@ -29,6 +29,57 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
  const example=async i=>{await page.locator('#input-panel').evaluate(e=>e.open=true);await page.locator('#example-'+i).click();await analyze();};
  const capture=async(selector,file)=>page.locator(selector).screenshot({path:process.env.LOADING_OUT+'/'+file});
  const summary=async()=>page.locator('#loading-summary').innerText();
+ const skillPresentation=async()=>{
+  const row=id=>page.locator('[data-milestone="'+id+'"]'),cell=(id,index)=>row(id).locator('td').nth(index);
+  assert.match(await summary(),/럭스의 빛의 속박\(Q\)/);assert.match(await summary(),/케이틀린의 요들잡이 덫\(W\)/);
+  assert.match(await page.locator('#lane-key').innerText(),/케이틀린의 요들잡이 덫\(W\) 발동/);
+  assert.match(await page.locator('#remember li').first().innerText(),/확정 케이틀린의 요들잡이 덫\(W\) 연계/);
+  assert.match(await cell('LEVEL1',0).innerText(),/케이틀린의 필트오버 피스메이커\(Q\).*럭스의 광휘의 특이점\(E\)/);
+  assert.match(await cell('LEVEL1',2).innerText(),/노틸러스가 노틸러스의 닻줄 견인\(Q\)로/);
+  assert.match(await cell('LEVEL1',2).innerText(),/카이사가.*카이사의 이케시아 폭우\(Q\) 피해/);
+  assert.match(await cell('LEVEL2',2).innerText(),/케이틀린의 요들잡이 덫\(W\)와 짧은/);
+  assert.match(await cell('LEVEL2',2).innerText(),/노틸러스의 닻줄 견인\(Q\) 접근/);
+  assert.match(await cell('LEVEL3_5',1).innerText(),/럭스의 광휘의 특이점\(E\)의 원문/);
+  assert.match(await cell('LEVEL3_5',0).innerText(),/럭스의 프리즘 보호막\(W\)을 배운 가정/);
+  assert.match(await cell('LEVEL3_5',1).innerText(),/아군에게 보호막을 줍니다/);
+  assert.match(await cell('LEVEL3_5',2).innerText(),/케이틀린의 90구경 투망\(E\)를 단순/);
+  assert.match(await cell('LEVEL3_5',2).innerText(),/케이틀린의 90구경 투망\(E\)가 없거나/);
+  assert.match(await cell('LEVEL3_5',2).innerText(),/럭스의 광휘의 특이점\(E\)로 보지 못한/);
+  assert.match(await cell('LEVEL3_5',2).innerText(),/또는 럭스의 프리즘 보호막\(W\) 하나/);
+  assert.match(await cell('LEVEL3_5',2).innerText(),/럭스의 프리즘 보호막\(W\)이 닿지/);
+  assert.match(await cell('LEVEL3_5',3).innerText(),/케이틀린의 90구경 투망\(E\)를 소모하거나 럭스의 프리즘 보호막\(W\) 보호/);
+  assert.match(await cell('LEVEL6',2).innerText(),/카이사의 사냥본능\(R\) 후속/);
+  assert.match(await row('FIRST_PURCHASE').innerText(),/노틸러스의 닻줄 견인\(Q\).*노틸러스의 강력한 일격\(P\)/);
+  assert.match(await cell('FIRST_PURCHASE',2).innerText(),/노틸러스의 닻줄 견인\(Q\)을 피하거나/);
+  assert.match(await row('FIRST_CORE').innerText(),/설계 가설/);
+  assert.match(await page.locator('#lane-context .fight-link-list').first().innerText(),/럭스의 빛의 속박\(Q\)/);
+  assert.match(await page.locator('#fight-content').innerText(),/케이틀린의 90구경 투망\(E\)/);
+  assert.match(await page.locator('#scenario-content').innerText(),/케이틀린의 요들잡이 덫\(W\)/);
+  assert.match(await page.locator('#scenario-content').innerText(),/케이틀린의 90구경 투망\(E\)/);
+  const originalFact=JSON.parse(fs.readFileSync('web_r4/loading-data.json','utf8')).champions.Caitlyn.facts.find(f=>f.slot==='W');
+  const fact=page.locator('[data-fact-id="official:Caitlyn:W"]');assert.equal(await fact.locator('blockquote').first().textContent(),originalFact.text);
+  assert.equal(await fact.locator('h4').textContent(),'케이틀린의 요들잡이 덫(W)');
+  assert(await page.evaluate(()=>{
+    const opts={champions:['Caitlyn','Lux','Nautilus','Kaisa'],own:'Caitlyn'},alias={...opts,aliases:[{text:'덫',champion:'Caitlyn',slot:'W'}]};
+    const sample='럭스 Q와 내 W, 케이틀린의 90구경 투망(E)',once=SkillDisplay.format(sample,opts),trap=SkillDisplay.format('덫 연결',alias);
+    const generic='교전 준비 · 상대 반격/매혹/공포',genericOptions={champions:['Katarina','Jax','Ahri','Fiddlesticks']};
+    return SkillDisplay.format(once,opts)===once&&SkillDisplay.format(trap,alias)===trap&&SkillDisplay.format('Q·E',opts)==='Q·E'&&SkillDisplay.format('덫 연결',opts)==='덫 연결'&&SkillDisplay.format(generic,genericOptions)===generic;
+  }));
+ };
+ const mapSkillPresentation=async()=>{
+  // A display-only fixture checks fields absent from the retained maps' generic labels.
+  await page.evaluate(catalog=>{
+   const input=LoadingStrategy.exampleInput(catalog,0),fixture={id:'recall-crash',map:{landmarks:[{step:1,label:'럭스 E',x:50,y:50}],caption:'케이틀린 E',notes:['럭스 Q'],entities:[]},plan:{steps:[{number:1,text:'덫 / 투망'}]}};
+   const host=document.createElement('div');host.id='skill-map-probe';host.append(LoadingMap.create(fixture,catalog,input));document.querySelector('main').append(host);
+  },JSON.parse(fs.readFileSync('web_r4/loading-data.json','utf8')));
+  const probe=page.locator('#skill-map-probe');
+  assert.equal(await probe.locator('.map-caption').innerText(),'케이틀린의 90구경 투망(E)');
+  assert.equal(await probe.locator('.map-label').textContent(),'럭스의 광휘의 특이점(E)');
+  assert.match(await probe.locator('.scenario-steps').innerText(),/케이틀린의 요들잡이 덫\(W\) \/ 케이틀린의 90구경 투망\(E\)/);
+  await probe.locator('.map-header button').click();await page.waitForSelector('#loading-map-dialog[open]');
+  assert.equal(await page.locator('#zoom-map .map-label').textContent(),'럭스의 광휘의 특이점(E)');
+  await page.locator('#map-close').click();await probe.evaluate(element=>element.remove());
+ };
  const snapshots=[];
  try{
   await ready(process.env.LOADING_PC+'/loading');
@@ -43,14 +94,18 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
   await page.locator('.optional-settings').evaluate(e=>e.open=true);await page.locator('#patch').fill('16.20');await analyze();
   const original=await summary();assert.match(original,/케이틀린/);assert.match(original,/카이사/);assert.match(original,/노틸러스/);
   assert.equal(await page.locator('#report-teams .roster-pick').count(),10);assert.equal(await page.locator('#lane-table tbody tr').count(),6);
+  assert.match(await page.locator('[data-milestone="LEVEL1"]').innerText(),/케이틀린의 필트오버 피스메이커\(Q\)/);
+  assert.match(await page.locator('[data-milestone="LEVEL1"]').innerText(),/럭스의 광휘의 특이점\(E\)/);
   assert.equal(await page.locator('#scenario-content [data-scenario]').count(),2);
   assert.equal(await page.locator('[data-team="ENEMY"][data-entity]').count(),0);
+  await skillPresentation();
+  await mapSkillPresentation();
   await capture('#loading-summary','desktop-summary.png');await capture('#loading-lane','desktop-lane.png');await capture('#teamfight','desktop-teamfight.png');
   snapshots.push({input:'example-0 manual Korean/English',summary:original,lane_rows:await page.locator('#lane-table tbody').innerText()});
   // Context meaning fixed in contract before implementation, exercised through real controls.
   const baseLane=await page.locator('#lane-table tbody').innerText();
   const level2=await page.locator('[data-milestone="LEVEL2"]').innerText();
-  assert.match(level2,/럭스 Q/);assert(!/오른|세주아니/.test(baseLane));
+  assert.match(level2,/럭스의 빛의 속박\(Q\)/);assert(!/오른|세주아니/.test(baseLane));
   assert.match(baseLane,/상대 대응 가정/);assert.match(baseLane,/그때의 대안/);assert.match(baseLane,/실제 상태 미관측/);
   assert.match(await page.locator('#fight-content').innerText(),/기본 유형·역할/);
   const beforeMap=await page.locator('#scenario-content [data-entity] title').allTextContents();
@@ -107,6 +162,8 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
   // The exact public allowlist works under /lol-coach/, with mobile steps/zoom/details.
   await page.setViewportSize({width:390,height:844});await ready(process.env.LOADING_WEB+'/lol-coach/index.html');await example(0);
   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+  await skillPresentation();
+  await mapSkillPresentation();
   const map=page.locator('#fight-content .scenario-grid').first();await map.locator('.scenario-steps [data-step="2"] button').click();
   assert.equal(await map.locator('.strategy-map').getAttribute('data-active-step'),'2');
   await map.locator('.map-header button').click();await page.waitForSelector('#loading-map-dialog[open]');

@@ -1,0 +1,305 @@
+test_bare_key_not_defaulted_to_own (tests_pregame.test_skill_display.SkillDisplayTests.test_bare_key_not_defaulted_to_own) ... FAIL
+test_display_input_objects_unchanged (tests_pregame.test_skill_display.SkillDisplayTests.test_display_input_objects_unchanged) ... FAIL
+test_exact_locator_and_no_item_or_summoner_slots (tests_pregame.test_skill_display.SkillDisplayTests.test_exact_locator_and_no_item_or_summoner_slots) ... FAIL
+test_existing_key_is_idempotent (tests_pregame.test_skill_display.SkillDisplayTests.test_existing_key_is_idempotent) ... FAIL
+test_explicit_mention_bindings_preserve_different_e_owners (tests_pregame.test_skill_display.SkillDisplayTests.test_explicit_mention_bindings_preserve_different_e_owners) ... FAIL
+test_five_caitlyn_slots_and_explicit_owners (tests_pregame.test_skill_display.SkillDisplayTests.test_five_caitlyn_slots_and_explicit_owners) ... FAIL
+test_multiple_champions_same_key_and_group (tests_pregame.test_skill_display.SkillDisplayTests.test_multiple_champions_same_key_and_group) ... FAIL
+test_offline_name_table_is_exact (tests_pregame.test_skill_display.SkillDisplayTests.test_offline_name_table_is_exact) ... FAIL
+test_real_duplicate_name_needs_owner (tests_pregame.test_skill_display.SkillDisplayTests.test_real_duplicate_name_needs_owner) ... FAIL
+
+======================================================================
+FAIL: test_bare_key_not_defaulted_to_own (tests_pregame.test_skill_display.SkillDisplayTests.test_bare_key_not_defaulted_to_own)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 33, in test_bare_key_not_defaulted_to_own
+    actual=js("console.log(JSON.stringify(S.format('E가 없으면 Q를 보류, official:Lux:Q',{own:'Caitlyn',champions:['Caitlyn','Lux']})))")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 11, in js
+    if p.returncode:raise AssertionError(p.stderr)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: node:internal/modules/cjs/loader:1520
+  throw err;
+  ^
+
+Error: Cannot find module './web_r4/skill-display.js'
+Require stack:
+- /workspace/lol-coach/[eval]
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+    at Module._load (node:internal/modules/cjs/loader:1294:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1617:12)
+    at require (node:internal/modules/helpers:153:16)
+    at [eval]:1:9
+    at runScriptInThisContext (node:internal/vm:219:10) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [ '/workspace/lol-coach/[eval]' ]
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_display_input_objects_unchanged (tests_pregame.test_skill_display.SkillDisplayTests.test_display_input_objects_unchanged)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 45, in test_display_input_objects_unchanged
+    actual=js("const x={name:'빛의 속박',text:'럭스 Q 원문',source:{locator:'data.Lux.spells.0.description',sha256:'fixed'}};const before=JSON.stringify(x);S.factLabel('Lux',x);S.format(x.text,{champions:['Lux']});console.log(JSON.stringify(before===JSON.stringify(x)))")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 11, in js
+    if p.returncode:raise AssertionError(p.stderr)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: node:internal/modules/cjs/loader:1520
+  throw err;
+  ^
+
+Error: Cannot find module './web_r4/skill-display.js'
+Require stack:
+- /workspace/lol-coach/[eval]
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+    at Module._load (node:internal/modules/cjs/loader:1294:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1617:12)
+    at require (node:internal/modules/helpers:153:16)
+    at [eval]:1:9
+    at runScriptInThisContext (node:internal/vm:219:10) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [ '/workspace/lol-coach/[eval]' ]
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_exact_locator_and_no_item_or_summoner_slots (tests_pregame.test_skill_display.SkillDisplayTests.test_exact_locator_and_no_item_or_summoner_slots)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 41, in test_exact_locator_and_no_item_or_summoner_slots
+    actual=js("console.log(JSON.stringify([S.factLabel('Caitlyn',{name:'헤드샷',source:{locator:'data.Caitlyn.passive.description'}}),S.factLabel('Lux',{name:'빛의 속박',source:{locator:'data.Lux.spells.0.description'}}),S.factLabel('Lux',{name:'빛의 속박',source:{locator:'data.Caitlyn.spells.0.description'}}),S.factLabel('Lux',{name:'장화',slot:'ITEM'}),S.format('점멸 / 회복',{champions:['Lux']})]))")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 11, in js
+    if p.returncode:raise AssertionError(p.stderr)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: node:internal/modules/cjs/loader:1520
+  throw err;
+  ^
+
+Error: Cannot find module './web_r4/skill-display.js'
+Require stack:
+- /workspace/lol-coach/[eval]
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+    at Module._load (node:internal/modules/cjs/loader:1294:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1617:12)
+    at require (node:internal/modules/helpers:153:16)
+    at [eval]:1:9
+    at runScriptInThisContext (node:internal/vm:219:10) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [ '/workspace/lol-coach/[eval]' ]
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_existing_key_is_idempotent (tests_pregame.test_skill_display.SkillDisplayTests.test_existing_key_is_idempotent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 25, in test_existing_key_is_idempotent
+    actual=js("const a=S.format('럭스의 빛의 속박(Q), 케이틀린 요들잡이 덫(W)',{champions:['Lux','Caitlyn']});console.log(JSON.stringify([a,S.format(a,{champions:['Lux','Caitlyn']})]))")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 11, in js
+    if p.returncode:raise AssertionError(p.stderr)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: node:internal/modules/cjs/loader:1520
+  throw err;
+  ^
+
+Error: Cannot find module './web_r4/skill-display.js'
+Require stack:
+- /workspace/lol-coach/[eval]
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+    at Module._load (node:internal/modules/cjs/loader:1294:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1617:12)
+    at require (node:internal/modules/helpers:153:16)
+    at [eval]:1:9
+    at runScriptInThisContext (node:internal/vm:219:10) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [ '/workspace/lol-coach/[eval]' ]
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_explicit_mention_bindings_preserve_different_e_owners (tests_pregame.test_skill_display.SkillDisplayTests.test_explicit_mention_bindings_preserve_different_e_owners)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 37, in test_explicit_mention_bindings_preserve_different_e_owners
+    actual=js("const input='E가 없거나 보호막이 닿지 않으면 회복합니다. E로 보지 못한 구역은 미확인입니다.';const opts={bindings:[{text:'E가 없거나',champion:'Caitlyn',slot:'E',prefix:true},{text:'E로 보지 못한',champion:'Lux',slot:'E',prefix:true}]};const before=JSON.stringify(opts);const a=S.format(input,opts);console.log(JSON.stringify([a,before===JSON.stringify(opts),S.format(a,opts)]))")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 11, in js
+    if p.returncode:raise AssertionError(p.stderr)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: node:internal/modules/cjs/loader:1520
+  throw err;
+  ^
+
+Error: Cannot find module './web_r4/skill-display.js'
+Require stack:
+- /workspace/lol-coach/[eval]
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+    at Module._load (node:internal/modules/cjs/loader:1294:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1617:12)
+    at require (node:internal/modules/helpers:153:16)
+    at [eval]:1:9
+    at runScriptInThisContext (node:internal/vm:219:10) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [ '/workspace/lol-coach/[eval]' ]
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_five_caitlyn_slots_and_explicit_owners (tests_pregame.test_skill_display.SkillDisplayTests.test_five_caitlyn_slots_and_explicit_owners)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 16, in test_five_caitlyn_slots_and_explicit_owners
+    actual=js("console.log(JSON.stringify(['P','Q','W','E','R'].map(s=>S.label('Caitlyn',s))))")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 11, in js
+    if p.returncode:raise AssertionError(p.stderr)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: node:internal/modules/cjs/loader:1520
+  throw err;
+  ^
+
+Error: Cannot find module './web_r4/skill-display.js'
+Require stack:
+- /workspace/lol-coach/[eval]
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+    at Module._load (node:internal/modules/cjs/loader:1294:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1617:12)
+    at require (node:internal/modules/helpers:153:16)
+    at [eval]:1:9
+    at runScriptInThisContext (node:internal/vm:219:10) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [ '/workspace/lol-coach/[eval]' ]
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_multiple_champions_same_key_and_group (tests_pregame.test_skill_display.SkillDisplayTests.test_multiple_champions_same_key_and_group)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 20, in test_multiple_champions_same_key_and_group
+    actual=js("console.log(JSON.stringify(S.format('럭스 Q 뒤 케이틀린 W, 노틸러스 Q와 럭스 W/E',{champions:['Caitlyn','Lux','Nautilus']})))")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 11, in js
+    if p.returncode:raise AssertionError(p.stderr)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: node:internal/modules/cjs/loader:1520
+  throw err;
+  ^
+
+Error: Cannot find module './web_r4/skill-display.js'
+Require stack:
+- /workspace/lol-coach/[eval]
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+    at Module._load (node:internal/modules/cjs/loader:1294:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1617:12)
+    at require (node:internal/modules/helpers:153:16)
+    at [eval]:1:9
+    at runScriptInThisContext (node:internal/vm:219:10) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [ '/workspace/lol-coach/[eval]' ]
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_offline_name_table_is_exact (tests_pregame.test_skill_display.SkillDisplayTests.test_offline_name_table_is_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 50, in test_offline_name_table_is_exact
+    self.assertEqual(p.returncode,0,p.stderr)
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/workspace/lol-coach/scripts/build_skill_display.py", line 34, in <module>
+    assert DEST.read_text()==expected,'SKILL_DISPLAY_NAMES_STALE'
+           ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/lol-coach/web_r4/skill-data.js'
+
+
+======================================================================
+FAIL: test_real_duplicate_name_needs_owner (tests_pregame.test_skill_display.SkillDisplayTests.test_real_duplicate_name_needs_owner)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 29, in test_real_duplicate_name_needs_owner
+    actual=js("console.log(JSON.stringify([S.format('동상',{champions:['Anivia','Braum']}),S.format('브라움의 동상',{champions:['Anivia','Braum']}),S.label('Anivia','E')]))")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/tests_pregame/test_skill_display.py", line 11, in js
+    if p.returncode:raise AssertionError(p.stderr)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: node:internal/modules/cjs/loader:1520
+  throw err;
+  ^
+
+Error: Cannot find module './web_r4/skill-display.js'
+Require stack:
+- /workspace/lol-coach/[eval]
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+    at Module._load (node:internal/modules/cjs/loader:1294:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1617:12)
+    at require (node:internal/modules/helpers:153:16)
+    at [eval]:1:9
+    at runScriptInThisContext (node:internal/vm:219:10) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [ '/workspace/lol-coach/[eval]' ]
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.459s
+
+FAILED (failures=9)

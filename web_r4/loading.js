@@ -3,13 +3,65 @@
   'use strict';
   const roles = { TOP: '탑', JUNGLE: '정글', MID: '미드', BOTTOM: '바텀', SUPPORT: '서포터' };
   const $ = id => document.getElementById(id);
-  const node = (tag, cls, value) => { const el = document.createElement(tag); if (cls) el.className = cls; if (value != null) el.textContent = String(value); return el; };
+  const node = (tag, cls, value, options) => { const el = document.createElement(tag); if (cls) el.className = cls; if (value != null) el.textContent = tag === 'code' || tag === 'blockquote' ? String(value) : display(value, options); return el; };
   const entries = value => Array.isArray(value) ? value : value == null ? [] : [value];
+  const caitlynAliases = [{ text: '덫', champion: 'Caitlyn', slot: 'W' }, { text: '투망', champion: 'Caitlyn', slot: 'E' }];
+  // These bindings belong to the authored decision and field, not a guessed nearby owner.
+  const laneSkillBindings = {
+    RECEIVE_WITH_SPACE: {
+      judgment: [{ text: 'Q', champion: 'Caitlyn', slot: 'Q' }, { text: 'E', champion: 'Lux', slot: 'E' }],
+      action: [{ text: 'Q로 받을', champion: 'Caitlyn', slot: 'Q', prefix: true }, { text: 'Q 조준', champion: 'Caitlyn', slot: 'Q', prefix: true }],
+      opponent_response: [{ text: 'Q로 당기거나', champion: 'Nautilus', slot: 'Q', prefix: true }, { text: 'Q 피해', champion: 'Kaisa', slot: 'Q', prefix: true }],
+      changes: [{ text: 'Q 적중', champion: 'Nautilus', slot: 'Q', prefix: true }]
+    },
+    FOLLOW_BIND_WITH_EXIT: {
+      action: [{ text: 'W와 짧은', champion: 'Caitlyn', slot: 'W', prefix: true }],
+      opponent_response: [{ text: 'Q 접근', champion: 'Nautilus', slot: 'Q', prefix: true }]
+    },
+    KEEP_ESCAPE_VS_REENGAGE: {
+      judgment: [{ text: '보호막', champion: 'Lux', slot: 'W' }],
+      why: [{ text: 'E의 원문', champion: 'Lux', slot: 'E', prefix: true }],
+      action: [{ text: 'E를 단순', champion: 'Caitlyn', slot: 'E', prefix: true }],
+      opponent_response: [{ text: 'Q로 재접근', champion: 'Nautilus', slot: 'Q', prefix: true }, { text: 'W 적중', champion: 'Kaisa', slot: 'W', prefix: true }, { text: '보호막', champion: 'Lux', slot: 'W' }],
+      alternative: [{ text: 'E가 없거나', champion: 'Caitlyn', slot: 'E', prefix: true }, { text: 'E로 보지 못한', champion: 'Lux', slot: 'E', prefix: true }, { text: '보호막', champion: 'Lux', slot: 'W' }],
+      changes: [{ text: 'E를 소모하거나', champion: 'Caitlyn', slot: 'E', prefix: true }, { text: 'W 보호', champion: 'Lux', slot: 'W', prefix: true }]
+    },
+    RESPECT_TARGETED_CONTROL: { opponent_response: [{ text: 'R 후속', champion: 'Kaisa', slot: 'R', prefix: true }] },
+    REASSESS_PURCHASE_AND_RETURN: { alternative: [{ text: '닻', champion: 'Nautilus', slot: 'Q' }] }, KEEP_FOLLOWUP_AFTER_CORE: {}
+  };
   let catalog = null;
   let report = null;
   let filling = false;
   let importing = false;
 
+  function display(value, options) {
+    const input = report && report.input || {};
+    return window.SkillDisplay ? window.SkillDisplay.format(String(value), { champions: [...entries(input.allies), ...entries(input.enemies)].map(pick => pick.champion), own: input.own_champion, ...options }) : String(value);
+  }
+  function laneFieldOptions(row, field) {
+    const fields = laneSkillBindings[row.decision_id];
+    return fields ? { bindings: fields[field] || [], aliases: caitlynAliases } : {};
+  }
+  function meansOptions(owner, value) {
+    const who = champion(owner), names = String(value || '').split('·');
+    return { owner, skillNames: Boolean(who && names.length && names.every(value => who.facts.some(fact => fact.name === value))) };
+  }
+  function ownActionOptions(value) {
+    // Only kitAction's authored second action interpolates these own skill names.
+    const own = report.input.own_champion, who = champion(own);
+    return { bindings: entries(who && who.facts).filter(fact => String(value).includes(fact.name)).map(fact => ({ text: fact.name, champion: own, slot: fact.slot })) };
+  }
+  function fightActions() {
+    return entries(report.teamfight && report.teamfight.actions).map((action, index) => index === 1 ? display(readable(action), ownActionOptions(readable(action))) : readable(action));
+  }
+  function laneFieldValue(row, field, value) {
+    if (row.decision_id || !['why', 'action', 'assumptions'].includes(field)) return value;
+    const own = report.input.own_champion, who = champion(own);
+    const fact = entries(who && who.facts).find(fact => String(row.why).startsWith(fact.name + ': '));
+    if (!fact || !window.SkillDisplay) return value;
+    const qualify = value => String(value).startsWith(fact.name) ? window.SkillDisplay.label(own, fact.slot) + String(value).slice(fact.name.length) : value;
+    return Array.isArray(value) ? value.map(qualify) : qualify(value);
+  }
   function readable(value) {
     if (value == null) return '';
     if (typeof value === 'string' || typeof value === 'number') return String(value);
@@ -17,24 +69,24 @@
     return ['text', 'description', 'message', 'label', 'name', 'role', 'status', 'reason', 'note', 'summary'].map(key => value[key]).filter(v => typeof v === 'string').join(' · ');
   }
   function message(value, state) {
-    $('loading-message').textContent = value;
+    $('loading-message').textContent = display(value);
     $('loading-message').classList.toggle('is-error', state === 'error');
     $('loading-message').classList.toggle('is-stale', state === 'stale');
   }
   function resolve(value) { return catalog ? window.LoadingStrategy.resolveChampion(value, catalog) : null; }
   function champion(value) { return catalog && catalog.champions[resolve(value) || value] || null; }
   function name(value) { const item = champion(value); return item ? item.name : String(value || '미확인'); }
-  function text(id, value) { $(id).textContent = readable(value); }
-  function list(items, cls, ordered) {
+  function text(id, value, options) { $(id).textContent = display(readable(value), options); }
+  function list(items, cls, ordered, options) {
     const ul = node(ordered ? 'ol' : 'ul', cls);
-    entries(items).forEach(item => { const copy = readable(item); if (copy) ul.append(node('li', '', copy)); });
+    entries(items).forEach(item => { const copy = readable(item); if (copy) ul.append(node('li', '', copy, options)); });
     return ul;
   }
-  function block(title, value, cls) {
+  function block(title, value, cls, options) {
     const wrap = node('div', 'copy-block' + (cls ? ' ' + cls : ''));
     wrap.append(node('h4', '', title));
-    if (Array.isArray(value)) wrap.append(list(value));
-    else wrap.append(node('p', '', readable(value) || '자료 미확인'));
+    if (Array.isArray(value)) wrap.append(list(value, '', false, options));
+    else wrap.append(node('p', '', readable(value) || '자료 미확인', options));
     return wrap;
   }
   function details(title, content) {
@@ -111,7 +163,7 @@
     const row = node('div', 'team-roster');
     picks.forEach(pick => {
       const self = !enemy && pick.champion === own, item = node('div', 'roster-pick' + (self ? ' is-self' : ''));
-      item.title = name(pick.champion) + ' · ' + (roles[pick.position] || '포지션 미확인') + (self ? ' · 나' : '');
+      item.title = display(name(pick.champion) + ' · ' + (roles[pick.position] || '포지션 미확인') + (self ? ' · 나' : ''));
       item.append(window.LoadingMap.portrait(champion(pick.champion), self), node('span', '', (self ? '나 · ' : '') + name(pick.champion))); row.append(item);
     });
     wrap.append(row); return wrap;
@@ -126,7 +178,7 @@
         const detail = node('details', 'evidence-details'), body = node('div'); detail.append(node('summary', '', '이 해석에 연결한 실제 픽'));
         signals.forEach(signal => {
           const signalName = typeof signal === 'string' ? '' : name(signal.champion || signal.champion_id);
-          const copy = typeof signal === 'string' ? signal : [readable(signal.means), readable(signal.condition)].filter(Boolean).join(' · ');
+          const copy = typeof signal === 'string' ? signal : [display(readable(signal.means), meansOptions(signal.champion || signal.champion_id, signal.means)), readable(signal.condition)].filter(Boolean).join(' · ');
           const p = node('p', 'source-note', [signalName !== '미확인' ? signalName : '', copy].filter(Boolean).join(' · '));
           if (signal.evidence_ids) p.append(node('code', 'fact-hash', '자료 식별자 · ' + entries(signal.evidence_ids).join(' · ')));
           body.append(p);
@@ -161,16 +213,17 @@
       const th = node('th', '', row.period); th.scope = 'row';
       const level = typeof row.level === 'string' ? ({ UNKNOWN: '상성 미확인', OFFICIAL_FACT: '공식 기술 참고', DESIGN_HYPOTHESIS: '조건부 해석', EXPLORATORY: '탐색 해석' }[row.level] || '') : '';
       if (level) th.append(node('span', 'lane-level', level)); tr.append(th);
-      [['판단', row.judgment], ['이유', row.why], ['내 행동', row.action], ['달라지는 조건', row.changes]].forEach(([label, value]) => {
+      [['판단', 'judgment'], ['이유', 'why'], ['내 행동', 'action'], ['달라지는 조건', 'changes']].forEach(([label, field]) => {
         const td = node('td'), body = node('div'); td.dataset.label = label;
-        body.append(Array.isArray(value) ? list(value) : node('span', '', readable(value)));
+        const value = laneFieldValue(row, field, row[field]), options = laneFieldOptions(row, field);
+        body.append(Array.isArray(value) ? list(value, '', false, options) : node('span', '', readable(value), options));
         if (label === '이유') {
-          if (entries(row.assumptions).length) body.append(block('가정한 기술·상황 · 실제 상태 미관측', row.assumptions));
+          if (entries(row.assumptions).length) body.append(block('가정한 기술·상황 · 실제 상태 미관측', laneFieldValue(row, 'assumptions', row.assumptions), '', laneFieldOptions(row, 'assumptions')));
           if (row.fact_scope) body.append(node('p', 'source-note', '공식 사실과 설계 가설의 경계 · ' + readable(row.fact_scope)));
         }
         if (label === '내 행동') {
-          if (row.opponent_response) body.append(block('상대 대응 가정', row.opponent_response));
-          if (row.alternative) body.append(block('그때의 대안', row.alternative));
+          if (row.opponent_response) body.append(block('상대 대응 가정', row.opponent_response, '', laneFieldOptions(row, 'opponent_response')));
+          if (row.alternative) body.append(block('그때의 대안', row.alternative, '', laneFieldOptions(row, 'alternative')));
         }
         td.append(body); tr.append(td);
       });
@@ -204,11 +257,12 @@
       }
       else {
         const who = champion(item.champion || item.id), body = node('div');
-        li.append(window.LoadingMap.portrait(who)); body.append(node('strong', '', item.name || (who && who.name) || name(item.champion)), node('p', '', readable(item.means)));
+        const options = { owner: item.champion || item.id };
+        li.append(window.LoadingMap.portrait(who)); body.append(node('strong', '', item.name || (who && who.name) || name(item.champion)), node('p', '', readable(item.means), meansOptions(item.champion || item.id, item.means)));
         const reasons = entries(item.reasons).map(readable).filter(Boolean);
-        if (reasons.length) reasons.forEach(reason => body.append(node('small', '', '선정 이유 · ' + reason)));
+        if (reasons.length) reasons.forEach(reason => body.append(node('small', '', '선정 이유 · ' + reason, options)));
         else if (reasonRequired || item.context) body.append(node('small', '', '선정 이유 · 추가 근거 미확인'));
-        if (item.condition) body.append(node('small', '', '조건 · ' + readable(item.condition))); li.append(body);
+        if (item.condition) body.append(node('small', '', '조건 · ' + readable(item.condition), options)); li.append(body);
       }
       ul.append(li);
     }); return ul;
@@ -239,23 +293,24 @@
     if (context && context.selection_note) target.append(node('p', 'source-note', readable(context.selection_note)));
     target.append(connectionColumns(context || fight, '함께 연결할 아군', '내 행동을 끊을 상대', Boolean(context)));
     if (fight.map) {
-      const scenario = { map: fight.map, plan: { steps: entries(fight.actions).map((action, i) => ({ number: i + 1, text: readable(action) })) } };
+      const scenario = { map: fight.map, plan: { steps: fightActions().map((action, i) => ({ number: i + 1, text: action })) } };
       target.append(window.LoadingMap.create(scenario, catalog, report.input));
     }
     const grid = node('div', 'content-grid'); grid.append(block('진입 전 점검', fight.setup || []));
-    if (!fight.map) grid.append(block('싸움 중 순서', fight.actions || []));
+    if (!fight.map) grid.append(block('싸움 중 순서', fightActions()));
     grid.append(block('역할을 바꿀 조건', fight.switch_when || []), block('퇴로와 이탈 기준', fight.exit || []), block('교전이 끝난 뒤', fight.after || [])); target.append(grid);
   }
   function renderScenarios() {
     const target = $('scenario-content'); target.replaceChildren();
     if (!entries(report.scenarios).length) { target.append(node('p', 'empty-state', '현재 내 챔피언과 역할에 바로 연결할 기존 지도 장면이 없습니다. 위의 조합·라인전·한타 조건부터 확인하세요. 다른 챔피언으로 바꾼 지도를 대신 표시하지 않습니다.')); return; }
     report.scenarios.forEach((scenario, index) => {
+      const options = { aliases: report.input.own_champion === 'Caitlyn' ? caitlynAliases : [] };
       const card = node('article', 'panel scenario-card'); card.dataset.scenario = scenario.id;
-      const heading = node('div', 'scenario-heading'); heading.append(node('h3', '', String(index + 1).padStart(2, '0') + ' · ' + scenario.title));
+      const heading = node('div', 'scenario-heading'); heading.append(node('h3', '', String(index + 1).padStart(2, '0') + ' · ' + scenario.title, options));
       const link = node('a', '', '기존 상황 연습에서 열기 ↗'); link.href = './directions.html#scene=' + encodeURIComponent(scenario.id); heading.append(link); card.append(heading);
-      const assumptions = node('div', 'scenario-conditions'); assumptions.append(node('h4', '', '앞으로 이 조건이 갖춰진 상황을 가정합니다'), list(scenario.assumptions || [])); card.append(assumptions);
+      const assumptions = node('div', 'scenario-conditions'); assumptions.append(node('h4', '', '앞으로 이 조건이 갖춰진 상황을 가정합니다'), list(scenario.assumptions || [], '', false, options)); card.append(assumptions);
       card.append(window.LoadingMap.create(scenario, catalog, report.input));
-      const lower = node('div', 'content-grid'); lower.append(block('먼저 확인할 전제', scenario.requirements || []), block('이때는 적용하지 않아요', scenario.exceptions || [])); card.append(lower); target.append(card);
+      const lower = node('div', 'content-grid'); lower.append(block('먼저 확인할 전제', scenario.requirements || [], '', options), block('이때는 적용하지 않아요', scenario.exceptions || [], '', options)); card.append(lower); target.append(card);
     });
   }
   function officialFacts(facts) {
@@ -263,7 +318,9 @@
     entries(facts).forEach(fact => {
       const article = node('article', 'fact-card'); article.dataset.factId = fact.id || '';
       const who = fact.champion || fact.champion_id || (typeof fact.id === 'string' && !fact.id.startsWith('official-item:') ? fact.id.split(':')[1] : null);
-      article.append(node('h4', '', [who ? name(who) : '', fact.slot === 'P' ? '기본 지속 효과' : fact.slot === 'ITEM' ? '아이템' : fact.slot, fact.name].filter(Boolean).join(' · ')), node('blockquote', '', fact.text || fact.raw_excerpt || fact.excerpt));
+      const factTitle = window.SkillDisplay && who ? window.SkillDisplay.factLabel(who, fact) : [who ? name(who) : '', fact.slot === 'P' ? '기본 지속 효과' : fact.slot === 'ITEM' ? '아이템' : fact.slot, fact.name].filter(Boolean).join(' · ');
+      const heading = node('h4'); heading.textContent = factTitle;
+      article.append(heading, node('blockquote', '', fact.text || fact.raw_excerpt || fact.excerpt));
       const meta = node('div', 'fact-meta'); meta.append(node('span', '', '공식 자료 패치 · ' + (fact.patch || catalog.source_patch || '미확인')));
       try { const url = new URL(fact.url); if (url.protocol === 'https:') { const link = node('a', '', '공식 원문 ↗'); link.href = url.href; link.target = '_blank'; link.rel = 'noopener noreferrer'; meta.append(link); } } catch (_) { /* Source data stays inert if its URL is malformed. */ }
       article.append(meta);
@@ -321,8 +378,10 @@
   }
   function renderReport() {
     const summary = report.summary || {};
-    ['our_plan', 'enemy_plan', 'collision', 'my_role', 'lane_key', 'fight_key'].forEach(key => text(key.replaceAll('_', '-'), summary[key]));
-    $('remember').replaceChildren(...entries(summary.remember).slice(0, 3).map(item => node('li', '', readable(item))));
+    const representative = report.lane && report.lane.matchup_id === 'Caitlyn_Lux__Kaisa_Nautilus_v2';
+    const representativeAliases = representative ? { aliases: [{ text: '덫', champion: 'Caitlyn', slot: 'W' }] } : {};
+    ['our_plan', 'enemy_plan', 'collision', 'my_role', 'lane_key', 'fight_key'].forEach(key => text(key.replaceAll('_', '-'), summary[key], key === 'lane_key' ? representativeAliases : {}));
+    $('remember').replaceChildren(...entries(summary.remember).slice(0, 3).map((item, index) => node('li', '', readable(item), index === 0 ? representativeAliases : {})));
     const uncertainties = [...entries(summary.uncertainties)];
     if (!uncertainties.some(item => /체력|준비|사용 가능/.test(readable(item)))) uncertainties.push('현재 체력·자원과 기술 사용 가능 여부는 경기 안에서 별도 확인하세요.');
     $('uncertainties').replaceChildren(...uncertainties.map(item => node('li', '', readable(item))));

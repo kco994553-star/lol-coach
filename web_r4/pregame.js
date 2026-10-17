@@ -16,6 +16,17 @@
   const node = (tag,text,className) => {const n=document.createElement(tag);if(text!==undefined)n.textContent=String(text);if(className)n.className=className;return n;};
   const context = () => ({auth:authEpoch,nav:navEpoch});
   const alive = mark => connected && mark.auth===authEpoch && mark.nav===navEpoch;
+  function skillOptions(p=plan) {
+    return {champions:p?.input?.slots?.map(slot=>slot.champion),own:p?.input?.my_champion};
+  }
+  function prose(value,p=plan) {return window.SkillDisplay.format(value,skillOptions(p));}
+  function cooldownName(item,p) {
+    if(item.spell_kind!=='ABILITY')return item.name || '스킬';
+    const matches=(p?.input?.slots || []).filter(slot=>slot.side===item.side && slot.position===item.position);
+    if(matches.length!==1 || !matches[0].champion)return item.name || '스킬';
+    const owner=matches[0].champion,slot=window.SkillDisplay.resolveSlot(owner,item.name);
+    return slot?window.SkillDisplay.label(owner,slot):item.name || '스킬';
+  }
   const manual = reference => ({kind:'MANUAL',reference:reference || null,observed_at:null,verification:'UNVERIFIED'});
   const unknownSource = () => ({kind:'UNKNOWN',reference:null,observed_at:null,verification:'UNKNOWN'});
   function notice(text,bad=false){$('pg-notice').textContent=text;$('pg-notice').className=bad?'error':'';}
@@ -160,11 +171,11 @@
   function addSources(parent,sources){
     const list=node('ul',undefined,'sources');for(const s of sources || []){const item=node('li'),a=node('a',s.title || s.url);try{const u=new URL(s.url);if(u.protocol==='https:' && !u.username&&!u.password){a.href=u.href;a.target='_blank';a.rel='noopener noreferrer';}}catch(_){}item.append(a,node('span',' · '+(s.locator || '')+' · 패치 '+(s.patch || '미확인')+' · '+(s.kind || '')));if(s.sha256)item.append(node('div','원본 SHA256: '+s.sha256));list.append(item);}parent.append(list);
   }
-  function cooldowns(parent,items){
-    for(const item of items || []){const box=node('div',undefined,'cooldown');box.append(node('p',(item.name || '스킬')+' · '+(item.label || '미확인')));
+  function cooldowns(parent,items,p){
+    for(const item of items || []){const box=node('div',undefined,'cooldown');box.append(node('p',cooldownName(item,p)+' · '+(item.label || '미확인')));
       if(item.base_values && item.base_values.length)box.append(node('p','기준값: '+item.base_values.join(' / ')+'초','small'));
       if(item.conditional_values && item.conditional_values.length)box.append(node('p','계산/조건부: '+item.conditional_values.join(' / ')+'초','small'));
-      if(item.linked_condition)box.append(node('p','연결 조건: '+item.linked_condition,'small'));
+      if(item.linked_condition)box.append(node('p','연결 조건: '+prose(item.linked_condition,p),'small'));
       for(const reason of item.reasons || [])box.append(node('p',reason,'small'));
       if(item.conditional?.source){box.append(node('p','계산/조건부 출처','small'));addSources(box,[item.conditional.source]);}
       for(const reason of item.conditional_reasons || [])box.append(node('p',reason,'small'));
@@ -176,7 +187,7 @@
     const names={ROLE:'내 역할',LANE:'라인·동선',FIGHT:'교전·생존',COMPOSITION:'조합',OPERATIONS:'운영·팀 의존',MOVEMENT:'이동 단계',CHANGES:'변화 조건'};
     const title=currentPlan?(roleNames[cell.key] || cell.title || cell.key):(roleNames[cell.key] || names[cell.key] || '보존된 카드');
     const head=node('div',undefined,'cell-head');head.append(node('h4',title),node('span',currentPlan?(labels[cell.status] || cell.status):'UNKNOWN · 만료된 이력','badge'));parent.append(head);
-    if(usable){if(cell.outlook)parent.append(node('p',labels[cell.outlook] || cell.outlook,'outlook'));for(const text of cell.texts || [])parent.append(node('p',text));cooldowns(parent,cell.cooldowns);}
+    if(usable){if(cell.outlook)parent.append(node('p',labels[cell.outlook] || cell.outlook,'outlook'));for(const text of cell.texts || [])parent.append(node('p',prose(text,p)));cooldowns(parent,cell.cooldowns,p);}
     else parent.append(node('p',currentPlan?'미확인 · 실행 내용은 보류합니다.':'만료된 이력 · 실행 내용과 수치는 보류합니다. 원본은 아래 이력에서 확인하세요.'));
     if(currentPlan){const reasons=node('ul');for(const reason of cell.reasons || [])reasons.append(node('li',reason));if(reasons.children.length)parent.append(reasons);}
     renderGuards(parent,cell,p);
@@ -188,8 +199,8 @@
     for(const trace of items){const box=node('div',undefined,'pg-guard'),guard=trace && usableGuard(p,cell,trace);box.dataset.status=guard?'KNOWN':'UNKNOWN';
       if(!guard){box.append(node('p','실행 조건 UNKNOWN · 미확인','small'),node('p','전제조건 · 무효화 신호 · 대안: UNKNOWN','small'));}
       else{box.append(node('p','직접 확인할 실행 조건 · '+trace.rule_id,'small'));
-        for(const [key,label] of [['preconditions','전제조건'],['invalidation_signals','무효화 신호']]){const list=node('ul');for(const signal of guard[key] || [])list.append(node('li',label+' · '+(signalNames[signal.field] || signal.field)+' · '+signal.text));box.append(list);}
-        box.append(node('p','대안 · '+guard.alternative));
+        for(const [key,label] of [['preconditions','전제조건'],['invalidation_signals','무효화 신호']]){const list=node('ul');for(const signal of guard[key] || [])list.append(node('li',label+' · '+(signalNames[signal.field] || signal.field)+' · '+prose(signal.text,p)));box.append(list);}
+        box.append(node('p','대안 · '+prose(guard.alternative,p)));
       }parent.append(box);
     }
   }
@@ -203,16 +214,16 @@
     let shown=false;
     for(const trace of cell.rules || []){if(!usableGuard(p,cell,trace))continue;const ops=trace.spec?.output?.operations;if(!ops)continue;shown=true;
       for(const [key,title] of [['opening_allies','초반 함께 움직일 아군'],['pressure_allies','압박할 아군'],['win_condition_allies','승리 조건을 맡는 아군']])parent.append(node('p',title+' · '+((ops[key] || []).map(r=>roleNames[r] || r).join(', ') || 'UNKNOWN')));
-      for(const d of ops.dependencies || [])parent.append(node('p','필요 행동 · '+(roleNames[d.position] || d.position)+' · '+d.required_play,'pg-dependency'));
-      for(const m of ops.minimum_plays || []){const list=node('ul',undefined,'pg-minimum-plays');for(const play of m.plays || [])list.append(node('li',(roleNames[m.position] || m.position)+' · '+play));parent.append(list);}
-      for(const text of ops.request_templates || [])parent.append(node('blockquote','요청 템플릿 · '+text,'pg-request-template'));
-      parent.append(node('p','혼자 할 수 있는 대안 · '+ops.solo_alternative));
+      for(const d of ops.dependencies || [])parent.append(node('p','필요 행동 · '+(roleNames[d.position] || d.position)+' · '+prose(d.required_play,p),'pg-dependency'));
+      for(const m of ops.minimum_plays || []){const list=node('ul',undefined,'pg-minimum-plays');for(const play of m.plays || [])list.append(node('li',(roleNames[m.position] || m.position)+' · '+prose(play,p)));parent.append(list);}
+      for(const text of ops.request_templates || [])parent.append(node('blockquote','요청 템플릿 · '+prose(text,p),'pg-request-template'));
+      parent.append(node('p','혼자 할 수 있는 대안 · '+prose(ops.solo_alternative,p)));
     }
     if(!shown)parent.append(node('p','운영 템플릿 UNKNOWN · 검토된 실행 조건과 연결 행동이 필요합니다.'));
     parent.append(node('p','요청은 검토된 원문을 표시합니다. 직접 확인하고 필요하면 직접 전달하세요.','small'));
     if(p.validity==='CURRENT' && p.input.my_pick_state==='UNPICKED')for(const warning of p.pick_warnings || []){
       if(warning.champion && !(p.input.frequent_champions || []).includes(warning.champion))continue;
-      const item=node('div',undefined,'pg-pick-warning');item.append(node('p','검토된 선택 후보 · '+(warning.champion || '')+' · '+(warning.reason || warning.text || '')));const details=node('details');details.append(node('summary','선택 후보 승인 근거'),node('p','규칙 '+warning.rule_id+' · 버전 '+warning.version+' · 명세 SHA256 '+warning.spec_sha256,'small'));addSources(details,warning.sources);item.append(details);parent.append(item);
+      const item=node('div',undefined,'pg-pick-warning');item.append(node('p','검토된 선택 후보 · '+(warning.champion || '')+' · '+prose(warning.reason || warning.text || '',p)));const details=node('details');details.append(node('summary','선택 후보 승인 근거'),node('p','규칙 '+warning.rule_id+' · 버전 '+warning.version+' · 명세 SHA256 '+warning.spec_sha256,'small'));addSources(details,warning.sources);item.append(details);parent.append(item);
     }
   }
   function renderMovement(parent,p,cell){
@@ -225,9 +236,9 @@
       for(const row of rows){if(!row.statistics_ref?.dataset_sha256 || !row.statistics_ref?.cohort_id)continue;shown=true;
         const article=node('article',undefined,'pg-movement-row');article.dataset.stage=row.stage;
         article.append(node('h4',row.stage+' · '+row.layer+' · '+(subjects[row.subject] || row.subject)+' '+(roleNames[row.position] || row.position || '')));
-        article.append(node('p','조건부 위치 · '+(locations[row.location] || row.location)),node('p','역할 · '+row.role),node('p','이유 · '+row.why));
+        article.append(node('p','조건부 위치 · '+(locations[row.location] || row.location)),node('p','역할 · '+prose(row.role,p)),node('p','이유 · '+prose(row.why,p)));
         for(const condition of row.stage_conditions || [])article.append(node('p','구간 조건 · '+(fields[condition.field] || condition.field)+' · '+(condition.value?'참일 때':'거짓일 때'),'small'));
-        for(const text of row.exceptions || [])article.append(node('p','예외 · '+text,'small'));
+        for(const text of row.exceptions || [])article.append(node('p','예외 · '+prose(text,p),'small'));
         const provenance=node('details');provenance.append(node('summary','이동 근거·통계 연결'),node('p','규칙 '+trace.rule_id+' · '+trace.version,'small'),node('p','통계 digest '+row.statistics_ref.dataset_sha256+' · cohort '+row.statistics_ref.cohort_id,'small'));
         if(row.overrides?.length)provenance.append(node('p','덮어쓰는 규칙 · '+row.overrides.join(', '),'small'));addSources(provenance,trace.spec?.sources || trace.sources);article.append(provenance);parent.append(article);
       }
@@ -272,7 +283,7 @@
   function detail(parent,p,cells){
     const d=node('details');d.append(node('summary','저장 입력·규칙·출처·적용/제외 이유'));
     const applied=cells.flatMap(c=>c.rules || []);d.append(node('p','이 카드의 적용 규칙과 전체 평가 이력을 함께 확인합니다.','small'));
-    for(const trace of [...applied,...(p.evaluations || [])]){d.append(node('p',(trace.rule_id || '규칙')+' · 버전 '+(trace.version || '')+' · '+(trace.status || '')+' · '+(trace.condition || ''),'small'));addSources(d,trace.sources || trace.spec?.sources);cooldowns(d,trace.cooldowns);}
+    for(const trace of [...applied,...(p.evaluations || [])]){d.append(node('p',(trace.rule_id || '규칙')+' · 버전 '+(trace.version || '')+' · '+(trace.status || '')+' · '+(trace.condition || ''),'small'));addSources(d,trace.sources || trace.spec?.sources);cooldowns(d,trace.cooldowns,p);}
     d.append(node('pre',json({saved_input:{session_id:p.session_id,input_revision:p.input_revision,input_sha256:p.input_sha256,input:p.input},cells,applied_rules:applied,evaluations:p.evaluations || []})));parent.append(d);
   }
   function renderOpponentRights(p){
@@ -320,7 +331,7 @@
     const mark=context(),seq=++knowledgeEpoch;selectedKnowledge=null;knowledgeBusy=true;$('pg-knowledge-detail').hidden=true;hidePlan();planAttempt=null;knowledgeControls();
     try{const results=await Promise.allSettled([api('/knowledge'),api('/candidates'),api('/review-priority')]);if(!alive(mark)||seq!==knowledgeEpoch)return;
       $('pg-review-priority').replaceChildren();
-      if(results[2].status==='fulfilled'){for(const row of (Array.isArray(results[2].value)?results[2].value:results[2].value?.recommended_review_order || [])){const d=node('details');d.append(node('summary',row.rank+'. '+row.title+' · '+row.candidate_id),node('p',row.reason),node('p','EXPLORATORY · 출처 후보 · 아직 실행 연결 없음','small'),node('p','출처 패치 범위: '+row.patch_range,'small'));addSources(d,(row.source_urls || []).map(url=>({url,title:url,locator:'원본 출처 후보',patch:null})));d.append(node('pre',json(row)));$('pg-review-priority').append(d);}}else $('pg-review-priority').append(node('p','검토 추천 목록을 불러오지 못했습니다.','small'));
+      if(results[2].status==='fulfilled'){for(const row of (Array.isArray(results[2].value)?results[2].value:results[2].value?.recommended_review_order || [])){const d=node('details');d.append(node('summary',row.rank+'. '+prose(row.title)+' · '+row.candidate_id),node('p',prose(row.reason)),node('p','EXPLORATORY · 출처 후보 · 아직 실행 연결 없음','small'),node('p','출처 패치 범위: '+row.patch_range,'small'));addSources(d,(row.source_urls || []).map(url=>({url,title:url,locator:'원본 출처 후보',patch:null})));d.append(node('pre',json(row)));$('pg-review-priority').append(d);}}else $('pg-review-priority').append(node('p','검토 추천 목록을 불러오지 못했습니다.','small'));
       for(const [idx,id] of [[0,'pg-knowledge-list'],[1,'pg-candidate-list']]){const container=$(id);container.replaceChildren();if(results[idx].status==='rejected'){container.append(node('p','조회 실패: '+results[idx].reason.message,'small'));if(results[idx].reason.status===401)throw results[idx].reason;continue;}const rows=results[idx].value;if(!rows.length)container.append(node('p','현재 항목이 없습니다.','small'));for(const row of rows){const item=idx===0?row:{proposal:null,spec:row},p=item.proposal,s=item.spec,b=node('button',(p?.rule_id || s?.rule_id || '미연결')+' · '+(p?labels[p.review_state] || p.review_state:'EXPLORATORY')+' · '+(p?.version || s?.version || ''));b.addEventListener('click',()=>showKnowledge(item));container.append(b);}}
     }catch(e){if(alive(mark)&&seq===knowledgeEpoch)apiError(e,mark);}finally{if(alive(mark)&&seq===knowledgeEpoch){knowledgeBusy=false;knowledgeControls();}}
   }

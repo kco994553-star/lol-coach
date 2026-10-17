@@ -4,7 +4,7 @@ import hashlib,json,os
 from pathlib import Path
 import subprocess,sys,tempfile,threading
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
-from scripts.verify_actual_evidence import affected_browser_changed
+from scripts.verify_actual_evidence import affected_browser_changed, affected_skill_browser_changed
 JS=r'''
 const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=require('playwright');
 (async()=>{
@@ -62,7 +62,10 @@ def main():
             (out/'runner.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+'\n')
             print(json.dumps(dict(passed=receipt['passed'],evidence_directory=str(out))))
             if not receipt['passed']:print(result.stderr.replace(server.token,'[REDACTED]'),file=sys.stderr)
-            return 0 if receipt['passed'] else 1
+            if not receipt['passed']:return 1
+            if affected_skill_browser_changed():
+                return subprocess.run([sys.executable,'scripts/browser_skill_pc.py'],cwd=ROOT).returncode
+            return 0
         finally:server.shutdown();server.server_close()
 
 if __name__=='__main__':raise SystemExit(main())

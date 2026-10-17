@@ -1,3 +1,44 @@
+된 것: 사용자 화면의 스킬을 공식 이름(키)와 소유자로 통일하는 표시 어댑터를 추가했습니다.
+된 것: 로딩·여섯 구간·운영/한타·지도/확대·PC/프리게임/검토 큐에서 PC·모바일 표시를 확인했습니다.
+보존: 원문 인용·저장 JSON·출처 해시·기존 전술 엔진/자료·승인/보류 이력은 그대로입니다.
+미확인: 전술 실전 효과 N=0·실제 Windows 연결은 미확인이고 신규 표시의 원격 CI/게시 결과는 별도 게이트입니다.
+내가 할 것: 기존 GitHub 앱 연결로 필수 CI와 정상 게시를 완료하고 공통 claim에 실제 결과를 남깁니다.
+
+# Official skill display addition — 2026-10-17
+
+Authority USER_SKILL_DISPLAY_FORMAT, base main75a4543c23b1f06f215986ab8ca4036ac6d199b7 (PR55 merged,
+required/postmain all3 SUCCESS). Branch work/skill-display-20261017; token main-20261017-loading-context.
+Existing PR54 context/duo repair remains published at https://kco994553-star.github.io/lol-coach/ .
+This additional display publication is not presumed live before its own CI/normal merge/Pages proof.
+
+Contract contracts/skill-display-v1.md; report/evidence actual-evidence/skill-display/report.md.
+Offline generated official173/865 name table checks archived hash+passive/spells slot mapping.
+Display-only shared adapter and bounded field bindings; no tactical engine/report/source data rewrite.
+Explicit owners, ambiguity preservation, typed name-field only, no general-effect/word inference,
+idempotent names/keys, conflicting cooldown key rejected, SUMMONER/ITEM not P/QWER. Raw excerpts,
+editor originals, snapshots/JSON/locators/hash/grades preserved. Same E in representative six rows
+has per-field owner bindings, not inferred from own champion. User source/API/quota queues unchanged.
+
+Fresh local PC/390 loading browser054437792339 PASS; directions054237663230 is reused for its
+unchanged formatting path (later resolveSlot fix is PC-only). Dedicated PC synthetic-renderer
+Chromium1440/390 checks plus original PC defer script load pass; no auth/API writes or Windows proof.
+Independent review found common-word inference+key-parenthesis duplication; RED/fixes preserved.
+All raw intermediate logs/JSON retained; redundant screenshots retained with hashes in workspace.
+
+CLI GitHub401 after PR55: environment current secret bindings absent, existing GitHub app works.
+Use public anonymous reads and existing authorized app Git-tree/ref/PR writes, with expected-head/
+ref leases and required CI. No key/token read or exposure. Do not attribute this to Riot/Gemini.
+Final remote SHA/CI/public artifacts and release state belong to commonclaim; no future success
+is written into this prepublication snapshot. No full old suite or collection repeated.
+
+All existing actual-evidence/Windows/manual fallback/Frozen350/advice7/AUTO30/HOLD20/USER0 preserved.
+Real coaching N0/accuracy=null; Windows BLOCKED_EXTERNAL. Oct17VIDEO3/3 no new provider/game/video/
+asset/paid calls. Existing Oct18 diagnostic order and ledgers unchanged; after diagnosis1/day.
+Next P0 remains six source questions and independent predecision/realplay evidence, not more cards
+or the remaining23 rewrites. User need not collect or review everything.
+
+---
+
 된 것: 공개10픽웹에서 라인전·정글개입·운영·한타의 관련 인물과 선정 이유를 구분합니다.
 된 것: 케이틀린·럭스 대 카이사·노틸러스의 여섯 구간에 가정·행동·상대 대응·대안·중단 조건을 연결했습니다.
 확인: PR54 필수3개·병합후3개·Pages배포 성공, 공개25파일 해시와 실제390px 모바일 반례가 통과했습니다.

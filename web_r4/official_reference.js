@@ -10,7 +10,7 @@
    const state=champion.patch_status;
    group.append(node('p','공식 자료 버전 '+champion.source_patch+' · '+(state==='MATCHING_ARCHIVE'?'입력한 경기 패치와 같은 버전 계열':state==='GAME_PATCH_MISMATCH'?'입력한 경기 패치와 다릅니다. 보관 자료로만 참고하세요.':'현재 경기 패치는 미확인입니다. 보관 자료로 참고하세요.')));
    for(const fact of champion.facts){
-    const item=node('div');item.className='official-fact';item.append(node('strong',fact.name),node('p',fact.text));
+    const item=node('div');item.className='official-fact';item.append(node('strong',window.SkillDisplay.factLabel(champion.champion,fact)),node('p',fact.text));
     try{const url=new URL(fact.source.url);if(url.protocol==='https:'&&url.hostname==='ddragon.leagueoflegends.com'){const link=node('a','공식 원문');link.href=url.href;link.target='_blank';link.rel='noopener noreferrer';item.append(link);}}catch{}
     group.append(item);
    }

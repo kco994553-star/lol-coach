@@ -5,11 +5,12 @@
   const styles = { MOVE: { color: '#90d7ee', label: '이동' }, PRESSURE: { color: '#f3bf69', dash: '24 17', label: '압박' }, RETREAT: { color: '#d3a4ee', dash: '5 17', label: '후퇴' } };
   let sequence = 0;
   let activeZoom = null;
-  const node = (tag, cls, text) => { const el = document.createElement(tag); if (cls) el.className = cls; if (text != null) el.textContent = String(text); return el; };
-  function svg(tag, attrs, text) {
+  const display = (text, options) => root.SkillDisplay ? root.SkillDisplay.format(String(text), { champions: [], ...options }) : String(text);
+  const node = (tag, cls, text, options) => { const el = document.createElement(tag); if (cls) el.className = cls; if (text != null) el.textContent = display(text, options); return el; };
+  function svg(tag, attrs, text, options) {
     const el = document.createElementNS(NS, tag);
-    Object.entries(attrs || {}).forEach(([key, value]) => { if (value != null) el.setAttribute(key, String(value)); });
-    if (text != null) el.textContent = String(text);
+    Object.entries(attrs || {}).forEach(([key, value]) => { if (value != null) el.setAttribute(key, key === 'aria-label' || key === 'title' ? display(value, options) : String(value)); });
+    if (text != null) el.textContent = display(text, options);
     return el;
   }
   function sprite(champion) {
@@ -28,7 +29,7 @@
   }
   const point = value => ({ x: Math.min(100, Math.max(0, Number(value && value.x) || 0)) * 10, y: Math.min(100, Math.max(0, Number(value && value.y) || 0)) * 10 });
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
-  function draw(map, catalog, input, prefix) {
+  function draw(map, catalog, input, prefix, options) {
     const result = svg('svg', { class: 'strategy-map', viewBox: '0 0 1000 1000', role: 'img', 'aria-labelledby': prefix + '-title ' + prefix + '-desc' });
     result.append(svg('title', { id: prefix + '-title' }, '내 시작과 목표 배치 · 설명용 예시'), svg('desc', { id: prefix + '-desc' }, '금색 테두리는 내 시작점, 반투명 점선은 목표점입니다. 번호별 화살표는 행동 카드와 대응하며 실제 위치·안전 경로가 아닙니다. 적 위치는 표시하지 않습니다.'));
     const defs = svg('defs');
@@ -40,7 +41,7 @@
     (map.landmarks || []).forEach(landmark => {
       const p = point(landmark);
       const group = svg('g', { class: 'map-step', 'data-step': landmark.step || 1 });
-      group.append(svg('circle', { cx: p.x, cy: p.y, r: 15, fill: '#12202a', stroke: '#e3c081', 'stroke-width': 4 }), svg('text', { x: clamp(p.x, 180, 820), y: clamp(p.y - 78, 35, 960), class: 'map-label', 'text-anchor': 'middle' }, landmark.label || '설명 위치'));
+      group.append(svg('circle', { cx: p.x, cy: p.y, r: 15, fill: '#12202a', stroke: '#e3c081', 'stroke-width': 4 }), svg('text', { x: clamp(p.x, 180, 820), y: clamp(p.y - 78, 35, 960), class: 'map-label', 'text-anchor': 'middle' }, landmark.label || '설명 위치', options));
       result.append(group);
     });
     const badgeLocations = [];
@@ -49,7 +50,7 @@
     (map.arrows || []).forEach((arrow, index) => {
       const style = styles[arrow.kind] || styles.MOVE, a = point(arrow.from), b = point(arrow.to), step = arrow.step || index + 1;
       const group = svg('g', { class: 'map-step', 'data-step': step });
-      group.append(svg('title', {}, step + '단계 · ' + style.label + ' 방향 예시'));
+      group.append(svg('title', {}, step + '단계 · ' + style.label + ' 방향 예시', options));
       const d = 'M ' + a.x + ' ' + a.y + ' L ' + b.x + ' ' + b.y;
       group.append(svg('path', { d, stroke: '#07121b', 'stroke-width': 22, fill: 'none', 'stroke-linecap': 'round' }), svg('path', { d, stroke: style.color, 'stroke-width': 11, 'stroke-dasharray': style.dash, fill: 'none', 'stroke-linecap': 'round', 'marker-end': 'url(#' + prefix + '-' + (styles[arrow.kind] ? arrow.kind : 'MOVE') + ')' }));
       const dx = b.x - a.x, dy = b.y - a.y, length = Math.hypot(dx, dy) || 1;
@@ -64,12 +65,12 @@
       const champion = catalog.champions[entity.champion], start = point(entity.start);
       const addPortrait = (p, target) => {
         const group = svg('g', target ? { 'data-entity-target': entity.id } : { 'data-entity': entity.id, 'data-self': String(Boolean(entity.self)), 'data-team': 'ALLY' });
-        group.append(svg('title', {}, (target ? '내 목표 배치 예시 · ' : entity.self ? '내 시작 예시 · ' : '아군 배치 예시 · 현재 위치 미확인 · ') + (champion ? champion.name : '')));
+        group.append(svg('title', {}, (target ? '내 목표 배치 예시 · ' : entity.self ? '내 시작 예시 · ' : '아군 배치 예시 · 현재 위치 미확인 · ') + (champion ? champion.name : ''), options));
         group.append(svg('circle', { cx: p.x, cy: p.y, r: target ? 35 : entity.self ? 34 : 27, fill: '#152333', 'fill-opacity': target ? .5 : 1, stroke: target || !entity.self ? '#80c4f5' : '#e3c081', 'stroke-width': target ? 4 : entity.self ? 6 : 5, 'stroke-dasharray': target ? '10 8' : null }));
         const image = sprite(champion);
         if (image) { const size = entity.self ? 52 : 43; image.setAttribute('class', 'map-sprite'); image.setAttribute('x', p.x - size / 2); image.setAttribute('y', p.y - size / 2); image.setAttribute('width', size); image.setAttribute('height', size); if (target) image.setAttribute('opacity', '.4'); group.append(image); }
         const right = !entity.self && p.x < 800;
-        group.append(svg('text', { x: p.x + (right ? 42 : -46), y: p.y + 8, 'text-anchor': right ? 'start' : 'end', class: 'map-label' }, target ? '목표 예시' : entity.self ? '내 시작 예시' : (champion ? champion.name : '') + ' 예시'));
+        group.append(svg('text', { x: p.x + (right ? 42 : -46), y: p.y + 8, 'text-anchor': right ? 'start' : 'end', class: 'map-label' }, target ? '목표 예시' : entity.self ? '내 시작 예시' : (champion ? champion.name : '') + ' 예시', options));
         result.append(group);
       };
       if (entity.self && entity.target) addPortrait(point(entity.target), true);
@@ -83,10 +84,11 @@
     return wrap;
   }
   function create(scenario, catalog, input) {
+    const options = { champions: [...input.allies, ...input.enemies].map(pick => pick.champion), own: input.own_champion, owner: scenario.id ? input.own_champion : undefined, aliases: scenario.id && input.own_champion === 'Caitlyn' ? [{ text: '덫', champion: 'Caitlyn', slot: 'W' }, { text: '투망', champion: 'Caitlyn', slot: 'E' }] : [] };
     const wrap = node('div', 'scenario-grid'), left = node('div', 'scenario-map-column'), right = node('div', 'scenario-steps-column');
     const heading = node('div', 'map-header'); heading.append(node('h4', '', '움직임 지도'));
     const zoom = node('button', '', '⤢ 크게 보기'); zoom.type = 'button'; heading.append(zoom); left.append(heading);
-    const prefix = 'loading-map-' + (++sequence), map = draw(scenario.map || {}, catalog, input, prefix);
+    const prefix = 'loading-map-' + (++sequence), map = draw(scenario.map || {}, catalog, input, prefix, options);
     let selected = root.matchMedia('(max-width: 560px)').matches ? '1' : 'ALL';
     const steps = node('ol', 'scenario-steps');
     const items = scenario.plan && scenario.plan.steps || [];
@@ -99,15 +101,24 @@
     };
     const control = controls(select); left.append(control);
     const frame = node('div', 'map-frame'); frame.append(map); left.append(frame);
-    const legend = node('div', 'map-legend'); legend.append(node('span', 'gold', '● 내 시작 예시'), node('span', 'blue', '◌ 목표 / 이동'), node('span', 'gold', '⇢ 압박'), node('span', 'purple', '⇢ 후퇴')); left.append(legend, node('p', 'map-caption', scenario.map && scenario.map.caption || '설명용 예시 · 실제 위치 추적 없음'), node('p', 'map-note', '화살표는 행동 방향입니다. 안전한 경로·정확한 기술 사거리·실제 적 위치를 나타내지 않습니다.'));
-    (scenario.map && scenario.map.notes || []).forEach(note => left.append(node('p', 'map-note', note)));
+    const legend = node('div', 'map-legend'); legend.append(node('span', 'gold', '● 내 시작 예시'), node('span', 'blue', '◌ 목표 / 이동'), node('span', 'gold', '⇢ 압박'), node('span', 'purple', '⇢ 후퇴')); left.append(legend, node('p', 'map-caption', scenario.map && scenario.map.caption || '설명용 예시 · 실제 위치 추적 없음', options), node('p', 'map-note', '화살표는 행동 방향입니다. 안전한 경로·정확한 기술 사거리·실제 적 위치를 나타내지 않습니다.'));
+    (scenario.map && scenario.map.notes || []).forEach(note => left.append(node('p', 'map-note', note, options)));
     right.append(node('h4', '', '번호를 눌러 한 단계씩 확인'));
-    items.forEach((step, index) => { const number = typeof step === 'string' ? index + 1 : step.number || index + 1; const item = node('li'); item.dataset.step = number; const button = node('button'); button.type = 'button'; button.append(node('span', '', number), node('span', '', typeof step === 'string' ? step : step.text)); button.addEventListener('click', () => select(String(number))); item.append(button); steps.append(item); });
+    items.forEach((step, index) => {
+      const number = typeof step === 'string' ? index + 1 : step.number || index + 1, value = typeof step === 'string' ? step : step.text;
+      const preset = catalog.directions && catalog.directions.presets.find(preset => preset.id === scenario.id);
+      const methodKey = preset && preset.input.decision === 'RECALL' ? 'RECALL' : scenario.plan && scenario.plan.id;
+      const method = preset && catalog.directions.methods[input.own_champion] && catalog.directions.methods[input.own_champion][methodKey];
+      const bindings = number === 2 && typeof method === 'string' && value === method ? catalog.champions[input.own_champion].facts.filter(fact => method.includes(fact.name)).map(fact => ({ text: fact.name, champion: input.own_champion, slot: fact.slot })) : [];
+      const item = node('li'); item.dataset.step = number; const button = node('button'); button.type = 'button';
+      button.append(node('span', '', number), node('span', '', value, { ...options, bindings }));
+      button.addEventListener('click', () => select(String(number))); item.append(button); steps.append(item);
+    });
     right.append(steps);
-    if (scenario.plan && scenario.plan.direction) right.append(node('p', 'map-note', scenario.plan.direction));
+    if (scenario.plan && scenario.plan.direction) right.append(node('p', 'map-note', scenario.plan.direction, options));
     zoom.addEventListener('click', () => {
       const dialog = document.getElementById('loading-map-dialog');
-      const zoomMap = draw(scenario.map || {}, catalog, input, prefix + '-zoom-' + (++sequence)), zoomControls = controls(select);
+      const zoomMap = draw(scenario.map || {}, catalog, input, prefix + '-zoom-' + (++sequence), options), zoomControls = controls(select);
       activeZoom = { owner: prefix, map: zoomMap, controls: zoomControls };
       document.getElementById('zoom-map').replaceChildren(zoomMap); document.getElementById('zoom-step-controls').replaceChildren(zoomControls);
       document.getElementById('map-scale').value = '100'; document.getElementById('map-scale-value').textContent = '100%';

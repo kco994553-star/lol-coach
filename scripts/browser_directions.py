@@ -9,6 +9,7 @@ import subprocess,sys,tempfile,threading
 
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 SOURCES=['web_r4/directions.html','web_r4/directions.js','web_r4/directions.css',
+    'web_r4/skill-data.js','web_r4/skill-display.js',
     'web_r4/directions-engine.js','web_r4/directions-data.json','web_r4/status.html',
     'web_r4/directions-status.js','web_r4/directions-status.json','coach_v1/pregame_server.py',
     'scripts/build_directions_web.py','scripts/browser_directions.py']
@@ -35,6 +36,12 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
   const displayedArrows=selector=>page.locator(selector+' [data-kind]').evaluateAll(nodes=>nodes.filter(e=>getComputedStyle(e).display!=='none').map(e=>e.dataset.step));
  const scene=async id=>{await page.click('#scene-'+id);await page.waitForFunction(()=>!!document.querySelector('#direction-app').dataset.planId);};
  const capture=async file=>{await page.locator('#main-plan').screenshot({path:process.env.DIRECTION_OUTPUT+'/'+file});};
+ const sceneSkills=async id=>{
+  const copy=await page.locator('#plan-steps').innerText(),aria=await page.locator('#plan-steps button').evaluateAll(buttons=>buttons.map(button=>button.getAttribute('aria-label')).join(' '));
+  const expected=id.startsWith('recall-')?['케이틀린의 요들잡이 덫(W)','케이틀린의 90구경 투망(E)']:id==='side-connected'?['피오라의 찌르기(Q)','피오라의 응수(W)']:id==='side-exit-lost'?['피오라의 응수(W)']:id==='objective-connected'?['오른의 화염 돌진(E)']:[];
+  expected.forEach(label=>{assert(copy.includes(label),label);assert(aria.includes(label),label+' accessible text');});
+  assert(await page.evaluate(()=>{const own=document.querySelector('#champion').value,options={champions:[own],own,owner:own,aliases:own==='Caitlyn'?[{text:'덫',champion:own,slot:'W'},{text:'투망',champion:own,slot:'E'}]:[]};const copy=document.querySelector('#plan-steps').textContent;return SkillDisplay.format(copy,options)===copy;}));
+ };
  const snapshots=[];
  try{
   await page.goto(process.env.DIRECTION_PC_URL+'/directions');await page.waitForSelector('#result:visible');
@@ -46,9 +53,20 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
   for(let n=0;n<scenes.length;n++){
    await scene(scenes[n]);assert.equal(await plan(),expected[n]);assert.equal(await page.locator('#plan-steps > li').count(),3);
    for(const step of [1,2,3])assert(await page.locator('#map [data-kind][data-step="'+step+'"]').count());
+   await sceneSkills(scenes[n]);
    assert.equal(await page.locator('#map [data-self="true"]').count(),1);
    snapshots.push({scene:scenes[n],plan:await plan(),title:await page.locator('#plan-title').innerText(),steps:await page.locator('#plan-steps > li').allInnerTexts()});
    await capture('scene-'+scenes[n]+'.png');
+  }
+  await scene('side-connected');await page.selectOption('#champion','Caitlyn');
+  assert.match(await page.locator('#plan-steps').innerText(),/케이틀린의 요들잡이 덫\(W\)/);
+  assert.match(await page.locator('#plan-steps button').nth(1).getAttribute('aria-label'),/케이틀린의 요들잡이 덫\(W\)/);
+  await scene('recall-crash');
+  const originalFacts=JSON.parse(fs.readFileSync('web_r4/directions-data.json','utf8')).champions.find(champion=>champion.id==='Caitlyn').official_facts;
+  for(let index=0;index<originalFacts.length;index++){
+   const fact=page.locator('#official-facts .fact-card').nth(index);assert.equal(await fact.locator('blockquote').textContent(),originalFacts[index].excerpt);
+   assert.match(await fact.locator('h4').textContent(),/케이틀린의 .+\([WE]\)/);
+   assert((await fact.locator('code').allTextContents()).some(value=>value==='SHA-256 · '+originalFacts[index].sha256));
   }
   await scene('recall-crash');await page.selectOption('#condition-wave','INCOMING_LARGE');assert.equal(await plan(),'RECEIVE_WAVE');
   for(const state of ['AHEAD','BEHIND','UNKNOWN']){await page.selectOption('#economy-BOTTOM',state);assert.equal(await plan(),'RECEIVE_WAVE');}
@@ -82,7 +100,7 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
   await page.goto(process.env.DIRECTION_WEB_URL+'/lol-coach/directions.html');await page.waitForSelector('#result:visible');
   assert.equal(await page.locator('#manual-settings').getAttribute('open'),null);
   assert.equal(await page.locator('#map').getAttribute('data-active-step'),'1');
-  for(const id of scenes){await scene(id);assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}
+  for(const id of scenes){await scene(id);await sceneSkills(id);assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}
   await page.locator('#plan-steps [data-step="2"] button').click();
   assert.deepEqual(await displayedArrows('#map'),['2']);
   await page.locator('#map-step-ALL').click();assert.deepEqual(await displayedArrows('#map'),['1','2','3']);
