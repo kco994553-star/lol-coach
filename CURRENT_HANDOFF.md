@@ -2,6 +2,17 @@
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
 - writer_active: true
+- owner_branch: `work/shared-theme-results-20261017`
+- current_main: `84003a4efc9fcb9de180bfa5c44f16e668bf5c7c`
+- active_pr: 74
+- scope: Product PR72/73 all feature/main required gates passed. Actual Pages9644721/run39032180568 and HTTPS47-file/PC-mobile state/card/map proof passed. Results-only PR74; no product republish/provider calls.
+
+---
+
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
 - owner_branch: `work/shared-mobile-crop-20261017`
 - current_main: `1b00751568df9404e0ff643adac0d0ea589c1b5b`
 - active_pr: 73
