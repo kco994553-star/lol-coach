@@ -2,6 +2,17 @@
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
 - writer_active: true
+- owner_branch: `work/shared-web-theme-20261017`
+- current_main: `9abd43195ba4bc664e6815c1367c63a78ce67726`
+- active_pr: 72
+- scope: Shared visual tokens/navigation, session official hero, decorative AI cards; preserve tactical engines, source/history and provider limits. Local affected and real browser proof complete; required CI and public proof next.
+
+---
+
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
 - owner_branch: `work/home-lane-entry-20261017`
 - current_main: `89c35e85a82c85974eac116c3d1c2fbd2a9f3db9`
 - active_pr: 71
