@@ -2,6 +2,16 @@
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
 - writer_active: true
+- owner_branch: `work/home-design-20261017`
+- current_main: `08b1975d19e9901eedb1d21b54d62bd30d391d0e`
+- scope: Exchange PR69 required gates passed and merged; new user-approved reference home design and remembered card destinations next. No provider/video/paid calls; preserve prior holds/history/N0/Windows.
+
+---
+
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
 - owner_branch: `work/exchange-preference-20261017`
 - intake_main: `3b02b886bc32e839a20cf6dc294ba00bab68dbc0`
 - detail: Latest user adds relative short/repeated exchange preference for both duos, separate from matchupwinner and riskpreference. Fresh main/AGENTS/FrozenDesign/contracts/handoff and parkedclaim read; no activewriter. Reuse previous validation; bounded additive model/view/eventsequence and wavecost gates, no providers/video/paidcalls, preserve history/AUTO30HOLD20N0Windows and unresolved post6 hypothesis. Required CI/normal merge/Pages/Handoff authorized.
