@@ -12,6 +12,17 @@ assert(html.indexOf('src="./loading-exploration.js"')<html.indexOf('src="./loadi
 assert(html.includes('src="./loading-interactive.js"'));assert(html.includes('id="interactive-flow"'));assert(html.includes('id="zoom-selected-action"'),'modal needs its selected action text');
 """)
 
+    def test_equal_supported_actions_explain_each_preference_change(self):
+        self.run_node("""
+const X=require('./web_r4/loading-exploration'),vm=require('node:vm'),scope={window:{}};vm.runInNewContext(fs.readFileSync('./web_r4/loading-interactive.js','utf8'),scope);const U=scope.window.LoadingInteractive;
+assert.equal(typeof U.describeSelection,'function','per-change same-selection feedback missing');
+const a=E.exampleInput(C,0),s=X.defaultState();s.assumptions={binding:'HIT',followup:'READY',exit_cover:'AVAILABLE'};
+const get=risk=>X.evaluate(E.analyze({...a,schema_version:'lol-coach-loading-input-v2',preferences:{risk}},C),C,s),balanced=get('BALANCED'),opp=get('OPPORTUNITY'),loss=get('LOSS_LIMIT');
+assert.equal(balanced.selected_plan_id,opp.selected_plan_id);assert(!opp.same_choice_across_preferences);assert(U.describeSelection(opp,{risk:'BALANCED',plan:balanced.selected_plan_id}).includes('현재 조건에서는 선택이 같습니다'));
+assert(U.describeSelection(opp,{risk:'BALANCED',plan:balanced.selected_plan_id}).includes('실행 가능'));
+assert.notEqual(loss.selected_plan_id,opp.selected_plan_id);assert(!U.describeSelection(opp,{risk:'LOSS_LIMIT',plan:loss.selected_plan_id}).startsWith('현재 조건에서는 선택이 같습니다'));
+""")
+
     def test_legacy_input_defaults_and_preference_is_versioned(self):
         self.run_node("""
 const a=E.exampleInput(C,0),r=E.analyze(a,C);assert.equal(r.input.schema_version,'lol-coach-loading-input-v2');

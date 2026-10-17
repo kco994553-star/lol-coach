@@ -1,3 +1,25 @@
+보완: 같은 지원 조건에서 균형↔기회추구가 같은 행동을 고를 때도 같은선택 이유를 표시합니다.
+유지: 행동ID·실행게이트·비용·근거 수준은 바꾸지 않습니다. 기존 공개기능/검증/배포 증거는 보존합니다.
+확인: 전환별 같은선택 단위검사 RED→GREEN, 새 브라우저 반례를 필수CI에 연결했습니다.
+상태: PR62는 결과 기록과 이 피드백 보완을 함께 포함합니다. 새소스 게시완료를 미리 주장하지 않습니다.
+한계: 전략가설·30초이해 미측정·실전N=0·Windows BLOCKED_EXTERNAL·영상한도/추가호출0을 유지합니다.
+
+# Per-preference-transition same-choice feedback — 2026-10-17
+
+Existing all-three preference invariance worked for UNKNOWN/IMPOSSIBLE gates. Additional
+positive-assumption counterexample BALANCED↔OPPORTUNITY also keeps SHORT_FOLLOW while
+LOSS_LIMIT differs. UI now compares actual prior/current selected action IDs per preference
+transition and shows same-choice/reason without changing the pure selection rule. Snapshot
+of prior published4e373bbd and actualPages34d141fa remains in publication/; these remain
+valid historical receipts, not proof of this feedback addition's future publication.
+
+PR62 updated scope is result receipts + this UI feedback (not results-only). Unit RED and
+new realbrowser positive same-choice checks added; unknownsame/changedchoice/conditions/maps/
+skillnames remain. No source/grade/tactic/API/Windows change. Newpublication/CI receipts will
+be recorded separately after actualgates. Oldbefore/failed/review/hold history retained.
+
+---
+
 된 것: 공개 웹에서 성향→미래조건→행동·비용 비교→설명·미니맵 연결을 끝까지 사용할 수 있습니다.
 된 것: 대표 바텀 레벨2의 실제 선택 변화·같은선택 이유·미확인 차단·키보드/터치를 PC·모바일에서 확인했습니다.
 확인: PR60·61 필수/병합후 각3개·Pages실제배포 성공, 공개29파일 일치와 실제HTTPS 흐름이 통과했습니다.
