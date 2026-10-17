@@ -21,6 +21,11 @@ MODIFIED={'coach_v1/pc_coach.py','.github/workflows/private-mvp-ci.yml',
     'scripts/diagnose_expert_front.py','scripts/diagnose_expert_video.py',
     'CURRENT_HANDOFF.md','docs/queue/QUEUE.md','coach_v1/pregame_server.py','web_r4/pc.html'}
 CURRENT=MODIFIED|{
+    'contracts/loading-strategy-v1.md','docs/superpowers/plans/2026-10-17-loading-strategy.md',
+    'scripts/build_loading_catalog.py','scripts/browser_loading.py',
+    'web_r4/loading.html','web_r4/loading.js','web_r4/loading.css','web_r4/loading-engine.js','web_r4/loading-map.js','web_r4/loading-data.json','web_r4/loading-assets/sprite-receipts.json',
+    *{'web_r4/loading-assets/champion'+str(i)+'.png' for i in range(6)},
+    'tests_pregame/test_loading_catalog.py','tests_pregame/test_loading_strategy.py','tests_pregame/test_loading_http.py',
     'contracts/directions-prototype-v1.md','docs/superpowers/plans/2026-10-17-directions.md',
     'config/direction_asset_sources.json','scripts/build_directions_web.py','scripts/browser_directions.py',
     'web_r4/directions.html','web_r4/directions.js','web_r4/directions.css','web_r4/directions-engine.js',
@@ -38,7 +43,8 @@ CURRENT=MODIFIED|{
 }
 TESTS=['tests_expert.test_video_diagnostic_payload','tests_expert.test_video_diagnostic_policy','tests_expert.test_video_diagnostic_cli','tests_expert.test_gemini_response_diagnostics','tests_expert.test_text_response_v2','tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
        'tests_pregame.test_resource_recovery','tests_pregame.test_resource_view','tests_pregame.test_fixed_resource_checkpoint',
-       'tests_pregame.test_actual_evidence_binding','tests_pregame.test_directions','tests_pregame.test_directions_http']
+       'tests_pregame.test_actual_evidence_binding','tests_pregame.test_directions','tests_pregame.test_directions_http',
+       'tests_pregame.test_loading_catalog','tests_pregame.test_loading_strategy','tests_pregame.test_loading_http']
 DATA_ROOTS=['data/resource_recovery/2026-10-16','data/pov_metadata/2026-10-16']
 
 
@@ -118,7 +124,8 @@ def affected_code_changed():
     executable={p for p in CURRENT if p.endswith(('.py','.js','.yml'))}
     content={'config/evidence_intake.json','config/pov_channels.json','config/video_api_diagnostic.json',
         'web_r4/directions-data.json','config/direction_asset_sources.json','web_r4/directions.html',
-        'web_r4/directions.css','web_r4/directions-status.json','web_r4/status.html'}
+        'web_r4/directions.css','web_r4/directions-status.json','web_r4/status.html',
+        'web_r4/loading.html','web_r4/loading.css','web_r4/loading-data.json'}
     return bool(changed&(executable|content))
 
 
@@ -129,6 +136,9 @@ def selected_tests():
     if not before or set(before)=={'0'}:return TESTS
     changed=set(git('diff','--name-only',before,'HEAD').decode().splitlines())
     groups={
+        'tests_pregame.test_loading_catalog':{'scripts/build_loading_catalog.py','web_r4/loading-data.json','web_r4/directions-data.json'},
+        'tests_pregame.test_loading_strategy':{'web_r4/loading-engine.js','web_r4/loading-data.json','web_r4/directions-engine.js','web_r4/directions-data.json'},
+        'tests_pregame.test_loading_http':{'coach_v1/pregame_server.py','web_r4/pc.html','scripts/build_directions_web.py','web_r4/loading.html','web_r4/loading.js','web_r4/loading-map.js','web_r4/loading.css'},
         'tests_pregame.test_directions':{'web_r4/directions-engine.js','web_r4/directions-data.json','config/direction_asset_sources.json'},
         'tests_pregame.test_directions_http':{'coach_v1/pregame_server.py','web_r4/pc.html','scripts/build_directions_web.py','web_r4/directions.html','web_r4/directions.js','web_r4/directions.css','web_r4/status.html','web_r4/directions-status.js','web_r4/directions-status.json'},
         'tests_expert.test_video_diagnostic_payload':{'coach_v1/video_diagnostic_payload.py','coach_v1/gemini_daily.py','scripts/run_video_diagnostic.py'},

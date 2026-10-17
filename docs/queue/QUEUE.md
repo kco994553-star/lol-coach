@@ -1,3 +1,47 @@
+된 것: 실제10픽과 내 포지션을 넣어 이번 판 요약→라인전·운영·한타·미니맵으로 이어지는 PC·모바일 화면을 구현했습니다.
+된 것: 수동 한국어·영어 입력과 선택적PC픽 가져오기가 같은 엔진을 쓰며 경제 입력은 필요하지 않습니다.
+확인: 변경 브라우저/원문 경계 독립검토 통과, 필수CI·정상병합·실제공개배포는 별도게이트입니다.
+미확인: 개별매치업 우열·신규전술 효과N=0·실제Windows연결·인게임승인은 완료로 표시하지 않습니다.
+유지: 조언7·AUTO30/HOLD20/USER0·Frozen350·영상3/3·108관측·실패이력과 기존예약을 보존합니다.
+
+# Loading Strategy MVP — 2026-10-17
+
+Authority USER_LOADING_STRATEGY_MVP_2026-10-17. Intake main00b40926e72a198a6143a8b6ffae97dadfac50bf,
+branchwork/loading-strategy-mvp-20261017, commontokenmain-20261017-loading-strategy. Latesthead/
+AGENTS/handoff/openPR/agents checked; completed predecessors reused. Main owns schema/engine.
+
+Contract: contracts/loading-strategy-v1.md. Detailed actual example,6milestone table,
+PC/mobile screenshots, reuse mapping and limits: evidence/actual-evidence/loading/report.md.
+Official173/865facts,346exploratoryprofile references,353boundedrecallcohorts reused; six
+officialspriteGETs only. ExistingQ15275/CH291/PRO89 kept separate. No provider/game/video/paid
+calls, no private data/public token, no USER/AUTO promotion. Functionbindings20champions/50
+were independently compared to official retained descriptions; missingbindings stayunknown.
+
+Manual10picks→composition-linked core summary→gameplan/lane6rows/teamfight/conditional
+scenes/source details. Ownrole and actualpick changes affect analysis; no economy required.
+Optional loopback-only explicit cachedChampSelect import uses same validator/engine.
+Existing /pc/launcher/LCU/manualfallback unchanged. Old6scenes retained as directions.html,
+only applicablechampion/role/allyconditions link maps; currentalliesonly/nohiddenenemy.
+
+Functional Chromium manual/roles/unknowns/sourcepatch/validation/import/fallback/maps/390px
+and legacy scene/hash route tests passed. Fresh independent source/implementation review
+records five resolvedfindings and sourcehashes, not strategy approval. Matchupadvantage and
+items/skillreadiness remainunknown; exactmatchupinteraction library is incomplete. New
+strategyDESIGN_HYPOTHESIS, realcoachingN0/accuracynull; actualWindowsBLOCKED_EXTERNAL.
+
+PublicexistingURL https://kco994553-star.github.io/lol-coach/ (update pending exact-head
+CI/merge/postmain). Existingstatus.html is a datedsnapshot, notlivemonitor. No newproject/
+hostingmigration. Currentclaim tracks finalpublication; futureCI/merge is not asserted here.
+
+NextP0: complete exact-headpublication, then source-backed lane/transition knowledge and
+independent future-blindscene evidence when gates permit. Oct17VIDEO3/3, additionalcalls0;
+Oct18③→separatereview/gatedpublish→④ remains; normal1/day afterdiagnosticresolution.
+ExistingMainenabledhourlyfromOct18KST/next_run_timenull/newpolicyexecutionUNOBSERVED, daily
+18KSTworkflow unchanged. Sourcequeues/POV categories and originalreservationrules preserved.
+No remaining23rewrite expansion. User has no additional required manual step.
+
+---
+
 된 것: 모바일·PC 웹을 실제 배포했고 휴대폰 크기의 공개 브라우저에서도 열어 확인했습니다.
 된 것: 세 판단·여섯 예시에서 챔피언·경제·상황을 바꾸고 카드·미니맵·확대를 함께 볼 수 있습니다.
 확인: 구현PR50 필수3개·병합 후3개·Pages 배포 성공, 공개12파일 해시가 검증본과 일치합니다.

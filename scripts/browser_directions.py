@@ -79,7 +79,7 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
   await page.locator('a[href="/directions"]').click();await page.waitForSelector('#result:visible');
   // The same exported code must work at a repository subpath, as GitHub Pages does.
   await page.setViewportSize({width:390,height:844});
-  await page.goto(process.env.DIRECTION_WEB_URL+'/lol-coach/index.html');await page.waitForSelector('#result:visible');
+  await page.goto(process.env.DIRECTION_WEB_URL+'/lol-coach/directions.html');await page.waitForSelector('#result:visible');
   assert.equal(await page.locator('#manual-settings').getAttribute('open'),null);
   assert.equal(await page.locator('#map').getAttribute('data-active-step'),'1');
   for(const id of scenes){await scene(id);assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}
