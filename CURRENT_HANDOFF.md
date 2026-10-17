@@ -1,3 +1,15 @@
+# Latest common execution claim — PARKED_EXTERNAL
+- run_token: `main-20261017-loading-context`
+- status: `PARKED_EXTERNAL`
+- writer_active: false
+- owner_branch: `work/skill-display-results-20261017`
+- authority: USER_LOADING_CONTEXT_QUALITY_2026-10-17 + USER_SKILL_DISPLAY_FORMAT + inherited authorized publication
+- final_main: `a698bb9d3aa7ca5ba94f1d8f57d702249dd0b519`
+- final_receipt_sha256: `6055608871d9fb1d0175f22a5a4e19f9d9b35b613295ed0bc25c492f9f1ae1c7`
+- detail: Context/duo repair PR54 and results PR55 preserved; official skill display PR56 and public results/Handoff PR57 normal merged. Final PR57 head1fc2412 testedmergecadc08c and actualmaina698bb9 share tree3b3be790. Required39008361663/39008361645 and postmain39008440384/39008440387 all3 jobs SUCCESS, exactcheckout/current_sources/unchanged-test+browser reuse verified. Functional PR56 source c5501b5 required/postmain all3 SUCCESS with24 affected checks and fresh PC/loading/directions browsers. Live Pages935e272 native39008108154 SUCCESS; public27files/root/build-info/.nojekyll match, actual HTTPS1440/390 manual10picks/name(slot)/sixrows/maps/zoom PASS. Final main source27files identical to published artifact; worktree clean/local+origin+remote main exact. Original source/engine/data/reviews/grades/history/Windows paths preserved, realcoachingN0/accuracy=null. No provider/game/video/new-source-asset/paid calls. CLI401 recorded separately; existing GitHub app authorized writes succeeded. Current requested implementation/publication READY work exhausted. Remaining nextP0 requires source-backed lecture answers/independent predecision-realplay evidence and actual Windows LCU (BLOCKED_EXTERNAL); Oct17 VIDEO3/3 preserved, existing Oct18 stage③→separate review/gated publish→④ and normal1/day after diagnostics unchanged. User need not supply new approval/full review/collection.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261017-loading-context`
 - status: `RUNNING`
