@@ -74,3 +74,17 @@ MISSING→구현: 조합연결 요약/내역할/운영/한타/6구간표·실제
 1. 입력→전략MVP exact-head필수3검사/정상병합/병합후3검사/기존Pages실제배포/HTTPS동작확인.
 2. 출처가확인된설명발언으로현재라인전/전환조건의빈근거보완. 오늘10/17VIDEO3/3유지·추가TEXT/VIDEO/Riot/유료호출0. 내일③→분리검토/CI게시→④기존계획과자동재개설정유지. 전문가채택/같은경기확정/판단전충분장면/평가0. 사용자전수검토/자료수집전가없음.
 3. 검증된개별매치업·사용자이해/실전효과증거확보는추가근거대기.23개문장확대는종료유지. 외부조건없는무제한챔피언·장면증식은하지않음.
+
+
+## 실제 게시 완료 — 2026-10-17
+
+PR52 정상병합 main ffe52ef624bd9d96691053cc0a614dea9253ed09. 필수3검사와 병합후3검사 모두SUCCESS. 각로그의 실제 checkout SHA·source binding·변경20검사·Chromium 결과를 확인했다. 기존완료 전체검증/수집은 재사용했다.
+
+기존Pagesartifact0d8fdfa76cc8395d4da23780df0f0f0b8a683004, 실제run39001496401 SUCCESS. 공개25파일이 SHA일치하며 root/build-info/.nojekyll도확인했다. 실제HTTPS390px에서 혼합언어수동10픽→요약/상세→다른조합/역할→기존관련장면/번호/200%확대/status를확인했다. JS/HTTP오류0·공개PC API요청0·TLS검증유지.
+
+[열기](https://kco994553-star.github.io/lol-coach/) · [상태](https://kco994553-star.github.io/lol-coach/status.html) · [PR52](https://github.com/kco994553-star/lol-coach/pull/52). 자세한근거는 publication/result.json, deployment.json, public-browser.json, ci-pr52.json, ci-main-pr52.json.
+
+![실제 공개 모바일 요약](publication/public-mobile-summary.png)
+![실제 공개 모바일 지도 확대](publication/public-mobile-map.png)
+
+다음P0는 출처확인된 라인전/전환조건의 근거와 독립평가장면이다. 오늘VIDEO3/3제약과 외부근거게이트 때문에 추가호출하지않는다. 실전검증N0·전문가채택0·판단전평가0·실제Windows BLOCKED_EXTERNAL을유지한다. 이결과기록PR자체의 미래CI/병합은 본기록이예언하지않으며 공통claim에서확인한다.
