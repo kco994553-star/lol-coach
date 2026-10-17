@@ -1,3 +1,14 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261017-loading-context`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `work/loading-context-results-20261017`
+- authority: USER_LOADING_CONTEXT_QUALITY_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `f411f624dd62f96ad2f825c8e8626bf37419404b`
+- detail: Observed PR54/Pages/mobile context results committed/pushed in results-only PR; functional bytes unchanged and tests/browsers reused. Await mandatory exact-head3 source-integrity checks before normal merge.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261017-loading-context`
 - status: `RUNNING`
