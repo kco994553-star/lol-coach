@@ -1,3 +1,9 @@
+# Current shared theme followup
+- READY: bounded mobile hero crop after final visual review; do not publish superseded prepared PR72 export. Reuse PR72 main gates and protected evidence; run affected followup required gates, publish latest source then real PC/mobile proof.
+- Preserve independent expert/video questions and10/17video3/3, no extra external requests.
+
+---
+
 진행: 시작·대시보드·10픽·전략 상세·연습·상태를 공통 네이비/보라색 토큰과 메뉴로 연결했습니다.
 동작: 세션별 공식 일러스트 선택, 입력/초점/스크롤 보존, 이미지·목록 실패와 API재시도 대안을 보강했습니다.
 이미지: 카드 AI가상장면을 명시했고 원본을 보존하며 WebP221KB로 최적화했습니다.

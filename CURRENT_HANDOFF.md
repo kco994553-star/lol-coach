@@ -1,3 +1,10 @@
+# Shared theme mobile crop followup — 2026-10-17
+- PR72 merged main1b007515; feature/post-main mandatory3 checks all success. Prepared export e646312d was NOT published.
+- Actual mobile visual review identified official Caitlyn focal face overlapping top menu/pro CTA. Narrow presentation fix: art starts below shared60px header,300px height (260px narrow), dedicated mobile crop100%; form/primary actions unchanged. Source-bound PC/mobile focused browser passed; original focused screenshots/logs retained, new crop-browser separate.
+- No tactical/provider/quota/grade/identity changes. Next requiredCI→normalmerge→Pages/47file/hash→realHTTPS→resultsHandoff. N0/30secunmeasured/Windowsblocked stay.
+
+---
+
 진행: 시작·대시보드·10픽·전략 상세·연습·상태를 공통 네이비/보라색 토큰과 메뉴로 연결했습니다.
 동작: 세션별 공식 일러스트 선택, 입력/초점/스크롤 보존, 이미지·목록 실패와 API재시도 대안을 보강했습니다.
 이미지: 카드 AI가상장면을 명시했고 원본을 보존하며 WebP221KB로 최적화했습니다.
