@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-directions`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/directions-prototype-20261017`
+- authority: USER_SITUATIONAL_MINIMAP_PROTOTYPE_AND_MOBILE_WEB_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `15e0e21a53d46e1b9368b93e6ea0963faf767440`
+- detail: Implement 3-decision/6-scene DESIGN_HYPOTHESIS prototype with shared PC/mobile web, official assets, changed-only checks, gated publication. Preserve VIDEO3/3 today; no provider/game/video requests.
+
+---
+
 # Latest common execution claim — PARKED_EXTERNAL
 - run_token: `main-20261017-video-resume-prep`
 - status: `PARKED_EXTERNAL`
