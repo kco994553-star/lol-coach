@@ -1,3 +1,15 @@
+# Latest common execution claim — PARKED_EXTERNAL
+- run_token: `main-20261017-loading-readability`
+- status: `PARKED_EXTERNAL`
+- writer_active: false
+- owner_branch: `work/loading-readability-results-20261017`
+- authority: USER_LOADING_SUMMARY_READABILITY_AND_THREE_EVIDENCE_QUESTIONS + inherited free implementation/publication/required CI/normal merge.
+- final_main: `fa22713f5eb363e5384fb140c2b8c6f9caef33de`
+- final_receipt_sha256: `6005cfd7460257f329e150e52b0b705e65a6ea23a4cf5c59573c18bb11b2007f`
+- detail: Bounded summary only and adjacent ownerduplicate display fixed; full sixrows/contexts/roles/gameplan/teamfight/sourcequotes/grades/history preserved. Original6questions unchanged; selected DUO-L2/L3_5/L6 retain currentadvice/factgap/neededlectureconditions/revisioncounterexamples, all unmatched/HOLD; expertadoptions0/evidence-drivenadvicechanges0. PR58 head409667de testedf1c9501f main4a88150 sharetree21044a14, required39014233647/39014233602 and postmain39014345913/39014345810 all3SUCCESS; exactsource/34affectedchecks/freshPC-loading-directions browsers verified. Review P2 missing conversion prerequisites fixed. PR59 resultsonly head19358472 tested654b2e45 mainfa22713 sharetree95baf3be, required39014584372/39014584323 and postmain39014660712/39014660711 all3SUCCESS, exactsource/unchangedtests+browsers reuse verified. Pages096234e8 actualnative39014451779SUCCESS; public27files/root/buildinfo/.nojekyll match and HTTPS1440/390 manual10pick-summary-details/context/map/zoom PASS; main product27files identical to publishedsource4a88150. Main/worktree clean/openPRs0. Evidence and Handoff onmain, finalclosure /workspace/readability-final-result.json. Original Auto30/Hold20/User0/advice7/Frozen350/Windowslauncher/LCU/manualfallback preserved, no23expansion. RealcoachingN0/accuracy=null,30scomprehensionNOT_MEASURED; actualWindows BLOCKED_EXTERNAL. ExtraTEXT/VIDEO/game/asset/paidcalls0; Oct17 VIDEO3/3. Workflow381076541 activeUTC09/KST18, latest5 manual only, actualscheduledexecutionunobserved. Existing Oct18KST18 eligible nominal stage3clip then separate review/requiredCIpublication thenstage4JSON, normal1video/day after diagnostic, samefree/sharedledger/duplicates/fulloriginalcharges/no refunds/no unchangedretry. Existing fullvideo Hecarim diagnostic not relevantlecture/sourcefact/predecision evidence; no matchedlecture interval ready. All authorized bounded READY implementation/publication finished. Remaining nextP0 external lecture/predecision/realplay evidence and actualWindows proof; no new userapproval/fullreview/collection required.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261017-loading-readability`
 - status: `RUNNING`
