@@ -86,3 +86,13 @@ selected action, map steps and inside zoom. The map interaction supplies explici
 skillAliases; unsupported othermatchups never receive this mapping. Raw facts/quotes and
 pure action selection remain unchanged. Fresh browser checks include step3 outside/inside
 zoom to prevent a correct heading from hiding unformatted action shorthand.
+
+Patch scope clarification: reuse existing SOURCE_MAJOR_MATCH comparison of the first two
+segments (example16.20 vs DataDragon16.20.1). This is not proof of equivalent DataDragon
+revision or hotfix behavior. Full input/source version remain displayed; no optimality or
+source patch equivalence beyond this inherited scope is claimed.
+
+Same-choice feedback applies to each preference transition, not just the all-three-choice
+invariance flag. In positive assumptions BALANCED→OPPORTUNITY still selects SHORT_FOLLOW;
+show the same-choice sentence and explain both preferences retain the same feasible plan.
+This feedback changes no selection/feasibility/cost/evidence rules.
