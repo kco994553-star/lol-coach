@@ -9,6 +9,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = {
+    **{'home-assets/'+p:'home-assets/'+p for p in ('Ahri.jpg','Caitlyn.jpg','lane.jpg','fight.jpg')},
     'dashboard.html':'index.html','dashboard.js':'dashboard.js','dashboard.css':'dashboard.css','pro-dashboard.json':'pro-dashboard.json',
     'loading-exchange.js':'loading-exchange.js','loading-exchange-view.js':'loading-exchange-view.js',
     'loading-engagement.js':'loading-engagement.js','loading-engagement-view.js':'loading-engagement-view.js',

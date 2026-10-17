@@ -23,7 +23,7 @@
     const champs=$('champion-records');champs.replaceChildren();if(!p?.champions?.length)champs.append(node('p','유효한 챔피언별 표본이 없습니다.'));
     (p?.champions||[]).forEach(c=>{const row=node('div',null,'champion-row');row.append(node('span',c.champion+' · '+c.sample_n+'경기'),node('span',ratio(c.win_rate)+'% · KDA '+ratio(c.kda)));champs.append(row);});
     $('coaching-notes').textContent='기록 조회와 코칭 분석은 별개입니다. 근거가 연결된 개인 분석이 아직 없습니다.';
-    document.querySelector('.pro-card').hidden=Boolean(p);
+    document.querySelector('.pro-card').hidden=Boolean(p);$('pro-entry').hidden=Boolean(p);
   }
   $('account-form').addEventListener('submit',async e=>{
     e.preventDefault();const body={riot_id:$('riot-id').value,region:$('region').value};const parts=body.riot_id.split('#');
@@ -43,6 +43,8 @@
   function validProfile(p){return p&&p.format==='lol-coach-account-profile-v1'&&typeof p.riot_id==='string'&&Array.isArray(p.recent_matches)&&p.recent_matches.every(m=>m.queue_id===420)&&p.statistics?.queue_id===420&&Array.isArray(p.champions)&&typeof p.omitted_matches==='number';}
   $('riot-id').addEventListener('input',invalidate);$('region').addEventListener('change',invalidate);
   $('guest-entry').addEventListener('click',()=>{generation++;controller?.abort();$('account-submit').disabled=false;renderProfile(null);status('GUEST');$('dashboard').focus({preventScroll:true});$('dashboard').scrollIntoView();$('prepare-main').focus({preventScroll:true});});
+  const heroes=[{src:'./home-assets/Ahri.jpg',name:'아리 · Ahri'},{src:'./home-assets/Caitlyn.jpg',name:'케이틀린 · Caitlyn'}];let heroIndex=0;
+  $('hero-cycle').addEventListener('click',()=>{heroIndex=(heroIndex+1)%heroes.length;$('hero-art').src=heroes[heroIndex].src;$('hero-name').textContent=heroes[heroIndex].name;});
   $('menu-toggle').addEventListener('click',()=>{const open=$('sidebar').classList.toggle('open');$('menu-toggle').setAttribute('aria-expanded',String(open));});
   $('sidebar').querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{$('sidebar').classList.remove('open');$('menu-toggle').setAttribute('aria-expanded','false');}));
   if(local){$('review-local').hidden=false;$('review-note').textContent='PC의 인증된 복기 화면에서 경기 종료·실제 자료를 확인한 뒤 분석합니다.';}

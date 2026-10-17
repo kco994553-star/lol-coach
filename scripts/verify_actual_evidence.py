@@ -23,6 +23,7 @@ MODIFIED={'coach_v1/pc_coach.py','.github/workflows/private-mvp-ci.yml',
     'web_r4/pc.js','web_r4/pregame.js','web_r4/pregame.html','web_r4/official_reference.js',
     'web_r4/review_queue.js','web_r4/review_queue.html'}
 CURRENT=MODIFIED|{
+    'contracts/home-design-v1.md','config/home_design_assets.json',*{'web_r4/home-assets/'+p for p in ('Ahri.jpg','Caitlyn.jpg','lane.jpg','fight.jpg')},
     'contracts/exchange-preference-v1.md','web_r4/loading-exchange.js','web_r4/loading-exchange-view.js','tests_pregame/test_exchange_preference.py',
     'contracts/lane-engagement-v1.md','web_r4/loading-engagement.js','web_r4/loading-engagement-view.js','tests_pregame/test_lane_engagement.py',
     'contracts/account-dashboard-v1.md','coach_v1/account_dashboard.py','scripts/refresh_verified_pro_dashboard.py','scripts/publish_verified_pro_dashboard.py','config/lck_verified_accounts.json',
