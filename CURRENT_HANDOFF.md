@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-loading-readability`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-readability-20261017`
+- authority: USER_LOADING_SUMMARY_READABILITY_AND_THREE_EVIDENCE_QUESTIONS; inherited free implementation/publication/required CI/normal merge.
+- intake_main: `a698bb9d3aa7ca5ba94f1d8f57d702249dd0b519`
+- detail: Bounded summary only, full detail/history retained; max3 prioritized questions reuse originals. Oct17 VIDEO3/3 no provider calls; Oct18 existing order unchanged. No champion/scene/rewrite expansion. Real coaching N0; comprehension unmeasured.
+
+---
+
 # Latest common execution claim — PARKED_EXTERNAL
 - run_token: `main-20261017-loading-context`
 - status: `PARKED_EXTERNAL`
