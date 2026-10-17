@@ -1,3 +1,53 @@
+구현: 대표 매치업의 라인전을 웨이브 목표 → 처리 → 응징 → 이득 전환 → 대안으로 연결했습니다.
+구현: Riot ID 검색·개인 대시보드·계정 없이 10픽 준비 진입을 PC·모바일로 연결했습니다.
+검증: 새 규칙·개인정보 경계·브라우저 변경 검사를 통과했고 독립 코드 검토 지적을 수정했습니다.
+미확인: 공개 계정 API·실제 Riot 기록 갱신·원격 CI/배포는 아직 완료로 주장하지 않습니다.
+보존: 전략 가설·실전 N=0·30초 이해 미측정·Windows BLOCKED_EXTERNAL·원문/보류/영상 이력을 유지합니다.
+
+# Wave-first lane + Riot ID dashboard implementation — 2026-10-17
+
+Intake8ff7021, branchwork/loading-wave-20261017, tokenmain-20261017-loading-wave.
+Contracts loading-wave-v4 and account-dashboard-v1, evidence/actual-evidence/loading-wave/report.md. Completed
+interactive implementation preserved and reused; no remaining23 rewrite/champion expansion.
+Newwave under exactduo; oldexchange subordinate and incompatiblemeans gated. Unknownfirstpush,
+fast≠crash/receive≠freeze, all6periods, futureconditions only, primary+alternative/cost/steps/
+line diagram/macro/evidence connected. Originalquestion3 unchanged plus wave subquestion links.
+Newrootdashboard; loading.html and PC/launcher remain. Publicstatichost no trustedaccountAPI,
+explicitunavailable/guest; privateauthloopback KR lookup/projection built. ActuallocalRiotkey
+notconfigured, noexpiryclaim. One Faker account's currentT1/LCK roster and owner tag sourced;
+MID prioruserroster, otherlegacy accounts/89cohort not promoted. No Riot stats adopted yet.
+Existing proworkflow modified verified-only daily18:30KST/cooldown121/concurrency; recursive
+safeprojection/failurehistory/data-onlyCAS+manifest/explicitPagesbuild. Settings not execution.
+Review fixes/REDs/browser receipts/screens/source metadata preserved; requiredCI/main/Pages/
+actualpro job gates stillpending. No video/text/paidcalls, oldAUTO30/HOLD20/USER0/Frozen350,
+rawsource/failedhistory/Windowsmanual untouched. RealcoachingN0/comprehensionunmeasured.
+
+---
+
+진행: 대표 매치업의 웨이브 목표·처리·응징·이득 전환·대안을 별도 가설 계약으로 연결 중입니다.
+보존: 기존 10픽·성향·스킬 후속·6구간·원문·AUTO30/HOLD20·영상 이력·Windows 경로를 재사용합니다.
+검증: 새 웨이브 규칙과 영향 범위 단위검사 26개 통과; 실제 브라우저 변경 확인을 진행 중입니다.
+범위: 현재 자료로 선푸시 우위·프리징 유지 기준은 미확인, 새 전략은 설계 가설·실전 코칭 N=0입니다.
+다음: Riot ID 검색·대시보드를 별도 연결하며, API/확인된 LCK 계정 자료가 없으면 해당 데이터만 미연결입니다.
+
+# Wave-first lane implementation intake — 2026-10-17
+
+Base main8ff7021, work/loading-wave-20261017, tokenmain-20261017-loading-wave.
+Contract contracts/loading-wave-v4.md. Existing v3 skill exchange stays unchanged as a
+subordinate collapsible means, not the primary lane plan. New pure report.wave plus future
+wave state supports exact Caitlyn/Lux vs Kaisa/Nautilus only, all six inspection periods.
+FIRST_PUSH remains UNKNOWN, feasibility is hypothetical, preferences cannot bypass gates.
+Fast processing differs from crash, trim receive differs from unsupported freeze. Original
+priority3 source questions unchanged with separate wave subquestion links. No new provider,
+video/game/paid calls or grade inheritance. N0/30secunmeasured/Windowsblocked unchanged.
+Account dashboard direction added by latest steering: use Riot ID search, private same-origin
+backend only, static public guest fallback, no fake metrics or identity→currentdraft inference.
+Only independently confirmed current LCK first-team accounts/queue420 may enter new pro
+reference; old 89-match roster/backup data must not be relabeled. No publication success
+claimed before actual requiredCI/main/Pages gates. Existing completion evidence reused.
+
+---
+
 된 것: 공개 웹에서 성향 → 미래 조건 → 행동·비용 비교 → 설명·미니맵 연결을 사용할 수 있습니다.
 된 것: 같은 행동을 유지하는 성향 전환의 이유도 PC·모바일 실제 화면에서 확인했습니다.
 검증: PR62 필수·병합 후 각 3개 검사와 실제 Pages 배포 성공, 공개 29파일 일치를 확인했습니다.

@@ -1,6 +1,16 @@
-name: Private pro timeline reference collection
+name: Verified LCK solo reference refresh
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'config/lck_verified_accounts.json'
+      - 'coach_v1/account_dashboard.py'
+      - 'scripts/refresh_verified_pro_dashboard.py'
+      - 'scripts/publish_verified_pro_dashboard.py'
+      - '.github/workflows/pro-reference-collection.yml'
+  schedule:
+    - cron: '30 9 * * *' # 18:30 Asia/Seoul
   workflow_dispatch:
     inputs:
       key_renewed:
@@ -19,7 +29,7 @@ concurrency:
 
 jobs:
   collect:
-    if: github.repository == 'kco994553-star/lol-coach' && github.ref == 'refs/heads/main' && inputs.key_renewed == true && github.run_attempt == 1
+    if: false # Historical unverified/backup roster path preserved; new collections use verified-dashboard only.
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -141,3 +151,48 @@ jobs:
           if path.is_dir():shutil.rmtree(path)
           print('EPHEMERAL_PRIVATE_DIRECTORY_REMOVED')
           PY
+
+  verified-dashboard:
+    permissions:
+      contents: write
+      actions: read
+      pages: write
+    if: github.repository == 'kco994553-star/lol-coach' && github.ref == 'refs/heads/main' && github.run_attempt == 1 && (github.event_name == 'schedule' || github.event_name == 'push' || inputs.key_renewed == true)
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Check out trusted main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - name: Install existing pinned runtime
+        run: python -m pip install --disable-pip-version-check -r requirements-r3.txt
+      - name: Preserve shared Riot rolling-window cooldown across jobs
+        run: |
+          python - <<'PYCOOLDOWN'
+          import time
+          time.sleep(60)
+          time.sleep(60)
+          time.sleep(1)
+          PYCOOLDOWN
+      - name: Refresh only verified current LCK solo accounts
+        env:
+          RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
+          KEY_RENEWED: ${{ inputs.key_renewed }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/refresh_verified_pro_dashboard.py --output "$RUNNER_TEMP/verified-pro-dashboard/pro-dashboard.json" --respect-published-auth-stop
+      - name: Preserve safe reference projection for reviewed publication
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: verified-lck-pro-dashboard
+          path: ${{ runner.temp }}/verified-pro-dashboard/pro-dashboard.json
+          retention-days: 14
+      - name: Validate and publish safe reference data to existing Pages artifact
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/publish_verified_pro_dashboard.py --input "$RUNNER_TEMP/verified-pro-dashboard/pro-dashboard.json"

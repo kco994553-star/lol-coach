@@ -1,0 +1,69 @@
+....F..F
+======================================================================
+FAIL: test_period_facts_are_required_for_period_guidance (tests_pregame.test_loading_wave.LoadingWaveTests.test_period_facts_are_required_for_period_guidance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_wave.py", line 55, in test_period_facts_are_required_for_period_guidance
+    self.run_node(self.prefix+"""
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_strategy.py", line 16, in run_node
+    self.assertEqual(result.returncode,0,result.stderr)
+AssertionError: 1 != 0 : /workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:192
+    if(hero.id==='Caitlyn')return `아군 ${controlNames}의 제어가 적중했고 덫 설치 위치·발동 조건과 후속 거리가 맞는 경우 ${fact(hero,'W').name} 후속을 검토합니다. 명중만으로 덫 연계가 보장되지는 않습니다. ${threat} 대응이 남으면 혼자 덫을 설치하러 나가지 않고 ${fact(hero,'E').name}과 뒤쪽 공간을 남깁니다.`;
+                                                                                                                                                                                                          ^
+
+TypeError: Cannot read properties of undefined (reading 'name')
+    at kitAction (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:192:203)
+    at Object.analyze (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:274:297)
+    at [eval]:10:267
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_subordinate_means_cannot_override_primary_wave_goal (tests_pregame.test_loading_wave.LoadingWaveTests.test_subordinate_means_cannot_override_primary_wave_goal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_wave.py", line 47, in test_subordinate_means_cannot_override_primary_wave_goal
+    self.run_node(self.prefix+"""
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_strategy.py", line 16, in run_node
+    self.assertEqual(result.returncode,0,result.stderr)
+AssertionError: 1 != 0 : node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: wave compatibility gate missing
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at [eval]:10:197
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.875s
+
+FAILED (failures=2)

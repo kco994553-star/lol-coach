@@ -9,9 +9,11 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = {
+    'dashboard.html':'index.html','dashboard.js':'dashboard.js','dashboard.css':'dashboard.css','pro-dashboard.json':'pro-dashboard.json',
+    'loading-wave.js':'loading-wave.js','loading-wave-view.js':'loading-wave-view.js',
     'loading-exploration.js':'loading-exploration.js','loading-interactive.js':'loading-interactive.js',
     'skill-data.js':'skill-data.js','skill-display.js':'skill-display.js',
-    'loading.html':'index.html', 'loading.js':'loading.js',
+    'loading.html':'loading.html', 'loading.js':'loading.js',
     'loading.css':'loading.css', 'loading-engine.js':'loading-engine.js',
     'loading-map.js':'loading-map.js', 'loading-data.json':'loading-data.json',
     'pregame-icon.svg':'pregame-icon.svg',
@@ -33,7 +35,10 @@ def build(output):
         p=ROOT/'web_r4'/source
         if p.is_symlink() or not p.is_file():raise ValueError('PUBLIC_SOURCE_NOT_REGULAR')
         target=output/destination;target.parent.mkdir(parents=True,exist_ok=True)
-        shutil.copyfile(p,target);hashes[destination]=hashlib.sha256(target.read_bytes()).hexdigest()
+        shutil.copyfile(p,target)
+        if source=='dashboard.html':
+            target.write_text(target.read_text().replace('data-account-backend="PC_LOOPBACK"','data-account-backend="PUBLIC_STATIC"'))
+        hashes[destination]=hashlib.sha256(target.read_bytes()).hexdigest()
     commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     manifest=dict(format='lol-coach-loading-public-export-v1',source_commit=commit,
         built_at=datetime.now(timezone.utc).isoformat(),sha256=hashes,
