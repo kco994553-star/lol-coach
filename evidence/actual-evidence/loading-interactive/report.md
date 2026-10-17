@@ -88,3 +88,7 @@ functionalresults; tacticsremainhypotheses, realcoachingN0,30seccomprehensionunm
 
 Patch gate reuses existing SOURCE_MAJOR_MATCH(first two segments); full version pair stays
 visible. DataDragon revision/hotfix equivalence is not independently established.
+
+## Per-transition feedback and final public confirmation
+
+PR62 adds an unchanged-action explanation for BALANCED↔OPPORTUNITY under positive assumptions; it changes no actual selection/feasibility/cost/evidence rules. Required and post-main three jobs each passed exact-source/fresh-browser checks at main8acd8df. Native Pages39017394734 and public29 hashes passed; actual HTTPS1440/390 browser verifies both unchanged preference directions, changed action IDs, costs, unknown gates and synchronized card/SVG/zoom. Screens and exact receipts in publication-feedback/. Prior publication/ and failures are preserved. These are functional results only, strategy remains a hypothesis, comprehension unmeasured and coaching N=0.

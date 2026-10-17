@@ -1,3 +1,72 @@
+된 것: 공개 웹에서 성향 → 미래 조건 → 행동·비용 비교 → 설명·미니맵 연결을 사용할 수 있습니다.
+된 것: 같은 행동을 유지하는 성향 전환의 이유도 PC·모바일 실제 화면에서 확인했습니다.
+검증: PR62 필수·병합 후 각 3개 검사와 실제 Pages 배포 성공, 공개 29파일 일치를 확인했습니다.
+한계: 새 비교·지도는 대표 바텀 Lv2에 한정하며, 전략은 가설·30초 이해 미측정·실전 코칭 N=0입니다.
+보존: Windows BLOCKED_EXTERNAL·질문 3개·영상 3/3과 기존 이력 유지, 추가 외부 근거 호출·사용자 할 일 없음입니다.
+
+# Interactive loading final public verification — 2026-10-17
+
+URL: https://kco994553-star.github.io/lol-coach/ . Manual 10 picks or example1 → 이번 판 방향 보기
+→ Lv2 → 후속 가능 가정 예시 → preference / one binding condition → compare actions and costs
+→ numbered card/map/zoom → each Why. All assumptions are future scenarios, never observations.
+Status page is still a dated snapshot, not a live monitor.
+
+Same example: Ornn/Sejuani/Ahri/Caitlyn/Lux vs Fiora/LeeSin/Zed/Kaisa/Nautilus, Caitlyn BOTTOM,
+input16.20 / source16.20.1 (inherited first-two-segment gate; hotfix equivalence unverified).
+Positive binding/follow-up/exit assumptions: LOSS_LIMIT selects RECEIVE_WITH_LUX; BALANCED
+and OPPORTUNITY select SHORT_FOLLOW. BALANCED↔OPPORTUNITY keeps the same action and explicitly
+explains why; no forced artificial difference. Binding-only MISS removes SHORT_FOLLOW and
+selects RECEIVE_WITH_LUX. Unknown exit prevents confirmed receiving/attack and selects
+PREPARE_WINDOW. Costs include lost CS/pressure/opportunity/time as well as trap/resources
+and forward exposure. No arbitrary risk, advantage, win or optimality scores.
+
+Input v2/preferences, future assumptions, result and view selection stay separate. Legacy
+input defaults BALANCED. Dirty picks hide/destroy stale results/map/zoom. Lane six-period
+selection/full table/Why, operations/fight quick views and old six scenes remain. Only exact
+Caitlyn/Lux vs Kaisa/Nautilus assigned Lv2 with required facts/patch receives new candidate
+comparison and dedicated illustrative map; other cases explain unsupported comparison/map.
+No new champion, scene, broad rewrite, live-feed or R3 synthetic production adapter.
+Official owner/name(key) remains, including active/zoom actions. Map has allied portraits
+only; unknown enemies are not positioned. Native card↔keyboard/touch SVG↔zoom share steps;
+200% zoom contains readable action text. No safe-route or exact-range claims.
+
+PR62 head72f02e759cd832db893ee101eb45925b5518a4b3, tested mergec7ecbed169043fb8e3f76e28ca3560d8a3c1a3c5,
+actual main8acd8dfee2ccbdc1d5aacf2460dca94468221530 share treee5effc633b68ae3aa430db7d5053621c36e13385.
+Required39017236074/39017236094 and post-main39017316348/39017316351: all three required jobs
+SUCCESS with exact source and fresh loading browser. Eight affected unit checks; prior
+45 feature / 26 display checks reused, overlapping counts are not coaching samples.
+Separate focused code review: no important findings. Existing failed/RED evidence retained.
+
+Pages artifactca85725e1ef6205f8f9ca1f5977ad2ce93fb6894, tree20b3f56e2ed98b0e3fa090010b174b6d1d9b20d1,
+native run39017394734 SUCCESS. All 29 public files + root/build-info/.nojekyll exact. Actual
+HTTPS Chromium 1440/390 connected flow PASS, including positive same-action feedback,
+condition gates/costs/Why/keyboard/touch/map/zoom/stale-input hiding; JS/HTTP errors0,
+local-PC/provider requests0, TLS retained. New receipts and six screenshots are in
+ evidence/actual-evidence/loading-interactive/publication-feedback/ . Previous 4e373bbd
+publication receipts remain untouched in publication/.
+
+This final follow-up contains results/Handoff/source seal only; 29 product files are identical
+to actually published main8acd8df. Its own future CI/merge is not forecast; common execution
+claim and external final receipt will record actual final main after normal merge/post-main.
+
+Original advice7/AUTO30/HOLD20/USER0/Frozen350/official865/raw quotes/holds/failures and Windows
+launcher/manual fallback preserved. New tactics remain DESIGN_HYPOTHESIS; real coaching N=0,
+accuracy=null, 30-second comprehension NOT_MEASURED, Windows LCU BLOCKED_EXTERNAL.
+Extra text/video/game/asset/paid calls0; Oct17 video3/3 unchanged. Evidence questions3 and
+Gemini diagnosis stay separate with existing free/shared ledger/full-original charges,
+no refund/unchanged retry; next eligible Oct18 stage3clip → separately reviewed required-CI
+publication → stage4JSON, then normal1/day. Existing schedule unchanged; no new schedule or
+actual scheduled-execution claim. No user collection/full review or reapproval burden.
+
+No READY implementation remains within this bounded flow. Next P0 is question-matched
+lecture evidence and independent predecision/real-play evaluation when access/quota permits;
+new tactic/champion/period comparison requires its own conditions, costs, map rules and
+source review. Do not automatically expand the remaining23 rewrites. Rollback to previous
+verified Pages34d141fa for feedback only, or096234e8 for pre-interactive; revert additive
+input/modules/UI binding if needed, preserve knowledge/ledger/history.
+
+---
+
 보완: 같은 지원 조건에서 균형↔기회추구가 같은 행동을 고를 때도 같은선택 이유를 표시합니다.
 유지: 행동ID·실행게이트·비용·근거 수준은 바꾸지 않습니다. 기존 공개기능/검증/배포 증거는 보존합니다.
 확인: 전환별 같은선택 단위검사 RED→GREEN, 새 브라우저 반례를 필수CI에 연결했습니다.
