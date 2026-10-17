@@ -83,22 +83,38 @@
     ['ALL', '1', '2', '3'].forEach(step => { const button = node('button', '', step === 'ALL' ? '전체' : step); button.type = 'button'; button.dataset.mapStep = step; button.setAttribute('aria-pressed', 'false'); button.setAttribute('aria-label', step === 'ALL' ? '전체 단계 표시' : step + '단계만 표시'); button.addEventListener('click', () => select(step)); wrap.append(button); });
     return wrap;
   }
-  function create(scenario, catalog, input) {
-    const options = { champions: [...input.allies, ...input.enemies].map(pick => pick.champion), own: input.own_champion, owner: scenario.id ? input.own_champion : undefined, aliases: scenario.id && input.own_champion === 'Caitlyn' ? [{ text: '덫', champion: 'Caitlyn', slot: 'W' }, { text: '투망', champion: 'Caitlyn', slot: 'E' }] : [] };
+  function create(scenario, catalog, input, interaction = {}) {
+    const options = { champions: [...input.allies, ...input.enemies].map(pick => pick.champion), own: input.own_champion, owner: scenario.id ? input.own_champion : undefined, aliases: interaction.skillAliases || (scenario.id && input.own_champion === 'Caitlyn' ? [{ text: '덫', champion: 'Caitlyn', slot: 'W' }, { text: '투망', champion: 'Caitlyn', slot: 'E' }] : []) };
     const wrap = node('div', 'scenario-grid'), left = node('div', 'scenario-map-column'), right = node('div', 'scenario-steps-column');
     const heading = node('div', 'map-header'); heading.append(node('h4', '', '움직임 지도'));
     const zoom = node('button', '', '⤢ 크게 보기'); zoom.type = 'button'; heading.append(zoom); left.append(heading);
     const prefix = 'loading-map-' + (++sequence), map = draw(scenario.map || {}, catalog, input, prefix, options);
-    let selected = root.matchMedia('(max-width: 560px)').matches ? '1' : 'ALL';
+    let selected = interaction.selectedStep || (root.matchMedia('(max-width: 560px)').matches ? '1' : 'ALL');
     const steps = node('ol', 'scenario-steps');
     const items = scenario.plan && scenario.plan.steps || [];
+    const stepTexts = new Map();
     const select = step => {
       selected = step;
+      if (interaction.onSelect) interaction.onSelect(step);
+      [map, activeZoom && activeZoom.owner === prefix ? activeZoom.map : null].filter(Boolean).forEach(view=>view.querySelectorAll('[data-map-action]').forEach(marker=>marker.setAttribute('aria-pressed',String(marker.dataset.mapAction===step))));
       map.dataset.activeStep = step;
       [control, activeZoom && activeZoom.owner === prefix ? activeZoom.controls : null].filter(Boolean).forEach(group => group.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.mapStep === step))));
-      if (activeZoom && activeZoom.owner === prefix) activeZoom.map.dataset.activeStep = step;
+      if (activeZoom && activeZoom.owner === prefix) {
+        activeZoom.map.dataset.activeStep = step;
+        const selectedCopy = document.getElementById('zoom-selected-action');
+        if (selectedCopy) selectedCopy.textContent = step === 'ALL' ? '전체 단계 · 번호를 선택해 해당 행동을 읽어보세요.' : stepTexts.get(step) || '해당 단계 설명 미확인';
+      }
       steps.querySelectorAll('li').forEach(item => { const match = item.dataset.step === step; item.classList.toggle('is-selected', match); item.querySelector('button').setAttribute('aria-pressed', String(match)); });
     };
+    const wire = view => {
+      view.setAttribute('role','group');
+      view.querySelectorAll('.map-step').forEach(group=>{
+        group.dataset.mapAction=group.dataset.step;group.setAttribute('role','button');group.setAttribute('tabindex','0');group.setAttribute('aria-label',group.dataset.step+'단계 행동 보기');
+        group.addEventListener('click',()=>select(group.dataset.step));
+        group.addEventListener('keydown',event=>{if(['Enter',' '].includes(event.key)){event.preventDefault();select(group.dataset.step);}});
+      });
+    };
+    wire(map);
     const control = controls(select); left.append(control);
     const frame = node('div', 'map-frame'); frame.append(map); left.append(frame);
     const legend = node('div', 'map-legend'); legend.append(node('span', 'gold', '● 내 시작 예시'), node('span', 'blue', '◌ 목표 / 이동'), node('span', 'gold', '⇢ 압박'), node('span', 'purple', '⇢ 후퇴')); left.append(legend, node('p', 'map-caption', scenario.map && scenario.map.caption || '설명용 예시 · 실제 위치 추적 없음', options), node('p', 'map-note', '화살표는 행동 방향입니다. 안전한 경로·정확한 기술 사거리·실제 적 위치를 나타내지 않습니다.'));
@@ -110,6 +126,7 @@
       const methodKey = preset && preset.input.decision === 'RECALL' ? 'RECALL' : scenario.plan && scenario.plan.id;
       const method = preset && catalog.directions.methods[input.own_champion] && catalog.directions.methods[input.own_champion][methodKey];
       const bindings = number === 2 && typeof method === 'string' && value === method ? catalog.champions[input.own_champion].facts.filter(fact => method.includes(fact.name)).map(fact => ({ text: fact.name, champion: input.own_champion, slot: fact.slot })) : [];
+      stepTexts.set(String(number), display(value, { ...options, bindings }));
       const item = node('li'); item.dataset.step = number; const button = node('button'); button.type = 'button';
       button.append(node('span', '', number), node('span', '', value, { ...options, bindings }));
       button.addEventListener('click', () => select(String(number))); item.append(button); steps.append(item);
@@ -119,6 +136,7 @@
     zoom.addEventListener('click', () => {
       const dialog = document.getElementById('loading-map-dialog');
       const zoomMap = draw(scenario.map || {}, catalog, input, prefix + '-zoom-' + (++sequence), options), zoomControls = controls(select);
+      wire(zoomMap);
       activeZoom = { owner: prefix, map: zoomMap, controls: zoomControls };
       document.getElementById('zoom-map').replaceChildren(zoomMap); document.getElementById('zoom-step-controls').replaceChildren(zoomControls);
       document.getElementById('map-scale').value = '100'; document.getElementById('map-scale-value').textContent = '100%';
