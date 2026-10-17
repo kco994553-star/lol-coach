@@ -1,3 +1,66 @@
+된 것: 라인전·정글개입·운영·한타의 연결 대상을 분리하고 입력 순서에 따른 강조 변화를 수정했습니다.
+된 것: 케이틀린·럭스 대 카이사·노틸러스의 여섯 구간을 조건·행동·상대 대응·대안·중단 조건으로 구체화했습니다.
+확인: 문맥 반례·보관 원문 검토·실제 PC/모바일 브라우저는 통과했고 필수CI/게시 결과는 별도게이트입니다.
+미확인: 매치업 우열·피해량·최적 구매·신규전략 실전검증 N=0·실제Windows는 미확인으로 유지합니다.
+유지: 기존10픽웹/6장면·조언7/AUTO30/HOLD20/USER0/Frozen350·영상3/3·보류/실패/Windows이력을 보존합니다.
+
+# Loading context / representative duo quality repair — 2026-10-17
+
+Authority USER_LOADING_CONTEXT_QUALITY_2026-10-17; intake mainb9cb5ed60e8cfefb743da57cdcc34d8cdca3111f,
+branchwork/loading-context-20261017, sharedtokenmain-20261017-loading-context. Latestmain,
+AGENTS/handoff/openPR/activewriters checked; priorvalidcompleted evidence reused.
+
+Rootcause reproduced: globalpartnerstring fed laneLV2/LV6/interactions; source-orderfirst2
+and equal-priorityties changed strategic emphasis on arraypermutation. Fixedbycontextselection,
+fulltypedcandidate/reason preservation, deterministicdisplayonly order (notimportance).
+Contract: contracts/loading-context-v2.md. Exactbefore/aftercoretext+sixmilestonerows,
+actorreasons, sourcebounds, counterexamples and screenshots: evidence/actual-evidence/
+loading-context/report.md; before.json/after.json/counterexamples.json retain actual outputs.
+
+Bottomlane binds assignedpeer/opponents; sololane binds counterpart; jungleintervention
+is separate NOT_OBSERVED future condition. Operations and teamfight use separatefunctional
+candidates with reasons/unknowns. No score/weight/top-kimportance. KnownenemySUP survives
+unknowncarry; exactKaisaBOTTOM/NautSUP required for representative template. Unknown/misassigned
+roles never silently inherit4champ scenario. Currentpositions/arrival/learnedskills unobserved.
+Caitlynrecallmaps bind only lanepeer; existingFiora/Ornn maps use conditionaloperationsactors.
+
+Basechampion/positionrole and proposedrole separated. Control/cover changes alter actual
+conditions/actions; no verifiedcontrol means no concretecontrol→trapfollow action. Basekept
+when insufficient; no claim missingclassification means missingability. Sixdistinctduo plans:
+receivewithspace / bindthenconditionalfollow / saveescape+cover / respecttargetedCC+Plasma /
+actualpurchaseandreturncomparison / coreitemdoesnotgrantengagepermission. Everyrowhas skill
+assumptions, opponentreply, concretefallback, switchingconditions and fact/hypothesis boundary.
+
+Retainedsource-only augmentation: original865facts/353recallrefs/6scenes identical byprojection
+hash; added5separatefacts (KaisaR/LuxW/Etooltips+boots/longswordproperties), sourceURL/patch/hash/
+locator bound. Templatevaluesnotcomputed; no optimalbuild/damage/recommendedprice inference.
+No newroster/champion/screen/assetdownload/source/game/video/provider/paidcall. Sourcequeues/
+quotas/decisions unchanged. Read-only mechanism review and fresh implementation/source review
+resolved3P2; summarylastwording has separate affectedreview. Nrealcoaching0/accuracynull.
+
+Changed-only verification:9semanticcontext cases (+25permutations),5affectedoldengine,9catalog,
+HTTP/export2 andboundary2; actualChromium PC/manual/import/publicsubpath/390px/maps+context
+counterexamples PASS. Separate reviewer checked240permutations; not an accuracy estimate.
+Finalbrowser evidence loading/browser-20261017T051720644389Z; priorintermediate runs preserved.
+Original fullcollection/Frozen/oldunaffectedbrowser suites are reused, not rerun. This record
+doesnot predict requiredCI/normalmerge/postmain/Pages success; currentclaim owns observed
+finalpublication. ExistingpublicURL retained: https://kco994553-star.github.io/lol-coach/ .
+
+Nextsource questions: loading-context/evidence-questions.json, L1position/wave, L2trapfailure/
+follow conditions, L3-5escape/cover, L6Plasma+trackingCC, actualfirstbuy and core/evolution
+planchanges. Prefer registeredBOTTOM/SUPPORT explanation/subtitle segments including
+땅우양/정뚱땡/이브; metadata/registeredgrade not adoptedstatement. Usernamed unverifiedsource
+identity/segment stayspending; POV remains visual-only, notQ19. No matchinglecture interval
+adopted. Do not ask user for collection/fullreview.
+
+Oct17VIDEO3/3/extraTEXT0/VIDEO0/Riot0/paid0. ExistingOct18③→separatereview/gatedpublish→④
+unchanged, thennormal1/day/sharedledger/full-originaldurationcharges/no unchangedretry.
+Existingautomations/18KSTschedule unchanged. Acceptedexpert/confirmedgamelinks/adequate
+predecision/evaluatedscenes0. WindowsLCU BLOCKED_EXTERNAL; Start-LoL-Coach.cmd and manual
+fallback unchanged. No23rewriteexpansion. NextP0finishthispublicationthen gatedsourceevidence.
+
+---
+
 된 것: 모바일·PC 공개 주소에서 실제10픽→이번 판 요약→라인전·운영·한타·미니맵 상세를 사용할 수 있습니다.
 된 것: 경제 입력 없이 한국어·영어10픽을 직접 넣어 공개 모바일 브라우저에서 결과와 확대를 확인했습니다.
 확인: PR52 필수3개·병합후3개·Pages배포 성공, 공개25파일 해시가 검증본과 일치합니다.

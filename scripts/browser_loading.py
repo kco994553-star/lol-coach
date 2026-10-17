@@ -47,6 +47,38 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
   assert.equal(await page.locator('[data-team="ENEMY"][data-entity]').count(),0);
   await capture('#loading-summary','desktop-summary.png');await capture('#loading-lane','desktop-lane.png');await capture('#teamfight','desktop-teamfight.png');
   snapshots.push({input:'example-0 manual Korean/English',summary:original,lane_rows:await page.locator('#lane-table tbody').innerText()});
+  // Context meaning fixed in contract before implementation, exercised through real controls.
+  const baseLane=await page.locator('#lane-table tbody').innerText();
+  const level2=await page.locator('[data-milestone="LEVEL2"]').innerText();
+  assert.match(level2,/럭스 Q/);assert(!/오른|세주아니/.test(baseLane));
+  assert.match(baseLane,/상대 대응 가정/);assert.match(baseLane,/그때의 대안/);assert.match(baseLane,/실제 상태 미관측/);
+  assert.match(await page.locator('#fight-content').innerText(),/기본 유형·역할/);
+  const beforeMap=await page.locator('#scenario-content [data-entity] title').allTextContents();
+  assert(beforeMap.every(t=>!/오른|세주아니/.test(t)));
+  await page.locator('#input-panel').evaluate(e=>e.open=true);
+  for(let t=0;t<2;t++)for(let i=0;i<5;i++){
+    const team=t?'ENEMY':'ALLY',from=4-i;await page.locator('#pick-'+team+'-'+i).fill(teams[t][from]);await page.locator('#position-'+team+'-'+i).selectOption(roles[from]);
+  }
+  await page.locator('#own-champion').selectOption('Caitlyn');await page.locator('#own-position').selectOption('BOTTOM');await analyze();
+  assert.equal(await summary(),original);assert.equal(await page.locator('#lane-table tbody').innerText(),baseLane);
+  await page.locator('#input-panel').evaluate(e=>e.open=true);await page.locator('#pick-ALLY-0').fill('Malphite');await analyze();
+  assert.equal(await page.locator('#lane-table tbody').innerText(),baseLane);
+  assert.match(await page.locator('#fight-content').innerText(),/말파이트/);
+  await page.locator('#input-panel').evaluate(e=>e.open=true);await page.locator('#pick-ALLY-4').fill('Janna');await analyze();
+  assert(!/빛의 속박/.test(await page.locator('#lane-table tbody').innerText()));assert.match(await page.locator('#lane-table tbody').innerText(),/잔나/);
+  await example(0);await page.locator('#input-panel').evaluate(e=>e.open=true);await page.locator('#pick-ENEMY-4').fill('Lulu');await analyze();
+  assert(!/노틸러스|닻줄 견인/.test(await page.locator('#lane-table tbody').innerText()));assert.match(await page.locator('#lane-table tbody').innerText(),/룰루/);
+  await example(0);await page.locator('#input-panel').evaluate(e=>e.open=true);await page.locator('#position-ENEMY-4').selectOption('');await analyze();
+  assert.match(await page.locator('#lane-context').innerText(),/배치 미확인/);assert(!/럭스 Q·내 W를 배운 가정/.test(await page.locator('#lane-table tbody').innerText()));
+  await example(0);await page.locator('#input-panel').evaluate(e=>e.open=true);await page.locator('#position-ENEMY-3').selectOption('');await analyze();
+  assert.match(await page.locator('#lane-context').innerText(),/노틸러스/);assert.match(await page.locator('#lane-opponent-copy').innerText(),/미확인/);
+  await example(0);await page.locator('#input-panel').evaluate(e=>e.open=true);await page.locator('#position-ENEMY-3').selectOption('SUPPORT');await page.locator('#position-ENEMY-4').selectOption('BOTTOM');await analyze();
+  assert.match(await page.locator('#lane-opponent-copy').innerText(),/노틸러스/);assert(!/럭스 Q·내 W를 배운 가정/.test(await page.locator('#lane-table tbody').innerText()));
+  await example(0);await page.locator('#input-panel').evaluate(e=>e.open=true);
+  for(const [i,id] of [[0,'Gangplank'],[1,'Kindred'],[2,'Hwei'],[4,'Teemo']])await page.locator('#pick-ALLY-'+i).fill(id);
+  await analyze();const unknownControl=await page.locator('#fight-content .scenario-steps [data-step="2"]').innerText();
+  assert.match(unknownControl,/제어 연결은 미확인/);assert.match(unknownControl,/90구경 투망/);assert(!unknownControl.includes('제어가 적중'));
+  await example(0);
   await page.locator('.detail-nav a[href="#loading-lane"]').click();assert.equal(await page.evaluate(()=>location.hash),'#loading-lane');
   await page.locator('#input-panel').evaluate(e=>e.open=true);await page.locator('#own-champion').selectOption('Ornn');await page.locator('#own-position').selectOption('TOP');await analyze();
   assert.notEqual(await summary(),original);assert.match(await page.locator('#my-role').innerText(),/오른/);assert.match(await page.locator('#fight-content').innerText(),/화염 돌진/);
@@ -87,7 +119,7 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
   await page.locator('.site-header nav a[href="./directions.html"]').click();await page.waitForSelector('#result:visible');
   await page.goto(process.env.LOADING_WEB+'/lol-coach/status.html');await page.waitForSelector('#status-items section');
   assert.equal(errors.length,0,JSON.stringify(errors));assert.equal(bad.length,0,JSON.stringify(bad));
-  process.stdout.write(JSON.stringify({passed:true,snapshots,checks:['true manual ten picks Korean/English','no economy required','actual composition and own role counterfactual','six milestone table','relevant legacy scenes and hash selection','unknown opponent and patch mismatch','invalid input hides stale report','explicit authenticated sanitized PC import and manual fallback','public repository subpath navigation','desktop1440/mobile390 no overflow','card/main/zoom step synchronization','mobile200percent zoom','public status'],browser_errors:errors,http_errors:bad,provider_requests:0,real_windows_connection:'BLOCKED_EXTERNAL',real_coaching_n:0,coaching_accuracy:null})+'\n');
+  process.stdout.write(JSON.stringify({passed:true,snapshots,checks:['context lane/jungle/fight actor separation','25 engine permutations and real form array reversal','distant ally preserves lane; own/enemy support changes mechanisms','six hypothetical decisions with reply/alternative and source boundary','base vs proposed role','missing support assignment does not fabricate duo','known support survives missing carry; swapped enemy roles disable duo template','unbound allied control removes concrete trap-follow action','true manual ten picks Korean/English','no economy required','actual composition and own role counterfactual','six milestone table','relevant legacy scenes and hash selection','unknown opponent and patch mismatch','invalid input hides stale report','explicit authenticated sanitized PC import and manual fallback','public repository subpath navigation','desktop1440/mobile390 no overflow','card/main/zoom step synchronization','mobile200percent zoom','public status'],browser_errors:errors,http_errors:bad,provider_requests:0,real_windows_connection:'BLOCKED_EXTERNAL',real_coaching_n:0,coaching_accuracy:null})+'\n');
  }finally{await browser.close();}
 })().catch(e=>{process.stderr.write(String(e.stack||e));process.exitCode=1;});
 '''

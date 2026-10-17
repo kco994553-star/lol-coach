@@ -1,0 +1,4460 @@
+{
+  "schema_version": "lol-coach-loading-report-v2",
+  "input": {
+    "allies": [
+      {
+        "champion": "Ornn",
+        "position": "TOP"
+      },
+      {
+        "champion": "Sejuani",
+        "position": "JUNGLE"
+      },
+      {
+        "champion": "Ahri",
+        "position": "MID"
+      },
+      {
+        "champion": "Caitlyn",
+        "position": "BOTTOM"
+      },
+      {
+        "champion": "Lux",
+        "position": "SUPPORT"
+      }
+    ],
+    "enemies": [
+      {
+        "champion": "Fiora",
+        "position": "TOP"
+      },
+      {
+        "champion": "LeeSin",
+        "position": "JUNGLE"
+      },
+      {
+        "champion": "Zed",
+        "position": "MID"
+      },
+      {
+        "champion": "Kaisa",
+        "position": "BOTTOM"
+      },
+      {
+        "champion": "Nautilus",
+        "position": "SUPPORT"
+      }
+    ],
+    "own_champion": "Caitlyn",
+    "own_position": "BOTTOM",
+    "side": "BLUE",
+    "patch": "16.20",
+    "opponent_mode": "ASSIGNED",
+    "lane_opponent": null
+  },
+  "summary": {
+    "our_plan": "우리 조합의 보호·전방 연결 후보·제어 연결 후보를 연결합니다. 보호 연결을 남긴 제어 후속 공격은 보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우에 실행하는 기본 계획입니다.",
+    "enemy_plan": "상대는 접근·고립 대상 위협·보호·전방 연결 후보·제어 연결·견제·공간을 연결할 가능성이 있습니다. 유형별 후보이며 실제 의도·위치·가용성은 미확인입니다.",
+    "collision": "우리의 제어·보호·후속 거리가 상대의 접근·제어·견제에 끊기는지가 핵심입니다. 라인전 상대와 한타 후보는 상세에서 구분합니다.",
+    "my_role": "바텀 케이틀린: 기본 아군 제어 뒤 연결되는 지속 공격 / 이번 계획 보호 연결을 남긴 제어 후속 공격.",
+    "lane_key": "럭스 Q가 적중하고 덫 발동·후속 거리까지 맞으면 케이틀린 W 후속을 검토합니다. 노틸러스 Q/기본 공격 속박과 카이사 후속이 남으면 짧게 끝내고 럭스 쪽 수급선으로 돌아옵니다.",
+    "fight_key": "보호 후보 럭스가 실제로 닿는 거리에서, 제어 후보 아리·럭스·오른·세주아니의 적중 뒤 접근 가능한 대상을 공격합니다. 상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김. 연결이 끊기면 추격 대신 공격 대상·위치를 바꿉니다.",
+    "remember": [
+      "럭스 Q 적중만으로 확정 덫 연계는 아님; 노틸러스와 카이사의 남은 대응을 함께 보기",
+      "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+      "보이지 않는 적·실제 합류·미니언 차단 효과를 임의로 확정하지 않기"
+    ],
+    "uncertainties": [
+      "스킬 습득·가용성·체력·웨이브·현재 위치/실제 합류는 로딩에서 미관측",
+      "요약은 유형별 계획입니다. 상세의 다른 후보 생략을 위협 부재나 중요도 순위로 읽지 마세요."
+    ]
+  },
+  "composition": {
+    "allies": {
+      "signals": [
+        {
+          "champion": "Ahri",
+          "name": "아리",
+          "kind": "ASSASSIN",
+          "means": "혼령 질주",
+          "evidence_ids": [
+            "official:Ahri:R"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Ahri"
+          ]
+        },
+        {
+          "champion": "Ahri",
+          "name": "아리",
+          "kind": "PICK",
+          "means": "매혹",
+          "evidence_ids": [
+            "official:Ahri:E"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Ahri"
+          ]
+        },
+        {
+          "champion": "Caitlyn",
+          "name": "케이틀린",
+          "kind": "PICK",
+          "means": "요들잡이 덫",
+          "evidence_ids": [
+            "official:Caitlyn:W"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Caitlyn"
+          ]
+        },
+        {
+          "champion": "Caitlyn",
+          "name": "케이틀린",
+          "kind": "PRESSURE",
+          "means": "필트오버 피스메이커",
+          "evidence_ids": [
+            "official:Caitlyn:Q"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Caitlyn"
+          ]
+        },
+        {
+          "champion": "Lux",
+          "name": "럭스",
+          "kind": "COVER",
+          "means": "프리즘 보호막",
+          "evidence_ids": [
+            "official:Lux:W"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Lux"
+          ]
+        },
+        {
+          "champion": "Lux",
+          "name": "럭스",
+          "kind": "PICK",
+          "means": "빛의 속박",
+          "evidence_ids": [
+            "official:Lux:Q"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Lux"
+          ]
+        },
+        {
+          "champion": "Lux",
+          "name": "럭스",
+          "kind": "PRESSURE",
+          "means": "광휘의 특이점",
+          "evidence_ids": [
+            "official:Lux:E"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Lux"
+          ]
+        },
+        {
+          "champion": "Ornn",
+          "name": "오른",
+          "kind": "ACCESS",
+          "means": "화염 돌진",
+          "evidence_ids": [
+            "official:Ornn:E"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Ornn"
+          ]
+        },
+        {
+          "champion": "Ornn",
+          "name": "오른",
+          "kind": "FRONT",
+          "means": "전방 역할 후보(탐색 분류·특정 기술 효과 미확인)",
+          "evidence_ids": [],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Ornn"
+          ]
+        },
+        {
+          "champion": "Sejuani",
+          "name": "세주아니",
+          "kind": "ACCESS",
+          "means": "혹한의 맹습",
+          "evidence_ids": [
+            "official:Sejuani:Q"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Sejuani"
+          ]
+        },
+        {
+          "champion": "Sejuani",
+          "name": "세주아니",
+          "kind": "FRONT",
+          "means": "전방 역할 후보(탐색 분류·특정 기술 효과 미확인)",
+          "evidence_ids": [],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Sejuani"
+          ]
+        },
+        {
+          "champion": "Sejuani",
+          "name": "세주아니",
+          "kind": "PICK",
+          "means": "빙하 감옥",
+          "evidence_ids": [
+            "official:Sejuani:R"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Sejuani"
+          ]
+        }
+      ],
+      "strengths": [
+        "제어 연결 후보 아리·케이틀린·럭스·세주아니: 아리의 매혹 / 케이틀린의 요들잡이 덫 / 럭스의 빛의 속박 / 세주아니의 빙하 감옥. 습득·가용성·발동 조건과 후속 거리가 맞는 경우의 탐색 해석입니다.",
+        "접근 후보 오른·세주아니: 오른의 화염 돌진 / 세주아니의 혹한의 맹습. 습득·가용성·발동 조건과 후속 거리가 맞는 경우의 탐색 해석입니다.",
+        "견제·공간 후보 케이틀린·럭스: 케이틀린의 필트오버 피스메이커 / 럭스의 광휘의 특이점. 습득·가용성·발동 조건과 후속 거리가 맞는 경우의 탐색 해석입니다.",
+        "보호 후보 럭스: 럭스의 프리즘 보호막. 습득·가용성·발동 조건과 후속 거리가 맞는 경우의 탐색 해석입니다.",
+        "전방 연결 후보 후보 오른·세주아니: 오른의 전방 역할 후보(탐색 분류·특정 기술 효과 미확인) / 세주아니의 전방 역할 후보(탐색 분류·특정 기술 효과 미확인). 습득·가용성·발동 조건과 후속 거리가 맞는 경우의 탐색 해석입니다."
+      ],
+      "weaknesses": [
+        "제어·보호 후보가 있어도 실제 습득·가용성과 아군 연결은 별도 조건입니다."
+      ],
+      "conditions": [
+        "이름의 표시 순서는 중요도 순위가 아닙니다. 알려진 유형별 후보를 모두 보존합니다.",
+        "픽만으로 현재 위치·합류·체력·기술 상태와 상대 의도를 알 수 없습니다."
+      ]
+    },
+    "enemies": {
+      "signals": [
+        {
+          "champion": "Fiora",
+          "name": "피오라",
+          "kind": "ACCESS",
+          "means": "찌르기",
+          "evidence_ids": [
+            "official:Fiora:Q"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Fiora"
+          ]
+        },
+        {
+          "champion": "Kaisa",
+          "name": "카이사",
+          "kind": "ACCESS",
+          "means": "사냥본능",
+          "evidence_ids": [
+            "official:Kaisa:R"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Kaisa"
+          ]
+        },
+        {
+          "champion": "Kaisa",
+          "name": "카이사",
+          "kind": "PRESSURE",
+          "means": "공허추적자",
+          "evidence_ids": [
+            "official:Kaisa:W"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Kaisa"
+          ]
+        },
+        {
+          "champion": "LeeSin",
+          "name": "리 신",
+          "kind": "ACCESS",
+          "means": "음파 / 공명의 일격",
+          "evidence_ids": [
+            "official:LeeSin:Q"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-LeeSin"
+          ]
+        },
+        {
+          "champion": "LeeSin",
+          "name": "리 신",
+          "kind": "COVER",
+          "means": "방호 / 강철의 의지",
+          "evidence_ids": [
+            "official:LeeSin:W"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-LeeSin"
+          ]
+        },
+        {
+          "champion": "Nautilus",
+          "name": "노틸러스",
+          "kind": "ACCESS",
+          "means": "닻줄 견인",
+          "evidence_ids": [
+            "official:Nautilus:Q"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Nautilus"
+          ]
+        },
+        {
+          "champion": "Nautilus",
+          "name": "노틸러스",
+          "kind": "FRONT",
+          "means": "전방 역할 후보(탐색 분류·특정 기술 효과 미확인)",
+          "evidence_ids": [],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Nautilus"
+          ]
+        },
+        {
+          "champion": "Nautilus",
+          "name": "노틸러스",
+          "kind": "PICK",
+          "means": "닻줄 견인",
+          "evidence_ids": [
+            "official:Nautilus:Q"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Nautilus"
+          ]
+        },
+        {
+          "champion": "Zed",
+          "name": "제드",
+          "kind": "ACCESS",
+          "means": "죽음의 표식",
+          "evidence_ids": [
+            "official:Zed:R"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Zed"
+          ]
+        },
+        {
+          "champion": "Zed",
+          "name": "제드",
+          "kind": "ASSASSIN",
+          "means": "죽음의 표식",
+          "evidence_ids": [
+            "official:Zed:R"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Zed"
+          ]
+        },
+        {
+          "champion": "Zed",
+          "name": "제드",
+          "kind": "PRESSURE",
+          "means": "예리한 표창",
+          "evidence_ids": [
+            "official:Zed:Q"
+          ],
+          "level": "EXISTING_RULE",
+          "review_state": "EXPLORATORY",
+          "condition": "배운 기술·가용성·발동/적중 조건·아군 연결을 확인한 경우에만",
+          "rule_ids": [
+            "Q05-P-Zed"
+          ]
+        }
+      ],
+      "strengths": [
+        "제어 연결 후보 노틸러스: 노틸러스의 닻줄 견인. 습득·가용성·발동 조건과 후속 거리가 맞는 경우의 탐색 해석입니다.",
+        "접근 후보 피오라·카이사·리 신·노틸러스·제드: 피오라의 찌르기 / 카이사의 사냥본능 / 리 신의 음파 / 공명의 일격 / 노틸러스의 닻줄 견인 / 제드의 죽음의 표식. 습득·가용성·발동 조건과 후속 거리가 맞는 경우의 탐색 해석입니다.",
+        "견제·공간 후보 카이사·제드: 카이사의 공허추적자 / 제드의 예리한 표창. 습득·가용성·발동 조건과 후속 거리가 맞는 경우의 탐색 해석입니다.",
+        "보호 후보 리 신: 리 신의 방호 / 강철의 의지. 습득·가용성·발동 조건과 후속 거리가 맞는 경우의 탐색 해석입니다.",
+        "전방 연결 후보 후보 노틸러스: 노틸러스의 전방 역할 후보(탐색 분류·특정 기술 효과 미확인). 습득·가용성·발동 조건과 후속 거리가 맞는 경우의 탐색 해석입니다."
+      ],
+      "weaknesses": [
+        "제어·보호 후보가 있어도 실제 습득·가용성과 아군 연결은 별도 조건입니다."
+      ],
+      "conditions": [
+        "이름의 표시 순서는 중요도 순위가 아닙니다. 알려진 유형별 후보를 모두 보존합니다.",
+        "픽만으로 현재 위치·합류·체력·기술 상태와 상대 의도를 알 수 없습니다."
+      ]
+    }
+  },
+  "roles": {
+    "base": {
+      "id": "FOLLOW_DAMAGE",
+      "label": "아군 제어 뒤 연결되는 지속 공격",
+      "types": [
+        "Marksman"
+      ],
+      "scope": "챔피언·포지션의 기본 분류 · 전술 효과 미검증"
+    },
+    "proposed": {
+      "id": "CONTROL_WITH_COVER",
+      "label": "보호 연결을 남긴 제어 후속 공격",
+      "reasons": [
+        "제어 수단 후보: 아리 매혹 / 럭스 빛의 속박 / 오른 대장장이 신의 부름 / 세주아니 빙하 감옥",
+        "보호 수단 후보: 럭스 프리즘 보호막"
+      ],
+      "conditions": [
+        "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+        "상대의 접근·제어가 남아 있으면 공격 폭을 줄이고 접근 가능한 대상을 선택",
+        "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+      ],
+      "limits": [
+        "조합만으로 현재 보호/제어 가용성·교전 승리를 확인하지 않습니다.",
+        "기본 유형은 바뀌지 않으며 이번 계획은 설계 가설입니다."
+      ],
+      "action_ids": [
+        "FOLLOW_CONFIRMED_CONTROL",
+        "KEEP_COVER_CONNECTION",
+        "CHANGE_TARGET_IF_ACCESS_OPENS",
+        "RESPECT_CONFIRMED_ENTRY"
+      ]
+    },
+    "changed": true
+  },
+  "contexts": {
+    "lane": {
+      "kind": "DUO",
+      "opponent": {
+        "id": "Kaisa",
+        "name": "카이사",
+        "position": "BOTTOM"
+      },
+      "partners": [
+        {
+          "champion": "Lux",
+          "name": "럭스",
+          "context": "LANE",
+          "kinds": [
+            "PICK",
+            "PRESSURE",
+            "COVER"
+          ],
+          "means": "빛의 속박·광휘의 특이점·프리즘 보호막·광채·최후의 섬광",
+          "reasons": [
+            "입력한 서포터 배치가 내 바텀와 같은 바텀 라인인 경우의 동료. 다른 라인의 합류를 가정하지 않음.",
+            "기존 탐색 분류/기술별 기능 후보: 제어 연결·견제·공간·보호"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Lux:E",
+            "official:Lux:P",
+            "official:Lux:Q",
+            "official:Lux:R",
+            "official:Lux:W"
+          ],
+          "eligible": true
+        }
+      ],
+      "threats": [
+        {
+          "champion": "Kaisa",
+          "name": "카이사",
+          "context": "LANE",
+          "kinds": [
+            "ACCESS",
+            "PRESSURE"
+          ],
+          "means": "사냥본능·공허추적자·두 번째 피부·이케시아 폭우·고속 충전",
+          "reasons": [
+            "입력한 라인 배치 또는 직접 비교 대상으로 지정한 상대. 현재 같은 위치에 있다는 관측은 아님.",
+            "기존 탐색 분류/기술별 기능 후보: 접근·견제·공간"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Kaisa:E",
+            "official:Kaisa:P",
+            "official:Kaisa:Q",
+            "official:Kaisa:R",
+            "official:Kaisa:W"
+          ],
+          "eligible": true
+        },
+        {
+          "champion": "Nautilus",
+          "name": "노틸러스",
+          "context": "LANE",
+          "kinds": [
+            "PICK",
+            "ACCESS",
+            "FRONT"
+          ],
+          "means": "닻줄 견인·강력한 일격·타이탄의 분노·역조·폭뢰",
+          "reasons": [
+            "입력한 라인 배치 또는 직접 비교 대상으로 지정한 상대. 현재 같은 위치에 있다는 관측은 아님.",
+            "기존 탐색 분류/기술별 기능 후보: 제어 연결·접근·전방 연결 후보"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Nautilus:E",
+            "official:Nautilus:P",
+            "official:Nautilus:Q",
+            "official:Nautilus:R",
+            "official:Nautilus:W"
+          ],
+          "eligible": true
+        }
+      ],
+      "selection_note": "라인은 포지션/직접 지정으로만 연결합니다. 목록 정렬은 표시용이며 중요도 순위가 아닙니다.",
+      "limits": [
+        "로딩에서는 현재 위치·실제 합류·스킬 습득/가용성을 관측하지 않습니다."
+      ]
+    },
+    "jungle": {
+      "partners": [
+        {
+          "champion": "Sejuani",
+          "name": "세주아니",
+          "context": "JUNGLE_INTERVENTION",
+          "kinds": [
+            "PICK",
+            "ACCESS",
+            "FRONT"
+          ],
+          "means": "빙하 감옥·혹한의 맹습·혹한의 분노·혹한의 서릿발·만년 서리",
+          "reasons": [
+            "입력한 정글 배치의 개입 후보. 실제 위치·합류 시점은 관측하지 않았으며 기본 라인 인원에 합치지 않음.",
+            "기존 탐색 분류/기술별 기능 후보: 제어 연결·접근·전방 연결 후보"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Sejuani:E",
+            "official:Sejuani:P",
+            "official:Sejuani:Q",
+            "official:Sejuani:R",
+            "official:Sejuani:W"
+          ],
+          "eligible": true
+        }
+      ],
+      "threats": [
+        {
+          "champion": "LeeSin",
+          "name": "리 신",
+          "context": "JUNGLE_INTERVENTION",
+          "kinds": [
+            "ACCESS",
+            "COVER",
+            "PICK",
+            "PRESSURE"
+          ],
+          "means": "음파 / 공명의 일격·방호 / 강철의 의지·용의 분노·질풍격·폭풍/무력화",
+          "reasons": [
+            "입력한 정글 배치의 개입 후보. 실제 위치·합류 시점은 관측하지 않았으며 기본 라인 인원에 합치지 않음.",
+            "기존 탐색 분류/기술별 기능 후보: 접근·보호·제어 연결·견제·공간"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:LeeSin:E",
+            "official:LeeSin:P",
+            "official:LeeSin:Q",
+            "official:LeeSin:R",
+            "official:LeeSin:W"
+          ],
+          "eligible": true
+        }
+      ],
+      "conditions": [
+        "정글러 위치·실제 접근 경로와 라이너 자원이 확인된 경우에만 개입 장면을 별도로 비교",
+        "미확인 정글 위치를 안전이나 확정 갱으로 바꾸지 않기"
+      ],
+      "observation": "NOT_OBSERVED"
+    },
+    "operations": {
+      "partners": [
+        {
+          "champion": "Ahri",
+          "name": "아리",
+          "context": "OPERATIONS",
+          "kinds": [
+            "PICK",
+            "PRESSURE"
+          ],
+          "means": "매혹·현혹의 구슬",
+          "reasons": [
+            "웨이브·목표물·복귀 계획을 연결할 실제 아군 후보. 같은 위치/합류는 가정하지 않음.",
+            "기존 탐색 분류/기술별 기능 후보: 제어 연결·견제·공간"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Ahri:E",
+            "official:Ahri:Q"
+          ],
+          "eligible": true
+        },
+        {
+          "champion": "Lux",
+          "name": "럭스",
+          "context": "OPERATIONS",
+          "kinds": [
+            "PICK",
+            "PRESSURE",
+            "COVER"
+          ],
+          "means": "빛의 속박·광휘의 특이점·프리즘 보호막",
+          "reasons": [
+            "웨이브·목표물·복귀 계획을 연결할 실제 아군 후보. 같은 위치/합류는 가정하지 않음.",
+            "기존 탐색 분류/기술별 기능 후보: 제어 연결·견제·공간·보호"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Lux:E",
+            "official:Lux:Q",
+            "official:Lux:W"
+          ],
+          "eligible": true
+        },
+        {
+          "champion": "Ornn",
+          "name": "오른",
+          "context": "OPERATIONS",
+          "kinds": [
+            "FRONT",
+            "PICK",
+            "PRESSURE"
+          ],
+          "means": "대장장이 신의 부름·용암 균열",
+          "reasons": [
+            "웨이브·목표물·복귀 계획을 연결할 실제 아군 후보. 같은 위치/합류는 가정하지 않음.",
+            "기존 탐색 분류/기술별 기능 후보: 전방 연결 후보·제어 연결·견제·공간"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Ornn:Q",
+            "official:Ornn:R"
+          ],
+          "eligible": true
+        },
+        {
+          "champion": "Sejuani",
+          "name": "세주아니",
+          "context": "OPERATIONS",
+          "kinds": [
+            "PICK",
+            "FRONT"
+          ],
+          "means": "빙하 감옥",
+          "reasons": [
+            "웨이브·목표물·복귀 계획을 연결할 실제 아군 후보. 같은 위치/합류는 가정하지 않음.",
+            "기존 탐색 분류/기술별 기능 후보: 제어 연결·전방 연결 후보"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Sejuani:R"
+          ],
+          "eligible": true
+        }
+      ],
+      "threats": [
+        {
+          "champion": "Fiora",
+          "name": "피오라",
+          "context": "OPERATIONS",
+          "kinds": [
+            "ACCESS",
+            "PICK"
+          ],
+          "means": "찌르기·응수",
+          "reasons": [
+            "실제 상대 픽의 알려진 접근·제어·견제 등 대응 후보를 보존합니다. 중요도·현재 위치·사용 가능 여부는 미확인.",
+            "기존 탐색 분류/기술별 기능 후보: 접근·제어 연결"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Fiora:Q",
+            "official:Fiora:W"
+          ],
+          "eligible": true
+        },
+        {
+          "champion": "Kaisa",
+          "name": "카이사",
+          "context": "OPERATIONS",
+          "kinds": [
+            "ACCESS",
+            "PRESSURE"
+          ],
+          "means": "사냥본능·공허추적자",
+          "reasons": [
+            "실제 상대 픽의 알려진 접근·제어·견제 등 대응 후보를 보존합니다. 중요도·현재 위치·사용 가능 여부는 미확인.",
+            "기존 탐색 분류/기술별 기능 후보: 접근·견제·공간"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Kaisa:R",
+            "official:Kaisa:W"
+          ],
+          "eligible": true
+        },
+        {
+          "champion": "LeeSin",
+          "name": "리 신",
+          "context": "OPERATIONS",
+          "kinds": [
+            "ACCESS",
+            "COVER",
+            "PICK",
+            "PRESSURE"
+          ],
+          "means": "음파 / 공명의 일격·방호 / 강철의 의지·용의 분노",
+          "reasons": [
+            "실제 상대 픽의 알려진 접근·제어·견제 등 대응 후보를 보존합니다. 중요도·현재 위치·사용 가능 여부는 미확인.",
+            "기존 탐색 분류/기술별 기능 후보: 접근·보호·제어 연결·견제·공간"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:LeeSin:Q",
+            "official:LeeSin:R",
+            "official:LeeSin:W"
+          ],
+          "eligible": true
+        },
+        {
+          "champion": "Nautilus",
+          "name": "노틸러스",
+          "context": "OPERATIONS",
+          "kinds": [
+            "PICK",
+            "ACCESS",
+            "FRONT"
+          ],
+          "means": "닻줄 견인",
+          "reasons": [
+            "실제 상대 픽의 알려진 접근·제어·견제 등 대응 후보를 보존합니다. 중요도·현재 위치·사용 가능 여부는 미확인.",
+            "기존 탐색 분류/기술별 기능 후보: 제어 연결·접근·전방 연결 후보"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Nautilus:Q"
+          ],
+          "eligible": true
+        },
+        {
+          "champion": "Zed",
+          "name": "제드",
+          "context": "OPERATIONS",
+          "kinds": [
+            "ACCESS",
+            "ASSASSIN",
+            "PRESSURE"
+          ],
+          "means": "죽음의 표식·예리한 표창",
+          "reasons": [
+            "실제 상대 픽의 알려진 접근·제어·견제 등 대응 후보를 보존합니다. 중요도·현재 위치·사용 가능 여부는 미확인.",
+            "기존 탐색 분류/기술별 기능 후보: 접근·고립 대상 위협·견제·공간"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Zed:Q",
+            "official:Zed:R"
+          ],
+          "eligible": true
+        }
+      ],
+      "selection_note": "유형별 후보이며 중요도 순위가 아닙니다. 모든 실제 픽을 보존하고 기능 미확인은 따로 표시합니다. 요약의 생략은 위협 부재가 아닙니다."
+    },
+    "teamfight": {
+      "partners": [
+        {
+          "champion": "Ahri",
+          "name": "아리",
+          "context": "TEAMFIGHT",
+          "kinds": [
+            "PICK"
+          ],
+          "means": "매혹",
+          "reasons": [
+            "내 기본 역할과 제어·보호·후속 기능을 연결할 실제 아군 후보. 현재 거리와 기술 준비는 별도 조건.",
+            "기존 탐색 분류/기술별 기능 후보: 제어 연결"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Ahri:E"
+          ],
+          "eligible": true
+        },
+        {
+          "champion": "Lux",
+          "name": "럭스",
+          "context": "TEAMFIGHT",
+          "kinds": [
+            "PICK",
+            "COVER"
+          ],
+          "means": "빛의 속박·프리즘 보호막",
+          "reasons": [
+            "내 기본 역할과 제어·보호·후속 기능을 연결할 실제 아군 후보. 현재 거리와 기술 준비는 별도 조건.",
+            "기존 탐색 분류/기술별 기능 후보: 제어 연결·보호"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Lux:Q",
+            "official:Lux:W"
+          ],
+          "eligible": true
+        },
+        {
+          "champion": "Ornn",
+          "name": "오른",
+          "context": "TEAMFIGHT",
+          "kinds": [
+            "FRONT",
+            "PICK"
+          ],
+          "means": "대장장이 신의 부름",
+          "reasons": [
+            "내 기본 역할과 제어·보호·후속 기능을 연결할 실제 아군 후보. 현재 거리와 기술 준비는 별도 조건.",
+            "기존 탐색 분류/기술별 기능 후보: 전방 연결 후보·제어 연결"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Ornn:R"
+          ],
+          "eligible": true
+        },
+        {
+          "champion": "Sejuani",
+          "name": "세주아니",
+          "context": "TEAMFIGHT",
+          "kinds": [
+            "PICK",
+            "FRONT"
+          ],
+          "means": "빙하 감옥",
+          "reasons": [
+            "내 기본 역할과 제어·보호·후속 기능을 연결할 실제 아군 후보. 현재 거리와 기술 준비는 별도 조건.",
+            "기존 탐색 분류/기술별 기능 후보: 제어 연결·전방 연결 후보"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Sejuani:R"
+          ],
+          "eligible": true
+        }
+      ],
+      "threats": [
+        {
+          "champion": "Fiora",
+          "name": "피오라",
+          "context": "TEAMFIGHT",
+          "kinds": [
+            "ACCESS",
+            "PICK"
+          ],
+          "means": "찌르기·응수",
+          "reasons": [
+            "실제 상대 픽의 알려진 접근·제어·견제 등 대응 후보를 보존합니다. 중요도·현재 위치·사용 가능 여부는 미확인.",
+            "기존 탐색 분류/기술별 기능 후보: 접근·제어 연결"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Fiora:Q",
+            "official:Fiora:W"
+          ],
+          "eligible": true
+        },
+        {
+          "champion": "Kaisa",
+          "name": "카이사",
+          "context": "TEAMFIGHT",
+          "kinds": [
+            "ACCESS",
+            "PRESSURE"
+          ],
+          "means": "사냥본능·공허추적자",
+          "reasons": [
+            "실제 상대 픽의 알려진 접근·제어·견제 등 대응 후보를 보존합니다. 중요도·현재 위치·사용 가능 여부는 미확인.",
+            "기존 탐색 분류/기술별 기능 후보: 접근·견제·공간"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Kaisa:R",
+            "official:Kaisa:W"
+          ],
+          "eligible": true
+        },
+        {
+          "champion": "LeeSin",
+          "name": "리 신",
+          "context": "TEAMFIGHT",
+          "kinds": [
+            "ACCESS",
+            "COVER",
+            "PICK",
+            "PRESSURE"
+          ],
+          "means": "음파 / 공명의 일격·방호 / 강철의 의지·용의 분노",
+          "reasons": [
+            "실제 상대 픽의 알려진 접근·제어·견제 등 대응 후보를 보존합니다. 중요도·현재 위치·사용 가능 여부는 미확인.",
+            "기존 탐색 분류/기술별 기능 후보: 접근·보호·제어 연결·견제·공간"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:LeeSin:Q",
+            "official:LeeSin:R",
+            "official:LeeSin:W"
+          ],
+          "eligible": true
+        },
+        {
+          "champion": "Nautilus",
+          "name": "노틸러스",
+          "context": "TEAMFIGHT",
+          "kinds": [
+            "PICK",
+            "ACCESS",
+            "FRONT"
+          ],
+          "means": "닻줄 견인",
+          "reasons": [
+            "실제 상대 픽의 알려진 접근·제어·견제 등 대응 후보를 보존합니다. 중요도·현재 위치·사용 가능 여부는 미확인.",
+            "기존 탐색 분류/기술별 기능 후보: 제어 연결·접근·전방 연결 후보"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Nautilus:Q"
+          ],
+          "eligible": true
+        },
+        {
+          "champion": "Zed",
+          "name": "제드",
+          "context": "TEAMFIGHT",
+          "kinds": [
+            "ACCESS",
+            "ASSASSIN",
+            "PRESSURE"
+          ],
+          "means": "죽음의 표식·예리한 표창",
+          "reasons": [
+            "실제 상대 픽의 알려진 접근·제어·견제 등 대응 후보를 보존합니다. 중요도·현재 위치·사용 가능 여부는 미확인.",
+            "기존 탐색 분류/기술별 기능 후보: 접근·고립 대상 위협·견제·공간"
+          ],
+          "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+          "evidence_ids": [
+            "official:Zed:Q",
+            "official:Zed:R"
+          ],
+          "eligible": true
+        }
+      ],
+      "selection_note": "유형별 후보이며 중요도 순위가 아닙니다. 모든 실제 픽을 보존하고 기능 미확인은 따로 표시합니다. 요약의 생략은 위협 부재가 아닙니다."
+    }
+  },
+  "gameplan": {
+    "base": "우리 조합의 보호·전방 연결 후보·제어 연결 후보를 연결합니다. 보호 연결을 남긴 제어 후속 공격은 보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우에 실행하는 기본 계획입니다.",
+    "prepare": [
+      "운영 연결 후보 아리·럭스·오른·세주아니의 실제 웨이브·접근 거리·기술 상태를 확인한 뒤 움직일 순서를 맞춥니다.",
+      "상대의 유형별 대응과 내 이탈/회복 수단을 함께 확인합니다.",
+      "목표물·시야·인원이 확인된 후 경합 또는 가까운 자원 교환을 비교합니다."
+    ],
+    "fallback": "연결이 부족하면 보이지 않는 반대편이 비었다고 가정하지 않고 아군 쪽 보이는 자원·회복·구매로 목표를 낮춥니다.",
+    "switch_when": [
+      "아군 후속 또는 내 이탈/보호 조건이 사라짐",
+      "상대 증원·체력 손실·남은 제어가 확인됨",
+      "웨이브·구매·목표물 조건이 달라짐"
+    ],
+    "stages": [
+      {
+        "stage": "초반",
+        "role": "바텀 케이틀린의 라인/정글 자원과 기술 조건 준비",
+        "conditions": [
+          "같은 라인 동료와 직접 상대만 기본 문맥에 연결",
+          "정글 개입은 따로 관측될 때 비교"
+        ]
+      },
+      {
+        "stage": "중반",
+        "role": "보호 연결을 남긴 제어 후속 공격",
+        "conditions": [
+          "웨이브·합류 자원 손실·아군 실제 준비를 함께 확인"
+        ]
+      },
+      {
+        "stage": "후반",
+        "role": "남은 기술·인원과 귀환/목표물 이득 전환 비교",
+        "conditions": [
+          "아이템 완성만으로 재진입하지 않기",
+          "현재 위치·기술을 확인한 후보만 연결"
+        ]
+      }
+    ],
+    "side_vs_group": "사이드/본대 선택은 보이는 자원·복귀 수단·본대의 대기와 상대 접근이 함께 확인된 경우 비교합니다. 유형별 후보가 있다고 실제 합류를 가정하지 않습니다.",
+    "objectives": "실제로 존재하는 목표물과 웨이브·체력·인원·접근 정보를 확인한 뒤 경합을 준비합니다. 미연결 생성 시각·승률을 만들지 않습니다.",
+    "conversion": "교전 뒤 실제 남은 인원·체력·웨이브와 접근 가능한 목표물을 보고 포탑·목표물·귀환 중 이득을 고릅니다. 킬이 모든 이득을 보장하지 않습니다."
+  },
+  "lane": {
+    "opponent": {
+      "id": "Kaisa",
+      "name": "카이사",
+      "position": "BOTTOM"
+    },
+    "status": "조건부 계획 · 매치업 우열 미확인",
+    "matchup_id": "Caitlyn_Lux__Kaisa_Nautilus_v2",
+    "rows": [
+      {
+        "id": "LEVEL1",
+        "period": "레벨 1",
+        "decision_id": "RECEIVE_WITH_SPACE",
+        "judgment": "Q·E를 배운 가정: 수급 위치와 포착 각을 나누기",
+        "assumptions": [
+          "케이틀린 Q·럭스 E를 배웠고 사용할 수 있음",
+          "양쪽 바텀 두 명만 라인에 있고 웨이브·체력·거리를 확인한 미래 상황"
+        ],
+        "why": "케이틀린 Q는 조준 뒤 관통 피해, 럭스 E는 지역 둔화/폭발 수단입니다. 노틸러스 Q의 적중 시 당김과 기본 공격 속박 때문에, 스킬로 미니언을 받는 위치와 상대가 접근할 각을 함께 비교하는 계획입니다.",
+        "action": "럭스 E를 사용할 범위와 내 Q로 받을 미니언을 먼저 맞춥니다. 노틸러스의 접근을 감당할 거리·뒤쪽 공간이 있을 때만 그 위치로 옮겨 짧게 수급/교환합니다. Q 조준 때문에 대응이 늦을 수 있는 위치까지 따라 나가지는 않습니다.",
+        "opponent_response": "노틸러스가 Q로 당기거나 가까워져 기본 공격 속박을 노리고, 카이사가 근처 대상에 Q 피해를 연결할 가능성이 있습니다. 실제 기술 선택·피해 우열은 미확인입니다.",
+        "alternative": "거리·체력 또는 럭스 E 연결이 부족하면 견제를 강제로 만들지 않고 다음 미니언을 받을 위치를 아군 쪽으로 바꿉니다. 상대가 실제로 전진/기술을 쓰는지 보며 수급 목표를 줄입니다.",
+        "changes": [
+          "노틸러스가 Q 적중을 노릴 위치로 좁혀 올 때",
+          "럭스 E를 배웠거나 쓸 수 있다는 가정이 틀릴 때",
+          "보이지 않던 추가 인원이 확인될 때"
+        ],
+        "evidence_ids": [
+          "official:Caitlyn:Q",
+          "official:Lux:E",
+          "official:Nautilus:Q",
+          "official:Nautilus:P",
+          "official:Kaisa:Q"
+        ],
+        "action_ids": [
+          "MATCH_LUX_AREA",
+          "RECEIVE_SHORT_TRADE",
+          "CHANGE_RECEIVE_POSITION"
+        ],
+        "actors": {
+          "self": "Caitlyn",
+          "ally": "Lux",
+          "enemies": [
+            "Kaisa",
+            "Nautilus"
+          ]
+        },
+        "assumption_status": "NOT_OBSERVED",
+        "fact_scope": "공식: 연결된 기술/아이템의 명시한 성질. 가정: 위 스킬·자원·인원 조건을 갖춘 미래 장면. 행동 선택·연계 타이밍·우열은 설계 가설이며 실전 검증 없음.",
+        "level": "DESIGN_HYPOTHESIS"
+      },
+      {
+        "id": "LEVEL2",
+        "period": "레벨 2",
+        "decision_id": "FOLLOW_BIND_WITH_EXIT",
+        "judgment": "럭스 Q·내 W를 배운 가정: 속박 적중 뒤 제한된 후속",
+        "assumptions": [
+          "럭스 Q와 케이틀린 W가 실제로 배워져 가용함",
+          "양쪽 실제 레벨·거리·체력을 확인했으며 노틸러스의 대응을 감당할 퇴로가 있음"
+        ],
+        "why": "럭스 Q는 최대 두 적 유닛을 속박하고 케이틀린 W는 발동해야 적 챔피언을 묶습니다. 둘을 배운 경우에만 제어 후속이라는 선택지가 생깁니다. 레벨 2 도달만으로 이 스킬 조합·선점·유리함이 확인되지는 않습니다.",
+        "action": "럭스 Q의 실제 챔피언 적중을 본 뒤, 설치 위치·덫 발동과 후속 거리까지 맞는 경우 W와 짧은 공격을 검토합니다. 속박을 보았다는 이유만으로 덫 발동이나 확정 연계/킬을 가정하지 않습니다.",
+        "opponent_response": "노틸러스는 럭스 Q가 빠진 틈에 Q 접근 또는 기본 공격 속박으로 역대응할 수 있습니다. 카이사도 계속 공격할 권리가 있으므로 한 명의 속박만으로 상대 둘의 대응이 사라지지는 않습니다.",
+        "alternative": "럭스 Q가 빗나가거나 덫 연결이 불명확하면 추가 전진을 접고 럭스와 같은 수급선으로 돌아옵니다. 상대가 기술을 쓰도록 억지로 몸을 내주는 행동은 권하지 않습니다.",
+        "changes": [
+          "럭스 Q 빗나감/가용성 상실",
+          "노틸러스 접근·카이사 후속이 열림",
+          "추가 인원·레벨 또는 웨이브 조건이 바뀜"
+        ],
+        "evidence_ids": [
+          "official:Lux:Q",
+          "official:Caitlyn:W",
+          "official:Nautilus:Q",
+          "official:Nautilus:P",
+          "official:Kaisa:Q"
+        ],
+        "action_ids": [
+          "OBSERVE_BIND_HIT",
+          "CONDITIONAL_TRAP_FOLLOW",
+          "END_ADVANCE_AFTER_MISS"
+        ],
+        "actors": {
+          "self": "Caitlyn",
+          "ally": "Lux",
+          "enemies": [
+            "Kaisa",
+            "Nautilus"
+          ]
+        },
+        "assumption_status": "NOT_OBSERVED",
+        "fact_scope": "공식: 연결된 기술/아이템의 명시한 성질. 가정: 위 스킬·자원·인원 조건을 갖춘 미래 장면. 행동 선택·연계 타이밍·우열은 설계 가설이며 실전 검증 없음.",
+        "level": "DESIGN_HYPOTHESIS"
+      },
+      {
+        "id": "LEVEL3_5",
+        "period": "레벨 3~5",
+        "decision_id": "KEEP_ESCAPE_VS_REENGAGE",
+        "judgment": "투망·보호막을 배운 가정: 공격과 이탈 자원을 나누기",
+        "assumptions": [
+          "케이틀린 E·럭스 W/E가 배워져 있고 현재 가용성을 확인함",
+          "현재 웨이브·상대 두 명의 접근 각과 자원을 확인한 미래 상황"
+        ],
+        "why": "케이틀린 E는 둔화와 뒤로 밀리는 수단이고, 럭스 W는 마법봉에 닿는 아군에게 보호막을 줍니다. E의 원문에는 지역 시야 제공도 있습니다. 이 수단을 함께 남길 수 있는지에 따라 견제와 수급 위치를 다르게 잡는 가설입니다.",
+        "action": "노틸러스의 접근 대응이 남으면 E를 단순 견제에 모두 쓰기보다 이탈에 남기는 선택을 비교합니다. 럭스 W가 닿을 위치를 맞추고, 럭스 E로 확인한 범위의 정보만 사용해 다음 수급 위치를 옮깁니다.",
+        "opponent_response": "노틸러스는 가까운 거리의 기본 공격 속박이나 Q로 재접근을 노릴 수 있고, 카이사는 W 적중으로 플라즈마를 쌓을 수 있습니다. 투망 또는 보호막 하나로 이 대응을 모두 무효화한다고 보지 않습니다.",
+        "alternative": "E가 없거나 보호막이 닿지 않으면 교환을 더 이어가지 않고 아군 쪽 받을 자원과 회복을 고릅니다. E로 보지 못한 구역은 계속 미확인이며, 정보 확인을 위해 혼자 그곳으로 이동하지 않습니다.",
+        "changes": [
+          "E를 소모하거나 W 보호 연결이 끊김",
+          "노틸러스가 거리를 좁힘/카이사 W 적중",
+          "지역 시야 밖 정보나 추가 인원이 문제됨"
+        ],
+        "evidence_ids": [
+          "official:Caitlyn:E",
+          "official:Lux:W",
+          "official-detail:Lux:W",
+          "official-detail:Lux:E",
+          "official:Nautilus:Q",
+          "official:Nautilus:P",
+          "official:Kaisa:W"
+        ],
+        "action_ids": [
+          "KEEP_E_FOR_EXIT",
+          "MATCH_SHIELD_CONTACT",
+          "LIMIT_TO_OBSERVED_AREA",
+          "RESET_IF_ESCAPE_LOST"
+        ],
+        "actors": {
+          "self": "Caitlyn",
+          "ally": "Lux",
+          "enemies": [
+            "Kaisa",
+            "Nautilus"
+          ]
+        },
+        "assumption_status": "NOT_OBSERVED",
+        "fact_scope": "공식: 연결된 기술/아이템의 명시한 성질. 가정: 위 스킬·자원·인원 조건을 갖춘 미래 장면. 행동 선택·연계 타이밍·우열은 설계 가설이며 실전 검증 없음.",
+        "level": "DESIGN_HYPOTHESIS"
+      },
+      {
+        "id": "LEVEL6",
+        "period": "레벨 6",
+        "decision_id": "RESPECT_TARGETED_CONTROL",
+        "judgment": "궁극기를 배운 가정: 표식·추적 제어까지 포함해 배치 변경",
+        "assumptions": [
+          "해당 궁극기를 실제로 배웠고 가용성을 확인한 상황",
+          "카이사의 플라즈마 표식과 후속 거리·내 체력/보호 연결을 확인할 수 있음"
+        ],
+        "why": "노틸러스 R은 대상을 추적해 띄우고 기절시키며, 카이사 R 상세 원문은 플라즈마 표식 대상 근처 돌진을 요구합니다. 카이사 P에는 아군 이동 불가 효과도 표식을 더한다는 설명이 있습니다. 미니언이나 거리만으로 이 연결이 사라진다고 가정하지 않는 계획입니다.",
+        "action": "추적 제어와 표식 후속이 열릴 경우 럭스 W가 닿을 거리와 이탈 공간부터 맞춥니다. 케이틀린 R은 적 챔피언이 대신 막을 수 있으므로 마무리가 보장된다고 추격하지 않습니다. 투망으로 노틸러스 R을 취소할 수 있다고 가정하지 않습니다.",
+        "opponent_response": "노틸러스의 이동 불가 효과가 카이사의 표식·R 후속 조건과 연결될 가능성이 있습니다. 실제 가용성·표식·아군 거리와 별개로 자동 연계가 완성된다고 단정하지 않습니다.",
+        "alternative": "상대 궁극기 상태나 표식이 불명확하면 새로운 마무리 추격보다 럭스와 받을 공간을 좁혀 연결을 유지합니다. 표식/접근이 생기면 공격 대상을 바꾸고 아군 쪽으로 전진 폭을 줄입니다.",
+        "changes": [
+          "표식·추적 제어·카이사 후속 거리가 확인됨",
+          "럭스 보호 연결이나 내 이탈 자원 상실",
+          "상대 궁극기 가용성이 달라짐"
+        ],
+        "evidence_ids": [
+          "official:Nautilus:R",
+          "official:Kaisa:P",
+          "official-detail:Kaisa:R",
+          "official:Caitlyn:R",
+          "official:Caitlyn:E",
+          "official-detail:Lux:W"
+        ],
+        "action_ids": [
+          "CHECK_PLASMA_ACCESS",
+          "KEEP_LUX_COVER",
+          "NO_ASSUMED_R_CANCEL",
+          "STOP_FINISH_CHASE"
+        ],
+        "actors": {
+          "self": "Caitlyn",
+          "ally": "Lux",
+          "enemies": [
+            "Kaisa",
+            "Nautilus"
+          ]
+        },
+        "assumption_status": "NOT_OBSERVED",
+        "fact_scope": "공식: 연결된 기술/아이템의 명시한 성질. 가정: 위 스킬·자원·인원 조건을 갖춘 미래 장면. 행동 선택·연계 타이밍·우열은 설계 가설이며 실전 검증 없음.",
+        "level": "DESIGN_HYPOTHESIS"
+      },
+      {
+        "id": "FIRST_PURCHASE",
+        "period": "첫 귀환·구매 이후",
+        "decision_id": "REASSESS_PURCHASE_AND_RETURN",
+        "judgment": "실제 구매가 확인된 가정: 이동·공격 자원과 복귀 손실 재비교",
+        "assumptions": [
+          "실제로 구매한 아이템과 체력·마나 회복을 확인한 미래 상황",
+          "상대 두 명의 구매/복귀와 다음 웨이브는 확인한 범위만 사용"
+        ],
+        "why": "공식 장화의 이동 속도와 롱소드의 공격력 속성은 서로 다른 변화입니다. 실제 구매 효과를 확인한 경우에만 접근/공격 조건을 재비교합니다. 어느 것을 샀는지, 최적 첫 구매와 이 매치업의 피해 우열은 로딩에서 미확인입니다.",
+        "action": "내 구매가 이동·공격 중 무엇을 바꾸었는지 확인하고 럭스의 자원/복귀와 다음 웨이브를 함께 맞춥니다. 상대 구매가 불명확하면 이전과 같은 교환이 이긴다고 가정하지 않고 짧은 수급·교환부터 다시 비교합니다.",
+        "opponent_response": "노틸러스 Q/P의 제어와 카이사의 표식 후속 조건은 단순 아이템 구매만으로 없어진다고 보지 않습니다. 상대도 구매·회복 후 돌아올 수 있습니다.",
+        "alternative": "복귀가 어긋나 1명만 먼저 라인에 서거나 큰 손실이 예상되면 압박보다 받을 위치·자원을 줄이고 회복/동시 복귀를 비교합니다. 구매 아이템 하나로 닻을 피하거나 맞교환을 이긴다고 보지 않습니다.",
+        "changes": [
+          "실제 아이템 속성·상대 구매가 확인됨",
+          "럭스와 복귀/자원 연결이 어긋남",
+          "웨이브·체력/마나·인원이 바뀜"
+        ],
+        "evidence_ids": [
+          "official-item:1001",
+          "official-item:1036",
+          "official:Nautilus:Q",
+          "official:Nautilus:P",
+          "official:Kaisa:P"
+        ],
+        "action_ids": [
+          "COMPARE_ACTUAL_PURCHASE_PROPERTY",
+          "MATCH_RETURN_RESOURCES",
+          "LIMIT_SOLO_RECEIVE"
+        ],
+        "actors": {
+          "self": "Caitlyn",
+          "ally": "Lux",
+          "enemies": [
+            "Kaisa",
+            "Nautilus"
+          ]
+        },
+        "assumption_status": "NOT_OBSERVED",
+        "fact_scope": "공식: 연결된 기술/아이템의 명시한 성질. 가정: 위 스킬·자원·인원 조건을 갖춘 미래 장면. 행동 선택·연계 타이밍·우열은 설계 가설이며 실전 검증 없음.",
+        "level": "DESIGN_HYPOTHESIS"
+      },
+      {
+        "id": "FIRST_CORE",
+        "period": "첫 핵심 아이템 이후",
+        "decision_id": "KEEP_FOLLOWUP_AFTER_CORE",
+        "judgment": "핵심 아이템 완성 가정: 후속 지속/회복 계획을 다시 선택",
+        "assumptions": [
+          "내 실제 완성 아이템과 상대 아이템·레벨·체력/인원을 확인함",
+          "럭스의 제어/보호와 내 이탈 수단이 연결되는지 확인할 수 있는 미래 상황"
+        ],
+        "why": "완성 아이템에 따른 실제 피해량·상성 역전 근거는 없습니다. 따라서 아이템 완성 자체를 진입 허가로 쓰지 않고, 럭스 제어 적중과 노틸러스의 남은 제어·카이사 후속을 함께 비교하는 계획입니다.",
+        "action": "럭스 제어가 적중하고 남은 상대 대응·후속 거리까지 감당할 때만 접근 가능한 대상에 공격을 이어갑니다. 이 조건이 없으면 라인 자원 확보→회복/구매 또는 다음 합류 준비 중 손실이 작은 쪽을 고릅니다. 새 아이템을 이유로 혼자 추격하지 않습니다.",
+        "opponent_response": "노틸러스의 남은 제어와 카이사의 표식·돌진은 여전히 계획 전환 조건입니다. 상대 아이템·지원 인원 변화도 기존 교환 계획을 무효화할 수 있습니다.",
+        "alternative": "내 이탈이나 럭스 연결이 끊기면 짧게 공격한 뒤 자원 수급/회복으로 돌아옵니다. 사이드 이동·합류는 추가 인원·웨이브·복귀 손실이 확인된 별도 운영 계획에서만 비교합니다.",
+        "changes": [
+          "상대 아이템/지원 인원 또는 남은 제어가 달라짐",
+          "럭스 연결이나 내 이탈이 사라짐",
+          "라인 유지와 다음 합류의 자원 손실 조건이 바뀜"
+        ],
+        "evidence_ids": [
+          "official:Lux:Q",
+          "official-detail:Lux:W",
+          "official:Caitlyn:E",
+          "official:Nautilus:R",
+          "official-detail:Kaisa:R"
+        ],
+        "action_ids": [
+          "FOLLOW_CONFIRMED_CONTROL",
+          "KEEP_SELF_EXIT",
+          "CONVERT_TO_RESOURCE_OR_RECOVERY"
+        ],
+        "actors": {
+          "self": "Caitlyn",
+          "ally": "Lux",
+          "enemies": [
+            "Kaisa",
+            "Nautilus"
+          ]
+        },
+        "assumption_status": "NOT_OBSERVED",
+        "fact_scope": "공식: 연결된 기술/아이템의 명시한 성질. 가정: 위 스킬·자원·인원 조건을 갖춘 미래 장면. 행동 선택·연계 타이밍·우열은 설계 가설이며 실전 검증 없음.",
+        "level": "DESIGN_HYPOTHESIS"
+      }
+    ],
+    "interactions": [
+      "럭스 Q 적중→케이틀린 W 후속은 설치·발동·거리 조건이 필요하며 확정 연계가 아닙니다.",
+      "노틸러스의 이동 불가 수단과 카이사의 플라즈마/궁극기 후속을 함께 봅니다.",
+      "럭스 Q는 최대 두 유닛에 적용됩니다. 노틸러스 Q의 미니언 충돌 규칙은 이 원문에서 확인하지 않았으므로 웨이브 뒤면 안전하다고 단정하지 않습니다."
+    ],
+    "wave": "미니언은 수급·밀기·귀환 조건입니다. 특정 기술의 충돌/관통 규칙이 확인되지 않았으면 미니언만으로 진입을 막는다고 가정하지 않습니다.",
+    "jungle": "정글 개입은 아래 별도 조건부 항목입니다. 로딩에서는 위치·실제 도착·갱 시점을 모르며 기본 라인 인원에 합치지 않습니다.",
+    "reset_roam": "웨이브 도착·체력/마나·실제 구매와 동료 복귀가 확인된 뒤 귀환 후보를 비교합니다. 이동/합류는 복귀 손실과 아군 준비가 맞는 별도 운영 조건입니다.",
+    "recovery": "같은 라인 연결·퇴로가 끊기면 받을 자원과 회복/복귀를 다시 고릅니다. 포탑 아래라는 이유만으로 안전을 보장하지 않습니다."
+  },
+  "teamfight": {
+    "role": "케이틀린: 보호 연결을 남긴 제어 후속 공격. 보호 후보 럭스가 실제로 닿는 거리에서, 제어 후보 아리·럭스·오른·세주아니의 적중 뒤 접근 가능한 대상을 공격합니다.",
+    "partners": [
+      {
+        "champion": "Ahri",
+        "name": "아리",
+        "context": "TEAMFIGHT",
+        "kinds": [
+          "PICK"
+        ],
+        "means": "매혹",
+        "reasons": [
+          "내 기본 역할과 제어·보호·후속 기능을 연결할 실제 아군 후보. 현재 거리와 기술 준비는 별도 조건.",
+          "기존 탐색 분류/기술별 기능 후보: 제어 연결"
+        ],
+        "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+        "evidence_ids": [
+          "official:Ahri:E"
+        ],
+        "eligible": true
+      },
+      {
+        "champion": "Lux",
+        "name": "럭스",
+        "context": "TEAMFIGHT",
+        "kinds": [
+          "PICK",
+          "COVER"
+        ],
+        "means": "빛의 속박·프리즘 보호막",
+        "reasons": [
+          "내 기본 역할과 제어·보호·후속 기능을 연결할 실제 아군 후보. 현재 거리와 기술 준비는 별도 조건.",
+          "기존 탐색 분류/기술별 기능 후보: 제어 연결·보호"
+        ],
+        "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+        "evidence_ids": [
+          "official:Lux:Q",
+          "official:Lux:W"
+        ],
+        "eligible": true
+      },
+      {
+        "champion": "Ornn",
+        "name": "오른",
+        "context": "TEAMFIGHT",
+        "kinds": [
+          "FRONT",
+          "PICK"
+        ],
+        "means": "대장장이 신의 부름",
+        "reasons": [
+          "내 기본 역할과 제어·보호·후속 기능을 연결할 실제 아군 후보. 현재 거리와 기술 준비는 별도 조건.",
+          "기존 탐색 분류/기술별 기능 후보: 전방 연결 후보·제어 연결"
+        ],
+        "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+        "evidence_ids": [
+          "official:Ornn:R"
+        ],
+        "eligible": true
+      },
+      {
+        "champion": "Sejuani",
+        "name": "세주아니",
+        "context": "TEAMFIGHT",
+        "kinds": [
+          "PICK",
+          "FRONT"
+        ],
+        "means": "빙하 감옥",
+        "reasons": [
+          "내 기본 역할과 제어·보호·후속 기능을 연결할 실제 아군 후보. 현재 거리와 기술 준비는 별도 조건.",
+          "기존 탐색 분류/기술별 기능 후보: 제어 연결·전방 연결 후보"
+        ],
+        "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+        "evidence_ids": [
+          "official:Sejuani:R"
+        ],
+        "eligible": true
+      }
+    ],
+    "threats": [
+      {
+        "champion": "Fiora",
+        "name": "피오라",
+        "context": "TEAMFIGHT",
+        "kinds": [
+          "ACCESS",
+          "PICK"
+        ],
+        "means": "찌르기·응수",
+        "reasons": [
+          "실제 상대 픽의 알려진 접근·제어·견제 등 대응 후보를 보존합니다. 중요도·현재 위치·사용 가능 여부는 미확인.",
+          "기존 탐색 분류/기술별 기능 후보: 접근·제어 연결"
+        ],
+        "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+        "evidence_ids": [
+          "official:Fiora:Q",
+          "official:Fiora:W"
+        ],
+        "eligible": true
+      },
+      {
+        "champion": "Kaisa",
+        "name": "카이사",
+        "context": "TEAMFIGHT",
+        "kinds": [
+          "ACCESS",
+          "PRESSURE"
+        ],
+        "means": "사냥본능·공허추적자",
+        "reasons": [
+          "실제 상대 픽의 알려진 접근·제어·견제 등 대응 후보를 보존합니다. 중요도·현재 위치·사용 가능 여부는 미확인.",
+          "기존 탐색 분류/기술별 기능 후보: 접근·견제·공간"
+        ],
+        "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+        "evidence_ids": [
+          "official:Kaisa:R",
+          "official:Kaisa:W"
+        ],
+        "eligible": true
+      },
+      {
+        "champion": "LeeSin",
+        "name": "리 신",
+        "context": "TEAMFIGHT",
+        "kinds": [
+          "ACCESS",
+          "COVER",
+          "PICK",
+          "PRESSURE"
+        ],
+        "means": "음파 / 공명의 일격·방호 / 강철의 의지·용의 분노",
+        "reasons": [
+          "실제 상대 픽의 알려진 접근·제어·견제 등 대응 후보를 보존합니다. 중요도·현재 위치·사용 가능 여부는 미확인.",
+          "기존 탐색 분류/기술별 기능 후보: 접근·보호·제어 연결·견제·공간"
+        ],
+        "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+        "evidence_ids": [
+          "official:LeeSin:Q",
+          "official:LeeSin:R",
+          "official:LeeSin:W"
+        ],
+        "eligible": true
+      },
+      {
+        "champion": "Nautilus",
+        "name": "노틸러스",
+        "context": "TEAMFIGHT",
+        "kinds": [
+          "PICK",
+          "ACCESS",
+          "FRONT"
+        ],
+        "means": "닻줄 견인",
+        "reasons": [
+          "실제 상대 픽의 알려진 접근·제어·견제 등 대응 후보를 보존합니다. 중요도·현재 위치·사용 가능 여부는 미확인.",
+          "기존 탐색 분류/기술별 기능 후보: 제어 연결·접근·전방 연결 후보"
+        ],
+        "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+        "evidence_ids": [
+          "official:Nautilus:Q"
+        ],
+        "eligible": true
+      },
+      {
+        "champion": "Zed",
+        "name": "제드",
+        "context": "TEAMFIGHT",
+        "kinds": [
+          "ACCESS",
+          "ASSASSIN",
+          "PRESSURE"
+        ],
+        "means": "죽음의 표식·예리한 표창",
+        "reasons": [
+          "실제 상대 픽의 알려진 접근·제어·견제 등 대응 후보를 보존합니다. 중요도·현재 위치·사용 가능 여부는 미확인.",
+          "기존 탐색 분류/기술별 기능 후보: 접근·고립 대상 위협·견제·공간"
+        ],
+        "condition": "해당 기술을 배웠고 사용할 수 있으며 실제 거리·체력·발동 조건이 맞는 경우의 후보. 위치·합류·가용성은 미관측.",
+        "evidence_ids": [
+          "official:Zed:Q",
+          "official:Zed:R"
+        ],
+        "eligible": true
+      }
+    ],
+    "setup": [
+      "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+      "유형별 후보는 현재 배치가 아닙니다. 실제 위치·준비를 확인한 후보만 연결합니다."
+    ],
+    "actions": [
+      "아리·럭스·오른·세주아니 중 실제 후속/보호가 연결될 아군과 내 이탈 방향을 먼저 맞춥니다. 로딩에서 이미 모여 있다고 보지 않습니다.",
+      "아군 아리·럭스·오른·세주아니의 제어가 적중했고 덫 설치 위치·발동 조건과 후속 거리가 맞는 경우 요들잡이 덫 후속을 검토합니다. 명중만으로 덫 연계가 보장되지는 않습니다. 상대의 접근·제어·견제 대응이 남으면 혼자 덫을 설치하러 나가지 않고 90구경 투망과 뒤쪽 공간을 남깁니다.",
+      "상대의 접근·제어·견제로 연결이 끊기면 공격 대상·위치를 바꾸거나 아군 쪽으로 이탈합니다."
+    ],
+    "switch_when": [
+      "아군 선교전에 닿지 못하면 억지 후속 대신 가까운 연결/보호로 변경",
+      "내 이동 수단 사용 후 퇴로가 사라지면 추격 중단"
+    ],
+    "exit": [
+      "보호·후속·내 이탈 자원이 끊기거나 새 적 접근이 확인됨",
+      "퇴로 정보가 없으면 보이지 않는 길로 추격하지 않기"
+    ],
+    "after": [
+      "교전 뒤 실제 남은 인원·체력·웨이브와 접근 가능한 목표물을 보고 포탑·목표물·귀환 중 이득을 고릅니다. 킬이 모든 이득을 보장하지 않습니다."
+    ],
+    "map": {
+      "context": "TEAMFIGHT",
+      "asset": "direction-assets/map11.png",
+      "caption": "전술 설명용 예시 · 한타 문맥 · 실제 위치/합류 관측 아님",
+      "entities": [
+        {
+          "id": "self",
+          "self": true,
+          "team": "ALLY",
+          "champion": "Caitlyn",
+          "portrait": {
+            "sprite": "loading-assets/champion0.png",
+            "x": 0,
+            "y": 96,
+            "w": 48,
+            "h": 48,
+            "sheet_width": 480,
+            "sheet_height": 144
+          },
+          "start": {
+            "x": 40,
+            "y": 61
+          },
+          "target": {
+            "x": 33,
+            "y": 68
+          }
+        },
+        {
+          "id": "partner-Ahri",
+          "self": false,
+          "team": "ALLY",
+          "champion": "Ahri",
+          "portrait": {
+            "sprite": "loading-assets/champion0.png",
+            "x": 48,
+            "y": 0,
+            "w": 48,
+            "h": 48,
+            "sheet_width": 480,
+            "sheet_height": 144
+          },
+          "start": {
+            "x": 46,
+            "y": 59
+          },
+          "target": null
+        },
+        {
+          "id": "partner-Lux",
+          "self": false,
+          "team": "ALLY",
+          "champion": "Lux",
+          "portrait": {
+            "sprite": "loading-assets/champion2.png",
+            "x": 336,
+            "y": 48,
+            "w": 48,
+            "h": 48,
+            "sheet_width": 480,
+            "sheet_height": 144
+          },
+          "start": {
+            "x": 53,
+            "y": 51
+          },
+          "target": null
+        },
+        {
+          "id": "partner-Ornn",
+          "self": false,
+          "team": "ALLY",
+          "champion": "Ornn",
+          "portrait": {
+            "sprite": "loading-assets/champion3.png",
+            "x": 432,
+            "y": 0,
+            "w": 48,
+            "h": 48,
+            "sheet_width": 480,
+            "sheet_height": 144
+          },
+          "start": {
+            "x": 60,
+            "y": 43
+          },
+          "target": null
+        },
+        {
+          "id": "partner-Sejuani",
+          "self": false,
+          "team": "ALLY",
+          "champion": "Sejuani",
+          "portrait": {
+            "sprite": "loading-assets/champion3.png",
+            "x": 288,
+            "y": 96,
+            "w": 48,
+            "h": 48,
+            "sheet_width": 480,
+            "sheet_height": 144
+          },
+          "start": {
+            "x": 67,
+            "y": 35
+          },
+          "target": null
+        }
+      ],
+      "arrows": [
+        {
+          "step": 1,
+          "kind": "MOVE",
+          "from": {
+            "x": 40,
+            "y": 61
+          },
+          "to": {
+            "x": 33,
+            "y": 68
+          }
+        },
+        {
+          "step": 2,
+          "kind": "PRESSURE",
+          "from": {
+            "x": 33,
+            "y": 68
+          },
+          "to": {
+            "x": 37,
+            "y": 64
+          }
+        },
+        {
+          "step": 3,
+          "kind": "RETREAT",
+          "from": {
+            "x": 33,
+            "y": 68
+          },
+          "to": {
+            "x": 28,
+            "y": 73
+          }
+        }
+      ],
+      "landmarks": [],
+      "notes": [
+        "기본 역할 아군 제어 뒤 연결되는 지속 공격을 검토하는 경우의 가상 배치입니다.",
+        "표시한 아군 아리·럭스·오른·세주아니은 조건부 연결 후보이며 위치·준비는 미관측입니다. 후보 표시 순서는 중요도가 아닙니다.",
+        "상대 위치는 모르므로 적 초상화를 배치하지 않습니다. 화살표는 안전 경로나 기술 사거리가 아닙니다."
+      ]
+    }
+  },
+  "scenarios": [
+    {
+      "id": "recall-crash",
+      "title": "1A · 밀어 넣은 뒤 귀환",
+      "context": "LANE",
+      "assumption_status": "NOT_OBSERVED",
+      "assumptions": [
+        "웨이브 상태：상대 포탑 도착을 확인라는 미래 가정",
+        "구매 목표：구매할 아이템·골드 확인라는 미래 가정",
+        "체력·자원：현재 행동에 필요한 상태 확인라는 미래 가정"
+      ],
+      "requirements": [
+        "웨이브 도착·체력·구매 목표를 직접 확인",
+        "귀환 지점의 위협과 다음 목표물 일정을 별도로 확인",
+        "럭스의 같은 라인 연결이 실제로 성립하는 경우만 적용"
+      ],
+      "exceptions": [
+        "웨이브가 도착하지 않았으면 라인 처리부터 재검토",
+        "적 추격·아군 교전 발생 시 현재 귀환 위치에서 중단",
+        "경제·적 위치·실제 합류는 로딩에서 미확인입니다."
+      ],
+      "plan": {
+        "title": "밀어 넣은 뒤 구매·복귀 준비",
+        "direction": "웨이브가 도착한 틈에 구매와 다음 라인 복귀를 준비합니다.",
+        "role": "귀환 손실을 줄이고 다음 웨이브로 돌아올 사람",
+        "steps": [
+          {
+            "number": 1,
+            "text": "상대 포탑에 웨이브가 도착했는지 다시 보고, 더 공격하려고 앞으로 따라가지 않습니다."
+          },
+          {
+            "number": 2,
+            "text": "덫은 발동 시 이동을 막고, 투망은 자신을 뒤로 밀 수 있는 수단입니다. 배운 상태·사용 가능 여부를 확인해 두고, 귀환을 위해 먼저 견제하거나 앞으로 투망을 쓰지는 않습니다."
+          },
+          {
+            "number": 3,
+            "text": "적에게 끊길 위험이 낮다고 확인한 아군 쪽 지점으로 빠져 귀환을 검토합니다. 귀환 위치의 안전은 지도만으로 알 수 없습니다."
+          }
+        ],
+        "requirements": [
+          "웨이브 도착·체력·구매 목표를 직접 확인",
+          "귀환 지점의 위협과 다음 목표물 일정을 별도로 확인"
+        ],
+        "alternative": {
+          "title": "귀환 지점을 바꾸기",
+          "when": "견제나 추격 때문에 귀환을 이어갈 수 없을 때",
+          "steps": [
+            "귀환을 취소하고 아군 포탑 쪽으로 거리를 벌립니다.",
+            "이동 중 추가 압박 대신 다음 웨이브 손실과 구매 필요를 비교합니다."
+          ]
+        },
+        "switch_when": [
+          "웨이브가 도착하지 않았으면 라인 처리부터 재검토",
+          "적 추격·아군 교전 발생 시 현재 귀환 위치에서 중단"
+        ],
+        "layout": "RESET",
+        "id": "RESET_AFTER_CRASH",
+        "why": [
+          "웨이브 상태: 상대 포탑 도착을 확인 (미래 조건 가정 · 현재 관측 아님)",
+          "구매 목표: 구매할 아이템·골드 확인 (미래 조건 가정 · 현재 관측 아님)",
+          "체력·자원: 현재 행동에 필요한 상태 확인 (미래 조건 가정 · 현재 관측 아님)",
+          "경제 입력: 전 포지션 미확인. 경제 상태만으로 교전 승리·이동 가능성을 판정하지 않습니다.",
+          "미확인 경제 상태 5개는 비슷으로 바꾸지 않았습니다."
+        ]
+      },
+      "map": {
+        "asset": "direction-assets/map11.png",
+        "caption": "전술 설명용 예시 · 실제 위치 추적 아님",
+        "entities": [
+          {
+            "id": "self",
+            "team": "ALLY",
+            "self": true,
+            "champion": "Caitlyn",
+            "portrait": "direction-assets/Caitlyn.png",
+            "start": {
+              "x": 80,
+              "y": 73
+            },
+            "target": {
+              "x": 18,
+              "y": 81
+            }
+          },
+          {
+            "id": "context-Lux",
+            "self": false,
+            "team": "ALLY",
+            "champion": "Lux",
+            "portrait": {
+              "sprite": "loading-assets/champion2.png",
+              "x": 336,
+              "y": 48,
+              "w": 48,
+              "h": 48,
+              "sheet_width": 480,
+              "sheet_height": 144
+            },
+            "start": {
+              "x": 85,
+              "y": 69
+            },
+            "target": null
+          }
+        ],
+        "arrows": [
+          {
+            "step": 1,
+            "kind": "RETREAT",
+            "from": {
+              "x": 80,
+              "y": 73
+            },
+            "to": {
+              "x": 60,
+              "y": 84
+            },
+            "label": "행동 1"
+          },
+          {
+            "step": 2,
+            "kind": "RETREAT",
+            "from": {
+              "x": 60,
+              "y": 84
+            },
+            "to": {
+              "x": 43,
+              "y": 85
+            },
+            "label": "2 · 수단을 검토할 위치"
+          },
+          {
+            "step": 3,
+            "kind": "RETREAT",
+            "from": {
+              "x": 43,
+              "y": 85
+            },
+            "to": {
+              "x": 18,
+              "y": 81
+            },
+            "label": "행동 3"
+          }
+        ],
+        "landmarks": [
+          {
+            "id": "friendly-tower",
+            "kind": "TOWER",
+            "label": "아군 포탑 예시",
+            "x": 60,
+            "y": 84,
+            "step": 1
+          },
+          {
+            "id": "wave",
+            "kind": "WAVE",
+            "label": "도착한 웨이브 예시",
+            "x": 85,
+            "y": 59,
+            "step": 1
+          }
+        ],
+        "notes": [
+          "선명한 초상화: 예시 시작 · 반투명 초상화: 목표 배치",
+          "화살표는 행동 방향이며 안전 경로나 정확한 기술 사거리가 아닙니다. 귀환 방향은 도보 경로가 아닙니다.",
+          "좌표·웨이브·포탑·시야 표시는 개략적인 설명 위치입니다. 지도 자산 16.20.1의 최신 지형 일치 여부는 별도입니다.",
+          "적 위치 미확인: 적 초상화를 배치하지 않았습니다.",
+          "문맥 바텀 라인전: 럭스. 현재 합류·위치·인원은 관측하지 않은 예시입니다."
+        ],
+        "context": "LANE"
+      },
+      "level": "DESIGN_HYPOTHESIS"
+    },
+    {
+      "id": "recall-incoming",
+      "title": "1B · 큰 웨이브가 들어올 때",
+      "context": "LANE",
+      "assumption_status": "NOT_OBSERVED",
+      "assumptions": [
+        "웨이브 상태：큰 웨이브가 우리 쪽으로 이동라는 미래 가정",
+        "구매 목표：구매할 아이템·골드 확인라는 미래 가정",
+        "체력·자원：현재 행동에 필요한 상태 확인라는 미래 가정"
+      ],
+      "requirements": [
+        "체력·자원이 잔류를 감당한다는 사용자 확인",
+        "포탑 아래도 다이브 위험이 있어 적 접근을 계속 확인",
+        "럭스의 같은 라인 연결이 실제로 성립하는 경우만 적용"
+      ],
+      "exceptions": [
+        "체력·자원이 줄거나 적 접근이 보이면 수급을 중단",
+        "웨이브 방향이 바뀌면 먼저 귀환 가능성을 재검토",
+        "경제·적 위치·실제 합류는 로딩에서 미확인입니다."
+      ],
+      "plan": {
+        "title": "들어오는 웨이브 손실부터 검토",
+        "direction": "지금 비우면 잃는 웨이브를 확인하고 구매 순서를 다시 잡습니다.",
+        "role": "살아서 받을 수 있는 자원을 남기는 사람",
+        "steps": [
+          {
+            "number": 1,
+            "text": "아군 포탑 쪽으로 위치를 조정하고 웨이브가 실제로 들어오는지 봅니다."
+          },
+          {
+            "number": 2,
+            "text": "덫은 발동 시 이동을 막고, 투망은 자신을 뒤로 밀 수 있는 수단입니다. 배운 상태·사용 가능 여부를 확인해 두고, 귀환을 위해 먼저 견제하거나 앞으로 투망을 쓰지는 않습니다."
+          },
+          {
+            "number": 3,
+            "text": "위협이 닿기 전에 받을 수 있는 미니언만 처리한 뒤, 남을 이유가 사라지면 귀환 위치로 물러납니다."
+          }
+        ],
+        "requirements": [
+          "체력·자원이 잔류를 감당한다는 사용자 확인",
+          "포탑 아래도 다이브 위험이 있어 적 접근을 계속 확인"
+        ],
+        "alternative": {
+          "title": "웨이브를 포기하고 손실 제한",
+          "when": "적 합류·킬 압박 때문에 받을 수 없을 때",
+          "steps": [
+            "포탑을 지키려고 사망 위험을 감수하지 않고 뒤로 빠집니다.",
+            "구매·체력 회복 후 받을 수 있는 다음 자원을 검토합니다."
+          ]
+        },
+        "switch_when": [
+          "체력·자원이 줄거나 적 접근이 보이면 수급을 중단",
+          "웨이브 방향이 바뀌면 먼저 귀환 가능성을 재검토"
+        ],
+        "layout": "RECEIVE",
+        "id": "RECEIVE_WAVE",
+        "why": [
+          "웨이브 상태: 큰 웨이브가 우리 쪽으로 이동 (미래 조건 가정 · 현재 관측 아님)",
+          "구매 목표: 구매할 아이템·골드 확인 (미래 조건 가정 · 현재 관측 아님)",
+          "체력·자원: 현재 행동에 필요한 상태 확인 (미래 조건 가정 · 현재 관측 아님)",
+          "경제 입력: 전 포지션 미확인. 경제 상태만으로 교전 승리·이동 가능성을 판정하지 않습니다.",
+          "미확인 경제 상태 5개는 비슷으로 바꾸지 않았습니다."
+        ]
+      },
+      "map": {
+        "asset": "direction-assets/map11.png",
+        "caption": "전술 설명용 예시 · 실제 위치 추적 아님",
+        "entities": [
+          {
+            "id": "self",
+            "team": "ALLY",
+            "self": true,
+            "champion": "Caitlyn",
+            "portrait": "direction-assets/Caitlyn.png",
+            "start": {
+              "x": 60,
+              "y": 84
+            },
+            "target": {
+              "x": 43,
+              "y": 85
+            }
+          },
+          {
+            "id": "context-Lux",
+            "self": false,
+            "team": "ALLY",
+            "champion": "Lux",
+            "portrait": {
+              "sprite": "loading-assets/champion2.png",
+              "x": 336,
+              "y": 48,
+              "w": 48,
+              "h": 48,
+              "sheet_width": 480,
+              "sheet_height": 144
+            },
+            "start": {
+              "x": 65,
+              "y": 80
+            },
+            "target": null
+          }
+        ],
+        "arrows": [
+          {
+            "step": 1,
+            "kind": "RETREAT",
+            "from": {
+              "x": 60,
+              "y": 84
+            },
+            "to": {
+              "x": 43,
+              "y": 85
+            },
+            "label": "행동 1"
+          },
+          {
+            "step": 2,
+            "kind": "PRESSURE",
+            "from": {
+              "x": 43,
+              "y": 85
+            },
+            "to": {
+              "x": 60,
+              "y": 84
+            },
+            "label": "2 · 수단을 검토할 위치"
+          },
+          {
+            "step": 3,
+            "kind": "RETREAT",
+            "from": {
+              "x": 60,
+              "y": 84
+            },
+            "to": {
+              "x": 18,
+              "y": 81
+            },
+            "label": "행동 3"
+          }
+        ],
+        "landmarks": [
+          {
+            "id": "friendly-tower",
+            "kind": "TOWER",
+            "label": "아군 포탑 예시",
+            "x": 60,
+            "y": 84,
+            "step": 1
+          },
+          {
+            "id": "wave",
+            "kind": "WAVE",
+            "label": "들어오는 웨이브 예시",
+            "x": 60,
+            "y": 84,
+            "step": 1
+          }
+        ],
+        "notes": [
+          "선명한 초상화: 예시 시작 · 반투명 초상화: 목표 배치",
+          "화살표는 행동 방향이며 안전 경로나 정확한 기술 사거리가 아닙니다. 귀환 방향은 도보 경로가 아닙니다.",
+          "좌표·웨이브·포탑·시야 표시는 개략적인 설명 위치입니다. 지도 자산 16.20.1의 최신 지형 일치 여부는 별도입니다.",
+          "적 위치 미확인: 적 초상화를 배치하지 않았습니다.",
+          "문맥 바텀 라인전: 럭스. 현재 합류·위치·인원은 관측하지 않은 예시입니다."
+        ],
+        "context": "LANE"
+      },
+      "level": "DESIGN_HYPOTHESIS"
+    }
+  ],
+  "evidence": {
+    "facts": [
+      {
+        "id": "official-detail:Kaisa:R",
+        "slot": "R",
+        "name": "사냥본능",
+        "text": "카이사가 플라즈마 표식이 남은 적 챔피언 근처로 빠르게 돌진하며, {{ rshieldduration }}초 동안 {{ rcalculatedshieldvalue }}의 보호막 을 얻습니다.{{ spellmodifierdescriptionappend }}",
+        "raw_excerpt": "카이사가 <keywordMajor>플라즈마</keywordMajor> 표식이 남은 적 챔피언 근처로 빠르게 돌진하며, {{ rshieldduration }}초 동안 <shield>{{ rcalculatedshieldvalue }}의 보호막</shield>을 얻습니다.{{ spellmodifierdescriptionappend }}",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Kaisa.json",
+        "patch": "16.20.1",
+        "sha256": "98544004fbc81a31b38a8856c301b5434e7881bb05fd4ec708dabb0827214ed3",
+        "local_source": "data/official_catalog/versions/16.20.1/Kaisa-16.20.1.ko_KR.json",
+        "locator": "data.Kaisa.spells.3.tooltip",
+        "scope": "RETAINED_TOOLTIP_MECHANISM_ONLY_UNEVALUATED_TEMPLATE_VALUES"
+      },
+      {
+        "id": "official-detail:Lux:E",
+        "slot": "E",
+        "name": "광휘의 특이점",
+        "text": "럭스가 빛의 영역을 생성해 적들을 {{ slowpercent }}% 둔화 시키고 해당 지역을 드러냅니다. {{ slowzoneduration }}초가 지나거나 스킬을 재사용 하면 폭발하며 {{ totaldamagett }}의 마법 피해 를 입히고 추가로 {{ slowlingerduration }}초 동안 둔화 시킵니다.{{ spellmodifierdescriptionappend }}",
+        "raw_excerpt": "럭스가 빛의 영역을 생성해 적들을 {{ slowpercent }}% <status>둔화</status>시키고 해당 지역을 드러냅니다. {{ slowzoneduration }}초가 지나거나 스킬을 <recast>재사용</recast>하면 폭발하며 <magicDamage>{{ totaldamagett }}의 마법 피해</magicDamage>를 입히고 추가로 {{ slowlingerduration }}초 동안 <status>둔화</status>시킵니다.{{ spellmodifierdescriptionappend }}",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+        "patch": "16.20.1",
+        "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+        "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+        "locator": "data.Lux.spells.2.tooltip",
+        "scope": "RETAINED_TOOLTIP_MECHANISM_ONLY_UNEVALUATED_TEMPLATE_VALUES"
+      },
+      {
+        "id": "official-detail:Lux:W",
+        "slot": "W",
+        "name": "프리즘 보호막",
+        "text": "럭스가 마법봉을 던져 봉에 닿은 모든 아군에게 {{ shieldduration }}초 동안 {{ totalshieldtt }}의 피해를 흡수하는 보호막 을 씌웁니다. 마법봉은 돌아올 때도 똑같이 보호막 을 부여합니다.{{ spellmodifierdescriptionappend }}",
+        "raw_excerpt": "럭스가 마법봉을 던져 봉에 닿은 모든 아군에게 {{ shieldduration }}초 동안 <shield>{{ totalshieldtt }}의 피해를 흡수하는 보호막</shield>을 씌웁니다. 마법봉은 돌아올 때도 똑같이 <shield>보호막</shield>을 부여합니다.{{ spellmodifierdescriptionappend }}",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+        "patch": "16.20.1",
+        "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+        "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+        "locator": "data.Lux.spells.1.tooltip",
+        "scope": "RETAINED_TOOLTIP_MECHANISM_ONLY_UNEVALUATED_TEMPLATE_VALUES"
+      },
+      {
+        "id": "official-item:1001",
+        "slot": "ITEM",
+        "name": "장화",
+        "text": "이동 속도 25",
+        "raw_excerpt": "<mainText><stats>이동 속도 <attention>25</attention></stats><br><br></mainText>",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/item.json",
+        "patch": "16.20.1",
+        "sha256": "8fd60c77bddc212fd1550850f0db01caa68c05c9f11e377d52df03a9627f8085",
+        "local_source": "data/official_items/versions/16.20.1/item.ko_KR.json",
+        "locator": "data.1001.description",
+        "scope": "OBSERVED_ITEM_PROPERTY_ONLY_NOT_BUILD_OR_MATCHUP_RECOMMENDATION"
+      },
+      {
+        "id": "official-item:1036",
+        "slot": "ITEM",
+        "name": "롱소드",
+        "text": "공격력 10",
+        "raw_excerpt": "<mainText><stats>공격력 <attention>10</attention></stats><br><br></mainText>",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/item.json",
+        "patch": "16.20.1",
+        "sha256": "8fd60c77bddc212fd1550850f0db01caa68c05c9f11e377d52df03a9627f8085",
+        "local_source": "data/official_items/versions/16.20.1/item.ko_KR.json",
+        "locator": "data.1036.description",
+        "scope": "OBSERVED_ITEM_PROPERTY_ONLY_NOT_BUILD_OR_MATCHUP_RECOMMENDATION"
+      },
+      {
+        "id": "official:Ahri:E",
+        "slot": "E",
+        "name": "매혹",
+        "text": "아리가 입맞춤을 날려 피해를 주며 맞은 적을 홀립니다. 홀린 적은 즉시 이동 스킬을 멈추고 아리 쪽으로 무작정 다가갑니다.",
+        "raw_excerpt": "아리가 입맞춤을 날려 피해를 주며 맞은 적을 홀립니다. 홀린 적은 즉시 이동 스킬을 멈추고 아리 쪽으로 무작정 다가갑니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ahri.json",
+        "patch": "16.20.1",
+        "sha256": "867e69e9bd23b3d722db513714270807b7ba262c04392fb9c8c007adfa5eb02b",
+        "local_source": "data/official_catalog/versions/16.20.1/Ahri-16.20.1.ko_KR.json",
+        "locator": "data.Ahri.spells.2.description"
+      },
+      {
+        "id": "official:Ahri:P",
+        "slot": "P",
+        "name": "정기 흡수",
+        "text": "아리가 미니언 또는 몬스터를 9마리 처치하면 체력을 회복합니다. 아리가 적 챔피언 처치에 관여하면 더 많은 체력을 회복합니다.",
+        "raw_excerpt": "아리가 미니언 또는 몬스터를 9마리 처치하면 체력을 회복합니다.<br>아리가 적 챔피언 처치에 관여하면 더 많은 체력을 회복합니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ahri.json",
+        "patch": "16.20.1",
+        "sha256": "867e69e9bd23b3d722db513714270807b7ba262c04392fb9c8c007adfa5eb02b",
+        "local_source": "data/official_catalog/versions/16.20.1/Ahri-16.20.1.ko_KR.json",
+        "locator": "data.Ahri.passive.description"
+      },
+      {
+        "id": "official:Ahri:Q",
+        "slot": "Q",
+        "name": "현혹의 구슬",
+        "text": "아리가 구슬을 던지고 다시 받습니다. 던질 때는 마법 피해를 주며 돌아올 때는 고정 피해를 줍니다.",
+        "raw_excerpt": "아리가 구슬을 던지고 다시 받습니다. 던질 때는 마법 피해를 주며 돌아올 때는 고정 피해를 줍니다. ",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ahri.json",
+        "patch": "16.20.1",
+        "sha256": "867e69e9bd23b3d722db513714270807b7ba262c04392fb9c8c007adfa5eb02b",
+        "local_source": "data/official_catalog/versions/16.20.1/Ahri-16.20.1.ko_KR.json",
+        "locator": "data.Ahri.spells.0.description"
+      },
+      {
+        "id": "official:Ahri:R",
+        "slot": "R",
+        "name": "혼령 질주",
+        "text": "아리가 전방으로 질주하며 근처 적 챔피언들에게 혼령의 정기를 쏘아냅니다. 재사용 대기시간이 적용되기 전에 최대 세 번까지 사용할 수 있으며, 적 챔피언 처치 관여 시 재사용 가능 횟수가 늘어납니다.",
+        "raw_excerpt": "아리가 전방으로 질주하며 근처 적 챔피언들에게 혼령의 정기를 쏘아냅니다. 재사용 대기시간이 적용되기 전에 최대 세 번까지 사용할 수 있으며, 적 챔피언 처치 관여 시 재사용 가능 횟수가 늘어납니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ahri.json",
+        "patch": "16.20.1",
+        "sha256": "867e69e9bd23b3d722db513714270807b7ba262c04392fb9c8c007adfa5eb02b",
+        "local_source": "data/official_catalog/versions/16.20.1/Ahri-16.20.1.ko_KR.json",
+        "locator": "data.Ahri.spells.3.description"
+      },
+      {
+        "id": "official:Ahri:W",
+        "slot": "W",
+        "name": "여우불",
+        "text": "아리의 이동 속도가 잠시 동안 크게 증가하며 아리가 여우불 세 개를 생성하면, 각각 자동으로 적을 찾아 공격합니다.",
+        "raw_excerpt": "아리의 이동 속도가 잠시 동안 크게 증가하며 아리가 여우불 세 개를 생성하면, 각각 자동으로 적을 찾아 공격합니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ahri.json",
+        "patch": "16.20.1",
+        "sha256": "867e69e9bd23b3d722db513714270807b7ba262c04392fb9c8c007adfa5eb02b",
+        "local_source": "data/official_catalog/versions/16.20.1/Ahri-16.20.1.ko_KR.json",
+        "locator": "data.Ahri.spells.1.description"
+      },
+      {
+        "id": "official:Caitlyn:E",
+        "slot": "E",
+        "name": "90구경 투망",
+        "text": "케이틀린이 무거운 그물을 발사하여 적을 느리게 합니다. 그 반동으로 케이틀린은 뒤로 밀려납니다.",
+        "raw_excerpt": "케이틀린이 무거운 그물을 발사하여 적을 느리게 합니다. 그 반동으로 케이틀린은 뒤로 밀려납니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Caitlyn.json",
+        "patch": "16.20.1",
+        "sha256": "d3215fc64246d7014dbd924cf1b76620756f84184c01191f0f6ffa65c3625029",
+        "local_source": "data/official_catalog/versions/16.20.1/Caitlyn-16.20.1.ko_KR.json",
+        "locator": "data.Caitlyn.spells.2.description"
+      },
+      {
+        "id": "official:Caitlyn:P",
+        "slot": "P",
+        "name": "헤드샷",
+        "text": "케이틀린은 덫 또는 투망에 걸린 대상을 공격할 때나 일정 횟수 이상의 기본 공격을 했을 때 헤드샷을 발사하여 치명타 확률에 비례한 추가 피해를 입힙니다. 덫에 걸리거나 투망에 맞은 대상에게는 케이틀린의 헤드샷 공격 사거리가 두 배가 됩니다.",
+        "raw_excerpt": "케이틀린은 덫 또는 투망에 걸린 대상을 공격할 때나 일정 횟수 이상의 기본 공격을 했을 때 헤드샷을 발사하여 치명타 확률에 비례한 추가 피해를 입힙니다. 덫에 걸리거나 투망에 맞은 대상에게는 케이틀린의 헤드샷 공격 사거리가 두 배가 됩니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Caitlyn.json",
+        "patch": "16.20.1",
+        "sha256": "d3215fc64246d7014dbd924cf1b76620756f84184c01191f0f6ffa65c3625029",
+        "local_source": "data/official_catalog/versions/16.20.1/Caitlyn-16.20.1.ko_KR.json",
+        "locator": "data.Caitlyn.passive.description"
+      },
+      {
+        "id": "official:Caitlyn:Q",
+        "slot": "Q",
+        "name": "필트오버 피스메이커",
+        "text": "케이틀린이 소총을 1초 동안 조준한 후 관통하는 탄환을 발사하여 물리 피해를 입힙니다. (다음 명중하는 대상에게는 더 낮은 피해가 들어갑니다.)",
+        "raw_excerpt": "케이틀린이 소총을 1초 동안 조준한 후 관통하는 탄환을 발사하여 물리 피해를 입힙니다. (다음 명중하는 대상에게는 더 낮은 피해가 들어갑니다.)",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Caitlyn.json",
+        "patch": "16.20.1",
+        "sha256": "d3215fc64246d7014dbd924cf1b76620756f84184c01191f0f6ffa65c3625029",
+        "local_source": "data/official_catalog/versions/16.20.1/Caitlyn-16.20.1.ko_KR.json",
+        "locator": "data.Caitlyn.spells.0.description"
+      },
+      {
+        "id": "official:Caitlyn:R",
+        "slot": "R",
+        "name": "비장의 한 발",
+        "text": "케이틀린이 공을 들인 완벽한 사격을 하여 먼 거리에서 하나의 대상에게 큰 피해를 입힙니다. 적 챔피언이 자신의 아군을 위해 총알을 막아낼 수 있습니다.",
+        "raw_excerpt": "케이틀린이 공을 들인 완벽한 사격을 하여 먼 거리에서 하나의 대상에게 큰 피해를 입힙니다. 적 챔피언이 자신의 아군을 위해 총알을 막아낼 수 있습니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Caitlyn.json",
+        "patch": "16.20.1",
+        "sha256": "d3215fc64246d7014dbd924cf1b76620756f84184c01191f0f6ffa65c3625029",
+        "local_source": "data/official_catalog/versions/16.20.1/Caitlyn-16.20.1.ko_KR.json",
+        "locator": "data.Caitlyn.spells.3.description"
+      },
+      {
+        "id": "official:Caitlyn:W",
+        "slot": "W",
+        "name": "요들잡이 덫",
+        "text": "케이틀린이 함정을 설치합니다. 함정이 발동하면 함정에 걸린 적 챔피언은 1.5초간 모습이 드러나며 이동할 수 없게 되고, 케이틀린의 헤드샷이 강화됩니다.",
+        "raw_excerpt": "케이틀린이 함정을 설치합니다. 함정이 발동하면 함정에 걸린 적 챔피언은 1.5초간 모습이 드러나며 이동할 수 없게 되고, 케이틀린의 헤드샷이 강화됩니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Caitlyn.json",
+        "patch": "16.20.1",
+        "sha256": "d3215fc64246d7014dbd924cf1b76620756f84184c01191f0f6ffa65c3625029",
+        "local_source": "data/official_catalog/versions/16.20.1/Caitlyn-16.20.1.ko_KR.json",
+        "locator": "data.Caitlyn.spells.1.description"
+      },
+      {
+        "id": "official:Fiora:E",
+        "slot": "E",
+        "name": "대가의 검술",
+        "text": "피오라는 다음 두 번의 공격에 대해 공격 속도가 상승합니다. 첫 번째 공격은 대상을 둔화시키고, 두 번째 공격은 치명타가 됩니다.",
+        "raw_excerpt": "피오라는 다음 두 번의 공격에 대해 공격 속도가 상승합니다. 첫 번째 공격은 대상을 둔화시키고, 두 번째 공격은 치명타가 됩니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Fiora.json",
+        "patch": "16.20.1",
+        "sha256": "b11ce2d22e1688d05f135a46d7aaf3af4cf2284372dcd75155b7e0f6f451b078",
+        "local_source": "data/official_catalog/versions/16.20.1/Fiora-16.20.1.ko_KR.json",
+        "locator": "data.Fiora.spells.2.description"
+      },
+      {
+        "id": "official:Fiora:P",
+        "slot": "P",
+        "name": "치명적인 검무",
+        "text": "피오라가 챔피언의 급소 하나를 드러냅니다. 급소 를 가격하면 체력을 회복 하고 이동 속도 가 상승합니다.",
+        "raw_excerpt": "피오라가 챔피언의 <keywordMajor>급소</keywordMajor> 하나를 드러냅니다. <keywordMajor>급소</keywordMajor>를 가격하면 <healing>체력을 회복</healing>하고 <speed>이동 속도</speed>가 상승합니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Fiora.json",
+        "patch": "16.20.1",
+        "sha256": "b11ce2d22e1688d05f135a46d7aaf3af4cf2284372dcd75155b7e0f6f451b078",
+        "local_source": "data/official_catalog/versions/16.20.1/Fiora-16.20.1.ko_KR.json",
+        "locator": "data.Fiora.passive.description"
+      },
+      {
+        "id": "official:Fiora:Q",
+        "slot": "Q",
+        "name": "찌르기",
+        "text": "피오라가 한 방향으로 돌진하며 근처 적 하나를 찔러 물리 피해를 입히고 적중 시 효과를 적용합니다.",
+        "raw_excerpt": "피오라가 한 방향으로 돌진하며 근처 적 하나를 찔러 물리 피해를 입히고 적중 시 효과를 적용합니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Fiora.json",
+        "patch": "16.20.1",
+        "sha256": "b11ce2d22e1688d05f135a46d7aaf3af4cf2284372dcd75155b7e0f6f451b078",
+        "local_source": "data/official_catalog/versions/16.20.1/Fiora-16.20.1.ko_KR.json",
+        "locator": "data.Fiora.spells.0.description"
+      },
+      {
+        "id": "official:Fiora:R",
+        "slot": "R",
+        "name": "대결투",
+        "text": "피오라가 적 챔피언의 급소 네 군데를 모두 드러내고 해당 적 근처에서 이동 속도가 증가합니다. 피오라가 급소 네 군데를 모두 가격하거나 한 군데라도 가격한 후 대상이 죽으면 다음 몇 초 동안 피오라와 주변 지역에 있는 아군이 치유됩니다.",
+        "raw_excerpt": "피오라가 적 챔피언의 급소 네 군데를 모두 드러내고 해당 적 근처에서 이동 속도가 증가합니다. 피오라가 급소 네 군데를 모두 가격하거나 한 군데라도 가격한 후 대상이 죽으면 다음 몇 초 동안 피오라와 주변 지역에 있는 아군이 치유됩니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Fiora.json",
+        "patch": "16.20.1",
+        "sha256": "b11ce2d22e1688d05f135a46d7aaf3af4cf2284372dcd75155b7e0f6f451b078",
+        "local_source": "data/official_catalog/versions/16.20.1/Fiora-16.20.1.ko_KR.json",
+        "locator": "data.Fiora.spells.3.description"
+      },
+      {
+        "id": "official:Fiora:W",
+        "slot": "W",
+        "name": "응수",
+        "text": "피오라가 잠시 동안 받는 모든 공격과 이동 불가 효과를 막아낸 다음 대상이 있는 방향으로 검을 찌릅니다. 이 공격은 처음 맞은 적 챔피언을 둔화시키고, 피오라가 이동 불가 효과를 막아낼 경우 공격한 상대를 기절시킵니다.",
+        "raw_excerpt": "피오라가 잠시 동안 받는 모든 공격과 이동 불가 효과를 막아낸 다음 대상이 있는 방향으로 검을 찌릅니다. 이 공격은 처음 맞은 적 챔피언을 둔화시키고, 피오라가 이동 불가 효과를 막아낼 경우 공격한 상대를 기절시킵니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Fiora.json",
+        "patch": "16.20.1",
+        "sha256": "b11ce2d22e1688d05f135a46d7aaf3af4cf2284372dcd75155b7e0f6f451b078",
+        "local_source": "data/official_catalog/versions/16.20.1/Fiora-16.20.1.ko_KR.json",
+        "locator": "data.Fiora.spells.1.description"
+      },
+      {
+        "id": "official:Kaisa:E",
+        "slot": "E",
+        "name": "고속 충전",
+        "text": "카이사의 이동 속도가 잠시 동안 증가한 뒤 공격 속도가 증가합니다. 살아있는 무기: 고속 충전을 사용하면 잠시 투명 상태가 됩니다.",
+        "raw_excerpt": "카이사의 이동 속도가 잠시 동안 증가한 뒤 공격 속도가 증가합니다.<br><br>살아있는 무기: 고속 충전을 사용하면 잠시 투명 상태가 됩니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Kaisa.json",
+        "patch": "16.20.1",
+        "sha256": "98544004fbc81a31b38a8856c301b5434e7881bb05fd4ec708dabb0827214ed3",
+        "local_source": "data/official_catalog/versions/16.20.1/Kaisa-16.20.1.ko_KR.json",
+        "locator": "data.Kaisa.spells.2.description"
+      },
+      {
+        "id": "official:Kaisa:P",
+        "slot": "P",
+        "name": "두 번째 피부",
+        "text": "카이사는 기본 공격으로 플라즈마 중첩을 쌓아 그에 따른 추가 마법 피해를 입힙니다. 아군의 이동 불가 효과가 적에게 적용됐을 때에도 플라즈마 중첩이 쌓입니다. 살아있는 무기 효과는 카이사가 구입하는 아이템에 따라 스킬을 강화시킵니다.",
+        "raw_excerpt": "카이사는 기본 공격으로 플라즈마 중첩을 쌓아 그에 따른 추가 마법 피해를 입힙니다. 아군의 이동 불가 효과가 적에게 적용됐을 때에도 플라즈마 중첩이 쌓입니다. 살아있는 무기 효과는 카이사가 구입하는 아이템에 따라 스킬을 강화시킵니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Kaisa.json",
+        "patch": "16.20.1",
+        "sha256": "98544004fbc81a31b38a8856c301b5434e7881bb05fd4ec708dabb0827214ed3",
+        "local_source": "data/official_catalog/versions/16.20.1/Kaisa-16.20.1.ko_KR.json",
+        "locator": "data.Kaisa.passive.description"
+      },
+      {
+        "id": "official:Kaisa:Q",
+        "slot": "Q",
+        "name": "이케시아 폭우",
+        "text": "카이사가 근처 적들을 추격하는 미사일 세례를 퍼붓습니다. 살아있는 무기: 이케시아 폭우가 발사하는 미사일 개수가 증가합니다.",
+        "raw_excerpt": "카이사가 근처 적들을 추격하는 미사일 세례를 퍼붓습니다.<br><br>살아있는 무기: 이케시아 폭우가 발사하는 미사일 개수가 증가합니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Kaisa.json",
+        "patch": "16.20.1",
+        "sha256": "98544004fbc81a31b38a8856c301b5434e7881bb05fd4ec708dabb0827214ed3",
+        "local_source": "data/official_catalog/versions/16.20.1/Kaisa-16.20.1.ko_KR.json",
+        "locator": "data.Kaisa.spells.0.description"
+      },
+      {
+        "id": "official:Kaisa:R",
+        "slot": "R",
+        "name": "사냥본능",
+        "text": "카이사가 적 챔피언 근처로 돌진합니다.",
+        "raw_excerpt": "카이사가 적 챔피언 근처로 돌진합니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Kaisa.json",
+        "patch": "16.20.1",
+        "sha256": "98544004fbc81a31b38a8856c301b5434e7881bb05fd4ec708dabb0827214ed3",
+        "local_source": "data/official_catalog/versions/16.20.1/Kaisa-16.20.1.ko_KR.json",
+        "locator": "data.Kaisa.spells.3.description"
+      },
+      {
+        "id": "official:Kaisa:W",
+        "slot": "W",
+        "name": "공허추적자",
+        "text": "카이사가 장거리 광선을 발사하며, 광선에 적중한 적에게 플라즈마 중첩이 쌓입니다. 살아있는 무기: 공허추적자 적중 시 플라즈마 중첩이 추가로 쌓이며 챔피언에게 적중 시 재사용 대기시간이 감소합니다.",
+        "raw_excerpt": "카이사가 장거리 광선을 발사하며, 광선에 적중한 적에게 플라즈마 중첩이 쌓입니다.<br><br>살아있는 무기: 공허추적자 적중 시 플라즈마 중첩이 추가로 쌓이며 챔피언에게 적중 시 재사용 대기시간이 감소합니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Kaisa.json",
+        "patch": "16.20.1",
+        "sha256": "98544004fbc81a31b38a8856c301b5434e7881bb05fd4ec708dabb0827214ed3",
+        "local_source": "data/official_catalog/versions/16.20.1/Kaisa-16.20.1.ko_KR.json",
+        "locator": "data.Kaisa.spells.1.description"
+      },
+      {
+        "id": "official:LeeSin:E",
+        "slot": "E",
+        "name": "폭풍/무력화",
+        "text": "폭풍: 리 신이 바닥을 내리쳐 마법 피해를 입히고 은신한 유닛을 드러내는 충격파를 발생시킵니다. 폭풍이 적에게 명중하면 무력화를 사용할 수 있습니다. 무력화: 리 신이 폭풍에 피해를 입은 적을 약화시키며 이동 속도를 낮춥니다. 저하된 이동 속도는 시간이 지남에 따라 점차 회복됩니다.",
+        "raw_excerpt": "폭풍: 리 신이 바닥을 내리쳐 마법 피해를 입히고 은신한 유닛을 드러내는 충격파를 발생시킵니다. 폭풍이 적에게 명중하면 무력화를 사용할 수 있습니다.<br>무력화: 리 신이 폭풍에 피해를 입은 적을 약화시키며 이동 속도를 낮춥니다. 저하된 이동 속도는 시간이 지남에 따라 점차 회복됩니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/LeeSin.json",
+        "patch": "16.20.1",
+        "sha256": "1c92048e3db2d83b93fddaa1cd3978e2dd93c60314fe27a11278f9610d14ae55",
+        "local_source": "data/official_catalog/versions/16.20.1/LeeSin-16.20.1.ko_KR.json",
+        "locator": "data.LeeSin.spells.2.description"
+      },
+      {
+        "id": "official:LeeSin:P",
+        "slot": "P",
+        "name": "질풍격",
+        "text": "리 신이 스킬을 사용하면 다음 두 번의 기본 공격 속도가 증가하며 기력을 회복합니다.",
+        "raw_excerpt": "리 신이 스킬을 사용하면 다음 두 번의 기본 공격 속도가 증가하며 기력을 회복합니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/LeeSin.json",
+        "patch": "16.20.1",
+        "sha256": "1c92048e3db2d83b93fddaa1cd3978e2dd93c60314fe27a11278f9610d14ae55",
+        "local_source": "data/official_catalog/versions/16.20.1/LeeSin-16.20.1.ko_KR.json",
+        "locator": "data.LeeSin.passive.description"
+      },
+      {
+        "id": "official:LeeSin:Q",
+        "slot": "Q",
+        "name": "음파 / 공명의 일격",
+        "text": "음파: 리 신이 음파를 발사하여 적의 위치를 파악하며, 음파에 맞은 적에게 물리 피해를 입힙니다. 적이 음파에 명중하면 다음 3초 안에 공명의 일격을 시전할 수 있습니다. 공명의 일격: 리 신이 음파에 맞은 적에게 돌격해 적이 잃은 체력에 비례한 물리 피해를 입힙니다.",
+        "raw_excerpt": "음파: 리 신이 음파를 발사하여 적의 위치를 파악하며, 음파에 맞은 적에게 물리 피해를 입힙니다. 적이 음파에 명중하면 다음 3초 안에 공명의 일격을 시전할 수 있습니다.<br>공명의 일격: 리 신이 음파에 맞은 적에게 돌격해 적이 잃은 체력에 비례한 물리 피해를 입힙니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/LeeSin.json",
+        "patch": "16.20.1",
+        "sha256": "1c92048e3db2d83b93fddaa1cd3978e2dd93c60314fe27a11278f9610d14ae55",
+        "local_source": "data/official_catalog/versions/16.20.1/LeeSin-16.20.1.ko_KR.json",
+        "locator": "data.LeeSin.spells.0.description"
+      },
+      {
+        "id": "official:LeeSin:R",
+        "slot": "R",
+        "name": "용의 분노",
+        "text": "리 신이 강력한 돌려차기로 적 챔피언을 뒤로 밀어내고 공격 대상과 대상과 부딪히는 모든 적에게 물리 피해를 입힙니다. 공격 대상과 부딪힌 적은 짧은 시간 공중에 떠오릅니다. 이 기술은 제시 페링이 전수한 기술이지만, 리 신은 적을 맵 밖으로 날려버리지는 않습니다.",
+        "raw_excerpt": "리 신이 강력한 돌려차기로 적 챔피언을 뒤로 밀어내고 공격 대상과 대상과 부딪히는 모든 적에게 물리 피해를 입힙니다. 공격 대상과 부딪힌 적은 짧은 시간 공중에 떠오릅니다. 이 기술은 제시 페링이 전수한 기술이지만, 리 신은 적을 맵 밖으로 날려버리지는 않습니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/LeeSin.json",
+        "patch": "16.20.1",
+        "sha256": "1c92048e3db2d83b93fddaa1cd3978e2dd93c60314fe27a11278f9610d14ae55",
+        "local_source": "data/official_catalog/versions/16.20.1/LeeSin-16.20.1.ko_KR.json",
+        "locator": "data.LeeSin.spells.3.description"
+      },
+      {
+        "id": "official:LeeSin:W",
+        "slot": "W",
+        "name": "방호 / 강철의 의지",
+        "text": "방호: 리 신이 대상 아군에게 돌격하여 자신에게 피해를 흡수하는 보호막을 생성합니다. 해당 아군이 챔피언일 경우 아군에게도 보호막이 적용됩니다. 방호를 사용하고 난 뒤 강철의 의지를 시전할 수 있습니다. 강철의 의지: 고된 수행으로 리 신이 전투에서 보다 잘 살아남을 수 있게 됩니다. 모든 피해 흡혈 효과를 얻습니다.",
+        "raw_excerpt": "방호: 리 신이 대상 아군에게 돌격하여 자신에게 피해를 흡수하는 보호막을 생성합니다. 해당 아군이 챔피언일 경우 아군에게도 보호막이 적용됩니다. 방호를 사용하고 난 뒤 강철의 의지를 시전할 수 있습니다.<br>강철의 의지: 고된 수행으로 리 신이 전투에서 보다 잘 살아남을 수 있게 됩니다. 모든 피해 흡혈 효과를 얻습니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/LeeSin.json",
+        "patch": "16.20.1",
+        "sha256": "1c92048e3db2d83b93fddaa1cd3978e2dd93c60314fe27a11278f9610d14ae55",
+        "local_source": "data/official_catalog/versions/16.20.1/LeeSin-16.20.1.ko_KR.json",
+        "locator": "data.LeeSin.spells.1.description"
+      },
+      {
+        "id": "official:Lux:E",
+        "slot": "E",
+        "name": "광휘의 특이점",
+        "text": "지정한 지역에 뒤틀린 빛의 구체를 띄워 주변 적의 속도를 늦춥니다. 럭스는 이 빛을 폭발시켜 피해를 입힐 수 있습니다.",
+        "raw_excerpt": "지정한 지역에 뒤틀린 빛의 구체를 띄워 주변 적의 속도를 늦춥니다. 럭스는 이 빛을 폭발시켜 피해를 입힐 수 있습니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+        "patch": "16.20.1",
+        "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+        "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+        "locator": "data.Lux.spells.2.description"
+      },
+      {
+        "id": "official:Lux:P",
+        "slot": "P",
+        "name": "광채",
+        "text": "럭스의 공격 스킬은 몇 초 동안 적을 빛의 에너지로 가득 채웁니다. 럭스의 기본 공격으로 이 에너지를 불태우면 적은 럭스의 레벨에 비례하는 추가 마법 피해를 받습니다.",
+        "raw_excerpt": "럭스의 공격 스킬은 몇 초 동안 적을 빛의 에너지로 가득 채웁니다. 럭스의 기본 공격으로 이 에너지를 불태우면 적은 럭스의 레벨에 비례하는 추가 마법 피해를 받습니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+        "patch": "16.20.1",
+        "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+        "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+        "locator": "data.Lux.passive.description"
+      },
+      {
+        "id": "official:Lux:Q",
+        "slot": "Q",
+        "name": "빛의 속박",
+        "text": "럭스가 빛의 구를 발사하여 최대 2명의 적 유닛을 속박하며 피해를 입힙니다.",
+        "raw_excerpt": "럭스가 빛의 구를 발사하여 최대 2명의 적 유닛을 속박하며 피해를 입힙니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+        "patch": "16.20.1",
+        "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+        "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+        "locator": "data.Lux.spells.0.description"
+      },
+      {
+        "id": "official:Lux:R",
+        "slot": "R",
+        "name": "최후의 섬광",
+        "text": "럭스가 에너지를 모아 빛 기둥을 발사하며 목표 지역에 있는 모든 대상에게 피해를 입힙니다. 또한 이는 럭스의 기본 지속 효과 스킬을 발동시키고 광채 효과의 지속시간을 갱신합니다.",
+        "raw_excerpt": "럭스가 에너지를 모아 빛 기둥을 발사하며 목표 지역에 있는 모든 대상에게 피해를 입힙니다. 또한 이는 럭스의 기본 지속 효과 스킬을 발동시키고 광채 효과의 지속시간을 갱신합니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+        "patch": "16.20.1",
+        "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+        "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+        "locator": "data.Lux.spells.3.description"
+      },
+      {
+        "id": "official:Lux:W",
+        "slot": "W",
+        "name": "프리즘 보호막",
+        "text": "럭스가 마법봉을 던져 아군 주변의 빛을 구부리며 적의 공격으로부터 보호해줍니다.",
+        "raw_excerpt": "럭스가 마법봉을 던져 아군 주변의 빛을 구부리며 적의 공격으로부터 보호해줍니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+        "patch": "16.20.1",
+        "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+        "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+        "locator": "data.Lux.spells.1.description"
+      },
+      {
+        "id": "official:Nautilus:E",
+        "slot": "E",
+        "name": "역조",
+        "text": "노틸러스가 주위에 세 번의 폭발을 일으킵니다. 폭발할 때마다 적에게 피해를 입히고 둔화시킵니다.",
+        "raw_excerpt": "노틸러스가 주위에 세 번의 폭발을 일으킵니다. 폭발할 때마다 적에게 피해를 입히고 둔화시킵니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+        "patch": "16.20.1",
+        "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+        "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+        "locator": "data.Nautilus.spells.2.description"
+      },
+      {
+        "id": "official:Nautilus:P",
+        "slot": "P",
+        "name": "강력한 일격",
+        "text": "노틸러스가 대상에 대한 첫 기본 공격 시 추가 물리 피해를 입히고 잠시 속박합니다.",
+        "raw_excerpt": "노틸러스가 대상에 대한 첫 기본 공격 시 추가 물리 피해를 입히고 잠시 속박합니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+        "patch": "16.20.1",
+        "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+        "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+        "locator": "data.Nautilus.passive.description"
+      },
+      {
+        "id": "official:Nautilus:Q",
+        "slot": "Q",
+        "name": "닻줄 견인",
+        "text": "노틸러스가 전방으로 닻을 던집니다. 닻이 적을 맞히면 노틸러스와 대상이 가까이 당겨지며 대상에게 마법 피해를 입힙니다. 닻이 지형을 맞히면 노틸러스가 지형 쪽으로 끌려갑니다.",
+        "raw_excerpt": "노틸러스가 전방으로 닻을 던집니다.  닻이 적을 맞히면 노틸러스와 대상이 가까이 당겨지며 대상에게 마법 피해를 입힙니다. 닻이 지형을 맞히면 노틸러스가 지형 쪽으로 끌려갑니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+        "patch": "16.20.1",
+        "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+        "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+        "locator": "data.Nautilus.spells.0.description"
+      },
+      {
+        "id": "official:Nautilus:R",
+        "slot": "R",
+        "name": "폭뢰",
+        "text": "지면에 충격파를 발사하면 상대방을 추적해 갑니다. 충격파는 위의 지면을 찢으며 적들을 공중으로 띄웁니다. 충격파가 상대방에게 닿으면 폭발하여 대상을 공중으로 띄우고 기절시킵니다.",
+        "raw_excerpt": "지면에 충격파를 발사하면 상대방을 추적해 갑니다. 충격파는 위의 지면을 찢으며 적들을 공중으로 띄웁니다. 충격파가 상대방에게 닿으면 폭발하여 대상을 공중으로 띄우고 기절시킵니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+        "patch": "16.20.1",
+        "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+        "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+        "locator": "data.Nautilus.spells.3.description"
+      },
+      {
+        "id": "official:Nautilus:W",
+        "slot": "W",
+        "name": "타이탄의 분노",
+        "text": "노틸러스가 잠시 보호막을 얻습니다. 보호막이 지속되는 동안 노틸러스의 기본 공격은 대상과 대상 주위의 적에게 지속 피해를 입힙니다.",
+        "raw_excerpt": "노틸러스가 잠시 보호막을 얻습니다. 보호막이 지속되는 동안 노틸러스의 기본 공격은 대상과 대상 주위의 적에게 지속 피해를 입힙니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+        "patch": "16.20.1",
+        "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+        "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+        "locator": "data.Nautilus.spells.1.description"
+      },
+      {
+        "id": "official:Ornn:E",
+        "slot": "E",
+        "name": "화염 돌진",
+        "text": "오른이 돌진하며 통과한 적에게 피해를 입힙니다. 오른이 돌진 중 지형지물에 충돌하면, 그 충돌로 인해 충격파가 발생해 적에게 피해를 입히고 공중으로 띄웁니다.",
+        "raw_excerpt": "오른이 돌진하며 통과한 적에게 피해를 입힙니다. 오른이 돌진 중 지형지물에 충돌하면, 그 충돌로 인해 충격파가 발생해 적에게 피해를 입히고 공중으로 띄웁니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ornn.json",
+        "patch": "16.20.1",
+        "sha256": "020b57331afb32ee120f4157b4db72550c4ad93b8f43987d164bf3f57e129aaf",
+        "local_source": "data/official_catalog/versions/16.20.1/Ornn-16.20.1.ko_KR.json",
+        "locator": "data.Ornn.spells.2.description"
+      },
+      {
+        "id": "official:Ornn:P",
+        "slot": "P",
+        "name": "간이 대장간",
+        "text": "오른이 추가 방어력과 마법 저항력을 얻습니다. 오른은 어디에서든 골드를 써서 소모품을 제외한 아이템을 제작할 수 있습니다. 또한 걸작 아이템을 만들어 직접 사용하거나 아군의 아이템을 업그레이드할 수 있습니다.",
+        "raw_excerpt": "오른이 추가 방어력과 마법 저항력을 얻습니다.<br><br>오른은 어디에서든 골드를 써서 소모품을 제외한 아이템을 제작할 수 있습니다.<br><br>또한 걸작 아이템을 만들어 직접 사용하거나 아군의 아이템을 업그레이드할 수 있습니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ornn.json",
+        "patch": "16.20.1",
+        "sha256": "020b57331afb32ee120f4157b4db72550c4ad93b8f43987d164bf3f57e129aaf",
+        "local_source": "data/official_catalog/versions/16.20.1/Ornn-16.20.1.ko_KR.json",
+        "locator": "data.Ornn.passive.description"
+      },
+      {
+        "id": "official:Ornn:Q",
+        "slot": "Q",
+        "name": "용암 균열",
+        "text": "오른이 지면을 내려쳐 적에게 물리 피해를 입히고 둔화시키는 균열을 만들어냅니다. 잠시 후 목표 지점에 용암 기둥이 생성됩니다.",
+        "raw_excerpt": "오른이 지면을 내려쳐 적에게 물리 피해를 입히고 둔화시키는 균열을 만들어냅니다. 잠시 후 목표 지점에 용암 기둥이 생성됩니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ornn.json",
+        "patch": "16.20.1",
+        "sha256": "020b57331afb32ee120f4157b4db72550c4ad93b8f43987d164bf3f57e129aaf",
+        "local_source": "data/official_catalog/versions/16.20.1/Ornn-16.20.1.ko_KR.json",
+        "locator": "data.Ornn.spells.0.description"
+      },
+      {
+        "id": "official:Ornn:R",
+        "slot": "R",
+        "name": "대장장이 신의 부름",
+        "text": "오른이 목표 위치에 거대한 불의 정령을 소환합니다. 불의 정령은 오른에게로 다가오며 점점 이동 속도가 빨라집니다. 정령이 밟고 지나간 적은 피해를 입고 둔화되며 불안정 상태가 됩니다. 오른이 대장장이 신의 부름을 재시전하면 정령 쪽으로 돌진합니다. 오른이 돌진해 정령에 부딪히면 정령의 진행 방향이 바뀝니다. 진행 방향이 바뀐 정령은 부딪힌 모든 적을 공중으로 띄우며 전과 동일한 피해를 입히고 다시 불안정 상태로 만듭니다.",
+        "raw_excerpt": "오른이 목표 위치에 거대한 불의 정령을 소환합니다. 불의 정령은 오른에게로 다가오며 점점 이동 속도가 빨라집니다. 정령이 밟고 지나간 적은 피해를 입고 둔화되며 불안정 상태가 됩니다. 오른이 대장장이 신의 부름을 재시전하면 정령 쪽으로 돌진합니다. 오른이 돌진해 정령에 부딪히면 정령의 진행 방향이 바뀝니다. 진행 방향이 바뀐 정령은 부딪힌 모든 적을 공중으로 띄우며 전과 동일한 피해를 입히고 다시 불안정 상태로 만듭니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ornn.json",
+        "patch": "16.20.1",
+        "sha256": "020b57331afb32ee120f4157b4db72550c4ad93b8f43987d164bf3f57e129aaf",
+        "local_source": "data/official_catalog/versions/16.20.1/Ornn-16.20.1.ko_KR.json",
+        "locator": "data.Ornn.spells.3.description"
+      },
+      {
+        "id": "official:Ornn:W",
+        "slot": "W",
+        "name": "불꽃 풀무질",
+        "text": "오른이 전진하며 불꽃을 뿜습니다. 마지막 불꽃에 맞은 적은 불안정 상태가 됩니다.",
+        "raw_excerpt": "오른이 전진하며 불꽃을 뿜습니다. 마지막 불꽃에 맞은 적은 불안정 상태가 됩니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ornn.json",
+        "patch": "16.20.1",
+        "sha256": "020b57331afb32ee120f4157b4db72550c4ad93b8f43987d164bf3f57e129aaf",
+        "local_source": "data/official_catalog/versions/16.20.1/Ornn-16.20.1.ko_KR.json",
+        "locator": "data.Ornn.spells.1.description"
+      },
+      {
+        "id": "official:Sejuani:E",
+        "slot": "E",
+        "name": "만년 서리",
+        "text": "세주아니가 서리가 최대로 중첩된 대상을 얼리고 기절시킵니다.",
+        "raw_excerpt": "세주아니가 서리가 최대로 중첩된 대상을 얼리고 기절시킵니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Sejuani.json",
+        "patch": "16.20.1",
+        "sha256": "73609f3746b26b2d2f7b5bdd6a03f2647e32741005fd80bcdac341dfae3056b8",
+        "local_source": "data/official_catalog/versions/16.20.1/Sejuani-16.20.1.ko_KR.json",
+        "locator": "data.Sejuani.spells.2.description"
+      },
+      {
+        "id": "official:Sejuani:P",
+        "slot": "P",
+        "name": "혹한의 분노",
+        "text": "세주아니는 일정 시간 동안 피해를 입지 않으면 서리 갑옷이 생겨 추가 방어력과 마법 저항력을 얻고 둔화 효과에 면역됩니다. 서리 갑옷은 세주아니가 피해를 입은 후에도 잠깐 동안 유지됩니다. 기절한 적을 공격하면 막대한 마법 피해를 입힐 수 있습니다.",
+        "raw_excerpt": "세주아니는 일정 시간 동안 피해를 입지 않으면 서리 갑옷이 생겨 추가 방어력과 마법 저항력을 얻고 둔화 효과에 면역됩니다. 서리 갑옷은 세주아니가 피해를 입은 후에도 잠깐 동안 유지됩니다. 기절한 적을 공격하면 막대한 마법 피해를 입힐 수 있습니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Sejuani.json",
+        "patch": "16.20.1",
+        "sha256": "73609f3746b26b2d2f7b5bdd6a03f2647e32741005fd80bcdac341dfae3056b8",
+        "local_source": "data/official_catalog/versions/16.20.1/Sejuani-16.20.1.ko_KR.json",
+        "locator": "data.Sejuani.passive.description"
+      },
+      {
+        "id": "official:Sejuani:Q",
+        "slot": "Q",
+        "name": "혹한의 맹습",
+        "text": "세주아니가 전방으로 돌진해 적들을 공중으로 띄웁니다. 적 챔피언에게 한 번 부딪히면 돌진을 멈춥니다.",
+        "raw_excerpt": "세주아니가 전방으로 돌진해 적들을 공중으로 띄웁니다. 적 챔피언에게 한 번 부딪히면 돌진을 멈춥니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Sejuani.json",
+        "patch": "16.20.1",
+        "sha256": "73609f3746b26b2d2f7b5bdd6a03f2647e32741005fd80bcdac341dfae3056b8",
+        "local_source": "data/official_catalog/versions/16.20.1/Sejuani-16.20.1.ko_KR.json",
+        "locator": "data.Sejuani.spells.0.description"
+      },
+      {
+        "id": "official:Sejuani:R",
+        "slot": "R",
+        "name": "빙하 감옥",
+        "text": "세주아니가 올가미를 던져 첫 번째로 맞힌 챔피언을 얼리고 기절시킵니다. 올가미는 적들을 둔화시키는 얼음 폭풍을 일으킵니다.",
+        "raw_excerpt": "세주아니가 올가미를 던져 첫 번째로 맞힌 챔피언을 얼리고 기절시킵니다. 올가미는 적들을 둔화시키는 얼음 폭풍을 일으킵니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Sejuani.json",
+        "patch": "16.20.1",
+        "sha256": "73609f3746b26b2d2f7b5bdd6a03f2647e32741005fd80bcdac341dfae3056b8",
+        "local_source": "data/official_catalog/versions/16.20.1/Sejuani-16.20.1.ko_KR.json",
+        "locator": "data.Sejuani.spells.3.description"
+      },
+      {
+        "id": "official:Sejuani:W",
+        "slot": "W",
+        "name": "혹한의 서릿발",
+        "text": "세주아니가 철퇴를 두 번 휘둘러 피해를 입히고 적을 둔화시키며 서리 중첩을 적용시킵니다.",
+        "raw_excerpt": "세주아니가 철퇴를 두 번 휘둘러 피해를 입히고 적을 둔화시키며 서리 중첩을 적용시킵니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Sejuani.json",
+        "patch": "16.20.1",
+        "sha256": "73609f3746b26b2d2f7b5bdd6a03f2647e32741005fd80bcdac341dfae3056b8",
+        "local_source": "data/official_catalog/versions/16.20.1/Sejuani-16.20.1.ko_KR.json",
+        "locator": "data.Sejuani.spells.1.description"
+      },
+      {
+        "id": "official:Zed:E",
+        "slot": "E",
+        "name": "그림자 베기",
+        "text": "제드와 그림자가 각각 주위 적을 베어 피해를 입힙니다. 그림자의 공격에 맞은 적은 둔화됩니다.",
+        "raw_excerpt": "제드와 그림자가 각각 주위 적을 베어 피해를 입힙니다. 그림자의 공격에 맞은 적은 둔화됩니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Zed.json",
+        "patch": "16.20.1",
+        "sha256": "e2542b47e9deea121810152601f2568088512f040e659cf5ae21129a2ffaf224",
+        "local_source": "data/official_catalog/versions/16.20.1/Zed-16.20.1.ko_KR.json",
+        "locator": "data.Zed.spells.2.description"
+      },
+      {
+        "id": "official:Zed:P",
+        "slot": "P",
+        "name": "약자 멸시",
+        "text": "제드가 체력이 낮은 적을 기본 공격하면 마법 피해를 추가로 입힙니다. 같은 적 챔피언에게는 몇 초가 지나야 이 효과가 다시 적용됩니다.",
+        "raw_excerpt": "제드가 체력이 낮은 적을 기본 공격하면 마법 피해를 추가로 입힙니다. 같은 적 챔피언에게는 몇 초가 지나야 이 효과가 다시 적용됩니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Zed.json",
+        "patch": "16.20.1",
+        "sha256": "e2542b47e9deea121810152601f2568088512f040e659cf5ae21129a2ffaf224",
+        "local_source": "data/official_catalog/versions/16.20.1/Zed-16.20.1.ko_KR.json",
+        "locator": "data.Zed.passive.description"
+      },
+      {
+        "id": "official:Zed:Q",
+        "slot": "Q",
+        "name": "예리한 표창",
+        "text": "제드와 그림자가 표창을 던집니다. 각 표창은 적에게 명중하면 피해를 입힙니다.",
+        "raw_excerpt": "제드와 그림자가 표창을 던집니다.<br><br>각 표창은 적에게 명중하면 피해를 입힙니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Zed.json",
+        "patch": "16.20.1",
+        "sha256": "e2542b47e9deea121810152601f2568088512f040e659cf5ae21129a2ffaf224",
+        "local_source": "data/official_catalog/versions/16.20.1/Zed-16.20.1.ko_KR.json",
+        "locator": "data.Zed.spells.0.description"
+      },
+      {
+        "id": "official:Zed:R",
+        "slot": "R",
+        "name": "죽음의 표식",
+        "text": "제드가 잠시 대상으로 지정할 수 없는 상태가 되어 적 챔피언에게 돌진하며 표식을 남깁니다. 3초가 지나면 표식이 발동되며 표식이 적용된 동안 제드가 대상에게 가한 피해의 일부를 입힙니다.",
+        "raw_excerpt": "제드가 잠시 대상으로 지정할 수 없는 상태가 되어 적 챔피언에게 돌진하며 표식을 남깁니다. 3초가 지나면 표식이 발동되며 표식이 적용된 동안 제드가 대상에게 가한 피해의 일부를 입힙니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Zed.json",
+        "patch": "16.20.1",
+        "sha256": "e2542b47e9deea121810152601f2568088512f040e659cf5ae21129a2ffaf224",
+        "local_source": "data/official_catalog/versions/16.20.1/Zed-16.20.1.ko_KR.json",
+        "locator": "data.Zed.spells.3.description"
+      },
+      {
+        "id": "official:Zed:W",
+        "slot": "W",
+        "name": "살아있는 그림자",
+        "text": "기본 지속 효과: 제드와 그림자가 같은 스킬로 동일한 대상을 공격하면 제드가 기력을 회복합니다. 기력 회복은 스킬 사용 시마다 한 번씩만 가능합니다. 사용 시: 제드의 그림자가 전방으로 질주하여, 몇 초간 그 자리에 유지됩니다. 이 스킬을 다시 사용하면 제드가 그림자와 위치를 바꿉니다.",
+        "raw_excerpt": "<font color='#FF9900'>기본 지속 효과: </font>제드와 그림자가 같은 스킬로 동일한 대상을 공격하면 제드가 기력을 회복합니다. 기력 회복은 스킬 사용 시마다 한 번씩만 가능합니다.<br><br><font color='#FF9900'>사용 시:</font> 제드의 그림자가 전방으로 질주하여, 몇 초간 그 자리에 유지됩니다. 이 스킬을 다시 사용하면 제드가 그림자와 위치를 바꿉니다.",
+        "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Zed.json",
+        "patch": "16.20.1",
+        "sha256": "e2542b47e9deea121810152601f2568088512f040e659cf5ae21129a2ffaf224",
+        "local_source": "data/official_catalog/versions/16.20.1/Zed-16.20.1.ko_KR.json",
+        "locator": "data.Zed.spells.1.description"
+      }
+    ],
+    "rules": [
+      {
+        "id": "Q05-I-Ahri",
+        "version": "q05-initiative-2026-10-11.v2",
+        "local_source": "knowledge_candidates/initiative-v2.json",
+        "sha256": "986c1740df77c3af4c0d1b81297bf2bc72a959579f4e4616b1b20785cccc4627",
+        "locator": "0",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [],
+          "protection": [],
+          "strong_when": [],
+          "lane_style": [],
+          "jungle_style": [],
+          "initiative": [
+            "INITIATOR"
+          ],
+          "needs": []
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ahri.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Ahri.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "27a17429c2ee4391b190242985ad252e47eb7fe01e016db81c10497ecd4a3cb8",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Ahri-16.20.1.json",
+            "raw_excerpt": "Ahri blows a kiss that damages and charms an enemy it encounters, instantly stopping movement abilities and causing them to walk harmlessly towards her."
+          }
+        ],
+        "necessary_conditions": [
+          "STATIC_SOURCE_16.20.1|data.Ahri.spells.2.description|Ahri blows a kiss that damages and charms an enemy it encounters, instantly stopping movement abilities and causing them to walk harmlessly towards her."
+        ],
+        "limitations": [
+          "EXPLORATORY AI interpretation of official static mechanics; no approval actor, actual USER_WEB decision or coaching execution is asserted.",
+          "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN. Static build does not establish repository, current or match gameplay patch.",
+          "Initiative is an incomplete capability candidate, not a prediction of player behavior, successful opening, safety, relative strength or winning. Empty categories mean UNKNOWN, not NONE.",
+          "Necessary conditions quote archived mechanics. They do not assert observed ability availability, resources, target contact, range, timing or allied behavior.",
+          "SELF_SUFFICIENT, when present, describes a tentative own-tool pressure interpretation; it does not mean independence from allied help or guaranteed solo success."
+        ],
+        "counterexamples": [
+          "Charm requires encountering an enemy; a miss or prevented control does not open the fight."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      },
+      {
+        "id": "Q05-I-Caitlyn",
+        "version": "q05-initiative-2026-10-11.v2",
+        "local_source": "knowledge_candidates/initiative-v2.json",
+        "sha256": "986c1740df77c3af4c0d1b81297bf2bc72a959579f4e4616b1b20785cccc4627",
+        "locator": "2",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [],
+          "protection": [],
+          "strong_when": [],
+          "lane_style": [],
+          "jungle_style": [],
+          "initiative": [
+            "SELF_SUFFICIENT"
+          ],
+          "needs": []
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Caitlyn.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Caitlyn.passive.description",
+            "patch": "16.20.1",
+            "sha256": "151a89d2f1d2cf7f79eb017aadfa29f1514bd52078f8d15c0522ea7c974297b1",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Caitlyn-16.20.1.json",
+            "raw_excerpt": "Every few basic attacks, or against a target she has trapped or netted, Caitlyn will fire a headshot dealing bonus damage that scales with her critical strike chance. On trapped or netted targets, Caitlyn's Headshot attack range is doubled."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Caitlyn.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Caitlyn.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "151a89d2f1d2cf7f79eb017aadfa29f1514bd52078f8d15c0522ea7c974297b1",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Caitlyn-16.20.1.json",
+            "raw_excerpt": "Caitlyn revs up her rifle for 1 second to unleash a penetrating shot that deals physical damage (deals less damage to subsequent targets)."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Caitlyn.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Caitlyn.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "151a89d2f1d2cf7f79eb017aadfa29f1514bd52078f8d15c0522ea7c974297b1",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Caitlyn-16.20.1.json",
+            "raw_excerpt": "Caitlyn sets a trap that, when sprung, reveals and immobilizes the enemy champion for 1.5 seconds, granting Caitlyn an empowered Headshot."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Caitlyn.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Caitlyn.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "151a89d2f1d2cf7f79eb017aadfa29f1514bd52078f8d15c0522ea7c974297b1",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Caitlyn-16.20.1.json",
+            "raw_excerpt": "Caitlyn fires a heavy net to slow her target. The recoil knocks Caitlyn back."
+          }
+        ],
+        "necessary_conditions": [
+          "STATIC_SOURCE_16.20.1|data.Caitlyn.passive.description|Every few basic attacks, or against a target she has trapped or netted, Caitlyn will fire a headshot dealing bonus damage that scales with her critical strike chance. On trapped or netted targets, Caitlyn's Headshot attack range is doubled.",
+          "STATIC_SOURCE_16.20.1|data.Caitlyn.spells.0.description|Caitlyn revs up her rifle for 1 second to unleash a penetrating shot that deals physical damage (deals less damage to subsequent targets).",
+          "STATIC_SOURCE_16.20.1|data.Caitlyn.spells.1.description|Caitlyn sets a trap that, when sprung, reveals and immobilizes the enemy champion for 1.5 seconds, granting Caitlyn an empowered Headshot.",
+          "STATIC_SOURCE_16.20.1|data.Caitlyn.spells.2.description|Caitlyn fires a heavy net to slow her target. The recoil knocks Caitlyn back."
+        ],
+        "limitations": [
+          "EXPLORATORY AI interpretation of official static mechanics; no approval actor, actual USER_WEB decision or coaching execution is asserted.",
+          "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN. Static build does not establish repository, current or match gameplay patch.",
+          "Initiative is an incomplete capability candidate, not a prediction of player behavior, successful opening, safety, relative strength or winning. Empty categories mean UNKNOWN, not NONE.",
+          "Necessary conditions quote archived mechanics. They do not assert observed ability availability, resources, target contact, range, timing or allied behavior.",
+          "SELF_SUFFICIENT, when present, describes a tentative own-tool pressure interpretation; it does not mean independence from allied help or guaranteed solo success."
+        ],
+        "counterexamples": [
+          "Trap must be sprung for immobilization/empowered Headshot; net recoil and shot damage do not prove safe solo pressure or mandatory allied initiation."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      },
+      {
+        "id": "Q05-I-Fiora",
+        "version": "q05-initiative-2026-10-11.v2",
+        "local_source": "knowledge_candidates/initiative-v2.json",
+        "sha256": "986c1740df77c3af4c0d1b81297bf2bc72a959579f4e4616b1b20785cccc4627",
+        "locator": "4",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [],
+          "protection": [],
+          "strong_when": [],
+          "lane_style": [],
+          "jungle_style": [],
+          "initiative": [
+            "SELF_SUFFICIENT"
+          ],
+          "needs": []
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Fiora.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Fiora.passive.description",
+            "patch": "16.20.1",
+            "sha256": "7a089668881a767f3bf3dbc6e312a94d0f55d7b9ce9d3ea27d8a7e921b2a867e",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Fiora-16.20.1.json",
+            "raw_excerpt": "Fiora has revealed a <keywordMajor>Vital</keywordMajor> on this Champion. If she hits the <keywordMajor>Vital</keywordMajor>, she <healing>restores Health</healing> and gains <speed>Move Speed</speed>."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Fiora.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Fiora.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "7a089668881a767f3bf3dbc6e312a94d0f55d7b9ce9d3ea27d8a7e921b2a867e",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Fiora-16.20.1.json",
+            "raw_excerpt": "Fiora lunges in a direction and stabs a nearby enemy, dealing physical damage and applying on-hit effects."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Fiora.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Fiora.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "7a089668881a767f3bf3dbc6e312a94d0f55d7b9ce9d3ea27d8a7e921b2a867e",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Fiora-16.20.1.json",
+            "raw_excerpt": "Fiora parries all incoming damage and disables for a short time, then stabs in a direction. This stab slows the first enemy champion hit, or stuns them if Fiora blocked an immobilizing effect with this ability."
+          }
+        ],
+        "necessary_conditions": [
+          "STATIC_SOURCE_16.20.1|data.Fiora.passive.description|Fiora has revealed a <keywordMajor>Vital</keywordMajor> on this Champion. If she hits the <keywordMajor>Vital</keywordMajor>, she <healing>restores Health</healing> and gains <speed>Move Speed</speed>.",
+          "STATIC_SOURCE_16.20.1|data.Fiora.spells.0.description|Fiora lunges in a direction and stabs a nearby enemy, dealing physical damage and applying on-hit effects.",
+          "STATIC_SOURCE_16.20.1|data.Fiora.spells.1.description|Fiora parries all incoming damage and disables for a short time, then stabs in a direction. This stab slows the first enemy champion hit, or stuns them if Fiora blocked an immobilizing effect with this ability."
+        ],
+        "limitations": [
+          "EXPLORATORY AI interpretation of official static mechanics; no approval actor, actual USER_WEB decision or coaching execution is asserted.",
+          "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN. Static build does not establish repository, current or match gameplay patch.",
+          "Initiative is an incomplete capability candidate, not a prediction of player behavior, successful opening, safety, relative strength or winning. Empty categories mean UNKNOWN, not NONE.",
+          "Necessary conditions quote archived mechanics. They do not assert observed ability availability, resources, target contact, range, timing or allied behavior.",
+          "SELF_SUFFICIENT, when present, describes a tentative own-tool pressure interpretation; it does not mean independence from allied help or guaranteed solo success."
+        ],
+        "counterexamples": [
+          "Vital contact supplies the described healing/speed; Riposte stun requires blocking an immobilizing effect, so it is not an unconditional opener."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      },
+      {
+        "id": "Q05-I-Kaisa",
+        "version": "q05-initiative-2026-10-11.v2",
+        "local_source": "knowledge_candidates/initiative-v2.json",
+        "sha256": "986c1740df77c3af4c0d1b81297bf2bc72a959579f4e4616b1b20785cccc4627",
+        "locator": "5",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [],
+          "protection": [],
+          "strong_when": [],
+          "lane_style": [],
+          "jungle_style": [],
+          "initiative": [
+            "FOLLOW_UP"
+          ],
+          "needs": [
+            "ALLY_CC"
+          ]
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Kaisa.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Kaisa.passive.description",
+            "patch": "16.20.1",
+            "sha256": "f3b00f4f57d90eefef314b329145f2762fd8f6a2dd613cecae6551f25e4cf3b6",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Kaisa-16.20.1.json",
+            "raw_excerpt": "Kai'Sa's basic attacks stack Plasma, dealing increasing bonus magic damage. Allies' immobilizing effects help stack Plasma. Additionally, Kai'Sa's item purchases upgrade her basic spells to have more powerful properties."
+          }
+        ],
+        "necessary_conditions": [
+          "STATIC_SOURCE_16.20.1|data.Kaisa.passive.description|Kai'Sa's basic attacks stack Plasma, dealing increasing bonus magic damage. Allies' immobilizing effects help stack Plasma. Additionally, Kai'Sa's item purchases upgrade her basic spells to have more powerful properties."
+        ],
+        "limitations": [
+          "EXPLORATORY AI interpretation of official static mechanics; no approval actor, actual USER_WEB decision or coaching execution is asserted.",
+          "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN. Static build does not establish repository, current or match gameplay patch.",
+          "Initiative is an incomplete capability candidate, not a prediction of player behavior, successful opening, safety, relative strength or winning. Empty categories mean UNKNOWN, not NONE.",
+          "Necessary conditions quote archived mechanics. They do not assert observed ability availability, resources, target contact, range, timing or allied behavior.",
+          "SELF_SUFFICIENT, when present, describes a tentative own-tool pressure interpretation; it does not mean independence from allied help or guaranteed solo success.",
+          "FOLLOW_UP and ALLY_CC express the source-described optional benefit to Plasma stacking; they do not prove a mandatory teammate action for every play. The archived ultimate excerpt does not establish a Plasma-target requirement."
+        ],
+        "counterexamples": [
+          "Ally immobilization is an optional benefit to Plasma stacking, not proof of inability to act alone or a universal mandatory ally-engage requirement."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      },
+      {
+        "id": "Q05-I-LeeSin",
+        "version": "q05-initiative-2026-10-11.v2",
+        "local_source": "knowledge_candidates/initiative-v2.json",
+        "sha256": "986c1740df77c3af4c0d1b81297bf2bc72a959579f4e4616b1b20785cccc4627",
+        "locator": "6",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [],
+          "protection": [],
+          "strong_when": [],
+          "lane_style": [],
+          "jungle_style": [],
+          "initiative": [
+            "INITIATOR",
+            "PROTECTOR"
+          ],
+          "needs": []
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/LeeSin.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.LeeSin.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "1f73eed2730b956dce393e51d9fcd18765ded329bfde46470ff3e3e8761099d4",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/LeeSin-16.20.1.json",
+            "raw_excerpt": "Safeguard: Lee Sin rushes to target ally, shielding himself from damage. If the ally is a champion, they are also shielded. After using Safeguard, Lee Sin can cast Iron Will.<br>Iron Will: Lee Sin's intense training allows him to thrive in battle. Lee Sin gains Omnivamp."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/LeeSin.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.LeeSin.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "1f73eed2730b956dce393e51d9fcd18765ded329bfde46470ff3e3e8761099d4",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/LeeSin-16.20.1.json",
+            "raw_excerpt": "Lee Sin performs a powerful roundhouse kick launching his target back, dealing physical damage to the target and any enemies they collide with. Enemies the target collides with are knocked into the air for a short duration. This technique was taught to him by Jesse Perring, although Lee Sin does not kick players off the map."
+          }
+        ],
+        "necessary_conditions": [
+          "STATIC_SOURCE_16.20.1|data.LeeSin.spells.1.description|Safeguard: Lee Sin rushes to target ally, shielding himself from damage. If the ally is a champion, they are also shielded. After using Safeguard, Lee Sin can cast Iron Will.<br>Iron Will: Lee Sin's intense training allows him to thrive in battle. Lee Sin gains Omnivamp.",
+          "STATIC_SOURCE_16.20.1|data.LeeSin.spells.3.description|Lee Sin performs a powerful roundhouse kick launching his target back, dealing physical damage to the target and any enemies they collide with. Enemies the target collides with are knocked into the air for a short duration. This technique was taught to him by Jesse Perring, although Lee Sin does not kick players off the map."
+        ],
+        "limitations": [
+          "EXPLORATORY AI interpretation of official static mechanics; no approval actor, actual USER_WEB decision or coaching execution is asserted.",
+          "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN. Static build does not establish repository, current or match gameplay patch.",
+          "Initiative is an incomplete capability candidate, not a prediction of player behavior, successful opening, safety, relative strength or winning. Empty categories mean UNKNOWN, not NONE.",
+          "Necessary conditions quote archived mechanics. They do not assert observed ability availability, resources, target contact, range, timing or allied behavior.",
+          "SELF_SUFFICIENT, when present, describes a tentative own-tool pressure interpretation; it does not mean independence from allied help or guaranteed solo success."
+        ],
+        "counterexamples": [
+          "Safeguard shields the ally only when the ally is a champion; kick direction and enemy collision do not guarantee a useful opening or peel."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      },
+      {
+        "id": "Q05-I-Lux",
+        "version": "q05-initiative-2026-10-11.v2",
+        "local_source": "knowledge_candidates/initiative-v2.json",
+        "sha256": "986c1740df77c3af4c0d1b81297bf2bc72a959579f4e4616b1b20785cccc4627",
+        "locator": "7",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [],
+          "protection": [],
+          "strong_when": [],
+          "lane_style": [],
+          "jungle_style": [],
+          "initiative": [
+            "INITIATOR",
+            "PROTECTOR"
+          ],
+          "needs": []
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Lux.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Lux.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "54342f28c2e1d8449e831906aefcb74fe374e6130049520fff3c7ad70e237a70",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Lux-16.20.1.json",
+            "raw_excerpt": "Lux releases a sphere of light that binds and deals damage to up to two enemy units."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Lux.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Lux.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "54342f28c2e1d8449e831906aefcb74fe374e6130049520fff3c7ad70e237a70",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Lux-16.20.1.json",
+            "raw_excerpt": "Lux throws her wand and bends the light around any friendly target it touches, protecting them from enemy damage."
+          }
+        ],
+        "necessary_conditions": [
+          "STATIC_SOURCE_16.20.1|data.Lux.spells.0.description|Lux releases a sphere of light that binds and deals damage to up to two enemy units.",
+          "STATIC_SOURCE_16.20.1|data.Lux.spells.1.description|Lux throws her wand and bends the light around any friendly target it touches, protecting them from enemy damage."
+        ],
+        "limitations": [
+          "EXPLORATORY AI interpretation of official static mechanics; no approval actor, actual USER_WEB decision or coaching execution is asserted.",
+          "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN. Static build does not establish repository, current or match gameplay patch.",
+          "Initiative is an incomplete capability candidate, not a prediction of player behavior, successful opening, safety, relative strength or winning. Empty categories mean UNKNOWN, not NONE.",
+          "Necessary conditions quote archived mechanics. They do not assert observed ability availability, resources, target contact, range, timing or allied behavior.",
+          "SELF_SUFFICIENT, when present, describes a tentative own-tool pressure interpretation; it does not mean independence from allied help or guaranteed solo success."
+        ],
+        "counterexamples": [
+          "Binding affects up to two units, not guaranteed champions; friendly wand contact is required for the described damage protection."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      },
+      {
+        "id": "Q05-I-Nautilus",
+        "version": "q05-initiative-2026-10-11.v2",
+        "local_source": "knowledge_candidates/initiative-v2.json",
+        "sha256": "986c1740df77c3af4c0d1b81297bf2bc72a959579f4e4616b1b20785cccc4627",
+        "locator": "8",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [],
+          "protection": [],
+          "strong_when": [],
+          "lane_style": [],
+          "jungle_style": [],
+          "initiative": [
+            "INITIATOR"
+          ],
+          "needs": []
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Nautilus.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Nautilus-16.20.1.json",
+            "raw_excerpt": "Nautilus hurls his anchor forward.  Colliding with an enemy pulls them and Nautilus together, dealing magic damage.  Colliding with terrain pulls Nautilus towards it."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Nautilus.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Nautilus-16.20.1.json",
+            "raw_excerpt": "Nautilus fires a shockwave into the earth that chases an opponent. This shockwave rips up the earth above it, knocking enemies into the air. When it reaches the opponent, the shockwave erupts, knocking his target into the air and stunning them."
+          }
+        ],
+        "necessary_conditions": [
+          "STATIC_SOURCE_16.20.1|data.Nautilus.spells.0.description|Nautilus hurls his anchor forward.  Colliding with an enemy pulls them and Nautilus together, dealing magic damage.  Colliding with terrain pulls Nautilus towards it.",
+          "STATIC_SOURCE_16.20.1|data.Nautilus.spells.3.description|Nautilus fires a shockwave into the earth that chases an opponent. This shockwave rips up the earth above it, knocking enemies into the air. When it reaches the opponent, the shockwave erupts, knocking his target into the air and stunning them."
+        ],
+        "limitations": [
+          "EXPLORATORY AI interpretation of official static mechanics; no approval actor, actual USER_WEB decision or coaching execution is asserted.",
+          "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN. Static build does not establish repository, current or match gameplay patch.",
+          "Initiative is an incomplete capability candidate, not a prediction of player behavior, successful opening, safety, relative strength or winning. Empty categories mean UNKNOWN, not NONE.",
+          "Necessary conditions quote archived mechanics. They do not assert observed ability availability, resources, target contact, range, timing or allied behavior.",
+          "SELF_SUFFICIENT, when present, describes a tentative own-tool pressure interpretation; it does not mean independence from allied help or guaranteed solo success."
+        ],
+        "counterexamples": [
+          "Anchor terrain contact moves Nautilus and does not pull an enemy; target chase/anchor contact does not establish safe initiation."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      },
+      {
+        "id": "Q05-I-Ornn",
+        "version": "q05-initiative-2026-10-11.v2",
+        "local_source": "knowledge_candidates/initiative-v2.json",
+        "sha256": "986c1740df77c3af4c0d1b81297bf2bc72a959579f4e4616b1b20785cccc4627",
+        "locator": "9",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [],
+          "protection": [],
+          "strong_when": [],
+          "lane_style": [],
+          "jungle_style": [],
+          "initiative": [
+            "INITIATOR"
+          ],
+          "needs": []
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ornn.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Ornn.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "6b5c63d0a13bb342d40cd5b2feef2005e5a5c094964790cf6dea5ecbc1f41929",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Ornn-16.20.1.json",
+            "raw_excerpt": "Ornn charges, dealing damage to enemies he passes through. If Ornn collides with terrain while charging, the impact creates a shockwave around him which deals damage and knocks up enemies."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ornn.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Ornn.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "6b5c63d0a13bb342d40cd5b2feef2005e5a5c094964790cf6dea5ecbc1f41929",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Ornn-16.20.1.json",
+            "raw_excerpt": "Ornn summons a massive elemental at a location which travels toward him with increasing speed. Enemies run over by the elemental take damage, are slowed and are made Brittle. Ornn can recast the ability to charge into the elemental, redirecting it in the direction he hits it, causing the elemental to affect any enemies it runs over to be knocked up, dealing the same damage and re-applying Brittle."
+          }
+        ],
+        "necessary_conditions": [
+          "STATIC_SOURCE_16.20.1|data.Ornn.spells.2.description|Ornn charges, dealing damage to enemies he passes through. If Ornn collides with terrain while charging, the impact creates a shockwave around him which deals damage and knocks up enemies.",
+          "STATIC_SOURCE_16.20.1|data.Ornn.spells.3.description|Ornn summons a massive elemental at a location which travels toward him with increasing speed. Enemies run over by the elemental take damage, are slowed and are made Brittle. Ornn can recast the ability to charge into the elemental, redirecting it in the direction he hits it, causing the elemental to affect any enemies it runs over to be knocked up, dealing the same damage and re-applying Brittle."
+        ],
+        "limitations": [
+          "EXPLORATORY AI interpretation of official static mechanics; no approval actor, actual USER_WEB decision or coaching execution is asserted.",
+          "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN. Static build does not establish repository, current or match gameplay patch.",
+          "Initiative is an incomplete capability candidate, not a prediction of player behavior, successful opening, safety, relative strength or winning. Empty categories mean UNKNOWN, not NONE.",
+          "Necessary conditions quote archived mechanics. They do not assert observed ability availability, resources, target contact, range, timing or allied behavior.",
+          "SELF_SUFFICIENT, when present, describes a tentative own-tool pressure interpretation; it does not mean independence from allied help or guaranteed solo success."
+        ],
+        "counterexamples": [
+          "Terrain-contact charge or recast elemental contact is required for the described knockup; flat ground or missed recast does not establish an opener."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      },
+      {
+        "id": "Q05-I-Sejuani",
+        "version": "q05-initiative-2026-10-11.v2",
+        "local_source": "knowledge_candidates/initiative-v2.json",
+        "sha256": "986c1740df77c3af4c0d1b81297bf2bc72a959579f4e4616b1b20785cccc4627",
+        "locator": "10",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [],
+          "protection": [],
+          "strong_when": [],
+          "lane_style": [],
+          "jungle_style": [],
+          "initiative": [
+            "INITIATOR"
+          ],
+          "needs": []
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Sejuani.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Sejuani.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "2deba1bd3c270216bad103a16a920b0fa8cfa5e8d199bbc7aebbb194b725dfa3",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Sejuani-16.20.1.json",
+            "raw_excerpt": "Sejuani charges forward, knocking enemies into the air. The charge stops after hitting an enemy champion."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Sejuani.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Sejuani.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "2deba1bd3c270216bad103a16a920b0fa8cfa5e8d199bbc7aebbb194b725dfa3",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Sejuani-16.20.1.json",
+            "raw_excerpt": "Sejuani freezes and stuns an enemy champion that has maximum Frost stacks."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Sejuani.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Sejuani.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "2deba1bd3c270216bad103a16a920b0fa8cfa5e8d199bbc7aebbb194b725dfa3",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Sejuani-16.20.1.json",
+            "raw_excerpt": "Sejuani throws her bola that freezes and stuns the first champion hit and creates an ice storm that slows other enemies."
+          }
+        ],
+        "necessary_conditions": [
+          "STATIC_SOURCE_16.20.1|data.Sejuani.spells.0.description|Sejuani charges forward, knocking enemies into the air. The charge stops after hitting an enemy champion.",
+          "STATIC_SOURCE_16.20.1|data.Sejuani.spells.2.description|Sejuani freezes and stuns an enemy champion that has maximum Frost stacks.",
+          "STATIC_SOURCE_16.20.1|data.Sejuani.spells.3.description|Sejuani throws her bola that freezes and stuns the first champion hit and creates an ice storm that slows other enemies."
+        ],
+        "limitations": [
+          "EXPLORATORY AI interpretation of official static mechanics; no approval actor, actual USER_WEB decision or coaching execution is asserted.",
+          "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN. Static build does not establish repository, current or match gameplay patch.",
+          "Initiative is an incomplete capability candidate, not a prediction of player behavior, successful opening, safety, relative strength or winning. Empty categories mean UNKNOWN, not NONE.",
+          "Necessary conditions quote archived mechanics. They do not assert observed ability availability, resources, target contact, range, timing or allied behavior.",
+          "SELF_SUFFICIENT, when present, describes a tentative own-tool pressure interpretation; it does not mean independence from allied help or guaranteed solo success."
+        ],
+        "counterexamples": [
+          "Permafrost requires maximum Frost stacks; charge/bola descriptions do not guarantee contact or an available opening."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      },
+      {
+        "id": "Q05-I-Zed",
+        "version": "q05-initiative-2026-10-11.v2",
+        "local_source": "knowledge_candidates/initiative-v2.json",
+        "sha256": "986c1740df77c3af4c0d1b81297bf2bc72a959579f4e4616b1b20785cccc4627",
+        "locator": "12",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [],
+          "protection": [],
+          "strong_when": [],
+          "lane_style": [],
+          "jungle_style": [],
+          "initiative": [
+            "SELF_SUFFICIENT"
+          ],
+          "needs": []
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Zed.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Zed.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "16a4a845aad6967e74aac981400571b66f8cb59007247d6f6c7e0442e6519cd2",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Zed-16.20.1.json",
+            "raw_excerpt": "<font color='#FF9900'>Passive:</font> Zed gains energy whenever he and his shadows strike an enemy with the same ability. Energy can only be gained once per cast ability.<br><br><font color='#FF9900'>Active:</font> Zed's shadow dashes forward, remaining in place for a few seconds. Reactivating Living Shadow will cause Zed to switch positions with this shadow."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Zed.json",
+            "title": "Archived official Data Dragon static build16.20.1",
+            "locator": "data.Zed.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "16a4a845aad6967e74aac981400571b66f8cb59007247d6f6c7e0442e6519cd2",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Zed-16.20.1.json",
+            "raw_excerpt": "Zed becomes untargetable and dashes to an enemy champion, marking them. After 3 seconds the mark triggers, repeating a portion of all the damage Zed dealt to the target while they were marked."
+          }
+        ],
+        "necessary_conditions": [
+          "STATIC_SOURCE_16.20.1|data.Zed.spells.1.description|<font color='#FF9900'>Passive:</font> Zed gains energy whenever he and his shadows strike an enemy with the same ability. Energy can only be gained once per cast ability.<br><br><font color='#FF9900'>Active:</font> Zed's shadow dashes forward, remaining in place for a few seconds. Reactivating Living Shadow will cause Zed to switch positions with this shadow.",
+          "STATIC_SOURCE_16.20.1|data.Zed.spells.3.description|Zed becomes untargetable and dashes to an enemy champion, marking them. After 3 seconds the mark triggers, repeating a portion of all the damage Zed dealt to the target while they were marked."
+        ],
+        "limitations": [
+          "EXPLORATORY AI interpretation of official static mechanics; no approval actor, actual USER_WEB decision or coaching execution is asserted.",
+          "SOURCE_SNAPSHOT_16.20.1_ONLY; GAME_PATCH_UNKNOWN. Static build does not establish repository, current or match gameplay patch.",
+          "Initiative is an incomplete capability candidate, not a prediction of player behavior, successful opening, safety, relative strength or winning. Empty categories mean UNKNOWN, not NONE.",
+          "Necessary conditions quote archived mechanics. They do not assert observed ability availability, resources, target contact, range, timing or allied behavior.",
+          "SELF_SUFFICIENT, when present, describes a tentative own-tool pressure interpretation; it does not mean independence from allied help or guaranteed solo success."
+        ],
+        "counterexamples": [
+          "Death Mark repeats a portion of damage dealt while marked; dash or shadow position alone does not establish a kill or safe solo pressure."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      },
+      {
+        "id": "Q05-P-Ahri",
+        "version": "q05-adapter-2026-10-11.v1",
+        "local_source": "knowledge_candidates/executable-v1.json",
+        "sha256": "01be0ca8047ad1dc555067c6a5edb7545e7b317a5e6291ee4fe9d637e8a0942c",
+        "locator": "0",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [
+            "ASSASSINATION",
+            "GRAB_PICK"
+          ],
+          "protection": [],
+          "strong_when": [],
+          "lane_style": [
+            "ROAM"
+          ],
+          "jungle_style": [],
+          "initiative": [],
+          "needs": []
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Ahri.tags",
+            "patch": "16.20.1",
+            "sha256": "84fd12721ea0cec502d2a747aea94d8e57d4da337422d1d3ca33a7890909787f",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/champion-roster-16.20.1.json",
+            "raw_excerpt": [
+              "Mage",
+              "Assassin"
+            ]
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ahri.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Ahri.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "27a17429c2ee4391b190242985ad252e47eb7fe01e016db81c10497ecd4a3cb8",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Ahri-16.20.1.json",
+            "raw_excerpt": "Ahri blows a kiss that damages and charms an enemy it encounters, instantly stopping movement abilities and causing them to walk harmlessly towards her."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ahri.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Ahri.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "27a17429c2ee4391b190242985ad252e47eb7fe01e016db81c10497ecd4a3cb8",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Ahri-16.20.1.json",
+            "raw_excerpt": "Ahri dashes forward and fires essence bolts, damaging nearby enemies. Spirit Rush can be cast up to three times before going on cooldown, and gains additional recasts when taking down enemy champions."
+          }
+        ],
+        "necessary_conditions": [],
+        "limitations": [
+          "별도 킷 근거가 없는 전략 분류는 미확인(null)이다. null은 none이나 약함을 뜻하지 않는다.",
+          "키트 해석은 주요 위협의 후보이며 완전한 위협 목록·최적 역할·상대 우위를 의미하지 않는다.",
+          "roam은 이동 기술에 기반한 가능성 후보이다. 실제 로밍 우선권은 미확인이다.",
+          "Data Dragon16.20.1 정적 빌드와 실제 경기 패치의 적용 관계는 미확인이다. patches=[]는 승인 가능한 패치 범위를 뜻하지 않는다."
+        ],
+        "counterexamples": [
+          "공식 전투 클래스 태그는 라인 위치·승률·현재 게임 상태·전략 강도를 증명하지 않는다.",
+          "매혹은 적중해야 하며 이동 가능성은 실제 로밍 우선권·시야·궁 가용성을 증명하지 않는다."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      },
+      {
+        "id": "Q05-P-Caitlyn",
+        "version": "q05-adapter-2026-10-11.v1",
+        "local_source": "knowledge_candidates/executable-v1.json",
+        "sha256": "01be0ca8047ad1dc555067c6a5edb7545e7b317a5e6291ee4fe9d637e8a0942c",
+        "locator": "2",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [
+            "POKE",
+            "GRAB_PICK"
+          ],
+          "protection": [],
+          "strong_when": [],
+          "lane_style": [
+            "PRESSURE"
+          ],
+          "jungle_style": [],
+          "initiative": [],
+          "needs": []
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Caitlyn.tags",
+            "patch": "16.20.1",
+            "sha256": "84fd12721ea0cec502d2a747aea94d8e57d4da337422d1d3ca33a7890909787f",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/champion-roster-16.20.1.json",
+            "raw_excerpt": [
+              "Marksman"
+            ]
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Caitlyn.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Caitlyn.stats.attackrange",
+            "patch": "16.20.1",
+            "sha256": "151a89d2f1d2cf7f79eb017aadfa29f1514bd52078f8d15c0522ea7c974297b1",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Caitlyn-16.20.1.json",
+            "raw_excerpt": 650
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Caitlyn.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Caitlyn.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "151a89d2f1d2cf7f79eb017aadfa29f1514bd52078f8d15c0522ea7c974297b1",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Caitlyn-16.20.1.json",
+            "raw_excerpt": "Caitlyn sets a trap that, when sprung, reveals and immobilizes the enemy champion for 1.5 seconds, granting Caitlyn an empowered Headshot."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Caitlyn.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Caitlyn.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "151a89d2f1d2cf7f79eb017aadfa29f1514bd52078f8d15c0522ea7c974297b1",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Caitlyn-16.20.1.json",
+            "raw_excerpt": "Caitlyn fires a heavy net to slow her target. The recoil knocks Caitlyn back."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Caitlyn.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Caitlyn.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "151a89d2f1d2cf7f79eb017aadfa29f1514bd52078f8d15c0522ea7c974297b1",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Caitlyn-16.20.1.json",
+            "raw_excerpt": "Caitlyn takes time to line up the perfect shot, dealing massive damage to a single target at a huge range. Enemy champions can intercept the bullet for their ally."
+          }
+        ],
+        "necessary_conditions": [],
+        "limitations": [
+          "별도 킷 근거가 없는 전략 분류는 미확인(null)이다. null은 none이나 약함을 뜻하지 않는다.",
+          "키트 해석은 주요 위협의 후보이며 완전한 위협 목록·최적 역할·상대 우위를 의미하지 않는다.",
+          "lane-pressure는 사거리·원거리 피해에 기반한 가능성 후보이다. 실제 주도권은 미확인이다.",
+          "Data Dragon16.20.1 정적 빌드와 실제 경기 패치의 적용 관계는 미확인이다. patches=[]는 승인 가능한 패치 범위를 뜻하지 않는다."
+        ],
+        "counterexamples": [
+          "공식 전투 클래스 태그는 라인 위치·승률·현재 게임 상태·전략 강도를 증명하지 않는다.",
+          "긴 기본 공격 사거리만으로 라인 승리·자동 푸시·다이브 안전을 확정하지 않는다. 덫은 밟아야 발동한다."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      },
+      {
+        "id": "Q05-P-Fiora",
+        "version": "q05-adapter-2026-10-11.v1",
+        "local_source": "knowledge_candidates/executable-v1.json",
+        "sha256": "01be0ca8047ad1dc555067c6a5edb7545e7b317a5e6291ee4fe9d637e8a0942c",
+        "locator": "4",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [
+            "DIVE"
+          ],
+          "protection": [],
+          "strong_when": [],
+          "lane_style": [],
+          "jungle_style": [],
+          "initiative": [],
+          "needs": []
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Fiora.tags",
+            "patch": "16.20.1",
+            "sha256": "84fd12721ea0cec502d2a747aea94d8e57d4da337422d1d3ca33a7890909787f",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/champion-roster-16.20.1.json",
+            "raw_excerpt": [
+              "Fighter",
+              "Assassin"
+            ]
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Fiora.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Fiora.passive.description",
+            "patch": "16.20.1",
+            "sha256": "7a089668881a767f3bf3dbc6e312a94d0f55d7b9ce9d3ea27d8a7e921b2a867e",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Fiora-16.20.1.json",
+            "raw_excerpt": "Fiora has revealed a <keywordMajor>Vital</keywordMajor> on this Champion. If she hits the <keywordMajor>Vital</keywordMajor>, she <healing>restores Health</healing> and gains <speed>Move Speed</speed>."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Fiora.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Fiora.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "7a089668881a767f3bf3dbc6e312a94d0f55d7b9ce9d3ea27d8a7e921b2a867e",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Fiora-16.20.1.json",
+            "raw_excerpt": "Fiora lunges in a direction and stabs a nearby enemy, dealing physical damage and applying on-hit effects."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Fiora.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Fiora.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "7a089668881a767f3bf3dbc6e312a94d0f55d7b9ce9d3ea27d8a7e921b2a867e",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Fiora-16.20.1.json",
+            "raw_excerpt": "Fiora parries all incoming damage and disables for a short time, then stabs in a direction. This stab slows the first enemy champion hit, or stuns them if Fiora blocked an immobilizing effect with this ability."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Fiora.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Fiora.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "7a089668881a767f3bf3dbc6e312a94d0f55d7b9ce9d3ea27d8a7e921b2a867e",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Fiora-16.20.1.json",
+            "raw_excerpt": "Fiora reveals all four Vitals on an enemy champion and gains Move Speed while near them. If Fiora hits all four Vitals or if the target dies after she has hit at least one, Fiora and her allies in the area are healed over the next few seconds."
+          }
+        ],
+        "necessary_conditions": [],
+        "limitations": [
+          "별도 킷 근거가 없는 전략 분류는 미확인(null)이다. null은 none이나 약함을 뜻하지 않는다.",
+          "키트 해석은 주요 위협의 후보이며 완전한 위협 목록·최적 역할·상대 우위를 의미하지 않는다.",
+          "Data Dragon16.20.1 정적 빌드와 실제 경기 패치의 적용 관계는 미확인이다. patches=[]는 승인 가능한 패치 범위를 뜻하지 않는다."
+        ],
+        "counterexamples": [
+          "공식 전투 클래스 태그는 라인 위치·승률·현재 게임 상태·전략 강도를 증명하지 않는다.",
+          "응수는 짧은 창에 피해·제어를 막는다. 이 설명만으로 후반 우세·스플릿 속도·포탑 피해를 확정하지 않는다."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      },
+      {
+        "id": "Q05-P-Kaisa",
+        "version": "q05-adapter-2026-10-11.v1",
+        "local_source": "knowledge_candidates/executable-v1.json",
+        "sha256": "01be0ca8047ad1dc555067c6a5edb7545e7b317a5e6291ee4fe9d637e8a0942c",
+        "locator": "5",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [
+            "POKE",
+            "DIVE"
+          ],
+          "protection": [],
+          "strong_when": [],
+          "lane_style": [
+            "SCALING"
+          ],
+          "jungle_style": [],
+          "initiative": [],
+          "needs": []
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Kaisa.tags",
+            "patch": "16.20.1",
+            "sha256": "84fd12721ea0cec502d2a747aea94d8e57d4da337422d1d3ca33a7890909787f",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/champion-roster-16.20.1.json",
+            "raw_excerpt": [
+              "Marksman",
+              "Mage"
+            ]
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Kaisa.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Kaisa.passive.description",
+            "patch": "16.20.1",
+            "sha256": "f3b00f4f57d90eefef314b329145f2762fd8f6a2dd613cecae6551f25e4cf3b6",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Kaisa-16.20.1.json",
+            "raw_excerpt": "Kai'Sa's basic attacks stack Plasma, dealing increasing bonus magic damage. Allies' immobilizing effects help stack Plasma. Additionally, Kai'Sa's item purchases upgrade her basic spells to have more powerful properties."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Kaisa.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Kaisa.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "f3b00f4f57d90eefef314b329145f2762fd8f6a2dd613cecae6551f25e4cf3b6",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Kaisa-16.20.1.json",
+            "raw_excerpt": "Kai'Sa shoots a long range missile, marking enemies with her passive.<br><br>Living Weapon: Void Seeker is upgraded to apply more passive marks and reduce cooldown on champion hit."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Kaisa.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Kaisa.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "f3b00f4f57d90eefef314b329145f2762fd8f6a2dd613cecae6551f25e4cf3b6",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Kaisa-16.20.1.json",
+            "raw_excerpt": "Kai'Sa dashes near an enemy champion."
+          }
+        ],
+        "necessary_conditions": [],
+        "limitations": [
+          "별도 킷 근거가 없는 전략 분류는 미확인(null)이다. null은 none이나 약함을 뜻하지 않는다.",
+          "키트 해석은 주요 위협의 후보이며 완전한 위협 목록·최적 역할·상대 우위를 의미하지 않는다.",
+          "Data Dragon16.20.1 정적 빌드와 실제 경기 패치의 적용 관계는 미확인이다. patches=[]는 승인 가능한 패치 범위를 뜻하지 않는다."
+        ],
+        "counterexamples": [
+          "공식 전투 클래스 태그는 라인 위치·승률·현재 게임 상태·전략 강도를 증명하지 않는다.",
+          "아이템 구매에 따른 기본 스킬 강화는 직접 근거가 있지만 후반 우세는 미확인이다. 진입 가능성은 안전한 진입을 뜻하지 않는다."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      },
+      {
+        "id": "Q05-P-LeeSin",
+        "version": "q05-adapter-2026-10-11.v1",
+        "local_source": "knowledge_candidates/executable-v1.json",
+        "sha256": "01be0ca8047ad1dc555067c6a5edb7545e7b317a5e6291ee4fe9d637e8a0942c",
+        "locator": "6",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [
+            "DIVE"
+          ],
+          "protection": [
+            "PEEL"
+          ],
+          "strong_when": [],
+          "lane_style": [],
+          "jungle_style": [],
+          "initiative": [],
+          "needs": []
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.LeeSin.tags",
+            "patch": "16.20.1",
+            "sha256": "84fd12721ea0cec502d2a747aea94d8e57d4da337422d1d3ca33a7890909787f",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/champion-roster-16.20.1.json",
+            "raw_excerpt": [
+              "Fighter",
+              "Assassin"
+            ]
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/LeeSin.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.LeeSin.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "1f73eed2730b956dce393e51d9fcd18765ded329bfde46470ff3e3e8761099d4",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/LeeSin-16.20.1.json",
+            "raw_excerpt": "Sonic Wave: Lee Sin projects a discordant wave of sound to locate his enemies, dealing physical damage to the first enemy it encounters. If Sonic Wave hits, Lee Sin can cast Resonating Strike for the next 3 seconds.<br>Resonating Strike: Lee Sin dashes to the enemy hit by Sonic Wave, dealing physical damage based on the target's missing Health."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/LeeSin.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.LeeSin.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "1f73eed2730b956dce393e51d9fcd18765ded329bfde46470ff3e3e8761099d4",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/LeeSin-16.20.1.json",
+            "raw_excerpt": "Safeguard: Lee Sin rushes to target ally, shielding himself from damage. If the ally is a champion, they are also shielded. After using Safeguard, Lee Sin can cast Iron Will.<br>Iron Will: Lee Sin's intense training allows him to thrive in battle. Lee Sin gains Omnivamp."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/LeeSin.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.LeeSin.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "1f73eed2730b956dce393e51d9fcd18765ded329bfde46470ff3e3e8761099d4",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/LeeSin-16.20.1.json",
+            "raw_excerpt": "Lee Sin performs a powerful roundhouse kick launching his target back, dealing physical damage to the target and any enemies they collide with. Enemies the target collides with are knocked into the air for a short duration. This technique was taught to him by Jesse Perring, although Lee Sin does not kick players off the map."
+          }
+        ],
+        "necessary_conditions": [],
+        "limitations": [
+          "별도 킷 근거가 없는 전략 분류는 미확인(null)이다. null은 none이나 약함을 뜻하지 않는다.",
+          "키트 해석은 주요 위협의 후보이며 완전한 위협 목록·최적 역할·상대 우위를 의미하지 않는다.",
+          "Data Dragon16.20.1 정적 빌드와 실제 경기 패치의 적용 관계는 미확인이다. patches=[]는 승인 가능한 패치 범위를 뜻하지 않는다."
+        ],
+        "counterexamples": [
+          "공식 전투 클래스 태그는 라인 위치·승률·현재 게임 상태·전략 강도를 증명하지 않는다.",
+          "Q 진입은 첫 적중과 재사용에 의존한다. 킷으로 초반 갱킹 우위·일정·실제 쿨타임을 확정하지 않는다."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      },
+      {
+        "id": "Q05-P-Lux",
+        "version": "q05-adapter-2026-10-11.v1",
+        "local_source": "knowledge_candidates/executable-v1.json",
+        "sha256": "01be0ca8047ad1dc555067c6a5edb7545e7b317a5e6291ee4fe9d637e8a0942c",
+        "locator": "7",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [
+            "POKE",
+            "GRAB_PICK"
+          ],
+          "protection": [
+            "PEEL"
+          ],
+          "strong_when": [],
+          "lane_style": [
+            "PRESSURE"
+          ],
+          "jungle_style": [],
+          "initiative": [],
+          "needs": []
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Lux.tags",
+            "patch": "16.20.1",
+            "sha256": "84fd12721ea0cec502d2a747aea94d8e57d4da337422d1d3ca33a7890909787f",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/champion-roster-16.20.1.json",
+            "raw_excerpt": [
+              "Mage",
+              "Support"
+            ]
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Lux.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Lux.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "54342f28c2e1d8449e831906aefcb74fe374e6130049520fff3c7ad70e237a70",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Lux-16.20.1.json",
+            "raw_excerpt": "Lux releases a sphere of light that binds and deals damage to up to two enemy units."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Lux.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Lux.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "54342f28c2e1d8449e831906aefcb74fe374e6130049520fff3c7ad70e237a70",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Lux-16.20.1.json",
+            "raw_excerpt": "Lux throws her wand and bends the light around any friendly target it touches, protecting them from enemy damage."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Lux.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Lux.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "54342f28c2e1d8449e831906aefcb74fe374e6130049520fff3c7ad70e237a70",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Lux-16.20.1.json",
+            "raw_excerpt": "Fires an anomaly of twisted light to an area, which slows nearby enemies. Lux can detonate it to damage enemies in the area of effect."
+          }
+        ],
+        "necessary_conditions": [],
+        "limitations": [
+          "별도 킷 근거가 없는 전략 분류는 미확인(null)이다. null은 none이나 약함을 뜻하지 않는다.",
+          "키트 해석은 주요 위협의 후보이며 완전한 위협 목록·최적 역할·상대 우위를 의미하지 않는다.",
+          "lane-pressure는 사거리·원거리 피해에 기반한 가능성 후보이다. 실제 주도권은 미확인이다.",
+          "Data Dragon16.20.1 정적 빌드와 실제 경기 패치의 적용 관계는 미확인이다. patches=[]는 승인 가능한 패치 범위를 뜻하지 않는다."
+        ],
+        "counterexamples": [
+          "공식 전투 클래스 태그는 라인 위치·승률·현재 게임 상태·전략 강도를 증명하지 않는다.",
+          "Q는 최대 두 유닛을 속박한다. 스킬 적중·마나·웨이브를 모르므로 라인 우세와 완전한 보호는 미확인이다."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      },
+      {
+        "id": "Q05-P-Nautilus",
+        "version": "q05-adapter-2026-10-11.v1",
+        "local_source": "knowledge_candidates/executable-v1.json",
+        "sha256": "01be0ca8047ad1dc555067c6a5edb7545e7b317a5e6291ee4fe9d637e8a0942c",
+        "locator": "8",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [
+            "GRAB_PICK",
+            "DIVE"
+          ],
+          "protection": [
+            "FRONTLINE"
+          ],
+          "strong_when": [],
+          "lane_style": [],
+          "jungle_style": [],
+          "initiative": [],
+          "needs": []
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Nautilus.tags",
+            "patch": "16.20.1",
+            "sha256": "84fd12721ea0cec502d2a747aea94d8e57d4da337422d1d3ca33a7890909787f",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/champion-roster-16.20.1.json",
+            "raw_excerpt": [
+              "Tank",
+              "Support"
+            ]
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Nautilus.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Nautilus-16.20.1.json",
+            "raw_excerpt": "Nautilus hurls his anchor forward.  Colliding with an enemy pulls them and Nautilus together, dealing magic damage.  Colliding with terrain pulls Nautilus towards it."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Nautilus.passive.description",
+            "patch": "16.20.1",
+            "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Nautilus-16.20.1.json",
+            "raw_excerpt": "Nautilus' first Attack against a target deals increased physical damage and roots them briefly."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Nautilus.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Nautilus-16.20.1.json",
+            "raw_excerpt": "Nautilus gains a temporary Shield.  While it persists, his Attacks deal damage over time to his target and surrounding enemies."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Nautilus.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Nautilus.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "6e12f5e44b84881f018b2f8b46f581087707799744927f39d466a864b209b6ff",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Nautilus-16.20.1.json",
+            "raw_excerpt": "Nautilus fires a shockwave into the earth that chases an opponent. This shockwave rips up the earth above it, knocking enemies into the air. When it reaches the opponent, the shockwave erupts, knocking his target into the air and stunning them."
+          }
+        ],
+        "necessary_conditions": [],
+        "limitations": [
+          "별도 킷 근거가 없는 전략 분류는 미확인(null)이다. null은 none이나 약함을 뜻하지 않는다.",
+          "키트 해석은 주요 위협의 후보이며 완전한 위협 목록·최적 역할·상대 우위를 의미하지 않는다.",
+          "Data Dragon16.20.1 정적 빌드와 실제 경기 패치의 적용 관계는 미확인이다. patches=[]는 승인 가능한 패치 범위를 뜻하지 않는다."
+        ],
+        "counterexamples": [
+          "공식 전투 클래스 태그는 라인 위치·승률·현재 게임 상태·전략 강도를 증명하지 않는다.",
+          "그랩은 충돌 대상과 지형에 따라 결과가 다르다. 탱커·자가 보호막은 아군 보호 성공을 보장하지 않는다."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      },
+      {
+        "id": "Q05-P-Ornn",
+        "version": "q05-adapter-2026-10-11.v1",
+        "local_source": "knowledge_candidates/executable-v1.json",
+        "sha256": "01be0ca8047ad1dc555067c6a5edb7545e7b317a5e6291ee4fe9d637e8a0942c",
+        "locator": "9",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [
+            "DIVE"
+          ],
+          "protection": [
+            "FRONTLINE"
+          ],
+          "strong_when": [],
+          "lane_style": [
+            "SCALING"
+          ],
+          "jungle_style": [],
+          "initiative": [],
+          "needs": []
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Ornn.tags",
+            "patch": "16.20.1",
+            "sha256": "84fd12721ea0cec502d2a747aea94d8e57d4da337422d1d3ca33a7890909787f",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/champion-roster-16.20.1.json",
+            "raw_excerpt": [
+              "Tank"
+            ]
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ornn.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Ornn.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "6b5c63d0a13bb342d40cd5b2feef2005e5a5c094964790cf6dea5ecbc1f41929",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Ornn-16.20.1.json",
+            "raw_excerpt": "Ornn charges, dealing damage to enemies he passes through. If Ornn collides with terrain while charging, the impact creates a shockwave around him which deals damage and knocks up enemies."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ornn.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Ornn.passive.description",
+            "patch": "16.20.1",
+            "sha256": "6b5c63d0a13bb342d40cd5b2feef2005e5a5c094964790cf6dea5ecbc1f41929",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Ornn-16.20.1.json",
+            "raw_excerpt": "Ornn gains an additional bonus Armor and Magic Resist from all sources.<br><br>Ornn can spend gold to forge non-consumable items anywhere.<br><br>Additionally, he can create masterwork items for himself and for his allies."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Ornn.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Ornn.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "6b5c63d0a13bb342d40cd5b2feef2005e5a5c094964790cf6dea5ecbc1f41929",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Ornn-16.20.1.json",
+            "raw_excerpt": "Ornn summons a massive elemental at a location which travels toward him with increasing speed. Enemies run over by the elemental take damage, are slowed and are made Brittle. Ornn can recast the ability to charge into the elemental, redirecting it in the direction he hits it, causing the elemental to affect any enemies it runs over to be knocked up, dealing the same damage and re-applying Brittle."
+          }
+        ],
+        "necessary_conditions": [],
+        "limitations": [
+          "별도 킷 근거가 없는 전략 분류는 미확인(null)이다. null은 none이나 약함을 뜻하지 않는다.",
+          "키트 해석은 주요 위협의 후보이며 완전한 위협 목록·최적 역할·상대 우위를 의미하지 않는다.",
+          "Data Dragon16.20.1 정적 빌드와 실제 경기 패치의 적용 관계는 미확인이다. patches=[]는 승인 가능한 패치 범위를 뜻하지 않는다."
+        ],
+        "counterexamples": [
+          "공식 전투 클래스 태그는 라인 위치·승률·현재 게임 상태·전략 강도를 증명하지 않는다.",
+          "지형 충돌과 궁 재사용이 필요한 제어가 있다. 탱커 태그가 모든 상황의 생존이나 라인 우세를 보장하지 않는다."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      },
+      {
+        "id": "Q05-P-Sejuani",
+        "version": "q05-adapter-2026-10-11.v1",
+        "local_source": "knowledge_candidates/executable-v1.json",
+        "sha256": "01be0ca8047ad1dc555067c6a5edb7545e7b317a5e6291ee4fe9d637e8a0942c",
+        "locator": "10",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [
+            "DIVE",
+            "GRAB_PICK"
+          ],
+          "protection": [
+            "FRONTLINE"
+          ],
+          "strong_when": [],
+          "lane_style": [],
+          "jungle_style": [],
+          "initiative": [],
+          "needs": []
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Sejuani.tags",
+            "patch": "16.20.1",
+            "sha256": "84fd12721ea0cec502d2a747aea94d8e57d4da337422d1d3ca33a7890909787f",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/champion-roster-16.20.1.json",
+            "raw_excerpt": [
+              "Tank"
+            ]
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Sejuani.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Sejuani.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "2deba1bd3c270216bad103a16a920b0fa8cfa5e8d199bbc7aebbb194b725dfa3",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Sejuani-16.20.1.json",
+            "raw_excerpt": "Sejuani charges forward, knocking enemies into the air. The charge stops after hitting an enemy champion."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Sejuani.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Sejuani.spells.2.description",
+            "patch": "16.20.1",
+            "sha256": "2deba1bd3c270216bad103a16a920b0fa8cfa5e8d199bbc7aebbb194b725dfa3",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Sejuani-16.20.1.json",
+            "raw_excerpt": "Sejuani freezes and stuns an enemy champion that has maximum Frost stacks."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Sejuani.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Sejuani.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "2deba1bd3c270216bad103a16a920b0fa8cfa5e8d199bbc7aebbb194b725dfa3",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Sejuani-16.20.1.json",
+            "raw_excerpt": "Sejuani throws her bola that freezes and stuns the first champion hit and creates an ice storm that slows other enemies."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Sejuani.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Sejuani.passive.description",
+            "patch": "16.20.1",
+            "sha256": "2deba1bd3c270216bad103a16a920b0fa8cfa5e8d199bbc7aebbb194b725dfa3",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Sejuani-16.20.1.json",
+            "raw_excerpt": "After being out of combat, Sejuani gains Frost Armor which grants Armor and Magic Resist and immunity to slows. Frost Armor persists for a short time after Sejuani takes damage.  Sejuani can damage a stunned enemy to shatter it, dealing massive magic damage."
+          }
+        ],
+        "necessary_conditions": [],
+        "limitations": [
+          "별도 킷 근거가 없는 전략 분류는 미확인(null)이다. null은 none이나 약함을 뜻하지 않는다.",
+          "키트 해석은 주요 위협의 후보이며 완전한 위협 목록·최적 역할·상대 우위를 의미하지 않는다.",
+          "Data Dragon16.20.1 정적 빌드와 실제 경기 패치의 적용 관계는 미확인이다. patches=[]는 승인 가능한 패치 범위를 뜻하지 않는다."
+        ],
+        "counterexamples": [
+          "공식 전투 클래스 태그는 라인 위치·승률·현재 게임 상태·전략 강도를 증명하지 않는다.",
+          "Q는 적 챔피언에 멈추며 E는 최대 Frost가 필요하다. 정적 설명으로 초반 갱킹 강도·청소 속도를 확정하지 않는다."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      },
+      {
+        "id": "Q05-P-Zed",
+        "version": "q05-adapter-2026-10-11.v1",
+        "local_source": "knowledge_candidates/executable-v1.json",
+        "sha256": "01be0ca8047ad1dc555067c6a5edb7545e7b317a5e6291ee4fe9d637e8a0942c",
+        "locator": "12",
+        "review_state": "EXPLORATORY",
+        "fields": {
+          "threats": [
+            "ASSASSINATION",
+            "DIVE",
+            "POKE"
+          ],
+          "protection": [],
+          "strong_when": [],
+          "lane_style": [
+            "ROAM"
+          ],
+          "jungle_style": [],
+          "initiative": [],
+          "needs": []
+        },
+        "source_refs": [
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Zed.tags",
+            "patch": "16.20.1",
+            "sha256": "84fd12721ea0cec502d2a747aea94d8e57d4da337422d1d3ca33a7890909787f",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/champion-roster-16.20.1.json",
+            "raw_excerpt": [
+              "Assassin"
+            ]
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Zed.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Zed.spells.0.description",
+            "patch": "16.20.1",
+            "sha256": "16a4a845aad6967e74aac981400571b66f8cb59007247d6f6c7e0442e6519cd2",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Zed-16.20.1.json",
+            "raw_excerpt": "Zed and his shadows throw their shurikens.<br><br>Each shuriken deals damage to every enemy hit."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Zed.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Zed.spells.1.description",
+            "patch": "16.20.1",
+            "sha256": "16a4a845aad6967e74aac981400571b66f8cb59007247d6f6c7e0442e6519cd2",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Zed-16.20.1.json",
+            "raw_excerpt": "<font color='#FF9900'>Passive:</font> Zed gains energy whenever he and his shadows strike an enemy with the same ability. Energy can only be gained once per cast ability.<br><br><font color='#FF9900'>Active:</font> Zed's shadow dashes forward, remaining in place for a few seconds. Reactivating Living Shadow will cause Zed to switch positions with this shadow."
+          },
+          {
+            "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/en_US/champion/Zed.json",
+            "title": "Official Data Dragon static build16.20.1",
+            "locator": "data.Zed.spells.3.description",
+            "patch": "16.20.1",
+            "sha256": "16a4a845aad6967e74aac981400571b66f8cb59007247d6f6c7e0442e6519cd2",
+            "kind": "DATA_DRAGON",
+            "local_source": "evidence/queue/q05/sources/Zed-16.20.1.json",
+            "raw_excerpt": "Zed becomes untargetable and dashes to an enemy champion, marking them. After 3 seconds the mark triggers, repeating a portion of all the damage Zed dealt to the target while they were marked."
+          }
+        ],
+        "necessary_conditions": [],
+        "limitations": [
+          "별도 킷 근거가 없는 전략 분류는 미확인(null)이다. null은 none이나 약함을 뜻하지 않는다.",
+          "키트 해석은 주요 위협의 후보이며 완전한 위협 목록·최적 역할·상대 우위를 의미하지 않는다.",
+          "roam은 이동 기술에 기반한 가능성 후보이다. 실제 로밍 우선권은 미확인이다.",
+          "Data Dragon16.20.1 정적 빌드와 실제 경기 패치의 적용 관계는 미확인이다. patches=[]는 승인 가능한 패치 범위를 뜻하지 않는다."
+        ],
+        "counterexamples": [
+          "공식 전투 클래스 태그는 라인 위치·승률·현재 게임 상태·전략 강도를 증명하지 않는다.",
+          "암살자 태그와 대상 접근은 킬 보장이 아니다. 궁·그림자 가용성, 방어 수단, 체력, 웨이브를 별도로 확인해야 한다."
+        ],
+        "level": "EXISTING_RULE",
+        "interpretation": "기존 탐색 분류를 문맥별로 참고하며 전략 승인/실전 효과를 승계하지 않습니다."
+      }
+    ],
+    "statistics": [
+      {
+        "id": "recall:CHALLENGER:16.20:Caitlyn:BOTTOM",
+        "kind": "FIRST_RECALL_REFERENCE",
+        "scope": "CHAMPION_POSITION_NOT_MATCHUP",
+        "population": "CHALLENGER",
+        "population_samples": {
+          "matches": 291,
+          "participant_observations": 2910
+        },
+        "patch": "16.20",
+        "position": "BOTTOM",
+        "matches": 43,
+        "participant_observations": 43,
+        "champion": "Caitlyn",
+        "source_champion": "Caitlyn",
+        "opponent": null,
+        "first_recall": {
+          "timing": {
+            "match_n": 30,
+            "median": 206227.5,
+            "missing_n": 13,
+            "n": 30,
+            "q1": 180465.25,
+            "q3": 254748.5,
+            "reason": null,
+            "status": "AVAILABLE",
+            "unit": "MILLISECONDS"
+          },
+          "current_gold": {
+            "match_n": 30,
+            "median": 661.5,
+            "missing_n": 13,
+            "n": 30,
+            "q1": 545.25,
+            "q3": 896.5,
+            "reason": null,
+            "status": "AVAILABLE",
+            "unit": "GOLD_PRECEDING_FRAME"
+          },
+          "purchases": [
+            {
+              "count": 5,
+              "item_ids": [
+                1036,
+                2031
+              ],
+              "matches": 5
+            },
+            {
+              "count": 4,
+              "item_ids": [
+                1083,
+                2031
+              ],
+              "matches": 4
+            },
+            {
+              "count": 3,
+              "item_ids": [
+                1036,
+                1036,
+                2031
+              ],
+              "matches": 3
+            },
+            {
+              "count": 2,
+              "item_ids": [
+                1001,
+                2031
+              ],
+              "matches": 2
+            },
+            {
+              "count": 2,
+              "item_ids": [
+                1037
+              ],
+              "matches": 2
+            },
+            {
+              "count": 1,
+              "item_ids": [
+                1001,
+                1036,
+                1036,
+                1037
+              ],
+              "matches": 1
+            },
+            {
+              "count": 1,
+              "item_ids": [
+                1001,
+                1036,
+                2003
+              ],
+              "matches": 1
+            },
+            {
+              "count": 1,
+              "item_ids": [
+                1001,
+                1038
+              ],
+              "matches": 1
+            },
+            {
+              "count": 1,
+              "item_ids": [
+                1001,
+                1083,
+                2031
+              ],
+              "matches": 1
+            },
+            {
+              "count": 1,
+              "item_ids": [
+                1036,
+                1036,
+                2055
+              ],
+              "matches": 1
+            },
+            {
+              "count": 1,
+              "item_ids": [
+                1037,
+                2003
+              ],
+              "matches": 1
+            },
+            {
+              "count": 1,
+              "item_ids": [
+                1038
+              ],
+              "matches": 1
+            },
+            {
+              "count": 1,
+              "item_ids": [
+                1038,
+                1042
+              ],
+              "matches": 1
+            },
+            {
+              "count": 1,
+              "item_ids": [
+                1038,
+                2031
+              ],
+              "matches": 1
+            },
+            {
+              "count": 1,
+              "item_ids": [
+                2031
+              ],
+              "matches": 1
+            },
+            {
+              "count": 1,
+              "item_ids": [
+                2031,
+                3006
+              ],
+              "matches": 1
+            },
+            {
+              "count": 1,
+              "item_ids": [
+                2031,
+                3134
+              ],
+              "matches": 1
+            },
+            {
+              "count": 1,
+              "item_ids": [
+                2031,
+                3144
+              ],
+              "matches": 1
+            },
+            {
+              "count": 1,
+              "item_ids": [
+                3006
+              ],
+              "matches": 1
+            }
+          ],
+          "exclusions": [
+            {
+              "count": 13,
+              "reason": "DEATH_BEFORE_FIRST_PURCHASE"
+            }
+          ]
+        },
+        "limitations": [
+          "DESCRIPTIVE_NON_CAUSAL_NOT_MISTAKE_OR_INTENT",
+          "OPERATIONAL_THRESHOLDS_NOT_GAMEPLAY_RECOMMENDATIONS",
+          "FIVE_MATCH_MINIMUM_NOT_STATISTICAL_SUFFICIENCY",
+          "MATCH_CLUSTERED_NO_CONFIDENCE_OR_COACHING_ACCURACY_CLAIM",
+          "PURCHASE_PROXY_MISSES_RECALLS_WITHOUT_PURCHASES",
+          "EXACT_RECALL_START_AND_COMPLETION_UNKNOWN",
+          "CURRENT_GOLD_IS_PRECEDING_FRAME_NOT_PURCHASE_INSTANT",
+          "WAVE_STATE_INTENT_COMPONENT_INVENTORY_AND_DISCOUNTS_UNKNOWN",
+          "LANE_GEOMETRY_IS_OBSERVATION_NOT_WAVE_OR_TACTICAL_STATE",
+          "ACTION_GROUPS_OBSERVATIONAL_SELECTION_AND_SURVIVORSHIP_BIAS",
+          "OVERLAPPING_PARTICIPANT_WINDOWS_MAY_COUNT_SAME_EVENT",
+          "CHALLENGER_CURRENT_SEED_MATCH_COHORT_NOT_ALL_PARTICIPANT_RANKS",
+          "PRO_REFERENCE_SELECTED_PARTICIPANTS_ONLY_NOT_ALL_MATCH_PLAYERS",
+          "OPPONENT_CHAMPION_SCOPE_UNAVAILABLE_NOT_MATCHUP",
+          "UNKNOWN_METRICS_STAY_UNKNOWN_NOT_OPTIMAL_PURCHASE_OR_ADVANTAGE",
+          "MATCH_ONLY_CHAMPION_POSITION_PATCH_POPULATION_NO_ROLE_FALLBACK"
+        ],
+        "source": {
+          "local_source": "data/recall/2026-10-15/challenger/recall-data.json",
+          "sha256": "6fa06e7f239179431d624089bf8e9a064f55c2dadb579974711521d3d11f5aa8",
+          "locator": "cohorts.5"
+        },
+        "validation": {
+          "local_source": "data/recall/2026-10-15/source-binding.json",
+          "sha256": "9594843df3362419c15be815ffc6b4a2a3e7fe2c3b70e75510768ee7d59ea43a",
+          "locator": "validated_datasets.challenger"
+        }
+      },
+      {
+        "id": "recall:PRO_REFERENCE:16.20:Caitlyn:BOTTOM",
+        "kind": "FIRST_RECALL_REFERENCE",
+        "scope": "CHAMPION_POSITION_NOT_MATCHUP",
+        "population": "PRO_REFERENCE",
+        "population_samples": {
+          "matches": 89,
+          "participant_observations": 108
+        },
+        "patch": "16.20",
+        "position": "BOTTOM",
+        "matches": 1,
+        "participant_observations": 1,
+        "champion": "Caitlyn",
+        "source_champion": "Caitlyn",
+        "opponent": null,
+        "first_recall": {
+          "timing": {
+            "match_n": 1,
+            "median": 141560,
+            "missing_n": 0,
+            "n": 1,
+            "q1": 141560,
+            "q3": 141560,
+            "reason": "VALID_MATCH_N_LT_5",
+            "status": "UNKNOWN",
+            "unit": "MILLISECONDS"
+          },
+          "current_gold": {
+            "match_n": 1,
+            "median": 347,
+            "missing_n": 0,
+            "n": 1,
+            "q1": 347,
+            "q3": 347,
+            "reason": "VALID_MATCH_N_LT_5",
+            "status": "UNKNOWN",
+            "unit": "GOLD_PRECEDING_FRAME"
+          },
+          "purchases": [
+            {
+              "count": 1,
+              "item_ids": [
+                1083
+              ],
+              "matches": 1
+            }
+          ],
+          "exclusions": []
+        },
+        "limitations": [
+          "DESCRIPTIVE_NON_CAUSAL_NOT_MISTAKE_OR_INTENT",
+          "OPERATIONAL_THRESHOLDS_NOT_GAMEPLAY_RECOMMENDATIONS",
+          "FIVE_MATCH_MINIMUM_NOT_STATISTICAL_SUFFICIENCY",
+          "MATCH_CLUSTERED_NO_CONFIDENCE_OR_COACHING_ACCURACY_CLAIM",
+          "PURCHASE_PROXY_MISSES_RECALLS_WITHOUT_PURCHASES",
+          "EXACT_RECALL_START_AND_COMPLETION_UNKNOWN",
+          "CURRENT_GOLD_IS_PRECEDING_FRAME_NOT_PURCHASE_INSTANT",
+          "WAVE_STATE_INTENT_COMPONENT_INVENTORY_AND_DISCOUNTS_UNKNOWN",
+          "LANE_GEOMETRY_IS_OBSERVATION_NOT_WAVE_OR_TACTICAL_STATE",
+          "ACTION_GROUPS_OBSERVATIONAL_SELECTION_AND_SURVIVORSHIP_BIAS",
+          "OVERLAPPING_PARTICIPANT_WINDOWS_MAY_COUNT_SAME_EVENT",
+          "CHALLENGER_CURRENT_SEED_MATCH_COHORT_NOT_ALL_PARTICIPANT_RANKS",
+          "PRO_REFERENCE_SELECTED_PARTICIPANTS_ONLY_NOT_ALL_MATCH_PLAYERS",
+          "OPPONENT_CHAMPION_SCOPE_UNAVAILABLE_NOT_MATCHUP",
+          "UNKNOWN_METRICS_STAY_UNKNOWN_NOT_OPTIMAL_PURCHASE_OR_ADVANTAGE",
+          "MATCH_ONLY_CHAMPION_POSITION_PATCH_POPULATION_NO_ROLE_FALLBACK"
+        ],
+        "source": {
+          "local_source": "data/recall/2026-10-15/pro/recall-data.json",
+          "sha256": "fda7d4e517528c6c526029d3ebff14d15bece374446161e00f0d31bbe94cc91b",
+          "locator": "cohorts.16"
+        },
+        "validation": {
+          "local_source": "data/recall/2026-10-15/source-binding.json",
+          "sha256": "9594843df3362419c15be815ffc6b4a2a3e7fe2c3b70e75510768ee7d59ea43a",
+          "locator": "validated_datasets.pro"
+        }
+      }
+    ],
+    "lectures": [],
+    "unknowns": [
+      "스킬 습득·가용성·체력·웨이브·현재 위치/실제 합류는 로딩에서 미관측",
+      "요약은 유형별 계획입니다. 상세의 다른 후보 생략을 위협 부재나 중요도 순위로 읽지 마세요.",
+      "레벨별 매치업 우열·피해량·최적 스킬/구매·미확인 충돌 규칙"
+    ],
+    "limits": [
+      "공식 기술/아이템 사실과 신규 조건부 전략 해석은 별도입니다.",
+      "기존 유형 분류는 EXPLORATORY이며 미부여 유형은 능력 부재가 아닙니다.",
+      "라인전/운영/한타 대상은 문맥별 후보로 선정합니다. 배열 표시 순서가 중요도를 뜻하지 않습니다.",
+      "상황 가정은 실제 습득·위치·합류·아이템 관측이 아닙니다.",
+      "귀환 통계는 챔피언/포지션 관측이며 매치업/최적 시점 근거가 아닙니다.",
+      "경기 전 학습/경기 후 복기용. 실시간 지시·비공개 정보·게임 조작 없음."
+    ],
+    "patch_status": "SOURCE_MAJOR_MATCH",
+    "strategy_level": "DESIGN_HYPOTHESIS",
+    "real_coaching_n": 0,
+    "accuracy": null
+  }
+}

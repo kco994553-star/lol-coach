@@ -144,6 +144,11 @@
       entries(plan.stages).forEach(stage => { const item = node('li'); const label = { LANE: '라인전', EARLY: '초반', MID: '중반', LATE: '후반', TRANSITION: '라인전 이후', TEAMFIGHT: '한타', OBJECTIVE: '목표 경합' }[stage.stage] || stage.stage; item.append(node('h4', '', label), node('p', '', readable(stage.role)), list(stage.conditions || [])); stages.append(item); }); target.append(stages);
     }
     target.append(block('목표물 경합', plan.objectives), block('교전 뒤 이득으로 연결', plan.conversion));
+    const context = report.contexts && report.contexts.operations;
+    if (context) {
+      target.append(block('운영에서 연결할 픽과 조건', context.selection_note || '아래 연결은 픽의 기술을 바탕으로 한 조건부 설계 가설입니다.'));
+      target.append(connectionColumns(context, '운영을 함께 연결할 아군', '운영 전환을 끊을 상대'));
+    }
   }
   function renderLane() {
     const lane = report.lane || {};
@@ -156,30 +161,83 @@
       const th = node('th', '', row.period); th.scope = 'row';
       const level = typeof row.level === 'string' ? ({ UNKNOWN: '상성 미확인', OFFICIAL_FACT: '공식 기술 참고', DESIGN_HYPOTHESIS: '조건부 해석', EXPLORATORY: '탐색 해석' }[row.level] || '') : '';
       if (level) th.append(node('span', 'lane-level', level)); tr.append(th);
-      [['판단', row.judgment], ['이유', row.why], ['내 행동', row.action], ['달라지는 조건', row.changes]].forEach(([label, value]) => { const td = node('td'); td.dataset.label = label; td.append(Array.isArray(value) ? list(value) : node('span', '', readable(value))); tr.append(td); });
+      [['판단', row.judgment], ['이유', row.why], ['내 행동', row.action], ['달라지는 조건', row.changes]].forEach(([label, value]) => {
+        const td = node('td'), body = node('div'); td.dataset.label = label;
+        body.append(Array.isArray(value) ? list(value) : node('span', '', readable(value)));
+        if (label === '이유') {
+          if (entries(row.assumptions).length) body.append(block('가정한 기술·상황 · 실제 상태 미관측', row.assumptions));
+          if (row.fact_scope) body.append(node('p', 'source-note', '공식 사실과 설계 가설의 경계 · ' + readable(row.fact_scope)));
+        }
+        if (label === '내 행동') {
+          if (row.opponent_response) body.append(block('상대 대응 가정', row.opponent_response));
+          if (row.alternative) body.append(block('그때의 대안', row.alternative));
+        }
+        td.append(body); tr.append(td);
+      });
       if (entries(row.evidence_ids).length) tr.dataset.evidenceIds = row.evidence_ids.join(' ');
       tbody.append(tr);
     });
     const target = $('lane-context'); target.replaceChildren();
     const grid = node('div', 'content-grid'); grid.append(block('미니언 흐름', lane.wave), block('정글과의 연결', lane.jungle), block('귀환과 다른 라인 이동', lane.reset_roam), block('어려워졌을 때 복구', lane.recovery)); target.append(grid);
     if (entries(lane.interactions).length) target.append(block('맞부딪히는 기술과 조건', lane.interactions));
+    const contexts = report.contexts || {}, laneContext = contexts.lane, jungle = contexts.jungle;
+    if (laneContext) {
+      const label = { DUO: '바텀·서포터의 라인 연결', DUO_INCOMPLETE: '바텀·서포터 연결 · 일부 배치 미확인', SOLO: '단독 라인의 연결', SOLO_UNKNOWN: '라인 상대 미확인 상태의 연결', JUNGLE: '정글 · 고정 라인 상대 없음', MANUAL_COMPARISON: '직접 지정한 상대와 비교' }[laneContext.kind] || '라인에서 연결할 픽과 조건';
+      target.append(block(label, laneContext.selection_note || '라인 상대와 함께 서는 아군을 구분해 읽는 조건부 설계 가설입니다.'));
+      target.append(connectionColumns(laneContext, '라인에서 함께 연결할 아군', '라인에서 대응할 상대'));
+      if (entries(laneContext.limits).length) target.append(block('라인 연결의 미확인 범위', laneContext.limits));
+    }
+    if (jungle) {
+      target.append(block('정글 개입 · 현재 위치 미관측', '아군·적 정글러의 현재 위치와 이동 경로는 관측하지 않았습니다. 아래 개입은 조건이 확인된 경우만 가정합니다.'));
+      target.append(connectionColumns(jungle, '개입을 연결할 아군', '개입을 경계할 상대'));
+      if (entries(jungle.conditions).length) target.append(block('정글 개입을 가정하기 전 확인', jungle.conditions));
+    }
   }
-  function fightConnections(items, threats) {
+  function fightConnections(items, threats, reasonRequired) {
     const ul = node('ul', 'fight-link-list' + (threats ? ' threats' : ''));
     entries(items).forEach(item => {
       const li = node('li');
-      if (typeof item === 'string') li.append(node('p', '', item));
+      if (typeof item === 'string') {
+        const body = node('div'); body.append(node('p', '', item));
+        if (reasonRequired) body.append(node('small', '', '선정 이유 · 추가 근거 미확인'));
+        li.append(body);
+      }
       else {
         const who = champion(item.champion || item.id), body = node('div');
         li.append(window.LoadingMap.portrait(who)); body.append(node('strong', '', item.name || (who && who.name) || name(item.champion)), node('p', '', readable(item.means)));
+        const reasons = entries(item.reasons).map(readable).filter(Boolean);
+        if (reasons.length) reasons.forEach(reason => body.append(node('small', '', '선정 이유 · ' + reason)));
+        else if (reasonRequired || item.context) body.append(node('small', '', '선정 이유 · 추가 근거 미확인'));
         if (item.condition) body.append(node('small', '', '조건 · ' + readable(item.condition))); li.append(body);
       }
       ul.append(li);
     }); return ul;
   }
+  function connectionColumns(context, partnerTitle, threatTitle, reasonRequired = true) {
+    const columns = node('div', 'fight-columns');
+    [[context.partners, partnerTitle, false], [context.threats, threatTitle, true]].forEach(([items, title, threats]) => {
+      const column = node('div', 'copy-block'); column.append(node('h4', '', title));
+      column.append(entries(items).length ? fightConnections(items, threats, reasonRequired) : node('p', 'source-note', '이 맥락에 연결할 후보 미확인 · 해당 능력이 없다는 뜻은 아닙니다.'));
+      columns.append(column);
+    });
+    return columns;
+  }
   function renderFight() {
     const fight = report.teamfight || {}, target = $('fight-content'); target.replaceChildren(node('p', 'lead-copy', readable(fight.role)));
-    const columns = node('div', 'fight-columns'), allies = node('div', 'copy-block'), threats = node('div', 'copy-block'); allies.append(node('h4', '', '함께 연결할 아군'), fightConnections(fight.partners, false)); threats.append(node('h4', '', '내 행동을 끊을 상대'), fightConnections(fight.threats, true)); columns.append(allies, threats); target.append(columns);
+    const role = report.roles;
+    if (role) {
+      const roleGrid = node('div', 'content-grid'), proposed = role.proposed || {};
+      const base = block('기본 유형·역할', readable(role.base) || '기본 유형 미확인');
+      const proposal = block('이번 계획에서 맡을 역할 제안', readable(proposed) || '역할 제안 미확인', 'is-conditions');
+      if (typeof role.changed === 'boolean') proposal.append(node('p', 'source-note', role.changed ? '조합과 조건에 따라 기본 유형에서 역할을 바꾼 제안입니다.' : '이번 계획에서도 기본 유형의 역할을 제안합니다.'));
+      if (entries(proposed.reasons).length) proposal.append(block('이 역할을 제안한 이유', proposed.reasons));
+      if (entries(proposed.conditions).length) proposal.append(block('이 조건이 갖춰져야', proposed.conditions));
+      if (entries(proposed.limits).length) proposal.append(block('역할 제안의 한계', proposed.limits));
+      roleGrid.append(base, proposal); target.append(roleGrid);
+    }
+    const context = report.contexts && report.contexts.teamfight;
+    if (context && context.selection_note) target.append(node('p', 'source-note', readable(context.selection_note)));
+    target.append(connectionColumns(context || fight, '함께 연결할 아군', '내 행동을 끊을 상대', Boolean(context)));
     if (fight.map) {
       const scenario = { map: fight.map, plan: { steps: entries(fight.actions).map((action, i) => ({ number: i + 1, text: readable(action) })) } };
       target.append(window.LoadingMap.create(scenario, catalog, report.input));
@@ -204,11 +262,13 @@
     const wrap = node('div');
     entries(facts).forEach(fact => {
       const article = node('article', 'fact-card'); article.dataset.factId = fact.id || '';
-      const who = fact.champion || fact.champion_id || (typeof fact.id === 'string' ? fact.id.split(':')[1] : null);
-      article.append(node('h4', '', [who ? name(who) : '', fact.slot === 'P' ? '기본 지속 효과' : fact.slot, fact.name].filter(Boolean).join(' · ')), node('blockquote', '', fact.text || fact.raw_excerpt || fact.excerpt));
+      const who = fact.champion || fact.champion_id || (typeof fact.id === 'string' && !fact.id.startsWith('official-item:') ? fact.id.split(':')[1] : null);
+      article.append(node('h4', '', [who ? name(who) : '', fact.slot === 'P' ? '기본 지속 효과' : fact.slot === 'ITEM' ? '아이템' : fact.slot, fact.name].filter(Boolean).join(' · ')), node('blockquote', '', fact.text || fact.raw_excerpt || fact.excerpt));
       const meta = node('div', 'fact-meta'); meta.append(node('span', '', '공식 자료 패치 · ' + (fact.patch || catalog.source_patch || '미확인')));
       try { const url = new URL(fact.url); if (url.protocol === 'https:') { const link = node('a', '', '공식 원문 ↗'); link.href = url.href; link.target = '_blank'; link.rel = 'noopener noreferrer'; meta.append(link); } } catch (_) { /* Source data stays inert if its URL is malformed. */ }
       article.append(meta);
+      if (String(fact.scope || '').includes('UNEVALUATED_TEMPLATE')) article.append(node('p', 'source-note', '보관 원문의 템플릿 수치는 미평가입니다. 실제 피해량·사거리·재사용 시간을 계산한 값이 아닙니다.'));
+      if (String(fact.scope || '').includes('NOT_BUILD_OR_MATCHUP')) article.append(node('p', 'source-note', '아이템 속성 참고이며 권장 빌드·구매 시점·매치업 우열의 근거가 아닙니다.'));
       if (fact.raw_excerpt && fact.raw_excerpt !== fact.text) { const raw = node('details', 'evidence-details'); raw.append(node('summary', '', '보관한 원문 발췌'), node('blockquote', '', fact.raw_excerpt)); article.append(raw); }
       if (fact.id) article.append(node('code', 'fact-hash', '자료 식별자 · ' + fact.id));
       if (fact.sha256) article.append(node('code', 'fact-hash', 'SHA-256 · ' + fact.sha256));

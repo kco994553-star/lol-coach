@@ -21,6 +21,7 @@ MODIFIED={'coach_v1/pc_coach.py','.github/workflows/private-mvp-ci.yml',
     'scripts/diagnose_expert_front.py','scripts/diagnose_expert_video.py',
     'CURRENT_HANDOFF.md','docs/queue/QUEUE.md','coach_v1/pregame_server.py','web_r4/pc.html'}
 CURRENT=MODIFIED|{
+    'contracts/loading-context-v2.md','tests_pregame/test_loading_context.py',
     'contracts/loading-strategy-v1.md','docs/superpowers/plans/2026-10-17-loading-strategy.md',
     'scripts/build_loading_catalog.py','scripts/browser_loading.py',
     'web_r4/loading.html','web_r4/loading.js','web_r4/loading.css','web_r4/loading-engine.js','web_r4/loading-map.js','web_r4/loading-data.json','web_r4/loading-assets/sprite-receipts.json',
@@ -44,7 +45,7 @@ CURRENT=MODIFIED|{
 TESTS=['tests_expert.test_video_diagnostic_payload','tests_expert.test_video_diagnostic_policy','tests_expert.test_video_diagnostic_cli','tests_expert.test_gemini_response_diagnostics','tests_expert.test_text_response_v2','tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
        'tests_pregame.test_resource_recovery','tests_pregame.test_resource_view','tests_pregame.test_fixed_resource_checkpoint',
        'tests_pregame.test_actual_evidence_binding','tests_pregame.test_directions','tests_pregame.test_directions_http',
-       'tests_pregame.test_loading_catalog','tests_pregame.test_loading_strategy','tests_pregame.test_loading_http']
+       'tests_pregame.test_loading_catalog','tests_pregame.test_loading_strategy','tests_pregame.test_loading_http','tests_pregame.test_loading_context']
 DATA_ROOTS=['data/resource_recovery/2026-10-16','data/pov_metadata/2026-10-16']
 
 
@@ -136,6 +137,7 @@ def selected_tests():
     if not before or set(before)=={'0'}:return TESTS
     changed=set(git('diff','--name-only',before,'HEAD').decode().splitlines())
     groups={
+        'tests_pregame.test_loading_context':{'web_r4/loading-engine.js','web_r4/loading-data.json','scripts/build_loading_catalog.py','contracts/loading-context-v2.md'},
         'tests_pregame.test_loading_catalog':{'scripts/build_loading_catalog.py','web_r4/loading-data.json','web_r4/directions-data.json'},
         'tests_pregame.test_loading_strategy':{'web_r4/loading-engine.js','web_r4/loading-data.json','web_r4/directions-engine.js','web_r4/directions-data.json'},
         'tests_pregame.test_loading_http':{'coach_v1/pregame_server.py','web_r4/pc.html','scripts/build_directions_web.py','web_r4/loading.html','web_r4/loading.js','web_r4/loading-map.js','web_r4/loading.css'},

@@ -2,6 +2,8 @@
 
 Source snapshot: 16.20.1. 173 Korean champions, 865 exact P/Q/W/E/R facts, 346 existing candidate profile references.
 
+5 separately identified retained tooltip/item mechanism facts supplement context; original865 descriptions stay unchanged. Templates are not evaluated as numerical stats.
+
 Official facts retain URL, patch, source hash, exact raw excerpt and locator. English names come from the existing English archive. Interpretations remain EXPLORATORY and incomplete; unlisted labels mean UNKNOWN. No USER/AUTO promotion, new tactical rule or coaching accuracy claim.
 
 Entirely unclassified champions (9): Gangplank, Hwei, Kalista, Karthus, Kindred, Quinn, Smolder, Teemo, Vladimir.
