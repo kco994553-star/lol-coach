@@ -300,6 +300,24 @@ class PregameHandler(Handler):
     def dispatch(self):
         self.preflight();path=urlsplit(self.path);route=path.path
         if path.query or path.fragment:raise ServiceError(400,'QUERY_NOT_SUPPORTED')
+        # Public, manual learning examples only. No account/live-game adapter or
+        # private workbench export is reachable from this explicit asset list.
+        learning_assets={
+            '/directions':('directions.html','text/html; charset=utf-8'),
+            '/directions.html':('directions.html','text/html; charset=utf-8'),
+            '/index.html':('directions.html','text/html; charset=utf-8'),
+            '/directions.js':('directions.js','text/javascript; charset=utf-8'),
+            '/directions-engine.js':('directions-engine.js','text/javascript; charset=utf-8'),
+            '/directions.css':('directions.css','text/css; charset=utf-8'),
+            '/directions-data.json':('directions-data.json','application/json; charset=utf-8'),
+            '/directions-status.json':('directions-status.json','application/json; charset=utf-8'),
+            '/directions-status.js':('directions-status.js','text/javascript; charset=utf-8'),
+            '/status.html':('status.html','text/html; charset=utf-8'),
+            **{'/direction-assets/'+name:('direction-assets/'+name,'image/png')
+               for name in ('map11.png','Caitlyn.png','Fiora.png','Ornn.png')}}
+        if self.command=='GET' and route in learning_assets:
+            filename,ctype=learning_assets[route]
+            return self.reply(200,(ROOT/'web_r4'/filename).read_bytes(),ctype)
         assets={'/pc':('pc.html','text/html; charset=utf-8'),'/pc/':('pc.html','text/html; charset=utf-8'),
             '/pc.js':('pc.js','text/javascript; charset=utf-8'),'/pc.css':('pc.css','text/css; charset=utf-8'),
             '/pregame':('pregame.html','text/html; charset=utf-8'),'/pregame/':('pregame.html','text/html; charset=utf-8'),

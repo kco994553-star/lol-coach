@@ -123,6 +123,7 @@ jobs:
           CHROMIUM_EXECUTABLE="$(command -v google-chrome)"
           export CHROMIUM_EXECUTABLE
           python scripts/browser_actual_evidence.py
+          python scripts/browser_directions.py
       - name: Verify revised hypothesis cards and separate topic in Chromium
         if: steps.scope.outputs.mode == 'pilot'
         shell: bash
