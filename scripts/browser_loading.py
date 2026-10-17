@@ -6,7 +6,7 @@ from pathlib import Path
 import subprocess,sys,tempfile,threading
 
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
-SOURCES=['web_r4/'+p for p in ['loading-exploration.js','loading-interactive.js','loading.html','loading.js','loading.css','loading-engine.js','loading-map.js','loading-data.json','skill-data.js','skill-display.js','directions-engine.js','directions.js']]+['coach_v1/pregame_server.py','scripts/build_directions_web.py','scripts/browser_loading.py']
+SOURCES=['web_r4/'+p for p in ['dashboard.html','dashboard.js','dashboard.css','pro-dashboard.json','loading-wave.js','loading-wave-view.js','loading-exploration.js','loading-interactive.js','loading.html','loading.js','loading.css','loading-engine.js','loading-map.js','loading-data.json','skill-data.js','skill-display.js','directions-engine.js','directions.js']]+['coach_v1/pregame_server.py','scripts/build_directions_web.py','scripts/browser_loading.py']
 
 def affected():
     event_path=os.environ.get('GITHUB_EVENT_PATH')
@@ -22,7 +22,7 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
  const browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_EXECUTABLE?{executablePath:process.env.CHROMIUM_EXECUTABLE}:{}),args:['--no-sandbox']});
  const page=await browser.newPage({viewport:{width:1440,height:1000},hasTouch:true,reducedMotion:'reduce'}),errors=[],bad=[],requests=[];
  page.on('pageerror',e=>errors.push(e.message));
- page.on('request',r=>{requests.push(r.url());assert([process.env.LOADING_PC,process.env.LOADING_WEB].some(b=>r.url().startsWith(b+'/')),'unexpected external request');assert.equal(r.method(),'GET');});
+ page.on('request',r=>{requests.push(r.url());assert([process.env.LOADING_PC,process.env.LOADING_WEB].some(b=>r.url().startsWith(b+'/')),'unexpected external request');assert.equal(r.method(),r.url().endsWith('/dev/v1/account/lookup')?'POST':'GET');});
  page.on('response',r=>{if(r.status()>=400)bad.push({path:new URL(r.url()).pathname,status:r.status()});});
  const ready=async url=>{await page.goto(url);await page.waitForSelector('#analyze:enabled');};
  const analyze=async()=>{await page.locator('#analyze').click();await page.waitForSelector('#loading-results:visible');};
@@ -30,7 +30,7 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
  const capture=async(selector,file)=>page.locator(selector).screenshot({path:process.env.LOADING_OUT+'/'+file});
  const summary=async()=>page.locator('#loading-summary').innerText();
  const interactiveFlow=async(label)=>{
-  const flow=page.locator('#interactive-flow');await flow.waitFor({state:'visible'});
+  const flow=page.locator('#interactive-flow');await flow.waitFor({state:'visible'});await page.locator('#wave-skill-means').evaluate(e=>e.open=true);
   const selected=async()=>flow.getAttribute('data-selected-plan');
   assert.equal(await selected(),'PREPARE_WINDOW');await page.locator('#risk-OPPORTUNITY').check();assert.equal(await selected(),'PREPARE_WINDOW');assert.match(await page.locator('#exploration-summary').innerText(),/현재 조건에서는 선택이 같습니다/);assert(await page.locator('#preview-SHORT_FOLLOW').isDisabled());
   await page.locator('#assumptions-ready').click();assert.equal(await selected(),'SHORT_FOLLOW');assert.equal(await page.locator('#active-plan').getAttribute('data-plan'),'SHORT_FOLLOW');
@@ -47,11 +47,41 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
   await page.locator('#assumption-exit_cover').selectOption('UNKNOWN');assert.equal(await selected(),'PREPARE_WINDOW');assert.equal(await page.locator('#active-plan .strategy-map path[marker-end]').count(),0);assert.equal(await page.locator('#active-plan [data-team="ENEMY"]').count(),0);
   await page.locator('#assumptions-ready').click();await page.locator('#why-SHORT_FOLLOW > summary').click();assert.match(await page.locator('#why-SHORT_FOLLOW').innerText(),/설계 가설|조건부/);assert(await page.locator('#why-SHORT_FOLLOW a[href^="https:"]').count()>=5);assert.match(await page.locator('#why-SHORT_FOLLOW').innerText(),/DUO-L2/);
   await capture('#active-plan',label+'-interactive-plan.png');await capture('#plan-comparison',label+'-interactive-comparison.png');
-  await page.locator('#period-LEVEL6').click();assert.equal(await selected(),'UNSUPPORTED');assert.match(await page.locator('#selected-lane-row').innerText(),/폭뢰\(R\)/);assert.equal(await flow.locator('#active-plan').count(),0);
+  await page.locator('#period-LEVEL6').click();await page.locator('#wave-skill-means').evaluate(e=>e.open=true);assert.equal(await selected(),'UNSUPPORTED');assert.match(await page.locator('#selected-lane-row').innerText(),/폭뢰\(R\)/);assert.equal(await flow.locator('#active-plan').count(),0);
   await page.locator('#explore-tab-OPERATIONS').click();assert.match(await flow.innerText(),/운영 기본안/);await page.locator('#explore-tab-FIGHT').click();assert.match(await flow.innerText(),/한타에서 내 역할/);await page.locator('#explore-tab-LANE').click();await page.locator('#period-LEVEL2').click();await page.locator('#assumptions-reset').click();assert.equal(await selected(),'PREPARE_WINDOW');assert.equal(await page.locator('#assumption-followup').inputValue(),'UNKNOWN');
   await page.locator('#risk-BALANCED').check();await page.locator('#input-panel').evaluate(e=>e.open=true);await page.locator('#pick-ALLY-0').fill('Malphite');assert(await page.locator('#loading-results').isHidden());assert.equal(await flow.locator('.strategy-map').count(),0);await analyze();assert.match(await page.locator('#fight-content').innerText(),/말파이트/);await example(0);
   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'interactive horizontal overflow');
  };
+ const waveFlow=async(label)=>{
+  await example(0);const wave=page.locator('#wave-flow');const selected=async()=>wave.getAttribute('data-wave-plan');
+  assert.equal(await selected(),'CHECK_WAVE');assert(await page.locator('#wave-skill-means').evaluate(e=>!e.open));
+  assert.match(await page.locator('#lane-key').innerText(),/웨이브/);
+  await page.locator('#wave-example').click();assert.equal(await selected(),'SLOW_PUSH');
+  await page.locator('#risk-OPPORTUNITY').check();assert.equal(await selected(),'FAST_PUSH');assert.match(await page.locator('#wave-choice').innerText(),/소모|노출/);
+  await page.locator('#wave-preview-SLOW_PUSH').click();await page.locator('#wave-macro').evaluate(e=>e.open=true);assert.match(await page.locator('#wave-macro .scenario-steps-column > p').innerText(),/아군 잔여/);assert.equal(await page.locator('#wave-diagram [data-wave-direction]').getAttribute('data-wave-direction'),'TOWARD_ENEMY');await page.locator('#wave-preview-FAST_PUSH').click();await page.locator('#wave-macro').evaluate(e=>e.open=true);assert.match(await page.locator('#wave-macro .scenario-steps-column > p').innerText(),/처리 시간/);await page.locator('#wave-macro').evaluate(e=>e.open=false);
+
+  await page.locator('#wave-skill-means').evaluate(e=>e.open=true);await page.locator('#assumptions-ready').click();assert.equal(await wave.getAttribute('data-follow-allowed'),'true');assert.match(await page.locator('#lane-key').innerText(),/가상 웨이브 목표/);
+  await page.locator('#wave-purpose').selectOption('RESET');assert.equal(await selected(),'FAST_PUSH');assert.equal(await wave.getAttribute('data-follow-allowed'),'false');assert(await page.locator('#preview-SHORT_FOLLOW').isDisabled());assert.equal(await page.locator('#active-plan .strategy-map').count(),0);assert.match(await page.locator('#wave-choice').innerText(),/현재 조건에서는 선택이 같습니다/);
+  await page.locator('#wave-punishment > summary').click();assert.match(await page.locator('#wave-punishment').innerText(),/공격보다|기본 행동으로 선택하지|처리/);
+  assert.match(await page.locator('#wave-active').innerText(),/포탑 도착|Crash 완료/);await page.locator('#wave-crash').selectOption('READY');assert.equal(await selected(),'CRASH');
+  await page.locator('#wave-flow').screenshot({path:process.env.LOADING_OUT+'/'+label+'-wave-crash.png'});
+  await page.locator('#wave-flow').evaluate(e=>e.scrollIntoView());await page.locator('#wave-flow #wave-macro').evaluate(e=>e.open=true);
+  await page.locator('#wave-step-2').click();assert.equal(await page.locator('#wave-selected-action').getAttribute('data-step'),'2');assert.equal(await page.locator('#wave-active .strategy-map').getAttribute('data-active-step'),'2');
+  await page.locator('#wave-diagram .wave-diagram-control[data-wave-step="3"]').focus();await page.keyboard.press('Enter');assert.equal(await page.locator('#wave-selected-action').getAttribute('data-step'),'3');
+  await page.locator('#wave-line-open').click();await page.locator('#wave-line-scale').fill('200');await page.locator('#wave-line-scale').dispatchEvent('input');assert(await page.locator('.wave-line-scroll').evaluate(e=>e.scrollWidth>e.clientWidth));assert.match(await page.locator('#wave-line-dialog').innerText(),/실제 관측 없음/);
+  await page.keyboard.press('Escape');await page.locator('#wave-flow #wave-macro .map-step-controls [data-map-step="1"]').click();assert.equal(await page.locator('#wave-selected-action').getAttribute('data-step'),'1');
+  await page.locator('#wave-flow #wave-macro').evaluate(e=>e.open=false);
+  await page.locator('#wave-flow').screenshot({path:process.env.LOADING_OUT+'/'+label+'-wave-plan.png'});
+  await page.locator('#wave-flow #wave-why').evaluate(e=>e.open=true);assert.match(await page.locator('#wave-why').innerText(),/기술의 성질만|원문/);assert.equal(await page.locator('#wave-why a[href^="https:"]').count(),7);
+  await page.locator('#wave-flow').evaluate(e=>e.scrollIntoView());await page.locator('#wave-flow #wave-why').evaluate(e=>e.open=false);
+  await page.locator('#wave-crash').selectOption('UNKNOWN');
+  await page.locator('#wave-condition-flow').selectOption('INCOMING');await page.locator('#wave-access').selectOption('DENIED');assert.equal(await selected(),'TRIM_RECEIVE');
+  await page.locator('#risk-LOSS_LIMIT').check();assert.equal(await selected(),'TRIM_RECEIVE');await page.locator('#risk-OPPORTUNITY').check();assert.equal(await selected(),'TRIM_RECEIVE');
+  await page.locator('#wave-response').selectOption('UNKNOWN');assert.equal(await selected(),'CHECK_WAVE');assert(await page.locator('#wave-preview-FAST_PUSH').isDisabled());assert(await page.locator('#wave-preview-FREEZE').isDisabled());
+  await page.locator('#wave-reset').click();assert.equal(await selected(),'CHECK_WAVE');assert.equal(await page.locator('#wave-purpose').inputValue(),'UNKNOWN');
+  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await example(0);
+ };
+
  const skillPresentation=async()=>{
   const row=id=>page.locator('[data-milestone="'+id+'"]'),cell=(id,index)=>row(id).locator('td').nth(index);
   assert.match(await summary(),/럭스의 빛의 속박\(Q\)/);assert.match(await summary(),/케이틀린의 요들잡이 덫\(W\)/);
@@ -122,7 +152,7 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
   assert.equal(await page.locator('#scenario-content [data-scenario]').count(),2);
   assert.equal(await page.locator('[data-team="ENEMY"][data-entity]').count(),0);
   await skillPresentation();
-  await interactiveFlow('desktop');
+  await waveFlow('desktop');
   await mapSkillPresentation();
   await capture('#loading-summary','desktop-summary.png');await capture('#loading-lane','desktop-lane.png');await capture('#teamfight','desktop-teamfight.png');
   snapshots.push({input:'example-0 manual Korean/English',summary:original,lane_rows:await page.locator('#lane-table tbody').innerText()});
@@ -184,8 +214,8 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
   await page.locator('#input-panel').evaluate(e=>e.open=true);await page.locator('#pc-import').click();await page.waitForFunction(()=>document.querySelector('#loading-message').textContent.includes('직접 입력'));
   assert.match(await page.locator('#loading-message').innerText(),/직접 입력/);
   // The exact public allowlist works under /lol-coach/, with mobile steps/zoom/details.
-  await page.setViewportSize({width:390,height:844});await ready(process.env.LOADING_WEB+'/lol-coach/index.html');await example(0);
-  await interactiveFlow('mobile');
+  await page.setViewportSize({width:390,height:844});await ready(process.env.LOADING_WEB+'/lol-coach/loading.html');await example(0);
+  await waveFlow('mobile');
   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
   await skillPresentation();
   await mapSkillPresentation();
@@ -199,6 +229,24 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
   await capture('#loading-summary','mobile-summary.png');await capture('#loading-lane','mobile-lane.png');
   await page.locator('.site-header nav a[aria-current]').click();await page.waitForSelector('#analyze:enabled');
   await page.locator('.site-header nav a[href="./directions.html"]').click();await page.waitForSelector('#result:visible');
+
+  // New account entry: real service/projection against isolated protocol fixture only.
+  await page.setViewportSize({width:1440,height:1000});await page.goto(process.env.LOADING_PC+'/index.html');await page.waitForSelector('#account-submit');
+  await page.evaluate(()=>sessionStorage.removeItem('lol-coach-dev-token'));await page.locator('#riot-id').fill('synthetic-fixture#KR1');await page.locator('#account-submit').click();assert.equal(await page.locator('#account-status').getAttribute('data-state'),'AUTH_REQUIRED');
+  await page.evaluate(t=>sessionStorage.setItem('lol-coach-dev-token',t),token);await page.locator('#riot-id').fill('missing#KR1');await page.locator('#account-submit').click();await page.waitForFunction(()=>document.querySelector('#account-status').dataset.state==='ACCOUNT_NOT_FOUND');
+  await page.locator('#riot-id').fill('synthetic-fixture#KR1');await page.locator('#account-submit').click();await page.waitForFunction(()=>document.querySelector('#account-status').dataset.state==='CONNECTED');assert.match(await page.locator('#profile-scope').innerText(),/1경기/);assert.match(await page.locator('#profile-rank').innerText(),/골드 II/);assert.equal(await page.locator('#recent-matches .match-row').count(),1);assert.match(await page.locator('#coaching-notes').innerText(),/별개|아직 없습니다/);
+  await page.locator('#guest-entry').click();assert.equal(await page.locator('#account-status').getAttribute('data-state'),'GUEST');assert.match(await page.locator('#profile-name').innerText(),/연결 전/);
+  await page.locator('#riot-id').fill('slow#KR1');await page.locator('#account-submit').click();assert.equal(await page.locator('#account-status').getAttribute('data-state'),'LOADING');await page.locator('#guest-entry').click();assert.equal(await page.locator('#account-status').getAttribute('data-state'),'GUEST');assert(await page.locator('#account-submit').isEnabled());
+  await page.locator('#riot-id').fill('edited#KR1');assert.match(await page.locator('#profile-name').innerText(),/연결 전/);assert.equal(await page.locator('#recent-matches .match-row').count(),0);
+  // Public artifact knows it has no private backend, even under localhost test server.
+  await page.goto(process.env.LOADING_WEB+'/lol-coach/index.html');await page.waitForSelector('#account-submit');
+  assert.equal(await page.locator('body').getAttribute('data-account-backend'),'PUBLIC_STATIC');const accountBefore=requests.filter(u=>u.includes('/dev/v1/account')).length;
+  await page.locator('#riot-id').fill('bad');await page.locator('#account-submit').click();assert.equal(await page.locator('#account-status').getAttribute('data-state'),'INPUT_ERROR');
+  await page.locator('#riot-id').fill('synthetic-fixture#KR1');await page.locator('#account-submit').click();await page.waitForFunction(()=>document.querySelector('#account-status').dataset.state==='API_UNAVAILABLE');assert.equal(requests.filter(u=>u.includes('/dev/v1/account')).length,accountBefore);assert.match(await page.locator('#pro-records').innerText(),/확인된 LCK/);
+  await capture('#account-search','desktop-account-entry.png');await capture('#dashboard','desktop-dashboard.png');
+  await page.setViewportSize({width:390,height:844});await page.locator('#menu-toggle').click();assert.equal(await page.locator('#menu-toggle').getAttribute('aria-expanded'),'true');await page.locator('#menu-toggle').click();assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await capture('#account-search','mobile-account-entry.png');await capture('#dashboard','mobile-dashboard.png');
+  await page.locator('#guest-entry').click();await page.locator('#prepare-main').click();await page.waitForSelector('#analyze:enabled');await example(0);assert.equal(await page.locator('#report-teams .roster-pick').count(),10);assert.equal(await page.locator('#wave-flow').getAttribute('data-wave-plan'),'CHECK_WAVE');
+
   await page.goto(process.env.LOADING_WEB+'/lol-coach/status.html');await page.waitForSelector('#status-items section');
   assert.equal(errors.length,0,JSON.stringify(errors));assert.equal(bad.length,0,JSON.stringify(bad));
   process.stdout.write(JSON.stringify({passed:true,snapshots,checks:['context lane/jungle/fight actor separation','25 engine permutations and real form array reversal','distant ally preserves lane; own/enemy support changes mechanisms','six hypothetical decisions with reply/alternative and source boundary','base vs proposed role','missing support assignment does not fabricate duo','known support survives missing carry; swapped enemy roles disable duo template','unbound allied control removes concrete trap-follow action','true manual ten picks Korean/English','no economy required','actual composition and own role counterfactual','six milestone table','relevant legacy scenes and hash selection','unknown opponent and patch mismatch','invalid input hides stale report','explicit authenticated sanitized PC import and manual fallback','public repository subpath navigation','desktop1440/mobile390 no overflow','card/main/zoom step synchronization','mobile200percent zoom','public status'],browser_errors:errors,http_errors:bad,provider_requests:0,real_windows_connection:'BLOCKED_EXTERNAL',real_coaching_n:0,coaching_accuracy:null})+'\n');
@@ -223,13 +271,25 @@ def main():
         example=json.loads(subprocess.check_output(['node','-e',"const E=require('./web_r4/loading-engine.js'),C=require('./web_r4/loading-data.json');console.log(JSON.stringify(E.exampleInput(C,0)));"],cwd=ROOT,text=True))
         draft=dict(phase='PRE_GAME',patch=example['patch'],my_champion=example['own_champion'],my_position=example['own_position'],slots=[dict(side=side,slot=i+1,**pick) for side,key in [('ALLY','allies'),('ENEMY','enemies')] for i,pick in enumerate(example[key])])
         draft['riotId']='synthetic-private-identity';state=p/'cached-draft.json';state.write_text(json.dumps(dict(status='CONNECTED',phase='ChampSelect',revision=1,input=draft)));pc.pc_services=CachedDraft(state)
+        from coach_v1.account_dashboard import AccountDashboardService
+        def account_fixture(url,headers,timeout):
+            # Isolated protocol fixture, never published as a real player or provider result.
+            if '/accounts/by-riot-id/' in url:
+                if '/missing/' in url:return 404,{},b'{}'
+                if '/slow/' in url:__import__('time').sleep(.4)
+                data={'puuid':'synthetic-own-puuid'}
+            elif '/entries/by-puuid/' in url:data=[{'queueType':'RANKED_SOLO_5x5','tier':'GOLD','rank':'II','leaguePoints':30}]
+            elif '/ids?' in url:data=['KR_111']
+            else:data={'info':{'queueId':420,'gameStartTimestamp':1792195200000,'gameDuration':1800,'participants':[{'puuid':'synthetic-own-puuid','championName':'Caitlyn','win':True,'kills':4,'deaths':2,'assists':3}]}}
+            return 200,{},json.dumps(data).encode()
+        pc.account_dashboard_service=AccountDashboardService(api_key='RGAPI-'+'00000000-0000-0000-0000-000000000000',transport=account_fixture)
         public=ThreadingHTTPServer(('127.0.0.1',0),functools.partial(Quiet,directory=str(p/'public')))
         try:
             for server in (pc,public):threading.Thread(target=server.serve_forever,daemon=True).start()
             (p/'probe.cjs').write_text(JS)
             env=dict(os.environ,NODE_PATH=os.environ.get('NODE_PATH','/opt/codex/cua_node/lib/node_modules'),LOADING_PC='http://127.0.0.1:'+str(pc.server_port),LOADING_WEB='http://127.0.0.1:'+str(public.server_port),LOADING_OUT=str(out),LOADING_TOKEN=str(p/'private/access-token'),LOADING_STATE=str(state))
             if 'CHROMIUM_EXECUTABLE' not in env and Path('/usr/bin/chromium').exists():env['CHROMIUM_EXECUTABLE']='/usr/bin/chromium'
-            r=subprocess.run(['node',str(p/'probe.cjs')],cwd=ROOT,env=env,text=True,capture_output=True,timeout=150)
+            r=subprocess.run(['node',str(p/'probe.cjs')],cwd=ROOT,env=env,text=True,capture_output=True,timeout=210)
             (out/'browser.log').write_text(r.stdout+r.stderr)
             receipt=json.loads(r.stdout or '{}');receipt['passed']=bool(receipt.get('passed')) and r.returncode==0
             receipt['source_sha256']={name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in SOURCES}

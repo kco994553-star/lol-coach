@@ -1,0 +1,21 @@
+..E.......F.
+======================================================================
+ERROR: test_first_deployment_requires_exact_previous_artifact_and_manifest (tests_pregame.test_account_dashboard.AccountDashboardTests.test_first_deployment_requires_exact_previous_artifact_and_manifest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_account_dashboard.py", line 89, in test_first_deployment_requires_exact_previous_artifact_and_manifest
+    from scripts.refresh_verified_pro_dashboard import first_deployment_verified
+ImportError: cannot import name 'first_deployment_verified' from 'scripts.refresh_verified_pro_dashboard' (/workspace/worktrees/lol-coach-interactive/scripts/refresh_verified_pro_dashboard.py)
+
+======================================================================
+FAIL: test_scheduled_refresh_does_not_retry_a_published_auth_failure (tests_pregame.test_account_dashboard.AccountDashboardTests.test_scheduled_refresh_does_not_retry_a_published_auth_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_account_dashboard.py", line 84, in test_scheduled_refresh_does_not_retry_a_published_auth_failure
+    self.assertTrue(previous_auth_blocked(dict(base,failures=[{'status':'API_UNAVAILABLE','reason':reason}])))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.165s
+
+FAILED (failures=1, errors=1)

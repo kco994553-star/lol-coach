@@ -303,11 +303,17 @@ class PregameHandler(Handler):
         # Public, manual learning examples only. No account/live-game adapter or
         # private workbench export is reachable from this explicit asset list.
         learning_assets={
+            '/dashboard.html':('dashboard.html','text/html; charset=utf-8'),
+            '/dashboard.js':('dashboard.js','text/javascript; charset=utf-8'),
+            '/dashboard.css':('dashboard.css','text/css; charset=utf-8'),
+            '/pro-dashboard.json':('pro-dashboard.json','application/json; charset=utf-8'),
             '/skill-data.js':('skill-data.js','text/javascript; charset=utf-8'),
             '/skill-display.js':('skill-display.js','text/javascript; charset=utf-8'),
             '/loading':('loading.html','text/html; charset=utf-8'),
             '/loading.html':('loading.html','text/html; charset=utf-8'),
             '/loading.js':('loading.js','text/javascript; charset=utf-8'),
+            '/loading-wave.js':('loading-wave.js','text/javascript; charset=utf-8'),
+            '/loading-wave-view.js':('loading-wave-view.js','text/javascript; charset=utf-8'),
             '/loading-exploration.js':('loading-exploration.js','text/javascript; charset=utf-8'),
             '/loading-interactive.js':('loading-interactive.js','text/javascript; charset=utf-8'),
             '/loading-engine.js':('loading-engine.js','text/javascript; charset=utf-8'),
@@ -317,7 +323,7 @@ class PregameHandler(Handler):
             **{'/loading-assets/champion'+str(i)+'.png':('loading-assets/champion'+str(i)+'.png','image/png') for i in range(6)},
             '/directions':('directions.html','text/html; charset=utf-8'),
             '/directions.html':('directions.html','text/html; charset=utf-8'),
-            '/index.html':('loading.html','text/html; charset=utf-8'),
+            '/index.html':('dashboard.html','text/html; charset=utf-8'),
             '/directions.js':('directions.js','text/javascript; charset=utf-8'),
             '/directions-engine.js':('directions-engine.js','text/javascript; charset=utf-8'),
             '/directions.css':('directions.css','text/css; charset=utf-8'),
@@ -361,6 +367,15 @@ class PregameHandler(Handler):
             filename,ctype=assets[route];file=ROOT/'web_r4'/filename
             if not file.exists():raise ServiceError(404,'PREGAME_UI_NOT_INSTALLED')
             return self.reply(200,file.read_bytes(),ctype)
+        if route=='/dev/v1/account/lookup' and self.command=='POST':
+            self.authorize()
+            from .account_dashboard import AccountDashboardService
+            if not hasattr(self.server,'account_dashboard_service'):
+                # Reuse a single service for rate windows and auth/rate-limit stop state.
+                with self.server.job_lock:
+                    if not hasattr(self.server,'account_dashboard_service'):
+                        self.server.account_dashboard_service=AccountDashboardService()
+            return self.bounded_reply(200,self.server.account_dashboard_service.lookup(self.body()))
         if route.startswith('/dev/v1/experts/'):
             self.authorize()
             if route=='/dev/v1/experts/claims' and self.command=='GET':

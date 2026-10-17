@@ -28,7 +28,7 @@ class LoadingHTTPTests(unittest.TestCase):
         return r.status,body,headers
 
     def test_loading_assets_and_original_pc_access_boundary(self):
-        for path in ['/loading','/loading.html','/loading-engine.js','/loading-exploration.js','/loading-interactive.js','/loading-map.js','/loading-data.json','/loading-assets/champion0.png','/skill-data.js','/skill-display.js']:
+        for path in ['/loading','/loading.html','/loading-engine.js','/loading-exploration.js','/loading-interactive.js','/dashboard.html','/dashboard.js','/dashboard.css','/pro-dashboard.json','/loading-wave.js','/loading-wave-view.js','/loading-map.js','/loading-data.json','/loading-assets/champion0.png','/skill-data.js','/skill-display.js']:
             status,body,headers=self.get(path);self.assertEqual(status,200,path)
             self.assertGreater(len(body),0);self.assertIn("img-src 'self'",headers['Content-Security-Policy'])
         self.assertEqual(self.get('/dev/v1/pregame/pc-status')[0],401)
@@ -49,3 +49,15 @@ class LoadingHTTPTests(unittest.TestCase):
             self.assertNotIn('pc.js',names)
             self.assertFalse(any('token' in p or 'sqlite' in p or 'ledger' in p for p in names))
             self.assertFalse(result['live_game_connection'])
+
+    def test_private_account_route_auth_and_missing_configuration(self):
+        from coach_v1.account_dashboard import AccountDashboardService
+        self.server.account_dashboard_service=AccountDashboardService(api_key='')
+        def post(token=None):
+            c=http.client.HTTPConnection('127.0.0.1',self.server.server_port,timeout=15)
+            headers={'Content-Type':'application/json'}
+            if token:headers['Authorization']='Bearer '+token
+            c.request('POST','/dev/v1/account/lookup',json.dumps({'riot_id':'synthetic-fixture#KR1','region':'KR'}),headers)
+            r=c.getresponse();body=json.loads(r.read());status=r.status;c.close();return status,body
+        self.assertEqual(post()[0],401)
+        status,body=post(self.server.token);self.assertEqual(status,200);self.assertEqual(body['status'],'API_UNAVAILABLE');self.assertEqual(body['provider_requests'],0)
