@@ -3,6 +3,17 @@
 - status: `RUNNING`
 - writer_active: true
 - owner_branch: `work/skill-display-20261017`
+- authority: USER_SKILL_DISPLAY_FORMAT + inherited approved implementation/publication; no new approval.
+- intake_main: `75a4543c23b1f06f215986ab8ca4036ac6d199b7`
+- detail: Skill display implementation/source review complete; changed checks and source-bound required CI publication in progress. CLI GitHub401 is distinct from provider status; existing authorized GitHub app writes and public reads used. No provider/game/video/asset/paid calls. Preserve PR54/55 history and existing Pages artifact until new gates pass.
+
+---
+
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-loading-context`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/skill-display-20261017`
 - authority: USER_LOADING_CONTEXT_QUALITY_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
 - intake_main: `75a4543c23b1f06f215986ab8ca4036ac6d199b7`
 - detail: PR55 old individual pregame metadata resolved; all three success, normal merge main75a4543. New user skill display work isolated on work/skill-display-20261017 with prior uncommitted display changes retained. Existing PR54 public result reused. No provider calls.
