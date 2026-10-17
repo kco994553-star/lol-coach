@@ -1,3 +1,14 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261017-loading-context`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `work/skill-display-results-20261017`
+- authority: USER_SKILL_DISPLAY_FORMAT + inherited approved publication
+- intake_main: `c5501b5cc8f330e5b1204cfc30b1ef4c31bdce3e`
+- detail: PR56 and post-main all3 SUCCESS, Pages artifact935e272 native39008108154 SUCCESS, public27files and actual HTTPS1440/390 skill labels/manualflow/maps verified. Results-only PR57 head 1fc24123462a73b859c75bc4bc8971c9d3daab6f now awaits required source-integrity CI; reuse completed checks. No provider calls/N0/Windows external preserved.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261017-loading-context`
 - status: `RUNNING`
