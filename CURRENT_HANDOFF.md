@@ -1,3 +1,12 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-loading-interactive`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-interactive-results-20261017`
+- detail: PR62 now includes same-action per-preference-transition feedback, head72f02e759cd832db893ee101eb45925b5518a4b3 treee5effc633b68ae3aa430db7d5053621c36e13385 exactlocal. Pureselection/feasibility/costs/grades unchanged; 8 affected checks and focused separate review pass. Required CI39017236074 and companion running; then exactsource normalmerge/postmain and republish feedback. Prior4e373bbd Pages/public29/PCmobile proofs retained. No provider calls; question3/diagnosis separate; N0/comprehensionunmeasured/Windowsblocked.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261017-loading-interactive`
 - status: `CI_PENDING`
