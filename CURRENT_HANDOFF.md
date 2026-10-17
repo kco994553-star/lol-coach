@@ -1,3 +1,8 @@
+# Results-only packaging correction — 2026-10-17
+- PR74 first CI correctly rejected public-probe.cjs evidence extension (bounded_changes=false). Preserve failed logs; exact executed probe text/hash moved to public-probe.json, no verifier policy/runtime change. Product/Pages remain verified84003a4/9644721. Recheck exact amended head; no provider call or full browser replay.
+
+---
+
 # Shared visual system — 실제 공개 검증 완료 2026-10-17
 - PR72/73 병합 제품 main84003a4efc9fcb9de180bfa5c44f16e668bf5c7c, artifact96447216db5903508643eb79220d34c74e3bf702. feature+postmain 필수3 모두 SUCCESS. Native Pages39032180568 build/report/deploy SUCCESS.
 - 실제 HTTPS manifest47파일·root·build-info·.nojekyll 해시 일치. PC1440/mobile390 실제 홈/메뉴/세션공식hero/실패/수동retry/게스트대시보드→10픽→전략/지도확대·3카드 각영역 이동 PASS; pageerror0/HTTPerror0/provider0.
