@@ -79,3 +79,10 @@ input, positive/missing/impossible cases, one-condition action-ID transitions, s
 preference invariance, stale input, keyboard/touch/map/zoom, source links and 390px overflow.
 Rollback: revert additive exploration module/UI/integration/input v2 normalization and deploy
 previous verified Pages096234e8; no original knowledge/ledger/source/history removal.
+
+Display followup after PR60: authored trap shorthand in this exact representative context
+uses the retained official Caitlyn W alias at display time, including comparison/costs,
+selected action, map steps and inside zoom. The map interaction supplies explicit
+skillAliases; unsupported othermatchups never receive this mapping. Raw facts/quotes and
+pure action selection remain unchanged. Fresh browser checks include step3 outside/inside
+zoom to prevent a correct heading from hiding unformatted action shorthand.

@@ -84,7 +84,7 @@
     return wrap;
   }
   function create(scenario, catalog, input, interaction = {}) {
-    const options = { champions: [...input.allies, ...input.enemies].map(pick => pick.champion), own: input.own_champion, owner: scenario.id ? input.own_champion : undefined, aliases: scenario.id && input.own_champion === 'Caitlyn' ? [{ text: '덫', champion: 'Caitlyn', slot: 'W' }, { text: '투망', champion: 'Caitlyn', slot: 'E' }] : [] };
+    const options = { champions: [...input.allies, ...input.enemies].map(pick => pick.champion), own: input.own_champion, owner: scenario.id ? input.own_champion : undefined, aliases: interaction.skillAliases || (scenario.id && input.own_champion === 'Caitlyn' ? [{ text: '덫', champion: 'Caitlyn', slot: 'W' }, { text: '투망', champion: 'Caitlyn', slot: 'E' }] : []) };
     const wrap = node('div', 'scenario-grid'), left = node('div', 'scenario-map-column'), right = node('div', 'scenario-steps-column');
     const heading = node('div', 'map-header'); heading.append(node('h4', '', '움직임 지도'));
     const zoom = node('button', '', '⤢ 크게 보기'); zoom.type = 'button'; heading.append(zoom); left.append(heading);

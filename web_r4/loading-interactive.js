@@ -4,7 +4,7 @@
   function mount({report:initial,catalog,host,onPreference}){
     const X=root.LoadingExploration,S=root.SkillDisplay;
     let report=initial,state=X.defaultState(),panel='LANE',step='1',preview=null,result=null,destroyed=false,last=null;
-    const fmt=v=>S.format(String(v),{champions:report.input.allies.concat(report.input.enemies).map(p=>p.champion),own:report.input.own_champion});
+    const fmt=v=>S.format(String(v),{champions:report.input.allies.concat(report.input.enemies).map(p=>p.champion),own:report.input.own_champion,aliases:report.lane.matchup_id==='Caitlyn_Lux__Kaisa_Nautilus_v2'?[{text:'덫',champion:'Caitlyn',slot:'W'}]:[]});
     const el=(tag,text,cls)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=['code','blockquote'].includes(tag)?String(text):fmt(text);return n;};
     const button=(text,id,fn)=>{const n=el('button',text);n.type='button';if(id)n.id=id;n.addEventListener('click',fn);return n;};
     const list=(values,ordered=false)=>{const n=el(ordered?'ol':'ul');(values||[]).forEach(v=>n.append(el('li',v)));return n;};
@@ -83,7 +83,7 @@
       target.dataset.plan=plan.id;target.append(el('h3','살펴보는 안: '+plan.title),block('준비 → 실행 → 전환',plan.steps.map(s=>s.number+'. '+s.text)),block('상대 대응 시·중단 기준',plan.abort),block('불확실할 때의 다음 행동',plan.next_if_unknown));
       const action=el('p',null,'selected-action');action.id='selected-action';action.setAttribute('role','status');target.append(action);
       const select=n=>{step=n;action.textContent=fmt(n==='ALL'?'전체 단계 · 번호를 선택해 행동을 살펴보세요.':plan.steps.find(s=>String(s.number)===n)?.text||'');action.dataset.step=n;target.dataset.selectedStep=n;};
-      const scenario=X.mapFor(report.input,plan);target.append(root.LoadingMap.create(scenario,catalog,report.input,{selectedStep:step,onSelect:select}));select(step);
+      const scenario=X.mapFor(report.input,plan);target.append(root.LoadingMap.create(scenario,catalog,report.input,{selectedStep:step,onSelect:select,skillAliases:[{text:'덫',champion:'Caitlyn',slot:'W'}]}));select(step);
     }
     function showError(error){closeZoom();host.replaceChildren(el('p','탐색을 완료하지 못했습니다. 픽을 다시 분석해 주세요. '+(error?.message||''),'is-error'));}
     result=X.evaluate(report,catalog,state);preview=result.selected_plan_id;render();
