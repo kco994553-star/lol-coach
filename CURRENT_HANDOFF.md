@@ -1,3 +1,14 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261017-directions`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `work/directions-prototype-20261017`
+- authority: USER_SITUATIONAL_MINIMAP_PROTOTYPE_AND_MOBILE_WEB_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `15e0e21a53d46e1b9368b93e6ea0963faf767440`
+- detail: PR50 required/postmain all3SUCCESS, main0ec550d treea1902e95. Public artifact gh-pages6c950ca6cccde4b6758597cf5d3b1aa6767ad7be contains exact12allowlisted files+manifest/nojekyll. Pages create returned403 but freshGET confirms siteconfigured and actual github-pages deployment7134020088/building. Await realdeployment/HTTP verification; no retry creation/provider calls.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261017-directions`
 - status: `RUNNING`
