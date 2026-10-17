@@ -277,6 +277,32 @@ class Compiler:
                 'portrait': {'sprite': sheet['path'], **{key: image[key] for key in ('x', 'y', 'w', 'h')},
                              'sheet_width': sheet['width'], 'sheet_height': sheet['height']},
                 'facts': facts, 'profile': profiles[champion]}
+        # Bounded context supplements from already bound retained files; the original
+        # 865 description facts and all cohorts remain unchanged. Template values are
+        # retained verbatim, never evaluated as damage/range/cooldown statistics.
+        context_facts = []
+        for champion, slot in [('Kaisa', 'R'), ('Lux', 'W'), ('Lux', 'E')]:
+            original = next(f for f in champions[champion]['facts'] if f['slot'] == slot)
+            locator = f'data.{champion}.spells.{"QWER".index(slot)}.tooltip'
+            raw = located(self.documents[original['local_source']], locator)
+            context_facts.append({**original, 'id': f'official-detail:{champion}:{slot}',
+                'text': plain_text(raw), 'raw_excerpt': raw, 'locator': locator,
+                'scope': 'RETAINED_TOOLTIP_MECHANISM_ONLY_UNEVALUATED_TEMPLATE_VALUES'})
+        item_folder = f'data/official_items/versions/{patch}'
+        item_manifest = self.read(item_folder + '/manifest.json', 'RETAINED_OFFICIAL_ITEM_MANIFEST')
+        item_source = item_manifest['source']
+        item_path = item_folder + '/' + item_source['file']
+        items = self.read(item_path, 'RETAINED_OFFICIAL_ITEM_MECHANISMS', item_source['url'], item_source['sha256'])
+        if items['version'] != patch:
+            raise ValueError('Item context version mismatch')
+        for item_id in ('1001', '1036'):
+            item = items['data'][item_id]
+            raw = item['description']
+            context_facts.append({'id': 'official-item:' + item_id, 'slot': 'ITEM',
+                'name': item['name'], 'text': plain_text(raw), 'raw_excerpt': raw,
+                'url': item_source['url'], 'patch': patch, 'sha256': item_source['sha256'],
+                'local_source': item_path, 'locator': 'data.' + item_id + '.description',
+                'scope': 'OBSERVED_ITEM_PROPERTY_ONLY_NOT_BUILD_OR_MATCHUP_RECOMMENDATION'})
         directions = self.read('web_r4/directions-data.json', 'UNCHANGED_SIX_SCENE_SNAPSHOT')
         statistics, statistics_scope = self.recall_references(champions)
         queues = []
@@ -297,7 +323,7 @@ class Compiler:
                 'coaching_use': 'EXCLUDED_DIAGNOSTIC_ONLY'})
         catalog = {'format': 'lol-coach-loading-v1', 'source_patch': patch,
             'strategy_level': 'DESIGN_HYPOTHESIS', 'champions': champions,
-            'statistics': statistics, 'lectures': [], 'directions': directions,
+            'statistics': statistics, 'lectures': [], 'directions': directions, 'context_facts': context_facts,
             'assets': [assets[key] for key in sorted(assets)],
             'source_bindings': [self.bindings[key] for key in sorted(self.bindings)],
             'legacy': {'directions': 'PRESERVED_EXACT_SIX_SCENE_SNAPSHOT',
@@ -312,6 +338,7 @@ class Compiler:
                  if not any(row['profile'][field] for field in PROFILE_FIELDS)]
         scope = {'format': 'loading-catalog-scope-v1', 'source_patch': patch,
             'champion_count': len(champions), 'official_fact_count': sum(len(c['facts']) for c in champions.values()),
+            'context_supplement_fact_count': len(context_facts),
             'candidate_rule_count': sum(len(c['profile']['rule_refs']) for c in champions.values()),
             'classification_incomplete': True, 'empty_classification_champions': empty,
             'empty_classification_meaning': 'UNKNOWN_NOT_ABSENCE_OR_WEAKNESS',
@@ -336,6 +363,7 @@ def scope_markdown(scope):
     return (f'# Loading catalog evidence scope\n\nSource snapshot: {scope["source_patch"]}. '
         f'{scope["champion_count"]} Korean champions, {scope["official_fact_count"]} exact P/Q/W/E/R facts, '
         f'{scope["candidate_rule_count"]} existing candidate profile references.\n\n'
+        f"{scope.get('context_supplement_fact_count', 0)} separately identified retained tooltip/item mechanism facts supplement context; original865 descriptions stay unchanged. Templates are not evaluated as numerical stats.\n\n"
         'Official facts retain URL, patch, source hash, exact raw excerpt and locator. English names come '
         'from the existing English archive. Interpretations remain EXPLORATORY and incomplete; unlisted '
         'labels mean UNKNOWN. No USER/AUTO promotion, new tactical rule or coaching accuracy claim.\n\n'

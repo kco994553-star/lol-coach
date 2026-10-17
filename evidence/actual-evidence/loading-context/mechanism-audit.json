@@ -1,0 +1,1673 @@
+{
+  "schema_version": "loading-context.mechanism-audit.v1",
+  "artifact_type": "RETAINED_SOURCE_AUDIT_NOT_NEW_STRATEGY",
+  "audited_at_utc": "2026-10-17T05:04:11.692952+00:00",
+  "scope": {
+    "allies": [
+      "Caitlyn",
+      "Lux"
+    ],
+    "enemies": [
+      "Kaisa",
+      "Nautilus"
+    ],
+    "milestones": [
+      "LEVEL1",
+      "LEVEL2",
+      "LEVEL3_5",
+      "LEVEL6",
+      "FIRST_PURCHASE",
+      "FIRST_CORE"
+    ],
+    "source_patch": "16.20.1",
+    "game_patch_application": "UNKNOWN_UNLESS_OBSERVED",
+    "engine_and_contract_owner": "Main",
+    "existing_mvp_preserved": true
+  },
+  "epistemic_boundary": {
+    "official_facts_are_strategy_validation": false,
+    "new_tactical_interpretation_level": "DESIGN_HYPOTHESIS",
+    "real_coaching_n": 0,
+    "accuracy": null,
+    "user_approval_created": 0,
+    "auto_grade_changes": 0,
+    "expert_claims_adopted": 0,
+    "matched_same_game_pov_scenes": 0
+  },
+  "task_activity": {
+    "network_calls": 0,
+    "provider_calls": 0,
+    "video_calls": 0,
+    "game_collection_calls": 0,
+    "source_refreshes": 0,
+    "old_test_reruns": 0,
+    "protected_issue_writes": 0,
+    "new_strategy_code_tests_authored": 0,
+    "written_paths": [
+      "evidence/actual-evidence/loading-context/mechanism-audit.md",
+      "evidence/actual-evidence/loading-context/mechanism-audit.json"
+    ]
+  },
+  "sources": [
+    {
+      "id": "retained:champion:Caitlyn",
+      "local_source": "data/official_catalog/versions/16.20.1/Caitlyn-16.20.1.ko_KR.json",
+      "sha256": "d3215fc64246d7014dbd924cf1b76620756f84184c01191f0f6ffa65c3625029",
+      "bytes": 15532,
+      "kind": "OFFICIAL_DATA_DRAGON_KOREAN",
+      "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Caitlyn.json",
+      "patch": "16.20.1",
+      "manifest_hash_match": true
+    },
+    {
+      "id": "retained:champion:Lux",
+      "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+      "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+      "bytes": 16073,
+      "kind": "OFFICIAL_DATA_DRAGON_KOREAN",
+      "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+      "patch": "16.20.1",
+      "manifest_hash_match": true
+    },
+    {
+      "id": "retained:champion:Kaisa",
+      "local_source": "data/official_catalog/versions/16.20.1/Kaisa-16.20.1.ko_KR.json",
+      "sha256": "98544004fbc81a31b38a8856c301b5434e7881bb05fd4ec708dabb0827214ed3",
+      "bytes": 17548,
+      "kind": "OFFICIAL_DATA_DRAGON_KOREAN",
+      "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Kaisa.json",
+      "patch": "16.20.1",
+      "manifest_hash_match": true
+    },
+    {
+      "id": "retained:champion:Nautilus",
+      "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+      "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+      "bytes": 13936,
+      "kind": "OFFICIAL_DATA_DRAGON_KOREAN",
+      "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+      "patch": "16.20.1",
+      "manifest_hash_match": true
+    },
+    {
+      "id": "retained:items",
+      "local_source": "data/official_items/versions/16.20.1/item.ko_KR.json",
+      "sha256": "8fd60c77bddc212fd1550850f0db01caa68c05c9f11e377d52df03a9627f8085",
+      "bytes": 733122,
+      "kind": "OFFICIAL_DATA_DRAGON_KOREAN",
+      "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/item.json",
+      "patch": "16.20.1",
+      "manifest_hash_match": true
+    },
+    {
+      "id": "context:loading-data",
+      "local_source": "web_r4/loading-data.json",
+      "sha256": "923c57741d552d28e2be5b07329617c3b219ac9f4b79637ce3f22e2d735368b1",
+      "bytes": 3747507,
+      "kind": "CURRENT_LOADING_CATALOG_AT_AUDIT"
+    },
+    {
+      "id": "context:agents",
+      "local_source": "AGENTS.md",
+      "sha256": "8a3991710fc377a3d5d6b634635fdb513e248731045d2b2385c4dd356a268450",
+      "bytes": 2242,
+      "kind": "LOCAL_INSTRUCTIONS"
+    },
+    {
+      "id": "context:handoff",
+      "local_source": "CURRENT_HANDOFF.md",
+      "sha256": "9f798d0f8fe56a04d6a8abca130bee48636fc27aadd92164871c8946f9a96b62",
+      "bytes": 203094,
+      "kind": "LOCAL_HANDOFF_TOP_REUSED"
+    },
+    {
+      "id": "context:contract",
+      "local_source": "contracts/loading-strategy-v1.md",
+      "sha256": "3c16cca8ca673c2307659ee6c63395b7530a8dea3a30b08828341ce8034f24ab",
+      "bytes": 7009,
+      "kind": "EXISTING_OUTPUT_CONTRACT"
+    },
+    {
+      "id": "manifest:champions",
+      "local_source": "data/official_catalog/versions/16.20.1/manifest.json",
+      "sha256": "e61307d1acf1f8b27e66dd144b4136384dda35451a22e932a307e06c8885c406",
+      "bytes": 55950,
+      "kind": "RETAINED_OFFICIAL_SOURCE_MANIFEST"
+    },
+    {
+      "id": "manifest:items",
+      "local_source": "data/official_items/versions/16.20.1/manifest.json",
+      "sha256": "d7b89641deccbf91e076386a3bc60a4065e4edce35293fc65238d5686dd738ee",
+      "bytes": 611,
+      "kind": "RETAINED_OFFICIAL_SOURCE_MANIFEST"
+    },
+    {
+      "id": "queue:expert-channels",
+      "local_source": "config/expert_channels.json",
+      "sha256": "d6d2ae9e5a27dbe07527d3f1d757fd1777836a018ecaa5e57d8ded74c6101af8",
+      "bytes": 5011,
+      "kind": "REGISTERED_EXPERT_CANDIDATES_NOT_ADOPTED"
+    },
+    {
+      "id": "queue:pov-channels",
+      "local_source": "config/pov_channels.json",
+      "sha256": "7e937fce0a48ed3e772c9936e6eccbf6b7d178c7f60faccb6bc4249e365d1ecb",
+      "bytes": 2231,
+      "kind": "REGISTERED_POV_CANDIDATES_NOT_EXPERT_STATEMENTS"
+    },
+    {
+      "id": "queue:pov-metadata",
+      "local_source": "data/pov_metadata/2026-10-16/pov-metadata.json",
+      "sha256": "9ece66abdb0b71613a68c0a98cffbe8de4c43c03b745ffa263158e76990e92b5",
+      "bytes": 7893,
+      "kind": "RETAINED_CANONICAL_METADATA_NOT_FOOTAGE"
+    },
+    {
+      "id": "queue:pov-binding",
+      "local_source": "data/pov_metadata/2026-10-16/metadata-binding.json",
+      "sha256": "0a54e26f3dc4b4936dac026690c897574e6558052abc2cbe7b7cd38397145461",
+      "bytes": 855,
+      "kind": "RETAINED_METADATA_BINDING"
+    },
+    {
+      "id": "queue:pov-discovery",
+      "local_source": "evidence/actual-evidence/pov-public-investigation.json",
+      "sha256": "9acd6c2cbe783483f8c98acc75a0c3fa9bde4d7e1250bd6d00cf28eea3f5d868",
+      "bytes": 15915,
+      "kind": "EARLIER_DISCOVERY_CANDIDATES_NOT_MATCHED_GAMES"
+    },
+    {
+      "id": "queue:expert-readiness",
+      "local_source": "evidence/actual-evidence/video-step-diagnostic/resume-20261017/expert-report-readiness.json",
+      "sha256": "887796f7f65c634d95c9185807307bb8b575789086e8fcb9a426a48b8a2bc409",
+      "bytes": 1028,
+      "kind": "RETAINED_DIAGNOSTIC_READINESS_NOT_LOL_TACTICAL_EVIDENCE"
+    },
+    {
+      "id": "queue:items-summary",
+      "local_source": "evidence/queue/v23/items-source-summary.json",
+      "sha256": "89c62990ce4abac66012027519fb9dd65edb096859bb86e41868d141582a0cc6",
+      "bytes": 2936,
+      "kind": "RETAINED_ITEM_API_SUMMARY_NOT_BUILD_RECOMMENDATION"
+    },
+    {
+      "id": "queue:overview",
+      "local_source": "docs/queue/QUEUE.md",
+      "sha256": "e1233ea8a9f72fc9ca338e4a479a2a87ab9a58e758895e1b0465077a77d62130",
+      "bytes": 122384,
+      "kind": "EXISTING_QUEUE_HISTORY"
+    },
+    {
+      "id": "queue:quality-import",
+      "local_source": "data/coaching_quality/2026-10-16/import-receipt.json",
+      "sha256": "38762dc30d526483a7a0fe4e9c981057b204e5a07da50d0aa50824adb38e02a2",
+      "bytes": 820,
+      "kind": "RETAINED_PRO89_108_IMPORT_NOT_MATCHUP_EVALUATION"
+    }
+  ],
+  "official_skill_facts": [
+    {
+      "id": "official:Caitlyn:P",
+      "source_id": "retained:champion:Caitlyn",
+      "name": "헤드샷",
+      "slot": "P",
+      "locator": "data.Caitlyn.passive.description",
+      "quote": "케이틀린은 덫 또는 투망에 걸린 대상을 공격할 때나 일정 횟수 이상의 기본 공격을 했을 때 헤드샷을 발사하여 치명타 확률에 비례한 추가 피해를 입힙니다. 덫에 걸리거나 투망에 맞은 대상에게는 케이틀린의 헤드샷 공격 사거리가 두 배가 됩니다.",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "Periodic attacks or trap/net targets can trigger bonus Headshot; crit chance scales bonus damage; trapped/netted Headshot range doubles."
+      ],
+      "source_supported_limits": [
+        "No guaranteed trap/net hit, Headshot readiness, damage amount, safe attack opportunity, or lane advantage."
+      ]
+    },
+    {
+      "id": "official:Caitlyn:Q",
+      "source_id": "retained:champion:Caitlyn",
+      "name": "필트오버 피스메이커",
+      "slot": "Q",
+      "locator": "data.Caitlyn.spells.0.description",
+      "quote": "케이틀린이 소총을 1초 동안 조준한 후 관통하는 탄환을 발사하여 물리 피해를 입힙니다. (다음 명중하는 대상에게는 더 낮은 피해가 들어갑니다.)",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "One-second rifle aim; penetrating physical shot; reduced damage to subsequent targets."
+      ],
+      "source_supported_limits": [
+        "No guaranteed waveclear/priority or hit; exact damage and animation interaction are not supplied by this description."
+      ]
+    },
+    {
+      "id": "official:Caitlyn:W",
+      "source_id": "retained:champion:Caitlyn",
+      "name": "요들잡이 덫",
+      "slot": "W",
+      "locator": "data.Caitlyn.spells.1.description",
+      "quote": "케이틀린이 함정을 설치합니다. 함정이 발동하면 함정에 걸린 적 챔피언은 1.5초간 모습이 드러나며 이동할 수 없게 되고, 케이틀린의 헤드샷이 강화됩니다.",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "A triggered trap reveals/immobilizes an enemy champion and grants empowered Headshot."
+      ],
+      "source_supported_limits": [
+        "A trap must trigger; placement does not guarantee contact or a Lux-to-trap chain. Description mentions1.5seconds for reveal/immobilize, while tooltip separately says3seconds true sight and leaves rootduration unresolved: do not conflate the two durations."
+      ]
+    },
+    {
+      "id": "official:Caitlyn:E",
+      "source_id": "retained:champion:Caitlyn",
+      "name": "90구경 투망",
+      "slot": "E",
+      "locator": "data.Caitlyn.spells.2.description",
+      "quote": "케이틀린이 무거운 그물을 발사하여 적을 느리게 합니다. 그 반동으로 케이틀린은 뒤로 밀려납니다.",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "Net slows the enemy; recoil moves Caitlyn backward."
+      ],
+      "source_supported_limits": [
+        "No guarantee of escaping Nautilus Q/R, immunity to CC, wall traversal, or correct recoil direction in a concrete position."
+      ]
+    },
+    {
+      "id": "official:Caitlyn:R",
+      "source_id": "retained:champion:Caitlyn",
+      "name": "비장의 한 발",
+      "slot": "R",
+      "locator": "data.Caitlyn.spells.3.description",
+      "quote": "케이틀린이 공을 들인 완벽한 사격을 하여 먼 거리에서 하나의 대상에게 큰 피해를 입힙니다. 적 챔피언이 자신의 아군을 위해 총알을 막아낼 수 있습니다.",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "Time spent aiming; single target from long distance; an enemy champion can intercept for an ally."
+      ],
+      "source_supported_limits": [
+        "No guaranteed kill or uninterrupted shot; Nautilus can be an interceptor only conditionally on actual position/contact, never from pick alone."
+      ]
+    },
+    {
+      "id": "official:Lux:P",
+      "source_id": "retained:champion:Lux",
+      "name": "광채",
+      "slot": "P",
+      "locator": "data.Lux.passive.description",
+      "quote": "럭스의 공격 스킬은 몇 초 동안 적을 빛의 에너지로 가득 채웁니다. 럭스의 기본 공격으로 이 에너지를 불태우면 적은 럭스의 레벨에 비례하는 추가 마법 피해를 받습니다.",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "Damaging abilities leave light energy; Lux basic attacks consume it for bonus magic damage scaling with level."
+      ],
+      "source_supported_limits": [
+        "No guaranteed passive proc: ability contact and Lux basic attack opportunity remain conditions."
+      ]
+    },
+    {
+      "id": "official:Lux:Q",
+      "source_id": "retained:champion:Lux",
+      "name": "빛의 속박",
+      "slot": "Q",
+      "locator": "data.Lux.spells.0.description",
+      "quote": "럭스가 빛의 구를 발사하여 최대 2명의 적 유닛을 속박하며 피해를 입힙니다.",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "Binds and damages at most two enemy units."
+      ],
+      "source_supported_limits": [
+        "One intervening minion is not established as complete protection. This is not a general projectile-block rule and does not prove a guaranteed Caitlyn trap follow-up."
+      ]
+    },
+    {
+      "id": "official:Lux:W",
+      "source_id": "retained:champion:Lux",
+      "name": "프리즘 보호막",
+      "slot": "W",
+      "locator": "data.Lux.spells.1.description",
+      "quote": "럭스가 마법봉을 던져 아군 주변의 빛을 구부리며 적의 공격으로부터 보호해줍니다.",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "Protects allies from attacks; full tooltip specifies shields on wand contact and on return contact."
+      ],
+      "source_supported_limits": [
+        "Ally proximity alone does not guarantee wand contact, shield timing, amount, survival, or CC removal."
+      ]
+    },
+    {
+      "id": "official:Lux:E",
+      "source_id": "retained:champion:Lux",
+      "name": "광휘의 특이점",
+      "slot": "E",
+      "locator": "data.Lux.spells.2.description",
+      "quote": "지정한 지역에 뒤틀린 빛의 구체를 띄워 주변 적의 속도를 늦춥니다. 럭스는 이 빛을 폭발시켜 피해를 입힐 수 있습니다.",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "Area orb slows; Lux can detonate it to deal damage. Full tooltip adds area reveal."
+      ],
+      "source_supported_limits": [
+        "No guaranteed target hit or full brush/hidden-position knowledge beyond the revealed area; no mandatory poke-versus-wave decision is proved."
+      ]
+    },
+    {
+      "id": "official:Lux:R",
+      "source_id": "retained:champion:Lux",
+      "name": "최후의 섬광",
+      "slot": "R",
+      "locator": "data.Lux.spells.3.description",
+      "quote": "럭스가 에너지를 모아 빛 기둥을 발사하며 목표 지역에 있는 모든 대상에게 피해를 입힙니다. 또한 이는 럭스의 기본 지속 효과 스킬을 발동시키고 광채 효과의 지속시간을 갱신합니다.",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "Area beam damages targets and triggers/refreshes Illumination per description."
+      ],
+      "source_supported_limits": [
+        "No guaranteed kill, hit, full combo damage, or minion-blocking rule."
+      ]
+    },
+    {
+      "id": "official:Kaisa:P",
+      "source_id": "retained:champion:Kaisa",
+      "name": "두 번째 피부",
+      "slot": "P",
+      "locator": "data.Kaisa.passive.description",
+      "quote": "카이사는 기본 공격으로 플라즈마 중첩을 쌓아 그에 따른 추가 마법 피해를 입힙니다. 아군의 이동 불가 효과가 적에게 적용됐을 때에도 플라즈마 중첩이 쌓입니다. 살아있는 무기 효과는 카이사가 구입하는 아이템에 따라 스킬을 강화시킵니다.",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "Basic attacks stack Plasma for bonus magic damage; allied immobilization also stacks Plasma; purchases upgrade basic spells."
+      ],
+      "source_supported_limits": [
+        "No guaranteed ally CC contact, Plasma detonation damage, evolution state, item threshold reached, or late-game superiority."
+      ]
+    },
+    {
+      "id": "official:Kaisa:Q",
+      "source_id": "retained:champion:Kaisa",
+      "name": "이케시아 폭우",
+      "slot": "Q",
+      "locator": "data.Kaisa.spells.0.description",
+      "quote": "카이사가 근처 적들을 추격하는 미사일 세례를 퍼붓습니다.<br><br>살아있는 무기: 이케시아 폭우가 발사하는 미사일 개수가 증가합니다.",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "Missiles pursue nearby enemies; evolved spell fires more missiles."
+      ],
+      "source_supported_limits": [
+        "No exact distribution/isolation damage, wave priority, or winning isolated trade follows from description; tooltip says repeated hits on the same champion/monster deal reduced damage and still has dynamic placeholders."
+      ]
+    },
+    {
+      "id": "official:Kaisa:W",
+      "source_id": "retained:champion:Kaisa",
+      "name": "공허추적자",
+      "slot": "W",
+      "locator": "data.Kaisa.spells.1.description",
+      "quote": "카이사가 장거리 광선을 발사하며, 광선에 적중한 적에게 플라즈마 중첩이 쌓입니다.<br><br>살아있는 무기: 공허추적자 적중 시 플라즈마 중첩이 추가로 쌓이며 챔피언에게 적중 시 재사용 대기시간이 감소합니다.",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "Long-range beam applies Plasma; evolved form applies more marks and reduces cooldown on champion hit."
+      ],
+      "source_supported_limits": [
+        "Hit and evolution are conditions; no guaranteed mark, follow-up, reset, or generic minion-blocking rule from description."
+      ]
+    },
+    {
+      "id": "official:Kaisa:E",
+      "source_id": "retained:champion:Kaisa",
+      "name": "고속 충전",
+      "slot": "E",
+      "locator": "data.Kaisa.spells.2.description",
+      "quote": "카이사의 이동 속도가 잠시 동안 증가한 뒤 공격 속도가 증가합니다.<br><br>살아있는 무기: 고속 충전을 사용하면 잠시 투명 상태가 됩니다.",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "Movement speed increases before attack speed; evolved version gives temporary invisibility."
+      ],
+      "source_supported_limits": [
+        "Normal E does not imply invisibility; no guaranteed escape, chase success, or evolution at a fixed item count."
+      ]
+    },
+    {
+      "id": "official:Kaisa:R",
+      "source_id": "retained:champion:Kaisa",
+      "name": "사냥본능",
+      "slot": "R",
+      "locator": "data.Kaisa.spells.3.description",
+      "quote": "카이사가 적 챔피언 근처로 돌진합니다.",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "Abbreviated description only states dash near an enemy champion; retained full tooltip explicitly restricts to a Plasma-marked enemy champion and grants a shield."
+      ],
+      "source_supported_limits": [
+        "Do not present R as an unconditional dash to any champion. Learned/ready, mana, actual mark, range, chosen destination, and safety are not observed."
+      ]
+    },
+    {
+      "id": "official:Nautilus:P",
+      "source_id": "retained:champion:Nautilus",
+      "name": "강력한 일격",
+      "slot": "P",
+      "locator": "data.Nautilus.passive.description",
+      "quote": "노틸러스가 대상에 대한 첫 기본 공격 시 추가 물리 피해를 입히고 잠시 속박합니다.",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "First basic attack on a target deals extra physical damage and briefly roots."
+      ],
+      "source_supported_limits": [
+        "No contact or guaranteed CC chain; per-target reset duration is not specified in this description."
+      ]
+    },
+    {
+      "id": "official:Nautilus:Q",
+      "source_id": "retained:champion:Nautilus",
+      "name": "닻줄 견인",
+      "slot": "Q",
+      "locator": "data.Nautilus.spells.0.description",
+      "quote": "노틸러스가 전방으로 닻을 던집니다.  닻이 적을 맞히면 노틸러스와 대상이 가까이 당겨지며 대상에게 마법 피해를 입힙니다. 닻이 지형을 맞히면 노틸러스가 지형 쪽으로 끌려갑니다.",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "Anchor hit on an enemy pulls Nautilus and target together and deals magic damage; terrain hit pulls Nautilus toward terrain. Tooltip additionally says brief stun on enemy hit."
+      ],
+      "source_supported_limits": [
+        "Neither retained description nor tooltip explicitly defines minion collision, first-unit stop, hook width, wall-edge priority, or behind-minion safety. No source-backed claim that a wave makes this lane safe."
+      ]
+    },
+    {
+      "id": "official:Nautilus:W",
+      "source_id": "retained:champion:Nautilus",
+      "name": "타이탄의 분노",
+      "slot": "W",
+      "locator": "data.Nautilus.spells.1.description",
+      "quote": "노틸러스가 잠시 보호막을 얻습니다. 보호막이 지속되는 동안 노틸러스의 기본 공격은 대상과 대상 주위의 적에게 지속 피해를 입힙니다.",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "Temporary shield; while active, basic attacks deal damage over time to target and nearby enemies."
+      ],
+      "source_supported_limits": [
+        "No invulnerability, CC immunity, poke immunity, guaranteed all-in survival, or actual shield readiness."
+      ]
+    },
+    {
+      "id": "official:Nautilus:E",
+      "source_id": "retained:champion:Nautilus",
+      "name": "역조",
+      "slot": "E",
+      "locator": "data.Nautilus.spells.2.description",
+      "quote": "노틸러스가 주위에 세 번의 폭발을 일으킵니다. 폭발할 때마다 적에게 피해를 입히고 둔화시킵니다.",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "Three nearby explosions damage and slow enemies."
+      ],
+      "source_supported_limits": [
+        "No guaranteed three hits, chase success, exact overlap damage, or waveclear timing."
+      ]
+    },
+    {
+      "id": "official:Nautilus:R",
+      "source_id": "retained:champion:Nautilus",
+      "name": "폭뢰",
+      "slot": "R",
+      "locator": "data.Nautilus.spells.3.description",
+      "quote": "지면에 충격파를 발사하면 상대방을 추적해 갑니다. 충격파는 위의 지면을 찢으며 적들을 공중으로 띄웁니다. 충격파가 상대방에게 닿으면 폭발하여 대상을 공중으로 띄우고 기절시킵니다.",
+      "quote_matches_loading_fact": true,
+      "source_supported": [
+        "Tracks target; knocks up enemies on the path; explosion knocks up and stuns target. Tooltip explicitly says tracks enemy champion and other hit enemies are also knocked up/stunned."
+      ],
+      "source_supported_limits": [
+        "No source-backed minion-blocking safety, Q-miss removal of all engage tools, guaranteed interruptibility, target readiness, or successful follow-up."
+      ]
+    }
+  ],
+  "retained_tooltip_supplements": [
+    {
+      "id": "audit:Caitlyn:Q:tooltip",
+      "source_id": "retained:champion:Caitlyn",
+      "locator": "data.Caitlyn.spells.0.tooltip",
+      "quote": "케이틀린이 조준한 후 적을 관통하는 총알을 발사하여 <physicalDamage>{{ initialdamage }}의 물리 피해</physicalDamage>를 입힙니다. 첫 번째 대상에게 적중한 후에는 탄도체 유효 범위가 넓어지며 <physicalDamage>{{ secondarydamage }}의 물리 피해</physicalDamage>를 입힙니다.<br /><br /><spellName>요들잡이 덫</spellName> 때문에 위치가 드러난 적은 항상 100%의 피해를 입습니다.{{ spellmodifierdescriptionappend }}",
+      "loading_fact_id": "official:Caitlyn:Q",
+      "binding_status": "RETAINED_OFFICIAL_FIELD_NOT_SEPARATE_FACT_IN_LOADING_AT_AUDIT",
+      "limits": [
+        "Template placeholders remain unresolved; do not invent runtime damage/duration/evolution/availability."
+      ]
+    },
+    {
+      "id": "audit:Caitlyn:W:tooltip",
+      "source_id": "retained:champion:Caitlyn",
+      "locator": "data.Caitlyn.spells.1.tooltip",
+      "quote": "케이틀린이 덫을 설치하여 처음 밟는 적을 {{ rootduration }}초 동안 <status>속박</status>하고 3초 동안 해당 적에 대한 <keywordStealth>절대 시야</keywordStealth>를 얻습니다. 덫은 {{ trapduration }}초 동안 지속되며 한 번에 {{ maximumtraps }}개까지 설치할 수 있습니다. 이 스킬은 {{ maximumcharges }}회까지 충전됩니다. ({{ ammorechargetime }}초마다 충전)<br /><br />이 스킬에 의해 속박된 대상은 <keywordMajor>헤드샷</keywordMajor>으로 <physicalDamage>{{ headshotbonusdamage }}의 물리 피해</physicalDamage>를 추가로 입습니다.{{ spellmodifierdescriptionappend }}",
+      "loading_fact_id": "official:Caitlyn:W",
+      "binding_status": "RETAINED_OFFICIAL_FIELD_NOT_SEPARATE_FACT_IN_LOADING_AT_AUDIT",
+      "limits": [
+        "Template placeholders remain unresolved; do not invent runtime damage/duration/evolution/availability."
+      ]
+    },
+    {
+      "id": "audit:Caitlyn:E:tooltip",
+      "source_id": "retained:champion:Caitlyn",
+      "locator": "data.Caitlyn.spells.2.tooltip",
+      "quote": "케이틀린이 투망을 발사하여 처음으로 적중한 적을 {{ slowduration }}초 동안 {{ slowamount }}% <status>둔화</status>시키고 <magicDamage>{{ netdamage }}의 마법 피해</magicDamage>를 입힙니다. 케이틀린은 뒤로 밀려납니다.{{ spellmodifierdescriptionappend }}",
+      "loading_fact_id": "official:Caitlyn:E",
+      "binding_status": "RETAINED_OFFICIAL_FIELD_NOT_SEPARATE_FACT_IN_LOADING_AT_AUDIT",
+      "limits": [
+        "Template placeholders remain unresolved; do not invent runtime damage/duration/evolution/availability."
+      ]
+    },
+    {
+      "id": "audit:Caitlyn:R:tooltip",
+      "source_id": "retained:champion:Caitlyn",
+      "locator": "data.Caitlyn.spells.3.tooltip",
+      "quote": "케이틀린이 잠시 정신을 집중하고 공을 들인 완벽한 사격을 하여 <physicalDamage>{{ rtotaldamage }}의 물리 피해</physicalDamage>를 입힙니다. 다른 적 챔피언이 총알을 대신 맞을 수도 있습니다. 정신을 집중하는 동안 대상에 대한 <keywordStealth>절대 시야</keywordStealth>를 얻습니다.<br /><br /><rules>피해량은 케이틀린의 치명타 확률 및 치명타 피해량에 비례합니다.</rules>{{ spellmodifierdescriptionappend }}",
+      "loading_fact_id": "official:Caitlyn:R",
+      "binding_status": "RETAINED_OFFICIAL_FIELD_NOT_SEPARATE_FACT_IN_LOADING_AT_AUDIT",
+      "limits": [
+        "Template placeholders remain unresolved; do not invent runtime damage/duration/evolution/availability."
+      ]
+    },
+    {
+      "id": "audit:Lux:Q:tooltip",
+      "source_id": "retained:champion:Lux",
+      "locator": "data.Lux.spells.0.tooltip",
+      "quote": "럭스가 빛의 구체를 발사하여 처음 적중한 적 둘을 {{ rootduration }}초 동안 <status>속박</status>하고 각각 <magicDamage>{{ totaldamagett }}의 마법 피해</magicDamage>를 입힙니다.{{ spellmodifierdescriptionappend }}",
+      "loading_fact_id": "official:Lux:Q",
+      "binding_status": "RETAINED_OFFICIAL_FIELD_NOT_SEPARATE_FACT_IN_LOADING_AT_AUDIT",
+      "limits": [
+        "Template placeholders remain unresolved; do not invent runtime damage/duration/evolution/availability."
+      ]
+    },
+    {
+      "id": "audit:Lux:W:tooltip",
+      "source_id": "retained:champion:Lux",
+      "locator": "data.Lux.spells.1.tooltip",
+      "quote": "럭스가 마법봉을 던져 봉에 닿은 모든 아군에게 {{ shieldduration }}초 동안 <shield>{{ totalshieldtt }}의 피해를 흡수하는 보호막</shield>을 씌웁니다. 마법봉은 돌아올 때도 똑같이 <shield>보호막</shield>을 부여합니다.{{ spellmodifierdescriptionappend }}",
+      "loading_fact_id": "official:Lux:W",
+      "binding_status": "RETAINED_OFFICIAL_FIELD_NOT_SEPARATE_FACT_IN_LOADING_AT_AUDIT",
+      "limits": [
+        "Template placeholders remain unresolved; do not invent runtime damage/duration/evolution/availability."
+      ]
+    },
+    {
+      "id": "audit:Lux:E:tooltip",
+      "source_id": "retained:champion:Lux",
+      "locator": "data.Lux.spells.2.tooltip",
+      "quote": "럭스가 빛의 영역을 생성해 적들을 {{ slowpercent }}% <status>둔화</status>시키고 해당 지역을 드러냅니다. {{ slowzoneduration }}초가 지나거나 스킬을 <recast>재사용</recast>하면 폭발하며 <magicDamage>{{ totaldamagett }}의 마법 피해</magicDamage>를 입히고 추가로 {{ slowlingerduration }}초 동안 <status>둔화</status>시킵니다.{{ spellmodifierdescriptionappend }}",
+      "loading_fact_id": "official:Lux:E",
+      "binding_status": "RETAINED_OFFICIAL_FIELD_NOT_SEPARATE_FACT_IN_LOADING_AT_AUDIT",
+      "limits": [
+        "Template placeholders remain unresolved; do not invent runtime damage/duration/evolution/availability."
+      ]
+    },
+    {
+      "id": "audit:Lux:R:tooltip",
+      "source_id": "retained:champion:Lux",
+      "locator": "data.Lux.spells.3.tooltip",
+      "quote": "럭스가 눈부신 광선을 발사하여 일직선상에 있는 모든 적에게 <magicDamage>{{ totaldamage }}의 마법 피해</magicDamage>를 입힙니다.{{ spellmodifierdescriptionappend }}",
+      "loading_fact_id": "official:Lux:R",
+      "binding_status": "RETAINED_OFFICIAL_FIELD_NOT_SEPARATE_FACT_IN_LOADING_AT_AUDIT",
+      "limits": [
+        "Template placeholders remain unresolved; do not invent runtime damage/duration/evolution/availability."
+      ]
+    },
+    {
+      "id": "audit:Kaisa:Q:tooltip",
+      "source_id": "retained:champion:Kaisa",
+      "locator": "data.Kaisa.spells.0.tooltip",
+      "quote": "카이사가 근처 적들을 추격하는 미사일을 {{ e2 }}개 발사하며, 적중한 적에게 각각 <physicalDamage>{{ totalindividualmissiledamage }}의 물리 피해</physicalDamage>를 입힙니다. (최대 {{ maxdamagedisplay }}) 이미 미사일에 맞은 적 챔피언 또는 몬스터에게 추가 적중할 경우 {{ extrahitreduction*100 }}%의 피해를 입힙니다.<br /><br /><keywordMajor>진화 시</keywordMajor>: 미사일을 {{ e7 }}개 발사합니다.<br />현재: <physicalDamage>추가 공격력 {{ f11.1 }}/{{ e6 }}</physicalDamage>{{ spellmodifierdescriptionappend }}",
+      "loading_fact_id": "official:Kaisa:Q",
+      "binding_status": "RETAINED_OFFICIAL_FIELD_NOT_SEPARATE_FACT_IN_LOADING_AT_AUDIT",
+      "limits": [
+        "Template placeholders remain unresolved; do not invent runtime damage/duration/evolution/availability."
+      ]
+    },
+    {
+      "id": "audit:Kaisa:W:tooltip",
+      "source_id": "retained:champion:Kaisa",
+      "locator": "data.Kaisa.spells.1.tooltip",
+      "quote": "카이사가 공허 에너지 광선을 발사해 <magicDamage>{{ totaldamage }}의 마법 피해</magicDamage>를 입히고 <keywordMajor>플라즈마</keywordMajor> 중첩을 {{ e4 }}회 적용하며, {{ spell.kaisapassive:pduration }}초 동안 처음으로 적중한 적에 대한 <keywordStealth>절대 시야</keywordStealth>를 얻습니다.<br /><br /><keywordMajor>진화 시</keywordMajor>: <keywordMajor>플라즈마</keywordMajor> 중첩을 {{ e5 }}회 적용합니다. 챔피언 적중 시 재사용 대기시간이 {{ e3 }}% 감소합니다.<br />현재: <scaleAP>주문력 {{ f2.1 }}/{{ e2 }}</scaleAP>{{ spellmodifierdescriptionappend }}",
+      "loading_fact_id": "official:Kaisa:W",
+      "binding_status": "RETAINED_OFFICIAL_FIELD_NOT_SEPARATE_FACT_IN_LOADING_AT_AUDIT",
+      "limits": [
+        "Template placeholders remain unresolved; do not invent runtime damage/duration/evolution/availability."
+      ]
+    },
+    {
+      "id": "audit:Kaisa:E:tooltip",
+      "source_id": "retained:champion:Kaisa",
+      "locator": "data.Kaisa.spells.2.tooltip",
+      "quote": "카이사가 공허 에너지를 고속 충전하여 <speed>이동 속도가 {{ totalmovespeed }}</speed> 증가하고 충전 중에는 유체화 상태가 되며, {{ e2 }}초 동안 <attackSpeed>공격 속도가 {{ e5 }}%</attackSpeed> 증가합니다.<br /><br />기본 공격 시 스킬의 재사용 대기시간이 {{ e4 }}초 감소합니다.<br /><br /><keywordMajor>진화 시</keywordMajor>: {{ e7 }}초 동안 <keywordStealth>투명</keywordStealth> 상태가 됩니다.<br />현재: <attackSpeed>추가 공격 속도 {{ f10.1 }}%/{{ e6 }}%</attackSpeed>{{ spellmodifierdescriptionappend }}",
+      "loading_fact_id": "official:Kaisa:E",
+      "binding_status": "RETAINED_OFFICIAL_FIELD_NOT_SEPARATE_FACT_IN_LOADING_AT_AUDIT",
+      "limits": [
+        "Template placeholders remain unresolved; do not invent runtime damage/duration/evolution/availability."
+      ]
+    },
+    {
+      "id": "audit:Kaisa:R:tooltip",
+      "source_id": "retained:champion:Kaisa",
+      "locator": "data.Kaisa.spells.3.tooltip",
+      "quote": "카이사가 <keywordMajor>플라즈마</keywordMajor> 표식이 남은 적 챔피언 근처로 빠르게 돌진하며, {{ rshieldduration }}초 동안 <shield>{{ rcalculatedshieldvalue }}의 보호막</shield>을 얻습니다.{{ spellmodifierdescriptionappend }}",
+      "loading_fact_id": "official:Kaisa:R",
+      "binding_status": "RETAINED_OFFICIAL_FIELD_NOT_SEPARATE_FACT_IN_LOADING_AT_AUDIT",
+      "limits": [
+        "Template placeholders remain unresolved; do not invent runtime damage/duration/evolution/availability."
+      ]
+    },
+    {
+      "id": "audit:Nautilus:Q:tooltip",
+      "source_id": "retained:champion:Nautilus",
+      "locator": "data.Nautilus.spells.0.tooltip",
+      "quote": "노틸러스가 전방으로 닻을 던집니다. 닻이 적을 맞히면 노틸러스와 대상이 가까이 당겨지며 대상에게 <magicDamage>{{ qdamagecalc }}의 마법 피해</magicDamage>를 입히고 잠시 <status>기절</status>시킵니다. 닻이 지형을 맞히면 노틸러스가 지형 쪽으로 끌려갑니다.{{ spellmodifierdescriptionappend }}",
+      "loading_fact_id": "official:Nautilus:Q",
+      "binding_status": "RETAINED_OFFICIAL_FIELD_NOT_SEPARATE_FACT_IN_LOADING_AT_AUDIT",
+      "limits": [
+        "Template placeholders remain unresolved; do not invent runtime damage/duration/evolution/availability."
+      ]
+    },
+    {
+      "id": "audit:Nautilus:W:tooltip",
+      "source_id": "retained:champion:Nautilus",
+      "locator": "data.Nautilus.spells.1.tooltip",
+      "quote": "노틸러스가 {{ shieldduration }}초 동안 <shield>{{ shieldcalc }}의 피해를 흡수하는 보호막</shield>을 얻습니다. <shield>보호막</shield>이 지속되는 동안 노틸러스의 기본 공격은 2초에 걸쳐 대상과 대상 주위의 모든 적에게 <magicDamage>{{ dotdamagecalc }}의 마법 피해</magicDamage>를 추가로 입힙니다.{{ spellmodifierdescriptionappend }}",
+      "loading_fact_id": "official:Nautilus:W",
+      "binding_status": "RETAINED_OFFICIAL_FIELD_NOT_SEPARATE_FACT_IN_LOADING_AT_AUDIT",
+      "limits": [
+        "Template placeholders remain unresolved; do not invent runtime damage/duration/evolution/availability."
+      ]
+    },
+    {
+      "id": "audit:Nautilus:E:tooltip",
+      "source_id": "retained:champion:Nautilus",
+      "locator": "data.Nautilus.spells.2.tooltip",
+      "quote": "노틸러스가 주위에 세 번의 폭발을 일으킵니다. 폭발할 때마다 범위 내의 모든 적에게 <magicDamage>{{ damagecalc }}의 마법 피해</magicDamage>를 입히고 {{ slowduration }}초 동안 {{ slowpercent*100 }}% <status>둔화</status>시킵니다. 둔화 효과는 시간이 지나면 사라집니다.{{ spellmodifierdescriptionappend }}",
+      "loading_fact_id": "official:Nautilus:E",
+      "binding_status": "RETAINED_OFFICIAL_FIELD_NOT_SEPARATE_FACT_IN_LOADING_AT_AUDIT",
+      "limits": [
+        "Template placeholders remain unresolved; do not invent runtime damage/duration/evolution/availability."
+      ]
+    },
+    {
+      "id": "audit:Nautilus:R:tooltip",
+      "source_id": "retained:champion:Nautilus",
+      "locator": "data.Nautilus.spells.3.tooltip",
+      "quote": "노틸러스가 적 챔피언을 추격하는 충격파를 발사해 <magicDamage>{{ primarytargetdamage }}의 마법 피해</magicDamage>를 입히며, {{ stunduration }}초 동안 <status>공중으로</status> <status>띄워 올리고</status> <status>기절</status>시킵니다. 충격파에 맞은 다른 적 또한 <status>공중에 뜨고</status> <status>기절</status>하며 <magicDamage>{{ secondarytargetdamage }}의 마법 피해</magicDamage>를 입습니다.{{ spellmodifierdescriptionappend }}",
+      "loading_fact_id": "official:Nautilus:R",
+      "binding_status": "RETAINED_OFFICIAL_FIELD_NOT_SEPARATE_FACT_IN_LOADING_AT_AUDIT",
+      "limits": [
+        "Template placeholders remain unresolved; do not invent runtime damage/duration/evolution/availability."
+      ]
+    }
+  ],
+  "static_base_attack_range_facts": [
+    {
+      "id": "audit:Caitlyn:base-attackrange",
+      "source_id": "retained:champion:Caitlyn",
+      "locator": "data.Caitlyn.stats.attackrange",
+      "quote": 650,
+      "source_supported": "Static base attackrange field only.",
+      "limit": "Not effective current attack range, a safety margin against spells, priority, relative matchup strength, or permission to trade."
+    },
+    {
+      "id": "audit:Lux:base-attackrange",
+      "source_id": "retained:champion:Lux",
+      "locator": "data.Lux.stats.attackrange",
+      "quote": 550,
+      "source_supported": "Static base attackrange field only.",
+      "limit": "Not effective current attack range, a safety margin against spells, priority, relative matchup strength, or permission to trade."
+    },
+    {
+      "id": "audit:Kaisa:base-attackrange",
+      "source_id": "retained:champion:Kaisa",
+      "locator": "data.Kaisa.stats.attackrange",
+      "quote": 525,
+      "source_supported": "Static base attackrange field only.",
+      "limit": "Not effective current attack range, a safety margin against spells, priority, relative matchup strength, or permission to trade."
+    },
+    {
+      "id": "audit:Nautilus:base-attackrange",
+      "source_id": "retained:champion:Nautilus",
+      "locator": "data.Nautilus.stats.attackrange",
+      "quote": 175,
+      "source_supported": "Static base attackrange field only.",
+      "limit": "Not effective current attack range, a safety margin against spells, priority, relative matchup strength, or permission to trade."
+    }
+  ],
+  "official_item_reference_samples": [
+    {
+      "id": "audit:item:1001",
+      "source_id": "retained:items",
+      "item_id": "1001",
+      "name": "장화",
+      "locator": "data.1001",
+      "quote": {
+        "description": "<mainText><stats>이동 속도 <attention>25</attention></stats><br><br></mainText>",
+        "gold": {
+          "base": 300,
+          "purchasable": true,
+          "total": 300,
+          "sell": 210
+        },
+        "stats": {
+          "FlatMovementSpeedMod": 25
+        },
+        "from": [],
+        "maps": {
+          "11": true,
+          "12": true,
+          "22": false,
+          "30": false,
+          "453": true
+        },
+        "requiredAlly": null,
+        "requiredChampion": null
+      },
+      "source_supported": "Movement speed25; total300.",
+      "source_supported_limit": "Movement speed is not a guaranteed hook dodge or escape.",
+      "selection_meaning": "MECHANISM_REFERENCE_SAMPLE_NOT_BUILD_OR_PURCHASE_RECOMMENDATION"
+    },
+    {
+      "id": "audit:item:3006",
+      "source_id": "retained:items",
+      "item_id": "3006",
+      "name": "광전사의 군화",
+      "locator": "data.3006",
+      "quote": {
+        "description": "<mainText><stats>공격 속도 <attention>30%</attention><br>이동 속도 <attention>45</attention></stats><br><br></mainText>",
+        "gold": {
+          "base": 300,
+          "purchasable": true,
+          "total": 1100,
+          "sell": 770
+        },
+        "stats": {
+          "FlatMovementSpeedMod": 45,
+          "PercentAttackSpeedMod": 0.3
+        },
+        "from": [
+          "1001",
+          "1042",
+          "1042"
+        ],
+        "maps": {
+          "11": true,
+          "12": true,
+          "22": false,
+          "30": false,
+          "453": true
+        },
+        "requiredAlly": null,
+        "requiredChampion": null
+      },
+      "source_supported": "Attack speed30%, movement speed45; total1100.",
+      "source_supported_limit": "Attack speed does not prove a Kai'Sa evolution without complete relevant stats and observed evolution state.",
+      "selection_meaning": "MECHANISM_REFERENCE_SAMPLE_NOT_BUILD_OR_PURCHASE_RECOMMENDATION"
+    },
+    {
+      "id": "audit:item:1036",
+      "source_id": "retained:items",
+      "item_id": "1036",
+      "name": "롱소드",
+      "locator": "data.1036",
+      "quote": {
+        "description": "<mainText><stats>공격력 <attention>10</attention></stats><br><br></mainText>",
+        "gold": {
+          "base": 350,
+          "purchasable": true,
+          "total": 350,
+          "sell": 245
+        },
+        "stats": {
+          "FlatPhysicalDamageMod": 10
+        },
+        "from": [],
+        "maps": {
+          "11": true,
+          "12": true,
+          "22": false,
+          "30": false,
+          "453": true
+        },
+        "requiredAlly": null,
+        "requiredChampion": null
+      },
+      "source_supported": "Attack damage10; total350.",
+      "source_supported_limit": "A component does not prove an all-in threshold or remaining gold requirement.",
+      "selection_meaning": "MECHANISM_REFERENCE_SAMPLE_NOT_BUILD_OR_PURCHASE_RECOMMENDATION"
+    },
+    {
+      "id": "audit:item:1042",
+      "source_id": "retained:items",
+      "item_id": "1042",
+      "name": "단검",
+      "locator": "data.1042",
+      "quote": {
+        "description": "<mainText><stats>공격 속도 <attention>10%</attention></stats><br><br></mainText>",
+        "gold": {
+          "base": 250,
+          "purchasable": true,
+          "total": 250,
+          "sell": 175
+        },
+        "stats": {
+          "PercentAttackSpeedMod": 0.1
+        },
+        "from": [],
+        "maps": {
+          "11": true,
+          "12": true,
+          "22": false,
+          "30": false,
+          "453": true
+        },
+        "requiredAlly": null,
+        "requiredChampion": null
+      },
+      "source_supported": "Attack speed10%; total250.",
+      "source_supported_limit": "No automatic evolution or trade advantage.",
+      "selection_meaning": "MECHANISM_REFERENCE_SAMPLE_NOT_BUILD_OR_PURCHASE_RECOMMENDATION"
+    },
+    {
+      "id": "audit:item:1018",
+      "source_id": "retained:items",
+      "item_id": "1018",
+      "name": "민첩성의 망토",
+      "locator": "data.1018",
+      "quote": {
+        "description": "<mainText><stats>치명타 확률 <attention>15%</attention></stats><br><br></mainText>",
+        "gold": {
+          "base": 600,
+          "purchasable": true,
+          "total": 600,
+          "sell": 420
+        },
+        "stats": {
+          "FlatCritChanceMod": 0.15
+        },
+        "from": [],
+        "maps": {
+          "11": true,
+          "12": true,
+          "22": false,
+          "30": false,
+          "453": true
+        },
+        "requiredAlly": null,
+        "requiredChampion": null
+      },
+      "source_supported": "Critical chance15%; total600.",
+      "source_supported_limit": "Caitlyn passive crit scaling is supported; exact expected trade damage is not.",
+      "selection_meaning": "MECHANISM_REFERENCE_SAMPLE_NOT_BUILD_OR_PURCHASE_RECOMMENDATION"
+    },
+    {
+      "id": "audit:item:1038",
+      "source_id": "retained:items",
+      "item_id": "1038",
+      "name": "B.F. 대검",
+      "locator": "data.1038",
+      "quote": {
+        "description": "<mainText><stats>공격력 <attention>40</attention></stats><br><br></mainText>",
+        "gold": {
+          "base": 1300,
+          "purchasable": true,
+          "total": 1300,
+          "sell": 910
+        },
+        "stats": {
+          "FlatPhysicalDamageMod": 40
+        },
+        "from": [],
+        "maps": {
+          "11": true,
+          "12": true,
+          "22": false,
+          "30": false,
+          "453": true
+        },
+        "requiredAlly": null,
+        "requiredChampion": null
+      },
+      "source_supported": "Attack damage40; total1300.",
+      "source_supported_limit": "No first-back or first-core purchase recommendation is established.",
+      "selection_meaning": "MECHANISM_REFERENCE_SAMPLE_NOT_BUILD_OR_PURCHASE_RECOMMENDATION"
+    },
+    {
+      "id": "audit:item:1052",
+      "source_id": "retained:items",
+      "item_id": "1052",
+      "name": "증폭의 고서",
+      "locator": "data.1052",
+      "quote": {
+        "description": "<mainText><stats>주문력 <attention>20</attention></stats><br><br></mainText>",
+        "gold": {
+          "base": 400,
+          "purchasable": true,
+          "total": 400,
+          "sell": 280
+        },
+        "stats": {
+          "FlatMagicDamageMod": 20
+        },
+        "from": [],
+        "maps": {
+          "11": true,
+          "12": true,
+          "22": false,
+          "30": false,
+          "453": true
+        },
+        "requiredAlly": null,
+        "requiredChampion": null
+      },
+      "source_supported": "Ability power20; total400.",
+      "source_supported_limit": "AP is a static stat; relative burst/safety remains unknown.",
+      "selection_meaning": "MECHANISM_REFERENCE_SAMPLE_NOT_BUILD_OR_PURCHASE_RECOMMENDATION"
+    },
+    {
+      "id": "audit:item:3802",
+      "source_id": "retained:items",
+      "item_id": "3802",
+      "name": "사라진 양피지",
+      "locator": "data.3802",
+      "quote": {
+        "description": "<mainText><stats>주문력 <attention>40</attention><br>마나 <attention>300</attention><br>스킬 가속 <attention>10</attention></stats><br><br><passive>깨우치기</passive><br>레벨 업하면 3초 동안 <scaleMana>최대 마나의 20%</scaleMana>를 회복합니다.</mainText>",
+        "gold": {
+          "base": 250,
+          "purchasable": true,
+          "total": 1200,
+          "sell": 840
+        },
+        "stats": {
+          "FlatMPPoolMod": 300,
+          "FlatMagicDamageMod": 40
+        },
+        "from": [
+          "1052",
+          "1027",
+          "2022"
+        ],
+        "maps": {
+          "11": true,
+          "12": true,
+          "22": false,
+          "30": false,
+          "453": true
+        },
+        "requiredAlly": null,
+        "requiredChampion": null
+      },
+      "source_supported": "Ability power40, mana300, ability haste10; level-up passive restores20% maximum mana over3seconds; total1200.",
+      "source_supported_limit": "Not unconditional continuous mana restoration, guaranteed push, or a prescribed Lux item.",
+      "selection_meaning": "MECHANISM_REFERENCE_SAMPLE_NOT_BUILD_OR_PURCHASE_RECOMMENDATION"
+    },
+    {
+      "id": "audit:item:3145",
+      "source_id": "retained:items",
+      "item_id": "3145",
+      "name": "마법공학 교류 발전기",
+      "locator": "data.3145",
+      "quote": {
+        "description": "<mainText><stats>주문력 <attention>45</attention></stats><br><br><passive>자극</passive><br>챔피언에게 피해를 입히면 <magicDamage>추가 마법 피해</magicDamage>를 입힙니다.</mainText>",
+        "gold": {
+          "base": 300,
+          "purchasable": true,
+          "total": 1100,
+          "sell": 770
+        },
+        "stats": {
+          "FlatMagicDamageMod": 45
+        },
+        "from": [
+          "1052",
+          "1052"
+        ],
+        "maps": {
+          "11": true,
+          "12": true,
+          "22": false,
+          "30": false,
+          "453": true
+        },
+        "requiredAlly": null,
+        "requiredChampion": null
+      },
+      "source_supported": "Ability power45 and extra magic damage when damaging a champion; total1100.",
+      "source_supported_limit": "Dynamic bonus damage/cooldown and concrete kill range are not provided here.",
+      "selection_meaning": "MECHANISM_REFERENCE_SAMPLE_NOT_BUILD_OR_PURCHASE_RECOMMENDATION"
+    },
+    {
+      "id": "audit:item:3031",
+      "source_id": "retained:items",
+      "item_id": "3031",
+      "name": "무한의 대검",
+      "locator": "data.3031",
+      "quote": {
+        "description": "<mainText><stats>공격력 <attention>75</attention><br>치명타 확률 <attention>25%</attention><br>치명타 피해량 <attention>30%</attention></stats><br><br></mainText>",
+        "gold": {
+          "base": 725,
+          "purchasable": true,
+          "total": 3500,
+          "sell": 2450
+        },
+        "stats": {
+          "FlatCritChanceMod": 0.25,
+          "FlatPhysicalDamageMod": 75
+        },
+        "from": [
+          "1038",
+          "1037",
+          "1018"
+        ],
+        "maps": {
+          "11": true,
+          "12": true,
+          "22": false,
+          "30": false,
+          "453": true
+        },
+        "requiredAlly": null,
+        "requiredChampion": null
+      },
+      "source_supported": "Attack damage75, crit25%, crit damage30%; total3500.",
+      "source_supported_limit": "Does not prove optimal first core, stronger duo, or guaranteed kill.",
+      "selection_meaning": "MECHANISM_REFERENCE_SAMPLE_NOT_BUILD_OR_PURCHASE_RECOMMENDATION"
+    },
+    {
+      "id": "audit:item:6672",
+      "source_id": "retained:items",
+      "item_id": "6672",
+      "name": "크라켄 학살자",
+      "locator": "data.6672",
+      "quote": {
+        "description": "<mainText><stats>공격력 <attention>45</attention><br>공격 속도 <attention>40%</attention><br>이동 속도 <attention>4%</attention></stats><br><br><passive>벼락</passive><br>세 번째 기본 공격마다 <physicalDamage>추가 물리 피해</physicalDamage>(<OnHit>적중 시</OnHit> )를 입힙니다. 잃은 체력에 따라 피해량이 증가합니다.</mainText>",
+        "gold": {
+          "base": 325,
+          "purchasable": true,
+          "total": 3000,
+          "sell": 2100
+        },
+        "stats": {
+          "FlatPhysicalDamageMod": 45,
+          "PercentAttackSpeedMod": 0.4,
+          "PercentMovementSpeedMod": 0.04
+        },
+        "from": [
+          "6690",
+          "3051",
+          "1043"
+        ],
+        "maps": {
+          "11": true,
+          "12": true,
+          "22": false,
+          "30": false,
+          "453": true
+        },
+        "requiredAlly": null,
+        "requiredChampion": null
+      },
+      "source_supported": "Attack damage45, attack speed40%, movement speed4%; every third basic attack adds physical damage increasing with missing health; total3000.",
+      "source_supported_limit": "Not an assumed Kai'Sa purchase/evolution or fixed first-core superiority.",
+      "selection_meaning": "MECHANISM_REFERENCE_SAMPLE_NOT_BUILD_OR_PURCHASE_RECOMMENDATION"
+    },
+    {
+      "id": "audit:item:3124",
+      "source_id": "retained:items",
+      "item_id": "3124",
+      "name": "구인수의 격노검",
+      "locator": "data.3124",
+      "quote": {
+        "description": "<mainText><stats>공격력 <attention>30</attention><br>주문력 <attention>30</attention><br>공격 속도 <attention>25%</attention></stats><br><br><passive>분노</passive><br>공격 시 <magicDamage>30의 추가 마법 피해(<OnHit>적중 시</OnHit> )</magicDamage>를 입힙니다.<br><br><passive>들끓는 일격</passive><br>기본 공격 시 4초 동안 <attackSpeed>공격 속도가 8%</attackSpeed> 증가합니다. (4회 중첩) <br>최대 중첩 시 세 번째 기본 공격을 가할 때마다 <OnHit>적중 시</OnHit> 효과를 두 번씩 적용합니다.</mainText>",
+        "gold": {
+          "base": 1025,
+          "purchasable": true,
+          "total": 3000,
+          "sell": 2100
+        },
+        "stats": {
+          "FlatMagicDamageMod": 30,
+          "FlatPhysicalDamageMod": 30,
+          "PercentAttackSpeedMod": 0.25
+        },
+        "from": [
+          "1052",
+          "1043",
+          "1037"
+        ],
+        "maps": {
+          "11": true,
+          "12": true,
+          "22": false,
+          "30": false,
+          "453": true
+        },
+        "requiredAlly": null,
+        "requiredChampion": null
+      },
+      "source_supported": "AD30/AP30/AS25%; attack stacking and repeated on-hit effect at max stacks; total3000.",
+      "source_supported_limit": "Specific Plasma/on-hit interactions, evolution thresholds met, optimal build, and matchup results are not established by item text alone.",
+      "selection_meaning": "MECHANISM_REFERENCE_SAMPLE_NOT_BUILD_OR_PURCHASE_RECOMMENDATION"
+    },
+    {
+      "id": "audit:item:3190",
+      "source_id": "retained:items",
+      "item_id": "3190",
+      "name": "강철의 솔라리 펜던트",
+      "locator": "data.3190",
+      "quote": {
+        "description": "<mainText><stats>체력 <attention>200</attention><br>방어력 <attention>30</attention><br>마법 저항력 <attention>30</attention><br>스킬 가속 <attention>10</attention></stats><br><br><active>헌신</active><br>주변 아군들에게 <shield>290~360의 피해를 흡수하는 보호막</shield>을 부여합니다. 보호막 피해 흡수량은 2.5초에 걸쳐 점차 감소합니다.</mainText>",
+        "gold": {
+          "base": 700,
+          "purchasable": true,
+          "total": 2200,
+          "sell": 1540
+        },
+        "stats": {
+          "FlatSpellBlockMod": 30,
+          "FlatHPPoolMod": 200,
+          "FlatArmorMod": 30
+        },
+        "from": [
+          "3067",
+          "1029",
+          "1033"
+        ],
+        "maps": {
+          "11": true,
+          "12": true,
+          "22": false,
+          "30": false,
+          "453": true
+        },
+        "requiredAlly": null,
+        "requiredChampion": null
+      },
+      "source_supported": "HP200/armor30/MR30/haste10; active nearby ally shield290–360 decays over2.5seconds; total2200.",
+      "source_supported_limit": "Presence in inventory does not imply active ready, actual nearby ally shield, or survival.",
+      "selection_meaning": "MECHANISM_REFERENCE_SAMPLE_NOT_BUILD_OR_PURCHASE_RECOMMENDATION"
+    },
+    {
+      "id": "audit:item:3047",
+      "source_id": "retained:items",
+      "item_id": "3047",
+      "name": "판금 장화",
+      "locator": "data.3047",
+      "quote": {
+        "description": "<mainText><stats>방어력 <attention>25</attention><br>이동 속도 <attention>45</attention></stats><br><br><passive>장갑판</passive><br>기본 공격으로 받는 피해량이 10% 감소합니다.</mainText>",
+        "gold": {
+          "base": 600,
+          "purchasable": true,
+          "total": 1200,
+          "sell": 840
+        },
+        "stats": {
+          "FlatMovementSpeedMod": 45,
+          "FlatArmorMod": 25
+        },
+        "from": [
+          "1001",
+          "1029"
+        ],
+        "maps": {
+          "11": true,
+          "12": true,
+          "22": false,
+          "30": false,
+          "453": true
+        },
+        "requiredAlly": null,
+        "requiredChampion": null
+      },
+      "source_supported": "Armor25/movement speed45; basic-attack damage received reduced10%; total1200.",
+      "source_supported_limit": "Not general10% damage reduction against spells or all Kai'Sa/Nautilus damage.",
+      "selection_meaning": "MECHANISM_REFERENCE_SAMPLE_NOT_BUILD_OR_PURCHASE_RECOMMENDATION"
+    },
+    {
+      "id": "audit:item:3140",
+      "source_id": "retained:items",
+      "item_id": "3140",
+      "name": "수은 장식띠",
+      "locator": "data.3140",
+      "quote": {
+        "description": "<mainText><stats>마법 저항력 <attention>30</attention></stats><br><br><active>수은</active><br>모든 군중 제어 효과(<keyword>공중에 뜸</keyword> 제외)를 제거합니다.</mainText>",
+        "gold": {
+          "base": 900,
+          "purchasable": true,
+          "total": 1300,
+          "sell": 910
+        },
+        "stats": {
+          "FlatSpellBlockMod": 30
+        },
+        "from": [
+          "1033"
+        ],
+        "maps": {
+          "11": true,
+          "12": true,
+          "22": false,
+          "30": false,
+          "453": true
+        },
+        "requiredAlly": null,
+        "requiredChampion": null
+      },
+      "source_supported": "MR30; active removes all crowd control except airborne; total1300.",
+      "source_supported_limit": "Does not remove the airborne component of Nautilus R. No guaranteed escape or optimal purchase follows.",
+      "selection_meaning": "MECHANISM_REFERENCE_SAMPLE_NOT_BUILD_OR_PURCHASE_RECOMMENDATION"
+    },
+    {
+      "id": "audit:item:3865",
+      "source_id": "retained:items",
+      "item_id": "3865",
+      "name": "세계 지도집",
+      "locator": "data.3865",
+      "quote": {
+        "description": "",
+        "gold": {
+          "base": 400,
+          "purchasable": true,
+          "total": 400,
+          "sell": 160
+        },
+        "stats": {},
+        "from": [],
+        "maps": {
+          "11": true,
+          "12": false,
+          "22": false,
+          "30": false,
+          "453": true
+        },
+        "requiredAlly": null,
+        "requiredChampion": null
+      },
+      "source_supported": "Name/total400/map11/purchasable fields are retained; description is empty.",
+      "source_supported_limit": "Do not invent support quest, charges, ward unlock timing, income, or evolution details from the empty description.",
+      "selection_meaning": "MECHANISM_REFERENCE_SAMPLE_NOT_BUILD_OR_PURCHASE_RECOMMENDATION"
+    }
+  ],
+  "item_reference_limits": [
+    "Item catalog is not included in loading-data.source_bindings at audit intake; item reference requires its own retained-source binding if Main uses it.",
+    "Static16.20.1catalog has870items, with different map/store/requirements flags; sample checks are map11/purchasable, not blanket availability or a build recommendation.",
+    "Full gold.total is not remaining purchase cost, affordability, earned-gold difference, inventory value, or recall timing.",
+    "No matchup win rate, head-to-head simulation, damage budget, rune state, actual inventory, optimal build, item order, or evolution observation exists in these item rows.",
+    "World Atlas3865has empty description; do not fill its mechanics from memory."
+  ],
+  "six_milestone_conditional_questions_and_risks": [
+    {
+      "milestone": "LEVEL1",
+      "questions": [
+        "실제로 배운 각 챔피언의 첫 스킬과 현재 사용 가능 여부는 무엇인가?",
+        "미니언·지형·상대 위치와 체력/마나를 관측했는가?"
+      ],
+      "supported_refs": [
+        "official:Caitlyn:P",
+        "official:Caitlyn:Q",
+        "official:Lux:Q",
+        "official:Lux:E",
+        "official:Nautilus:Q",
+        "official:Nautilus:P"
+      ],
+      "risk": "Base range and ranged spells do not establish automatic push/priority or a safe trade. Starting ability is unknown; Nautilus minion-collision protection is unestablished."
+    },
+    {
+      "milestone": "LEVEL2",
+      "questions": [
+        "우리와 상대의 실제 레벨 상승 시점·경험치 차이·배운 스킬은 확인됐는가?",
+        "이동 불가 효과 적중과 카이사의 후속 기본 공격/플라즈마를 관측했는가?"
+      ],
+      "supported_refs": [
+        "official:Nautilus:P",
+        "official:Nautilus:Q",
+        "official:Kaisa:P",
+        "official:Lux:Q",
+        "official:Caitlyn:W"
+      ],
+      "risk": "No source establishes who reaches2first, exact minion count, standard unlock order, guaranteed CC chain, or required all-in."
+    },
+    {
+      "milestone": "LEVEL3_5",
+      "questions": [
+        "럭스 속박/둔화와 케이틀린 덫·투망의 실제 적중, 충전량, 사거리·마나·재사용 대기를 확인했는가?",
+        "노틸러스가 Q를 빗나간 뒤에도 기본 공격 속박·E·보호막 또는 접근 수단이 남아 있는가?"
+      ],
+      "supported_refs": [
+        "official:Lux:Q",
+        "audit:Lux:W:tooltip",
+        "audit:Lux:E:tooltip",
+        "official:Caitlyn:W",
+        "official:Caitlyn:E",
+        "official:Nautilus:P",
+        "official:Nautilus:W",
+        "official:Nautilus:E"
+      ],
+      "risk": "Lux Q to Caitlyn W is a potential mechanism sequence, not evidence of guaranteed contact/chain. A missed Q does not establish a harmless Nautilus; missing cooldown alone does not prove safety from enemy jungle/other tools."
+    },
+    {
+      "milestone": "LEVEL6",
+      "questions": [
+        "궁극기를 실제로 배웠고 재사용 대기·마나·사거리가 충족되는가?",
+        "카이사의 돌진 대상에게 플라즈마가 실제로 남아 있으며, 케이틀린 R 경로에 대신 맞을 적 챔피언이 있는가?"
+      ],
+      "supported_refs": [
+        "audit:Kaisa:R:tooltip",
+        "official:Nautilus:R",
+        "audit:Nautilus:R:tooltip",
+        "official:Caitlyn:R",
+        "official:Lux:R"
+      ],
+      "risk": "R availability is not implied by row label. Kaisa requires Plasma mark; Nautilus R tracks a champion and affects others in path; Caitlyn R can be intercepted. No automatic minion safety or superior level6duo."
+    },
+    {
+      "milestone": "FIRST_PURCHASE",
+      "questions": [
+        "각 챔피언이 실제로 산 아이템·남은 구성품·인벤토리·적용 게임 패치가 확인됐는가?",
+        "해당 구매가 바꾼 것은 공격력/주문력/공격속도/마나/이속/방어 중 무엇이며 능동 효과가 사용 가능한가?"
+      ],
+      "supported_refs": [
+        "audit:item:1001",
+        "audit:item:1036",
+        "audit:item:1042",
+        "audit:item:1018",
+        "audit:item:1038",
+        "audit:item:1052",
+        "audit:item:3802",
+        "audit:item:3145",
+        "audit:item:3140"
+      ],
+      "risk": "Catalog total cost is full item total, not remaining purchase gold or recall timing. Inventory/patch/active readiness unknown; boots do not guarantee dodge; QSS excludes airborne."
+    },
+    {
+      "milestone": "FIRST_CORE",
+      "questions": [
+        "완성템의 정확한 이름·효과와 상대 구매를 확인했는가?",
+        "카이사의 해당 스킬 진화와 케이틀린의 실제 치명타 조건·후속 공격 기회를 확인했는가?"
+      ],
+      "supported_refs": [
+        "official:Kaisa:P",
+        "official:Kaisa:Q",
+        "official:Kaisa:W",
+        "official:Kaisa:E",
+        "official:Caitlyn:P",
+        "audit:item:3031",
+        "audit:item:6672",
+        "audit:item:3124",
+        "audit:item:3190",
+        "audit:item:3047"
+      ],
+      "risk": "One completed item does not prove a Kai'Sa evolution, relative power reversal, optimal build, stronger duo, or safe combat. Runes/levels/complete inventories/ability contact and readiness remain unknown."
+    }
+  ],
+  "source_queue": {
+    "expert_channel_source_id": "queue:expert-channels",
+    "expert_candidates": [
+      {
+        "channel_id": "UCbRAQlJtEMooC9td9lr4tQg",
+        "name": "정뚱땡",
+        "speaker": "정뚱땡",
+        "speaker_verified": false,
+        "main_position": "BOTTOM",
+        "language": "ko",
+        "uploads_playlist_id": null,
+        "content_grade": "L",
+        "enabled": true,
+        "queue_category": "EXPERT_STATEMENT_CANDIDATE",
+        "accepted_claim": false
+      },
+      {
+        "channel_id": "UC9vI-9WYQLXKI6n9XdXXo3g",
+        "name": "땅우양",
+        "speaker": "땅우양",
+        "speaker_verified": false,
+        "main_position": "BOTTOM",
+        "language": "ko",
+        "uploads_playlist_id": null,
+        "content_grade": "L",
+        "enabled": true,
+        "queue_category": "EXPERT_STATEMENT_CANDIDATE",
+        "accepted_claim": false
+      },
+      {
+        "channel_id": "UCSzHok6X5qXEO7cjvVnE62g",
+        "name": "프레이",
+        "speaker": "프레이",
+        "speaker_verified": false,
+        "main_position": "BOTTOM",
+        "language": "ko",
+        "uploads_playlist_id": null,
+        "content_grade": "C",
+        "enabled": true,
+        "queue_category": "EXPERT_STATEMENT_CANDIDATE",
+        "accepted_claim": false
+      },
+      {
+        "channel_id": "UC6NXJtCn3p-actkvBUlHwDA",
+        "name": "데스티니",
+        "speaker": "데스티니",
+        "speaker_verified": false,
+        "main_position": "SUPPORT",
+        "language": "ko",
+        "uploads_playlist_id": null,
+        "content_grade": "L",
+        "enabled": true,
+        "queue_category": "EXPERT_STATEMENT_CANDIDATE",
+        "accepted_claim": false
+      },
+      {
+        "channel_id": "UCy-0ERPBCzs_p_E_Ag9C-Jw",
+        "name": "희성",
+        "speaker": "희성",
+        "speaker_verified": false,
+        "main_position": "SUPPORT",
+        "language": "ko",
+        "uploads_playlist_id": null,
+        "content_grade": "L",
+        "enabled": true,
+        "queue_category": "EXPERT_STATEMENT_CANDIDATE",
+        "accepted_claim": false
+      },
+      {
+        "channel_id": "UCYJ0Ucu9jPX5kn6SeDcNaIQ",
+        "name": "울프",
+        "speaker": "울프",
+        "speaker_verified": false,
+        "main_position": "SUPPORT",
+        "language": "ko",
+        "uploads_playlist_id": null,
+        "content_grade": "C",
+        "enabled": true,
+        "queue_category": "EXPERT_STATEMENT_CANDIDATE",
+        "accepted_claim": false
+      },
+      {
+        "channel_id": "UCerhqgFd8dnypewC3yjAlbg",
+        "name": "이브",
+        "speaker": "이브",
+        "speaker_verified": false,
+        "main_position": "BOTTOM",
+        "language": "ko",
+        "uploads_playlist_id": null,
+        "content_grade": "UNKNOWN",
+        "enabled": true,
+        "queue_category": "EXPERT_STATEMENT_CANDIDATE",
+        "accepted_claim": false
+      }
+    ],
+    "expert_candidate_limit": "Registered channel/grade is source discovery metadata, not verified speaker identity, direct relevant statement, or accepted coaching. Keep existing grades unchanged.",
+    "pov_channel_source_id": "queue:pov-channels",
+    "later_canonical_metadata_source_id": "queue:pov-metadata",
+    "pov_channels": [
+      {
+        "source_id": "queue:pov-metadata",
+        "channel_id": "UC60AsIDujUw3zd4k4Hz_4vA",
+        "metadata": {
+          "channel_id": "UC60AsIDujUw3zd4k4Hz_4vA",
+          "custom_url": "@proviewlol4u",
+          "title": "Proview Lol",
+          "uploads_playlist_id": "UU60AsIDujUw3zd4k4Hz_4vA"
+        },
+        "verification_status": "CANONICAL_CHANNEL_METADATA_VERIFIED",
+        "view_type": "UNKNOWN",
+        "continuity": "UNKNOWN",
+        "expert_source": false,
+        "official_status": "UNKNOWN"
+      },
+      {
+        "source_id": "queue:pov-metadata",
+        "channel_id": "UCck3GtfaB356euYQPXvMPhw",
+        "metadata": {
+          "channel_id": "UCck3GtfaB356euYQPXvMPhw",
+          "custom_url": "@lpllive",
+          "title": "LPL LCK Pros",
+          "uploads_playlist_id": "UUck3GtfaB356euYQPXvMPhw"
+        },
+        "verification_status": "CANONICAL_CHANNEL_METADATA_VERIFIED",
+        "view_type": "UNKNOWN",
+        "continuity": "UNKNOWN",
+        "expert_source": false,
+        "official_status": "UNKNOWN"
+      }
+    ],
+    "pov_metadata_limit": "Later canonical API metadata verifies channel IDs/names/handles; earlier public audit uncertainty stays as history. Neither source observes footage, player view, continuity, exact matchup, same-game identity, or tactics.",
+    "existing_matchup_search_candidate": {
+      "candidate_id": "lpl-ruler-20261002-title",
+      "url": "https://www.youtube.com/watch?v=ng7bEhcTmQU",
+      "title": "Ruler proview 2026/10/02 caitlyn kaisa Korea challenger | Ruler 第一视角",
+      "duration_text": "51:36",
+      "duration_seconds": 3096,
+      "upload_date": "UNKNOWN",
+      "title_date_text": "2026/10/02",
+      "game_date": "UNKNOWN",
+      "metadata_source_id": "lpl_public_index",
+      "metadata_confidence": "SECONDARY_INDEX_ONLY",
+      "search_keys": {
+        "player_label": "Ruler",
+        "champion_title_tokens": [
+          "caitlyn",
+          "kaisa"
+        ],
+        "opponent": "UNKNOWN"
+      },
+      "view_type": "UNKNOWN",
+      "continuity": "UNKNOWN",
+      "game_id": "UNKNOWN",
+      "patch": "UNKNOWN",
+      "same_game_anchor": "NONE_OBSERVED",
+      "watch_page_observation": "Online fetch throttled",
+      "footage_observed": false,
+      "notes": "Listed and linked by search-service index snapshot; the later direct GET's current 15-row sample did not include this older row. Source lag/sample-window differences do not establish deletion.",
+      "source_id": "queue:pov-discovery",
+      "status": "DISCOVERY_ONLY_TITLE_TOKENS_NOT_FOUR_CHAMPION_MATCHUP_EVIDENCE"
+    },
+    "search_candidate_limit": "Ruler title includes Caitlyn and Kaisa search tokens only; which player/champion/opponent, Lux/Nautilus presence, game date, patch, continuity, game link and predecision view remain unknown. The6newer videos in canonical metadata do not verify or refute the older Ruler row.",
+    "queue_paths": [
+      "config/expert_channels.json",
+      "config/pov_channels.json",
+      "data/pov_metadata/2026-10-16/pov-metadata.json",
+      "data/pov_metadata/2026-10-16/metadata-binding.json",
+      "evidence/actual-evidence/pov-public-investigation.json",
+      "evidence/actual-evidence/video-step-diagnostic/resume-20261017/expert-report-readiness.json",
+      "evidence/actual-evidence/video-step-diagnostic/resume-20261017/stage3-source-plan.json",
+      "evidence/actual-evidence/video-step-diagnostic/resume-20261017/stage4-source-plan.json",
+      "docs/queue/QUEUE.md"
+    ],
+    "required_future_evidence": [
+      "Direct relevant utterance URL/time/short paraphrase, verified speaker status, source-supported application conditions and independent review for expert statements.",
+      "For POV: reliable same-game anchor plus observed continuity and player-known view before decision; future outcome excluded from generation input.",
+      "Preserve existing diagnostics, original-duration reservation/debit/duplicate rules, dailyVIDEO3/3history and Oct18stage3→separate review/gated publication→stage4plan. This audit schedules or dispatches nothing."
+    ],
+    "not_matchup_tactical_evidence": [
+      "Existing diagnostic gameplay summary is unreviewed and excluded from coaching; expert candidates/adoptions0.",
+      "PRO89/108import is distinct-match/participant evidence, not this matchup or matched scenes. Do not join by title/name/date alone."
+    ]
+  },
+  "verification": {
+    "method": "Read retained bytes; recompute SHA256 against retained manifests; match all20loading fact excerpts/locators; check16item sample map11/store fields; parse written audit JSON. No product test or strategy evaluation.",
+    "official_champion_hashes_match_manifests": 4,
+    "official_item_hash_matches_manifest": true,
+    "loading_facts_exactly_matched": 20,
+    "tooltip_supplements": 16,
+    "static_attackrange_fields": 4,
+    "item_reference_samples": 16
+  },
+  "context_fact_candidates": [
+    {
+      "id": "official:Kaisa:P",
+      "candidate_kind": "EXISTING_LOADING_FACT_REFERENCE",
+      "champion": "Kaisa",
+      "slot": "P",
+      "name": "두 번째 피부",
+      "local_source": "data/official_catalog/versions/16.20.1/Kaisa-16.20.1.ko_KR.json",
+      "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Kaisa.json",
+      "patch": "16.20.1",
+      "sha256": "98544004fbc81a31b38a8856c301b5434e7881bb05fd4ec708dabb0827214ed3",
+      "locator": "data.Kaisa.passive.description",
+      "raw_excerpt": "카이사는 기본 공격으로 플라즈마 중첩을 쌓아 그에 따른 추가 마법 피해를 입힙니다. 아군의 이동 불가 효과가 적에게 적용됐을 때에도 플라즈마 중첩이 쌓입니다. 살아있는 무기 효과는 카이사가 구입하는 아이템에 따라 스킬을 강화시킵니다.",
+      "text": "카이사는 기본 공격으로 플라즈마 중첩을 쌓아 그에 따른 추가 마법 피해를 입힙니다. 아군의 이동 불가 효과가 적에게 적용됐을 때에도 플라즈마 중첩이 쌓입니다. 살아있는 무기 효과는 카이사가 구입하는 아이템에 따라 스킬을 강화시킵니다.",
+      "plain_text_normalization": "HTML tags replaced by spaces, entities decoded, whitespace collapsed; dynamic template placeholders preserved.",
+      "source_supported": "Allied immobilizing effects applying to the target add Plasma stacks.",
+      "source_supported_limit": "Actual CC hit, target mark count/duration, exact detonation damage and follow-up range/readiness are not observed.",
+      "new_strategy_approval": false
+    },
+    {
+      "id": "audit:Kaisa:R:tooltip",
+      "candidate_kind": "ADDITIVE_RETAINED_CONTEXT_FACT_CANDIDATE",
+      "champion": "Kaisa",
+      "slot": "R",
+      "name": "사냥본능",
+      "local_source": "data/official_catalog/versions/16.20.1/Kaisa-16.20.1.ko_KR.json",
+      "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Kaisa.json",
+      "patch": "16.20.1",
+      "sha256": "98544004fbc81a31b38a8856c301b5434e7881bb05fd4ec708dabb0827214ed3",
+      "locator": "data.Kaisa.spells.3.tooltip",
+      "raw_excerpt": "카이사가 <keywordMajor>플라즈마</keywordMajor> 표식이 남은 적 챔피언 근처로 빠르게 돌진하며, {{ rshieldduration }}초 동안 <shield>{{ rcalculatedshieldvalue }}의 보호막</shield>을 얻습니다.{{ spellmodifierdescriptionappend }}",
+      "text": "카이사가 플라즈마 표식이 남은 적 챔피언 근처로 빠르게 돌진하며, {{ rshieldduration }}초 동안 {{ rcalculatedshieldvalue }}의 보호막 을 얻습니다.{{ spellmodifierdescriptionappend }}",
+      "plain_text_normalization": "HTML tags replaced by spaces, entities decoded, whitespace collapsed; dynamic template placeholders preserved.",
+      "source_supported": "R dashes near an enemy champion carrying Plasma and grants a shield.",
+      "source_supported_limit": "Plasma target prerequisite is explicit; learned/ready, mana, range, destination and safe follow-up remain unknown. Dynamic shield duration/amount are unresolved placeholders.",
+      "new_strategy_approval": false
+    },
+    {
+      "id": "audit:Lux:W:tooltip",
+      "candidate_kind": "ADDITIVE_RETAINED_CONTEXT_FACT_CANDIDATE",
+      "champion": "Lux",
+      "slot": "W",
+      "name": "프리즘 보호막",
+      "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+      "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+      "patch": "16.20.1",
+      "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+      "locator": "data.Lux.spells.1.tooltip",
+      "raw_excerpt": "럭스가 마법봉을 던져 봉에 닿은 모든 아군에게 {{ shieldduration }}초 동안 <shield>{{ totalshieldtt }}의 피해를 흡수하는 보호막</shield>을 씌웁니다. 마법봉은 돌아올 때도 똑같이 <shield>보호막</shield>을 부여합니다.{{ spellmodifierdescriptionappend }}",
+      "text": "럭스가 마법봉을 던져 봉에 닿은 모든 아군에게 {{ shieldduration }}초 동안 {{ totalshieldtt }}의 피해를 흡수하는 보호막 을 씌웁니다. 마법봉은 돌아올 때도 똑같이 보호막 을 부여합니다.{{ spellmodifierdescriptionappend }}",
+      "plain_text_normalization": "HTML tags replaced by spaces, entities decoded, whitespace collapsed; dynamic template placeholders preserved.",
+      "source_supported": "W grants shield to all allies touched by the wand; return path also grants the same shield.",
+      "source_supported_limit": "Actual outbound/return wand contact, range, cooldown, mana, amount, duration and survival are not observed; no crowd-control removal is stated.",
+      "new_strategy_approval": false
+    },
+    {
+      "id": "audit:Lux:E:tooltip",
+      "candidate_kind": "ADDITIVE_RETAINED_CONTEXT_FACT_CANDIDATE",
+      "champion": "Lux",
+      "slot": "E",
+      "name": "광휘의 특이점",
+      "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+      "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+      "patch": "16.20.1",
+      "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+      "locator": "data.Lux.spells.2.tooltip",
+      "raw_excerpt": "럭스가 빛의 영역을 생성해 적들을 {{ slowpercent }}% <status>둔화</status>시키고 해당 지역을 드러냅니다. {{ slowzoneduration }}초가 지나거나 스킬을 <recast>재사용</recast>하면 폭발하며 <magicDamage>{{ totaldamagett }}의 마법 피해</magicDamage>를 입히고 추가로 {{ slowlingerduration }}초 동안 <status>둔화</status>시킵니다.{{ spellmodifierdescriptionappend }}",
+      "text": "럭스가 빛의 영역을 생성해 적들을 {{ slowpercent }}% 둔화 시키고 해당 지역을 드러냅니다. {{ slowzoneduration }}초가 지나거나 스킬을 재사용 하면 폭발하며 {{ totaldamagett }}의 마법 피해 를 입히고 추가로 {{ slowlingerduration }}초 동안 둔화 시킵니다.{{ spellmodifierdescriptionappend }}",
+      "plain_text_normalization": "HTML tags replaced by spaces, entities decoded, whitespace collapsed; dynamic template placeholders preserved.",
+      "source_supported": "E creates a slow zone that reveals the area, then explodes after its duration or on recast, dealing damage and a lingering slow.",
+      "source_supported_limit": "Reveal applies to the area; no full brush coverage or hidden enemy whereabouts outside it is implied. Dynamic slow/duration/damage placeholders remain unresolved.",
+      "new_strategy_approval": false
+    },
+    {
+      "id": "official:Nautilus:P",
+      "candidate_kind": "EXISTING_LOADING_FACT_REFERENCE",
+      "champion": "Nautilus",
+      "slot": "P",
+      "name": "강력한 일격",
+      "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+      "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+      "patch": "16.20.1",
+      "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+      "locator": "data.Nautilus.passive.description",
+      "raw_excerpt": "노틸러스가 대상에 대한 첫 기본 공격 시 추가 물리 피해를 입히고 잠시 속박합니다.",
+      "text": "노틸러스가 대상에 대한 첫 기본 공격 시 추가 물리 피해를 입히고 잠시 속박합니다.",
+      "plain_text_normalization": "HTML tags replaced by spaces, entities decoded, whitespace collapsed; dynamic template placeholders preserved.",
+      "source_supported": "First basic attack on a target deals extra physical damage and briefly roots.",
+      "source_supported_limit": "Requires actual basic-attack contact; per-target reset duration, readiness, safe approach and guaranteed CC chain are not established by this description.",
+      "new_strategy_approval": false
+    }
+  ],
+  "context_fact_candidates_limit": "Three additive retained tooltip candidates and two existing fact references. Main owns whether/how to bind them; none alters the original865fact archive or asserts tactical approval."
+}

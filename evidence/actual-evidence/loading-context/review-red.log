@@ -1,0 +1,119 @@
+test_known_enemy_support_survives_unknown_carry_assignment (tests_pregame.test_loading_context.LoadingContextTests.test_known_enemy_support_survives_unknown_carry_assignment) ... FAIL
+test_role_swapped_enemy_duo_does_not_inherit_representative_template (tests_pregame.test_loading_context.LoadingContextTests.test_role_swapped_enemy_duo_does_not_inherit_representative_template) ... FAIL
+test_unbound_control_does_not_survive_as_a_concrete_followup_action (tests_pregame.test_loading_context.LoadingContextTests.test_unbound_control_does_not_survive_as_a_concrete_followup_action) ... FAIL
+
+======================================================================
+FAIL: test_known_enemy_support_survives_unknown_carry_assignment (tests_pregame.test_loading_context.LoadingContextTests.test_known_enemy_support_survives_unknown_carry_assignment)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_loading_context.py", line 101, in test_known_enemy_support_survives_unknown_carry_assignment
+    self.run_node(r'''
+  File "/workspace/lol-coach/tests_pregame/test_loading_strategy.py", line 16, in run_node
+    self.assertEqual(result.returncode,0,result.stderr)
+AssertionError: 1 != 0 : node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ []
+- [
+-   'Nautilus'
+- ]
+
+    at [eval]:7:8
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [],
+  expected: [ 'Nautilus' ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_role_swapped_enemy_duo_does_not_inherit_representative_template (tests_pregame.test_loading_context.LoadingContextTests.test_role_swapped_enemy_duo_does_not_inherit_representative_template)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_loading_context.py", line 109, in test_role_swapped_enemy_duo_does_not_inherit_representative_template
+    self.run_node(r'''
+  File "/workspace/lol-coach/tests_pregame/test_loading_strategy.py", line 16, in run_node
+    self.assertEqual(result.returncode,0,result.stderr)
+AssertionError: 1 != 0 : node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'Caitlyn_Lux__Kaisa_Nautilus_v2'
+- null
+
+    at [eval]:6:75
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'Caitlyn_Lux__Kaisa_Nautilus_v2',
+  expected: null,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_unbound_control_does_not_survive_as_a_concrete_followup_action (tests_pregame.test_loading_context.LoadingContextTests.test_unbound_control_does_not_survive_as_a_concrete_followup_action)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_loading_context.py", line 116, in test_unbound_control_does_not_survive_as_a_concrete_followup_action
+    self.run_node(r'''
+  File "/workspace/lol-coach/tests_pregame/test_loading_strategy.py", line 16, in run_node
+    self.assertEqual(result.returncode,0,result.stderr)
+AssertionError: 1 != 0 : node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(!r.teamfight.actions[1].includes('제어가 적중'))
+
+    at [eval]:7:1
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.328s
+
+FAILED (failures=3)
