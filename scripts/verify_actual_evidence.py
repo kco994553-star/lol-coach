@@ -23,6 +23,7 @@ MODIFIED={'coach_v1/pc_coach.py','.github/workflows/private-mvp-ci.yml',
     'web_r4/pc.js','web_r4/pregame.js','web_r4/pregame.html','web_r4/official_reference.js',
     'web_r4/review_queue.js','web_r4/review_queue.html'}
 CURRENT=MODIFIED|{
+    'contracts/exchange-preference-v1.md','web_r4/loading-exchange.js','web_r4/loading-exchange-view.js','tests_pregame/test_exchange_preference.py',
     'contracts/lane-engagement-v1.md','web_r4/loading-engagement.js','web_r4/loading-engagement-view.js','tests_pregame/test_lane_engagement.py',
     'contracts/account-dashboard-v1.md','coach_v1/account_dashboard.py','scripts/refresh_verified_pro_dashboard.py','scripts/publish_verified_pro_dashboard.py','config/lck_verified_accounts.json',
     'web_r4/dashboard.html','web_r4/dashboard.js','web_r4/dashboard.css','web_r4/pro-dashboard.json','tests_pregame/test_account_dashboard.py',
@@ -53,7 +54,7 @@ CURRENT=MODIFIED|{
     'tests_pregame/test_resource_view.py','tests_pregame/test_fixed_resource_checkpoint.py','tests_pregame/test_actual_evidence_binding.py',
     'docs/superpowers/plans/2026-10-16-actual-evidence.md','docs/superpowers/plans/2026-10-17-gemini-diagnostic.md','contracts/gemini-response-diagnostic-v3.md',
 }
-TESTS=['tests_pregame.test_lane_engagement','tests_pregame.test_account_dashboard','tests_pregame.test_loading_wave','tests_pregame.test_loading_interactive','tests_expert.test_video_diagnostic_payload','tests_expert.test_video_diagnostic_policy','tests_expert.test_video_diagnostic_cli','tests_expert.test_gemini_response_diagnostics','tests_expert.test_text_response_v2','tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
+TESTS=['tests_pregame.test_exchange_preference','tests_pregame.test_lane_engagement','tests_pregame.test_account_dashboard','tests_pregame.test_loading_wave','tests_pregame.test_loading_interactive','tests_expert.test_video_diagnostic_payload','tests_expert.test_video_diagnostic_policy','tests_expert.test_video_diagnostic_cli','tests_expert.test_gemini_response_diagnostics','tests_expert.test_text_response_v2','tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
        'tests_pregame.test_resource_recovery','tests_pregame.test_resource_view','tests_pregame.test_fixed_resource_checkpoint',
        'tests_pregame.test_actual_evidence_binding','tests_pregame.test_directions','tests_pregame.test_directions_http',
        'tests_pregame.test_loading_catalog','tests_pregame.test_loading_strategy','tests_pregame.test_loading_http','tests_pregame.test_loading_context',
@@ -163,6 +164,7 @@ def selected_tests():
     if not before or set(before)=={'0'}:return TESTS
     changed=set(git('diff','--name-only',before,'HEAD').decode().splitlines())
     groups={
+        'tests_pregame.test_exchange_preference':{'contracts/exchange-preference-v1.md','web_r4/loading-exchange.js','web_r4/loading-exchange-view.js','web_r4/loading-engagement-view.js','web_r4/loading-interactive.js','web_r4/loading-engine.js','tests_pregame/test_exchange_preference.py'},
         'tests_pregame.test_lane_engagement':{'contracts/lane-engagement-v1.md','web_r4/loading-engagement.js','web_r4/loading-engagement-view.js','tests_pregame/test_lane_engagement.py','web_r4/loading-engine.js','web_r4/loading-interactive.js','web_r4/loading.html'},
         'tests_pregame.test_account_dashboard':{'coach_v1/account_dashboard.py','scripts/refresh_verified_pro_dashboard.py','scripts/publish_verified_pro_dashboard.py','config/lck_verified_accounts.json','web_r4/dashboard.html','web_r4/dashboard.js','web_r4/dashboard.css','web_r4/pro-dashboard.json','contracts/account-dashboard-v1.md','tests_pregame/test_account_dashboard.py'},
         'tests_pregame.test_loading_wave':{'web_r4/loading-wave.js','web_r4/loading-wave-view.js','web_r4/loading-engine.js','web_r4/loading-interactive.js','web_r4/loading.html','contracts/loading-wave-v4.md','tests_pregame/test_loading_wave.py'},

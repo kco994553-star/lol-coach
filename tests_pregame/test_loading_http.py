@@ -28,7 +28,7 @@ class LoadingHTTPTests(unittest.TestCase):
         return r.status,body,headers
 
     def test_loading_assets_and_original_pc_access_boundary(self):
-        for path in ['/loading','/loading.html','/loading-engine.js','/loading-exploration.js','/loading-interactive.js','/dashboard.html','/dashboard.js','/dashboard.css','/pro-dashboard.json','/loading-engagement.js','/loading-engagement-view.js','/loading-wave.js','/loading-wave-view.js','/loading-map.js','/loading-data.json','/loading-assets/champion0.png','/skill-data.js','/skill-display.js']:
+        for path in ['/loading','/loading.html','/loading-engine.js','/loading-exploration.js','/loading-interactive.js','/dashboard.html','/dashboard.js','/dashboard.css','/pro-dashboard.json','/loading-exchange.js','/loading-exchange-view.js','/loading-engagement.js','/loading-engagement-view.js','/loading-wave.js','/loading-wave-view.js','/loading-map.js','/loading-data.json','/loading-assets/champion0.png','/skill-data.js','/skill-display.js']:
             status,body,headers=self.get(path);self.assertEqual(status,200,path)
             self.assertGreater(len(body),0);self.assertIn("img-src 'self'",headers['Content-Security-Policy'])
         self.assertEqual(self.get('/dev/v1/pregame/pc-status')[0],401)
