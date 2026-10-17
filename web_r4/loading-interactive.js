@@ -15,8 +15,9 @@
     return id==='RECEIVE_WITH_LUX'&&['TRIM_RECEIVE','TOWER_CS','RETURNING'].includes(wave.selected_plan_id);
   }
   function mount({report:initial,catalog,host,onPreference}){
-    const X=root.LoadingExploration,S=root.SkillDisplay,W=root.LoadingWave;
+    const X=root.LoadingExploration,S=root.SkillDisplay,W=root.LoadingWave,G=root.LoadingEngagement;
     let report=initial,state=X.defaultState(),panel='LANE',step='1',preview=null,result=null,destroyed=false,last=null;
+    let engagementState=G.defaultState(),engagementResult=null,engagementOpen=false;
     let waveState=W.defaultState(),waveResult=null,wavePreview=null,waveStep='1',legacyOpen=false;
     const fmt=v=>S.format(String(v),{champions:report.input.allies.concat(report.input.enemies).map(p=>p.champion),own:report.input.own_champion,aliases:report.lane.matchup_id==='Caitlyn_Lux__Kaisa_Nautilus_v2'?[{text:'덫',champion:'Caitlyn',slot:'W'}]:[]});
     const el=(tag,text,cls)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=['code','blockquote'].includes(tag)?String(text):fmt(text);return n;};
@@ -46,7 +47,7 @@
       const before=result,oldPlan=before?.selected_plan_id;
       state=next;result=X.evaluate(report,catalog,state);preview=result.selected_plan_id;step='1';
       last={reason,previous:oldPlan,current:result.selected_plan_id,previous_choice:before?{risk:before.preference.risk,plan:oldPlan}:null,action_changed:Boolean(before&&oldPlan!==result.selected_plan_id)};
-      waveState={...waveState,milestone:state.milestone};waveResult=W.evaluate(report,catalog,waveState,result);wavePreview=waveResult.selected_plan_id;waveStep='1';
+      waveState={...waveState,milestone:state.milestone};engagementState={...engagementState,milestone:state.milestone};engagementResult=G.evaluate(report,catalog,engagementState);waveResult=G.constrainWave(report,catalog,waveState,result,engagementResult,W);wavePreview=waveResult.selected_plan_id;waveStep='1';
       closeZoom();render();
       if(focused)host.querySelector('#'+CSS.escape(focused))?.focus({preventScroll:true});
     }
@@ -71,7 +72,8 @@
       }
       const periods=el('div',null,'period-options');periods.setAttribute('role','group');periods.setAttribute('aria-label','라인전 구간 선택');
       report.lane.rows.forEach(row=>{const b=button(row.period,'period-'+row.id,()=>apply({...state,milestone:row.id},'라인전 구간 변경'));b.dataset.lanePeriod=row.id;b.setAttribute('aria-pressed',String(row.id===state.milestone));periods.append(b);});host.append(periods);
-      const wave=root.LoadingWaveView.create({result:waveResult,catalog,report,preview:wavePreview,step:waveStep,onAssumption:(key,value)=>{waveState={...waveState,assumptions:{...waveState.assumptions,[key]:value}};apply(state,'웨이브 가정 변경');},onPreset:assumptions=>{waveState={...waveState,assumptions};apply(state,'웨이브 가정 예시/초기화');},onPreview:id=>{wavePreview=id;waveStep='1';closeZoom();render();host.querySelector('#wave-preview-'+id)?.focus({preventScroll:true});},onStep:n=>{waveStep=n;}});host.append(wave);
+      const engagement=root.LoadingEngagementView.create({result:engagementResult,report,catalog,onChange:(key,value)=>{engagementState=key==='type'?{...engagementState,type:value}:{...engagementState,assumptions:{...engagementState.assumptions,[key]:value}};apply(state,'교전 가정 변경');},onReset:()=>{engagementState={...G.defaultState(),milestone:state.milestone};apply(state,'교전 가정 초기화');}});const ec=engagement.querySelector('#engagement-conditions');if(ec){ec.open=engagementOpen;ec.addEventListener('toggle',()=>engagementOpen=ec.open);}const encounterLink=el('a','교전 유형·올인 조건 비교로 이동');encounterLink.href='#engagement-flow';host.append(encounterLink);
+      const wave=root.LoadingWaveView.create({result:waveResult,catalog,report,preview:wavePreview,step:waveStep,onAssumption:(key,value)=>{waveState={...waveState,assumptions:{...waveState.assumptions,[key]:value}};apply(state,'웨이브 가정 변경');},onPreset:assumptions=>{waveState={...waveState,assumptions};apply(state,'웨이브 가정 예시/초기화');},onPreview:id=>{wavePreview=id;waveStep='1';closeZoom();render();host.querySelector('#wave-preview-'+id)?.focus({preventScroll:true});},onStep:n=>{waveStep=n;}});host.append(wave,engagement);if(waveResult.engagement_constraint==='LIMIT_EXPOSURE'){const note=el('p','교전 조건으로 웨이브 실행을 제한했습니다. 원래 입력은 보존하지만 전진 처리·상대 방해를 감당한다는 가정을 그대로 실행에 쓰지 않습니다. '+engagementResult.wave_bridge,'interactive-status');note.id='wave-engagement-gate';wave.prepend(note);}
       host.dataset.wavePlan=waveResult.selected_plan_id||'UNSUPPORTED';
       const laneKey=document.getElementById('lane-key');if(laneKey)laneKey.textContent=fmt(waveResult.supported&&waveResult.selected_plan_id!=='CHECK_WAVE'?'가상 웨이브 목표: '+waveResult.selected.title+' / 전환: '+waveResult.selected.failure+' / 기회: 처리·퇴로 예산을 깨지 않을 때만 공간·미니언 처리·짧은 응징을 비교합니다.':report.summary.lane_key);
       const legacy=el('details');legacy.id='wave-skill-means';legacy.open=legacyOpen;legacy.append(el('summary','웨이브 계획의 하위 수단 · 기존 기술·딜교환 상세'));legacy.addEventListener('toggle',()=>legacyOpen=legacy.open);host.append(legacy);
@@ -105,7 +107,7 @@
       const scenario=X.mapFor(report.input,plan);target.append(root.LoadingMap.create(scenario,catalog,report.input,{selectedStep:step,onSelect:select,skillAliases:[{text:'덫',champion:'Caitlyn',slot:'W'}]}));select(step);
     }
     function showError(error){closeZoom();host.replaceChildren(el('p','탐색을 완료하지 못했습니다. 픽을 다시 분석해 주세요. '+(error?.message||''),'is-error'));}
-    result=X.evaluate(report,catalog,state);preview=result.selected_plan_id;waveResult=W.evaluate(report,catalog,waveState,result);wavePreview=waveResult.selected_plan_id;render();
+    result=X.evaluate(report,catalog,state);preview=result.selected_plan_id;engagementResult=G.evaluate(report,catalog,engagementState);waveResult=G.constrainWave(report,catalog,waveState,result,engagementResult,W);wavePreview=waveResult.selected_plan_id;render();
     return {destroy(){destroyed=true;closeZoom();host.querySelector('#wave-line-dialog')?.close();host.replaceChildren();},snapshot(){return {state:JSON.parse(JSON.stringify(state)),panel,step,preview,result:result.selected_plan_id};}};
   }
   root.LoadingInteractive={mount,describeSelection,waveAllowsMeans};

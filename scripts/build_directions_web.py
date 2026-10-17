@@ -10,6 +10,7 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 FILES = {
     'dashboard.html':'index.html','dashboard.js':'dashboard.js','dashboard.css':'dashboard.css','pro-dashboard.json':'pro-dashboard.json',
+    'loading-engagement.js':'loading-engagement.js','loading-engagement-view.js':'loading-engagement-view.js',
     'loading-wave.js':'loading-wave.js','loading-wave-view.js':'loading-wave-view.js',
     'loading-exploration.js':'loading-exploration.js','loading-interactive.js':'loading-interactive.js',
     'skill-data.js':'skill-data.js','skill-display.js':'skill-display.js',

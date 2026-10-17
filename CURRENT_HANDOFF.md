@@ -1,3 +1,25 @@
+진행: 웨이브 중심 구조 위에 교전 유형·핵심 기술·첫 적중·후속 조건 비교를 연결했습니다.
+판정: 유나라·룰루 대 루시안·노틸러스의6이후 확정승리는 사용자 제시 검토 가설로만 등록했습니다.
+한계: 직접 비교 근거가 없어 교전 우세는 미확인, 가능한 수급/짧은 교환 후보와 올인을 구분합니다.
+보존: 기존 공개 대시보드·실제 프로5경기·웨이브/스킬·AUTO30/HOLD20·영상3/3·Windows 경로 유지입니다.
+다음: 변경한 교전 기능의 원격 필수검사·공개 화면 검증·게시 증거를 마무리합니다.
+
+# Lane engagement intake / implementation — 2026-10-17
+
+Intake8363ec213ac05103eced5b88704166a2e2515b6d, tokenmain-20261017-lane-engagement,
+branchwork/lane-engagement-20261017. Prior PR64–66/public933adc6/realpro8requests5games
+completion reused; PR66 postmain3 checks SUCCESS with reused product tests. New contract
+lane-engagement-v1, additive result +optional future comparison state, exact two duos only.
+All advantageUNKNOWN until direct evidence. User proposal notUSER/REVIEWED/AUTO. Preference
+never changes advantage; conditionalactions are hypotheses, allin unsupported. Type/period/
+keyspent/firsthit/means/followup/space/level-scope connected to conservative wave gate while
+original wave inputs preserved. Purchase≠6; R availability independent, unknowns not observed.
+Review fixes and new source/questions/RED/green/browser retained in lane-engagement/report.md.
+No provider/video/paidcalls; existing cohort/hold/source/LCU/manual/launcher untouched.
+FinalremoteCI/Pages not preclaimed. CoachingN0/30secunmeasured/Windowsblocked remain.
+
+---
+
 된 것: 웨이브 목표·처리·응징·이득 전환·대안이 같은 카드와 라인 도식·미니맵으로 연결됐습니다.
 된 것: Riot ID 검색·대시보드·계정 없이10픽 준비가 공개 PC·모바일 웹에서 작동합니다.
 자료: 확인된 Faker 계정의 실제 솔로랭크5경기·티어·LP를8회 요청으로 조회해 프로 참고로 표시했습니다.

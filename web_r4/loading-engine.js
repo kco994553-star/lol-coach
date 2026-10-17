@@ -1,8 +1,8 @@
 /* Shared PC/mobile pre-game analysis. Source facts and tactical hypotheses differ. */
 (function(root,factory){
-  if(typeof module==='object'&&module.exports)module.exports=factory(require('./directions-engine.js'),require('./loading-exploration.js'),require('./loading-wave.js'));
-  else root.LoadingStrategy=factory(root.DirectionEngine,root.LoadingExploration,root.LoadingWave);
-})(typeof globalThis!=='undefined'?globalThis:this,function(DirectionEngine,LoadingExploration,LoadingWave){
+  if(typeof module==='object'&&module.exports)module.exports=factory(require('./directions-engine.js'),require('./loading-exploration.js'),require('./loading-wave.js'),require('./loading-engagement.js'));
+  else root.LoadingStrategy=factory(root.DirectionEngine,root.LoadingExploration,root.LoadingWave,root.LoadingEngagement);
+})(typeof globalThis!=='undefined'?globalThis:this,function(DirectionEngine,LoadingExploration,LoadingWave,LoadingEngagement){
   'use strict';
   const POSITIONS=['TOP','JUNGLE','MID','BOTTOM','SUPPORT'];
   const POSITION_NAMES={TOP:'탑',JUNGLE:'정글',MID:'미드',BOTTOM:'바텀',SUPPORT:'서포터'};
@@ -280,6 +280,7 @@
     const result={schema_version:'lol-coach-loading-report-v3',input,summary,composition:{allies,enemies},roles,contexts,gameplan,lane,teamfight,scenarios:scenarioLinks(input,catalog,contexts),evidence};
     result.exploration=LoadingExploration.evaluate(result,catalog,LoadingExploration.defaultState());
     result.wave=LoadingWave.evaluate(result,catalog,LoadingWave.defaultState(),result.exploration);
+    result.engagement=LoadingEngagement.evaluate(result,catalog,LoadingEngagement.defaultState());
     return result;
   }
   return {resolveChampion,exampleInput,fromDraft,analyze};
