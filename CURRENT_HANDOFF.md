@@ -1,3 +1,14 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261017-directions`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `work/directions-prototype-20261017`
+- authority: USER_SITUATIONAL_MINIMAP_PROTOTYPE_AND_MOBILE_WEB_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `15e0e21a53d46e1b9368b93e6ea0963faf767440`
+- detail: PR50 normally merged exacttestedtree a1902e95; await postmain required3jobs then freepublic artifactdeployment. Provider calls0, VIDEO3/3 and allhistoricalevidence unchanged.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261017-directions`
 - status: `RUNNING`
