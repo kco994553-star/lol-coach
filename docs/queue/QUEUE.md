@@ -1,3 +1,9 @@
+# Current decorative art refresh
+- READY: requiredCI→normalPR→postmainCI→Pages→actualHTTPS PC/mobile, source/asset metadata preserved. No unrelated coaching or provider work.
+- Prior shared design/public workflow and tactical sources reused; old labels/source records preserved historically, user-visible labels removed by latest instruction.
+
+---
+
 # Latest — shared visual system published
 - DONE: 공통디자인·메뉴/상태·세션공식hero/AI장식카드, PR72/73 제품84003a4, Pages9644721/run39032180568, 실제HTTPS47파일+PC/mobile 전체흐름 PASS. evidence/actual-evidence/shared-theme/publication/result.md.
 - READY: 결과/Handoff 전용 PR, 기존필수3의 source-bound 증거재사용 확인 후 병합·원격SHA 확인. 제품·Pages 재게시 없음.

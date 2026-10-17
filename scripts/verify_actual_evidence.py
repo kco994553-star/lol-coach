@@ -23,6 +23,8 @@ MODIFIED={'coach_v1/pc_coach.py','.github/workflows/private-mvp-ci.yml',
     'web_r4/pc.js','web_r4/pregame.js','web_r4/pregame.html','web_r4/official_reference.js',
     'web_r4/review_queue.js','web_r4/review_queue.html'}
 CURRENT=MODIFIED|{
+    'contracts/art-refresh-v1.md','config/art_refresh_assets.json',
+    *{'web_r4/home-assets/'+p for p in ('AhriSkin27.jpg','LuxSkin7.jpg','Moonlit.webp','strategy-objectives.webp')},
     'contracts/shared-web-theme-v1.md','config/shared_theme_assets.json','web_r4/coach-theme.css','web_r4/coach-shell.js','web_r4/hero-art.json','web_r4/home-assets/strategy-panels.webp',
     'contracts/home-design-v1.md','config/home_design_assets.json',*{'web_r4/home-assets/'+p for p in ('Ahri.jpg','Caitlyn.jpg','lane.jpg','fight.jpg')},
     'contracts/exchange-preference-v1.md','web_r4/loading-exchange.js','web_r4/loading-exchange-view.js','tests_pregame/test_exchange_preference.py',

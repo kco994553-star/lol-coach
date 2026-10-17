@@ -56,7 +56,8 @@
   $('hero-cycle').addEventListener('click',()=>{if(heroes.length>1)showHero((heroIndex+1)%heroes.length);});
   fetch('./hero-art.json',{credentials:'same-origin',redirect:'error'}).then(r=>{if(!r.ok)throw Error();return r.json();}).then(data=>{
     if(data.format!=='lol-coach-hero-art-v1'||!Array.isArray(data.assets)||!data.assets.length)throw Error();
-    const safe=data.assets.every(h=>['Ahri','Caitlyn'].includes(h.id)&&h.src==='./home-assets/'+h.id+'.jpg'&&typeof h.name==='string'&&h.crop&&['desktop','mobile'].every(mode=>Array.isArray(h.crop[mode])&&h.crop[mode].length===2&&h.crop[mode].every(v=>typeof v==='number'&&Number.isFinite(v)&&v>=0&&v<=100)));
+    const heroSources={Ahri:'Ahri.jpg',Caitlyn:'Caitlyn.jpg',AhriSkin27:'AhriSkin27.jpg',LuxSkin7:'LuxSkin7.jpg',Moonlit:'Moonlit.webp'};
+    const safe=data.assets.every(h=>Object.hasOwn(heroSources,h.id)&&h.src==='./home-assets/'+heroSources[h.id]&&typeof h.name==='string'&&h.crop&&['desktop','mobile'].every(mode=>Array.isArray(h.crop[mode])&&h.crop[mode].length===2&&h.crop[mode].every(v=>typeof v==='number'&&Number.isFinite(v)&&v>=0&&v<=100)));
     if(!safe||new Set(data.assets.map(h=>h.id)).size!==data.assets.length)throw Error();heroes=data.assets;let saved;try{saved=sessionStorage.getItem('lol-coach-hero-v1');}catch(_){}const i=heroes.findIndex(h=>h.id===saved);showHero(i>=0?i:Math.floor(Math.random()*heroes.length));$('hero-cycle').disabled=heroes.length<2;
   }).catch(()=>{$('hero-art').hidden=true;$('hero-cycle').disabled=true;$('hero-name').textContent='LoL Coach';heroStatus('EMPTY','일러스트 목록 연결 불가 · 검색과 준비는 가능합니다.');});
   if(local){$('review-local').hidden=false;$('review-note').textContent='PC의 인증된 복기 화면에서 경기 종료·실제 자료를 확인한 뒤 분석합니다.';}

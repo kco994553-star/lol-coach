@@ -303,11 +303,12 @@ class PregameHandler(Handler):
         # Public, manual learning examples only. No account/live-game adapter or
         # private workbench export is reachable from this explicit asset list.
         learning_assets={
-            **{'/home-assets/'+p:('home-assets/'+p,'image/jpeg') for p in ('Ahri.jpg','Caitlyn.jpg','lane.jpg','fight.jpg')},
+            **{'/home-assets/'+p:('home-assets/'+p,'image/jpeg') for p in ('Ahri.jpg','Caitlyn.jpg','AhriSkin27.jpg','LuxSkin7.jpg','lane.jpg','fight.jpg')},
             '/coach-theme.css':('coach-theme.css','text/css; charset=utf-8'),
             '/coach-shell.js':('coach-shell.js','text/javascript; charset=utf-8'),
             '/hero-art.json':('hero-art.json','application/json; charset=utf-8'),
             '/home-assets/strategy-panels.webp':('home-assets/strategy-panels.webp','image/webp'),
+            **{'/home-assets/'+p:('home-assets/'+p,'image/webp') for p in ('Moonlit.webp','strategy-objectives.webp')},
             '/dashboard.html':('dashboard.html','text/html; charset=utf-8'),
             '/dashboard.js':('dashboard.js','text/javascript; charset=utf-8'),
             '/dashboard.css':('dashboard.css','text/css; charset=utf-8'),
