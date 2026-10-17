@@ -1,3 +1,14 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261017-loading-context`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `work/skill-display-20261017`
+- authority: USER_SKILL_DISPLAY_FORMAT + inherited approved publication
+- intake_main: `75a4543c23b1f06f215986ab8ca4036ac6d199b7`
+- detail: PR56 head cba9170bf811bbe659dd578e46a041dbe107d0a5 published through existing GitHub app; remote tree 050980c5 equals tested local tree. Required source-bound CI pending; no provider/game/video/asset/paid calls. CLI401 preserved separately, no gate bypass.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261017-loading-context`
 - status: `RUNNING`
