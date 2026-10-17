@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-loading-strategy`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-results-20261017`
+- authority: USER_LOADING_STRATEGY_MVP_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `ffe52ef624bd9d96691053cc0a614dea9253ed09`
+- detail: Results PR53 mainb9cb5ed postmerge all3SUCCESS; exact logs confirm source seal and unchanged tests/browsers reused. Final local/remote receipt checkpoint, then parked only on next evidence/Windows external gates.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261017-loading-strategy`
 - status: `CI_PENDING`
