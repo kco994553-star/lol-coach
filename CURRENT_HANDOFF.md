@@ -1,3 +1,12 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261017-loading-interactive`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `work/loading-interactive-20261017`
+- detail: PR60 headc5bd15d9f3db2107aa49e6b2c9a799f1b79b2946 tree1a53dd42692a66677cdc1629f573f59bb61a629f matches locally checked worktree.45 affected checks, loading075737 PC/mobile touch+keyboard/map/zoom/why/gates/staleinput and directions075814 pass. Separate review2findings fixed RED→GREEN. Required3/exactsource merge gate/postmain/Pages next. No provider calls or grades upgraded. Current UIcompare scoped exactduoLv2; otherrows/readiness clearlyunsupported/unknown.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261017-loading-interactive`
 - status: `RUNNING`
