@@ -158,3 +158,18 @@ evidence-questions.json의질문은L1수급/거리·L2속박후덫조건·L3~5�
 요약의 마지막 조건/행동 문구 수정은 summary-review.md에 별도 검토합니다. 초기 개선 스냅샷 after-initial.json/report-initial.md를 보존했습니다.
 
 원본 semantic-red.log의 Node diff 출력에 공백만 있는 줄이 있어 최초 커밋 전 whitespace 검사가 멈췄고 PR 생성도 커밋 부재로 실패했다. 코드·문서는 검사 통과, 실패 stdout 원문은 수정하지 않고 보존했다. 실제 PR/CI는 이후 성공 영수증으로 구분한다.
+
+
+## 실제 게시 결과 — 위 게시 전 게이트 기록의 후속
+
+PR54 정상병합 mainf411f624dd62f96ad2f825c8e8626bf37419404b, 필수3검사와 병합후3검사 모두SUCCESS. 정확한checkout/sourcebinding/변경27검사/실제context-browser를로그로확인했고 기존무관브라우저는재사용했다.
+
+기존Pagesartifactcf3ee5beb9ab13cfcfd94362feadc31ae5b4d397, actualrun39006070054 SUCCESS. 공개25파일/root/build-info/.nojekyll SHA일치. 실제HTTPS390px에서 수동10픽→새표/대응/대안→먼탑변경시라인불변→원딜미확인시노틸유지→다른조합/기존장면/지도번호/200%확대/status를확인했다. JS/HTTP오류0·공개PC요청0·TLS검증유지.
+
+[웹열기](https://kco994553-star.github.io/lol-coach/) · [PR54](https://github.com/kco994553-star/lol-coach/pull/54). JSON근거는 publication/result.json, deployment.json, public-browser.json, ci-pr54.json, ci-main-pr54.json. 현재기록PR자체의 미래CI/병합을예언하지않으며 최종공통claim에서확인한다.
+
+![실제공개수정후모바일요약](publication/public-mobile-summary.png)
+![실제공개여섯구간표](publication/public-mobile-lane.png)
+![실제공개지도확대](publication/public-mobile-map.png)
+
+실제코칭N0/정확도null/전문가발언채택0/실제Windows BLOCKED_EXTERNAL 유지. 현재문맥수정READY작업은완료, 다음P0는보관질문의새근거와독립평가로기존영상한도/진단순서·외부근거게이트를따른다.

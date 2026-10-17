@@ -1,3 +1,62 @@
+된 것: 공개10픽웹에서 라인전·정글개입·운영·한타의 관련 인물과 선정 이유를 구분합니다.
+된 것: 케이틀린·럭스 대 카이사·노틸러스의 여섯 구간에 가정·행동·상대 대응·대안·중단 조건을 연결했습니다.
+확인: PR54 필수3개·병합후3개·Pages배포 성공, 공개25파일 해시와 실제390px 모바일 반례가 통과했습니다.
+미확인: 매치업 우열·피해량·최적구매·실전코칭 N=0·실제Windows 연결은 검증으로 올리지 않았습니다.
+유지: 조언7/AUTO30/HOLD20/USER0/Frozen350·원문/보류/실패·기존10픽흐름/6장면/Windows·영상3/3을 보존합니다.
+
+# Context/duo repair actually published — 2026-10-17
+
+Open https://kco994553-star.github.io/lol-coach/ → same10picks+ownCaitlynBOTTOM → summary
+→6lane milestones/rolecomparison/contextualpartners/threats/maps. No economy input required.
+Exactbefore/aftertext andfullsixrowtable/sourcequestions/screens: evidence/actual-evidence/
+loading-context/report.md, before.json, after.json, evidence-questions.json, counterexamples.json.
+
+ImplementationPR54 headb79cee30e275c8990c7fb562fb8aafed3eceb2f3, testedmerge55b63a49e6661602fc1ac9c2a29c036b9d7062bf,
+mainf411f624dd62f96ad2f825c8e8626bf37419404b share treed5373755b82f68ec775b02725bb8cda55a775222.
+Required39005901283/39005901299 and postmain39005976357/39005976359 all3SUCCESS. Exactlogs
+verifycheckout/sourcebinding/27affectedchecks andactualcontext-browser; oldunaffected
+resource/directionsbrowsers reused. Initial rawREDstdout whitespace blockedcommit and
+precommitPRattemptfailed; exactlogs preserved, subsequentactualPR/merge success distinct.
+
+ExistingPages nonforceCAS0d8fdfa→cf3ee5beb9ab13cfcfd94362feadc31ae5b4d397, nativeactual
+run39006070054 SUCCESS and latestbuildsameartifact built. Public25files/root/buildinfo/
+.nojekyll match. ActualHTTPS390px manual10pick→new6rows/replies/alternatives→distantTOP
+change preserveslane→unknowncarry retainsknownNaut→compositionchange/legacy/mapsteps/
+200%zoom/status PASS, JS/HTTP0, localPCrequests0, TLSverificationretained. No provider/
+game/video/asset/paidcalls this task. Receipts/screens in loading-context/publication/.
+
+Rootfix: global partnerstring no longer used as lanemate; candidatefirst2/weightedties
+removed. Lane binds declaredpeer/opponents, jungle separateNOT_OBSERVED futurecondition,
+operations/fight select functional candidates separately withreasons. Deterministicdisplay
+order is not importance. KnownSUP survivesmissingcarry;exactenemyrolesgate specializedrowset.
+Caitlynrecallmap binds lanepeer only; postlanemaps use conditionaloperationsactors. No
+actualarrival/location or hiddenenemyinference. Base/proposedrole separated; insufficient
+control keepsbase and removes concreteCC→trapfollow from actualaction, not justmetadata.
+
+Original865descriptionfacts/353cohorts/6scenes preserved byprojectionhash. Five bounded
+retainedtooltip/itemfacts added separately, patch/URL/hash/locatorbound; no template damage/
+range/cooldown computation or optimalitem inference. User-sourcequeues/grades/history
+unchanged. Fresh source+implementation review fixed3P2; lastsummarywording separate
+reviewbinds engine2041017e. AI checks/probes/browser render are not expert or realplayproof.
+RealcoachingN0/accuracynull; actualWindowsLCU BLOCKED_EXTERNAL; in-gamepolicy notestablished.
+
+This branchwork/loading-context-results-20261017 records actualPR54/publicationonly;
+no functional/catalog/sourceasset/workflow/provider change. Completedfunctional/browsers
+reused. Its ownfutureCI/main is notpredicted; commonclaim records finalreceipt. Shared
+tokenmain-20261017-loading-context, intakef411f624. No conflictingwriter.
+
+NextP0 sourceevidence: sixconcretequestions on L1wave/spacing, L2trapfailure, L3-5escape/
+cover, L6Plasma/trackingCC, actualfirstpurchase, core/evolution-dependentplanchange. Prefer
+registeredBOTTOM/SUPPORT explanation/subtitles (땅우양/정뚱땡/이브 etc), no currentlyadopted
+relevantlecturesegment. Unverified usernamedidentities/segments staypending; POV notQ19.
+Oct17KST VIDEO3/3, no extraTEXT/VIDEO/Riot/paidcall; existingOct18③→separatereview/gated
+publish→④ thennormal1/day/sharedledger/full-durationcharge/nounchangedretry preserved.
+Originalschedulers unchanged; do not callprovider to prove scheduler. Independentgenuine
+predecision/userunderstanding/realplay evidence absent. No userfullreview/collection burden,
+no23rewriteexpansion; Windowslauncher/manualfallback and all oldstates preserved.
+
+---
+
 된 것: 라인전·정글개입·운영·한타의 연결 대상을 분리하고 입력 순서에 따른 강조 변화를 수정했습니다.
 된 것: 케이틀린·럭스 대 카이사·노틸러스의 여섯 구간을 조건·행동·상대 대응·대안·중단 조건으로 구체화했습니다.
 확인: 문맥 반례·보관 원문 검토·실제 PC/모바일 브라우저는 통과했고 필수CI/게시 결과는 별도게이트입니다.
