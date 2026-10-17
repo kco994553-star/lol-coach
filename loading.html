@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#101820">
+  <meta name="description" content="아군과 적군 10개 픽으로 경기 전 조합, 라인전, 한타에서 기억할 조건을 살펴보세요.">
+  <title>로딩 중, 이번 판의 방향 · LoL Coach</title>
+  <link rel="icon" href="./pregame-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./loading.css">
+  <script src="./directions-engine.js" defer></script>
+  <script src="./loading-exploration.js" defer></script>
+  <script src="./loading-wave.js" defer></script>
+  <script src="./loading-engine.js" defer></script>
+  <script src="./skill-data.js" defer></script>
+  <script src="./skill-display.js" defer></script>
+  <script src="./loading-map.js" defer></script>
+  <script src="./loading-wave-view.js" defer></script>
+  <script src="./loading-interactive.js" defer></script>
+  <script src="./loading.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#loading-inputs">픽 입력으로 바로 가기</a>
+  <header class="site-header">
+    <a class="brand" href="./index.html" aria-label="LoL Coach 홈"><span class="brand-icon" aria-hidden="true">L↗</span><span>LoL <b>Coach</b><small>생각하고, 다음 움직임</small></span></a>
+    <nav aria-label="주요 메뉴"><a href="./loading.html" aria-current="page">로딩 전략</a><a href="./directions.html">상황 연습</a><a href="./status.html">작업 상태 ↗</a></nav>
+  </header>
+  <main id="loading-app">
+    <section class="hero" aria-labelledby="page-title">
+      <div><p class="eyebrow"><span aria-hidden="true"></span> 경기 시작 전, 방향부터</p><h1 id="page-title">10개의 픽.<br>이번 판의 방향.</h1><p class="hero-copy">우리 조합이 원하는 싸움과 내가 지킬 한 가지.<br>픽을 넣고, 로딩 중 30초만 읽어보세요.</p></div>
+      <div class="hero-aside"><span class="badge hypothesis">설계 가설 · 미검증</span><p>조합 → 내 역할 → 다음 행동</p><small>공식 기술 설명을 바탕으로 조건을 연결합니다.</small></div>
+    </section>
+    <p id="loading-message" class="message" role="status" aria-live="polite">챔피언 자료를 불러오는 중입니다…</p>
+    <section id="loading-inputs" aria-labelledby="input-title">
+      <details id="input-panel" class="panel input-panel" open>
+        <summary><span><span class="section-number">01</span><strong id="input-title">이번 판의 픽 입력</strong><small id="input-state">아군 5명 · 적군 5명</small></span><span class="details-caret" aria-hidden="true">⌄</span></summary>
+        <form id="loading-form" autocomplete="off">
+          <div class="input-toolbar"><p>한국어·영어 이름 검색 <span class="muted">/ 포지션을 모르면 미확인</span></p><div class="example-buttons"><span>예시로 시작</span><button id="example-0" type="button" disabled>조합 예시 1</button><button id="example-1" type="button" disabled>조합 예시 2</button><button id="pc-import" type="button" hidden>PC 픽 가져오기</button></div></div>
+          <datalist id="champion-names"></datalist>
+          <div class="team-inputs"><fieldset class="team-input team-ally"><legend><span class="team-dot" aria-hidden="true"></span>우리 팀 <span>아군 5명</span></legend><div id="allied-picks" class="pick-list"></div></fieldset><fieldset class="team-input team-enemy"><legend><span class="team-dot" aria-hidden="true"></span>상대 팀 <span>적군 5명</span></legend><div id="enemy-picks" class="pick-list"></div></fieldset></div>
+          <div class="identity-fields"><label>내 챔피언 <span class="required">필수</span><select id="own-champion" required disabled><option value="">아군 픽에서 선택</option></select></label><label>내 포지션 <span class="required">필수</span><select id="own-position" required><option value="">선택하세요</option><option value="TOP">탑</option><option value="JUNGLE">정글</option><option value="MID">미드</option><option value="BOTTOM">바텀</option><option value="SUPPORT">서포터</option></select></label><label>우리 진영<select id="side"><option value="BLUE">블루 · 왼쪽 아래 본진</option><option value="RED">레드 · 오른쪽 위 본진</option></select></label></div>
+          <details class="optional-settings"><summary>선택 설정 <span>라인 상대 직접 지정 · 참고 패치</span><span aria-hidden="true">＋</span></summary><div class="optional-fields"><label>라인 상대 판단<select id="opponent-mode"><option value="ASSIGNED">입력한 포지션 기준</option><option value="UNKNOWN">상대 미확인 유지</option><option value="MANUAL">적군 중 직접 지정</option></select></label><label>직접 지정할 상대<select id="lane-opponent" disabled><option value="">적군 픽에서 선택</option></select></label><label>참고 패치<input id="patch" type="text" inputmode="decimal" maxlength="16" placeholder="미확인 · 예: 16.20"></label></div><p class="field-help">포지션 미확인은 대등이나 우세를 뜻하지 않습니다. 정글은 고정 라인 상대를 가정하지 않습니다.</p></details>
+          <div class="submit-row"><p>입력은 이 화면에서만 사용합니다.<br><span>현재 체력·기술 사용 가능 여부는 별도 확인이 필요합니다.</span></p><button id="analyze" class="primary-button" type="submit" disabled>이번 판 방향 보기 <span aria-hidden="true">↗</span></button></div>
+        </form>
+      </details>
+    </section>
+
+    <section id="loading-results" hidden aria-label="이번 판 분석 결과">
+      <div class="results-heading"><div><p class="eyebrow">로딩 중, 이것부터</p><h2>이번 판은 이렇게 생각해요.</h2></div><div class="report-badges"><span class="badge hypothesis">설계 가설 · 미검증</span><span id="report-patch" class="badge"></span></div></div>
+      <div id="report-teams" class="report-teams" aria-label="분석에 사용한 10개 픽"></div>
+      <section id="loading-summary" class="panel summary-panel" aria-labelledby="summary-title" tabindex="-1">
+        <div class="summary-heading"><h3 id="summary-title">30초, 이번 판의 핵심</h3><span>조건이 바뀌면 판단도 달라집니다</span></div>
+        <div class="plan-pair"><article class="our-plan"><p class="summary-label"><span class="team-dot" aria-hidden="true"></span>우리의 승리 방식</p><p id="our-plan"></p></article><article class="enemy-plan"><p class="summary-label"><span class="team-dot" aria-hidden="true"></span>상대가 원하는 싸움</p><p id="enemy-plan"></p></article></div>
+        <article class="collision-row"><span class="summary-index" aria-hidden="true">↔</span><div><h4>두 계획이 부딪히는 지점</h4><p id="collision"></p></div></article>
+        <div class="summary-keys"><article><span class="summary-index" aria-hidden="true">나</span><h4>내 역할</h4><p id="my-role"></p></article><article><span class="summary-index" aria-hidden="true">선</span><h4>라인전 핵심</h4><p id="lane-key"></p></article><article><span class="summary-index" aria-hidden="true">합</span><h4>한타 핵심</h4><p id="fight-key"></p></article></div>
+        <article class="remember-block"><h4>입장 전, 이것만 기억</h4><ol id="remember"></ol></article>
+      </section>
+      <aside class="uncertainty-strip" aria-labelledby="uncertainty-title"><span class="notice-icon" aria-hidden="true">!</span><div><h3 id="uncertainty-title">아직 확인해야 할 것</h3><ul id="uncertainties"></ul></div></aside>
+      <section id="interactive-flow" class="panel interactive-flow" aria-label="가상 조건과 전략 선택"></section>
+      <nav class="detail-nav" aria-label="분석 자세히 보기"><a href="#loading-composition">조합</a><a href="#loading-gameplan">운영</a><a href="#loading-lane">라인전</a><a href="#teamfight">한타</a><a href="#loading-scenarios">움직임 예시</a><a href="#loading-evidence">근거</a></nav>
+      <section id="loading-composition" class="detail-section" aria-labelledby="composition-title"><div class="section-heading"><span class="section-number">02</span><div><p class="eyebrow">어떤 조건에서 힘을 낼까</p><h2 id="composition-title">조합의 강점과 빈틈</h2></div></div><div id="composition-content" class="two-column"></div></section>
+      <section id="loading-gameplan" class="detail-section" aria-labelledby="gameplan-title"><div class="section-heading"><span class="section-number">03</span><div><p class="eyebrow">한 번의 싸움에서 다음 목표까지</p><h2 id="gameplan-title">경기 전체의 방향</h2></div></div><div id="gameplan-content" class="panel detail-content"></div></section>
+      <section id="loading-lane" class="detail-section" aria-labelledby="lane-title"><div class="section-heading"><span class="section-number">04</span><div><p class="eyebrow">레벨은 점검 시점, 기술 준비는 별도 확인</p><h2 id="lane-title">라인전, 여섯 번의 점검</h2></div><span id="lane-status" class="badge"></span></div><p id="lane-opponent-copy" class="section-description"></p><div class="lane-table-wrap"><table id="lane-table"><caption class="sr-only">시점별 판단, 이유, 행동과 판단이 바뀌는 조건</caption><thead><tr><th scope="col">시점</th><th scope="col">판단</th><th scope="col">이유</th><th scope="col">내 행동</th><th scope="col">달라지는 조건</th></tr></thead><tbody></tbody></table></div><div id="lane-context" class="panel detail-content"></div></section>
+      <section id="teamfight" class="detail-section" aria-labelledby="fight-title"><div class="section-heading"><span class="section-number">05</span><div><p class="eyebrow">실제 픽에서 찾는 연결과 위협</p><h2 id="fight-title">한타에서 내 자리는</h2></div></div><div id="fight-content" class="panel detail-content"></div></section>
+      <section id="loading-scenarios" class="detail-section" aria-labelledby="scenarios-title"><div class="section-heading"><span class="section-number">06</span><div><p class="eyebrow">조건을 갖춘 뒤 살펴볼 장면</p><h2 id="scenarios-title">지도와 함께 움직임 연습</h2></div></div><p class="section-description">지도의 시작점·목표·화살표는 설명용 예시입니다. 실제 챔피언 위치나 안전한 경로가 아닙니다.</p><div id="scenario-content"></div></section>
+      <section id="loading-evidence" class="detail-section" aria-labelledby="evidence-title"><div class="section-heading"><span class="section-number">07</span><div><p class="eyebrow">사실, 해석, 모르는 것 구분하기</p><h2 id="evidence-title">근거와 해석의 경계</h2></div></div><div id="evidence-content" class="panel detail-content"></div></section>
+    </section>
+    <footer class="site-footer"><p>LoL Coach · 경기 전 학습 / 경기 후 복기</p><a href="./directions.html">기존 6개 상황 연습 ↗</a><a href="./status.html">작업 상태와 현재 한계 ↗</a><p class="riot-disclaimer">LoL Coach는 Riot Games의 공식 서비스가 아니며 Riot Games의 견해를 반영하지 않습니다. Riot Games 및 관련 자산은 Riot Games, Inc.의 상표 또는 등록 상표입니다.</p></footer>
+  </main>
+  <dialog id="loading-map-dialog" aria-labelledby="zoom-title"><div class="dialog-heading"><div><p class="eyebrow">전술 설명용 예시</p><h2 id="zoom-title">움직임 지도 크게 보기</h2></div><button id="map-close" class="icon-button" type="button" aria-label="지도 닫기">×</button></div><div id="zoom-step-controls"></div><p id="zoom-selected-action" class="selected-action" role="status" aria-live="polite"></p><label class="zoom-label" for="map-scale">지도 확대 <output id="map-scale-value" for="map-scale">100%</output></label><input id="map-scale" type="range" min="100" max="250" value="100" step="25"><div id="map-zoom-stage" class="map-zoom-stage" data-zoom="100" tabindex="0" aria-label="확대 지도 스크롤 영역"><div id="zoom-map"></div></div><p class="map-note">내 시작 예시는 금색 테두리, 목표는 점선입니다. 번호는 같은 번호의 행동과 연결됩니다. 적 위치는 표시하지 않습니다.</p></dialog>
+</body>
+</html>
