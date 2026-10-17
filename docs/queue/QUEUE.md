@@ -1,3 +1,10 @@
+# Latest — shared visual system published
+- DONE: 공통디자인·메뉴/상태·세션공식hero/AI장식카드, PR72/73 제품84003a4, Pages9644721/run39032180568, 실제HTTPS47파일+PC/mobile 전체흐름 PASS. evidence/actual-evidence/shared-theme/publication/result.md.
+- READY: 결과/Handoff 전용 PR, 기존필수3의 source-bound 증거재사용 확인 후 병합·원격SHA 확인. 제품·Pages 재게시 없음.
+- EXTERNAL/SEPARATE: 기존 근거질문3·허용일진단·개인API안전배포·Windows 실제연결. N0/30초미측정/영상10월17일3/3·원문·보류·실패 보존.
+
+---
+
 # Current shared theme followup
 - READY: bounded mobile hero crop after final visual review; do not publish superseded prepared PR72 export. Reuse PR72 main gates and protected evidence; run affected followup required gates, publish latest source then real PC/mobile proof.
 - Preserve independent expert/video questions and10/17video3/3, no extra external requests.
