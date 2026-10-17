@@ -1,3 +1,13 @@
+# Shared visual system — 실제 공개 검증 완료 2026-10-17
+- PR72/73 병합 제품 main84003a4efc9fcb9de180bfa5c44f16e668bf5c7c, artifact96447216db5903508643eb79220d34c74e3bf702. feature+postmain 필수3 모두 SUCCESS. Native Pages39032180568 build/report/deploy SUCCESS.
+- 실제 HTTPS manifest47파일·root·build-info·.nojekyll 해시 일치. PC1440/mobile390 실제 홈/메뉴/세션공식hero/실패/수동retry/게스트대시보드→10픽→전략/지도확대·3카드 각영역 이동 PASS; pageerror0/HTTPerror0/provider0.
+- 공통CSS토큰·컨트롤상태·rem/간격·메뉴/아이콘·세션hero2종·AI장식카드. 모바일face/menu 겹침은 좁은 자르기 수정으로 해결. 입력/초점/스크롤 보존. 이전 공식 지도/초상화/스킬키/웨이브/교전/리스크/Windows/수동경로 보존.
+- 증거/화면/시안 같은크기비교: evidence/actual-evidence/shared-theme/publication/result.md. 중간 prepared export는 미실행으로 보존. 프로5경기JSON 이전공개바이트동일.
+- 개인계정API 공개미연결/개인화분석전·30초이해미측정·실전N0·WindowsBLOCKED_EXTERNAL. AUTO30/HOLD20/USER0/조언7/Frozen350/원문·보류·실패/10월17일영상3/3 유지. Gemini/경기추가0, 허용된 AI장식생성1회, 유료전환0.
+- 결과/Handoff 전용 게시 후 source변경 없는 검사증거 재사용. 남은 독립근거질문/진단은 기존허용시점·원장 그대로; 전수검토/자료수집 사용자전가 없음.
+
+---
+
 # Shared theme mobile crop followup — 2026-10-17
 - PR72 merged main1b007515; feature/post-main mandatory3 checks all success. Prepared export e646312d was NOT published.
 - Actual mobile visual review identified official Caitlyn focal face overlapping top menu/pro CTA. Narrow presentation fix: art starts below shared60px header,300px height (260px narrow), dedicated mobile crop100%; form/primary actions unchanged. Source-bound PC/mobile focused browser passed; original focused screenshots/logs retained, new crop-browser separate.
