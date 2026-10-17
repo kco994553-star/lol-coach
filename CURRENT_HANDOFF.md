@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-loading-strategy`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-strategy-mvp-20261017`
+- authority: USER_LOADING_STRATEGY_MVP_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `00b40926e72a198a6143a8b6ffae97dadfac50bf`
+- detail: Implement actual10pick→loadingstrategy→lane/teamfight/details over existingapp/6scenes; commoncontract Mainowned, noapprovalrepeats, changedchecks+mandatoryCI/gatedpublish. PreserveGeminiVIDEO3/3, no provider/game/paidcalls.
+
+---
+
 # Latest common execution claim — PARKED_EXTERNAL
 - run_token: `main-20261017-directions`
 - status: `PARKED_EXTERNAL`
