@@ -23,6 +23,7 @@ MODIFIED={'coach_v1/pc_coach.py','.github/workflows/private-mvp-ci.yml',
     'web_r4/pc.js','web_r4/pregame.js','web_r4/pregame.html','web_r4/official_reference.js',
     'web_r4/review_queue.js','web_r4/review_queue.html'}
 CURRENT=MODIFIED|{
+    'contracts/shared-web-theme-v1.md','config/shared_theme_assets.json','web_r4/coach-theme.css','web_r4/coach-shell.js','web_r4/hero-art.json','web_r4/home-assets/strategy-panels.webp',
     'contracts/home-design-v1.md','config/home_design_assets.json',*{'web_r4/home-assets/'+p for p in ('Ahri.jpg','Caitlyn.jpg','lane.jpg','fight.jpg')},
     'contracts/exchange-preference-v1.md','web_r4/loading-exchange.js','web_r4/loading-exchange-view.js','tests_pregame/test_exchange_preference.py',
     'contracts/lane-engagement-v1.md','web_r4/loading-engagement.js','web_r4/loading-engagement-view.js','tests_pregame/test_lane_engagement.py',
@@ -167,9 +168,9 @@ def selected_tests():
     groups={
         'tests_pregame.test_exchange_preference':{'contracts/exchange-preference-v1.md','web_r4/loading-exchange.js','web_r4/loading-exchange-view.js','web_r4/loading-engagement-view.js','web_r4/loading-interactive.js','web_r4/loading-engine.js','tests_pregame/test_exchange_preference.py'},
         'tests_pregame.test_lane_engagement':{'contracts/lane-engagement-v1.md','web_r4/loading-engagement.js','web_r4/loading-engagement-view.js','tests_pregame/test_lane_engagement.py','web_r4/loading-engine.js','web_r4/loading-interactive.js','web_r4/loading.html'},
-        'tests_pregame.test_account_dashboard':{'coach_v1/account_dashboard.py','scripts/refresh_verified_pro_dashboard.py','scripts/publish_verified_pro_dashboard.py','config/lck_verified_accounts.json','web_r4/dashboard.html','web_r4/dashboard.js','web_r4/dashboard.css','web_r4/pro-dashboard.json','contracts/account-dashboard-v1.md','tests_pregame/test_account_dashboard.py'},
+        'tests_pregame.test_account_dashboard':{'web_r4/hero-art.json','web_r4/coach-shell.js','web_r4/coach-theme.css','coach_v1/account_dashboard.py','scripts/refresh_verified_pro_dashboard.py','scripts/publish_verified_pro_dashboard.py','config/lck_verified_accounts.json','web_r4/dashboard.html','web_r4/dashboard.js','web_r4/dashboard.css','web_r4/pro-dashboard.json','contracts/account-dashboard-v1.md','tests_pregame/test_account_dashboard.py'},
         'tests_pregame.test_loading_wave':{'web_r4/loading-wave.js','web_r4/loading-wave-view.js','web_r4/loading-engine.js','web_r4/loading-interactive.js','web_r4/loading.html','contracts/loading-wave-v4.md','tests_pregame/test_loading_wave.py'},
-        'tests_pregame.test_loading_interactive':{'web_r4/loading-exploration.js','web_r4/loading-interactive.js','web_r4/loading-engine.js','web_r4/loading.js','web_r4/loading.html','web_r4/loading-map.js','contracts/loading-interactive-v3.md','tests_pregame/test_loading_interactive.py'},
+        'tests_pregame.test_loading_interactive':{'web_r4/coach-shell.js','web_r4/coach-theme.css','web_r4/loading-exploration.js','web_r4/loading-interactive.js','web_r4/loading-engine.js','web_r4/loading.js','web_r4/loading.html','web_r4/loading-map.js','contracts/loading-interactive-v3.md','tests_pregame/test_loading_interactive.py'},
         'tests_pregame.test_skill_display':SKILL_COMMON|SKILL_PC|{'web_r4/loading.js','web_r4/directions.js','web_r4/loading-map.js','web_r4/loading-data.json'},
         'tests_pregame.test_skill_pc_display':SKILL_COMMON|SKILL_PC,
         'tests_pregame.test_loading_context':{'web_r4/loading-engine.js','web_r4/loading-data.json','scripts/build_loading_catalog.py','contracts/loading-context-v2.md'},

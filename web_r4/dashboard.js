@@ -10,7 +10,7 @@
   const ratio=n=>typeof n==='number'&&Number.isFinite(n)?n.toFixed(1):'미확인';
   const node=(tag,text,cls)=>{const n=document.createElement(tag);if(text!=null)n.textContent=text;if(cls)n.className=cls;return n;};
   const statuses={GUEST:'계정 연결 없이 준비 중입니다. 기록은 미연결이며 10픽 전략은 바로 사용할 수 있습니다.',READY:'입력한 Riot ID는 아직 조회하지 않았습니다.',LOADING:'계정을 조회 중입니다…',INPUT_ERROR:'게임 이름#태그를 확인해 주세요.',REGION_UNSUPPORTED:'이 지역의 안전한 조회 경로는 준비 중입니다. 계정 없이 경기 전 준비는 가능합니다.',ACCOUNT_NOT_FOUND:'해당 Riot ID를 찾지 못했습니다. 이름·태그·지역을 확인해 주세요.',API_UNAVAILABLE:'계정 API에 연결할 수 없습니다. 계정 없이 경기 전 준비를 계속할 수 있습니다.',AUTH_REQUIRED:'PC 연결 인증이 필요합니다. 기존 PC 실행기로 연결하거나 계정 없이 준비하세요.',CONNECTED:'계정 기록을 불러왔습니다. 기록 조회는 계정 소유권 인증이나 코칭 평가가 아닙니다.'};
-  function status(code){$('account-status').dataset.state=code;$('account-status').textContent=statuses[code]||statuses.API_UNAVAILABLE;$('account-status').classList.toggle('error',!['GUEST','READY','LOADING','CONNECTED'].includes(code));}
+  function status(code){$('account-retry').hidden=code!=='API_UNAVAILABLE';$('account-status').dataset.state=code;$('account-status').textContent=statuses[code]||statuses.API_UNAVAILABLE;$('account-status').classList.toggle('error',!['GUEST','READY','LOADING','CONNECTED'].includes(code));}
   function invalidate(){generation++;controller?.abort();controller=null;$('account-submit').disabled=false;if(profile){profile=null;renderProfile(null);}status('READY');}
   function renderProfile(p){
     profile=p;$('data-mode').textContent=p?'조회한 계정 기록 · 소유권 미인증':'계정 미연결';$('profile-name').textContent=p?p.riot_id:'계정 연결 전';$('profile-sub').textContent=p?p.region+' · 마지막 조회 '+date(p.retrieved_at):'기록을 불러오면 이곳에 표시합니다.';
@@ -43,10 +43,22 @@
   function validProfile(p){return p&&p.format==='lol-coach-account-profile-v1'&&typeof p.riot_id==='string'&&Array.isArray(p.recent_matches)&&p.recent_matches.every(m=>m.queue_id===420)&&p.statistics?.queue_id===420&&Array.isArray(p.champions)&&typeof p.omitted_matches==='number';}
   $('riot-id').addEventListener('input',invalidate);$('region').addEventListener('change',invalidate);
   $('guest-entry').addEventListener('click',()=>{generation++;controller?.abort();$('account-submit').disabled=false;renderProfile(null);status('GUEST');$('dashboard').focus({preventScroll:true});$('dashboard').scrollIntoView();$('prepare-main').focus({preventScroll:true});});
-  const heroes=[{src:'./home-assets/Ahri.jpg',name:'아리 · Ahri'},{src:'./home-assets/Caitlyn.jpg',name:'케이틀린 · Caitlyn'}];let heroIndex=0;
-  $('hero-cycle').addEventListener('click',()=>{heroIndex=(heroIndex+1)%heroes.length;$('hero-art').src=heroes[heroIndex].src;$('hero-name').textContent=heroes[heroIndex].name;});
-  $('menu-toggle').addEventListener('click',()=>{const open=$('sidebar').classList.toggle('open');$('menu-toggle').setAttribute('aria-expanded',String(open));});
-  $('sidebar').querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{$('sidebar').classList.remove('open');$('menu-toggle').setAttribute('aria-expanded','false');}));
+  $('account-retry').addEventListener('click',()=>$('account-form').requestSubmit());
+  let heroes=[],heroIndex=-1,heroSerial=0;
+  const heroStatus=(state,text)=>{$('hero-status').dataset.state=state;$('hero-status').textContent=text;};
+  function showHero(index){
+    heroIndex=index;const h=heroes[index],serial=++heroSerial,img=$('hero-art');img.hidden=false;img.dataset.art=h.id;$('hero-name').textContent=h.name;heroStatus('LOADING','');
+    for(const [mode,keys] of [['desktop',['--hero-x','--hero-y']],['mobile',['--hero-mobile-x','--hero-mobile-y']]])h.crop[mode].forEach((v,i)=>img.style.setProperty(keys[i],v+'%'));
+    img.onload=()=>{if(serial===heroSerial)heroStatus('READY','');};img.onerror=()=>{if(serial===heroSerial){img.hidden=true;heroStatus('ERROR','이미지 연결 불가 · 검색과 준비는 계속할 수 있습니다.');}};
+    try{sessionStorage.setItem('lol-coach-hero-v1',h.id);}catch(_){}img.src=h.src;
+  }
+  $('hero-cycle').addEventListener('pointerdown',e=>{if(e.button===0&&$('account-form').contains(document.activeElement))e.preventDefault();});
+  $('hero-cycle').addEventListener('click',()=>{if(heroes.length>1)showHero((heroIndex+1)%heroes.length);});
+  fetch('./hero-art.json',{credentials:'same-origin',redirect:'error'}).then(r=>{if(!r.ok)throw Error();return r.json();}).then(data=>{
+    if(data.format!=='lol-coach-hero-art-v1'||!Array.isArray(data.assets)||!data.assets.length)throw Error();
+    const safe=data.assets.every(h=>['Ahri','Caitlyn'].includes(h.id)&&h.src==='./home-assets/'+h.id+'.jpg'&&typeof h.name==='string'&&h.crop&&['desktop','mobile'].every(mode=>Array.isArray(h.crop[mode])&&h.crop[mode].length===2&&h.crop[mode].every(v=>typeof v==='number'&&Number.isFinite(v)&&v>=0&&v<=100)));
+    if(!safe||new Set(data.assets.map(h=>h.id)).size!==data.assets.length)throw Error();heroes=data.assets;let saved;try{saved=sessionStorage.getItem('lol-coach-hero-v1');}catch(_){}const i=heroes.findIndex(h=>h.id===saved);showHero(i>=0?i:Math.floor(Math.random()*heroes.length));$('hero-cycle').disabled=heroes.length<2;
+  }).catch(()=>{$('hero-art').hidden=true;$('hero-cycle').disabled=true;$('hero-name').textContent='LoL Coach';heroStatus('EMPTY','일러스트 목록 연결 불가 · 검색과 준비는 가능합니다.');});
   if(local){$('review-local').hidden=false;$('review-note').textContent='PC의 인증된 복기 화면에서 경기 종료·실제 자료를 확인한 뒤 분석합니다.';}
   fetch('./pro-dashboard.json',{cache:'no-store',credentials:'same-origin',redirect:'error'}).then(r=>{if(!r.ok)throw Error();return r.json();}).then(data=>{
     const target=$('pro-records');target.replaceChildren();if(data.format!=='lol-coach-pro-dashboard-v1'||data.queue_id!==420||!Array.isArray(data.profiles))throw Error();

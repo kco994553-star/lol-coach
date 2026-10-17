@@ -8,7 +8,7 @@ from pathlib import Path
 import subprocess,sys,tempfile,threading
 
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
-SOURCES=['web_r4/directions.html','web_r4/directions.js','web_r4/directions.css',
+SOURCES=['web_r4/coach-theme.css','web_r4/coach-shell.js','web_r4/directions.html','web_r4/directions.js','web_r4/directions.css',
     'web_r4/skill-data.js','web_r4/skill-display.js',
     'web_r4/directions-engine.js','web_r4/directions-data.json','web_r4/status.html',
     'web_r4/directions-status.js','web_r4/directions-status.json','coach_v1/pregame_server.py',

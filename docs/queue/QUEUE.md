@@ -1,3 +1,30 @@
+진행: 시작·대시보드·10픽·전략 상세·연습·상태를 공통 네이비/보라색 토큰과 메뉴로 연결했습니다.
+동작: 세션별 공식 일러스트 선택, 입력/초점/스크롤 보존, 이미지·목록 실패와 API재시도 대안을 보강했습니다.
+이미지: 카드 AI가상장면을 명시했고 원본을 보존하며 WebP221KB로 최적화했습니다.
+보존: 기존 전술·근거·보류·교전/웨이브·지도·Windows/수동 경로·영상3/3·코칭N0를 유지합니다.
+다음: 영향 검증·필수CI·실제 공개 PC/mobile를 확인한 뒤 최종배포 증거를 남깁니다.
+
+# Shared web theme / interactive UX intake — 2026-10-17
+
+Fresh main9abd43195ba4bc664e6815c1367c63a78ce67726, branchwork/shared-web-theme-20261017.
+PR69/70/71 exact-source and postmain3 checks SUCCESS; actual prior public43file/HTTPS/Pages
+receipts reused. Lane-entry-only export was prepared but not published before new steering;
+new shared theme includes that routing change, avoiding an intermediate redundant deployment.
+Shared semantic color/type/spacing/radius tokens coach-theme.css; page files layout only,
+coach-shell.js one menu/icons for home/dashboard/loading/practice/status, proper selected
+hash/focus, skip link and mobile keyboard/touch. No engine/data/advice rewriting. Official
+hero-art catalog2, initial src-free, session random/cached visual ID, no other-hero preload,
+validated crop, input/focus/scroll invariance and image/empty fallback. API manual retry and
+honest public-unavailable/guest preserved; profile/pro visibility unchanged. New card AI
+triptych explicitly decorative, generated tool once with user authorization, originalPNG
+retained; WebP221432 from2517785 bytes, no Gemini/game/paid-plan changes. Official maps and
+portraits remain separate tactical examples. Contract shared-web-theme-v1 and style/source
+records in shared-theme. Current remote/public success still pending for final changed source.
+AUTO30/HOLD20/USER0/advice7/Frozen350/quotes/hold/failure/call ledgers unchanged,10/17video3/3,
+coachingN0/30secondunmeasured/WindowsBLOCKED_EXTERNAL/publicpersonalAPI+notesunconnected remain.
+
+---
+
 진행: 공개 확인 중 라인전 카드의 도착점을 웨이브 중심 영역으로 한정 수정합니다.
 이유: 기존 여섯 구간 전체 표보다 웨이브 목표·실행·교전 조건을 먼저 보도록 연결합니다.
 보존: 완료한 공개 디자인·43파일·실제HTTPS 증거는 이전 버전의 유효한 증거로 유지합니다.
