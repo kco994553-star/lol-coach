@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-directions`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/directions-prototype-20261017`
+- authority: USER_SITUATIONAL_MINIMAP_PROTOTYPE_AND_MOBILE_WEB_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `15e0e21a53d46e1b9368b93e6ea0963faf767440`
+- detail: PR50 required38997499760/772 and postmain38997627833/836 all3SUCCESS. Main0ec550d823936118f86487626467e3d01060de42 exacttestedtreea1902e95. Publish only explicitpublicartifactallowlist to free GitHubPages, then verify HTTPS/browser. No provider calls.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261017-directions`
 - status: `CI_PENDING`
