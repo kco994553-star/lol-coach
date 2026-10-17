@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#101a23">
+  <meta name="description" content="상황과 조건을 바꾸며 다음 움직임을 살펴보는 LoL 경기 전 학습·경기 후 복기 프로토타입입니다.">
+  <title>상황별 움직임 연습 · LoL Coach</title>
+  <link rel="stylesheet" href="./directions.css">
+  <script src="./directions-engine.js" defer></script>
+  <script src="./directions.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#workspace">상황 연습으로 바로 가기</a>
+  <header class="site-header">
+    <a class="brand" href="./index.html" aria-label="LoL Coach 홈"><span class="brand-icon" aria-hidden="true">L<span>↗</span></span><span>LoL <b>Coach</b><small>생각하고, 다음 움직임</small></span></a>
+    <nav aria-label="주요 메뉴"><a href="#workspace" aria-current="page">상황 연습</a><a href="./status.html">작업 상태 <span aria-hidden="true">↗</span></a></nav>
+  </header>
+
+  <main id="direction-app">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-copy"><p class="eyebrow"><span aria-hidden="true"></span> SITUATIONAL DIRECTIONS</p><h1 id="page-title">상황을 읽고,<br>다음 움직임을 그려보세요.</h1><p class="hero-description">같은 골드 상황이어도, 조건이 달라지면 선택이 달라집니다.<br class="desktop-break"> 예시 장면을 고르고 지도와 함께 판단의 이유를 살펴보세요.</p></div>
+      <div class="hero-aside"><span class="prototype-badge">DESIGN_HYPOTHESIS</span><p>경기 전에는 학습을,<br>경기 후에는 복기를.</p><span class="quiet">PC · 모바일 공통 학습 화면</span></div>
+    </section>
+
+    <div class="learning-notice"><span class="notice-icon" aria-hidden="true">i</span><p><strong>직접 입력하는 가상 상황입니다.</strong> 실제 경기 추적 없이 학습·복기만 제공합니다. 지도 위치와 전술은 검증되지 않은 설명용 예시입니다.</p></div>
+    <p id="app-message" class="app-message" role="status" aria-live="polite">학습 장면을 불러오고 있습니다…</p>
+
+    <section class="scene-section" aria-labelledby="scenes-title">
+      <div class="section-heading"><div><p class="eyebrow">START WITH A SCENE</p><h2 id="scenes-title">어떤 상황을 연습할까요?</h2></div><span class="section-note">6개 예시 · 조건에 따른 선택 비교</span></div>
+      <div id="scenes" class="scene-grid"></div>
+    </section>
+
+    <div id="workspace" class="workspace">
+      <aside class="input-column">
+        <details id="manual-settings" class="panel input-panel" open>
+          <summary><span><span class="panel-kicker">YOUR SCENARIO</span><strong>수동 조건 조정</strong></span><span class="summary-toggle" aria-hidden="true">⌄</span></summary>
+          <form id="scenario-form" autocomplete="off">
+            <fieldset class="form-section"><legend>01 <span>장면과 내 역할</span></legend>
+              <div id="phase" class="phase-tabs" role="tablist" aria-label="경기 단계"><button type="button" role="tab" data-phase="LANE" aria-selected="true">라인전</button><button type="button" role="tab" data-phase="POST_LANE" aria-selected="false">라인전 이후</button></div>
+              <label>연습할 판단<select id="decision" name="decision"></select></label>
+              <label>내 챔피언<select id="champion" name="champion"></select></label>
+              <div class="field-row"><label>내 포지션<select id="role" name="role"></select></label><label>아군 진영<select id="side" name="side"><option value="BLUE">블루 진영</option><option value="RED">레드 진영</option></select></label></div>
+              <label>사용 목적<select id="review-mode" name="review_mode"></select></label>
+            </fieldset>
+            <fieldset class="form-section"><legend>02 <span>포지션별 경제 상태</span></legend><p class="field-help">상대 같은 포지션과 비교한 수동 판단입니다. 모르면 ‘미확인’으로 두세요.</p><div id="economy-inputs" class="economy-inputs"></div></fieldset>
+            <fieldset class="form-section"><legend>03 <span>판단을 바꾸는 조건</span></legend><div id="condition-inputs"></div></fieldset>
+            <details class="optional-inputs"><summary>선택 입력 · 골드 수치와 참고 패치 <span aria-hidden="true">＋</span></summary><div class="optional-content">
+              <p class="field-help">각 수치는 의미가 다릅니다. 골드 차이가 교전 승리를 예측하지 않습니다.</p>
+              <label for="metric-total_earned_difference">총 획득 골드 차이<input id="metric-total_earned_difference" name="total_earned_difference" type="number" step="1" placeholder="미입력 · 상대와의 차이"></label>
+              <label for="metric-purchased_value_difference">구매한 아이템 가치 차이<input id="metric-purchased_value_difference" name="purchased_value_difference" type="number" step="1" placeholder="미입력 · 상대와의 차이"></label>
+              <label for="metric-current_gold">현재 보유 골드<input id="metric-current_gold" name="current_gold" type="number" step="1" min="0" placeholder="미입력 · 지금 사용 가능한 골드"></label>
+              <label for="observed-at">수치를 관찰한 시각<input id="observed-at" name="observed_at" type="text" maxlength="80" placeholder="예: 2026-10-17T02:30:00Z"></label>
+              <p class="field-help">시각을 비우면 수치는 기준 시각 미확인으로 표시됩니다.</p>
+              <label for="patch">참고 패치<input id="patch" name="patch" type="text" maxlength="40" placeholder="미확인"></label>
+            </div></details>
+            <p class="privacy-note"><span aria-hidden="true">◇</span> 입력은 이 화면에서만 사용합니다.<br>계정 연결 · 경기 수집 · 입력 저장 없음</p>
+          </form>
+        </details>
+      </aside>
+
+      <section id="result" class="result-column" aria-label="상황별 움직임" aria-live="polite" aria-atomic="false" hidden>
+        <div class="result-heading"><div><p class="eyebrow">READ THE MOMENT</p><h2>이 상황에서의 다음 움직임</h2></div><span id="mode-label" class="mode-tag"></span></div>
+        <div class="champion-context"><img id="champion-portrait" src="./direction-assets/Caitlyn.png" width="48" height="48" alt=""><div class="champion-identity"><strong id="champion-name"></strong><span id="champion-type"></span></div><div class="context-role"><span>현재 상황에서 맡을 역할</span><strong id="current-role"></strong></div></div>
+
+        <article id="main-plan" class="panel main-plan">
+          <div class="plan-heading"><span class="plan-label"><span aria-hidden="true">↗</span> 주 방향</span><span class="hypothesis-tag">설계 가설 · 미검증</span></div>
+          <h3 id="plan-title"></h3><p id="direction" class="direction-copy"></p>
+          <div class="map-plan-grid">
+            <div class="map-column"><div class="map-title-row"><h4>움직임 지도</h4><button id="map-zoom" type="button" class="text-button"><span aria-hidden="true">⤢</span> 크게 보기</button></div><div id="map-step-controls" class="map-step-controls" role="group" aria-label="지도에 표시할 행동 단계"><span>단계 보기</span><button id="map-step-ALL" type="button" data-map-step="ALL" aria-pressed="true">전체</button><button id="map-step-1" type="button" data-map-step="1" aria-pressed="false" aria-label="1단계만 지도에 표시">1</button><button id="map-step-2" type="button" data-map-step="2" aria-pressed="false" aria-label="2단계만 지도에 표시">2</button><button id="map-step-3" type="button" data-map-step="3" aria-pressed="false" aria-label="3단계만 지도에 표시">3</button></div><p id="map-step-status" class="map-step-status" aria-live="polite"></p><div class="map-frame"><svg id="map" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" role="img" aria-labelledby="map-title map-description"><title id="map-title">전술 설명용 예시 지도</title><desc id="map-description">예시 시작 위치와 목표 배치, 단계별 이동 방향을 나타냅니다.</desc></svg><span class="map-watermark">전술 설명용 예시</span></div><div class="map-legend" aria-label="지도 범례"><span><i class="legend-self" aria-hidden="true"></i>내 시작 예시</span><span><i class="legend-target" aria-hidden="true"></i>목표 위치</span><span><i class="legend-move" aria-hidden="true"></i>이동</span><span><i class="legend-pressure" aria-hidden="true"></i>압박</span><span><i class="legend-retreat" aria-hidden="true"></i>후퇴</span></div><p id="map-caption" class="map-caption"></p><ul id="map-notes" class="map-notes"></ul><p class="map-disclaimer">화살표는 움직임의 방향입니다. 안전한 경로·스킬 사거리·실제 위치를 나타내지 않습니다.</p></div>
+            <div class="steps-column"><h4>순서대로 생각해보기</h4><ol id="plan-steps" class="plan-steps"></ol><div class="reason-block"><h4><span aria-hidden="true">↳</span> 왜 이 방향인가요?</h4><ul id="plan-why"></ul></div><div class="requirements-block"><h4>먼저 확인할 전제</h4><ul id="plan-requirements"></ul></div></div>
+          </div>
+        </article>
+        <div class="secondary-grid"><article class="panel alternative-panel"><p class="eyebrow">PLAN B</p><h3 id="alternative-title"></h3><p id="alternative-when"></p><ul id="alternative-steps"></ul></article><article class="panel switch-panel"><p class="eyebrow">REASSESS</p><h3>이 조건이면 방향을 바꿔요</h3><ul id="switch-when"></ul></article></div>
+        <details class="panel economy-summary"><summary><span>입력한 경제 정보 <small>미확인은 대등과 다릅니다</small></span><span class="summary-toggle" aria-hidden="true">⌄</span></summary><div class="details-content"><div id="economy-states" class="economy-states"></div><div id="economy-metrics" class="metric-grid"></div><p id="economy-note" class="small-copy"></p></div></details>
+        <details id="evidence" class="panel evidence-panel"><summary><span>근거와 해석의 경계 <small id="evidence-label">공식 사실과 설계 가설 구분</small></span><span class="summary-toggle" aria-hidden="true">⌄</span></summary><div class="details-content"><p class="evidence-notice">공식 설명은 기술의 사실을 확인하는 참고 자료입니다. 아래 행동 계획의 효과를 검증하거나 전술을 승인한 근거가 아닙니다.</p><div id="official-facts"></div><div class="evidence-absence"><div><h4>통계 근거</h4><p id="statistics-status"></p></div><div><h4>전문가 발언</h4><p id="expert-status"></p></div></div><ul id="evidence-limits" class="small-copy"></ul><details class="asset-evidence"><summary>지도·초상화 자료의 출처와 사용 조건</summary><div id="asset-sources"></div></details></div></details>
+      </section>
+    </div>
+    <footer class="site-footer"><span>LoL Coach <span aria-hidden="true">/</span> 상황별 움직임 프로토타입</span><a href="./status.html">작업 상태와 현재 한계 ↗</a><p>PRE_GAME_LEARNING · POST_GAME_REVIEW만 제공 · 실시간 코칭 없음</p><p class="riot-disclaimer">LoL Coach isn’t endorsed by Riot Games and doesn’t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.</p></footer>
+  </main>
+
+  <dialog id="map-dialog" aria-labelledby="zoom-title"><div class="dialog-header"><div><p class="eyebrow">TACTICAL EXAMPLE</p><h2 id="zoom-title">움직임 지도 크게 보기</h2></div><button id="map-close" class="icon-button" type="button" aria-label="지도 닫기">×</button></div><p class="dialog-note">전술 설명용 예시 · 확대 후 지도를 스크롤해서 살펴보세요.</p><div class="zoom-controls"><label for="zoom-range">지도 확대 <output id="zoom-value" for="zoom-range">100%</output></label><input id="zoom-range" type="range" min="100" max="250" step="25" value="100" aria-label="지도 확대 비율"></div><div id="zoom-step-controls" class="map-step-controls" role="group" aria-label="지도에 표시할 행동 단계"><span>단계 보기</span><button id="zoom-step-ALL" type="button" data-map-step="ALL" aria-pressed="true">전체</button><button id="zoom-step-1" type="button" data-map-step="1" aria-pressed="false" aria-label="1단계만 지도에 표시">1</button><button id="zoom-step-2" type="button" data-map-step="2" aria-pressed="false" aria-label="2단계만 지도에 표시">2</button><button id="zoom-step-3" type="button" data-map-step="3" aria-pressed="false" aria-label="3단계만 지도에 표시">3</button></div><p id="zoom-step-status" class="map-step-status" aria-live="polite"></p><div id="map-zoom-stage" class="map-zoom-stage" data-zoom="100" tabindex="0" aria-label="확대 지도 스크롤 영역"><div id="zoom-map" class="zoom-map"></div></div><p class="dialog-note">파랑 실선 테두리와 금색 강조는 내 시작 예시, 반투명 표시는 목표 위치입니다. 화살표는 이동·압박·후퇴 방향이며 안전한 경로나 사거리가 아닙니다.</p></dialog>
+</body>
+</html>

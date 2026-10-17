@@ -1,0 +1,1001 @@
+{
+  "format": "lol-coach-directions-v1",
+  "strategy_level": "DESIGN_HYPOTHESIS",
+  "source_version": "16.20.1",
+  "labels": {
+    "positions": {
+      "TOP": "탑",
+      "JUNGLE": "정글",
+      "MID": "미드",
+      "BOTTOM": "바텀",
+      "SUPPORT": "서포터"
+    },
+    "economy": {
+      "BEHIND": "열세",
+      "EVEN": "비슷",
+      "AHEAD": "우세",
+      "UNKNOWN": "미확인"
+    },
+    "phases": {
+      "LANE": "라인전",
+      "POST_LANE": "라인전 이후"
+    },
+    "review_modes": {
+      "PRE_GAME_LEARNING": "경기 전 학습",
+      "POST_GAME_REVIEW": "경기 후 복기"
+    }
+  },
+  "inputs": {
+    "conditions": [
+      {
+        "key": "wave",
+        "label": "웨이브 상태",
+        "options": {
+          "UNKNOWN": "미확인",
+          "CRASHED": "상대 포탑 도착을 확인",
+          "INCOMING_LARGE": "큰 웨이브가 우리 쪽으로 이동"
+        }
+      },
+      {
+        "key": "purchase",
+        "label": "구매 목표",
+        "options": {
+          "UNKNOWN": "미확인",
+          "READY": "구매할 아이템·골드 확인",
+          "NOT_READY": "아직 부족"
+        }
+      },
+      {
+        "key": "health",
+        "label": "체력·자원",
+        "options": {
+          "UNKNOWN": "미확인",
+          "READY": "현재 행동에 필요한 상태 확인",
+          "LOW": "잔류·접근 위험이 큰 상태"
+        }
+      },
+      {
+        "key": "numbers",
+        "label": "확인된 인원 조건",
+        "options": {
+          "UNKNOWN": "미확인",
+          "ENOUGH": "연결 가능한 인원 확인",
+          "OUTNUMBERED": "가용 아군 인원 부족"
+        }
+      },
+      {
+        "key": "vision",
+        "label": "이동 방향의 정보",
+        "options": {
+          "UNKNOWN": "미확인",
+          "OBSERVED_ROUTE": "접근 방향의 시야·위협을 확인",
+          "UNOBSERVED": "접근 방향 정보 부족"
+        }
+      },
+      {
+        "key": "ally_ready",
+        "label": "아군 연결",
+        "options": {
+          "UNKNOWN": "미확인",
+          "READY": "함께 움직일 준비 확인",
+          "NOT_READY": "즉시 연결하기 어려움"
+        }
+      },
+      {
+        "key": "side_exit",
+        "label": "사이드 복귀 수단",
+        "options": {
+          "UNKNOWN": "미확인",
+          "AVAILABLE": "사용할 수단·퇴로와 복귀 시간 확인",
+          "UNAVAILABLE": "합류·퇴로 조건 부족"
+        }
+      },
+      {
+        "key": "objective",
+        "label": "검토할 목표물",
+        "options": {
+          "UNKNOWN": "미확인",
+          "AVAILABLE": "현재 존재하는 용을 예시로 선택",
+          "NOT_AVAILABLE": "지금 용 경합을 검토하지 않음"
+        }
+      },
+      {
+        "key": "level_items",
+        "label": "레벨·완성 아이템",
+        "options": {
+          "UNKNOWN": "미확인",
+          "READY": "계획에 필요한 조건 확인",
+          "DISADVANTAGE": "현재 계획에 불리한 차이 확인"
+        }
+      },
+      {
+        "key": "enemy_visible",
+        "label": "예시 적 위치",
+        "options": {
+          "UNKNOWN": "적 위치 미확인",
+          "VISIBLE_EXAMPLE": "화면에서 본 적 1명만 예시로 표시"
+        }
+      }
+    ]
+  },
+  "default_input": {
+    "phase": "LANE",
+    "decision": "RECALL",
+    "champion": "Caitlyn",
+    "role": "BOTTOM",
+    "side": "BLUE",
+    "review_mode": "PRE_GAME_LEARNING",
+    "patch": null,
+    "economy": {
+      "TOP": "UNKNOWN",
+      "JUNGLE": "UNKNOWN",
+      "MID": "UNKNOWN",
+      "BOTTOM": "UNKNOWN",
+      "SUPPORT": "UNKNOWN"
+    },
+    "metrics": {
+      "total_earned_difference": null,
+      "purchased_value_difference": null,
+      "current_gold": null,
+      "observed_at": null
+    },
+    "conditions": {
+      "wave": "UNKNOWN",
+      "purchase": "UNKNOWN",
+      "health": "UNKNOWN",
+      "numbers": "UNKNOWN",
+      "vision": "UNKNOWN",
+      "ally_ready": "UNKNOWN",
+      "side_exit": "UNKNOWN",
+      "objective": "UNKNOWN",
+      "level_items": "UNKNOWN",
+      "enemy_visible": "UNKNOWN"
+    }
+  },
+  "champions": [
+    {
+      "id": "Caitlyn",
+      "name": "케이틀린",
+      "primary_type": "견제·포위",
+      "secondary_types": [
+        "지속딜",
+        "공간 장악·웨이브 관리"
+      ],
+      "official_facts": [
+        {
+          "slot": "W",
+          "name": "요들잡이 덫",
+          "excerpt": "케이틀린이 함정을 설치합니다. 함정이 발동하면 함정에 걸린 적 챔피언은 1.5초간 모습이 드러나며 이동할 수 없게 되고, 케이틀린의 헤드샷이 강화됩니다.",
+          "version": "16.20.1",
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Caitlyn.json",
+          "local_source": "data/official_catalog/versions/16.20.1/Caitlyn-16.20.1.ko_KR.json",
+          "sha256": "d3215fc64246d7014dbd924cf1b76620756f84184c01191f0f6ffa65c3625029"
+        },
+        {
+          "slot": "E",
+          "name": "90구경 투망",
+          "excerpt": "케이틀린이 무거운 그물을 발사하여 적을 느리게 합니다. 그 반동으로 케이틀린은 뒤로 밀려납니다.",
+          "version": "16.20.1",
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Caitlyn.json",
+          "local_source": "data/official_catalog/versions/16.20.1/Caitlyn-16.20.1.ko_KR.json",
+          "sha256": "d3215fc64246d7014dbd924cf1b76620756f84184c01191f0f6ffa65c3625029"
+        }
+      ]
+    },
+    {
+      "id": "Fiora",
+      "name": "피오라",
+      "primary_type": "사이드 압박",
+      "secondary_types": [
+        "지속딜"
+      ],
+      "official_facts": [
+        {
+          "slot": "Q",
+          "name": "찌르기",
+          "excerpt": "피오라가 한 방향으로 돌진하며 근처 적 하나를 찔러 물리 피해를 입히고 적중 시 효과를 적용합니다.",
+          "version": "16.20.1",
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Fiora.json",
+          "local_source": "data/official_catalog/versions/16.20.1/Fiora-16.20.1.ko_KR.json",
+          "sha256": "b11ce2d22e1688d05f135a46d7aaf3af4cf2284372dcd75155b7e0f6f451b078"
+        },
+        {
+          "slot": "W",
+          "name": "응수",
+          "excerpt": "피오라가 잠시 동안 받는 모든 공격과 이동 불가 효과를 막아낸 다음 대상이 있는 방향으로 검을 찌릅니다. 이 공격은 처음 맞은 적 챔피언을 둔화시키고, 피오라가 이동 불가 효과를 막아낼 경우 공격한 상대를 기절시킵니다.",
+          "version": "16.20.1",
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Fiora.json",
+          "local_source": "data/official_catalog/versions/16.20.1/Fiora-16.20.1.ko_KR.json",
+          "sha256": "b11ce2d22e1688d05f135a46d7aaf3af4cf2284372dcd75155b7e0f6f451b078"
+        }
+      ]
+    },
+    {
+      "id": "Ornn",
+      "name": "오른",
+      "primary_type": "진입·전방 유지",
+      "secondary_types": [
+        "보호·지원",
+        "공간 장악·웨이브 관리"
+      ],
+      "official_facts": [
+        {
+          "slot": "P",
+          "name": "간이 대장간",
+          "excerpt": "오른이 추가 방어력과 마법 저항력을 얻습니다.<br><br>오른은 어디에서든 골드를 써서 소모품을 제외한 아이템을 제작할 수 있습니다.<br><br>또한 걸작 아이템을 만들어 직접 사용하거나 아군의 아이템을 업그레이드할 수 있습니다.",
+          "version": "16.20.1",
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ornn.json",
+          "local_source": "data/official_catalog/versions/16.20.1/Ornn-16.20.1.ko_KR.json",
+          "sha256": "020b57331afb32ee120f4157b4db72550c4ad93b8f43987d164bf3f57e129aaf"
+        },
+        {
+          "slot": "E",
+          "name": "화염 돌진",
+          "excerpt": "오른이 돌진하며 통과한 적에게 피해를 입힙니다. 오른이 돌진 중 지형지물에 충돌하면, 그 충돌로 인해 충격파가 발생해 적에게 피해를 입히고 공중으로 띄웁니다.",
+          "version": "16.20.1",
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ornn.json",
+          "local_source": "data/official_catalog/versions/16.20.1/Ornn-16.20.1.ko_KR.json",
+          "sha256": "020b57331afb32ee120f4157b4db72550c4ad93b8f43987d164bf3f57e129aaf"
+        },
+        {
+          "slot": "R",
+          "name": "대장장이 신의 부름",
+          "excerpt": "오른이 목표 위치에 거대한 불의 정령을 소환합니다. 불의 정령은 오른에게로 다가오며 점점 이동 속도가 빨라집니다. 정령이 밟고 지나간 적은 피해를 입고 둔화되며 불안정 상태가 됩니다. 오른이 대장장이 신의 부름을 재시전하면 정령 쪽으로 돌진합니다. 오른이 돌진해 정령에 부딪히면 정령의 진행 방향이 바뀝니다. 진행 방향이 바뀐 정령은 부딪힌 모든 적을 공중으로 띄우며 전과 동일한 피해를 입히고 다시 불안정 상태로 만듭니다.",
+          "version": "16.20.1",
+          "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ornn.json",
+          "local_source": "data/official_catalog/versions/16.20.1/Ornn-16.20.1.ko_KR.json",
+          "sha256": "020b57331afb32ee120f4157b4db72550c4ad93b8f43987d164bf3f57e129aaf"
+        }
+      ]
+    }
+  ],
+  "types": {
+    "SUSTAINED": {
+      "label": "지속딜",
+      "goal": "연결되는 교전에서 피해를 이어가기",
+      "procedure": [
+        "공격 가능한 위치를 찾기",
+        "중단·후퇴 조건을 정하기"
+      ]
+    },
+    "POKE_SIEGE": {
+      "label": "견제·포위",
+      "goal": "접근 공간과 구조물 압박을 검토하기",
+      "procedure": [
+        "아군과 공격선 맞추기",
+        "상대 진입에 따라 압박선 조정하기"
+      ]
+    },
+    "BURST_PICK": {
+      "label": "폭딜·포착",
+      "goal": "노출된 대상에 자원을 집중할 조건 찾기",
+      "procedure": [
+        "대상과 아군 연결 확인",
+        "실패 시 이탈 수단 남기기"
+      ]
+    },
+    "FRONT": {
+      "label": "진입·전방 유지",
+      "goal": "아군이 연결할 앞 공간 만들기",
+      "procedure": [
+        "후속 아군과 거리 맞추기",
+        "고립되면 진입 대신 위치 회복"
+      ]
+    },
+    "PROTECT": {
+      "label": "보호·지원",
+      "goal": "아군 핵심 행동을 이어 주기",
+      "procedure": [
+        "보호할 대상과 위협 정하기",
+        "사용할 수단을 남기기"
+      ]
+    },
+    "SIDE": {
+      "label": "사이드 압박",
+      "goal": "옆 라인 자원과 상대 대응 부담을 검토하기",
+      "procedure": [
+        "퇴로·합류 조건 정하기",
+        "상대 대응 시 압박 중단"
+      ]
+    },
+    "SPACE_WAVE": {
+      "label": "공간 장악·웨이브 관리",
+      "goal": "웨이브와 진입 방향을 조정하기",
+      "procedure": [
+        "웨이브 도착과 안전 지점 확인",
+        "상대 대응에 따라 위치 조정"
+      ]
+    }
+  },
+  "decisions": [
+    {
+      "id": "RECALL",
+      "phase": "LANE",
+      "title": "라인 관리와 귀환",
+      "condition_keys": [
+        "wave",
+        "purchase",
+        "health",
+        "enemy_visible"
+      ]
+    },
+    {
+      "id": "SIDE_GROUP",
+      "phase": "POST_LANE",
+      "title": "사이드 압박과 본대 합류",
+      "condition_keys": [
+        "side_exit",
+        "ally_ready",
+        "vision",
+        "health",
+        "level_items",
+        "enemy_visible"
+      ]
+    },
+    {
+      "id": "OBJECTIVE",
+      "phase": "POST_LANE",
+      "title": "목표물 경합과 다른 이득",
+      "condition_keys": [
+        "objective",
+        "numbers",
+        "vision",
+        "ally_ready",
+        "health",
+        "level_items",
+        "wave",
+        "enemy_visible"
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "id": "recall-crash",
+      "title": "1A · 밀어 넣은 뒤 귀환",
+      "description": "같은 경제 상태 · 웨이브 도착 확인",
+      "input": {
+        "phase": "LANE",
+        "decision": "RECALL",
+        "champion": "Caitlyn",
+        "role": "BOTTOM",
+        "side": "BLUE",
+        "review_mode": "PRE_GAME_LEARNING",
+        "patch": "16.20",
+        "economy": {
+          "TOP": "EVEN",
+          "JUNGLE": "EVEN",
+          "MID": "EVEN",
+          "BOTTOM": "EVEN",
+          "SUPPORT": "EVEN"
+        },
+        "metrics": {
+          "total_earned_difference": null,
+          "purchased_value_difference": null,
+          "current_gold": null,
+          "observed_at": null
+        },
+        "conditions": {
+          "wave": "CRASHED",
+          "purchase": "READY",
+          "health": "READY",
+          "numbers": "UNKNOWN",
+          "vision": "UNKNOWN",
+          "ally_ready": "UNKNOWN",
+          "side_exit": "UNKNOWN",
+          "objective": "UNKNOWN",
+          "level_items": "UNKNOWN",
+          "enemy_visible": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "id": "recall-incoming",
+      "title": "1B · 큰 웨이브가 들어올 때",
+      "description": "1A와 경제 동일 · 웨이브 방향만 변경",
+      "input": {
+        "phase": "LANE",
+        "decision": "RECALL",
+        "champion": "Caitlyn",
+        "role": "BOTTOM",
+        "side": "BLUE",
+        "review_mode": "PRE_GAME_LEARNING",
+        "patch": "16.20",
+        "economy": {
+          "TOP": "EVEN",
+          "JUNGLE": "EVEN",
+          "MID": "EVEN",
+          "BOTTOM": "EVEN",
+          "SUPPORT": "EVEN"
+        },
+        "metrics": {
+          "total_earned_difference": null,
+          "purchased_value_difference": null,
+          "current_gold": null,
+          "observed_at": null
+        },
+        "conditions": {
+          "wave": "INCOMING_LARGE",
+          "purchase": "READY",
+          "health": "READY",
+          "numbers": "UNKNOWN",
+          "vision": "UNKNOWN",
+          "ally_ready": "UNKNOWN",
+          "side_exit": "UNKNOWN",
+          "objective": "UNKNOWN",
+          "level_items": "UNKNOWN",
+          "enemy_visible": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "id": "side-connected",
+      "title": "2A · 복귀 가능한 사이드",
+      "description": "같은 경제 상태 · 복귀·본대 연결 조건 확인",
+      "input": {
+        "phase": "POST_LANE",
+        "decision": "SIDE_GROUP",
+        "champion": "Fiora",
+        "role": "TOP",
+        "side": "BLUE",
+        "review_mode": "PRE_GAME_LEARNING",
+        "patch": "16.20",
+        "economy": {
+          "TOP": "EVEN",
+          "JUNGLE": "EVEN",
+          "MID": "EVEN",
+          "BOTTOM": "EVEN",
+          "SUPPORT": "EVEN"
+        },
+        "metrics": {
+          "total_earned_difference": null,
+          "purchased_value_difference": null,
+          "current_gold": null,
+          "observed_at": null
+        },
+        "conditions": {
+          "wave": "UNKNOWN",
+          "purchase": "UNKNOWN",
+          "health": "READY",
+          "numbers": "UNKNOWN",
+          "vision": "OBSERVED_ROUTE",
+          "ally_ready": "READY",
+          "side_exit": "AVAILABLE",
+          "objective": "UNKNOWN",
+          "level_items": "READY",
+          "enemy_visible": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "id": "side-exit-lost",
+      "title": "2B · 복귀 수단이 사라질 때",
+      "description": "2A와 경제 동일 · 복귀 조건만 변경",
+      "input": {
+        "phase": "POST_LANE",
+        "decision": "SIDE_GROUP",
+        "champion": "Fiora",
+        "role": "TOP",
+        "side": "BLUE",
+        "review_mode": "PRE_GAME_LEARNING",
+        "patch": "16.20",
+        "economy": {
+          "TOP": "EVEN",
+          "JUNGLE": "EVEN",
+          "MID": "EVEN",
+          "BOTTOM": "EVEN",
+          "SUPPORT": "EVEN"
+        },
+        "metrics": {
+          "total_earned_difference": null,
+          "purchased_value_difference": null,
+          "current_gold": null,
+          "observed_at": null
+        },
+        "conditions": {
+          "wave": "UNKNOWN",
+          "purchase": "UNKNOWN",
+          "health": "READY",
+          "numbers": "UNKNOWN",
+          "vision": "OBSERVED_ROUTE",
+          "ally_ready": "READY",
+          "side_exit": "UNAVAILABLE",
+          "objective": "UNKNOWN",
+          "level_items": "READY",
+          "enemy_visible": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "id": "objective-connected",
+      "title": "3A · 함께 경합 위치 준비",
+      "description": "같은 경제 상태 · 접근·인원·자원 조건 확인",
+      "input": {
+        "phase": "POST_LANE",
+        "decision": "OBJECTIVE",
+        "champion": "Ornn",
+        "role": "TOP",
+        "side": "BLUE",
+        "review_mode": "PRE_GAME_LEARNING",
+        "patch": "16.20",
+        "economy": {
+          "TOP": "EVEN",
+          "JUNGLE": "EVEN",
+          "MID": "EVEN",
+          "BOTTOM": "EVEN",
+          "SUPPORT": "EVEN"
+        },
+        "metrics": {
+          "total_earned_difference": null,
+          "purchased_value_difference": null,
+          "current_gold": null,
+          "observed_at": null
+        },
+        "conditions": {
+          "wave": "UNKNOWN",
+          "purchase": "UNKNOWN",
+          "health": "READY",
+          "numbers": "ENOUGH",
+          "vision": "OBSERVED_ROUTE",
+          "ally_ready": "READY",
+          "side_exit": "UNKNOWN",
+          "objective": "AVAILABLE",
+          "level_items": "READY",
+          "enemy_visible": "UNKNOWN"
+        }
+      }
+    },
+    {
+      "id": "objective-short",
+      "title": "3B · 경합 대신 다른 준비",
+      "description": "3A와 경제 동일 · 가용 아군 인원만 부족",
+      "input": {
+        "phase": "POST_LANE",
+        "decision": "OBJECTIVE",
+        "champion": "Ornn",
+        "role": "TOP",
+        "side": "BLUE",
+        "review_mode": "PRE_GAME_LEARNING",
+        "patch": "16.20",
+        "economy": {
+          "TOP": "EVEN",
+          "JUNGLE": "EVEN",
+          "MID": "EVEN",
+          "BOTTOM": "EVEN",
+          "SUPPORT": "EVEN"
+        },
+        "metrics": {
+          "total_earned_difference": null,
+          "purchased_value_difference": null,
+          "current_gold": null,
+          "observed_at": null
+        },
+        "conditions": {
+          "wave": "UNKNOWN",
+          "purchase": "UNKNOWN",
+          "health": "READY",
+          "numbers": "OUTNUMBERED",
+          "vision": "OBSERVED_ROUTE",
+          "ally_ready": "READY",
+          "side_exit": "UNKNOWN",
+          "objective": "AVAILABLE",
+          "level_items": "READY",
+          "enemy_visible": "UNKNOWN"
+        }
+      }
+    }
+  ],
+  "plans": {
+    "RESET_AFTER_CRASH": {
+      "title": "밀어 넣은 뒤 구매·복귀 준비",
+      "direction": "웨이브가 도착한 틈에 구매와 다음 라인 복귀를 준비합니다.",
+      "role": "귀환 손실을 줄이고 다음 웨이브로 돌아올 사람",
+      "steps": [
+        "상대 포탑에 웨이브가 도착했는지 다시 보고, 더 공격하려고 앞으로 따라가지 않습니다.",
+        "{kit}",
+        "적에게 끊길 위험이 낮다고 확인한 아군 쪽 지점으로 빠져 귀환을 검토합니다. 귀환 위치의 안전은 지도만으로 알 수 없습니다."
+      ],
+      "requirements": [
+        "웨이브 도착·체력·구매 목표를 직접 확인",
+        "귀환 지점의 위협과 다음 목표물 일정을 별도로 확인"
+      ],
+      "alternative": {
+        "title": "귀환 지점을 바꾸기",
+        "when": "견제나 추격 때문에 귀환을 이어갈 수 없을 때",
+        "steps": [
+          "귀환을 취소하고 아군 포탑 쪽으로 거리를 벌립니다.",
+          "이동 중 추가 압박 대신 다음 웨이브 손실과 구매 필요를 비교합니다."
+        ]
+      },
+      "switch_when": [
+        "웨이브가 도착하지 않았으면 라인 처리부터 재검토",
+        "적 추격·아군 교전 발생 시 현재 귀환 위치에서 중단"
+      ],
+      "layout": "RESET"
+    },
+    "RECEIVE_WAVE": {
+      "title": "들어오는 웨이브 손실부터 검토",
+      "direction": "지금 비우면 잃는 웨이브를 확인하고 구매 순서를 다시 잡습니다.",
+      "role": "살아서 받을 수 있는 자원을 남기는 사람",
+      "steps": [
+        "아군 포탑 쪽으로 위치를 조정하고 웨이브가 실제로 들어오는지 봅니다.",
+        "{kit}",
+        "위협이 닿기 전에 받을 수 있는 미니언만 처리한 뒤, 남을 이유가 사라지면 귀환 위치로 물러납니다."
+      ],
+      "requirements": [
+        "체력·자원이 잔류를 감당한다는 사용자 확인",
+        "포탑 아래도 다이브 위험이 있어 적 접근을 계속 확인"
+      ],
+      "alternative": {
+        "title": "웨이브를 포기하고 손실 제한",
+        "when": "적 합류·킬 압박 때문에 받을 수 없을 때",
+        "steps": [
+          "포탑을 지키려고 사망 위험을 감수하지 않고 뒤로 빠집니다.",
+          "구매·체력 회복 후 받을 수 있는 다음 자원을 검토합니다."
+        ]
+      },
+      "switch_when": [
+        "체력·자원이 줄거나 적 접근이 보이면 수급을 중단",
+        "웨이브 방향이 바뀌면 먼저 귀환 가능성을 재검토"
+      ],
+      "layout": "RECEIVE"
+    },
+    "INFORMATION_RESET": {
+      "title": "현재 위치에서 손실부터 줄이기",
+      "direction": "잔류·귀환 중 단정할 수 없는 부분을 줄이고 회복 경로를 마련합니다.",
+      "role": "정보가 없는 채로 추가 교전을 만들지 않는 사람",
+      "steps": [
+        "아군 포탑 쪽에서 보이는 웨이브 방향·내 체력·보유 골드를 확인합니다. 시야 밖으로 정보를 얻으러 이동하지 않습니다.",
+        "{kit}",
+        "위협이 닿으면 자원을 포기하고 아군 쪽으로 물러납니다. 구매·체력 회복이 필요하면 그 위치에서 귀환 가능성을 봅니다."
+      ],
+      "requirements": [
+        "안전한 귀환 지점은 별도 관측 필요",
+        "미확인 웨이브·적 위치는 있는 그대로 유지"
+      ],
+      "alternative": {
+        "title": "당장 이탈이 어려우면 거리부터 확보",
+        "when": "귀환이 끊기거나 퇴로가 막혔을 때",
+        "steps": [
+          "주변 아군 쪽으로 거리를 줄이고 위험 신호를 공유합니다.",
+          "수단 사용 가능 여부가 미확인이면 그 수단으로 탈출할 수 있다고 가정하지 않습니다."
+        ]
+      },
+      "switch_when": [
+        "웨이브 도착·구매 조건이 확인되면 귀환 계획으로 재선택",
+        "체력 위험이 커지면 남은 미니언을 받으려 하지 않기"
+      ],
+      "layout": "RECEIVE"
+    },
+    "SIDE_PRESSURE": {
+      "title": "복귀 수단을 남긴 사이드 압박",
+      "direction": "옆 라인의 자원을 얻되 본대가 고립되기 전에 합류로 전환합니다.",
+      "role": "별도 라인의 압박을 만들고 복귀할 사람",
+      "steps": [
+        "아군이 바로 싸움을 시작하지 않도록 계획을 공유하고, 보이는 웨이브까지만 접근합니다.",
+        "{kit}",
+        "복귀에 필요한 시간·수단을 다시 확인하며, 적 대응이나 본대 교전이 보이면 미리 정한 아군 쪽 경로로 압박을 접습니다."
+      ],
+      "requirements": [
+        "본대 대기·복귀 수단·퇴로·체력·레벨/아이템 조건의 사용자 확인",
+        "표시한 화살표가 안전 경로나 순간이동 가능 지점을 보증하지 않음"
+      ],
+      "alternative": {
+        "title": "사이드 대신 본대와 거리 맞추기",
+        "when": "복귀 수단이 없거나 본대가 대기할 수 없을 때",
+        "steps": [
+          "더 깊이 밀지 않고 아군이 보이는 위치로 물러납니다.",
+          "한 라인의 가까운 자원을 받은 뒤 함께 움직일 위치를 정합니다."
+        ]
+      },
+      "switch_when": [
+        "적 대응 수 증가·퇴로 정보 상실 시 더 전진하지 않기",
+        "본대가 움직이거나 복귀 수단이 사라지면 합류 우선으로 전환"
+      ],
+      "layout": "SIDE"
+    },
+    "GROUP_SETUP": {
+      "title": "아군과 압박선 맞추기",
+      "direction": "단독 전진 대신 함께 공격할 수 있는 공간을 만듭니다.",
+      "role": "본대 뒤에서 압박을 이어갈 사람",
+      "steps": [
+        "사이드 깊이 들어가기보다 아군이 보이는 라인에서 공격선을 맞춥니다.",
+        "{kit}",
+        "앞줄과 거리가 벌어지면 구조물 압박을 끊고 다시 아군 뒤로 위치를 맞춥니다."
+      ],
+      "requirements": [
+        "아군이 함께 움직일 준비·접근 방향·체력 조건 확인",
+        "덫이나 견제만으로 적 진입을 모두 막는다고 보지 않기"
+      ],
+      "alternative": {
+        "title": "가까운 웨이브만 받고 재정렬",
+        "when": "아군이 흩어지거나 접근 정보가 사라졌을 때",
+        "steps": [
+          "아군 포탑 쪽의 보이는 웨이브로 목표를 낮춥니다.",
+          "혼자 시야를 만들러 들어가지 않고 아군과 만날 위치를 정합니다."
+        ]
+      },
+      "switch_when": [
+        "적 진입·아군 이탈 시 공격선 뒤로 이동",
+        "목표물이 우선이면 압박을 접고 경합 조건 재검토"
+      ],
+      "layout": "GROUP"
+    },
+    "FRONT_CONNECT": {
+      "title": "앞줄과 후속 아군 연결",
+      "direction": "진입 자체보다 아군이 함께 행동할 앞 공간을 준비합니다.",
+      "role": "먼저 고립되지 않는 전방 연결자",
+      "steps": [
+        "후속 아군이 보이는 위치까지 앞 공간을 좁히고 혼자 적에게 접근하지 않습니다.",
+        "{kit}",
+        "아군이 연결되지 않거나 상대 대응 수단이 남으면 진입을 미루고 아군 쪽으로 전방선을 되돌립니다."
+      ],
+      "requirements": [
+        "후속 아군의 거리·체력·사용할 기술 확인",
+        "지형 충돌 위치와 상대 회피·저지 수단은 별도 확인"
+      ],
+      "alternative": {
+        "title": "아군 쪽으로 후퇴하며 연결",
+        "when": "후속 아군이 즉시 따라올 수 없을 때",
+        "steps": [
+          "뒤쪽 아군과 간격을 줄여 고립을 풉니다.",
+          "진입 기술을 먼저 쓰지 않고 보호에 쓸 수 있는지 검토합니다."
+        ]
+      },
+      "switch_when": [
+        "아군 이탈·적 측면 접근 시 진입 계획 중단",
+        "지형·기술 조건이 없으면 위치 유지·보호 역할로 변경"
+      ],
+      "layout": "GROUP"
+    },
+    "SAFE_REGROUP": {
+      "title": "사이드 확대 대신 합류 거리 줄이기",
+      "direction": "복귀 조건이 부족하므로 더 깊은 압박보다 다음 행동의 연결을 만듭니다.",
+      "role": "놓칠 자원을 정하고 고립을 줄이는 사람",
+      "steps": [
+        "현재 보이는 아군 쪽으로 목표 위치를 낮추고 다음에 받을 가까운 웨이브를 정합니다.",
+        "{kit}",
+        "아군과 만날 위치·순서를 공유합니다. 경로 정보가 없으면 정글을 가로지르지 않고 아군 포탑 쪽에서 대안을 봅니다."
+      ],
+      "requirements": [
+        "합류 경로·아군 위치의 실제 관측 필요",
+        "사이드 중단이 모든 자원을 포기하라는 뜻은 아님"
+      ],
+      "alternative": {
+        "title": "만날 수 없으면 가까운 자원과 회복",
+        "when": "즉시 합류 경로가 확인되지 않을 때",
+        "steps": [
+          "보이는 아군 포탑 쪽 웨이브 중 받을 수 있는 것만 선택합니다.",
+          "체력·구매가 필요하면 회복 후 합류할 위치를 다시 정합니다."
+        ]
+      },
+      "switch_when": [
+        "복귀 수단·본대 대기 조건이 갖춰지면 사이드 검토 가능",
+        "새 위협이 보이면 가까운 자원도 포기하고 거리 확보"
+      ],
+      "layout": "REGROUP"
+    },
+    "OBJECTIVE_SETUP": {
+      "title": "퇴로를 남긴 목표물 접근",
+      "direction": "용을 바로 시작하기보다 함께 경합할 위치와 철수 조건을 맞춥니다.",
+      "role": "{objective_role}",
+      "steps": [
+        "현재 존재하는 용과 연결 가능한 아군을 확인하고, 정보가 확인된 아군 쪽 접근 지점으로 모입니다.",
+        "{kit}",
+        "목표물을 치기 전 적 접근과 아군 연결을 다시 봅니다. 불리한 변화가 보이면 퇴로 쪽으로 물러나 교환 계획으로 바꿉니다."
+      ],
+      "requirements": [
+        "인원·체력·레벨/아이템·접근 정보·아군 준비 조건의 사용자 확인",
+        "적이 안 보인다는 사실을 적이 없다는 뜻으로 쓰지 않기"
+      ],
+      "alternative": {
+        "title": "경합 대신 확인된 가까운 자원",
+        "when": "숫자·시야·연결 조건이 무너졌을 때",
+        "steps": [
+          "용 쪽 새 정보를 얻으려고 혼자 접근하지 않습니다.",
+          "아군 쪽의 보이는 웨이브나 회복·구매를 목표로 바꿉니다."
+        ]
+      },
+      "switch_when": [
+        "적 증원·체력 손실·퇴로 정보 상실 시 경합 중단",
+        "아군과 연결이 끊기면 목표물 시작 대신 재정렬"
+      ],
+      "layout": "OBJECTIVE"
+    },
+    "TRADE_KNOWN_RESOURCE": {
+      "title": "목표물 대신 확인된 손실 제한",
+      "direction": "용 쪽으로 무리하게 접근하지 않고 현재 얻을 수 있는 자원을 다시 고릅니다.",
+      "role": "경합 손실을 줄이고 다음 행동을 준비할 사람",
+      "steps": [
+        "용 쪽 이동을 멈추고 아군이 보이는 포탑·웨이브 방향으로 목표를 낮춥니다.",
+        "{kit}",
+        "보이는 웨이브가 없으면 공짜 반대편 목표가 있다고 가정하지 않고 체력 회복·구매·아군 재정렬을 택합니다."
+      ],
+      "requirements": [
+        "실제로 보이는 자원만 교환 후보로 사용",
+        "상대가 용에 모였다고 다른 위치가 비었다고 단정하지 않기"
+      ],
+      "alternative": {
+        "title": "교환할 자원도 없으면 회복·재정렬",
+        "when": "가까운 자원과 이동 경로가 모두 미확인일 때",
+        "steps": [
+          "더 깊은 이동 대신 아군 쪽에서 구매·회복할 위치를 정합니다.",
+          "다음에 정보가 확인된 라인부터 함께 접근합니다."
+        ]
+      },
+      "switch_when": [
+        "가용 인원·접근 정보·자원이 다시 확인되면 경합 재검토",
+        "새 적 접근이 보이면 선택한 웨이브도 포기하고 이탈"
+      ],
+      "layout": "TRADE"
+    }
+  },
+  "methods": {
+    "Caitlyn": {
+      "RECALL": "덫은 발동 시 이동을 막고, 투망은 자신을 뒤로 밀 수 있는 수단입니다. 배운 상태·사용 가능 여부를 확인해 두고, 귀환을 위해 먼저 견제하거나 앞으로 투망을 쓰지는 않습니다.",
+      "SIDE_PRESSURE": "덫과 투망의 사용 가능 여부를 확인하되 이를 확정 탈출 수단으로 계산하지 않습니다. 상대에게 접근하기보다 아군과 사격선을 맞춥니다.",
+      "GROUP_SETUP": "아군 앞줄 뒤에서 덫을 놓을 지점을 검토합니다. 설치를 위해 혼자 앞으로 나가야 한다면 그 위치를 포기하고 압박선을 낮춥니다.",
+      "FRONT_CONNECT": "덫을 둘 지점을 아군과 맞추고, 직접 앞줄 역할을 대신하려고 진입하지 않습니다.",
+      "SAFE_REGROUP": "덫·투망의 사용 가능 여부를 확인하되, 그 수단이 있다는 이유로 정보 없는 경로로 이동하지 않습니다.",
+      "OBJECTIVE_SETUP": "아군 뒤에서 덫을 둘 입구를 검토합니다. 입구 접근이 확인되지 않으면 설치하려고 전진하지 않고 사격할 위치를 낮춥니다.",
+      "TRADE_KNOWN_RESOURCE": "덫을 놓으려는 새 공간 진입보다 아군 쪽 웨이브를 받을 위치를 고릅니다. 투망을 쓸 수 있다고 퇴로를 보장하지 않습니다."
+    },
+    "Fiora": {
+      "RECALL": "찌르기·응수의 배운 상태와 사용 가능 여부를 따로 봅니다. 응수로 상대 기술을 막을 수 있다는 이유로 귀환 전 추가 결투를 만들지 않습니다.",
+      "SIDE_PRESSURE": "찌르기로 더 전진하기 전에 응수를 남겨야 할 상대 수단과 퇴로를 정합니다. 응수 사용이 불가능하거나 상대가 둘 이상 대응하면 결투 대신 압박을 접습니다.",
+      "GROUP_SETUP": "응수를 사용할 상대 수단을 정하되 먼저 찌르기로 깊이 들어가지 않습니다. 아군이 따라올 수 있는 위치를 유지합니다.",
+      "FRONT_CONNECT": "응수는 조건부 방어 수단이며 본대 앞줄을 보장하지 않습니다. 찌르기로 고립되기보다 아군과 거리를 맞춥니다.",
+      "SAFE_REGROUP": "응수로 막을 수 있는 기술이 있다고 퇴로를 가정하지 않습니다. 찌르기 사용 가능 여부와 별개로 아군 쪽 경로를 고릅니다.",
+      "OBJECTIVE_SETUP": "응수를 남겨야 할 상대 수단과 아군 연결을 먼저 정합니다. 찌르기로 단독 진입하거나 목표물 옆 결투를 만들지 않고 연결 가능한 옆 위치를 고릅니다.",
+      "TRADE_KNOWN_RESOURCE": "찌르기로 먼 웨이브를 쫓지 않고 가까운 자원부터 봅니다. 응수 사용 가능 여부가 미확인이면 이를 이탈 조건에 넣지 않습니다."
+    },
+    "Ornn": {
+      "RECALL": "오른은 소모품 외 아이템을 어디서든 제작할 수 있다는 공식 설명이 있습니다. 구매가 가능한지 따로 확인하고, 체력 회복이 필요하면 제작만으로 귀환을 대신하지 않습니다.",
+      "SIDE_PRESSURE": "지형 충돌 조건과 아군 연결을 먼저 정하고, 혼자 진입 기술을 써서 퇴로를 없애지 않습니다.",
+      "GROUP_SETUP": "지형과 후속 아군을 함께 봅니다. 아군이 따라올 수 없으면 화염 돌진을 진입에 먼저 쓰지 않습니다.",
+      "FRONT_CONNECT": "화염 돌진의 띄우기는 지형 충돌이 조건입니다. 실제 충돌 지형과 사용 가능 여부를 확인하고, 후속 아군이 닿지 않으면 기술 대신 아군 쪽으로 위치를 맞춥니다.",
+      "SAFE_REGROUP": "지형 충돌을 기대해 단독 진입하지 않습니다. 기술 사용 가능 여부와 후속 아군 위치를 따로 확인하며 연결을 회복합니다.",
+      "OBJECTIVE_SETUP": "화염 돌진은 지형 충돌이 있어야 띄울 수 있습니다. 아군 연결·지형·기술 사용 가능 여부가 갖춰질 때만 전방 제어를 검토하고, 조건이 없으면 뒤쪽 아군과 거리를 맞춥니다.",
+      "TRADE_KNOWN_RESOURCE": "지형 충돌 진입으로 용을 억지로 확인하지 않습니다. 아군 쪽에서 자원·체력을 정리하고 다음 연결 위치를 정합니다."
+    }
+  },
+  "layouts": {
+    "RESET": {
+      "start": "lane_forward",
+      "target": "base",
+      "path": [
+        "lane_home",
+        "lane_safe",
+        "base"
+      ],
+      "kinds": [
+        "RETREAT",
+        "RETREAT",
+        "RETREAT"
+      ]
+    },
+    "RECEIVE": {
+      "start": "lane_home",
+      "target": "lane_safe",
+      "path": [
+        "lane_safe",
+        "lane_home",
+        "base"
+      ],
+      "kinds": [
+        "RETREAT",
+        "PRESSURE",
+        "RETREAT"
+      ]
+    },
+    "SIDE": {
+      "start": "lane_home",
+      "target": "lane_forward",
+      "path": [
+        "lane_forward",
+        "lane_pressure",
+        "lane_safe"
+      ],
+      "kinds": [
+        "MOVE",
+        "PRESSURE",
+        "RETREAT"
+      ]
+    },
+    "GROUP": {
+      "start": "mid_home",
+      "target": "mid_front",
+      "path": [
+        "mid_front",
+        "mid_pressure",
+        "mid_home"
+      ],
+      "kinds": [
+        "MOVE",
+        "PRESSURE",
+        "RETREAT"
+      ]
+    },
+    "REGROUP": {
+      "start": "lane_forward",
+      "target": "mid_home",
+      "path": [
+        "lane_home",
+        "lane_safe",
+        "mid_home"
+      ],
+      "kinds": [
+        "RETREAT",
+        "RETREAT",
+        "MOVE"
+      ]
+    },
+    "OBJECTIVE": {
+      "start": "mid_home",
+      "target": "objective_approach",
+      "path": [
+        "objective_approach",
+        "objective_edge",
+        "mid_home"
+      ],
+      "kinds": [
+        "MOVE",
+        "PRESSURE",
+        "RETREAT"
+      ]
+    },
+    "TRADE": {
+      "start": "objective_approach",
+      "target": "lane_home",
+      "path": [
+        "mid_home",
+        "lane_home",
+        "lane_safe"
+      ],
+      "kinds": [
+        "RETREAT",
+        "MOVE",
+        "RETREAT"
+      ]
+    }
+  },
+  "limitations": [
+    "전체 계획·유형 분류·배치는 설계 가설이며 실경기 효과를 검증하지 않았습니다.",
+    "공식 스킬 원문은 수단의 설명이며 행동의 최적성을 뒷받침하지 않습니다.",
+    "Q15 275경기·귀환/저체력 291경기·프로 참고 89경기를 이번 계획의 통계 근거로 전용하지 않았습니다.",
+    "수동 입력은 관측 확인이나 Riot의 인게임 사용 승인을 뜻하지 않습니다."
+  ],
+  "asset_sources": [
+    {
+      "id": "map11.png",
+      "requested_url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/img/map/map11.png",
+      "source_build": "16.20.1",
+      "sha256": "5b446777c3e8491c1ab1860bc8fd448ad58f46cf3630d909f74dd3dc3dda8cd1",
+      "copyright_holder": "Riot Games, Inc.",
+      "license_note": "Riot proprietary IP; conditional use subject to Riot Developer policies, Terms of Use and Legal Jibber Jabber. No MIT, CC, public-domain or unconditional redistribution license is asserted."
+    },
+    {
+      "id": "Caitlyn.png",
+      "requested_url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/img/champion/Caitlyn.png",
+      "source_build": "16.20.1",
+      "sha256": "f7a515360f30f33dfe5ab4e8886ce59a70c2d333f924252f48f5f9a2fbc6edf4",
+      "copyright_holder": "Riot Games, Inc.",
+      "license_note": "Riot proprietary IP; conditional use subject to Riot Developer policies, Terms of Use and Legal Jibber Jabber. No MIT, CC, public-domain or unconditional redistribution license is asserted."
+    },
+    {
+      "id": "Fiora.png",
+      "requested_url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/img/champion/Fiora.png",
+      "source_build": "16.20.1",
+      "sha256": "b76387ea62f007ece3e06e589ac15bc9bf5452472b70a0d847d096b06f6785b7",
+      "copyright_holder": "Riot Games, Inc.",
+      "license_note": "Riot proprietary IP; conditional use subject to Riot Developer policies, Terms of Use and Legal Jibber Jabber. No MIT, CC, public-domain or unconditional redistribution license is asserted."
+    },
+    {
+      "id": "Ornn.png",
+      "requested_url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/img/champion/Ornn.png",
+      "source_build": "16.20.1",
+      "sha256": "91374f0919871a6490ac7b8ff9b073efb8b6a797f28302cc3751294c47c58d6e",
+      "copyright_holder": "Riot Games, Inc.",
+      "license_note": "Riot proprietary IP; conditional use subject to Riot Developer policies, Terms of Use and Legal Jibber Jabber. No MIT, CC, public-domain or unconditional redistribution license is asserted."
+    }
+  ]
+}
