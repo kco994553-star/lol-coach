@@ -45,6 +45,8 @@ same safe CS action. Unknown stays concrete intake/known-resource inspection, no
 Negative assumed allied protection/position/followup/additional-unit/major-enemy-hit conditions constrain
 wave execution (preserve original inputs/control values, expose separate execution_assumptions/derived gate), cannot upgrade an UNKNOWN
 wave to push. Positive key-spell window alone never grants first push/crash/CS denial/allin.
+Live wave purpose RESET suppresses additional short-trade selection; caller passes purpose
+as a separate context, not evidence or a change to the opponent-advantage judgment.
 Same chosen type/period/assumptions recompute reason/actions/wave bridge in one render;
 card+diagram+macro use the resulting wave plan. Newduo wave execution map unsupported.
 

@@ -12,7 +12,7 @@ const get=(risk='BALANCED')=>G.evaluate({...r,input:{...r.input,preferences:{ris
  def test_no_false_win_and_preference_is_not_evidence(self):
   self.run_node(self.prefix+"""
 for(const period of G.periods)for(const type of Object.keys(G.typeNames)){s.milestone=period;s.type=type;for(const risk of ['LOSS_LIMIT','BALANCED','OPPORTUNITY']){const x=get(risk);assert.equal(x.advantage,'UNKNOWN');assert.equal(x.probability,null);assert.equal(x.all_in_supported,false);assert.equal(x.observation,'HYPOTHETICAL');}}
-ready();s.type='SHORT';const l=get('LOSS_LIMIT'),o=get('OPPORTUNITY');assert.equal(l.advantage,o.advantage);assert.notEqual(l.selected_action_id,o.selected_action_id);assert.equal(l.evidence.grade,'DESIGN_HYPOTHESIS');s.assumptions.hit='UNKNOWN';assert(!get('OPPORTUNITY').actions.some(a=>a.id==='SHORT_WINDOW'));assert(r.engagement);assert.equal(r.evidence.real_coaching_n,0);
+ready();s.type='SHORT';const l=get('LOSS_LIMIT'),o=get('OPPORTUNITY');assert(!G.evaluate(r,C,s,'RESET').actions.some(a=>a.id==='SHORT_WINDOW'));assert.equal(l.advantage,o.advantage);assert.notEqual(l.selected_action_id,o.selected_action_id);assert.equal(l.evidence.grade,'DESIGN_HYPOTHESIS');s.assumptions.hit='UNKNOWN';assert(!get('OPPORTUNITY').actions.some(a=>a.id==='SHORT_WINDOW'));assert(r.engagement);assert.equal(r.evidence.real_coaching_n,0);
 """)
  def test_spent_spell_is_not_allin_and_remaining_counter_is_explicit(self):
   self.run_node(self.prefix+"""

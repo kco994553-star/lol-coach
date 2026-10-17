@@ -47,7 +47,7 @@
       const before=result,oldPlan=before?.selected_plan_id;
       state=next;result=X.evaluate(report,catalog,state);preview=result.selected_plan_id;step='1';
       last={reason,previous:oldPlan,current:result.selected_plan_id,previous_choice:before?{risk:before.preference.risk,plan:oldPlan}:null,action_changed:Boolean(before&&oldPlan!==result.selected_plan_id)};
-      waveState={...waveState,milestone:state.milestone};engagementState={...engagementState,milestone:state.milestone};engagementResult=G.evaluate(report,catalog,engagementState);waveResult=G.constrainWave(report,catalog,waveState,result,engagementResult,W);wavePreview=waveResult.selected_plan_id;waveStep='1';
+      waveState={...waveState,milestone:state.milestone};engagementState={...engagementState,milestone:state.milestone};engagementResult=G.evaluate(report,catalog,engagementState,waveState.assumptions.purpose);waveResult=G.constrainWave(report,catalog,waveState,result,engagementResult,W);wavePreview=waveResult.selected_plan_id;waveStep='1';
       closeZoom();render();
       if(focused)host.querySelector('#'+CSS.escape(focused))?.focus({preventScroll:true});
     }
@@ -107,7 +107,7 @@
       const scenario=X.mapFor(report.input,plan);target.append(root.LoadingMap.create(scenario,catalog,report.input,{selectedStep:step,onSelect:select,skillAliases:[{text:'덫',champion:'Caitlyn',slot:'W'}]}));select(step);
     }
     function showError(error){closeZoom();host.replaceChildren(el('p','탐색을 완료하지 못했습니다. 픽을 다시 분석해 주세요. '+(error?.message||''),'is-error'));}
-    result=X.evaluate(report,catalog,state);preview=result.selected_plan_id;engagementResult=G.evaluate(report,catalog,engagementState);waveResult=G.constrainWave(report,catalog,waveState,result,engagementResult,W);wavePreview=waveResult.selected_plan_id;render();
+    result=X.evaluate(report,catalog,state);preview=result.selected_plan_id;engagementResult=G.evaluate(report,catalog,engagementState,waveState.assumptions.purpose);waveResult=G.constrainWave(report,catalog,waveState,result,engagementResult,W);wavePreview=waveResult.selected_plan_id;render();
     return {destroy(){destroyed=true;closeZoom();host.querySelector('#wave-line-dialog')?.close();host.replaceChildren();},snapshot(){return {state:JSON.parse(JSON.stringify(state)),panel,step,preview,result:result.selected_plan_id};}};
   }
   root.LoadingInteractive={mount,describeSelection,waveAllowsMeans};
