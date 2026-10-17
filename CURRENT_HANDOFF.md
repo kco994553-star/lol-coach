@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-directions`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/directions-results-20261017`
+- authority: USER_SITUATIONAL_MINIMAP_PROTOTYPE_AND_MOBILE_WEB_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `0ec550d823936118f86487626467e3d01060de42`
+- detail: PR51 required38998023440/38998023515 all3SUCCESS on testedmerge2543189/treef02ab4f. Docs-only checks correctlyreusecompletedtests/browsers; sourcecontractPASS. Normal expectedheadmerge thenpostmain. ExistingmobileHTTPSdeploy remainsverifiedunchanged.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261017-directions`
 - status: `CI_PENDING`
