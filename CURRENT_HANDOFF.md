@@ -1,3 +1,52 @@
+된 것: 상황별 주 계획·대안과 공식 미니맵을 PC·모바일 공통 화면으로 구현했습니다.
+된 것: 귀환/웨이브·사이드/합류·목표물/교환의 조건 비교 6장면과 대표 챔피언 3명을 연결했습니다.
+유지: 기존 조언7개·AUTO30/HOLD20/USER0·영상3/3·복구108관측·Windows 경로를 보존합니다.
+안 된 것: 새 전략 실전 효과·인게임 연결 승인·실제 Windows 연결은 미확인입니다.
+내가 할 것: 변경 범위 검증·독립 검토·필수CI·정상 병합 후 공개 모바일 웹을 실제 배포 확인합니다.
+
+# Situational directions / real minimap prototype + mobile web — 2026-10-17
+
+Authority USER_SITUATIONAL_MINIMAP_PROTOTYPE_AND_MOBILE_WEB_2026-10-17.
+Intake main15e0e21a53d46e1b9368b93e6ea0963faf767440; branchwork/directions-prototype-20261017;
+common tokenmain-20261017-directions. No conflicting writer/openPR at intake.
+Common source contract contracts/directions-prototype-v1.md. Implementation, evidence and
+limits: evidence/actual-evidence/directions/report.md, assets-policy.md and browser receipts.
+New strategy/types/coordinates are DESIGN_HYPOTHESIS, no inherited AUTO/USER approval.
+
+One pure JS engine/catalog powers PC /directions and allowlisted static mobile export.
+Manual phase/champion/position/BLUE-RED/five economy/condition inputs, separate earned-gold
+and purchased-value differences/currentgold, numbered steps/start-target portraits/arrows,
+mobile zoom and dated public status snapshot. No backend/provider/game connection or input
+persistence. Public export excludes PC auth/UI, accounts, private raw data and quota ledgers.
+Sources are existing ko_KR16.20.1 and four small official PNGs; four official policy/doc GETs.
+No Gemini/YouTube/RiotMatch/paid calls or new games. No assumed live permission from manual
+inputs/reference wording. Riot registration/audit/approval unverified; pregame learning /
+postgame review only. ActualWindowsLCU remains BLOCKED_EXTERNAL.
+
+Three decisions: RECALL with crashed/incoming wave; SIDE_GROUP with available/missing
+return conditions; OBJECTIVE with connected/insufficient ally numbers. Same economy may
+produce different plans, each plan can recur across economy states. Champion-only change
+can yield Caitlyn groupedpressure/Fiora side/Ornn frontconnection under identical conditions.
+All unknowns remain unknown; unseen enemy and unknown wave have no definite portrait/marker.
+No automatic economy threshold, win prediction, new stats, expert statement or advice approval.
+
+Changed-only tests/Chromium and source amendment retain completed predecessor checks. New
+public routes retain Host/CSP/auth boundaries. Original modified server and PC HTML archived
+under evidence/actual-evidence/parent; Frozen/source history remains hash-bound. Independent
+review and exact-head required/postmain CI govern publication; this snapshot does not assert
+future CI or deployment success. Final publication receipt belongs to common claim.
+
+Existing advice7 rewrite ended, no remaining23 expansion. AUTO30/HOLD20/USER0 unchanged.
+Q15275/recallCH291/PRO89 separate; recovery108 participant×match observations unchanged.
+Existing video diagnosis, failed400, successful stages1/2, quota13rows14022s/private pair,
+prepared3/4requests, access path/model/project and free rules untouched. TodayOct17KST
+VIDEO3/3, newTEXT/VIDEO/game/paid calls0. OnOct18 retain plan3→separate exact-result review
+and gated publication→4, then return1/day. Existing Main automation enabled hourly from
+Oct18 00KST; configured next_run_time null/newpolicyexecution UNOBSERVED, dailyworkflow
+18KST configured. Do not spend a call just to prove scheduling. Prior handoff below preserved.
+
+---
+
 된 것: ③ 구간 지정과④ JSON 요청을 로컬 준비했고 기존 성공 출력과 전체 원장을 보존했습니다.
 된 것: 꺼져 있던 기존 Main 예약을 같은 ID로 활성화하고 저장 상태를 재조회했습니다.
 유지: 오늘10/17KST 영상3/3회이며 추가텍스트·영상·YouTube자료 요청·신규예약은0회입니다.
