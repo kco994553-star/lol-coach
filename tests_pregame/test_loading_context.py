@@ -22,6 +22,24 @@ assert(!laneIds.has('Zed')&&fightIds.has('Zed'));
 assert(r.scenarios.every(s=>s.context==='LANE'&&s.map.entities.every(e=>['Caitlyn','Lux'].includes(e.champion))));
 ''')
 
+    def test_summary_is_compact_but_details_keep_conditions_and_all_candidates(self):
+        self.run_node(r"""
+const r=E.analyze(E.exampleInput(C,0),C);
+for(const key of ['our_plan','fight_key']){
+ assert(!/아리|오른|세주아니|피오라|리 신|제드/.test(r.summary[key]),'summary must describe functions, not enumerate candidates');
+ assert(r.summary[key].length<150,'bounded summary length is a readability check, not comprehension evidence');
+}
+assert(/제어/.test(r.summary.our_plan)&&/거리/.test(r.summary.our_plan)&&/끊기/.test(r.summary.our_plan));
+assert(/남은 인원·웨이브/.test(r.summary.our_plan)&&/귀환/.test(r.summary.our_plan),'conversion prerequisites must survive shortening');
+assert(/럭스 Q/.test(r.summary.lane_key)&&/발동/.test(r.summary.lane_key)&&/거리/.test(r.summary.lane_key));
+assert(/수급선/.test(r.summary.lane_key));
+assert(/보호/.test(r.summary.fight_key)&&/접근/.test(r.summary.fight_key)&&/추격/.test(r.summary.fight_key));
+assert(r.gameplan.base.includes('아리·럭스·오른·세주아니'));
+assert.equal(r.contexts.teamfight.threats.length,5);assert(r.teamfight.role.includes('아리·럭스·오른·세주아니'));
+const a=E.exampleInput(C,0);a.allies.find(p=>p.position==='SUPPORT').champion='Ziggs';
+const noCover=E.analyze(a,C);assert(!noCover.summary.fight_key.includes('보호 연결 안에서'));assert(noCover.summary.fight_key.includes('내 이탈'));
+""")
+
     def test_array_order_does_not_change_strategic_meaning_or_map(self):
         self.run_node(r'''
 const a=E.exampleInput(C,0),r=E.analyze(a,C),project=x=>{const c=copy(x);delete c.input;return c;};

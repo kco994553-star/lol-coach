@@ -1,0 +1,40 @@
+..............................F.
+======================================================================
+FAIL: test_position_and_duo_context_are_not_generic_cs_instructions (tests_pregame.test_loading_strategy.LoadingStrategyTests.test_position_and_duo_context_are_not_generic_cs_instructions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_loading_strategy.py", line 93, in test_position_and_duo_context_are_not_generic_cs_instructions
+    self.run_node(r'''
+  File "/workspace/lol-coach/tests_pregame/test_loading_strategy.py", line 16, in run_node
+    self.assertEqual(result.returncode,0,result.stderr)
+AssertionError: 1 != 0 : node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(bot.summary.lane_key.includes('럭스')&&bot.summary.lane_key.includes('노틸러스'))
+
+    at [eval]:6:1
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 32 tests in 2.518s
+
+FAILED (failures=1)

@@ -25,6 +25,13 @@ class SkillDisplayTests(unittest.TestCase):
         actual=js("const a=S.format('럭스의 빛의 속박(Q), 케이틀린 요들잡이 덫(W)',{champions:['Lux','Caitlyn']});console.log(JSON.stringify([a,S.format(a,{champions:['Lux','Caitlyn']})]))")
         self.assertEqual(actual[0],actual[1]);self.assertNotIn('(Q)(Q)',actual[0]);self.assertNotIn('의 럭스의',actual[0])
 
+    def test_adjacent_same_subject_does_not_repeat_display_owner(self):
+        actual=js("const o={champions:['Nautilus','Lux','Draven'],bindings:[{text:'Q로',champion:'Nautilus',slot:'Q',prefix:true}]};const a=S.format('노틸러스가 Q로 접근하고 럭스는 럭스 Q를 씁니다. 드레이븐이 드레이븐의 드레이븐의 리그(P)를 봅니다.',o);console.log(JSON.stringify([a,S.format(a,o),S.format('럭스가 노틸러스 Q를 피합니다.',o)]))")
+        self.assertEqual(actual[0],actual[1])
+        self.assertIn('노틸러스가 닻줄 견인(Q)로',actual[0]);self.assertIn('럭스는 빛의 속박(Q)를',actual[0])
+        self.assertIn('드레이븐이 드레이븐의 리그(P)',actual[0]);self.assertNotIn('노틸러스가 노틸러스의',actual[0])
+        self.assertIn('럭스가 노틸러스의 닻줄 견인(Q)',actual[2])
+
     def test_real_duplicate_name_needs_owner(self):
         actual=js("console.log(JSON.stringify([S.format('동상',{champions:['Anivia','Braum']}),S.format('브라움의 동상',{champions:['Anivia','Braum']}),S.label('Anivia','E')]))")
         self.assertEqual(actual[0],'동상');self.assertEqual(actual[1],'브라움의 동상(Q)');self.assertEqual(actual[2],'애니비아의 동상(E)')
