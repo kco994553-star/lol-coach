@@ -1,3 +1,13 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-loading-wave`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-wave-20261017`
+- intake_main: `8ff7021e95fb24f5fb412f0aa75d415cf423b3ad`
+- detail: User wave-first lane amendment. Reuse completed interactive/public/CI evidence; preserve existing skill means/history/grades/quota/Windows. Bounded exact representative duo wave goals/costs/response/conversion/alternatives, same-state lane diagram and macro map. New strategy DESIGN_HYPOTHESIS only; no game/video/provider/paid calls. Fresh main/AGENTS/Handoff/contracts/claim read; no active prior writer. Implement and affected verification/required CI/normal merge/Pages/Handoff authorized without repeated approval.
+
+---
+
 # Latest common execution claim — PARKED_EXTERNAL
 - run_token: `main-20261017-loading-interactive`
 - status: `PARKED_EXTERNAL`
