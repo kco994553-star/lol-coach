@@ -1,3 +1,12 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261017-loading-interactive`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `work/loading-interactive-results-20261017`
+- detail: PR60/61 main4e373bbd allrequired/postmain3SUCCESS,45feature/26display affectedchecks, freshbrowsers. Pages34d141fa native39016494997SUCCESS,public29files exact+HTTPS1440/390 fullinteractiveflow/keyboard/touch/why/zoom/staleinput PASS. PR62 results-only head41180f19ba96561957c4042a14f5e13b0496c29a treeee2bce03c0179c9744c6b116cbc570a6af312b75 exactlocal; docs/evidence only, product29files unchanged, await required3/source/reuse gate thennormalmerge/postmain. N0/comprehensionunmeasured/Windowsblocked; no provider calls; question3/diagnosis separate.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261017-loading-interactive`
 - status: `RUNNING`
