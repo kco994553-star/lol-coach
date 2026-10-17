@@ -2,6 +2,17 @@
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
 - writer_active: true
+- owner_branch: `work/shared-mobile-crop-20261017`
+- current_main: `1b00751568df9404e0ff643adac0d0ea589c1b5b`
+- active_pr: 73
+- scope: PR72 feature and post-main mandatory3 passed; prepared export not published. Narrow mobile hero focal-area fix before final public publish; preserve all prior proof/history/quotas.
+
+---
+
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
 - owner_branch: `work/shared-web-theme-20261017`
 - current_main: `9abd43195ba4bc664e6815c1367c63a78ce67726`
 - active_pr: 72
