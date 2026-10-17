@@ -1,3 +1,14 @@
+# Latest common execution claim — CI_PENDING
+- run_token: `main-20261017-loading-strategy`
+- status: `CI_PENDING`
+- writer_active: false
+- owner_branch: `work/loading-strategy-mvp-20261017`
+- authority: USER_LOADING_STRATEGY_MVP_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `00b40926e72a198a6143a8b6ffae97dadfac50bf`
+- detail: Existing gh-pages updated non-force from6c950ca to0d8fdfa, source mainffe52ef; actual Pages run39001496401 in_progress, public HTTP/live mobile verification NOT_YET. Writer released while deployment runs.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261017-loading-strategy`
 - status: `RUNNING`
