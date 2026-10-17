@@ -1,3 +1,43 @@
+# Latest common execution claim — PARKED_EXTERNAL
+- run_token: `main-20261017-exchange-preference`
+- status: `PARKED_EXTERNAL`
+- writer_active: false
+- final_main: `7f686b3466e7d208e8418fee0006b9c6f82f782e`
+- product_source_main: `84003a4efc9fcb9de180bfa5c44f16e668bf5c7c`
+- artifact: `96447216db5903508643eb79220d34c74e3bf702`
+- completed_prs: 69,70,71,72,73,74
+- result_main_required_ci: `39032672111`, `39032672132` — all3 SUCCESS; source-bound unchanged checks/browser reused
+- native_pages_run: `39032180568` — build/report/deploy SUCCESS
+- public_proof: actual HTTPS47 manifest files+root/build-info/.nojekyll hashes; PC1440/mobile390 session hero/failure/retry/navigation/guest ten-pick/card destinations/map/200%text PASS. Source and pro5 snapshot preserved.
+- handoff: `evidence/actual-evidence/shared-theme/publication/result.md`; screenshots and same-size original-reference/before-after comparisons on final main. PR74 packaging CI failure retained; .cjs probe converted to exact source/hash JSON without weakening policy, final gates passed.
+- final_receipt: `/workspace/shared-theme-final-receipt.json`
+- receipt_sha256: `8d1a1291c7ec8ec2675d3a9ed74857cba372c8f9155abadd2e79e14e2afa9a1e`
+- remaining: actual private account API deployment, source-question/video allowed-window work and Windows real client external verification. No ready frontend task left; no extra provider/video/paid calls. CoachingN0/30secunmeasured/WindowsBLOCKED_EXTERNAL/AUTO30HOLD20/2026-10-17video3of3 retained.
+
+---
+
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/shared-theme-results-20261017`
+- current_main: `84003a4efc9fcb9de180bfa5c44f16e668bf5c7c`
+- active_pr: 74
+- scope: Product PR72/73 all feature/main required gates passed. Actual Pages9644721/run39032180568 and HTTPS47-file/PC-mobile state/card/map proof passed. Results-only PR74; no product republish/provider calls.
+
+---
+
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/shared-mobile-crop-20261017`
+- current_main: `1b00751568df9404e0ff643adac0d0ea589c1b5b`
+- active_pr: 73
+- scope: PR72 feature and post-main mandatory3 passed; prepared export not published. Narrow mobile hero focal-area fix before final public publish; preserve all prior proof/history/quotas.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
