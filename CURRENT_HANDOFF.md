@@ -1,3 +1,30 @@
+된 것: 교전 유형·기술 소모·첫 적중·후속 조건을 행동·비용·웨이브 실행 제한에 연결했습니다.
+확인: 실제 공개 PC·모바일 화면, PR67·병합후 필수3검사, Pages배포와37파일 일치를 확인했습니다.
+가설: 유나라·룰루 대 루시안·노틸러스의6이후 확정승리는 사용자 제시 검토 가설로만 보존했습니다.
+한계: 교전 우세 직접 근거·올인 승리 검증은 없고 실전N=0·30초 이해미측정·Windows미실증입니다.
+다음: 기존 질문·보류·영상3/3·자동검토30/보류20을 유지하며 필요한 강의/판단전 장면 근거를 기다립니다.
+
+# Lane engagement public completion — 2026-10-17
+
+Productmain359621329f2187c24872b7dfd812542d69d8a157 (PR67), artifact6420484c294600f35ac049734010cef79c753127,
+Pages39024199383 SUCCESS; actual37files/root/manifest and HTTPS PC/mobile encounter/wave gates PASS.
+URL https://kco994553-star.github.io/lol-coach/ ; loading.html manual10pick. Requestedduo register
+and5encountertypes/sixperiodcontrols implemented. AlladvantageUNKNOWN without direct comparison;
+user nearly-assuredwin quote pendinghypothesis only, noUSER/AUTO inheritance. Shorttrade/CS/
+resource-preserving alternatives separated from unsupported sustained/allin. Preference affects
+alternatives only, no advantage. Negative assumptions conservatively gate wave without changing
+inputs; RESET suppresses shorttrade; typedinitiator/Ravailability/sourcepatch/missingassignment
+gates tested. Newduo detailedwave map unsupported; original representative diagrams preserved.
+Sources/questions/counterexamples/history in lane-engagement/publication/result.md; newreview
+queue3 questions plus oldwave/source3 intact.43affected checks and exactsourceCI; reviewfixes.
+Earlier wave/dashboard/pro actualpublication reused, currentpro5game projection identical,
+no new provider calls. Public personalAPI/notes remainunconnected. Gemini10/17video3/3unchanged,
+AUTO30/HOLD20/USER0/advice7/Frozen350/rawhistory/launcher/manual preserved. CoachingN0/30secnot
+measured/WindowsBLOCKED_EXTERNAL. Remaining P0 evidence work external/daylimit gated; no extra
+calls or user-wide review. Final result-only merge SHA and required gates are recorded on work/main-execution-claim; product files unchanged.
+
+---
+
 진행: 웨이브 중심 구조 위에 교전 유형·핵심 기술·첫 적중·후속 조건 비교를 연결했습니다.
 판정: 유나라·룰루 대 루시안·노틸러스의6이후 확정승리는 사용자 제시 검토 가설로만 등록했습니다.
 한계: 직접 비교 근거가 없어 교전 우세는 미확인, 가능한 수급/짧은 교환 후보와 올인을 구분합니다.
