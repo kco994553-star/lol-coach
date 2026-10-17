@@ -1,0 +1,40 @@
+.......F
+======================================================================
+FAIL: test_unsupported_duo_and_invalid_phase_do_not_emit_other_duo_attack_plans (tests_pregame.test_exchange_preference.ExchangePreferenceTests.test_unsupported_duo_and_invalid_phase_do_not_emit_other_duo_attack_plans)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_exchange_preference.py", line 47, in test_unsupported_duo_and_invalid_phase_do_not_emit_other_duo_attack_plans
+    self.run_node(self.prefix+"""
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_strategy.py", line 16, in run_node
+    self.assertEqual(result.returncode,0,result.stderr)
+AssertionError: 1 != 0 : node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(!JSON.stringify(x).includes('카이사'))
+
+    at [eval]:10:173
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.039s
+
+FAILED (failures=1)

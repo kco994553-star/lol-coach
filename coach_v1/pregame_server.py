@@ -312,6 +312,8 @@ class PregameHandler(Handler):
             '/loading':('loading.html','text/html; charset=utf-8'),
             '/loading.html':('loading.html','text/html; charset=utf-8'),
             '/loading.js':('loading.js','text/javascript; charset=utf-8'),
+            '/loading-exchange.js':('loading-exchange.js','text/javascript; charset=utf-8'),
+            '/loading-exchange-view.js':('loading-exchange-view.js','text/javascript; charset=utf-8'),
             '/loading-engagement.js':('loading-engagement.js','text/javascript; charset=utf-8'),
             '/loading-engagement-view.js':('loading-engagement-view.js','text/javascript; charset=utf-8'),
             '/loading-wave.js':('loading-wave.js','text/javascript; charset=utf-8'),

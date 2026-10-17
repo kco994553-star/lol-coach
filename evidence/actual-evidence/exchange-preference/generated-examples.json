@@ -1,0 +1,2414 @@
+{
+  "format": "generated-future-exchange-examples-v1",
+  "observation": "SYNTHETIC_FUTURE_ASSUMPTIONS_NOT_MATCH_SCENES",
+  "real_coaching_n": 0,
+  "examples": [
+    {
+      "id": "YUNARA_REPEAT",
+      "input": {
+        "allies": [
+          {
+            "champion": "Ornn",
+            "position": "TOP"
+          },
+          {
+            "champion": "Sejuani",
+            "position": "JUNGLE"
+          },
+          {
+            "champion": "Ahri",
+            "position": "MID"
+          },
+          {
+            "champion": "Yunara",
+            "position": "BOTTOM"
+          },
+          {
+            "champion": "Lulu",
+            "position": "SUPPORT"
+          }
+        ],
+        "enemies": [
+          {
+            "champion": "Fiora",
+            "position": "TOP"
+          },
+          {
+            "champion": "LeeSin",
+            "position": "JUNGLE"
+          },
+          {
+            "champion": "Zed",
+            "position": "MID"
+          },
+          {
+            "champion": "Lucian",
+            "position": "BOTTOM"
+          },
+          {
+            "champion": "Nautilus",
+            "position": "SUPPORT"
+          }
+        ],
+        "own_champion": "Yunara",
+        "own_position": "BOTTOM",
+        "side": "BLUE",
+        "patch": "16.20",
+        "opponent_mode": "ASSIGNED",
+        "lane_opponent": null,
+        "schema_version": "lol-coach-loading-input-v2",
+        "preferences": {
+          "risk": "BALANCED"
+        }
+      },
+      "engagement_state": {
+        "milestone": "LEVEL6",
+        "type": "SHORT",
+        "assumptions": {
+          "window": "ENEMY_Q_SPENT",
+          "resources": "READY",
+          "followup": "BOTH",
+          "space": "PLAYABLE",
+          "intervention": "DUO_ONLY",
+          "level_stage": "UNKNOWN",
+          "hit": "ALLY_HIT",
+          "growth": "COMPARABLE",
+          "spells": "BOTH_READY",
+          "initiator": "ALLY"
+        }
+      },
+      "exchange_state": {
+        "ours": {
+          "window": "REPEAT_ACTIVE",
+          "cover": "ACTIVE",
+          "contact": "CONNECTED"
+        },
+        "theirs": {
+          "window": "HIT_WINDOW",
+          "cover": "ACTIVE",
+          "contact": "CONNECTED"
+        }
+      },
+      "risk": "BALANCED",
+      "wave_purpose": "SPACE",
+      "result": {
+        "schema_version": "exchange-preference-v1",
+        "supported": true,
+        "state": {
+          "ours": {
+            "window": "REPEAT_ACTIVE",
+            "cover": "ACTIVE",
+            "contact": "CONNECTED"
+          },
+          "theirs": {
+            "window": "HIT_WINDOW",
+            "cover": "ACTIVE",
+            "contact": "CONNECTED"
+          }
+        },
+        "observation": "HYPOTHETICAL",
+        "milestone": "LEVEL6",
+        "ours": {
+          "evidence_ids": [
+            "official:Yunara:Q",
+            "official:Yunara:W",
+            "official:Yunara:E",
+            "official:Lulu:P",
+            "official:Lulu:W",
+            "official:Lulu:E"
+          ],
+          "classification": "CONDITIONAL",
+          "label": "조건부",
+          "mode": "REPEATED",
+          "preferred_exchange": "조건부 · 효과가 남는 동안 반복 공격 후보",
+          "reason": "유나라의 영혼 단련(Q)에는 공격 속도·적중 추가 피해·주변 확산이 있고, 룰루의 요정 친구 픽스(P)는 따라가는 대상의 공격에 반응합니다. 룰루의 도와줘, 픽스!(E)의 보호가 남는 동안 반복 공격을 비교할 기전은 있습니다. 룰루의 변덕쟁이(W)를 아군 강화에 쓰는 선택과 상대의 공격·시전을 제한하는 선택은 나눠야 합니다. 이 성질만으로 상대보다 지속 피해가 높다고 판정하지 않습니다.",
+          "start_conditions": [
+            "관련 기술을 실제 배워 가용하고 양쪽 남은 반격·우리 자원·동료 후속·미니언/포탑 노출·외부 개입과 퇴로를 비교한 가정에서만 후보를 실행합니다.",
+            "룰루의 도와줘, 픽스!(E)의 적용 대상과 남은 효과를 구분합니다. 보호 종료나 강화 종료를 실제 게임 관측으로 기록하지 않습니다."
+          ],
+          "attack_order": [
+            "룰루의 도와줘, 픽스!(E)의 아군 보호가 닿아 남는지 보고, 룰루의 변덕쟁이(W)는 아군 강화와 상대 제약 중 어느 용도로 남길지 나눕니다.",
+            "유나라의 영혼 단련(Q) 강화와 후속 거리·처리/대응 예산이 남는 동안, 닿는 대상의 기본 공격을 반복할 후보를 비교합니다. 누구를 이기는지는 미확인입니다.",
+            "유나라의 칸메이의 발자취 | 닿지 않는 그림자(E) 등 남길 이동 수단과 룰루 연결을 지키고, 확산 공격이 원래 웨이브 목표를 깨면 추가 공격 대신 처리량·대상을 바꿉니다."
+          ],
+          "end": [
+            "유나라의 영혼 단련(Q) 강화가 종료되거나 보호 효과·후속/공격 거리가 끊기면 이번 반복을 끝내고 다시 비교합니다.",
+            "룰루의 도와줘, 픽스!(E)의 종료, 남은 상대 제어가 열림, 미니언/포탑 노출·증원 또는 처리/이탈 자원 부족은 전환 사건입니다. 공통 초 수로 정하지 않습니다."
+          ],
+          "continue_if": [
+            "다음 공격·강화·보호 수단이 실제 남고 양쪽 후속·퇴로·자원·미니언/포탑 노출이 다시 맞을 때만 추가 교환을 비교합니다.",
+            "이어서 공격할 수 있다는 조건은 올인·추격 승리 또는 전체 피해 우위가 아닙니다."
+          ],
+          "reply_alternative": "상대가 접근·제어·맞견제로 끊으면 추가 공격 대신 남은 보호·이동을 수급 복귀에 남깁니다. 상대 반격 창이 살아 있는 동안 무리하게 붙지 않고, 상대가 CS를 먹는 동안 얻을 처리·공간과 포기할 자원을 비교합니다.",
+          "cover_owner": "Lulu",
+          "cover_target": "Yunara",
+          "intent": "UNKNOWN",
+          "short_may_only_limit_loss": false,
+          "mechanism_inference": "DESIGN_HYPOTHESIS",
+          "actual_relative_superiority": "UNVERIFIED",
+          "actual_matchup_advantage": "UNKNOWN"
+        },
+        "theirs": {
+          "evidence_ids": [
+            "official:Lucian:P",
+            "official:Lucian:Q",
+            "official:Lucian:E",
+            "official:Nautilus:P",
+            "official:Nautilus:W"
+          ],
+          "classification": "CONDITIONAL",
+          "label": "조건부",
+          "mode": "SHORT",
+          "preferred_exchange": "조건부 · 한 기회만 쓰거나 이미 시작한 교환을 짧게 끝내는 후보",
+          "reason": "루시안의 빛의 사수(P)는 스킬 뒤 다음 공격을 강화합니다. 한 번의 기술→공격 창으로 끊을 수도 있고, 다음 기술이 실제 남아 있으면 다시 기술→공격을 연결할 수도 있습니다. 루시안의 끈질긴 추격(E)는 지속 효과 공격으로 재사용 대기시간이 줄어드는 성질이지 즉시 다시 이동할 수 있다는 증거는 아닙니다. 노틸러스의 타이탄의 분노(W)의 보호 대상은 노틸러스 자신이며 루시안이 아닙니다. 이번 가정은 한 적중·발동 기회이며 다음 반복까지 보장하지 않아, 그 기회 뒤 끊는 후보를 비교합니다.",
+          "start_conditions": [
+            "상대가 관련 기술·자원과 후속 거리를 남겨 둔 경우의 가능성입니다. 상대 실제 의도·체력/마나·다음 가용 수단은 미확인입니다.",
+            "노틸러스의 타이탄의 분노(W)의 적용 대상과 남은 효과를 구분합니다. 보호 종료나 강화 종료를 실제 게임 관측으로 기록하지 않습니다."
+          ],
+          "attack_order": [
+            "루시안의 꿰뚫는 빛(Q) 등 배워 가용한 기술 뒤 루시안의 빛의 사수(P) 공격을 잇는 가능성을 비교합니다. 실제 적중·노출 비용은 별도입니다.",
+            "이번 강화 공격 창을 사용한 뒤 다음 기술·자원이 남았는지 다시 봅니다. 공격 뒤 아무 피해도 없다고 가정하지 않습니다.",
+            "루시안의 끈질긴 추격(E)를 앞으로 썼다면 즉시 이탈에 다시 쓰는 것으로 세지 않습니다. 노틸러스의 강력한 일격(P) 등 남은 반격과 동료 거리를 별도로 봅니다."
+          ],
+          "end": [
+            "선택한 공격 발동 기회가 소모되거나 다음 가용 수단이 없고 보호·후속 거리가 끊기면 이번 교환을 끝내고 다시 비교합니다.",
+            "노틸러스의 타이탄의 분노(W)의 종료, 남은 상대 제어가 열림, 미니언/포탑 노출·증원 또는 처리/이탈 자원 부족은 전환 사건입니다. 공통 초 수로 정하지 않습니다."
+          ],
+          "continue_if": [
+            "다음 공격·강화·보호 수단이 실제 남고 양쪽 후속·퇴로·자원·미니언/포탑 노출이 다시 맞을 때만 추가 교환을 비교합니다.",
+            "이어서 공격할 수 있다는 조건은 올인·추격 승리 또는 전체 피해 우위가 아닙니다."
+          ],
+          "reply_alternative": "상대가 원하는 기술→공격 또는 중첩 연속을 끊을 수 있는 거리·동료 연결을 먼저 비교합니다. 그 조건이 없으면 공격을 유도하러 전진하지 않고 CS 처리·자원 보존으로 바꿉니다. 미니언만으로 접근이 막힌다고 단정하지 않습니다.",
+          "cover_owner": "Nautilus",
+          "cover_target": "Nautilus",
+          "intent": "UNKNOWN",
+          "short_may_only_limit_loss": false,
+          "mechanism_inference": "DESIGN_HYPOTHESIS",
+          "actual_relative_superiority": "UNVERIFIED",
+          "actual_matchup_advantage": "UNKNOWN"
+        },
+        "actual_matchup_advantage": "UNKNOWN",
+        "all_in_supported": false,
+        "chase_supported": false,
+        "attack_gate": "UNCHANGED",
+        "wave": {
+          "adoption": "KEEP_EXISTING_GATES",
+          "cost": "교환에 쓰는 기술·마나·앞으로 나가는 노출과 웨이브 처리·복귀 비용을 함께 비교합니다. 처리 속도와 포탑 도착 완료는 별도입니다.",
+          "minion_effect": "유나라의 영혼 단련(Q)는 주변 확산으로 웨이브 처리량을 바꿀 수 있습니다. 룰루의 요정 친구 픽스(P)의 광선은 다른 유닛이 대신 맞을 수 있어 실제 닿는 피해를 확인해야 합니다.",
+          "avoid_opponent_pattern": "상대 기술→추가 공격 창이 열린 동안 같은 길이의 교환을 강요하지 않습니다. 다음 수단이 실제 소모된 뒤 남은 반격과 CS·처리 공간을 다시 비교합니다."
+        },
+        "evidence": {
+          "grade": "DESIGN_HYPOTHESIS",
+          "facts": [
+            {
+              "id": "official:Lucian:E",
+              "slot": "E",
+              "name": "끈질긴 추격",
+              "text": "루시안이 짧은 거리를 빠르게 돌진합니다. 빛의 사수 스킬로 공격하면 끈질긴 추격의 재사용 대기시간이 감소합니다.",
+              "raw_excerpt": "루시안이 짧은 거리를 빠르게 돌진합니다. 빛의 사수 스킬로 공격하면 끈질긴 추격의 재사용 대기시간이 감소합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lucian.json",
+              "patch": "16.20.1",
+              "sha256": "d667a59b8285eb687f06bc3a5e8f3028341b5bfb94aa3b1ca1670a181691aeb6",
+              "local_source": "data/official_catalog/versions/16.20.1/Lucian-16.20.1.ko_KR.json",
+              "locator": "data.Lucian.spells.2.description"
+            },
+            {
+              "id": "official:Lucian:P",
+              "slot": "P",
+              "name": "빛의 사수",
+              "text": "루시안이 스킬을 사용할 때마다 다음 공격이 2연속으로 발사됩니다. 아군이 루시안에게 회복 또는 보호막 효과를 부여하거나, 근처 적 챔피언이 이동 불가 상태가 되면 루시안의 다음 기본 공격 2회가 추가 마법 피해를 입힙니다.",
+              "raw_excerpt": "루시안이 스킬을 사용할 때마다 다음 공격이 2연속으로 발사됩니다. 아군이 루시안에게 회복 또는 보호막 효과를 부여하거나, 근처 적 챔피언이 이동 불가 상태가 되면 루시안의 다음 기본 공격 2회가 추가 마법 피해를 입힙니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lucian.json",
+              "patch": "16.20.1",
+              "sha256": "d667a59b8285eb687f06bc3a5e8f3028341b5bfb94aa3b1ca1670a181691aeb6",
+              "local_source": "data/official_catalog/versions/16.20.1/Lucian-16.20.1.ko_KR.json",
+              "locator": "data.Lucian.passive.description"
+            },
+            {
+              "id": "official:Lucian:Q",
+              "slot": "Q",
+              "name": "꿰뚫는 빛",
+              "text": "루시안이 대상을 관통하는 빛 줄기를 발사합니다.",
+              "raw_excerpt": "루시안이 대상을 관통하는 빛 줄기를 발사합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lucian.json",
+              "patch": "16.20.1",
+              "sha256": "d667a59b8285eb687f06bc3a5e8f3028341b5bfb94aa3b1ca1670a181691aeb6",
+              "local_source": "data/official_catalog/versions/16.20.1/Lucian-16.20.1.ko_KR.json",
+              "locator": "data.Lucian.spells.0.description"
+            },
+            {
+              "id": "official:Lulu:E",
+              "slot": "E",
+              "name": "도와줘, 픽스!",
+              "text": "아군에게 시전하면 픽스가 대상에게 점프하여 보호막을 씌워줍니다. 그 다음 대상을 따라다니며 공격을 돕습니다. 적에게 시전하면 픽스가 대상에게 점프하여 피해를 줍니다. 그 다음 대상을 따라다니며 위치를 확인할 수 있도록 해 줍니다.",
+              "raw_excerpt": "아군에게 시전하면 픽스가 대상에게 점프하여 보호막을 씌워줍니다. 그 다음 대상을 따라다니며 공격을 돕습니다. 적에게 시전하면 픽스가 대상에게 점프하여 피해를 줍니다. 그 다음 대상을 따라다니며 위치를 확인할 수 있도록 해 줍니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lulu.json",
+              "patch": "16.20.1",
+              "sha256": "7859290d4e2a26d8b5a3a81a75bd7e2d48195a7659bfac3aa936c262d3c7da75",
+              "local_source": "data/official_catalog/versions/16.20.1/Lulu-16.20.1.ko_KR.json",
+              "locator": "data.Lulu.spells.2.description"
+            },
+            {
+              "id": "official:Lulu:P",
+              "slot": "P",
+              "name": "요정 친구 픽스",
+              "text": "픽스는 현재 따라다니는 챔피언이 적 유닛을 공격할 때마다 함께 마법 광선을 발사합니다. 이 마법 광선은 목표를 추적하지만, 다른 유닛이 막아서 대신 맞을 수 있습니다.",
+              "raw_excerpt": "픽스는 현재 따라다니는 챔피언이 적 유닛을 공격할 때마다 함께 마법 광선을 발사합니다. 이 마법 광선은 목표를 추적하지만, 다른 유닛이 막아서 대신 맞을 수 있습니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lulu.json",
+              "patch": "16.20.1",
+              "sha256": "7859290d4e2a26d8b5a3a81a75bd7e2d48195a7659bfac3aa936c262d3c7da75",
+              "local_source": "data/official_catalog/versions/16.20.1/Lulu-16.20.1.ko_KR.json",
+              "locator": "data.Lulu.passive.description"
+            },
+            {
+              "id": "official:Lulu:W",
+              "slot": "W",
+              "name": "변덕쟁이",
+              "text": "아군에게 사용하면 잠깐 동안 대상의 공격 속도와 이동 속도가 상승합니다. 적에게 시전하면 기본 공격이나 스킬 시전이 불가능한 귀여운 생물로 변합니다.",
+              "raw_excerpt": "아군에게 사용하면 잠깐 동안 대상의 공격 속도와 이동 속도가 상승합니다. 적에게 시전하면 기본 공격이나 스킬 시전이 불가능한 귀여운 생물로 변합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lulu.json",
+              "patch": "16.20.1",
+              "sha256": "7859290d4e2a26d8b5a3a81a75bd7e2d48195a7659bfac3aa936c262d3c7da75",
+              "local_source": "data/official_catalog/versions/16.20.1/Lulu-16.20.1.ko_KR.json",
+              "locator": "data.Lulu.spells.1.description"
+            },
+            {
+              "id": "official:Nautilus:P",
+              "slot": "P",
+              "name": "강력한 일격",
+              "text": "노틸러스가 대상에 대한 첫 기본 공격 시 추가 물리 피해를 입히고 잠시 속박합니다.",
+              "raw_excerpt": "노틸러스가 대상에 대한 첫 기본 공격 시 추가 물리 피해를 입히고 잠시 속박합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+              "patch": "16.20.1",
+              "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+              "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+              "locator": "data.Nautilus.passive.description"
+            },
+            {
+              "id": "official:Nautilus:W",
+              "slot": "W",
+              "name": "타이탄의 분노",
+              "text": "노틸러스가 잠시 보호막을 얻습니다. 보호막이 지속되는 동안 노틸러스의 기본 공격은 대상과 대상 주위의 적에게 지속 피해를 입힙니다.",
+              "raw_excerpt": "노틸러스가 잠시 보호막을 얻습니다. 보호막이 지속되는 동안 노틸러스의 기본 공격은 대상과 대상 주위의 적에게 지속 피해를 입힙니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+              "patch": "16.20.1",
+              "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+              "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+              "locator": "data.Nautilus.spells.1.description"
+            },
+            {
+              "id": "official:Yunara:E",
+              "slot": "E",
+              "name": "칸메이의 발자취 | 닿지 않는 그림자",
+              "text": "유나라가 유체화 상태가 되고 이동 속도가 증가합니다. 초월 상태에서는 유나라가 한 방향으로 돌진합니다.",
+              "raw_excerpt": "유나라가 유체화 상태가 되고 이동 속도가 증가합니다. 초월 상태에서는 유나라가 한 방향으로 돌진합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Yunara.json",
+              "patch": "16.20.1",
+              "sha256": "83720ec1f71f46e507b14a53910755d6caed1c353acb84062799f7cc8ebd0b9c",
+              "local_source": "data/official_catalog/versions/16.20.1/Yunara-16.20.1.ko_KR.json",
+              "locator": "data.Yunara.spells.2.description"
+            },
+            {
+              "id": "official:Yunara:Q",
+              "slot": "Q",
+              "name": "영혼 단련",
+              "text": "유나라의 공격 속도가 증가하고 적중 시 추가 피해를 입히며 기본 공격이 주변 적에게 확산됩니다.",
+              "raw_excerpt": "유나라의 공격 속도가 증가하고 적중 시 추가 피해를 입히며 기본 공격이 주변 적에게 확산됩니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Yunara.json",
+              "patch": "16.20.1",
+              "sha256": "83720ec1f71f46e507b14a53910755d6caed1c353acb84062799f7cc8ebd0b9c",
+              "local_source": "data/official_catalog/versions/16.20.1/Yunara-16.20.1.ko_KR.json",
+              "locator": "data.Yunara.spells.0.description"
+            },
+            {
+              "id": "official:Yunara:W",
+              "slot": "W",
+              "name": "심판의 궤적 | 파멸의 궤적",
+              "text": "유나라가 회전하는 기도의 구슬을 날려 적에게 피해를 입히고 둔화시킵니다. 초월 상태에서는 유나라가 빛줄기를 발사해 적에게 피해를 입히고 둔화시킵니다.",
+              "raw_excerpt": "유나라가 회전하는 기도의 구슬을 날려 적에게 피해를 입히고 둔화시킵니다. 초월 상태에서는 유나라가 빛줄기를 발사해 적에게 피해를 입히고 둔화시킵니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Yunara.json",
+              "patch": "16.20.1",
+              "sha256": "83720ec1f71f46e507b14a53910755d6caed1c353acb84062799f7cc8ebd0b9c",
+              "local_source": "data/official_catalog/versions/16.20.1/Yunara-16.20.1.ko_KR.json",
+              "locator": "data.Yunara.spells.1.description"
+            }
+          ],
+          "matchup_comparisons": 0,
+          "scope": "공식 기전에서 만든 조건부 계획. 실제 매치업의 짧은/지속 우열·피해 공백 길이·승리 조건 근거는 미연결.",
+          "question_ids": [
+            "ENG-6-ALLREADY",
+            "ENG-6-SPENT",
+            "ENG-6-INITIATOR"
+          ],
+          "coaching_n": 0
+        }
+      },
+      "selected_action": "PRESERVE_INTAKE"
+    },
+    {
+      "id": "YUNARA_COVER_ENDS",
+      "input": {
+        "allies": [
+          {
+            "champion": "Ornn",
+            "position": "TOP"
+          },
+          {
+            "champion": "Sejuani",
+            "position": "JUNGLE"
+          },
+          {
+            "champion": "Ahri",
+            "position": "MID"
+          },
+          {
+            "champion": "Yunara",
+            "position": "BOTTOM"
+          },
+          {
+            "champion": "Lulu",
+            "position": "SUPPORT"
+          }
+        ],
+        "enemies": [
+          {
+            "champion": "Fiora",
+            "position": "TOP"
+          },
+          {
+            "champion": "LeeSin",
+            "position": "JUNGLE"
+          },
+          {
+            "champion": "Zed",
+            "position": "MID"
+          },
+          {
+            "champion": "Lucian",
+            "position": "BOTTOM"
+          },
+          {
+            "champion": "Nautilus",
+            "position": "SUPPORT"
+          }
+        ],
+        "own_champion": "Yunara",
+        "own_position": "BOTTOM",
+        "side": "BLUE",
+        "patch": "16.20",
+        "opponent_mode": "ASSIGNED",
+        "lane_opponent": null,
+        "schema_version": "lol-coach-loading-input-v2",
+        "preferences": {
+          "risk": "BALANCED"
+        }
+      },
+      "engagement_state": {
+        "milestone": "LEVEL6",
+        "type": "SHORT",
+        "assumptions": {
+          "window": "ENEMY_Q_SPENT",
+          "resources": "READY",
+          "followup": "BOTH",
+          "space": "PLAYABLE",
+          "intervention": "DUO_ONLY",
+          "level_stage": "UNKNOWN",
+          "hit": "ALLY_HIT",
+          "growth": "COMPARABLE",
+          "spells": "BOTH_READY",
+          "initiator": "ALLY"
+        }
+      },
+      "exchange_state": {
+        "ours": {
+          "window": "REPEAT_ACTIVE",
+          "cover": "ENDING",
+          "contact": "CONNECTED"
+        },
+        "theirs": {
+          "window": "HIT_WINDOW",
+          "cover": "ACTIVE",
+          "contact": "CONNECTED"
+        }
+      },
+      "risk": "BALANCED",
+      "wave_purpose": "SPACE",
+      "result": {
+        "schema_version": "exchange-preference-v1",
+        "supported": true,
+        "state": {
+          "ours": {
+            "window": "REPEAT_ACTIVE",
+            "cover": "ENDING",
+            "contact": "CONNECTED"
+          },
+          "theirs": {
+            "window": "HIT_WINDOW",
+            "cover": "ACTIVE",
+            "contact": "CONNECTED"
+          }
+        },
+        "observation": "HYPOTHETICAL",
+        "milestone": "LEVEL6",
+        "ours": {
+          "evidence_ids": [
+            "official:Yunara:Q",
+            "official:Yunara:W",
+            "official:Yunara:E",
+            "official:Lulu:P",
+            "official:Lulu:W",
+            "official:Lulu:E"
+          ],
+          "classification": "CONDITIONAL",
+          "label": "조건부",
+          "mode": "SHORT",
+          "preferred_exchange": "조건부 · 한 기회만 쓰거나 이미 시작한 교환을 짧게 끝내는 후보",
+          "reason": "유나라의 영혼 단련(Q)에는 공격 속도·적중 추가 피해·주변 확산이 있고, 룰루의 요정 친구 픽스(P)는 따라가는 대상의 공격에 반응합니다. 룰루의 도와줘, 픽스!(E)의 보호가 남는 동안 반복 공격을 비교할 기전은 있습니다. 룰루의 변덕쟁이(W)를 아군 강화에 쓰는 선택과 상대의 공격·시전을 제한하는 선택은 나눠야 합니다. 이 성질만으로 상대보다 지속 피해가 높다고 판정하지 않습니다. 선택한 종료 사건 뒤 길게 붙는 대신 이미 시작한 교환을 끊는 후보입니다. 두 방식 모두 불리하고 짧게 끝내는 편이 손실을 덜 남길 가능성도 있으며, 그 크기는 검증하지 않았습니다.",
+          "start_conditions": [
+            "관련 기술을 실제 배워 가용하고 양쪽 남은 반격·우리 자원·동료 후속·미니언/포탑 노출·외부 개입과 퇴로를 비교한 가정에서만 후보를 실행합니다.",
+            "룰루의 도와줘, 픽스!(E)의 적용 대상과 남은 효과를 구분합니다. 보호 종료나 강화 종료를 실제 게임 관측으로 기록하지 않습니다."
+          ],
+          "attack_order": [
+            "추가 공격을 시작하지 않고 이미 시작한 교환을 마무리합니다.",
+            "공격에 쓴 수단을 이탈에 다시 세지 말고 남은 이동·보호와 동료 거리를 확인합니다.",
+            "현재 받을 수급·웨이브 처리 범위로 목표를 바꿉니다. 무리하게 붙는 대신 잃을 CS·공간과 회복/귀환을 비교합니다."
+          ],
+          "end": [
+            "유나라의 영혼 단련(Q) 강화가 종료되거나 보호 효과·후속/공격 거리가 끊기면 이번 반복을 끝내고 다시 비교합니다.",
+            "룰루의 도와줘, 픽스!(E)의 종료, 남은 상대 제어가 열림, 미니언/포탑 노출·증원 또는 처리/이탈 자원 부족은 전환 사건입니다. 공통 초 수로 정하지 않습니다."
+          ],
+          "continue_if": [
+            "다음 공격·강화·보호 수단이 실제 남고 양쪽 후속·퇴로·자원·미니언/포탑 노출이 다시 맞을 때만 추가 교환을 비교합니다.",
+            "이어서 공격할 수 있다는 조건은 올인·추격 승리 또는 전체 피해 우위가 아닙니다."
+          ],
+          "reply_alternative": "상대가 접근·제어·맞견제로 끊으면 추가 공격 대신 남은 보호·이동을 수급 복귀에 남깁니다. 상대 반격 창이 살아 있는 동안 무리하게 붙지 않고, 상대가 CS를 먹는 동안 얻을 처리·공간과 포기할 자원을 비교합니다.",
+          "cover_owner": "Lulu",
+          "cover_target": "Yunara",
+          "intent": "UNKNOWN",
+          "short_may_only_limit_loss": true,
+          "mechanism_inference": "DESIGN_HYPOTHESIS",
+          "actual_relative_superiority": "UNVERIFIED",
+          "actual_matchup_advantage": "UNKNOWN"
+        },
+        "theirs": {
+          "evidence_ids": [
+            "official:Lucian:P",
+            "official:Lucian:Q",
+            "official:Lucian:E",
+            "official:Nautilus:P",
+            "official:Nautilus:W"
+          ],
+          "classification": "CONDITIONAL",
+          "label": "조건부",
+          "mode": "SHORT",
+          "preferred_exchange": "조건부 · 한 기회만 쓰거나 이미 시작한 교환을 짧게 끝내는 후보",
+          "reason": "루시안의 빛의 사수(P)는 스킬 뒤 다음 공격을 강화합니다. 한 번의 기술→공격 창으로 끊을 수도 있고, 다음 기술이 실제 남아 있으면 다시 기술→공격을 연결할 수도 있습니다. 루시안의 끈질긴 추격(E)는 지속 효과 공격으로 재사용 대기시간이 줄어드는 성질이지 즉시 다시 이동할 수 있다는 증거는 아닙니다. 노틸러스의 타이탄의 분노(W)의 보호 대상은 노틸러스 자신이며 루시안이 아닙니다. 이번 가정은 한 적중·발동 기회이며 다음 반복까지 보장하지 않아, 그 기회 뒤 끊는 후보를 비교합니다.",
+          "start_conditions": [
+            "상대가 관련 기술·자원과 후속 거리를 남겨 둔 경우의 가능성입니다. 상대 실제 의도·체력/마나·다음 가용 수단은 미확인입니다.",
+            "노틸러스의 타이탄의 분노(W)의 적용 대상과 남은 효과를 구분합니다. 보호 종료나 강화 종료를 실제 게임 관측으로 기록하지 않습니다."
+          ],
+          "attack_order": [
+            "루시안의 꿰뚫는 빛(Q) 등 배워 가용한 기술 뒤 루시안의 빛의 사수(P) 공격을 잇는 가능성을 비교합니다. 실제 적중·노출 비용은 별도입니다.",
+            "이번 강화 공격 창을 사용한 뒤 다음 기술·자원이 남았는지 다시 봅니다. 공격 뒤 아무 피해도 없다고 가정하지 않습니다.",
+            "루시안의 끈질긴 추격(E)를 앞으로 썼다면 즉시 이탈에 다시 쓰는 것으로 세지 않습니다. 노틸러스의 강력한 일격(P) 등 남은 반격과 동료 거리를 별도로 봅니다."
+          ],
+          "end": [
+            "선택한 공격 발동 기회가 소모되거나 다음 가용 수단이 없고 보호·후속 거리가 끊기면 이번 교환을 끝내고 다시 비교합니다.",
+            "노틸러스의 타이탄의 분노(W)의 종료, 남은 상대 제어가 열림, 미니언/포탑 노출·증원 또는 처리/이탈 자원 부족은 전환 사건입니다. 공통 초 수로 정하지 않습니다."
+          ],
+          "continue_if": [
+            "다음 공격·강화·보호 수단이 실제 남고 양쪽 후속·퇴로·자원·미니언/포탑 노출이 다시 맞을 때만 추가 교환을 비교합니다.",
+            "이어서 공격할 수 있다는 조건은 올인·추격 승리 또는 전체 피해 우위가 아닙니다."
+          ],
+          "reply_alternative": "상대가 원하는 기술→공격 또는 중첩 연속을 끊을 수 있는 거리·동료 연결을 먼저 비교합니다. 그 조건이 없으면 공격을 유도하러 전진하지 않고 CS 처리·자원 보존으로 바꿉니다. 미니언만으로 접근이 막힌다고 단정하지 않습니다.",
+          "cover_owner": "Nautilus",
+          "cover_target": "Nautilus",
+          "intent": "UNKNOWN",
+          "short_may_only_limit_loss": false,
+          "mechanism_inference": "DESIGN_HYPOTHESIS",
+          "actual_relative_superiority": "UNVERIFIED",
+          "actual_matchup_advantage": "UNKNOWN"
+        },
+        "actual_matchup_advantage": "UNKNOWN",
+        "all_in_supported": false,
+        "chase_supported": false,
+        "attack_gate": "NO_ADDITIONAL_ATTACK",
+        "wave": {
+          "adoption": "NO_ADDITIONAL_ATTACK",
+          "cost": "교환에 쓰는 기술·마나·앞으로 나가는 노출과 웨이브 처리·복귀 비용을 함께 비교합니다. 처리 속도와 포탑 도착 완료는 별도입니다.",
+          "minion_effect": "유나라의 영혼 단련(Q)는 주변 확산으로 웨이브 처리량을 바꿀 수 있습니다. 룰루의 요정 친구 픽스(P)의 광선은 다른 유닛이 대신 맞을 수 있어 실제 닿는 피해를 확인해야 합니다.",
+          "avoid_opponent_pattern": "상대 기술→추가 공격 창이 열린 동안 같은 길이의 교환을 강요하지 않습니다. 다음 수단이 실제 소모된 뒤 남은 반격과 CS·처리 공간을 다시 비교합니다."
+        },
+        "evidence": {
+          "grade": "DESIGN_HYPOTHESIS",
+          "facts": [
+            {
+              "id": "official:Lucian:E",
+              "slot": "E",
+              "name": "끈질긴 추격",
+              "text": "루시안이 짧은 거리를 빠르게 돌진합니다. 빛의 사수 스킬로 공격하면 끈질긴 추격의 재사용 대기시간이 감소합니다.",
+              "raw_excerpt": "루시안이 짧은 거리를 빠르게 돌진합니다. 빛의 사수 스킬로 공격하면 끈질긴 추격의 재사용 대기시간이 감소합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lucian.json",
+              "patch": "16.20.1",
+              "sha256": "d667a59b8285eb687f06bc3a5e8f3028341b5bfb94aa3b1ca1670a181691aeb6",
+              "local_source": "data/official_catalog/versions/16.20.1/Lucian-16.20.1.ko_KR.json",
+              "locator": "data.Lucian.spells.2.description"
+            },
+            {
+              "id": "official:Lucian:P",
+              "slot": "P",
+              "name": "빛의 사수",
+              "text": "루시안이 스킬을 사용할 때마다 다음 공격이 2연속으로 발사됩니다. 아군이 루시안에게 회복 또는 보호막 효과를 부여하거나, 근처 적 챔피언이 이동 불가 상태가 되면 루시안의 다음 기본 공격 2회가 추가 마법 피해를 입힙니다.",
+              "raw_excerpt": "루시안이 스킬을 사용할 때마다 다음 공격이 2연속으로 발사됩니다. 아군이 루시안에게 회복 또는 보호막 효과를 부여하거나, 근처 적 챔피언이 이동 불가 상태가 되면 루시안의 다음 기본 공격 2회가 추가 마법 피해를 입힙니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lucian.json",
+              "patch": "16.20.1",
+              "sha256": "d667a59b8285eb687f06bc3a5e8f3028341b5bfb94aa3b1ca1670a181691aeb6",
+              "local_source": "data/official_catalog/versions/16.20.1/Lucian-16.20.1.ko_KR.json",
+              "locator": "data.Lucian.passive.description"
+            },
+            {
+              "id": "official:Lucian:Q",
+              "slot": "Q",
+              "name": "꿰뚫는 빛",
+              "text": "루시안이 대상을 관통하는 빛 줄기를 발사합니다.",
+              "raw_excerpt": "루시안이 대상을 관통하는 빛 줄기를 발사합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lucian.json",
+              "patch": "16.20.1",
+              "sha256": "d667a59b8285eb687f06bc3a5e8f3028341b5bfb94aa3b1ca1670a181691aeb6",
+              "local_source": "data/official_catalog/versions/16.20.1/Lucian-16.20.1.ko_KR.json",
+              "locator": "data.Lucian.spells.0.description"
+            },
+            {
+              "id": "official:Lulu:E",
+              "slot": "E",
+              "name": "도와줘, 픽스!",
+              "text": "아군에게 시전하면 픽스가 대상에게 점프하여 보호막을 씌워줍니다. 그 다음 대상을 따라다니며 공격을 돕습니다. 적에게 시전하면 픽스가 대상에게 점프하여 피해를 줍니다. 그 다음 대상을 따라다니며 위치를 확인할 수 있도록 해 줍니다.",
+              "raw_excerpt": "아군에게 시전하면 픽스가 대상에게 점프하여 보호막을 씌워줍니다. 그 다음 대상을 따라다니며 공격을 돕습니다. 적에게 시전하면 픽스가 대상에게 점프하여 피해를 줍니다. 그 다음 대상을 따라다니며 위치를 확인할 수 있도록 해 줍니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lulu.json",
+              "patch": "16.20.1",
+              "sha256": "7859290d4e2a26d8b5a3a81a75bd7e2d48195a7659bfac3aa936c262d3c7da75",
+              "local_source": "data/official_catalog/versions/16.20.1/Lulu-16.20.1.ko_KR.json",
+              "locator": "data.Lulu.spells.2.description"
+            },
+            {
+              "id": "official:Lulu:P",
+              "slot": "P",
+              "name": "요정 친구 픽스",
+              "text": "픽스는 현재 따라다니는 챔피언이 적 유닛을 공격할 때마다 함께 마법 광선을 발사합니다. 이 마법 광선은 목표를 추적하지만, 다른 유닛이 막아서 대신 맞을 수 있습니다.",
+              "raw_excerpt": "픽스는 현재 따라다니는 챔피언이 적 유닛을 공격할 때마다 함께 마법 광선을 발사합니다. 이 마법 광선은 목표를 추적하지만, 다른 유닛이 막아서 대신 맞을 수 있습니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lulu.json",
+              "patch": "16.20.1",
+              "sha256": "7859290d4e2a26d8b5a3a81a75bd7e2d48195a7659bfac3aa936c262d3c7da75",
+              "local_source": "data/official_catalog/versions/16.20.1/Lulu-16.20.1.ko_KR.json",
+              "locator": "data.Lulu.passive.description"
+            },
+            {
+              "id": "official:Lulu:W",
+              "slot": "W",
+              "name": "변덕쟁이",
+              "text": "아군에게 사용하면 잠깐 동안 대상의 공격 속도와 이동 속도가 상승합니다. 적에게 시전하면 기본 공격이나 스킬 시전이 불가능한 귀여운 생물로 변합니다.",
+              "raw_excerpt": "아군에게 사용하면 잠깐 동안 대상의 공격 속도와 이동 속도가 상승합니다. 적에게 시전하면 기본 공격이나 스킬 시전이 불가능한 귀여운 생물로 변합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lulu.json",
+              "patch": "16.20.1",
+              "sha256": "7859290d4e2a26d8b5a3a81a75bd7e2d48195a7659bfac3aa936c262d3c7da75",
+              "local_source": "data/official_catalog/versions/16.20.1/Lulu-16.20.1.ko_KR.json",
+              "locator": "data.Lulu.spells.1.description"
+            },
+            {
+              "id": "official:Nautilus:P",
+              "slot": "P",
+              "name": "강력한 일격",
+              "text": "노틸러스가 대상에 대한 첫 기본 공격 시 추가 물리 피해를 입히고 잠시 속박합니다.",
+              "raw_excerpt": "노틸러스가 대상에 대한 첫 기본 공격 시 추가 물리 피해를 입히고 잠시 속박합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+              "patch": "16.20.1",
+              "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+              "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+              "locator": "data.Nautilus.passive.description"
+            },
+            {
+              "id": "official:Nautilus:W",
+              "slot": "W",
+              "name": "타이탄의 분노",
+              "text": "노틸러스가 잠시 보호막을 얻습니다. 보호막이 지속되는 동안 노틸러스의 기본 공격은 대상과 대상 주위의 적에게 지속 피해를 입힙니다.",
+              "raw_excerpt": "노틸러스가 잠시 보호막을 얻습니다. 보호막이 지속되는 동안 노틸러스의 기본 공격은 대상과 대상 주위의 적에게 지속 피해를 입힙니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+              "patch": "16.20.1",
+              "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+              "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+              "locator": "data.Nautilus.spells.1.description"
+            },
+            {
+              "id": "official:Yunara:E",
+              "slot": "E",
+              "name": "칸메이의 발자취 | 닿지 않는 그림자",
+              "text": "유나라가 유체화 상태가 되고 이동 속도가 증가합니다. 초월 상태에서는 유나라가 한 방향으로 돌진합니다.",
+              "raw_excerpt": "유나라가 유체화 상태가 되고 이동 속도가 증가합니다. 초월 상태에서는 유나라가 한 방향으로 돌진합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Yunara.json",
+              "patch": "16.20.1",
+              "sha256": "83720ec1f71f46e507b14a53910755d6caed1c353acb84062799f7cc8ebd0b9c",
+              "local_source": "data/official_catalog/versions/16.20.1/Yunara-16.20.1.ko_KR.json",
+              "locator": "data.Yunara.spells.2.description"
+            },
+            {
+              "id": "official:Yunara:Q",
+              "slot": "Q",
+              "name": "영혼 단련",
+              "text": "유나라의 공격 속도가 증가하고 적중 시 추가 피해를 입히며 기본 공격이 주변 적에게 확산됩니다.",
+              "raw_excerpt": "유나라의 공격 속도가 증가하고 적중 시 추가 피해를 입히며 기본 공격이 주변 적에게 확산됩니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Yunara.json",
+              "patch": "16.20.1",
+              "sha256": "83720ec1f71f46e507b14a53910755d6caed1c353acb84062799f7cc8ebd0b9c",
+              "local_source": "data/official_catalog/versions/16.20.1/Yunara-16.20.1.ko_KR.json",
+              "locator": "data.Yunara.spells.0.description"
+            },
+            {
+              "id": "official:Yunara:W",
+              "slot": "W",
+              "name": "심판의 궤적 | 파멸의 궤적",
+              "text": "유나라가 회전하는 기도의 구슬을 날려 적에게 피해를 입히고 둔화시킵니다. 초월 상태에서는 유나라가 빛줄기를 발사해 적에게 피해를 입히고 둔화시킵니다.",
+              "raw_excerpt": "유나라가 회전하는 기도의 구슬을 날려 적에게 피해를 입히고 둔화시킵니다. 초월 상태에서는 유나라가 빛줄기를 발사해 적에게 피해를 입히고 둔화시킵니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Yunara.json",
+              "patch": "16.20.1",
+              "sha256": "83720ec1f71f46e507b14a53910755d6caed1c353acb84062799f7cc8ebd0b9c",
+              "local_source": "data/official_catalog/versions/16.20.1/Yunara-16.20.1.ko_KR.json",
+              "locator": "data.Yunara.spells.1.description"
+            }
+          ],
+          "matchup_comparisons": 0,
+          "scope": "공식 기전에서 만든 조건부 계획. 실제 매치업의 짧은/지속 우열·피해 공백 길이·승리 조건 근거는 미연결.",
+          "question_ids": [
+            "ENG-6-ALLREADY",
+            "ENG-6-SPENT",
+            "ENG-6-INITIATOR"
+          ],
+          "coaching_n": 0
+        }
+      },
+      "selected_action": "PRESERVE_INTAKE"
+    },
+    {
+      "id": "RISK_LOSS_UNCHANGED",
+      "input": {
+        "allies": [
+          {
+            "champion": "Ornn",
+            "position": "TOP"
+          },
+          {
+            "champion": "Sejuani",
+            "position": "JUNGLE"
+          },
+          {
+            "champion": "Ahri",
+            "position": "MID"
+          },
+          {
+            "champion": "Yunara",
+            "position": "BOTTOM"
+          },
+          {
+            "champion": "Lulu",
+            "position": "SUPPORT"
+          }
+        ],
+        "enemies": [
+          {
+            "champion": "Fiora",
+            "position": "TOP"
+          },
+          {
+            "champion": "LeeSin",
+            "position": "JUNGLE"
+          },
+          {
+            "champion": "Zed",
+            "position": "MID"
+          },
+          {
+            "champion": "Lucian",
+            "position": "BOTTOM"
+          },
+          {
+            "champion": "Nautilus",
+            "position": "SUPPORT"
+          }
+        ],
+        "own_champion": "Yunara",
+        "own_position": "BOTTOM",
+        "side": "BLUE",
+        "patch": "16.20",
+        "opponent_mode": "ASSIGNED",
+        "lane_opponent": null,
+        "schema_version": "lol-coach-loading-input-v2",
+        "preferences": {
+          "risk": "LOSS_LIMIT"
+        }
+      },
+      "engagement_state": {
+        "milestone": "LEVEL6",
+        "type": "SHORT",
+        "assumptions": {
+          "window": "ENEMY_Q_SPENT",
+          "resources": "READY",
+          "followup": "BOTH",
+          "space": "PLAYABLE",
+          "intervention": "DUO_ONLY",
+          "level_stage": "UNKNOWN",
+          "hit": "ALLY_HIT",
+          "growth": "COMPARABLE",
+          "spells": "BOTH_READY",
+          "initiator": "ALLY"
+        }
+      },
+      "exchange_state": {
+        "ours": {
+          "window": "REPEAT_ACTIVE",
+          "cover": "ACTIVE",
+          "contact": "CONNECTED"
+        },
+        "theirs": {
+          "window": "HIT_WINDOW",
+          "cover": "ACTIVE",
+          "contact": "CONNECTED"
+        }
+      },
+      "risk": "LOSS_LIMIT",
+      "wave_purpose": "SPACE",
+      "result": {
+        "schema_version": "exchange-preference-v1",
+        "supported": true,
+        "state": {
+          "ours": {
+            "window": "REPEAT_ACTIVE",
+            "cover": "ACTIVE",
+            "contact": "CONNECTED"
+          },
+          "theirs": {
+            "window": "HIT_WINDOW",
+            "cover": "ACTIVE",
+            "contact": "CONNECTED"
+          }
+        },
+        "observation": "HYPOTHETICAL",
+        "milestone": "LEVEL6",
+        "ours": {
+          "evidence_ids": [
+            "official:Yunara:Q",
+            "official:Yunara:W",
+            "official:Yunara:E",
+            "official:Lulu:P",
+            "official:Lulu:W",
+            "official:Lulu:E"
+          ],
+          "classification": "CONDITIONAL",
+          "label": "조건부",
+          "mode": "REPEATED",
+          "preferred_exchange": "조건부 · 효과가 남는 동안 반복 공격 후보",
+          "reason": "유나라의 영혼 단련(Q)에는 공격 속도·적중 추가 피해·주변 확산이 있고, 룰루의 요정 친구 픽스(P)는 따라가는 대상의 공격에 반응합니다. 룰루의 도와줘, 픽스!(E)의 보호가 남는 동안 반복 공격을 비교할 기전은 있습니다. 룰루의 변덕쟁이(W)를 아군 강화에 쓰는 선택과 상대의 공격·시전을 제한하는 선택은 나눠야 합니다. 이 성질만으로 상대보다 지속 피해가 높다고 판정하지 않습니다.",
+          "start_conditions": [
+            "관련 기술을 실제 배워 가용하고 양쪽 남은 반격·우리 자원·동료 후속·미니언/포탑 노출·외부 개입과 퇴로를 비교한 가정에서만 후보를 실행합니다.",
+            "룰루의 도와줘, 픽스!(E)의 적용 대상과 남은 효과를 구분합니다. 보호 종료나 강화 종료를 실제 게임 관측으로 기록하지 않습니다."
+          ],
+          "attack_order": [
+            "룰루의 도와줘, 픽스!(E)의 아군 보호가 닿아 남는지 보고, 룰루의 변덕쟁이(W)는 아군 강화와 상대 제약 중 어느 용도로 남길지 나눕니다.",
+            "유나라의 영혼 단련(Q) 강화와 후속 거리·처리/대응 예산이 남는 동안, 닿는 대상의 기본 공격을 반복할 후보를 비교합니다. 누구를 이기는지는 미확인입니다.",
+            "유나라의 칸메이의 발자취 | 닿지 않는 그림자(E) 등 남길 이동 수단과 룰루 연결을 지키고, 확산 공격이 원래 웨이브 목표를 깨면 추가 공격 대신 처리량·대상을 바꿉니다."
+          ],
+          "end": [
+            "유나라의 영혼 단련(Q) 강화가 종료되거나 보호 효과·후속/공격 거리가 끊기면 이번 반복을 끝내고 다시 비교합니다.",
+            "룰루의 도와줘, 픽스!(E)의 종료, 남은 상대 제어가 열림, 미니언/포탑 노출·증원 또는 처리/이탈 자원 부족은 전환 사건입니다. 공통 초 수로 정하지 않습니다."
+          ],
+          "continue_if": [
+            "다음 공격·강화·보호 수단이 실제 남고 양쪽 후속·퇴로·자원·미니언/포탑 노출이 다시 맞을 때만 추가 교환을 비교합니다.",
+            "이어서 공격할 수 있다는 조건은 올인·추격 승리 또는 전체 피해 우위가 아닙니다."
+          ],
+          "reply_alternative": "상대가 접근·제어·맞견제로 끊으면 추가 공격 대신 남은 보호·이동을 수급 복귀에 남깁니다. 상대 반격 창이 살아 있는 동안 무리하게 붙지 않고, 상대가 CS를 먹는 동안 얻을 처리·공간과 포기할 자원을 비교합니다.",
+          "cover_owner": "Lulu",
+          "cover_target": "Yunara",
+          "intent": "UNKNOWN",
+          "short_may_only_limit_loss": false,
+          "mechanism_inference": "DESIGN_HYPOTHESIS",
+          "actual_relative_superiority": "UNVERIFIED",
+          "actual_matchup_advantage": "UNKNOWN"
+        },
+        "theirs": {
+          "evidence_ids": [
+            "official:Lucian:P",
+            "official:Lucian:Q",
+            "official:Lucian:E",
+            "official:Nautilus:P",
+            "official:Nautilus:W"
+          ],
+          "classification": "CONDITIONAL",
+          "label": "조건부",
+          "mode": "SHORT",
+          "preferred_exchange": "조건부 · 한 기회만 쓰거나 이미 시작한 교환을 짧게 끝내는 후보",
+          "reason": "루시안의 빛의 사수(P)는 스킬 뒤 다음 공격을 강화합니다. 한 번의 기술→공격 창으로 끊을 수도 있고, 다음 기술이 실제 남아 있으면 다시 기술→공격을 연결할 수도 있습니다. 루시안의 끈질긴 추격(E)는 지속 효과 공격으로 재사용 대기시간이 줄어드는 성질이지 즉시 다시 이동할 수 있다는 증거는 아닙니다. 노틸러스의 타이탄의 분노(W)의 보호 대상은 노틸러스 자신이며 루시안이 아닙니다. 이번 가정은 한 적중·발동 기회이며 다음 반복까지 보장하지 않아, 그 기회 뒤 끊는 후보를 비교합니다.",
+          "start_conditions": [
+            "상대가 관련 기술·자원과 후속 거리를 남겨 둔 경우의 가능성입니다. 상대 실제 의도·체력/마나·다음 가용 수단은 미확인입니다.",
+            "노틸러스의 타이탄의 분노(W)의 적용 대상과 남은 효과를 구분합니다. 보호 종료나 강화 종료를 실제 게임 관측으로 기록하지 않습니다."
+          ],
+          "attack_order": [
+            "루시안의 꿰뚫는 빛(Q) 등 배워 가용한 기술 뒤 루시안의 빛의 사수(P) 공격을 잇는 가능성을 비교합니다. 실제 적중·노출 비용은 별도입니다.",
+            "이번 강화 공격 창을 사용한 뒤 다음 기술·자원이 남았는지 다시 봅니다. 공격 뒤 아무 피해도 없다고 가정하지 않습니다.",
+            "루시안의 끈질긴 추격(E)를 앞으로 썼다면 즉시 이탈에 다시 쓰는 것으로 세지 않습니다. 노틸러스의 강력한 일격(P) 등 남은 반격과 동료 거리를 별도로 봅니다."
+          ],
+          "end": [
+            "선택한 공격 발동 기회가 소모되거나 다음 가용 수단이 없고 보호·후속 거리가 끊기면 이번 교환을 끝내고 다시 비교합니다.",
+            "노틸러스의 타이탄의 분노(W)의 종료, 남은 상대 제어가 열림, 미니언/포탑 노출·증원 또는 처리/이탈 자원 부족은 전환 사건입니다. 공통 초 수로 정하지 않습니다."
+          ],
+          "continue_if": [
+            "다음 공격·강화·보호 수단이 실제 남고 양쪽 후속·퇴로·자원·미니언/포탑 노출이 다시 맞을 때만 추가 교환을 비교합니다.",
+            "이어서 공격할 수 있다는 조건은 올인·추격 승리 또는 전체 피해 우위가 아닙니다."
+          ],
+          "reply_alternative": "상대가 원하는 기술→공격 또는 중첩 연속을 끊을 수 있는 거리·동료 연결을 먼저 비교합니다. 그 조건이 없으면 공격을 유도하러 전진하지 않고 CS 처리·자원 보존으로 바꿉니다. 미니언만으로 접근이 막힌다고 단정하지 않습니다.",
+          "cover_owner": "Nautilus",
+          "cover_target": "Nautilus",
+          "intent": "UNKNOWN",
+          "short_may_only_limit_loss": false,
+          "mechanism_inference": "DESIGN_HYPOTHESIS",
+          "actual_relative_superiority": "UNVERIFIED",
+          "actual_matchup_advantage": "UNKNOWN"
+        },
+        "actual_matchup_advantage": "UNKNOWN",
+        "all_in_supported": false,
+        "chase_supported": false,
+        "attack_gate": "UNCHANGED",
+        "wave": {
+          "adoption": "KEEP_EXISTING_GATES",
+          "cost": "교환에 쓰는 기술·마나·앞으로 나가는 노출과 웨이브 처리·복귀 비용을 함께 비교합니다. 처리 속도와 포탑 도착 완료는 별도입니다.",
+          "minion_effect": "유나라의 영혼 단련(Q)는 주변 확산으로 웨이브 처리량을 바꿀 수 있습니다. 룰루의 요정 친구 픽스(P)의 광선은 다른 유닛이 대신 맞을 수 있어 실제 닿는 피해를 확인해야 합니다.",
+          "avoid_opponent_pattern": "상대 기술→추가 공격 창이 열린 동안 같은 길이의 교환을 강요하지 않습니다. 다음 수단이 실제 소모된 뒤 남은 반격과 CS·처리 공간을 다시 비교합니다."
+        },
+        "evidence": {
+          "grade": "DESIGN_HYPOTHESIS",
+          "facts": [
+            {
+              "id": "official:Lucian:E",
+              "slot": "E",
+              "name": "끈질긴 추격",
+              "text": "루시안이 짧은 거리를 빠르게 돌진합니다. 빛의 사수 스킬로 공격하면 끈질긴 추격의 재사용 대기시간이 감소합니다.",
+              "raw_excerpt": "루시안이 짧은 거리를 빠르게 돌진합니다. 빛의 사수 스킬로 공격하면 끈질긴 추격의 재사용 대기시간이 감소합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lucian.json",
+              "patch": "16.20.1",
+              "sha256": "d667a59b8285eb687f06bc3a5e8f3028341b5bfb94aa3b1ca1670a181691aeb6",
+              "local_source": "data/official_catalog/versions/16.20.1/Lucian-16.20.1.ko_KR.json",
+              "locator": "data.Lucian.spells.2.description"
+            },
+            {
+              "id": "official:Lucian:P",
+              "slot": "P",
+              "name": "빛의 사수",
+              "text": "루시안이 스킬을 사용할 때마다 다음 공격이 2연속으로 발사됩니다. 아군이 루시안에게 회복 또는 보호막 효과를 부여하거나, 근처 적 챔피언이 이동 불가 상태가 되면 루시안의 다음 기본 공격 2회가 추가 마법 피해를 입힙니다.",
+              "raw_excerpt": "루시안이 스킬을 사용할 때마다 다음 공격이 2연속으로 발사됩니다. 아군이 루시안에게 회복 또는 보호막 효과를 부여하거나, 근처 적 챔피언이 이동 불가 상태가 되면 루시안의 다음 기본 공격 2회가 추가 마법 피해를 입힙니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lucian.json",
+              "patch": "16.20.1",
+              "sha256": "d667a59b8285eb687f06bc3a5e8f3028341b5bfb94aa3b1ca1670a181691aeb6",
+              "local_source": "data/official_catalog/versions/16.20.1/Lucian-16.20.1.ko_KR.json",
+              "locator": "data.Lucian.passive.description"
+            },
+            {
+              "id": "official:Lucian:Q",
+              "slot": "Q",
+              "name": "꿰뚫는 빛",
+              "text": "루시안이 대상을 관통하는 빛 줄기를 발사합니다.",
+              "raw_excerpt": "루시안이 대상을 관통하는 빛 줄기를 발사합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lucian.json",
+              "patch": "16.20.1",
+              "sha256": "d667a59b8285eb687f06bc3a5e8f3028341b5bfb94aa3b1ca1670a181691aeb6",
+              "local_source": "data/official_catalog/versions/16.20.1/Lucian-16.20.1.ko_KR.json",
+              "locator": "data.Lucian.spells.0.description"
+            },
+            {
+              "id": "official:Lulu:E",
+              "slot": "E",
+              "name": "도와줘, 픽스!",
+              "text": "아군에게 시전하면 픽스가 대상에게 점프하여 보호막을 씌워줍니다. 그 다음 대상을 따라다니며 공격을 돕습니다. 적에게 시전하면 픽스가 대상에게 점프하여 피해를 줍니다. 그 다음 대상을 따라다니며 위치를 확인할 수 있도록 해 줍니다.",
+              "raw_excerpt": "아군에게 시전하면 픽스가 대상에게 점프하여 보호막을 씌워줍니다. 그 다음 대상을 따라다니며 공격을 돕습니다. 적에게 시전하면 픽스가 대상에게 점프하여 피해를 줍니다. 그 다음 대상을 따라다니며 위치를 확인할 수 있도록 해 줍니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lulu.json",
+              "patch": "16.20.1",
+              "sha256": "7859290d4e2a26d8b5a3a81a75bd7e2d48195a7659bfac3aa936c262d3c7da75",
+              "local_source": "data/official_catalog/versions/16.20.1/Lulu-16.20.1.ko_KR.json",
+              "locator": "data.Lulu.spells.2.description"
+            },
+            {
+              "id": "official:Lulu:P",
+              "slot": "P",
+              "name": "요정 친구 픽스",
+              "text": "픽스는 현재 따라다니는 챔피언이 적 유닛을 공격할 때마다 함께 마법 광선을 발사합니다. 이 마법 광선은 목표를 추적하지만, 다른 유닛이 막아서 대신 맞을 수 있습니다.",
+              "raw_excerpt": "픽스는 현재 따라다니는 챔피언이 적 유닛을 공격할 때마다 함께 마법 광선을 발사합니다. 이 마법 광선은 목표를 추적하지만, 다른 유닛이 막아서 대신 맞을 수 있습니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lulu.json",
+              "patch": "16.20.1",
+              "sha256": "7859290d4e2a26d8b5a3a81a75bd7e2d48195a7659bfac3aa936c262d3c7da75",
+              "local_source": "data/official_catalog/versions/16.20.1/Lulu-16.20.1.ko_KR.json",
+              "locator": "data.Lulu.passive.description"
+            },
+            {
+              "id": "official:Lulu:W",
+              "slot": "W",
+              "name": "변덕쟁이",
+              "text": "아군에게 사용하면 잠깐 동안 대상의 공격 속도와 이동 속도가 상승합니다. 적에게 시전하면 기본 공격이나 스킬 시전이 불가능한 귀여운 생물로 변합니다.",
+              "raw_excerpt": "아군에게 사용하면 잠깐 동안 대상의 공격 속도와 이동 속도가 상승합니다. 적에게 시전하면 기본 공격이나 스킬 시전이 불가능한 귀여운 생물로 변합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lulu.json",
+              "patch": "16.20.1",
+              "sha256": "7859290d4e2a26d8b5a3a81a75bd7e2d48195a7659bfac3aa936c262d3c7da75",
+              "local_source": "data/official_catalog/versions/16.20.1/Lulu-16.20.1.ko_KR.json",
+              "locator": "data.Lulu.spells.1.description"
+            },
+            {
+              "id": "official:Nautilus:P",
+              "slot": "P",
+              "name": "강력한 일격",
+              "text": "노틸러스가 대상에 대한 첫 기본 공격 시 추가 물리 피해를 입히고 잠시 속박합니다.",
+              "raw_excerpt": "노틸러스가 대상에 대한 첫 기본 공격 시 추가 물리 피해를 입히고 잠시 속박합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+              "patch": "16.20.1",
+              "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+              "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+              "locator": "data.Nautilus.passive.description"
+            },
+            {
+              "id": "official:Nautilus:W",
+              "slot": "W",
+              "name": "타이탄의 분노",
+              "text": "노틸러스가 잠시 보호막을 얻습니다. 보호막이 지속되는 동안 노틸러스의 기본 공격은 대상과 대상 주위의 적에게 지속 피해를 입힙니다.",
+              "raw_excerpt": "노틸러스가 잠시 보호막을 얻습니다. 보호막이 지속되는 동안 노틸러스의 기본 공격은 대상과 대상 주위의 적에게 지속 피해를 입힙니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+              "patch": "16.20.1",
+              "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+              "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+              "locator": "data.Nautilus.spells.1.description"
+            },
+            {
+              "id": "official:Yunara:E",
+              "slot": "E",
+              "name": "칸메이의 발자취 | 닿지 않는 그림자",
+              "text": "유나라가 유체화 상태가 되고 이동 속도가 증가합니다. 초월 상태에서는 유나라가 한 방향으로 돌진합니다.",
+              "raw_excerpt": "유나라가 유체화 상태가 되고 이동 속도가 증가합니다. 초월 상태에서는 유나라가 한 방향으로 돌진합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Yunara.json",
+              "patch": "16.20.1",
+              "sha256": "83720ec1f71f46e507b14a53910755d6caed1c353acb84062799f7cc8ebd0b9c",
+              "local_source": "data/official_catalog/versions/16.20.1/Yunara-16.20.1.ko_KR.json",
+              "locator": "data.Yunara.spells.2.description"
+            },
+            {
+              "id": "official:Yunara:Q",
+              "slot": "Q",
+              "name": "영혼 단련",
+              "text": "유나라의 공격 속도가 증가하고 적중 시 추가 피해를 입히며 기본 공격이 주변 적에게 확산됩니다.",
+              "raw_excerpt": "유나라의 공격 속도가 증가하고 적중 시 추가 피해를 입히며 기본 공격이 주변 적에게 확산됩니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Yunara.json",
+              "patch": "16.20.1",
+              "sha256": "83720ec1f71f46e507b14a53910755d6caed1c353acb84062799f7cc8ebd0b9c",
+              "local_source": "data/official_catalog/versions/16.20.1/Yunara-16.20.1.ko_KR.json",
+              "locator": "data.Yunara.spells.0.description"
+            },
+            {
+              "id": "official:Yunara:W",
+              "slot": "W",
+              "name": "심판의 궤적 | 파멸의 궤적",
+              "text": "유나라가 회전하는 기도의 구슬을 날려 적에게 피해를 입히고 둔화시킵니다. 초월 상태에서는 유나라가 빛줄기를 발사해 적에게 피해를 입히고 둔화시킵니다.",
+              "raw_excerpt": "유나라가 회전하는 기도의 구슬을 날려 적에게 피해를 입히고 둔화시킵니다. 초월 상태에서는 유나라가 빛줄기를 발사해 적에게 피해를 입히고 둔화시킵니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Yunara.json",
+              "patch": "16.20.1",
+              "sha256": "83720ec1f71f46e507b14a53910755d6caed1c353acb84062799f7cc8ebd0b9c",
+              "local_source": "data/official_catalog/versions/16.20.1/Yunara-16.20.1.ko_KR.json",
+              "locator": "data.Yunara.spells.1.description"
+            }
+          ],
+          "matchup_comparisons": 0,
+          "scope": "공식 기전에서 만든 조건부 계획. 실제 매치업의 짧은/지속 우열·피해 공백 길이·승리 조건 근거는 미연결.",
+          "question_ids": [
+            "ENG-6-ALLREADY",
+            "ENG-6-SPENT",
+            "ENG-6-INITIATOR"
+          ],
+          "coaching_n": 0
+        }
+      },
+      "selected_action": "PRESERVE_INTAKE"
+    },
+    {
+      "id": "RISK_OPPORTUNITY_UNCHANGED",
+      "input": {
+        "allies": [
+          {
+            "champion": "Ornn",
+            "position": "TOP"
+          },
+          {
+            "champion": "Sejuani",
+            "position": "JUNGLE"
+          },
+          {
+            "champion": "Ahri",
+            "position": "MID"
+          },
+          {
+            "champion": "Yunara",
+            "position": "BOTTOM"
+          },
+          {
+            "champion": "Lulu",
+            "position": "SUPPORT"
+          }
+        ],
+        "enemies": [
+          {
+            "champion": "Fiora",
+            "position": "TOP"
+          },
+          {
+            "champion": "LeeSin",
+            "position": "JUNGLE"
+          },
+          {
+            "champion": "Zed",
+            "position": "MID"
+          },
+          {
+            "champion": "Lucian",
+            "position": "BOTTOM"
+          },
+          {
+            "champion": "Nautilus",
+            "position": "SUPPORT"
+          }
+        ],
+        "own_champion": "Yunara",
+        "own_position": "BOTTOM",
+        "side": "BLUE",
+        "patch": "16.20",
+        "opponent_mode": "ASSIGNED",
+        "lane_opponent": null,
+        "schema_version": "lol-coach-loading-input-v2",
+        "preferences": {
+          "risk": "OPPORTUNITY"
+        }
+      },
+      "engagement_state": {
+        "milestone": "LEVEL6",
+        "type": "SHORT",
+        "assumptions": {
+          "window": "ENEMY_Q_SPENT",
+          "resources": "READY",
+          "followup": "BOTH",
+          "space": "PLAYABLE",
+          "intervention": "DUO_ONLY",
+          "level_stage": "UNKNOWN",
+          "hit": "ALLY_HIT",
+          "growth": "COMPARABLE",
+          "spells": "BOTH_READY",
+          "initiator": "ALLY"
+        }
+      },
+      "exchange_state": {
+        "ours": {
+          "window": "REPEAT_ACTIVE",
+          "cover": "ACTIVE",
+          "contact": "CONNECTED"
+        },
+        "theirs": {
+          "window": "HIT_WINDOW",
+          "cover": "ACTIVE",
+          "contact": "CONNECTED"
+        }
+      },
+      "risk": "OPPORTUNITY",
+      "wave_purpose": "SPACE",
+      "result": {
+        "schema_version": "exchange-preference-v1",
+        "supported": true,
+        "state": {
+          "ours": {
+            "window": "REPEAT_ACTIVE",
+            "cover": "ACTIVE",
+            "contact": "CONNECTED"
+          },
+          "theirs": {
+            "window": "HIT_WINDOW",
+            "cover": "ACTIVE",
+            "contact": "CONNECTED"
+          }
+        },
+        "observation": "HYPOTHETICAL",
+        "milestone": "LEVEL6",
+        "ours": {
+          "evidence_ids": [
+            "official:Yunara:Q",
+            "official:Yunara:W",
+            "official:Yunara:E",
+            "official:Lulu:P",
+            "official:Lulu:W",
+            "official:Lulu:E"
+          ],
+          "classification": "CONDITIONAL",
+          "label": "조건부",
+          "mode": "REPEATED",
+          "preferred_exchange": "조건부 · 효과가 남는 동안 반복 공격 후보",
+          "reason": "유나라의 영혼 단련(Q)에는 공격 속도·적중 추가 피해·주변 확산이 있고, 룰루의 요정 친구 픽스(P)는 따라가는 대상의 공격에 반응합니다. 룰루의 도와줘, 픽스!(E)의 보호가 남는 동안 반복 공격을 비교할 기전은 있습니다. 룰루의 변덕쟁이(W)를 아군 강화에 쓰는 선택과 상대의 공격·시전을 제한하는 선택은 나눠야 합니다. 이 성질만으로 상대보다 지속 피해가 높다고 판정하지 않습니다.",
+          "start_conditions": [
+            "관련 기술을 실제 배워 가용하고 양쪽 남은 반격·우리 자원·동료 후속·미니언/포탑 노출·외부 개입과 퇴로를 비교한 가정에서만 후보를 실행합니다.",
+            "룰루의 도와줘, 픽스!(E)의 적용 대상과 남은 효과를 구분합니다. 보호 종료나 강화 종료를 실제 게임 관측으로 기록하지 않습니다."
+          ],
+          "attack_order": [
+            "룰루의 도와줘, 픽스!(E)의 아군 보호가 닿아 남는지 보고, 룰루의 변덕쟁이(W)는 아군 강화와 상대 제약 중 어느 용도로 남길지 나눕니다.",
+            "유나라의 영혼 단련(Q) 강화와 후속 거리·처리/대응 예산이 남는 동안, 닿는 대상의 기본 공격을 반복할 후보를 비교합니다. 누구를 이기는지는 미확인입니다.",
+            "유나라의 칸메이의 발자취 | 닿지 않는 그림자(E) 등 남길 이동 수단과 룰루 연결을 지키고, 확산 공격이 원래 웨이브 목표를 깨면 추가 공격 대신 처리량·대상을 바꿉니다."
+          ],
+          "end": [
+            "유나라의 영혼 단련(Q) 강화가 종료되거나 보호 효과·후속/공격 거리가 끊기면 이번 반복을 끝내고 다시 비교합니다.",
+            "룰루의 도와줘, 픽스!(E)의 종료, 남은 상대 제어가 열림, 미니언/포탑 노출·증원 또는 처리/이탈 자원 부족은 전환 사건입니다. 공통 초 수로 정하지 않습니다."
+          ],
+          "continue_if": [
+            "다음 공격·강화·보호 수단이 실제 남고 양쪽 후속·퇴로·자원·미니언/포탑 노출이 다시 맞을 때만 추가 교환을 비교합니다.",
+            "이어서 공격할 수 있다는 조건은 올인·추격 승리 또는 전체 피해 우위가 아닙니다."
+          ],
+          "reply_alternative": "상대가 접근·제어·맞견제로 끊으면 추가 공격 대신 남은 보호·이동을 수급 복귀에 남깁니다. 상대 반격 창이 살아 있는 동안 무리하게 붙지 않고, 상대가 CS를 먹는 동안 얻을 처리·공간과 포기할 자원을 비교합니다.",
+          "cover_owner": "Lulu",
+          "cover_target": "Yunara",
+          "intent": "UNKNOWN",
+          "short_may_only_limit_loss": false,
+          "mechanism_inference": "DESIGN_HYPOTHESIS",
+          "actual_relative_superiority": "UNVERIFIED",
+          "actual_matchup_advantage": "UNKNOWN"
+        },
+        "theirs": {
+          "evidence_ids": [
+            "official:Lucian:P",
+            "official:Lucian:Q",
+            "official:Lucian:E",
+            "official:Nautilus:P",
+            "official:Nautilus:W"
+          ],
+          "classification": "CONDITIONAL",
+          "label": "조건부",
+          "mode": "SHORT",
+          "preferred_exchange": "조건부 · 한 기회만 쓰거나 이미 시작한 교환을 짧게 끝내는 후보",
+          "reason": "루시안의 빛의 사수(P)는 스킬 뒤 다음 공격을 강화합니다. 한 번의 기술→공격 창으로 끊을 수도 있고, 다음 기술이 실제 남아 있으면 다시 기술→공격을 연결할 수도 있습니다. 루시안의 끈질긴 추격(E)는 지속 효과 공격으로 재사용 대기시간이 줄어드는 성질이지 즉시 다시 이동할 수 있다는 증거는 아닙니다. 노틸러스의 타이탄의 분노(W)의 보호 대상은 노틸러스 자신이며 루시안이 아닙니다. 이번 가정은 한 적중·발동 기회이며 다음 반복까지 보장하지 않아, 그 기회 뒤 끊는 후보를 비교합니다.",
+          "start_conditions": [
+            "상대가 관련 기술·자원과 후속 거리를 남겨 둔 경우의 가능성입니다. 상대 실제 의도·체력/마나·다음 가용 수단은 미확인입니다.",
+            "노틸러스의 타이탄의 분노(W)의 적용 대상과 남은 효과를 구분합니다. 보호 종료나 강화 종료를 실제 게임 관측으로 기록하지 않습니다."
+          ],
+          "attack_order": [
+            "루시안의 꿰뚫는 빛(Q) 등 배워 가용한 기술 뒤 루시안의 빛의 사수(P) 공격을 잇는 가능성을 비교합니다. 실제 적중·노출 비용은 별도입니다.",
+            "이번 강화 공격 창을 사용한 뒤 다음 기술·자원이 남았는지 다시 봅니다. 공격 뒤 아무 피해도 없다고 가정하지 않습니다.",
+            "루시안의 끈질긴 추격(E)를 앞으로 썼다면 즉시 이탈에 다시 쓰는 것으로 세지 않습니다. 노틸러스의 강력한 일격(P) 등 남은 반격과 동료 거리를 별도로 봅니다."
+          ],
+          "end": [
+            "선택한 공격 발동 기회가 소모되거나 다음 가용 수단이 없고 보호·후속 거리가 끊기면 이번 교환을 끝내고 다시 비교합니다.",
+            "노틸러스의 타이탄의 분노(W)의 종료, 남은 상대 제어가 열림, 미니언/포탑 노출·증원 또는 처리/이탈 자원 부족은 전환 사건입니다. 공통 초 수로 정하지 않습니다."
+          ],
+          "continue_if": [
+            "다음 공격·강화·보호 수단이 실제 남고 양쪽 후속·퇴로·자원·미니언/포탑 노출이 다시 맞을 때만 추가 교환을 비교합니다.",
+            "이어서 공격할 수 있다는 조건은 올인·추격 승리 또는 전체 피해 우위가 아닙니다."
+          ],
+          "reply_alternative": "상대가 원하는 기술→공격 또는 중첩 연속을 끊을 수 있는 거리·동료 연결을 먼저 비교합니다. 그 조건이 없으면 공격을 유도하러 전진하지 않고 CS 처리·자원 보존으로 바꿉니다. 미니언만으로 접근이 막힌다고 단정하지 않습니다.",
+          "cover_owner": "Nautilus",
+          "cover_target": "Nautilus",
+          "intent": "UNKNOWN",
+          "short_may_only_limit_loss": false,
+          "mechanism_inference": "DESIGN_HYPOTHESIS",
+          "actual_relative_superiority": "UNVERIFIED",
+          "actual_matchup_advantage": "UNKNOWN"
+        },
+        "actual_matchup_advantage": "UNKNOWN",
+        "all_in_supported": false,
+        "chase_supported": false,
+        "attack_gate": "UNCHANGED",
+        "wave": {
+          "adoption": "KEEP_EXISTING_GATES",
+          "cost": "교환에 쓰는 기술·마나·앞으로 나가는 노출과 웨이브 처리·복귀 비용을 함께 비교합니다. 처리 속도와 포탑 도착 완료는 별도입니다.",
+          "minion_effect": "유나라의 영혼 단련(Q)는 주변 확산으로 웨이브 처리량을 바꿀 수 있습니다. 룰루의 요정 친구 픽스(P)의 광선은 다른 유닛이 대신 맞을 수 있어 실제 닿는 피해를 확인해야 합니다.",
+          "avoid_opponent_pattern": "상대 기술→추가 공격 창이 열린 동안 같은 길이의 교환을 강요하지 않습니다. 다음 수단이 실제 소모된 뒤 남은 반격과 CS·처리 공간을 다시 비교합니다."
+        },
+        "evidence": {
+          "grade": "DESIGN_HYPOTHESIS",
+          "facts": [
+            {
+              "id": "official:Lucian:E",
+              "slot": "E",
+              "name": "끈질긴 추격",
+              "text": "루시안이 짧은 거리를 빠르게 돌진합니다. 빛의 사수 스킬로 공격하면 끈질긴 추격의 재사용 대기시간이 감소합니다.",
+              "raw_excerpt": "루시안이 짧은 거리를 빠르게 돌진합니다. 빛의 사수 스킬로 공격하면 끈질긴 추격의 재사용 대기시간이 감소합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lucian.json",
+              "patch": "16.20.1",
+              "sha256": "d667a59b8285eb687f06bc3a5e8f3028341b5bfb94aa3b1ca1670a181691aeb6",
+              "local_source": "data/official_catalog/versions/16.20.1/Lucian-16.20.1.ko_KR.json",
+              "locator": "data.Lucian.spells.2.description"
+            },
+            {
+              "id": "official:Lucian:P",
+              "slot": "P",
+              "name": "빛의 사수",
+              "text": "루시안이 스킬을 사용할 때마다 다음 공격이 2연속으로 발사됩니다. 아군이 루시안에게 회복 또는 보호막 효과를 부여하거나, 근처 적 챔피언이 이동 불가 상태가 되면 루시안의 다음 기본 공격 2회가 추가 마법 피해를 입힙니다.",
+              "raw_excerpt": "루시안이 스킬을 사용할 때마다 다음 공격이 2연속으로 발사됩니다. 아군이 루시안에게 회복 또는 보호막 효과를 부여하거나, 근처 적 챔피언이 이동 불가 상태가 되면 루시안의 다음 기본 공격 2회가 추가 마법 피해를 입힙니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lucian.json",
+              "patch": "16.20.1",
+              "sha256": "d667a59b8285eb687f06bc3a5e8f3028341b5bfb94aa3b1ca1670a181691aeb6",
+              "local_source": "data/official_catalog/versions/16.20.1/Lucian-16.20.1.ko_KR.json",
+              "locator": "data.Lucian.passive.description"
+            },
+            {
+              "id": "official:Lucian:Q",
+              "slot": "Q",
+              "name": "꿰뚫는 빛",
+              "text": "루시안이 대상을 관통하는 빛 줄기를 발사합니다.",
+              "raw_excerpt": "루시안이 대상을 관통하는 빛 줄기를 발사합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lucian.json",
+              "patch": "16.20.1",
+              "sha256": "d667a59b8285eb687f06bc3a5e8f3028341b5bfb94aa3b1ca1670a181691aeb6",
+              "local_source": "data/official_catalog/versions/16.20.1/Lucian-16.20.1.ko_KR.json",
+              "locator": "data.Lucian.spells.0.description"
+            },
+            {
+              "id": "official:Lulu:E",
+              "slot": "E",
+              "name": "도와줘, 픽스!",
+              "text": "아군에게 시전하면 픽스가 대상에게 점프하여 보호막을 씌워줍니다. 그 다음 대상을 따라다니며 공격을 돕습니다. 적에게 시전하면 픽스가 대상에게 점프하여 피해를 줍니다. 그 다음 대상을 따라다니며 위치를 확인할 수 있도록 해 줍니다.",
+              "raw_excerpt": "아군에게 시전하면 픽스가 대상에게 점프하여 보호막을 씌워줍니다. 그 다음 대상을 따라다니며 공격을 돕습니다. 적에게 시전하면 픽스가 대상에게 점프하여 피해를 줍니다. 그 다음 대상을 따라다니며 위치를 확인할 수 있도록 해 줍니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lulu.json",
+              "patch": "16.20.1",
+              "sha256": "7859290d4e2a26d8b5a3a81a75bd7e2d48195a7659bfac3aa936c262d3c7da75",
+              "local_source": "data/official_catalog/versions/16.20.1/Lulu-16.20.1.ko_KR.json",
+              "locator": "data.Lulu.spells.2.description"
+            },
+            {
+              "id": "official:Lulu:P",
+              "slot": "P",
+              "name": "요정 친구 픽스",
+              "text": "픽스는 현재 따라다니는 챔피언이 적 유닛을 공격할 때마다 함께 마법 광선을 발사합니다. 이 마법 광선은 목표를 추적하지만, 다른 유닛이 막아서 대신 맞을 수 있습니다.",
+              "raw_excerpt": "픽스는 현재 따라다니는 챔피언이 적 유닛을 공격할 때마다 함께 마법 광선을 발사합니다. 이 마법 광선은 목표를 추적하지만, 다른 유닛이 막아서 대신 맞을 수 있습니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lulu.json",
+              "patch": "16.20.1",
+              "sha256": "7859290d4e2a26d8b5a3a81a75bd7e2d48195a7659bfac3aa936c262d3c7da75",
+              "local_source": "data/official_catalog/versions/16.20.1/Lulu-16.20.1.ko_KR.json",
+              "locator": "data.Lulu.passive.description"
+            },
+            {
+              "id": "official:Lulu:W",
+              "slot": "W",
+              "name": "변덕쟁이",
+              "text": "아군에게 사용하면 잠깐 동안 대상의 공격 속도와 이동 속도가 상승합니다. 적에게 시전하면 기본 공격이나 스킬 시전이 불가능한 귀여운 생물로 변합니다.",
+              "raw_excerpt": "아군에게 사용하면 잠깐 동안 대상의 공격 속도와 이동 속도가 상승합니다. 적에게 시전하면 기본 공격이나 스킬 시전이 불가능한 귀여운 생물로 변합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lulu.json",
+              "patch": "16.20.1",
+              "sha256": "7859290d4e2a26d8b5a3a81a75bd7e2d48195a7659bfac3aa936c262d3c7da75",
+              "local_source": "data/official_catalog/versions/16.20.1/Lulu-16.20.1.ko_KR.json",
+              "locator": "data.Lulu.spells.1.description"
+            },
+            {
+              "id": "official:Nautilus:P",
+              "slot": "P",
+              "name": "강력한 일격",
+              "text": "노틸러스가 대상에 대한 첫 기본 공격 시 추가 물리 피해를 입히고 잠시 속박합니다.",
+              "raw_excerpt": "노틸러스가 대상에 대한 첫 기본 공격 시 추가 물리 피해를 입히고 잠시 속박합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+              "patch": "16.20.1",
+              "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+              "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+              "locator": "data.Nautilus.passive.description"
+            },
+            {
+              "id": "official:Nautilus:W",
+              "slot": "W",
+              "name": "타이탄의 분노",
+              "text": "노틸러스가 잠시 보호막을 얻습니다. 보호막이 지속되는 동안 노틸러스의 기본 공격은 대상과 대상 주위의 적에게 지속 피해를 입힙니다.",
+              "raw_excerpt": "노틸러스가 잠시 보호막을 얻습니다. 보호막이 지속되는 동안 노틸러스의 기본 공격은 대상과 대상 주위의 적에게 지속 피해를 입힙니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+              "patch": "16.20.1",
+              "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+              "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+              "locator": "data.Nautilus.spells.1.description"
+            },
+            {
+              "id": "official:Yunara:E",
+              "slot": "E",
+              "name": "칸메이의 발자취 | 닿지 않는 그림자",
+              "text": "유나라가 유체화 상태가 되고 이동 속도가 증가합니다. 초월 상태에서는 유나라가 한 방향으로 돌진합니다.",
+              "raw_excerpt": "유나라가 유체화 상태가 되고 이동 속도가 증가합니다. 초월 상태에서는 유나라가 한 방향으로 돌진합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Yunara.json",
+              "patch": "16.20.1",
+              "sha256": "83720ec1f71f46e507b14a53910755d6caed1c353acb84062799f7cc8ebd0b9c",
+              "local_source": "data/official_catalog/versions/16.20.1/Yunara-16.20.1.ko_KR.json",
+              "locator": "data.Yunara.spells.2.description"
+            },
+            {
+              "id": "official:Yunara:Q",
+              "slot": "Q",
+              "name": "영혼 단련",
+              "text": "유나라의 공격 속도가 증가하고 적중 시 추가 피해를 입히며 기본 공격이 주변 적에게 확산됩니다.",
+              "raw_excerpt": "유나라의 공격 속도가 증가하고 적중 시 추가 피해를 입히며 기본 공격이 주변 적에게 확산됩니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Yunara.json",
+              "patch": "16.20.1",
+              "sha256": "83720ec1f71f46e507b14a53910755d6caed1c353acb84062799f7cc8ebd0b9c",
+              "local_source": "data/official_catalog/versions/16.20.1/Yunara-16.20.1.ko_KR.json",
+              "locator": "data.Yunara.spells.0.description"
+            },
+            {
+              "id": "official:Yunara:W",
+              "slot": "W",
+              "name": "심판의 궤적 | 파멸의 궤적",
+              "text": "유나라가 회전하는 기도의 구슬을 날려 적에게 피해를 입히고 둔화시킵니다. 초월 상태에서는 유나라가 빛줄기를 발사해 적에게 피해를 입히고 둔화시킵니다.",
+              "raw_excerpt": "유나라가 회전하는 기도의 구슬을 날려 적에게 피해를 입히고 둔화시킵니다. 초월 상태에서는 유나라가 빛줄기를 발사해 적에게 피해를 입히고 둔화시킵니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Yunara.json",
+              "patch": "16.20.1",
+              "sha256": "83720ec1f71f46e507b14a53910755d6caed1c353acb84062799f7cc8ebd0b9c",
+              "local_source": "data/official_catalog/versions/16.20.1/Yunara-16.20.1.ko_KR.json",
+              "locator": "data.Yunara.spells.1.description"
+            }
+          ],
+          "matchup_comparisons": 0,
+          "scope": "공식 기전에서 만든 조건부 계획. 실제 매치업의 짧은/지속 우열·피해 공백 길이·승리 조건 근거는 미연결.",
+          "question_ids": [
+            "ENG-6-ALLREADY",
+            "ENG-6-SPENT",
+            "ENG-6-INITIATOR"
+          ],
+          "coaching_n": 0
+        }
+      },
+      "selected_action": "SHORT_WINDOW"
+    },
+    {
+      "id": "RESET_RETAINS_RELATIVE_CANDIDATE_WITHHOLDS_ADOPTION",
+      "input": {
+        "allies": [
+          {
+            "champion": "Ornn",
+            "position": "TOP"
+          },
+          {
+            "champion": "Sejuani",
+            "position": "JUNGLE"
+          },
+          {
+            "champion": "Ahri",
+            "position": "MID"
+          },
+          {
+            "champion": "Yunara",
+            "position": "BOTTOM"
+          },
+          {
+            "champion": "Lulu",
+            "position": "SUPPORT"
+          }
+        ],
+        "enemies": [
+          {
+            "champion": "Fiora",
+            "position": "TOP"
+          },
+          {
+            "champion": "LeeSin",
+            "position": "JUNGLE"
+          },
+          {
+            "champion": "Zed",
+            "position": "MID"
+          },
+          {
+            "champion": "Lucian",
+            "position": "BOTTOM"
+          },
+          {
+            "champion": "Nautilus",
+            "position": "SUPPORT"
+          }
+        ],
+        "own_champion": "Yunara",
+        "own_position": "BOTTOM",
+        "side": "BLUE",
+        "patch": "16.20",
+        "opponent_mode": "ASSIGNED",
+        "lane_opponent": null,
+        "schema_version": "lol-coach-loading-input-v2",
+        "preferences": {
+          "risk": "OPPORTUNITY"
+        }
+      },
+      "engagement_state": {
+        "milestone": "LEVEL6",
+        "type": "SHORT",
+        "assumptions": {
+          "window": "ENEMY_Q_SPENT",
+          "resources": "READY",
+          "followup": "BOTH",
+          "space": "PLAYABLE",
+          "intervention": "DUO_ONLY",
+          "level_stage": "UNKNOWN",
+          "hit": "ALLY_HIT",
+          "growth": "COMPARABLE",
+          "spells": "BOTH_READY",
+          "initiator": "ALLY"
+        }
+      },
+      "exchange_state": {
+        "ours": {
+          "window": "REPEAT_ACTIVE",
+          "cover": "ACTIVE",
+          "contact": "CONNECTED"
+        },
+        "theirs": {
+          "window": "HIT_WINDOW",
+          "cover": "ACTIVE",
+          "contact": "CONNECTED"
+        }
+      },
+      "risk": "OPPORTUNITY",
+      "wave_purpose": "RESET",
+      "result": {
+        "schema_version": "exchange-preference-v1",
+        "supported": true,
+        "state": {
+          "ours": {
+            "window": "REPEAT_ACTIVE",
+            "cover": "ACTIVE",
+            "contact": "CONNECTED"
+          },
+          "theirs": {
+            "window": "HIT_WINDOW",
+            "cover": "ACTIVE",
+            "contact": "CONNECTED"
+          }
+        },
+        "observation": "HYPOTHETICAL",
+        "milestone": "LEVEL6",
+        "ours": {
+          "evidence_ids": [
+            "official:Yunara:Q",
+            "official:Yunara:W",
+            "official:Yunara:E",
+            "official:Lulu:P",
+            "official:Lulu:W",
+            "official:Lulu:E"
+          ],
+          "classification": "CONDITIONAL",
+          "label": "조건부",
+          "mode": "REPEATED",
+          "preferred_exchange": "조건부 · 효과가 남는 동안 반복 공격 후보",
+          "reason": "유나라의 영혼 단련(Q)에는 공격 속도·적중 추가 피해·주변 확산이 있고, 룰루의 요정 친구 픽스(P)는 따라가는 대상의 공격에 반응합니다. 룰루의 도와줘, 픽스!(E)의 보호가 남는 동안 반복 공격을 비교할 기전은 있습니다. 룰루의 변덕쟁이(W)를 아군 강화에 쓰는 선택과 상대의 공격·시전을 제한하는 선택은 나눠야 합니다. 이 성질만으로 상대보다 지속 피해가 높다고 판정하지 않습니다.",
+          "start_conditions": [
+            "관련 기술을 실제 배워 가용하고 양쪽 남은 반격·우리 자원·동료 후속·미니언/포탑 노출·외부 개입과 퇴로를 비교한 가정에서만 후보를 실행합니다.",
+            "룰루의 도와줘, 픽스!(E)의 적용 대상과 남은 효과를 구분합니다. 보호 종료나 강화 종료를 실제 게임 관측으로 기록하지 않습니다."
+          ],
+          "attack_order": [
+            "룰루의 도와줘, 픽스!(E)의 아군 보호가 닿아 남는지 보고, 룰루의 변덕쟁이(W)는 아군 강화와 상대 제약 중 어느 용도로 남길지 나눕니다.",
+            "유나라의 영혼 단련(Q) 강화와 후속 거리·처리/대응 예산이 남는 동안, 닿는 대상의 기본 공격을 반복할 후보를 비교합니다. 누구를 이기는지는 미확인입니다.",
+            "유나라의 칸메이의 발자취 | 닿지 않는 그림자(E) 등 남길 이동 수단과 룰루 연결을 지키고, 확산 공격이 원래 웨이브 목표를 깨면 추가 공격 대신 처리량·대상을 바꿉니다."
+          ],
+          "end": [
+            "유나라의 영혼 단련(Q) 강화가 종료되거나 보호 효과·후속/공격 거리가 끊기면 이번 반복을 끝내고 다시 비교합니다.",
+            "룰루의 도와줘, 픽스!(E)의 종료, 남은 상대 제어가 열림, 미니언/포탑 노출·증원 또는 처리/이탈 자원 부족은 전환 사건입니다. 공통 초 수로 정하지 않습니다."
+          ],
+          "continue_if": [
+            "다음 공격·강화·보호 수단이 실제 남고 양쪽 후속·퇴로·자원·미니언/포탑 노출이 다시 맞을 때만 추가 교환을 비교합니다.",
+            "이어서 공격할 수 있다는 조건은 올인·추격 승리 또는 전체 피해 우위가 아닙니다."
+          ],
+          "reply_alternative": "상대가 접근·제어·맞견제로 끊으면 추가 공격 대신 남은 보호·이동을 수급 복귀에 남깁니다. 상대 반격 창이 살아 있는 동안 무리하게 붙지 않고, 상대가 CS를 먹는 동안 얻을 처리·공간과 포기할 자원을 비교합니다.",
+          "cover_owner": "Lulu",
+          "cover_target": "Yunara",
+          "intent": "UNKNOWN",
+          "short_may_only_limit_loss": false,
+          "mechanism_inference": "DESIGN_HYPOTHESIS",
+          "actual_relative_superiority": "UNVERIFIED",
+          "actual_matchup_advantage": "UNKNOWN"
+        },
+        "theirs": {
+          "evidence_ids": [
+            "official:Lucian:P",
+            "official:Lucian:Q",
+            "official:Lucian:E",
+            "official:Nautilus:P",
+            "official:Nautilus:W"
+          ],
+          "classification": "CONDITIONAL",
+          "label": "조건부",
+          "mode": "SHORT",
+          "preferred_exchange": "조건부 · 한 기회만 쓰거나 이미 시작한 교환을 짧게 끝내는 후보",
+          "reason": "루시안의 빛의 사수(P)는 스킬 뒤 다음 공격을 강화합니다. 한 번의 기술→공격 창으로 끊을 수도 있고, 다음 기술이 실제 남아 있으면 다시 기술→공격을 연결할 수도 있습니다. 루시안의 끈질긴 추격(E)는 지속 효과 공격으로 재사용 대기시간이 줄어드는 성질이지 즉시 다시 이동할 수 있다는 증거는 아닙니다. 노틸러스의 타이탄의 분노(W)의 보호 대상은 노틸러스 자신이며 루시안이 아닙니다. 이번 가정은 한 적중·발동 기회이며 다음 반복까지 보장하지 않아, 그 기회 뒤 끊는 후보를 비교합니다.",
+          "start_conditions": [
+            "상대가 관련 기술·자원과 후속 거리를 남겨 둔 경우의 가능성입니다. 상대 실제 의도·체력/마나·다음 가용 수단은 미확인입니다.",
+            "노틸러스의 타이탄의 분노(W)의 적용 대상과 남은 효과를 구분합니다. 보호 종료나 강화 종료를 실제 게임 관측으로 기록하지 않습니다."
+          ],
+          "attack_order": [
+            "루시안의 꿰뚫는 빛(Q) 등 배워 가용한 기술 뒤 루시안의 빛의 사수(P) 공격을 잇는 가능성을 비교합니다. 실제 적중·노출 비용은 별도입니다.",
+            "이번 강화 공격 창을 사용한 뒤 다음 기술·자원이 남았는지 다시 봅니다. 공격 뒤 아무 피해도 없다고 가정하지 않습니다.",
+            "루시안의 끈질긴 추격(E)를 앞으로 썼다면 즉시 이탈에 다시 쓰는 것으로 세지 않습니다. 노틸러스의 강력한 일격(P) 등 남은 반격과 동료 거리를 별도로 봅니다."
+          ],
+          "end": [
+            "선택한 공격 발동 기회가 소모되거나 다음 가용 수단이 없고 보호·후속 거리가 끊기면 이번 교환을 끝내고 다시 비교합니다.",
+            "노틸러스의 타이탄의 분노(W)의 종료, 남은 상대 제어가 열림, 미니언/포탑 노출·증원 또는 처리/이탈 자원 부족은 전환 사건입니다. 공통 초 수로 정하지 않습니다."
+          ],
+          "continue_if": [
+            "다음 공격·강화·보호 수단이 실제 남고 양쪽 후속·퇴로·자원·미니언/포탑 노출이 다시 맞을 때만 추가 교환을 비교합니다.",
+            "이어서 공격할 수 있다는 조건은 올인·추격 승리 또는 전체 피해 우위가 아닙니다."
+          ],
+          "reply_alternative": "상대가 원하는 기술→공격 또는 중첩 연속을 끊을 수 있는 거리·동료 연결을 먼저 비교합니다. 그 조건이 없으면 공격을 유도하러 전진하지 않고 CS 처리·자원 보존으로 바꿉니다. 미니언만으로 접근이 막힌다고 단정하지 않습니다.",
+          "cover_owner": "Nautilus",
+          "cover_target": "Nautilus",
+          "intent": "UNKNOWN",
+          "short_may_only_limit_loss": false,
+          "mechanism_inference": "DESIGN_HYPOTHESIS",
+          "actual_relative_superiority": "UNVERIFIED",
+          "actual_matchup_advantage": "UNKNOWN"
+        },
+        "actual_matchup_advantage": "UNKNOWN",
+        "all_in_supported": false,
+        "chase_supported": false,
+        "attack_gate": "UNCHANGED",
+        "wave": {
+          "adoption": "WITHHELD_FOR_RESET",
+          "cost": "상대보다 교환이 유리하더라도 귀환을 위한 처리·이탈 자원과 밀어 넣을 시간을 잃으면 이번 공격을 채택하지 않습니다. 상대적 길이 후보와 실행 선택은 다릅니다.",
+          "minion_effect": "유나라의 영혼 단련(Q)는 주변 확산으로 웨이브 처리량을 바꿀 수 있습니다. 룰루의 요정 친구 픽스(P)의 광선은 다른 유닛이 대신 맞을 수 있어 실제 닿는 피해를 확인해야 합니다.",
+          "avoid_opponent_pattern": "상대 기술→추가 공격 창이 열린 동안 같은 길이의 교환을 강요하지 않습니다. 다음 수단이 실제 소모된 뒤 남은 반격과 CS·처리 공간을 다시 비교합니다."
+        },
+        "evidence": {
+          "grade": "DESIGN_HYPOTHESIS",
+          "facts": [
+            {
+              "id": "official:Lucian:E",
+              "slot": "E",
+              "name": "끈질긴 추격",
+              "text": "루시안이 짧은 거리를 빠르게 돌진합니다. 빛의 사수 스킬로 공격하면 끈질긴 추격의 재사용 대기시간이 감소합니다.",
+              "raw_excerpt": "루시안이 짧은 거리를 빠르게 돌진합니다. 빛의 사수 스킬로 공격하면 끈질긴 추격의 재사용 대기시간이 감소합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lucian.json",
+              "patch": "16.20.1",
+              "sha256": "d667a59b8285eb687f06bc3a5e8f3028341b5bfb94aa3b1ca1670a181691aeb6",
+              "local_source": "data/official_catalog/versions/16.20.1/Lucian-16.20.1.ko_KR.json",
+              "locator": "data.Lucian.spells.2.description"
+            },
+            {
+              "id": "official:Lucian:P",
+              "slot": "P",
+              "name": "빛의 사수",
+              "text": "루시안이 스킬을 사용할 때마다 다음 공격이 2연속으로 발사됩니다. 아군이 루시안에게 회복 또는 보호막 효과를 부여하거나, 근처 적 챔피언이 이동 불가 상태가 되면 루시안의 다음 기본 공격 2회가 추가 마법 피해를 입힙니다.",
+              "raw_excerpt": "루시안이 스킬을 사용할 때마다 다음 공격이 2연속으로 발사됩니다. 아군이 루시안에게 회복 또는 보호막 효과를 부여하거나, 근처 적 챔피언이 이동 불가 상태가 되면 루시안의 다음 기본 공격 2회가 추가 마법 피해를 입힙니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lucian.json",
+              "patch": "16.20.1",
+              "sha256": "d667a59b8285eb687f06bc3a5e8f3028341b5bfb94aa3b1ca1670a181691aeb6",
+              "local_source": "data/official_catalog/versions/16.20.1/Lucian-16.20.1.ko_KR.json",
+              "locator": "data.Lucian.passive.description"
+            },
+            {
+              "id": "official:Lucian:Q",
+              "slot": "Q",
+              "name": "꿰뚫는 빛",
+              "text": "루시안이 대상을 관통하는 빛 줄기를 발사합니다.",
+              "raw_excerpt": "루시안이 대상을 관통하는 빛 줄기를 발사합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lucian.json",
+              "patch": "16.20.1",
+              "sha256": "d667a59b8285eb687f06bc3a5e8f3028341b5bfb94aa3b1ca1670a181691aeb6",
+              "local_source": "data/official_catalog/versions/16.20.1/Lucian-16.20.1.ko_KR.json",
+              "locator": "data.Lucian.spells.0.description"
+            },
+            {
+              "id": "official:Lulu:E",
+              "slot": "E",
+              "name": "도와줘, 픽스!",
+              "text": "아군에게 시전하면 픽스가 대상에게 점프하여 보호막을 씌워줍니다. 그 다음 대상을 따라다니며 공격을 돕습니다. 적에게 시전하면 픽스가 대상에게 점프하여 피해를 줍니다. 그 다음 대상을 따라다니며 위치를 확인할 수 있도록 해 줍니다.",
+              "raw_excerpt": "아군에게 시전하면 픽스가 대상에게 점프하여 보호막을 씌워줍니다. 그 다음 대상을 따라다니며 공격을 돕습니다. 적에게 시전하면 픽스가 대상에게 점프하여 피해를 줍니다. 그 다음 대상을 따라다니며 위치를 확인할 수 있도록 해 줍니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lulu.json",
+              "patch": "16.20.1",
+              "sha256": "7859290d4e2a26d8b5a3a81a75bd7e2d48195a7659bfac3aa936c262d3c7da75",
+              "local_source": "data/official_catalog/versions/16.20.1/Lulu-16.20.1.ko_KR.json",
+              "locator": "data.Lulu.spells.2.description"
+            },
+            {
+              "id": "official:Lulu:P",
+              "slot": "P",
+              "name": "요정 친구 픽스",
+              "text": "픽스는 현재 따라다니는 챔피언이 적 유닛을 공격할 때마다 함께 마법 광선을 발사합니다. 이 마법 광선은 목표를 추적하지만, 다른 유닛이 막아서 대신 맞을 수 있습니다.",
+              "raw_excerpt": "픽스는 현재 따라다니는 챔피언이 적 유닛을 공격할 때마다 함께 마법 광선을 발사합니다. 이 마법 광선은 목표를 추적하지만, 다른 유닛이 막아서 대신 맞을 수 있습니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lulu.json",
+              "patch": "16.20.1",
+              "sha256": "7859290d4e2a26d8b5a3a81a75bd7e2d48195a7659bfac3aa936c262d3c7da75",
+              "local_source": "data/official_catalog/versions/16.20.1/Lulu-16.20.1.ko_KR.json",
+              "locator": "data.Lulu.passive.description"
+            },
+            {
+              "id": "official:Lulu:W",
+              "slot": "W",
+              "name": "변덕쟁이",
+              "text": "아군에게 사용하면 잠깐 동안 대상의 공격 속도와 이동 속도가 상승합니다. 적에게 시전하면 기본 공격이나 스킬 시전이 불가능한 귀여운 생물로 변합니다.",
+              "raw_excerpt": "아군에게 사용하면 잠깐 동안 대상의 공격 속도와 이동 속도가 상승합니다. 적에게 시전하면 기본 공격이나 스킬 시전이 불가능한 귀여운 생물로 변합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lulu.json",
+              "patch": "16.20.1",
+              "sha256": "7859290d4e2a26d8b5a3a81a75bd7e2d48195a7659bfac3aa936c262d3c7da75",
+              "local_source": "data/official_catalog/versions/16.20.1/Lulu-16.20.1.ko_KR.json",
+              "locator": "data.Lulu.spells.1.description"
+            },
+            {
+              "id": "official:Nautilus:P",
+              "slot": "P",
+              "name": "강력한 일격",
+              "text": "노틸러스가 대상에 대한 첫 기본 공격 시 추가 물리 피해를 입히고 잠시 속박합니다.",
+              "raw_excerpt": "노틸러스가 대상에 대한 첫 기본 공격 시 추가 물리 피해를 입히고 잠시 속박합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+              "patch": "16.20.1",
+              "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+              "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+              "locator": "data.Nautilus.passive.description"
+            },
+            {
+              "id": "official:Nautilus:W",
+              "slot": "W",
+              "name": "타이탄의 분노",
+              "text": "노틸러스가 잠시 보호막을 얻습니다. 보호막이 지속되는 동안 노틸러스의 기본 공격은 대상과 대상 주위의 적에게 지속 피해를 입힙니다.",
+              "raw_excerpt": "노틸러스가 잠시 보호막을 얻습니다. 보호막이 지속되는 동안 노틸러스의 기본 공격은 대상과 대상 주위의 적에게 지속 피해를 입힙니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+              "patch": "16.20.1",
+              "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+              "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+              "locator": "data.Nautilus.spells.1.description"
+            },
+            {
+              "id": "official:Yunara:E",
+              "slot": "E",
+              "name": "칸메이의 발자취 | 닿지 않는 그림자",
+              "text": "유나라가 유체화 상태가 되고 이동 속도가 증가합니다. 초월 상태에서는 유나라가 한 방향으로 돌진합니다.",
+              "raw_excerpt": "유나라가 유체화 상태가 되고 이동 속도가 증가합니다. 초월 상태에서는 유나라가 한 방향으로 돌진합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Yunara.json",
+              "patch": "16.20.1",
+              "sha256": "83720ec1f71f46e507b14a53910755d6caed1c353acb84062799f7cc8ebd0b9c",
+              "local_source": "data/official_catalog/versions/16.20.1/Yunara-16.20.1.ko_KR.json",
+              "locator": "data.Yunara.spells.2.description"
+            },
+            {
+              "id": "official:Yunara:Q",
+              "slot": "Q",
+              "name": "영혼 단련",
+              "text": "유나라의 공격 속도가 증가하고 적중 시 추가 피해를 입히며 기본 공격이 주변 적에게 확산됩니다.",
+              "raw_excerpt": "유나라의 공격 속도가 증가하고 적중 시 추가 피해를 입히며 기본 공격이 주변 적에게 확산됩니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Yunara.json",
+              "patch": "16.20.1",
+              "sha256": "83720ec1f71f46e507b14a53910755d6caed1c353acb84062799f7cc8ebd0b9c",
+              "local_source": "data/official_catalog/versions/16.20.1/Yunara-16.20.1.ko_KR.json",
+              "locator": "data.Yunara.spells.0.description"
+            },
+            {
+              "id": "official:Yunara:W",
+              "slot": "W",
+              "name": "심판의 궤적 | 파멸의 궤적",
+              "text": "유나라가 회전하는 기도의 구슬을 날려 적에게 피해를 입히고 둔화시킵니다. 초월 상태에서는 유나라가 빛줄기를 발사해 적에게 피해를 입히고 둔화시킵니다.",
+              "raw_excerpt": "유나라가 회전하는 기도의 구슬을 날려 적에게 피해를 입히고 둔화시킵니다. 초월 상태에서는 유나라가 빛줄기를 발사해 적에게 피해를 입히고 둔화시킵니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Yunara.json",
+              "patch": "16.20.1",
+              "sha256": "83720ec1f71f46e507b14a53910755d6caed1c353acb84062799f7cc8ebd0b9c",
+              "local_source": "data/official_catalog/versions/16.20.1/Yunara-16.20.1.ko_KR.json",
+              "locator": "data.Yunara.spells.1.description"
+            }
+          ],
+          "matchup_comparisons": 0,
+          "scope": "공식 기전에서 만든 조건부 계획. 실제 매치업의 짧은/지속 우열·피해 공백 길이·승리 조건 근거는 미연결.",
+          "question_ids": [
+            "ENG-6-ALLREADY",
+            "ENG-6-SPENT",
+            "ENG-6-INITIATOR"
+          ],
+          "coaching_n": 0
+        }
+      },
+      "selected_action": "CS_WINDOW"
+    },
+    {
+      "id": "LUCIAN_NEXT_CYCLE",
+      "input": {
+        "allies": [
+          {
+            "champion": "Ornn",
+            "position": "TOP"
+          },
+          {
+            "champion": "Sejuani",
+            "position": "JUNGLE"
+          },
+          {
+            "champion": "Ahri",
+            "position": "MID"
+          },
+          {
+            "champion": "Yunara",
+            "position": "BOTTOM"
+          },
+          {
+            "champion": "Lulu",
+            "position": "SUPPORT"
+          }
+        ],
+        "enemies": [
+          {
+            "champion": "Fiora",
+            "position": "TOP"
+          },
+          {
+            "champion": "LeeSin",
+            "position": "JUNGLE"
+          },
+          {
+            "champion": "Zed",
+            "position": "MID"
+          },
+          {
+            "champion": "Lucian",
+            "position": "BOTTOM"
+          },
+          {
+            "champion": "Nautilus",
+            "position": "SUPPORT"
+          }
+        ],
+        "own_champion": "Yunara",
+        "own_position": "BOTTOM",
+        "side": "BLUE",
+        "patch": "16.20",
+        "opponent_mode": "ASSIGNED",
+        "lane_opponent": null,
+        "schema_version": "lol-coach-loading-input-v2",
+        "preferences": {
+          "risk": "BALANCED"
+        }
+      },
+      "engagement_state": {
+        "milestone": "LEVEL6",
+        "type": "SHORT",
+        "assumptions": {
+          "window": "ENEMY_Q_SPENT",
+          "resources": "READY",
+          "followup": "BOTH",
+          "space": "PLAYABLE",
+          "intervention": "DUO_ONLY",
+          "level_stage": "UNKNOWN",
+          "hit": "ALLY_HIT",
+          "growth": "COMPARABLE",
+          "spells": "BOTH_READY",
+          "initiator": "ALLY"
+        }
+      },
+      "exchange_state": {
+        "ours": {
+          "window": "REPEAT_ACTIVE",
+          "cover": "ACTIVE",
+          "contact": "CONNECTED"
+        },
+        "theirs": {
+          "window": "REPEAT_ACTIVE",
+          "cover": "ACTIVE",
+          "contact": "CONNECTED"
+        }
+      },
+      "risk": "BALANCED",
+      "wave_purpose": "SPACE",
+      "result": {
+        "schema_version": "exchange-preference-v1",
+        "supported": true,
+        "state": {
+          "ours": {
+            "window": "REPEAT_ACTIVE",
+            "cover": "ACTIVE",
+            "contact": "CONNECTED"
+          },
+          "theirs": {
+            "window": "REPEAT_ACTIVE",
+            "cover": "ACTIVE",
+            "contact": "CONNECTED"
+          }
+        },
+        "observation": "HYPOTHETICAL",
+        "milestone": "LEVEL6",
+        "ours": {
+          "evidence_ids": [
+            "official:Yunara:Q",
+            "official:Yunara:W",
+            "official:Yunara:E",
+            "official:Lulu:P",
+            "official:Lulu:W",
+            "official:Lulu:E"
+          ],
+          "classification": "CONDITIONAL",
+          "label": "조건부",
+          "mode": "REPEATED",
+          "preferred_exchange": "조건부 · 효과가 남는 동안 반복 공격 후보",
+          "reason": "유나라의 영혼 단련(Q)에는 공격 속도·적중 추가 피해·주변 확산이 있고, 룰루의 요정 친구 픽스(P)는 따라가는 대상의 공격에 반응합니다. 룰루의 도와줘, 픽스!(E)의 보호가 남는 동안 반복 공격을 비교할 기전은 있습니다. 룰루의 변덕쟁이(W)를 아군 강화에 쓰는 선택과 상대의 공격·시전을 제한하는 선택은 나눠야 합니다. 이 성질만으로 상대보다 지속 피해가 높다고 판정하지 않습니다.",
+          "start_conditions": [
+            "관련 기술을 실제 배워 가용하고 양쪽 남은 반격·우리 자원·동료 후속·미니언/포탑 노출·외부 개입과 퇴로를 비교한 가정에서만 후보를 실행합니다.",
+            "룰루의 도와줘, 픽스!(E)의 적용 대상과 남은 효과를 구분합니다. 보호 종료나 강화 종료를 실제 게임 관측으로 기록하지 않습니다."
+          ],
+          "attack_order": [
+            "룰루의 도와줘, 픽스!(E)의 아군 보호가 닿아 남는지 보고, 룰루의 변덕쟁이(W)는 아군 강화와 상대 제약 중 어느 용도로 남길지 나눕니다.",
+            "유나라의 영혼 단련(Q) 강화와 후속 거리·처리/대응 예산이 남는 동안, 닿는 대상의 기본 공격을 반복할 후보를 비교합니다. 누구를 이기는지는 미확인입니다.",
+            "유나라의 칸메이의 발자취 | 닿지 않는 그림자(E) 등 남길 이동 수단과 룰루 연결을 지키고, 확산 공격이 원래 웨이브 목표를 깨면 추가 공격 대신 처리량·대상을 바꿉니다."
+          ],
+          "end": [
+            "유나라의 영혼 단련(Q) 강화가 종료되거나 보호 효과·후속/공격 거리가 끊기면 이번 반복을 끝내고 다시 비교합니다.",
+            "룰루의 도와줘, 픽스!(E)의 종료, 남은 상대 제어가 열림, 미니언/포탑 노출·증원 또는 처리/이탈 자원 부족은 전환 사건입니다. 공통 초 수로 정하지 않습니다."
+          ],
+          "continue_if": [
+            "다음 공격·강화·보호 수단이 실제 남고 양쪽 후속·퇴로·자원·미니언/포탑 노출이 다시 맞을 때만 추가 교환을 비교합니다.",
+            "이어서 공격할 수 있다는 조건은 올인·추격 승리 또는 전체 피해 우위가 아닙니다."
+          ],
+          "reply_alternative": "상대가 접근·제어·맞견제로 끊으면 추가 공격 대신 남은 보호·이동을 수급 복귀에 남깁니다. 상대 반격 창이 살아 있는 동안 무리하게 붙지 않고, 상대가 CS를 먹는 동안 얻을 처리·공간과 포기할 자원을 비교합니다.",
+          "cover_owner": "Lulu",
+          "cover_target": "Yunara",
+          "intent": "UNKNOWN",
+          "short_may_only_limit_loss": false,
+          "mechanism_inference": "DESIGN_HYPOTHESIS",
+          "actual_relative_superiority": "UNVERIFIED",
+          "actual_matchup_advantage": "UNKNOWN"
+        },
+        "theirs": {
+          "evidence_ids": [
+            "official:Lucian:P",
+            "official:Lucian:Q",
+            "official:Lucian:E",
+            "official:Nautilus:P",
+            "official:Nautilus:W"
+          ],
+          "classification": "CONDITIONAL",
+          "label": "조건부",
+          "mode": "REPEATED",
+          "preferred_exchange": "조건부 · 효과가 남는 동안 반복 공격 후보",
+          "reason": "루시안의 빛의 사수(P)는 스킬 뒤 다음 공격을 강화합니다. 한 번의 기술→공격 창으로 끊을 수도 있고, 다음 기술이 실제 남아 있으면 다시 기술→공격을 연결할 수도 있습니다. 루시안의 끈질긴 추격(E)는 지속 효과 공격으로 재사용 대기시간이 줄어드는 성질이지 즉시 다시 이동할 수 있다는 증거는 아닙니다. 노틸러스의 타이탄의 분노(W)의 보호 대상은 노틸러스 자신이며 루시안이 아닙니다.",
+          "start_conditions": [
+            "상대가 관련 기술·자원과 후속 거리를 남겨 둔 경우의 가능성입니다. 상대 실제 의도·체력/마나·다음 가용 수단은 미확인입니다.",
+            "노틸러스의 타이탄의 분노(W)의 적용 대상과 남은 효과를 구분합니다. 보호 종료나 강화 종료를 실제 게임 관측으로 기록하지 않습니다."
+          ],
+          "attack_order": [
+            "루시안의 꿰뚫는 빛(Q) 등 배워 가용한 기술 뒤 루시안의 빛의 사수(P) 공격을 잇는 가능성을 비교합니다. 실제 적중·노출 비용은 별도입니다.",
+            "다음 기술과 자원이 실제 남아 있을 때만 다시 기술→강화 공격을 연결할 후보입니다. 재사용 대기시간을 임의 계산해 순서를 보장하지 않습니다.",
+            "루시안의 끈질긴 추격(E)를 앞으로 썼다면 즉시 이탈에 다시 쓰는 것으로 세지 않습니다. 노틸러스의 강력한 일격(P) 등 남은 반격과 동료 거리를 별도로 봅니다."
+          ],
+          "end": [
+            "선택한 공격 발동 기회가 소모되거나 다음 가용 수단이 없고 보호·후속 거리가 끊기면 이번 교환을 끝내고 다시 비교합니다.",
+            "노틸러스의 타이탄의 분노(W)의 종료, 남은 상대 제어가 열림, 미니언/포탑 노출·증원 또는 처리/이탈 자원 부족은 전환 사건입니다. 공통 초 수로 정하지 않습니다."
+          ],
+          "continue_if": [
+            "다음 공격·강화·보호 수단이 실제 남고 양쪽 후속·퇴로·자원·미니언/포탑 노출이 다시 맞을 때만 추가 교환을 비교합니다.",
+            "이어서 공격할 수 있다는 조건은 올인·추격 승리 또는 전체 피해 우위가 아닙니다."
+          ],
+          "reply_alternative": "상대가 원하는 기술→공격 또는 중첩 연속을 끊을 수 있는 거리·동료 연결을 먼저 비교합니다. 그 조건이 없으면 공격을 유도하러 전진하지 않고 CS 처리·자원 보존으로 바꿉니다. 미니언만으로 접근이 막힌다고 단정하지 않습니다.",
+          "cover_owner": "Nautilus",
+          "cover_target": "Nautilus",
+          "intent": "UNKNOWN",
+          "short_may_only_limit_loss": false,
+          "mechanism_inference": "DESIGN_HYPOTHESIS",
+          "actual_relative_superiority": "UNVERIFIED",
+          "actual_matchup_advantage": "UNKNOWN"
+        },
+        "actual_matchup_advantage": "UNKNOWN",
+        "all_in_supported": false,
+        "chase_supported": false,
+        "attack_gate": "UNCHANGED",
+        "wave": {
+          "adoption": "KEEP_EXISTING_GATES",
+          "cost": "교환에 쓰는 기술·마나·앞으로 나가는 노출과 웨이브 처리·복귀 비용을 함께 비교합니다. 처리 속도와 포탑 도착 완료는 별도입니다.",
+          "minion_effect": "유나라의 영혼 단련(Q)는 주변 확산으로 웨이브 처리량을 바꿀 수 있습니다. 룰루의 요정 친구 픽스(P)의 광선은 다른 유닛이 대신 맞을 수 있어 실제 닿는 피해를 확인해야 합니다.",
+          "avoid_opponent_pattern": "상대 중첩·다음 강화 공격이 이어지는 거리에 계속 머물지 않을 조건을 비교합니다. 동료·퇴로가 없으면 이를 끊으려 무리하게 전진하지 않습니다."
+        },
+        "evidence": {
+          "grade": "DESIGN_HYPOTHESIS",
+          "facts": [
+            {
+              "id": "official:Lucian:E",
+              "slot": "E",
+              "name": "끈질긴 추격",
+              "text": "루시안이 짧은 거리를 빠르게 돌진합니다. 빛의 사수 스킬로 공격하면 끈질긴 추격의 재사용 대기시간이 감소합니다.",
+              "raw_excerpt": "루시안이 짧은 거리를 빠르게 돌진합니다. 빛의 사수 스킬로 공격하면 끈질긴 추격의 재사용 대기시간이 감소합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lucian.json",
+              "patch": "16.20.1",
+              "sha256": "d667a59b8285eb687f06bc3a5e8f3028341b5bfb94aa3b1ca1670a181691aeb6",
+              "local_source": "data/official_catalog/versions/16.20.1/Lucian-16.20.1.ko_KR.json",
+              "locator": "data.Lucian.spells.2.description"
+            },
+            {
+              "id": "official:Lucian:P",
+              "slot": "P",
+              "name": "빛의 사수",
+              "text": "루시안이 스킬을 사용할 때마다 다음 공격이 2연속으로 발사됩니다. 아군이 루시안에게 회복 또는 보호막 효과를 부여하거나, 근처 적 챔피언이 이동 불가 상태가 되면 루시안의 다음 기본 공격 2회가 추가 마법 피해를 입힙니다.",
+              "raw_excerpt": "루시안이 스킬을 사용할 때마다 다음 공격이 2연속으로 발사됩니다. 아군이 루시안에게 회복 또는 보호막 효과를 부여하거나, 근처 적 챔피언이 이동 불가 상태가 되면 루시안의 다음 기본 공격 2회가 추가 마법 피해를 입힙니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lucian.json",
+              "patch": "16.20.1",
+              "sha256": "d667a59b8285eb687f06bc3a5e8f3028341b5bfb94aa3b1ca1670a181691aeb6",
+              "local_source": "data/official_catalog/versions/16.20.1/Lucian-16.20.1.ko_KR.json",
+              "locator": "data.Lucian.passive.description"
+            },
+            {
+              "id": "official:Lucian:Q",
+              "slot": "Q",
+              "name": "꿰뚫는 빛",
+              "text": "루시안이 대상을 관통하는 빛 줄기를 발사합니다.",
+              "raw_excerpt": "루시안이 대상을 관통하는 빛 줄기를 발사합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lucian.json",
+              "patch": "16.20.1",
+              "sha256": "d667a59b8285eb687f06bc3a5e8f3028341b5bfb94aa3b1ca1670a181691aeb6",
+              "local_source": "data/official_catalog/versions/16.20.1/Lucian-16.20.1.ko_KR.json",
+              "locator": "data.Lucian.spells.0.description"
+            },
+            {
+              "id": "official:Lulu:E",
+              "slot": "E",
+              "name": "도와줘, 픽스!",
+              "text": "아군에게 시전하면 픽스가 대상에게 점프하여 보호막을 씌워줍니다. 그 다음 대상을 따라다니며 공격을 돕습니다. 적에게 시전하면 픽스가 대상에게 점프하여 피해를 줍니다. 그 다음 대상을 따라다니며 위치를 확인할 수 있도록 해 줍니다.",
+              "raw_excerpt": "아군에게 시전하면 픽스가 대상에게 점프하여 보호막을 씌워줍니다. 그 다음 대상을 따라다니며 공격을 돕습니다. 적에게 시전하면 픽스가 대상에게 점프하여 피해를 줍니다. 그 다음 대상을 따라다니며 위치를 확인할 수 있도록 해 줍니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lulu.json",
+              "patch": "16.20.1",
+              "sha256": "7859290d4e2a26d8b5a3a81a75bd7e2d48195a7659bfac3aa936c262d3c7da75",
+              "local_source": "data/official_catalog/versions/16.20.1/Lulu-16.20.1.ko_KR.json",
+              "locator": "data.Lulu.spells.2.description"
+            },
+            {
+              "id": "official:Lulu:P",
+              "slot": "P",
+              "name": "요정 친구 픽스",
+              "text": "픽스는 현재 따라다니는 챔피언이 적 유닛을 공격할 때마다 함께 마법 광선을 발사합니다. 이 마법 광선은 목표를 추적하지만, 다른 유닛이 막아서 대신 맞을 수 있습니다.",
+              "raw_excerpt": "픽스는 현재 따라다니는 챔피언이 적 유닛을 공격할 때마다 함께 마법 광선을 발사합니다. 이 마법 광선은 목표를 추적하지만, 다른 유닛이 막아서 대신 맞을 수 있습니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lulu.json",
+              "patch": "16.20.1",
+              "sha256": "7859290d4e2a26d8b5a3a81a75bd7e2d48195a7659bfac3aa936c262d3c7da75",
+              "local_source": "data/official_catalog/versions/16.20.1/Lulu-16.20.1.ko_KR.json",
+              "locator": "data.Lulu.passive.description"
+            },
+            {
+              "id": "official:Lulu:W",
+              "slot": "W",
+              "name": "변덕쟁이",
+              "text": "아군에게 사용하면 잠깐 동안 대상의 공격 속도와 이동 속도가 상승합니다. 적에게 시전하면 기본 공격이나 스킬 시전이 불가능한 귀여운 생물로 변합니다.",
+              "raw_excerpt": "아군에게 사용하면 잠깐 동안 대상의 공격 속도와 이동 속도가 상승합니다. 적에게 시전하면 기본 공격이나 스킬 시전이 불가능한 귀여운 생물로 변합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lulu.json",
+              "patch": "16.20.1",
+              "sha256": "7859290d4e2a26d8b5a3a81a75bd7e2d48195a7659bfac3aa936c262d3c7da75",
+              "local_source": "data/official_catalog/versions/16.20.1/Lulu-16.20.1.ko_KR.json",
+              "locator": "data.Lulu.spells.1.description"
+            },
+            {
+              "id": "official:Nautilus:P",
+              "slot": "P",
+              "name": "강력한 일격",
+              "text": "노틸러스가 대상에 대한 첫 기본 공격 시 추가 물리 피해를 입히고 잠시 속박합니다.",
+              "raw_excerpt": "노틸러스가 대상에 대한 첫 기본 공격 시 추가 물리 피해를 입히고 잠시 속박합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+              "patch": "16.20.1",
+              "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+              "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+              "locator": "data.Nautilus.passive.description"
+            },
+            {
+              "id": "official:Nautilus:W",
+              "slot": "W",
+              "name": "타이탄의 분노",
+              "text": "노틸러스가 잠시 보호막을 얻습니다. 보호막이 지속되는 동안 노틸러스의 기본 공격은 대상과 대상 주위의 적에게 지속 피해를 입힙니다.",
+              "raw_excerpt": "노틸러스가 잠시 보호막을 얻습니다. 보호막이 지속되는 동안 노틸러스의 기본 공격은 대상과 대상 주위의 적에게 지속 피해를 입힙니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+              "patch": "16.20.1",
+              "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+              "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+              "locator": "data.Nautilus.spells.1.description"
+            },
+            {
+              "id": "official:Yunara:E",
+              "slot": "E",
+              "name": "칸메이의 발자취 | 닿지 않는 그림자",
+              "text": "유나라가 유체화 상태가 되고 이동 속도가 증가합니다. 초월 상태에서는 유나라가 한 방향으로 돌진합니다.",
+              "raw_excerpt": "유나라가 유체화 상태가 되고 이동 속도가 증가합니다. 초월 상태에서는 유나라가 한 방향으로 돌진합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Yunara.json",
+              "patch": "16.20.1",
+              "sha256": "83720ec1f71f46e507b14a53910755d6caed1c353acb84062799f7cc8ebd0b9c",
+              "local_source": "data/official_catalog/versions/16.20.1/Yunara-16.20.1.ko_KR.json",
+              "locator": "data.Yunara.spells.2.description"
+            },
+            {
+              "id": "official:Yunara:Q",
+              "slot": "Q",
+              "name": "영혼 단련",
+              "text": "유나라의 공격 속도가 증가하고 적중 시 추가 피해를 입히며 기본 공격이 주변 적에게 확산됩니다.",
+              "raw_excerpt": "유나라의 공격 속도가 증가하고 적중 시 추가 피해를 입히며 기본 공격이 주변 적에게 확산됩니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Yunara.json",
+              "patch": "16.20.1",
+              "sha256": "83720ec1f71f46e507b14a53910755d6caed1c353acb84062799f7cc8ebd0b9c",
+              "local_source": "data/official_catalog/versions/16.20.1/Yunara-16.20.1.ko_KR.json",
+              "locator": "data.Yunara.spells.0.description"
+            },
+            {
+              "id": "official:Yunara:W",
+              "slot": "W",
+              "name": "심판의 궤적 | 파멸의 궤적",
+              "text": "유나라가 회전하는 기도의 구슬을 날려 적에게 피해를 입히고 둔화시킵니다. 초월 상태에서는 유나라가 빛줄기를 발사해 적에게 피해를 입히고 둔화시킵니다.",
+              "raw_excerpt": "유나라가 회전하는 기도의 구슬을 날려 적에게 피해를 입히고 둔화시킵니다. 초월 상태에서는 유나라가 빛줄기를 발사해 적에게 피해를 입히고 둔화시킵니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Yunara.json",
+              "patch": "16.20.1",
+              "sha256": "83720ec1f71f46e507b14a53910755d6caed1c353acb84062799f7cc8ebd0b9c",
+              "local_source": "data/official_catalog/versions/16.20.1/Yunara-16.20.1.ko_KR.json",
+              "locator": "data.Yunara.spells.1.description"
+            }
+          ],
+          "matchup_comparisons": 0,
+          "scope": "공식 기전에서 만든 조건부 계획. 실제 매치업의 짧은/지속 우열·피해 공백 길이·승리 조건 근거는 미연결.",
+          "question_ids": [
+            "ENG-6-ALLREADY",
+            "ENG-6-SPENT",
+            "ENG-6-INITIATOR"
+          ],
+          "coaching_n": 0
+        }
+      },
+      "selected_action": "PRESERVE_INTAKE"
+    },
+    {
+      "id": "CAITLYN_ONE_TRIGGER",
+      "input": {
+        "allies": [
+          {
+            "champion": "Ornn",
+            "position": "TOP"
+          },
+          {
+            "champion": "Sejuani",
+            "position": "JUNGLE"
+          },
+          {
+            "champion": "Ahri",
+            "position": "MID"
+          },
+          {
+            "champion": "Caitlyn",
+            "position": "BOTTOM"
+          },
+          {
+            "champion": "Lux",
+            "position": "SUPPORT"
+          }
+        ],
+        "enemies": [
+          {
+            "champion": "Fiora",
+            "position": "TOP"
+          },
+          {
+            "champion": "LeeSin",
+            "position": "JUNGLE"
+          },
+          {
+            "champion": "Zed",
+            "position": "MID"
+          },
+          {
+            "champion": "Kaisa",
+            "position": "BOTTOM"
+          },
+          {
+            "champion": "Nautilus",
+            "position": "SUPPORT"
+          }
+        ],
+        "own_champion": "Caitlyn",
+        "own_position": "BOTTOM",
+        "side": "BLUE",
+        "patch": "16.20",
+        "opponent_mode": "ASSIGNED",
+        "lane_opponent": null,
+        "schema_version": "lol-coach-loading-input-v2",
+        "preferences": {
+          "risk": "BALANCED"
+        }
+      },
+      "engagement_state": {
+        "milestone": "LEVEL6",
+        "type": "SHORT",
+        "assumptions": {
+          "window": "ENEMY_Q_SPENT",
+          "resources": "READY",
+          "followup": "BOTH",
+          "space": "PLAYABLE",
+          "intervention": "DUO_ONLY",
+          "level_stage": "UNKNOWN",
+          "hit": "ALLY_HIT",
+          "growth": "COMPARABLE",
+          "spells": "BOTH_READY",
+          "initiator": "ALLY"
+        }
+      },
+      "exchange_state": {
+        "ours": {
+          "window": "HIT_WINDOW",
+          "cover": "ACTIVE",
+          "contact": "CONNECTED"
+        },
+        "theirs": {
+          "window": "HIT_WINDOW",
+          "cover": "ACTIVE",
+          "contact": "CONNECTED"
+        }
+      },
+      "risk": "BALANCED",
+      "wave_purpose": "SPACE",
+      "result": {
+        "schema_version": "exchange-preference-v1",
+        "supported": true,
+        "state": {
+          "ours": {
+            "window": "HIT_WINDOW",
+            "cover": "ACTIVE",
+            "contact": "CONNECTED"
+          },
+          "theirs": {
+            "window": "HIT_WINDOW",
+            "cover": "ACTIVE",
+            "contact": "CONNECTED"
+          }
+        },
+        "observation": "HYPOTHETICAL",
+        "milestone": "LEVEL6",
+        "ours": {
+          "evidence_ids": [
+            "official:Caitlyn:P",
+            "official:Caitlyn:W",
+            "official:Caitlyn:E",
+            "official:Lux:P",
+            "official:Lux:Q",
+            "official:Lux:W",
+            "official:Lux:E"
+          ],
+          "classification": "CONDITIONAL",
+          "label": "조건부",
+          "mode": "SHORT",
+          "preferred_exchange": "조건부 · 한 기회만 쓰거나 이미 시작한 교환을 짧게 끝내는 후보",
+          "reason": "케이틀린의 헤드샷(P)는 케이틀린의 요들잡이 덫(W) 또는 케이틀린의 90구경 투망(E) 조건에 반응하며, 럭스의 광채(P)도 기술 적중 뒤 별도 기본 공격 조건이 있습니다. 이 발동 기회를 제한된 후속으로 쓰는 후보와, 계속 기본 공격을 누적하는 선택은 다릅니다. 기본 공격을 반복할 수 있다는 사실만으로 지속 교전 선호를 확정하지 않습니다. 이번 가정은 한 적중·발동 기회이며 다음 반복까지 보장하지 않아, 그 기회 뒤 끊는 후보를 비교합니다.",
+          "start_conditions": [
+            "관련 기술을 실제 배워 가용하고 양쪽 남은 반격·우리 자원·동료 후속·미니언/포탑 노출·외부 개입과 퇴로를 비교한 가정에서만 후보를 실행합니다.",
+            "럭스의 프리즘 보호막(W)의 적용 대상과 남은 효과를 구분합니다. 보호 종료나 강화 종료를 실제 게임 관측으로 기록하지 않습니다."
+          ],
+          "attack_order": [
+            "럭스의 빛의 속박(Q) 실제 적중 뒤 케이틀린의 요들잡이 덫(W) 설치·발동과 후속 거리가 맞는 경우를 따로 확인합니다. 적중만으로 덫 후속이 확정되지 않습니다.",
+            "케이틀린의 요들잡이 덫(W) 또는 케이틀린의 90구경 투망(E)가 만든 조건의 케이틀린의 헤드샷(P) 공격 후보를 비교합니다. 럭스의 광채(P) 추가 공격은 럭스가 실제로 들어갔다 나올 수 있을 때만 비교합니다.",
+            "케이틀린의 90구경 투망(E)를 이미 공격에 썼다면 다시 이탈 수단으로 세지 않습니다. 남은 동료 연결과 받을 수급 범위로 바꾸며, 다음 발동을 기다리겠다고 추격하지 않습니다."
+          ],
+          "end": [
+            "선택한 공격 발동 기회가 소모되거나 다음 가용 수단이 없고 보호·후속 거리가 끊기면 이번 교환을 끝내고 다시 비교합니다.",
+            "럭스의 프리즘 보호막(W)의 종료, 남은 상대 제어가 열림, 미니언/포탑 노출·증원 또는 처리/이탈 자원 부족은 전환 사건입니다. 공통 초 수로 정하지 않습니다."
+          ],
+          "continue_if": [
+            "다음 공격·강화·보호 수단이 실제 남고 양쪽 후속·퇴로·자원·미니언/포탑 노출이 다시 맞을 때만 추가 교환을 비교합니다.",
+            "이어서 공격할 수 있다는 조건은 올인·추격 승리 또는 전체 피해 우위가 아닙니다."
+          ],
+          "reply_alternative": "상대가 접근·제어·맞견제로 끊으면 추가 공격 대신 남은 보호·이동을 수급 복귀에 남깁니다. 상대 반격 창이 살아 있는 동안 무리하게 붙지 않고, 상대가 CS를 먹는 동안 얻을 처리·공간과 포기할 자원을 비교합니다.",
+          "cover_owner": "Lux",
+          "cover_target": "Caitlyn",
+          "intent": "UNKNOWN",
+          "short_may_only_limit_loss": false,
+          "mechanism_inference": "DESIGN_HYPOTHESIS",
+          "actual_relative_superiority": "UNVERIFIED",
+          "actual_matchup_advantage": "UNKNOWN"
+        },
+        "theirs": {
+          "evidence_ids": [
+            "official:Kaisa:P",
+            "official:Kaisa:Q",
+            "official:Kaisa:W",
+            "official:Kaisa:E",
+            "official:Nautilus:W"
+          ],
+          "classification": "CONDITIONAL",
+          "label": "조건부",
+          "mode": "SHORT",
+          "preferred_exchange": "조건부 · 한 기회만 쓰거나 이미 시작한 교환을 짧게 끝내는 후보",
+          "reason": "카이사의 두 번째 피부(P)는 반복 공격·아군 이동 불가에 중첩이 쌓이고, 카이사의 고속 충전(E)는 이동 속도 뒤 공격 속도가 증가합니다. 이 상태와 후속이 남으면 반복 공격을 원하는 후보가 됩니다. 노틸러스의 타이탄의 분노(W)는 노틸러스 자신의 보호막과 그동안의 공격 효과입니다. 카이사의 보호막으로 합치거나 중첩만으로 올인 피해를 확정하지 않습니다. 이번 가정은 한 적중·발동 기회이며 다음 반복까지 보장하지 않아, 그 기회 뒤 끊는 후보를 비교합니다.",
+          "start_conditions": [
+            "상대가 관련 기술·자원과 후속 거리를 남겨 둔 경우의 가능성입니다. 상대 실제 의도·체력/마나·다음 가용 수단은 미확인입니다.",
+            "노틸러스의 타이탄의 분노(W)의 적용 대상과 남은 효과를 구분합니다. 보호 종료나 강화 종료를 실제 게임 관측으로 기록하지 않습니다."
+          ],
+          "attack_order": [
+            "카이사의 고속 충전(E)의 실제 상태와 카이사의 두 번째 피부(P) 중첩·후속 기회가 남는 조건을 비교합니다. 이동 속도 구간과 공격 속도 구간을 같다고 보지 않습니다.",
+            "카이사의 이케시아 폭우(Q)·카이사의 공허추적자(W) 뒤 추가 기본 공격 또는 다음 수단이 남는지 봅니다. 발동 횟수·처치 피해·가용 시각은 만들지 않습니다.",
+            "노틸러스의 타이탄의 분노(W)의 자기 보호가 끝나거나 카이사와 연결이 끊기면 상대 계획도 바뀔 수 있습니다. 물러나는 상대를 쫓을 허가는 아닙니다."
+          ],
+          "end": [
+            "선택한 공격 발동 기회가 소모되거나 다음 가용 수단이 없고 보호·후속 거리가 끊기면 이번 교환을 끝내고 다시 비교합니다.",
+            "노틸러스의 타이탄의 분노(W)의 종료, 남은 상대 제어가 열림, 미니언/포탑 노출·증원 또는 처리/이탈 자원 부족은 전환 사건입니다. 공통 초 수로 정하지 않습니다."
+          ],
+          "continue_if": [
+            "다음 공격·강화·보호 수단이 실제 남고 양쪽 후속·퇴로·자원·미니언/포탑 노출이 다시 맞을 때만 추가 교환을 비교합니다.",
+            "이어서 공격할 수 있다는 조건은 올인·추격 승리 또는 전체 피해 우위가 아닙니다."
+          ],
+          "reply_alternative": "상대가 원하는 기술→공격 또는 중첩 연속을 끊을 수 있는 거리·동료 연결을 먼저 비교합니다. 그 조건이 없으면 공격을 유도하러 전진하지 않고 CS 처리·자원 보존으로 바꿉니다. 미니언만으로 접근이 막힌다고 단정하지 않습니다.",
+          "cover_owner": "Nautilus",
+          "cover_target": "Nautilus",
+          "intent": "UNKNOWN",
+          "short_may_only_limit_loss": false,
+          "mechanism_inference": "DESIGN_HYPOTHESIS",
+          "actual_relative_superiority": "UNVERIFIED",
+          "actual_matchup_advantage": "UNKNOWN"
+        },
+        "actual_matchup_advantage": "UNKNOWN",
+        "all_in_supported": false,
+        "chase_supported": false,
+        "attack_gate": "UNCHANGED",
+        "wave": {
+          "adoption": "KEEP_EXISTING_GATES",
+          "cost": "교환에 쓰는 기술·마나·앞으로 나가는 노출과 웨이브 처리·복귀 비용을 함께 비교합니다. 처리 속도와 포탑 도착 완료는 별도입니다.",
+          "minion_effect": "럭스의 광휘의 특이점(E) 등 처리 수단을 교환에 쓰면 원래 처리·방어 예산이 바뀝니다. 상대 미니언과 포탑의 실제 영향은 분포·위치·대상 없이는 정하지 않습니다.",
+          "avoid_opponent_pattern": "상대 기술→추가 공격 창이 열린 동안 같은 길이의 교환을 강요하지 않습니다. 다음 수단이 실제 소모된 뒤 남은 반격과 CS·처리 공간을 다시 비교합니다."
+        },
+        "evidence": {
+          "grade": "DESIGN_HYPOTHESIS",
+          "facts": [
+            {
+              "id": "official:Caitlyn:E",
+              "slot": "E",
+              "name": "90구경 투망",
+              "text": "케이틀린이 무거운 그물을 발사하여 적을 느리게 합니다. 그 반동으로 케이틀린은 뒤로 밀려납니다.",
+              "raw_excerpt": "케이틀린이 무거운 그물을 발사하여 적을 느리게 합니다. 그 반동으로 케이틀린은 뒤로 밀려납니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Caitlyn.json",
+              "patch": "16.20.1",
+              "sha256": "d3215fc64246d7014dbd924cf1b76620756f84184c01191f0f6ffa65c3625029",
+              "local_source": "data/official_catalog/versions/16.20.1/Caitlyn-16.20.1.ko_KR.json",
+              "locator": "data.Caitlyn.spells.2.description"
+            },
+            {
+              "id": "official:Caitlyn:P",
+              "slot": "P",
+              "name": "헤드샷",
+              "text": "케이틀린은 덫 또는 투망에 걸린 대상을 공격할 때나 일정 횟수 이상의 기본 공격을 했을 때 헤드샷을 발사하여 치명타 확률에 비례한 추가 피해를 입힙니다. 덫에 걸리거나 투망에 맞은 대상에게는 케이틀린의 헤드샷 공격 사거리가 두 배가 됩니다.",
+              "raw_excerpt": "케이틀린은 덫 또는 투망에 걸린 대상을 공격할 때나 일정 횟수 이상의 기본 공격을 했을 때 헤드샷을 발사하여 치명타 확률에 비례한 추가 피해를 입힙니다. 덫에 걸리거나 투망에 맞은 대상에게는 케이틀린의 헤드샷 공격 사거리가 두 배가 됩니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Caitlyn.json",
+              "patch": "16.20.1",
+              "sha256": "d3215fc64246d7014dbd924cf1b76620756f84184c01191f0f6ffa65c3625029",
+              "local_source": "data/official_catalog/versions/16.20.1/Caitlyn-16.20.1.ko_KR.json",
+              "locator": "data.Caitlyn.passive.description"
+            },
+            {
+              "id": "official:Caitlyn:W",
+              "slot": "W",
+              "name": "요들잡이 덫",
+              "text": "케이틀린이 함정을 설치합니다. 함정이 발동하면 함정에 걸린 적 챔피언은 1.5초간 모습이 드러나며 이동할 수 없게 되고, 케이틀린의 헤드샷이 강화됩니다.",
+              "raw_excerpt": "케이틀린이 함정을 설치합니다. 함정이 발동하면 함정에 걸린 적 챔피언은 1.5초간 모습이 드러나며 이동할 수 없게 되고, 케이틀린의 헤드샷이 강화됩니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Caitlyn.json",
+              "patch": "16.20.1",
+              "sha256": "d3215fc64246d7014dbd924cf1b76620756f84184c01191f0f6ffa65c3625029",
+              "local_source": "data/official_catalog/versions/16.20.1/Caitlyn-16.20.1.ko_KR.json",
+              "locator": "data.Caitlyn.spells.1.description"
+            },
+            {
+              "id": "official:Kaisa:E",
+              "slot": "E",
+              "name": "고속 충전",
+              "text": "카이사의 이동 속도가 잠시 동안 증가한 뒤 공격 속도가 증가합니다. 살아있는 무기: 고속 충전을 사용하면 잠시 투명 상태가 됩니다.",
+              "raw_excerpt": "카이사의 이동 속도가 잠시 동안 증가한 뒤 공격 속도가 증가합니다.<br><br>살아있는 무기: 고속 충전을 사용하면 잠시 투명 상태가 됩니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Kaisa.json",
+              "patch": "16.20.1",
+              "sha256": "98544004fbc81a31b38a8856c301b5434e7881bb05fd4ec708dabb0827214ed3",
+              "local_source": "data/official_catalog/versions/16.20.1/Kaisa-16.20.1.ko_KR.json",
+              "locator": "data.Kaisa.spells.2.description"
+            },
+            {
+              "id": "official:Kaisa:P",
+              "slot": "P",
+              "name": "두 번째 피부",
+              "text": "카이사는 기본 공격으로 플라즈마 중첩을 쌓아 그에 따른 추가 마법 피해를 입힙니다. 아군의 이동 불가 효과가 적에게 적용됐을 때에도 플라즈마 중첩이 쌓입니다. 살아있는 무기 효과는 카이사가 구입하는 아이템에 따라 스킬을 강화시킵니다.",
+              "raw_excerpt": "카이사는 기본 공격으로 플라즈마 중첩을 쌓아 그에 따른 추가 마법 피해를 입힙니다. 아군의 이동 불가 효과가 적에게 적용됐을 때에도 플라즈마 중첩이 쌓입니다. 살아있는 무기 효과는 카이사가 구입하는 아이템에 따라 스킬을 강화시킵니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Kaisa.json",
+              "patch": "16.20.1",
+              "sha256": "98544004fbc81a31b38a8856c301b5434e7881bb05fd4ec708dabb0827214ed3",
+              "local_source": "data/official_catalog/versions/16.20.1/Kaisa-16.20.1.ko_KR.json",
+              "locator": "data.Kaisa.passive.description"
+            },
+            {
+              "id": "official:Kaisa:Q",
+              "slot": "Q",
+              "name": "이케시아 폭우",
+              "text": "카이사가 근처 적들을 추격하는 미사일 세례를 퍼붓습니다. 살아있는 무기: 이케시아 폭우가 발사하는 미사일 개수가 증가합니다.",
+              "raw_excerpt": "카이사가 근처 적들을 추격하는 미사일 세례를 퍼붓습니다.<br><br>살아있는 무기: 이케시아 폭우가 발사하는 미사일 개수가 증가합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Kaisa.json",
+              "patch": "16.20.1",
+              "sha256": "98544004fbc81a31b38a8856c301b5434e7881bb05fd4ec708dabb0827214ed3",
+              "local_source": "data/official_catalog/versions/16.20.1/Kaisa-16.20.1.ko_KR.json",
+              "locator": "data.Kaisa.spells.0.description"
+            },
+            {
+              "id": "official:Kaisa:W",
+              "slot": "W",
+              "name": "공허추적자",
+              "text": "카이사가 장거리 광선을 발사하며, 광선에 적중한 적에게 플라즈마 중첩이 쌓입니다. 살아있는 무기: 공허추적자 적중 시 플라즈마 중첩이 추가로 쌓이며 챔피언에게 적중 시 재사용 대기시간이 감소합니다.",
+              "raw_excerpt": "카이사가 장거리 광선을 발사하며, 광선에 적중한 적에게 플라즈마 중첩이 쌓입니다.<br><br>살아있는 무기: 공허추적자 적중 시 플라즈마 중첩이 추가로 쌓이며 챔피언에게 적중 시 재사용 대기시간이 감소합니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Kaisa.json",
+              "patch": "16.20.1",
+              "sha256": "98544004fbc81a31b38a8856c301b5434e7881bb05fd4ec708dabb0827214ed3",
+              "local_source": "data/official_catalog/versions/16.20.1/Kaisa-16.20.1.ko_KR.json",
+              "locator": "data.Kaisa.spells.1.description"
+            },
+            {
+              "id": "official:Lux:E",
+              "slot": "E",
+              "name": "광휘의 특이점",
+              "text": "지정한 지역에 뒤틀린 빛의 구체를 띄워 주변 적의 속도를 늦춥니다. 럭스는 이 빛을 폭발시켜 피해를 입힐 수 있습니다.",
+              "raw_excerpt": "지정한 지역에 뒤틀린 빛의 구체를 띄워 주변 적의 속도를 늦춥니다. 럭스는 이 빛을 폭발시켜 피해를 입힐 수 있습니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+              "patch": "16.20.1",
+              "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+              "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+              "locator": "data.Lux.spells.2.description"
+            },
+            {
+              "id": "official:Lux:P",
+              "slot": "P",
+              "name": "광채",
+              "text": "럭스의 공격 스킬은 몇 초 동안 적을 빛의 에너지로 가득 채웁니다. 럭스의 기본 공격으로 이 에너지를 불태우면 적은 럭스의 레벨에 비례하는 추가 마법 피해를 받습니다.",
+              "raw_excerpt": "럭스의 공격 스킬은 몇 초 동안 적을 빛의 에너지로 가득 채웁니다. 럭스의 기본 공격으로 이 에너지를 불태우면 적은 럭스의 레벨에 비례하는 추가 마법 피해를 받습니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+              "patch": "16.20.1",
+              "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+              "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+              "locator": "data.Lux.passive.description"
+            },
+            {
+              "id": "official:Lux:Q",
+              "slot": "Q",
+              "name": "빛의 속박",
+              "text": "럭스가 빛의 구를 발사하여 최대 2명의 적 유닛을 속박하며 피해를 입힙니다.",
+              "raw_excerpt": "럭스가 빛의 구를 발사하여 최대 2명의 적 유닛을 속박하며 피해를 입힙니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+              "patch": "16.20.1",
+              "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+              "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+              "locator": "data.Lux.spells.0.description"
+            },
+            {
+              "id": "official:Lux:W",
+              "slot": "W",
+              "name": "프리즘 보호막",
+              "text": "럭스가 마법봉을 던져 아군 주변의 빛을 구부리며 적의 공격으로부터 보호해줍니다.",
+              "raw_excerpt": "럭스가 마법봉을 던져 아군 주변의 빛을 구부리며 적의 공격으로부터 보호해줍니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+              "patch": "16.20.1",
+              "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+              "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+              "locator": "data.Lux.spells.1.description"
+            },
+            {
+              "id": "official:Nautilus:W",
+              "slot": "W",
+              "name": "타이탄의 분노",
+              "text": "노틸러스가 잠시 보호막을 얻습니다. 보호막이 지속되는 동안 노틸러스의 기본 공격은 대상과 대상 주위의 적에게 지속 피해를 입힙니다.",
+              "raw_excerpt": "노틸러스가 잠시 보호막을 얻습니다. 보호막이 지속되는 동안 노틸러스의 기본 공격은 대상과 대상 주위의 적에게 지속 피해를 입힙니다.",
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+              "patch": "16.20.1",
+              "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+              "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+              "locator": "data.Nautilus.spells.1.description"
+            }
+          ],
+          "matchup_comparisons": 0,
+          "scope": "공식 기전에서 만든 조건부 계획. 실제 매치업의 짧은/지속 우열·피해 공백 길이·승리 조건 근거는 미연결.",
+          "question_ids": [
+            "DUO-L2",
+            "DUO-L3_5",
+            "DUO-L6"
+          ],
+          "coaching_n": 0
+        }
+      },
+      "selected_action": "PRESERVE_INTAKE"
+    }
+  ]
+}

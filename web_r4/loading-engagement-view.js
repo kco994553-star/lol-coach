@@ -1,7 +1,7 @@
 /* Encounter comparison is separate from preference and wave execution. */
 (function(root){
  'use strict';
- function create({result:r,report,catalog,onChange,onReset}){
+ function create({result:r,report,catalog,onChange,onReset,exchangeResult,onExchange,onExchangeReset}){
   const G=root.LoadingEngagement,el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!=null)n.textContent=text;if(cls)n.className=cls;return n;},block=(title,vs)=>{const n=el('div',null,'interactive-block');n.append(el('h4',title));for(const v of Array.isArray(vs)?vs:[vs])n.append(el('p',v));return n;};
   const host=el('section',null,'engagement-flow');host.id='engagement-flow';host.dataset.advantage=r.advantage;host.dataset.action=r.selected_action_id;host.dataset.waveConstraint=r.wave_constraint;
   host.append(el('h3','교전 비교 → 웨이브에서 얻을 것'),el('p','로딩 시점의 비교용 가정 · 실제 체력·스킬·위치 관측이 아닙니다. 리스크 선호는 우세를 바꾸지 않습니다.','source-note'));
@@ -11,7 +11,7 @@
   const fields=el('fieldset',null,'hypothesis-inputs');fields.append(el('legend','선택 입력 · 미확인으로 두어도 기존10픽·웨이브 분석 가능'));
   for(const def of G.conditionDefs){if(def.key==='level_stage'&&!['FIRST_PURCHASE','FIRST_CORE'].includes(r.state.milestone))continue;const label=el('label'),select=el('select');select.id='engagement-'+def.key;for(const [value,name] of Object.entries(def.options)){const o=el('option',name);o.value=value;select.append(o);}select.value=r.state.assumptions[def.key];if(def.key==='initiator'&&['ALLY_INIT','COUNTER'].includes(r.state.type)){select.value=r.initiator;select.disabled=true;label.append(el('small','이 교전 유형에서 선진입 측은 고정됩니다. 다른 유형에서는 원래 선택값을 사용합니다.'));}select.addEventListener('change',()=>onChange(def.key,select.value));label.append(el('span',def.label),select);fields.append(label);}controls.append(fields);
   const reset=el('button','교전 가정 초기화');reset.id='engagement-reset';reset.type='button';reset.addEventListener('click',onReset);controls.append(reset,el('p',r.comparison_scope));host.append(controls);
-  const status=el('div',null,'interactive-status');status.id='engagement-status';status.setAttribute('role','status');status.append(el('strong','교전 우세: '+r.advantage_label+' · '+G.typeNames[r.state.type]),el('p',r.reason),el('p',r.period_change));if(!r.scenario_valid)status.append(el('p',r.invalid_reason,'is-error'));host.append(status);
+  const status=el('div',null,'interactive-status');status.id='engagement-status';status.setAttribute('role','status');status.append(el('strong','교전 우세: '+r.advantage_label+' · '+G.typeNames[r.state.type]),el('p',r.reason),el('p',r.period_change));if(!r.scenario_valid)status.append(el('p',r.invalid_reason,'is-error'));host.append(status);host.append(root.LoadingExchangeView.create({result:exchangeResult,report,catalog,engagement:r,onChange:onExchange,onReset:onExchangeReset}));
   host.append(block('소모된 기술이 맡던 역할',r.removed_role),block('상대에게 남을 수 있는 반격·보호·이탈 · 실제 습득·가용은 별도',r.remaining_counters),block('우리에게 남겨야 할 수단',r.our_required_tools));
   const comparison=el('details');comparison.id='engagement-table';comparison.append(el('summary','현재 구간의 다섯 교전 유형 비교'));
   const scroll=el('div',null,'table-scroll');scroll.tabIndex=0;scroll.setAttribute('role','region');scroll.setAttribute('aria-label','교전 유형 비교 표 · 좌우 스크롤');const table=el('table'),head=el('thead'),hr=el('tr');['구간','교전 유형','우세 측','강약 원인','필수 조건','결론을 뒤집는 조건','근거 상태'].forEach(t=>hr.append(el('th',t)));head.append(hr);table.append(head);const body=el('tbody');

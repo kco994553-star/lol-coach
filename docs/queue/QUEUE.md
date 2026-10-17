@@ -1,3 +1,29 @@
+된 것: 양쪽 교환 길이 후보에 이유·시작·공격 순서·종료·지속 조건·상대 대응 대안을 연결했습니다.
+확인: 보호 종료·후속 단절은 추가 공격과 기존 실행 지도에 함께 반영하며 성향은 선호/우세를 바꾸지 않습니다.
+한계: 실제 매치업 길이 우위·승리 근거가 없으므로 조건부 가설 또는 미확인입니다.
+보존: 기존 원문·조언7·AUTO30/HOLD20·영상3/3·Windows 경로와 코칭N0·30초 미측정을 유지합니다.
+다음: 원격 필수검사·공개 PC/모바일 게시 결과를 별도 증거로 마무리합니다.
+
+# Exchange preference implementation — 2026-10-17
+
+Intake main3b02b886bc32e839a20cf6dc294ba00bab68dbc0, branchwork/exchange-preference-20261017,
+run_token main-20261017-exchange-preference. Additive exchange-preference-v1/report.exchange,
+independent hypothetical ours/theirs effect/cover/contact. Exact Caitlyn/Lux vs Kaisa/Nautilus
+and Yunara/Lulu vs Lucian/Nautilus only; unsupported returns neutral no substitute champions.
+Relative length candidate != actual opponent advantage. Conditional repeated vs single-window
+or ending-loss-limit; no firsttwo advantage labels without matchup comparisons. Lucian may
+repeat if next means remain; NautilusW covers self not carry. Lv1/2 investment unknown and
+invalid scenarios don't emit multi-skill attack instructions. Risk leaves preference/advantage
+unchanged. Reset retains physical candidate but withholds wave adoption. Endgate removes extra
+attack and follow map, visible feedback uses derived adoption while raw result preserved.
+Actual PC1440/mobile390 changed flow passed; full initial affected browser reused plus focused
+review fixes; final remote CI not preclaimed. Sources/question3/holds/failures/pro5 projection,
+launcher/manual and frozen contracts preserved. No providers/video/paid calls; today's3/3 and
+coachingN0/30secunmeasured/WindowsBLOCKED_EXTERNAL unchanged. Evidence under exchange-preference.
+Newduo dedicated wave map remains unsupported; no unsafe map portrait substitution.
+
+---
+
 된 것: 교전 유형·기술 소모·첫 적중·후속 조건을 행동·비용·웨이브 실행 제한에 연결했습니다.
 확인: 실제 공개 PC·모바일 화면, PR67·병합후 필수3검사, Pages배포와37파일 일치를 확인했습니다.
 가설: 유나라·룰루 대 루시안·노틸러스의6이후 확정승리는 사용자 제시 검토 가설로만 보존했습니다.
