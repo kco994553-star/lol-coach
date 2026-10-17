@@ -28,7 +28,7 @@ class LoadingHTTPTests(unittest.TestCase):
         return r.status,body,headers
 
     def test_loading_assets_and_original_pc_access_boundary(self):
-        for path in ['/coach-theme.css','/coach-shell.js','/hero-art.json','/home-assets/strategy-panels.webp','/home-assets/Ahri.jpg','/home-assets/Caitlyn.jpg','/home-assets/lane.jpg','/home-assets/fight.jpg','/loading','/loading.html','/loading-engine.js','/loading-exploration.js','/loading-interactive.js','/dashboard.html','/dashboard.js','/dashboard.css','/pro-dashboard.json','/loading-exchange.js','/loading-exchange-view.js','/loading-engagement.js','/loading-engagement-view.js','/loading-wave.js','/loading-wave-view.js','/loading-map.js','/loading-data.json','/loading-assets/champion0.png','/skill-data.js','/skill-display.js']:
+        for path in ['/home-assets/AhriSkin27.jpg','/home-assets/LuxSkin7.jpg','/home-assets/Moonlit.webp','/home-assets/strategy-objectives.webp','/coach-theme.css','/coach-shell.js','/hero-art.json','/home-assets/strategy-panels.webp','/home-assets/Ahri.jpg','/home-assets/Caitlyn.jpg','/home-assets/lane.jpg','/home-assets/fight.jpg','/loading','/loading.html','/loading-engine.js','/loading-exploration.js','/loading-interactive.js','/dashboard.html','/dashboard.js','/dashboard.css','/pro-dashboard.json','/loading-exchange.js','/loading-exchange-view.js','/loading-engagement.js','/loading-engagement-view.js','/loading-wave.js','/loading-wave-view.js','/loading-map.js','/loading-data.json','/loading-assets/champion0.png','/skill-data.js','/skill-display.js']:
             status,body,headers=self.get(path);self.assertEqual(status,200,path)
             self.assertGreater(len(body),0);self.assertIn("img-src 'self'",headers['Content-Security-Policy'])
         self.assertEqual(self.get('/dev/v1/pregame/pc-status')[0],401)
@@ -55,11 +55,18 @@ class LoadingHTTPTests(unittest.TestCase):
         catalog=json.loads(Path('web_r4/hero-art.json').read_text())
         registry=json.loads(Path('config/home_design_assets.json').read_text())
         official={r['path']:r for r in registry['assets']}
+        refresh=json.loads(Path('config/art_refresh_assets.json').read_text())
+        official.update({r['path']:r for r in refresh['official_skins']})
+        self.assertEqual({r['kind'] for r in catalog['assets']},{'OFFICIAL_STATIC_SPLASH','OFFICIAL_SKIN_SPLASH','GENERATED_DECORATION'})
         for row in catalog['assets']:
             path='web_r4/'+row['src'].removeprefix('./')
             self.assertEqual(row['sha256'],hashlib.sha256(Path(path).read_bytes()).hexdigest())
-            self.assertEqual(row['source_url'],official[path]['source_url'])
-            self.assertEqual(row['kind'],'OFFICIAL_STATIC_SPLASH')
+            if row['kind'].startswith('OFFICIAL_'):
+                self.assertEqual(row['source_url'],official[path]['source_url'])
+            else:
+                self.assertIsNone(row['source_url'])
+                self.assertFalse(refresh['generated']['hero']['official_riot_asset'])
+                self.assertEqual(row['sha256'],refresh['generated']['hero']['sha256'])
         ai=json.loads(Path('config/shared_theme_assets.json').read_text())
         self.assertFalse(ai['official_riot_asset']);self.assertFalse(ai['tactical_evidence'])
         self.assertEqual(ai['sha256'],hashlib.sha256(Path(ai['public_path']).read_bytes()).hexdigest())
