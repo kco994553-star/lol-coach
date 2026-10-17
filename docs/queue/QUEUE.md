@@ -1,3 +1,52 @@
+된 것: 모바일·PC 웹을 실제 배포했고 휴대폰 크기의 공개 브라우저에서도 열어 확인했습니다.
+된 것: 세 판단·여섯 예시에서 챔피언·경제·상황을 바꾸고 카드·미니맵·확대를 함께 볼 수 있습니다.
+확인: 구현PR50 필수3개·병합 후3개·Pages 배포 성공, 공개12파일 해시가 검증본과 일치합니다.
+미확인: 새 전략의 실전 효과·Riot 인게임 승인·실제 Windows 롤 연결은 완료로 표시하지 않습니다.
+유지: 조언7개·AUTO30/HOLD20/USER0·영상3/3·기존 이력을 보존했고 오늘 추가 제공자 호출은0회입니다.
+
+# Actual public mobile/PC prototype publication — 2026-10-17
+
+Public learning: https://kco994553-star.github.io/lol-coach/
+Public work status: https://kco994553-star.github.io/lol-coach/status.html
+Status is a dated snapshot, not a live monitor. GitHub main handoff/Actions are linked.
+PC primary launcher and /pc remain; its new navigation opens /directions. No PC service
+or access token is exposed by the public website. All new strategies DESIGN_HYPOTHESIS.
+
+ImplementationPR50 head e684c8dbc724efd832382f13ea61ad34e2ba3ce3, testedmerge049deec01b78251836d94c8a5e236daa49de7823,
+main0ec550d823936118f86487626467e3d01060de42 share treea1902e952ac730a14888aec0079c2b80c6cf8003.
+Required38997499760/38997499772 and postmain38997627833/38997627836 all3SUCCESS.
+Pagesartifact6c950ca6cccde4b6758597cf5d3b1aa6767ad7be, actualrun38997722411/deployment7134020088 SUCCESS.
+Source main0ec550d;12allowlisted publicfiles match SHA, liveHTTPS root/status work, actual390px
+Chromium scene/step/zoom/status PASS withJSerrors0 and TLSverification retained. FirstcreateAPI403
+was followed by actual persistedconfig/build success; no repeatedcreate/payment/provider call.
+Evidence: evidence/actual-evidence/directions/report.md and publication/{result,deployment,
+public-browser,ci-pr50,ci-main-pr50}.json plus screenshots. All oldfailure histories remain.
+
+This branchwork/directions-results-20261017 records observed results only. No functional,
+sourcecatalog/asset/policy, runtime/workflow, provider or private-data change. Completed7affected
+checks/Chromium/independentreview reused; only amendment integrity and requiredCI apply to
+this record. Its ownfutureCI/merge is not predicted by this immutable snapshot; common claim
+records final publication. Shared tokenmain-20261017-directions, intake main0ec550d.
+
+Completed scope: RECALL/SIDE_GROUP/OBJECTIVE, two condition examples each; Caitlyn/Fiora/Ornn;
+unknown staysunknown; three economic metrics separate; generaltypes/currentrole separate;
+BLUE/RED anchors with fixeddragon; hiddenenemy0portraits; numberedcard/mapsteps and mobilezoom.
+Officialskill facts are sourcebound references, not optimal-strategy proof. No observedstats
+or expertstatement supports the new plans. No real-game effect/user-understanding study done.
+Next queues: usability/condition-counterexample evidence before extra role/champion expansion;
+separate linehold/roam and combat-formation decisions not implemented; old23rewrites stayended.
+Ingame tactical integration requires policy/data-path clearance; Riot registration/audit/
+approval unverified. WindowsLCU BLOCKED_EXTERNAL, launcher/manualfallback unchanged.
+
+All prior constraints below remain: Q15275/recallCH291/PRO89 separate; resource108 participant×
+matchobservations preserved; AUTO30/HOLD20/USER0, original7revisions/350frozen unchanged.
+Oct17KST VIDEO3/3, newTEXT/VIDEO/RiotMatch/paid calls0. Existing③→separatereview+gatedpublish→④
+preparation and shared ledger/reservation/fulloriginalcharge rules remain for Oct18KST.
+ExistingMain hourlyresume configured fromOct18 00KST, next_run_time null/newpolicyactualexecution
+UNOBSERVED; dailyworkflow18KST configured. No scheduling changes made for this prototype.
+
+---
+
 된 것: 상황별 주 계획·대안과 공식 미니맵을 PC·모바일 공통 화면으로 구현했습니다.
 된 것: 귀환/웨이브·사이드/합류·목표물/교환의 조건 비교 6장면과 대표 챔피언 3명을 연결했습니다.
 유지: 기존 조언7개·AUTO30/HOLD20/USER0·영상3/3·복구108관측·Windows 경로를 보존합니다.
