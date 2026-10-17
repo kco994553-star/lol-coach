@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-loading-interactive`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-interactive-20261017`
+- authority: USER_INTERACTIVE_FRONTEND_STRATEGY_SELECTION + inherited free implementation/publication/required CI/normal merge; no repeated approval.
+- intake_main: `fa22713f5eb363e5384fb140c2b8c6f9caef33de`
+- detail: Fresh contracts/design/currentdeployment intake. Reuse existing10pick/6rows/maps. Add versioned preference and separate future assumptions, bounded representative LV2 alternatives, milestone/evidence exploration, synchronized map. Unknown and evidence gates before preference. No provider/video/game/paid calls or strategy grade inheritance. CoachingN0/comprehensionunmeasured/WindowsBLOCKED_EXTERNAL preserved.
+
+---
+
 # Latest common execution claim — PARKED_EXTERNAL
 - run_token: `main-20261017-loading-readability`
 - status: `PARKED_EXTERNAL`
