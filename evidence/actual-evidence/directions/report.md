@@ -101,3 +101,23 @@ RED는 아군 기지·라인 기준을 바꾸며 용 위치를 반대 구덩이�
 
 번호 선택 시 해당 화살표만 표시하며 카드·기본 지도·확대 지도에 동시에 반영됩니다.
 공개 웹/상태 페이지 실제 HTTP 확인과 원격CI는 게시 단계에서 별도로 기록합니다.
+
+## 실제 게시 결과 — 2026-10-17
+
+[모바일/PC 공개 연습](https://kco994553-star.github.io/lol-coach/) · [작업 상태](https://kco994553-star.github.io/lol-coach/status.html)
+
+구현 PR50의 필수 검사3개와 main 병합 후3개가 모두 SUCCESS입니다. 구현 head e684c8d /
+테스트 merge049deec / main0ec550d의 트리 a1902e95를 대조했습니다. 공개 gh-pages 빌드는
+6c950ca6이며 source main0ec550d입니다. Pages 실제 실행38997722411·배포7134020088은
+success, HTTPS12개 파일은 내보내기 해시와 모두 일치합니다. 실제 공개 주소를390px
+Chromium에서 열어 장면 선택·단계 보기·확대·상태 페이지를 확인했고 JS오류0입니다.
+
+첫 Pages 생성 요청은403을 반환했지만 곧바로 재조회한 실제 설정과 배포가 존재했습니다.
+같은 생성 요청을 반복하지 않고 완료 상태와 공개 결과를 확인했습니다. 원인 미확인을
+보존하며 설정·HTTP성공·브라우저동작을 구분합니다. 유료 전환은 없습니다.
+
+자세한 영수증: [result](publication/result.json), [PR CI](publication/ci-pr50.json),
+[main CI](publication/ci-main-pr50.json), [배포/해시](publication/deployment.json),
+[공개 브라우저](publication/public-browser.json), [모바일 화면](publication/mobile-live-390.png),
+[상태 화면](publication/status-live-390.png). 이후 기록용 PR의 검사 결과와 별개로 위 구현·
+배포의 완료 사실을 기록합니다. 이번 기록에는 기능/자료 변경이 없으므로 완료 검증을 재사용합니다.
