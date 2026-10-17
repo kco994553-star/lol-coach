@@ -1,4 +1,14 @@
 # Latest common execution claim — RUNNING
+- run_token: `main-20261017-lane-engagement`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/lane-engagement-20261017`
+- intake_main: `8363ec213ac05103eced5b88704166a2e2515b6d`
+- detail: Prior wave/dashboard/pro reference actually published and PR64-66 preserved. Latest user adds engagement-type evidence comparison and Yunara/Lulu vsLucian/Nautilus pre/post6 review hypothesis. Bounded additive pure rule/view contract, no quantified win claims or inherited approval; preferences never change advantage. No provider/video/paid calls; preserve grades/source/Windows/N0/quota. Normal required gates/Pages/Handoff continue.
+
+---
+
+# Latest common execution claim — RUNNING
 - run_token: `main-20261017-loading-wave`
 - status: `RUNNING`
 - writer_active: true
