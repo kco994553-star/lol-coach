@@ -5,6 +5,17 @@
 - owner_branch: `work/loading-context-20261017`
 - authority: USER_LOADING_CONTEXT_QUALITY_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
 - intake_main: `b9cb5ed60e8cfefb743da57cdcc34d8cdca3111f`
+- detail: Final context/duo repair engine2041017e and UI/catalog reviewed;9semantic+5engine+9catalog+HTTP2/boundary2 and actualChromium context counterexamples passed. Before/after/report/sourcequestions preserved; no provider/game/video/asset/paidcall. Preparing required exact-head PR.
+
+---
+
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-loading-context`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-context-20261017`
+- authority: USER_LOADING_CONTEXT_QUALITY_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `b9cb5ed60e8cfefb743da57cdcc34d8cdca3111f`
 - detail: User requests context selection and one representative duo matchup quality repair, no roster/UI expansion. Latest mainb9cb5ed clean/no openPR/no workers; reproduced global partner leakage and order-dependent strategic emphasis. Preserve VIDEO3/3/advice/Windows/history.
 
 ---
