@@ -1,0 +1,47 @@
+{
+  "schema_version": "video-resume.automation-observation.v1",
+  "checked_at_utc": "2026-10-17T00:20:19.532358+00:00",
+  "main": {
+    "id": "6ac3074f4ec88191b42adecb423c3520",
+    "team_id": null,
+    "title": "LoL Coach Main 자동 재개",
+    "prompt": "LoL Coach의 단일 Main Executor로 현재 작업을 이어간다. repository=kco994553-star/lol-coach, default=main. 이 실행은 사용자에게 부여받은 Dynamic Workflow v1.0 + Autonomous Execution Authority v1.0을 따르며 유료 결제만 사전 승인한다. 목표는 실제 경기 Evidence로 검증되는 개인용 Web MVP다. 합리적 코드/설계/테스트/무료 dependency/문서/commit/GitHub API publication/PR/Hard Gate 충족 merge/repair/replan/다음 task 선택은 이미 승인됐다. 사용자에게 매 단계 계속 진행할지 묻지 않는다.\n\n[READ-ONLY INTAKE]\n최신 main HEAD, CURRENT_HANDOFF 최상단, docs/AUTONOMOUS_EXECUTION.md, 필요한 최신 scoped handoff/evidence, open PR/branch/Actions만 fresh-read한다. 실제 GitHub와 current evidence가 과거 대화/SHA보다 우선한다. historical evidence와 fresh evidence를 구분하고 동일 source/hash 검증을 다시 하지 않는다. 기존 Progress/CI/Evidence Watch 세 개는 최종 조회에서 이미 PAUSED로 확인됐으므로 임의 재활성화하지 않는다. 이 단일 Main 예약의 intake에서 진행/CI/증거 세 lens를 필요한 최소 조회로 read-only 확인하고, 그 다음 실행 phase로 분리한다. 중복 감시/Executor를 새로 만들지 않는다. 이 Executor만 실행 가능한 후속 작업을 실제 수행한다. 관련 material change, CI_PENDING 또는 unfinished authorized task가 없으면 NO_MATERIAL_CHANGE로 조용히 종료한다. 임의 기능·새 framework를 만들지 않는다.\n\n[SINGLE WRITER / COMMON CLAIM]\n동일 scope는 반드시 공통 ref work/main-execution-claim의 CURRENT_HANDOFF 최신 claim에서 소유권을 획득한다. implementation branch와 공통 claim ref를 구분한다. 현재 RUNNING token/active owner/same-scope 실행이 있으면 read-only 종료한다. 과거 보존문단의 IN_PROGRESS를 현재 owner로 오인하지 않는다. 별도 implementation branch에 claim을 쓰는 것은 잠금이 아니다.\n공통 ref의 exact observed HEAD를 parent로 unique run token, RUNNING, task scope, owner branch, intake main HEAD를 포함한 새 coordination handoff commit을 만든 후 force:false 갱신으로 획득한다. 동시 sibling 갱신이 거절되면 종료하고 winner 위에 rebase/retry하지 않는다. 갱신 직후와 매 mutation 전 공통 ref/token을 재확인한다. 다른 token이면 write를 중단한다. 공유 ref를 읽거나 안전하게 갱신하지 못하면 read-only 점검만 한다. RUNNING 종료가 실제 실행 evidence/handoff로 입증되지 않은 claim을 시간경과로 훔치거나 새 coordination ref를 만들지 않는다. 현재 토큰 소유자만 terminal IDLE/CI_PENDING/PARKED_EXTERNAL/FAILED로 release한다. 장시간 CI 기다림 동안 RUNNING을 보유하지 않는다.\n기존 PR가 있으면 별도 동일scope 구현을 만들지 않는다. terminal owner+CI_PENDING이 기록된 경우에만 exact 기존 PR/head/run을 인수해 공통 claim을 새로 획득하고 이어간다. 수동 Main Work도 같은 공통 claim 정책을 사용한다.\n\n[PLAN / EXECUTE / VERIFY]\n작업을 Critical Path/Authority/Risk/Acceptance/Required Evidence로 좁게 정한다. Blocking regression→integrity→현재 critical path→미완료 acceptance→높은 영향 evidence gap→integration→실제 usability 순서로 고른다. 독립 작업만 유용할 때 fan-out한다. Hard Gate→static/schema→targeted deterministic→affected/full required regression→필요한 independent verifier 순서. 실패를 RETRY/REPAIR/REPLAN/ESCALATE로 분류해 승인 범위에서 수정·재검증한다. 최초 실패는 보존한다. 완료 task 뒤 실제 requirement/evidence/usability gap이 남으면 계속하고 외부 dependency만 PARKED_EXTERNAL로 둔다.\npublish 전 latest main/owner ref를 다시 확인한다. Git transport 실패를 GitHub write 불가로 보지 말고 검증된 authenticated GitHub API object/ref 경로를 사용한다. source/tree/remote SHA를 대조한다. force push/history rewrite 금지. PR merge는 required tests/protected regression/Frozen integrity PASS, blocking conflict/review0, expected head 확인, 무료 범위가 모두 확인될 때만 한다. 병합 후 actual SHA와 required post-merge evidence를 확인하고 Handoff를 갱신한다. PR CI는 GitHub merge ref에서 실행될 수 있으므로 GITHUB_SHA와 PR head 불일치만으로 FAIL하지 말고 actual tested tree/parents/source hashes를 검증한다. Local PASS와 actual Actions PASS를 구분한다.\n\n[EVIDENCE INVARIANTS]\nFrozen/old fixtures/expected/history/evidence를 이유 없이 rewrite하지 않는다. Frozen 변경 필요 시 실제 반례→기존 구조 불가 이유→최소versioned 변경→영향/대안→독립검증→affected regression→rollback/decision record를 준비하고 검증한다. Invariant/Evidence Gate 약화, expected 근거없는 변경, UNKNOWN 임의값, synthetic→real 위장, AI합의→gold, hindsight decision input은 금지다.\nPLAYER_INFORMATION_STATE와 GROUND_TRUTH_STATE를 분리한다. 미래사건/결과/observer-only 위치는 당시 Decision input이 아니다. Structured/Event/Derivation 우선, Vision은 실제 자료가 있을 때 selective observation만 한다. Source-level26direct/2derived를 PLAYER 분모에 합치지 않는다. 기존 public clip의 독립 source-backed HUD 검수는 새 clip/known patch 없이 시작 가능하지만 동일 pixels의 OCR/AI agreement만으로 VERIFIED나 독립gold를 만들지 않는다. 실경기 State→Knowledge→Decision→Coach gate 미충족이면 실제 Coach N0/accuracy null을 유지한다. 새 입력이 생긴 경우만 narrow importer/검증을 구현한다.\n\n[DELTA / PRIVATE STATE]\nlast_seen_head/semantic input hash/handoff/evidence fingerprint/PR review IDs/CI run_id+attempt+conclusion/last_reported_blocker를 이 automation prompt의 private state 또는 실제 실행 context로 유지한다. 자기 receipts/docs/status 출력만 바뀐 event와 해결된 과거 failure는 중복 재실행·반복 알림하지 않는다. watermark는 실제 처리 성공 또는 explicit NO_ACTION/PARKED 뒤에만 전진한다. CI_PENDING은 새 HEAD 없이도 후속 확인 가능하다. 의미있는 결과/새 blocker/필수 user-only 입력만 짧게 보고하며 change 없으면 조용히 종료한다. actual 비용/사용자만 가능한 auth/모든 meaningful critical path가 사용자 외부입력에 막힐 때만 개입을 요구한다.\n\n초기 참고: PR1 import-selection repair head90916356, merged main377a1065; PR CI37254080596와 push CI37254286657 SUCCESS는 실제 다시 대조한다. initial import3/7→repair7/7, old111/protected9/Frozen27/backup23, actual Chrome38은 합성 workflow 검증이며 실제 코칭N이 아니다. Current Player independent reference/행동문맥 PARKED_EXTERNAL. 이 값은 고정baseline이 아니다. private_executor_state는 첫 실행의 fresh-read 이후 기록한다.\n\n\n\nADDITIVE TOOL POLICY — user2026-10-05: Keep current implementation/tests/publication and apply at safe checkpoints. GitHub authoritative; exposed plugins do not mean service projects/DB/design/deploy exist. Context7 use actual package/lockfile version official docs only when needed. Superpowers only current planning/debug/TDD/review/verification subset; do not restart approved design. Choose one Figma/MagicPath only for needed flow, SAMPLE/NOT REAL MATCH EVIDENCE, no design-as-code/accuracy claim. Actual browser development-server workflow distinct from DOM/Node tests. Linear existing targets first if necessary, no duplication or status-as-code claim. Supabase only repository-adopted or explicit adoption decision, actual target/read-only first; connection is not DB migration approval. Vercel only confirmed existing target, production deploy/env/public access changes need explicit approval. Record first actual tool purpose/target/read-v-write/result/evidence/exact created links. English terms bilingual Korean. Current actual tool record docs/TOOL_USAGE.md. No new monitors/frameworks/services/payment.\n\nprivate_executor_state:{\"last_seen_head\":\"0f2b333e44c1918e7a2a9dd7d9f6fce67d1d76a2\",\"last_seen_pr_state\":{\"number\":8,\"state\":\"open\",\"head\":\"066f4447f19d7d96214950fc439b9f790a476ed3\",\"tree\":\"5edb6560235ddc889646a34b1cd48aeec84617bd\"},\"last_seen_ci_state\":{\"id\":37276347795,\"attempt\":1,\"head\":\"066f4447f19d7d96214950fc439b9f790a476ed3\",\"status\":\"in_progress\",\"conclusion\":null,\"browser_checks_required\":108},\"last_seen_evidence_state\":{\"PLAYER_DIRECT\":0,\"PLAYER_DERIVED\":0,\"complete\":0,\"truth_pair\":0,\"decision_N\":0,\"coaching_N\":0,\"accuracy\":null},\"last_reported_blocker\":\"Independent source-backed player reference and decision context PARKED_EXTERNAL dependency only\",\"disposition\":\"CI_PENDING\",\"owner_ref\":\"work/main-execution-claim\",\"owner_token\":\"main-20261005T0630-manual-draft-capture-root\",\"owner_branch\":\"feat/manual-draft-capture-2026-10-05\",\"owner_terminal_head\":\"376366536663f69e2c167268f86c605330b8b44a\",\"semantic_inputs\":257,\"note\":\"PR8 isolated manual capture API-published066f444/tree5edb656, requiredlocalPASS257inputs. Null/order/scalar reconstruction-loss and verifier-routing failures preserved/repaired. ActualChrome108 not yet verified. Continue exactPR8/head/run37276347795 by commonclaim reacquisition; after gatedmerge/post verify next actual retry-safe save integritygap. RealCoachN0 alone is not wholeWorkSTOP.\"}",
+    "schedule": "BEGIN:VEVENT\nDTSTART:20261005T021227Z\nRRULE:FREQ=HOURLY\nEND:VEVENT",
+    "timing_mode": "condition_watch",
+    "display_schedule": null,
+    "is_enabled": false,
+    "conversation_id": null,
+    "default_timezone": "Asia/Seoul",
+    "next_run_time": null,
+    "last_run_time": "2026-10-05T09:47:33.830211+00:00",
+    "updated_at": "2026-10-05T10:14:38.113890+00:00"
+  },
+  "watchers": [
+    {
+      "id": "6ac2f38f899c819196b7f4292a966b55",
+      "title": "LoL Coach Evidence Watch",
+      "is_enabled": false,
+      "last_run_time": "2026-10-05T00:49:23.163597+00:00",
+      "next_run_time": null
+    },
+    {
+      "id": "6ac2f38cecfc8191bda1e8063966e920",
+      "title": "LoL Coach CI Watch",
+      "is_enabled": false,
+      "last_run_time": "2026-10-05T01:44:05.686564+00:00",
+      "next_run_time": null
+    },
+    {
+      "id": "6ac2f36d73ac8191a2ddf67362d7495c",
+      "title": "LoL Coach Progress Watch",
+      "is_enabled": false,
+      "last_run_time": "2026-10-05T00:56:16.824293+00:00",
+      "next_run_time": null
+    }
+  ],
+  "current_main": "72625590be7c25fb6d5a23864c766c9fd0264416",
+  "status": "EXISTING_MAIN_DISABLED",
+  "new_provider_requests": 0,
+  "coaching_accuracy": null,
+  "observation_time_meaning": "capture time of the just-read automation response; remote updated_at/last_run_time are separate"
+}
