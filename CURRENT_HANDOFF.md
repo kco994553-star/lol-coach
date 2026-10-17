@@ -1,3 +1,8 @@
+# Image-load browser check correction
+- PR75 initial browser CI117530390166 caught legacy homeDesignFlow immediate complete/naturalWidth assertion after changing src. New uncached background decoding was not awaited. Await decode then retain original complete/naturalWidth criterion; no image error bypass or runtime change. Failed log preserved. Changed local home+card+5hero PC/mobile flow passes; rerun exact amended CI before merge.
+
+---
+
 # Decorative art refresh intake — 2026-10-17
 - User removes visibleAI labels and changes operations→strategy movement, fight→dragon-pit battle; adds basic/skin/generated hero pool. Prior main7f686b3/public9644721 proof reused.
 - Base2 + official skin2 (Ahri27/Lux7 verified16.20.1) + generated Moonlit1. Fixed source paths and session/input/focus/scroll guards; first hero only. New 2panel cards preserve lane original. Source/provenance in config/art_refresh_assets.json; old records preserved, no false official classification.
