@@ -1,3 +1,28 @@
+된 것: PR60 인터랙티브 흐름이 병합됐고 필수·병합후3개 검사가 모두 통과했습니다.
+보완: 새 행동·비용·지도/확대 설명의 덫 약칭을 공식 이름(키)으로 연결하는 표시 수정입니다.
+보존: 입력v2·조건게이트·실제 행동선택·원문·기존 요약/전체표/6장면·Windows 경로는 그대로입니다.
+미확인: 전략은 가설·실전N=0·30초이해 미측정·Windows BLOCKED_EXTERNAL을 유지합니다.
+다음: 표시 후속수정 필수CI·정상병합 뒤 공개Pages 실증과 최종결과를 기록합니다. 추가호출0입니다.
+
+# Interactive display followup — 2026-10-17
+
+PR60 headc5bd15d9 tested6aaad0e7 maina4b25a33 sharetree1a53dd42; required39015861516/
+39015861461 and postmain39015982313/39015982014 all3SUCCESS.45affectedchecks andfreshbrowser
+source verified at required merge gate. Before publicexport, newauthored trap shorthand
+needed same officialalias in cost/action/map/zoom. Bounded display followup branch
+work/loading-interactive-labels-20261017, tokenmain-20261017-loading-interactive.
+
+Pure analysis/input/candidates/selection/conditions/evidence unchanged; exactrepresentative
+context binds Caitlyn W through unchanged officialSkillDisplay. Explicit map interaction
+skillAliases reaches step/modal text; othermatchups retainunknown. Rawquotes unchanged.
+Newbrowser step3 officialname RED captured080532; local080545GREEN displayfix. Additional
+insidezoomstep3 assertion included for fresh exact-source CI. Oldfailures/screens retained.
+No additionalprovider/game/video/paidcalls; Oct17VIDEO3/3, queuedquestion3/diagnosis unchanged.
+Currentpublic remains previousPages096234e8 until this followup'sCI/postmain/export/publicproof.
+No strategy or Windows/comprehension upgrade. Remaining work is gatedpublication/results.
+
+---
+
 된 것: 사용자 성향과 미래 조건을 실제 행동·비용 비교에 연결하는 대표 바텀 레벨2 흐름을 구현했습니다.
 된 것: 여섯 구간 탐색·주장별왜·카드/지도/확대창 단계 동기화를 PC·모바일에서 확인했습니다.
 보존: 기존 요약·전체표·6장면·원문/보류·조언7/AUTO30/HOLD20·Windows 경로를 유지했습니다.
