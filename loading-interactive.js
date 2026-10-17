@@ -1,6 +1,13 @@
 /* One synchronous future-scenario state. Preferences, assumptions and viewing stay distinct. */
 (function(root){
   'use strict';
+  function describeSelection(result, previous) {
+    const sameChange = previous && previous.risk !== result.preference.risk && previous.plan === result.selected_plan_id;
+    if (sameChange && !result.selection_reason.startsWith('현재 조건에서는 선택이 같습니다')) {
+      return '현재 조건에서는 선택이 같습니다. 두 성향 모두 명시한 가정에서 실행 가능한 같은 안을 먼저 살펴보도록 연결되어 있습니다. 조건·비용·중단 기준은 그대로입니다.';
+    }
+    return result.selection_reason;
+  }
   function mount({report:initial,catalog,host,onPreference}){
     const X=root.LoadingExploration,S=root.SkillDisplay;
     let report=initial,state=X.defaultState(),panel='LANE',step='1',preview=null,result=null,destroyed=false,last=null;
@@ -31,7 +38,7 @@
       const focused=host.contains(document.activeElement)?document.activeElement.id:null;
       const before=result,oldPlan=before?.selected_plan_id;
       state=next;result=X.evaluate(report,catalog,state);preview=result.selected_plan_id;step='1';
-      last={reason,previous:oldPlan,current:result.selected_plan_id,action_changed:Boolean(before&&oldPlan!==result.selected_plan_id)};
+      last={reason,previous:oldPlan,current:result.selected_plan_id,previous_choice:before?{risk:before.preference.risk,plan:oldPlan}:null,action_changed:Boolean(before&&oldPlan!==result.selected_plan_id)};
       closeZoom();render();
       if(focused)host.querySelector('#'+CSS.escape(focused))?.focus({preventScroll:true});
     }
@@ -46,7 +53,7 @@
       host.append(preference);
       const status=el('div',null,'interactive-status');status.id='exploration-summary';status.setAttribute('role','status');
       const preferred=result.plans.find(p=>p.id===result.selected_plan_id);
-      status.append(el('strong','가상 '+result.row.period+' 선택: '+(preferred?.title||'기존 구간 설명만 지원')),el('p',result.selection_reason),el('small','사용자 선호: '+result.preference.label+' / 근거: 설계 가설 · '+(result.supported?'조건부':'자료/비교 규칙 부족')+' / 현재 관측: 없음'));host.append(status);
+      status.append(el('strong','가상 '+result.row.period+' 선택: '+(preferred?.title||'기존 구간 설명만 지원')),el('p',describeSelection(result,last?.previous_choice)),el('small','사용자 선호: '+result.preference.label+' / 근거: 설계 가설 · '+(result.supported?'조건부':'자료/비교 규칙 부족')+' / 현재 관측: 없음'));host.append(status);
       const tabs=el('div',null,'interactive-tabs');tabs.setAttribute('role','group');tabs.setAttribute('aria-label','빠른 분석 전환');
       for(const [id,name] of [['LANE','라인전'],['OPERATIONS','운영'],['FIGHT','한타']]){const b=button(name,'explore-tab-'+id,()=>{panel=id;render();host.querySelector('#explore-tab-'+id).focus({preventScroll:true});});b.setAttribute('aria-pressed',String(panel===id));tabs.append(b);}host.append(tabs);
       if(panel!=='LANE'){
@@ -68,7 +75,7 @@
       X.conditionDefs.forEach(def=>{const label=el('label'),select=el('select');select.id='assumption-'+def.key;for(const [value,name] of Object.entries(def.options)){const o=el('option',name);o.value=value;select.append(o);}select.value=state.assumptions[def.key];select.addEventListener('change',()=>apply({...state,assumptions:{...state.assumptions,[def.key]:select.value}},def.label));label.append(el('span',def.label),select);if(def.note)label.append(el('small',def.note));conditions.append(label);});
       const presets=el('div',null,'assumption-actions');presets.append(button('후속 가능 가정 예시','assumptions-ready',()=>apply({...state,assumptions:{binding:'HIT',followup:'READY',exit_cover:'AVAILABLE'}},'미래 조건 예시 불러오기')),button('기본 조건으로 되돌리기','assumptions-reset',()=>apply({...state,assumptions:X.defaultState().assumptions},'가상 조건 초기화')));conditions.append(presets);host.append(conditions);
       const diff=el('div',null,'condition-diff');diff.id='condition-change';diff.setAttribute('aria-live','polite');diff.dataset.actionChanged=String(Boolean(last?.action_changed));
-      const title=id=>result.plans.find(p=>p.id===id)?.title||'미지원';diff.append(block('달라진 행동',last?.action_changed?title(last.previous)+' → '+title(last.current):'행동 선택 유지: '+title(result.selected_plan_id)),block('달라진 이유',result.selection_reason),block('그대로인 조건',result.unchanged_conditions),block('새로 필요한 확인',result.required_checks));host.append(diff);
+      const title=id=>result.plans.find(p=>p.id===id)?.title||'미지원';diff.append(block('달라진 행동',last?.action_changed?title(last.previous)+' → '+title(last.current):'행동 선택 유지: '+title(result.selected_plan_id)),block('달라진 이유',describeSelection(result,last?.previous_choice)),block('그대로인 조건',result.unchanged_conditions),block('새로 필요한 확인',result.required_checks));host.append(diff);
       const comparison=el('div',null,'plan-comparison');comparison.id='plan-comparison';
       result.plans.forEach(plan=>{
         const card=el('article',null,'plan-option');card.dataset.planId=plan.id;card.dataset.feasibility=plan.feasibility;card.dataset.preferred=String(plan.id===result.selected_plan_id);
@@ -89,5 +96,5 @@
     result=X.evaluate(report,catalog,state);preview=result.selected_plan_id;render();
     return {destroy(){destroyed=true;closeZoom();host.replaceChildren();},snapshot(){return {state:JSON.parse(JSON.stringify(state)),panel,step,preview,result:result.selected_plan_id};}};
   }
-  root.LoadingInteractive={mount};
+  root.LoadingInteractive={mount,describeSelection};
 })(window);
