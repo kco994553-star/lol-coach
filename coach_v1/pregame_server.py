@@ -303,6 +303,7 @@ class PregameHandler(Handler):
         # Public, manual learning examples only. No account/live-game adapter or
         # private workbench export is reachable from this explicit asset list.
         learning_assets={
+            **{'/home-assets/'+p:('home-assets/'+p,'image/jpeg') for p in ('Ahri.jpg','Caitlyn.jpg','lane.jpg','fight.jpg')},
             '/dashboard.html':('dashboard.html','text/html; charset=utf-8'),
             '/dashboard.js':('dashboard.js','text/javascript; charset=utf-8'),
             '/dashboard.css':('dashboard.css','text/css; charset=utf-8'),

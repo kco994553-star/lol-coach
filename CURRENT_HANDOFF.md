@@ -1,3 +1,29 @@
+된 것: 교전 길이 선호 PR69와 필수3검사를 완료했고, 첨부 기준의 시작 화면을 추가 연결했습니다.
+화면: 공식 챔피언 일러스트·네이비/보라색·PC 사이드바·모바일 세로 구성과3개 영역 카드입니다.
+동작: 카드→수동10픽→선택 영역 이동, 일러스트 교체와 분석 픽 분리, 기존 계정/프로 경계를 유지합니다.
+한계: 신규 전술은 조건부 가설·실제 우세 미확인, 공개 개인 API 미연결·코칭N0·30초 미측정입니다.
+다음: 디자인 변경의 필수 원격검사·공개배포·실제 HTTPS PC/mobile 결과를 별도 보존합니다.
+
+# Approved reference home design intake — 2026-10-17
+
+Base08b1975d19e9901eedb1d21b54d62bd30d391d0e (exchange PR69 merged), branchwork/home-design-20261017,
+shared run_token main-20261017-exchange-preference. Existing exchange feature/postmain required
+checks reused; source property hypotheses not upgraded. Attached PC/mobile reference adopted
+for home composition, no style replacement proposal. Add contracts/home-design-v1.md, approved
+navy/violet/art/search/equal3cards/responsive shell; existing dashboard below remains intact.
+Native allowlisted #prepare-area links require actual ten-pick analysis before focusing area.
+Hero change only decoration. Official default splashes and Riot introduction frame1.5/9.5,
+existing official map fallback registered with source/hash/conditional-use evidence; generated
+user reference is not official art. No original video stored or Gemini/model call. Actual
+PC/mobile card paths, same-size comparison screenshots and independent review being completed.
+No new 23 advice rewrites/champion strategy extension/provider collection. Current pro5 JSON
+must stay byte-identical on export. Public accountAPI/notes unconnected, no fake metrics.
+AUTO30/HOLD20/USER0/advice7/Frozen350/rawquotes/history/Windows/manual preserved.10/17video3/3,
+coachingN0/30secunmeasured/WindowsBLOCKED_EXTERNAL remain unchanged. Remote/public success
+reported only after observed gates; existing source questions and resume schedule untouched.
+
+---
+
 된 것: 양쪽 교환 길이 후보에 이유·시작·공격 순서·종료·지속 조건·상대 대응 대안을 연결했습니다.
 확인: 보호 종료·후속 단절은 추가 공격과 기존 실행 지도에 함께 반영하며 성향은 선호/우세를 바꾸지 않습니다.
 한계: 실제 매치업 길이 우위·승리 근거가 없으므로 조건부 가설 또는 미확인입니다.
