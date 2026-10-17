@@ -29,7 +29,7 @@
     RESPECT_TARGETED_CONTROL: { opponent_response: [{ text: 'R 후속', champion: 'Kaisa', slot: 'R', prefix: true }] },
     REASSESS_PURCHASE_AND_RETURN: { alternative: [{ text: '닻', champion: 'Nautilus', slot: 'Q' }] }, KEEP_FOLLOWUP_AFTER_CORE: {}
   };
-  const entryAreas={lane:{id:'loading-lane',name:'라인전'},operations:{id:'loading-gameplan',name:'운영'},fight:{id:'teamfight',name:'한타'}},entryKey=location.hash.slice(1).replace(/^prepare-/,''),entry=location.hash.startsWith('#prepare-')&&Object.hasOwn(entryAreas,entryKey)?entryAreas[entryKey]:null;
+  const entryAreas={lane:{id:'interactive-flow',name:'라인전'},operations:{id:'loading-gameplan',name:'운영'},fight:{id:'teamfight',name:'한타'}},entryKey=location.hash.slice(1).replace(/^prepare-/,''),entry=location.hash.startsWith('#prepare-')&&Object.hasOwn(entryAreas,entryKey)?entryAreas[entryKey]:null;
   let catalog = null;
   let report = null;
   let filling = false;
