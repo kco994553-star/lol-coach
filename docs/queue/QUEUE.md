@@ -1,3 +1,55 @@
+진행: 공개 확인 중 라인전 카드의 도착점을 웨이브 중심 영역으로 한정 수정합니다.
+이유: 기존 여섯 구간 전체 표보다 웨이브 목표·실행·교전 조건을 먼저 보도록 연결합니다.
+보존: 완료한 공개 디자인·43파일·실제HTTPS 증거는 이전 버전의 유효한 증거로 유지합니다.
+한계: 전략 근거·교전 우세·코칭N0·Windows·API 상태는 변경하지 않습니다.
+다음: 이동 경로 반례 검증·필수CI 후 해당 파일만 다시 게시하고 최신 결과를 기록합니다.
+
+# Wave-first lane entry follow-up — 2026-10-17
+
+At public review of PR70 source89c35e8/artifact75ab9e5, lane image-card opened the old
+six-period table first. Change fixed lane destination to interactive-flow, the existing
+wave-first plan and synchronized encounter/diagram area. Other destinations, ten-pick
+validation, summary accessibility and existing full table remain. Followup RED caught old
+focus loading-lane versus expected interactive-flow; new actual PC/mobile route evidence
+in home-design/wave-entry-followup. Preserve preceding successful public evidence as dated
+history, not final-source claims. No strategy/asset/provider change or extra Gemini calls.
+Previous requiredCI/public/projection evidence reused where unaffected. Current source
+required gates/publication still pending; final result-only receipts will identify latest SHA.
+
+---
+
+된 것: 양쪽 교전 선호·이유·공격 순서·종료와 첨부 기준 PC/모바일 시작 화면을 공개했습니다.
+확인: PR69/70 필수·병합후 각3검사, 실제 Pages실행,43파일일치와 공개 PC/mobile 이동을 확인했습니다.
+사례: 보호 유지→반복 후보, 보호 종료→추가 공격 제외; 성향만 바꾸면 선호·우세는 그대로입니다.
+한계: 실제 교전 우세 미확인·새 전략 가설·코칭N0·30초미측정·공개개인API미연결·Windows미실증입니다.
+할 일: 사용자 추가 작업 없음; 기존 근거 질문·영상3/3·보류·실패·Windows 경로를 보존합니다.
+
+# Exchange preference + approved reference home public completion — 2026-10-17
+
+URL https://kco994553-star.github.io/lol-coach/ ; loading.html manual10pick. PR69 exchange
+merge08b1975 and PR70 final product89c35e85a82c85974eac116c3d1c2fbd2a9f3db9. Each feature PR
+and postmain required3 checks SUCCESS, artifact75ab9e541537a5edd11fcd26143bf39340fed365,
+Pages39029667393 actualSUCCESS, HTTPS43files/root/manifest/.nojekyll match. Actual PC/mobile
+home→3cards→empty manual10pick→selected analysis areas and both-side relative trade plans/
+reason/order/end/continuation/counter alternative/physical cost vs execution gates passed.
+Public snapshots/verbatim/CI/receipts/screens in exchange-preference/publication/result.md.
+Reference same-size PC952/mobile282 comparisons in home-design; official base splashes and
+Riot intro gameplay stills, operation official minimap fallback disclosed. Carousel decorative
+only. Pro5 public JSON bytes unchanged; account/backend/guest and PC/manual boundaries intact.
+Relative method candidate != actual opponent advantage; all actual comparisons UNKNOWN with
+no direct matchup evidence; hypotheses don't unlock sustained/allin/chase or source grade.
+Explicit end excludes additional attack+map, risk leaves preference/advantage unchanged, RESET
+keeps candidate but withholds attack for wave resources. Source questions/history maintained,
+Lv1/2/invalid procedure neutral, unsupported JSON/view don't substitute other duo skills.
+No new Gemini/model/paid/game calls; decorative official asset HTTP/stills not tactical inputs.
+AUTO30/HOLD20/USER0/advice7/Frozen350/quotes/holds/failures/video10/17 3/3/Windows/manual intact.
+CoachingN0/30secunmeasured/WindowsBLOCKED_EXTERNAL/publicpersonalAPI+notesunconnected remain.
+Ready frontend changes completed; remaining matchup lecture/same-match predecision evidence
+is externally/daylimit dependent. No user-wide review/collection requested. Final result-only
+main SHA and gates go in work/main-execution-claim; no product republish for evidence-only merge.
+
+---
+
 된 것: 교전 길이 선호 PR69와 필수3검사를 완료했고, 첨부 기준의 시작 화면을 추가 연결했습니다.
 화면: 공식 챔피언 일러스트·네이비/보라색·PC 사이드바·모바일 세로 구성과3개 영역 카드입니다.
 동작: 카드→수동10픽→선택 영역 이동, 일러스트 교체와 분석 픽 분리, 기존 계정/프로 경계를 유지합니다.

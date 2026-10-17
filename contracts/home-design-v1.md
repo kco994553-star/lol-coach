@@ -13,7 +13,8 @@ no keys in browser/no fake rank/winrate/coaching values. Guest dashboard→prepa
 Cards use #prepare-lane / #prepare-operations / #prepare-fight, a fixed allowlist. No arbitrary
 URL/selector navigation, identity storage, query credentials or input auto-fill. Before
 analysis show selected area as pending and require real manual ten picks. On successful
-analysis focus/scroll the requested area; invalid inputs keep results hidden. Other fragments
+analysis focus/scroll the requested area (lane uses the shared wave-first interactive area;
+the old six-period full table stays available for comparison); invalid inputs keep results hidden. Other fragments
 use normal summary flow. Same behavior for native links/keyboard/touch; actual 10pick analysis
 preserved. Source/risk/phase/unknown gates and dirty-input result invalidation remain unchanged.
 
