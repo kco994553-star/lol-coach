@@ -1,3 +1,14 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-loading-context`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-context-results-20261017`
+- authority: USER_LOADING_CONTEXT_QUALITY_2026-10-17 + inherited free implementation/publication/gated merge; no additional approval; completed v2.1 evidence reused without rerun.
+- intake_main: `f411f624dd62f96ad2f825c8e8626bf37419404b`
+- detail: User added official skill-name(slot) display across existing loading/directions/PC screens. Preserve PR54 deployed results and PR55 initial CI history; add new changed display paths before fresh required CI/publication, no provider/game/video/asset/paid requests. Initial PR55 pregame metadata remains pending despite complete run/steps; no bypass or rerun.
+
+---
+
 # Latest common execution claim — CI_PENDING
 - run_token: `main-20261017-loading-context`
 - status: `CI_PENDING`
