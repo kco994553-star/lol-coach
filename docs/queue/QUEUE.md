@@ -1,3 +1,56 @@
+된 것: 모바일·PC 공개 주소에서 실제10픽→이번 판 요약→라인전·운영·한타·미니맵 상세를 사용할 수 있습니다.
+된 것: 경제 입력 없이 한국어·영어10픽을 직접 넣어 공개 모바일 브라우저에서 결과와 확대를 확인했습니다.
+확인: PR52 필수3개·병합후3개·Pages배포 성공, 공개25파일 해시가 검증본과 일치합니다.
+미확인: 개별매치업 우열·전술 실전 효과N=0·실제Windows연결·인게임승인은 완료로 표시하지 않습니다.
+유지: 조언7·AUTO30/HOLD20/USER0·Frozen350·영상3/3·108관측·기존보류/실패/예약을 보존했습니다.
+
+# Loading Strategy actual public delivery — 2026-10-17
+
+Open https://kco994553-star.github.io/lol-coach/ → tenpicks+ownchampion/position →
+이번 판 방향 보기 → compactsummary → lane6milestones/operations/teamfight/maps/evidence.
+Korean/Englishsearch, optionalopponent/roles/patch correction; economy not required.
+Status https://kco994553-star.github.io/lol-coach/status.html is datedsnapshot, notlivemonitor.
+
+PR52 head4a21ed9ca603978659ecbf350e8694a989ced95d, testedmergef94a77f382719b8b5c0d672a920b3503be02a889,
+normalmainffe52ef624bd9d96691053cc0a614dea9253ed09 share treec1ee46e2e2cdf047d28005635efc2aad589b1c06.
+Required39001308754/39001308956 and postmain39001397031/39001397065 all3SUCCESS; exactlogs checked
+source binding/current_sources,20affectedchecks and actualnew/legacybrowserreceipts. Unrelated
+completed collection/fulltests reused. Separate source/implementationreview fixed5findings.
+
+Existing gh-pages updated non-forceCAS6c950ca→0d8fdfa76cc8395d4da23780df0f0f0b8a683004,
+Pagesrun39001496401 SUCCESS; actuallatestbuild sameartifact built. Public25files match SHA;
+root/build-info/.nojekyll verified. Actual390pxHTTPS Chromium manualmixed-language10picks
+→summary/details/6lanerows→compositionchange→relatedscene→mapsteps/200%zoom/status PASS,
+JS/HTTPerrors0, publiclocalAPIrequests0, TLSverificationretained. No newhosting/project.
+Receipts/screens: evidence/actual-evidence/loading/publication/{result,deployment,public-browser,
+ci-pr52,ci-main-pr52}.json and public*.png. Full actualsummary/table: ../report.md/examples.json.
+
+Official173/865facts, existingEXPLORATORYrules,353boundedrecallrefs and old6scenes reused.
+Function-to-skill binding20representatives/50checkedmechanisms does not validate optimal
+strategy; remainingfunctions/profilegaps unknown. Roles/methods useactualpicks; details
+retain all knownthreatcandidates, not an importance ranking. Existing scenes only apply
+to boundedCaitlyn/Fiora/Ornn roles with statedfutureconditions. No hiddenenemypositions.
+Laneactions are reusableconditionalframework+officialmechanics, not completevalidated
+matchupinteractions. Matchupadvantage/itemreversals unknown, actualcoachN0/accuracynull.
+
+This results branchwork/loading-results-20261017 records observed PR52/publicationonly;
+no functional/catalog/asset/workflow/provider/knowledge change. Existing verified code/
+browsers reused. Its ownfutureCI/main is not predicted; commonclaim owns finalreceipt.
+CurrentMain tokenmain-20261017-loading-strategy, intakeffe52ef. No conflictingwriter.
+
+Next unfinishedP0: source-supported lane/transition knowledge and independentscene/user
+understanding evidence; expertadoption/confirmedlinks/adequatepredecision/evaluatedscenes0.
+Oct17KST VIDEO3/3, newTEXT/VIDEO/Riot/paidcalls0 in this task, sixofficialstatic spriteGETs
+only. Oct18③→separatereview/gatedpublish→④ and normal1/day afterresolution remain. Existing
+Main hourlyresume fromOct18KST/next_run_timenull/newpolicyexecutionUNOBSERVED and daily18KST
+workflow unchanged. Do not callprovider to prove scheduler. Sourcechannel/POV categories,
+originaldurationreservation/debit/duplicate rules/history preserved. No other READY feature
+expansion authorized: remaining23rewrites ended; newchampion/scene multiplication deferred.
+PC Start-LoL-Coach.cmd, /pc, sanitizedLCUadapter/manualfallback retained; actualWindows
+BLOCKED_EXTERNAL, live tactical policy/approval not established. User has no required step.
+
+---
+
 된 것: 실제10픽과 내 포지션을 넣어 이번 판 요약→라인전·운영·한타·미니맵으로 이어지는 PC·모바일 화면을 구현했습니다.
 된 것: 수동 한국어·영어 입력과 선택적PC픽 가져오기가 같은 엔진을 쓰며 경제 입력은 필요하지 않습니다.
 확인: 변경 브라우저/원문 경계 독립검토 통과, 필수CI·정상병합·실제공개배포는 별도게이트입니다.
