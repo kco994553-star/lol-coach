@@ -19,23 +19,33 @@
   const $ = id => document.getElementById(id);
   const clone = value => JSON.parse(JSON.stringify(value));
 
-  function node(tag, className, text) {
+  function display(value, options) {
+    const own = input && input.champion;
+    return window.SkillDisplay ? window.SkillDisplay.format(String(value), { champions: own ? [own] : [], own, owner: own, aliases: own === 'Caitlyn' ? [{ text: '덫', champion: 'Caitlyn', slot: 'W' }, { text: '투망', champion: 'Caitlyn', slot: 'E' }] : [], ...options }) : String(value);
+  }
+  function methodOptions(step) {
+    const key = input.decision === 'RECALL' ? 'RECALL' : result.plan.id;
+    const method = catalog.methods[input.champion][key];
+    return { bindings: step.number === 2 && step.text === method ? result.champion.official_facts.filter(fact => method.includes(fact.name)).map(fact => ({ text: fact.name, champion: input.champion, slot: fact.slot })) : [] };
+  }
+
+  function node(tag, className, text, options) {
     const element = document.createElement(tag);
     if (className) element.className = className;
-    if (text !== undefined && text !== null) element.textContent = String(text);
+    if (text !== undefined && text !== null) element.textContent = tag === 'code' || tag === 'blockquote' ? String(text) : display(text, options);
     return element;
   }
 
   function svgNode(tag, attributes, text) {
     const element = document.createElementNS(NS, tag);
     Object.entries(attributes || {}).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) element.setAttribute(key, String(value));
+      if (value !== undefined && value !== null) element.setAttribute(key, key === 'aria-label' || key === 'title' ? display(value) : String(value));
     });
-    if (text !== undefined) element.textContent = String(text);
+    if (text !== undefined) element.textContent = display(text);
     return element;
   }
 
-  function text(id, value) { $(id).textContent = value == null ? '' : String(value); }
+  function text(id, value) { $(id).textContent = value == null ? '' : display(value); }
 
   function options(select, entries, value) {
     select.replaceChildren(...Object.entries(entries).map(([key, label]) => {
@@ -57,6 +67,7 @@
 
   function renderScenes() {
     $('scenes').replaceChildren(...catalog.presets.map((preset, index) => {
+      const own = preset.input.champion, options = { champions: [own], own, owner: own, aliases: own === 'Caitlyn' ? [{ text: '덫', champion: 'Caitlyn', slot: 'W' }, { text: '투망', champion: 'Caitlyn', slot: 'E' }] : [] };
       const button = node('button', 'scene-card');
       button.type = 'button';
       button.id = 'scene-' + preset.id;
@@ -65,7 +76,7 @@
       const number = node('span', 'scene-number', String(index + 1).padStart(2, '0'));
       number.setAttribute('aria-hidden', 'true');
       const copy = node('span', 'scene-text');
-      copy.append(node('strong', '', preset.title), node('small', '', preset.description));
+      copy.append(node('strong', '', preset.title, options), node('small', '', preset.description, options));
       button.append(number, copy);
       button.addEventListener('click', () => {
         input = clone(preset.input);
@@ -145,7 +156,7 @@
     text('mode-label', catalog.labels.review_modes[input.review_mode]);
     text('champion-name', result.champion.name);
     $('champion-portrait').src = portraits[result.champion.id];
-    $('champion-portrait').alt = result.champion.name + ' 초상화';
+    $('champion-portrait').alt = display(result.champion.name + ' 초상화');
     const typeLabel = value => (catalog.labels.types && catalog.labels.types[value]) || value;
     text('champion-type', '일반 유형 · ' + [result.champion.primary_type, ...result.champion.secondary_types].map(typeLabel).join(' / '));
     text('current-role', plan.role);
@@ -156,10 +167,11 @@
       item.dataset.step = step.number;
       const button = node('button', 'step-card-button');
       button.type = 'button';
-      button.setAttribute('aria-label', step.number + '단계를 지도에 표시. ' + step.text);
+      const options = methodOptions(step);
+      button.setAttribute('aria-label', display(step.number + '단계를 지도에 표시. ' + step.text, options));
       const number = node('span', 'step-badge', step.number);
       number.setAttribute('aria-hidden', 'true');
-      const copy = node('span', 'step-copy', step.text);
+      const copy = node('span', 'step-copy', step.text, options);
       copy.append(node('span', 'selected-step-label', '지도에 표시 중'));
       button.append(number, copy);
       item.append(button);
@@ -234,7 +246,9 @@
     text('evidence-label', evidence.label);
     $('official-facts').replaceChildren(...evidence.official_facts.map(fact => {
       const article = node('article', 'fact-card');
-      article.append(node('h4', '', '공식 사실 · ' + fact.slot + ' ' + fact.name), node('blockquote', '', fact.excerpt));
+      const label = window.SkillDisplay ? window.SkillDisplay.factLabel(result.champion.id, fact) : fact.slot + ' ' + fact.name;
+      const heading = node('h4'); heading.textContent = '공식 사실 · ' + label;
+      article.append(heading, node('blockquote', '', fact.excerpt));
       const source = node('div', 'fact-source');
       source.append(node('span', '', '자료 버전 ' + fact.version));
       try {
