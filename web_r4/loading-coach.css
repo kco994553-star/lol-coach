@@ -77,3 +77,32 @@
 @media(max-width:600px){.loading-coach .coach-board-tiles{grid-template-columns:1fr}}
 
 .loading-coach .coach-tile-support{grid-column:1;display:block;color:var(--text-muted,#adb0c6);font-size:.8rem;line-height:1.55;margin-top:0;font-weight:400}
+
+/* Teamfight geometry: names stay outside portraits, no map/range implication. */
+.formation-explorer { min-width:0; border:1px solid var(--coach-border,#34384d); border-radius:var(--coach-radius,14px); padding:clamp(12px,2vw,20px); background:var(--coach-surface,#141827); }
+.formation-controls { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+.formation-controls button { min-height:44px; padding:8px 12px; }
+.formation-controls [aria-pressed=true] { background:#35295a; border-color:#ab8ae8; color:#fff; }
+.formation-arena { position:relative; width:100%; aspect-ratio:1.4; min-height:280px; max-width:780px; margin:18px auto 10px; border:1px solid #45405e; border-radius:14px; overflow:hidden; background:radial-gradient(ellipse at 23% 50%,#29426066,transparent 50%),radial-gradient(ellipse at 80% 50%,#602b3f55,transparent 50%),#10131f; }
+.formation-contact { position:absolute; left:50%; top:5%; bottom:5%; border-left:1px dashed #75628c; opacity:.65; }
+.formation-actor { position:absolute; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:3px; width:64px; min-height:52px; padding:2px; background:none!important; border:0!important; color:#edf0fa; }
+.formation-portrait { display:block; flex:none; width:30px; height:30px; border-radius:50%; box-shadow:0 0 0 2px #75b8ee; background-repeat:no-repeat; background-color:#1c253a; }
+.formation-actor.enemy .formation-portrait { box-shadow:0 0 0 2px #ed879e; }
+.formation-actor.is-self .formation-portrait { box-shadow:0 0 0 3px #efca75; }
+.formation-actor[aria-pressed=true] .formation-portrait { outline:2px solid #fff; outline-offset:4px; }
+.formation-name { max-width:100%; font-size:12px; line-height:1.3; overflow-wrap:anywhere; text-shadow:0 1px 3px #000; }
+.formation-legend { color:#bfc6da; font-size:var(--coach-body-small,14px); }
+.formation-action { padding:12px; border-left:3px solid #a582e5; background:#241e38; }
+.formation-dialog { width:min(960px,94vw); max-height:92dvh; overflow:auto; color:#f1f0fa; background:#101321; border:1px solid #9281b5; border-radius:16px; padding:18px; }
+.formation-dialog::backdrop { background:#060813dd; }
+.formation-dialog>.formation-controls { margin-top:0; }
+.formation-explorer button:focus-visible { outline:3px solid #d6bdff; outline-offset:3px; }
+@media(max-width:520px){.formation-arena{aspect-ratio:1;min-height:300px}.formation-controls button{flex:1;font-size:14px}.formation-actor{width:54px}.formation-name{font-size:12px}.formation-dialog{padding:12px}}
+.formation-explorer .formation-actor{padding:2px;width:80px;min-height:62px;border:0;line-height:1.3}
+.formation-portrait{width:clamp(32px,3.4vw,48px);height:clamp(32px,3.4vw,48px)}
+.formation-name{font-size:14px;line-height:1.3}
+.formation-arena{max-width:620px;aspect-ratio:1.35}
+.formation-arrows{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.formation-arrows path{fill:none;stroke-width:.7;stroke-dasharray:2 1;stroke:#8abfe8}
+.formation-arrows path.enemy{stroke:#e694ac}
+@media(max-width:520px){.formation-explorer .formation-actor{width:52px;min-height:52px;padding:0}.formation-name{font-size:12px}.formation-arena{aspect-ratio:1;min-height:310px}}

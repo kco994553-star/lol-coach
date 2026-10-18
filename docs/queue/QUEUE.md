@@ -1,3 +1,11 @@
+# Teamfight formations — source ready, publication pending
+- Inherit mainabd0872/public742bb62 and existing completed IA checks. Shared ten-portrait conditional frontal/flank comparison in gameplan fight and first learning lesson; original map/6scenes remain separate. Same input/report, actual picks, own highlight, step/zoom state; no live positions/win/range/path prediction.
+- Future statistics CLI MASTER/GRANDMASTER/CHALLENGER seed guard before network; existing schedule/auth/budgets/primary insufficiency preserved, manual MASTER auxiliary enabled. Historical scopes and original synthetic lower-tier core preserved; seed rank is not allparticipants historical rank. No new collection.
+-64affected checks and current local PC/mobile/320/200% flow passed. REDs401, flank overflow, modal focus and close-event timing retained. One read-only review fixes checked. MandatoryCI/publication next; source scope contract contracts/teamfight-formation-v1.md, evidence evidence/actual-evidence/teamfight-formation/.
+- Sources/claims/AUTO30HOLD20USER0/advice7/Frozen350/quotes/holds/failures/video/pro/riot/Windows retained. N0,30secUNMEASURED,WindowsBLOCKED_EXTERNAL. Next: scoped group-fight evidence and further teaching questions; no generalized ideal/winner or synthetic Master+ sample.
+
+---
+
 # Five-menu IA — actual public completion
 - PR105 product19d31f18565117a17c7e77dca5d9b24ba5dbe11f; required PR/exact-product-main3PASS. Public742bb62383b8d5d9bf3f428d6fb1a50c9c832b57, nativePages39117544461 actualSUCCESS; HTTPS15hashes/root/buildinfo/nojekyll,86manifest/71unchanged reused. Latest scheduled pro refresh e7b5470 preserved, riot proof intact.
 - Five menus +commonPCsidebar/mobilebottomnav; work status separate. Guest1click→10pick→four-sentence summary→three focused details; method/context/comparison/trade/sustain/maps/Why optional, same report. PublicPC1440/mobile390/320/200%+input edit+step/empty statesPASS, privateAPIrequests0. Actual public1verified pro profile/5recent rows selected into PRO_REFERENCE review prep; analysis explicitly unconnected.

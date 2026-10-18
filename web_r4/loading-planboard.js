@@ -1,8 +1,8 @@
 /* Pure decision projection. No observations, IO, strength scores or source promotions. */
 (function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory();
-  else root.LoadingPlanboard = factory();
-})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./loading-formation.js'));
+  else root.LoadingPlanboard = factory(root.LoadingFormation);
+})(typeof globalThis !== 'undefined' ? globalThis : this, function (formation) {
   'use strict';
   const clone = x => JSON.parse(JSON.stringify(x));
   const ENUMS = {
@@ -308,7 +308,7 @@
         strong_fight: id==='C'&&coach.selected.metrics.EXTENDED.assessment==='ALLY' ? '근접 지속 교전 우세 추론 · 접촉 유지 조건' : reverse ? '상대 강화·보호가 겹치지 않는 조건부 후속 창 · 전체 우열 미확인' : valid ? coach.trade.ours.label : '개별 매치업 자료 부족', avoid: id === 'A' ? '사거리 안쪽에 붙은 장기전·올인 승리는 별도 판단' : '처치·추격을 교환 선호와 동일시하지 않기',
         induce: absent ? '남은 상대가 막타에 접근할 때 제한적 압박' : '상대의 막타 접근·처리 기술 사용을 짧은 공간 이득으로 연결', gain: 'CS 접근·처리 시간·귀환 선택권', basis: usable ? id === 'A' && early ? 'GUIDE_BASED' : 'CONDITIONAL' : 'INSUFFICIENT', claim_ids: claims },
       overall: { lanes, jungle_links: jungleLinks, risk: [slot('enemies', 'JUNGLE'), slot('enemies', 'MID')].filter(Boolean).map(name).join('·') + '의 개입 가능성을 전진 비용에 포함한다. 실제 로밍·정글 동선은 미관측이다.', route_prediction: false },
-      operations, fight, wave, choice, growth, matchup_playbook: playbook, coverage,
+      operations, fight: {...fight,formations:formation?.evaluate(input,{...catalog,coaching_knowledge:allKnowledge})}, wave, choice, growth, matchup_playbook: playbook, coverage,
       reminders: [valid && id === 'A' ? '측면 진입·럭스 후속 단절이면 교환 종료.' : changeIf, p.goal === 'RECALL' ? '빠른 처리와 실제 포탑 도달은 별개다.' : '교환에 다음 처리·대응 자원을 모두 쓰지 않는다.', growth ? '성장 후에도 남는 견제·연결 수단을 활용한다.' : '정글 미확인은 전진 폭을 조절할 이유이며 모든 처리·교전 금지가 아니다.'],
       quick_scenarios: quick,
       evidence: { claims: allClaims, sources: allKnowledge.sources.filter(s => sourceIds.has(s.id)), official_facts: threats.map(t => ({ ...fact(t.champion, t.slot), champion: t.champion })) }

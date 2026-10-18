@@ -13,6 +13,7 @@ from coach_v1.power_stats import TIERS, validate_power_dataset
 from coach_v1.riot_collector import RiotCollector, collection_tier
 from coach_v1.power_accumulator import PowerAccumulator
 from coach_v1.collection_progress import validate_progress
+from coach_v1.riot_collection_policy import validate_new_statistics_tier
 
 
 def write_json(path,data):
@@ -66,6 +67,7 @@ def main(argv=None):
     if args.lookback_days<1:parser.error('lookback-days must be positive')
     try:
         tier=args.tier or collection_tier(args.rotation,args.user_tier)
+        if not args.publish_only:validate_new_statistics_tier(tier)
         accumulator=PowerAccumulator.load(args.accumulator) if args.accumulator and Path(args.accumulator).exists() else PowerAccumulator()
         if args.seed_data:
             path=Path(args.seed_data)
@@ -80,7 +82,10 @@ def main(argv=None):
                 write_json(args.output,accumulator.dataset(representative['patch'],representative['tier']))
             print(json.dumps(dict(status='RESTORED_DERIVED_STATE',request_count=0,coaching_accuracy=None)))
             return 0
-    except (ValueError,OSError,EOFError,json.JSONDecodeError):
+    except ValueError as error:
+        if str(error)=='MASTER_PLUS_REQUIRED':parser.error('MASTER_PLUS_REQUIRED: new statistics require MASTER/GRANDMASTER/CHALLENGER seed accounts')
+        parser.error('invalid retained accumulator or seed; no provider call made')
+    except (OSError,EOFError,json.JSONDecodeError):
         parser.error('invalid retained accumulator or seed; no provider call made')
     end=args.end_time if args.end_time is not None else int(datetime.now(timezone.utc).timestamp())
     start=args.start_time if args.start_time is not None else max(0,end-args.lookback_days*86400)

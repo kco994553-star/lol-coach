@@ -13,7 +13,7 @@ from coach_v1.riot_collection_policy import resolve_patch,key_enabled,auxiliary_
 URL='https://ddragon.leagueoflegends.com/api/versions.json'
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--patch',default='');p.add_argument('--tier',choices=['CHALLENGER','GRANDMASTER'],default='CHALLENGER')
+    p=argparse.ArgumentParser();p.add_argument('--patch',default='');p.add_argument('--tier',choices=['CHALLENGER','GRANDMASTER','MASTER'],default='CHALLENGER')
     p.add_argument('--manual-renewed',action='store_true');p.add_argument('--aggregate-directory',required=True);args=p.parse_args()
     try:
         policy=json.loads(Path('config/riot_collection_policy.json').read_text())
@@ -25,7 +25,7 @@ def main():
             if len(body)>100_000:raise ValueError('PUBLIC_PATCH_METADATA_LIMIT')
             patch=resolve_patch(json.loads(body))
         directory=Path(args.aggregate_directory);enabled=key_enabled(policy,int(time.time()),manual_confirmed=args.manual_renewed)
-        if args.tier=='GRANDMASTER':
+        if args.tier in ('GRANDMASTER','MASTER'):
             paths=list(directory.glob('power-*-CHALLENGER.json'))
             if len(paths)>100:raise ValueError('DATASET_BOUND')
             needed=auxiliary_needed([json.loads(path.read_text()) for path in paths],patch=patch)
