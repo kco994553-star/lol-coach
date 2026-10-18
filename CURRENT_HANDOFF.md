@@ -1,3 +1,15 @@
+# Action briefs and range/cohesion — completed
+- run_token: `main-20261018-action-briefs-range`
+- status: `COMPLETED`
+- writer_active: false
+- final_main: `28c2057c118f1e388117bf0f041351994c49282e` (PR109/110)
+- product_main: `89b73bda3c0ac603c66fed4ce54f8952c75a1f79`; public `bdfd4503f4dcca50137b5a8d269f91c05d879dda`, nativePages39123582704 actualSUCCESS.
+- Feature/product-main/results/final-main required3PASS; exact final-main39123902930/39123902939 current_sources=true and unchanged tests/browser reused. Actual HTTPS changes/root/buildinfo/nojekyll and actual public PC/mobile/320/200% verified. Pro/riot preserved; no identical product republish.
+- First five linked actions per lane/operations/fight; partial objective/execution/conditional/missing knowledge scoped, no unknown all-in→tie/win. Official archived base attack ranges173champions, square illustrative circles and nearest-ally spacing, same actor/step/zoom state. No live full-threat/protection/isolation verdict.
+- Final proof: `evidence/actual-evidence/action-briefs-range/final-handoff.json` on this coordination branch. Source/publication/failures retained on main. N0/30secUNMEASURED/WindowsBLOCKED_EXTERNAL; original grades/quotes/holds/budgets/Master+ admission unchanged; no initiated provider/game/video/paid calls.
+
+---
+
 # Action briefs and range/cohesion — active writer
 - run_token: `main-20261018-action-briefs-range`
 - status: `RUNNING`
