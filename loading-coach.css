@@ -116,3 +116,18 @@
 .formation-range-values{font-size:14px;color:var(--ink,#edf0fa);padding:4px 0}@media(max-width:520px){.formation-range-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.formation-range-controls button{width:100%}}
 /* The diagram coordinate is the portrait centre, not the portrait-plus-label box. */
 .formation-explorer .formation-actor{padding:0;min-height:0;transform:translate(-50%,clamp(-24px,-1.7vw,-16px))}
+/* Threat overview: small portraits, a shared scale and separate commitment rings. */
+.formation-explorer .formation-actor{width:24px;height:24px;min-height:24px;gap:0;padding:0;justify-content:center;transform:translate(-50%,-50%)}
+.formation-explorer .formation-portrait{width:20px;height:20px}
+.formation-explorer .formation-name{display:none}
+.formation-explorer .formation-range{fill:none;stroke-width:.24;opacity:.65}
+.formation-explorer .formation-range.committed{stroke-dasharray:1.2 .9;stroke-width:.19;opacity:.5}
+.formation-explorer .formation-range.is-muted{opacity:.16}
+.formation-explorer .formation-range.is-selected{stroke-width:.6;opacity:1}
+.formation-explorer .formation-range.is-partial{stroke:#969bad;stroke-dasharray:.4 .8}
+.formation-explorer .formation-connection{opacity:.45;stroke-width:.25}
+.formation-threat-summary{margin-top:12px;padding:12px;border-left:3px solid var(--accent,#a78bfa);background:#101421;border-radius:8px}
+.formation-roster-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.formation-roster-buttons button{min-height:44px;white-space:normal}
+@media(max-width:520px){.formation-explorer .formation-portrait{width:14px;height:14px}.formation-explorer .formation-actor{width:20px;height:20px;min-height:20px}}
+.formation-explorer .formation-range.is-self{stroke:#efca75}
