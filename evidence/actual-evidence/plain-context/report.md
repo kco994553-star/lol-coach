@@ -19,3 +19,5 @@ composition/matchup separately. Reuse main11b115b and prior product404f984/publi
   the two confusing words. Rendering and AI review do not prove tactical effectiveness.
 - Mandatory CI/normal merge/exact-main CI/Pages/actual public verification pending.
   Rollback product404f984/public2008be4; preserve all evidence.
+
+Initial required CI found the old map-caption text expectation. Actual new caption was correct; update that semantic assertion to minion-time wording. Local complete loading+game-info browser checks passed; initial logs preserved, no source or behavior relaxation.
