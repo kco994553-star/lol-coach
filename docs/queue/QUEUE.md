@@ -1,3 +1,12 @@
+# Five-menu information architecture — publication pending
+- Fresh mainc446862/public5bbcf7c reused; full KEEP/ADAPT/MISSING/data map contracts/information-architecture-v1.md.
+- Five primary menus/common PCsidebar+mobilebottomnav; work status separate. Search/dashboard/review routed views, guest direct10pick, actual safe recent-record→review prep USER/PRO distinction. No fake public analysis.
+- Four one-sentence briefing from same report; lane/macro/fight core first, context/method/cost/trade/sustain/maps/Why optional. Helper connection first, single inventory calculation; learning same knowledge+6scenes. Official24active art,25registry/history preserved.
+-65affected checks/current PCmobile320/200% and review fixes passed; fullprotected browser PASS; requiredCI/Pages/HTTPS next. Evidence evidence/actual-evidence/information-architecture/report.md. Original sources/strength/risk/grades/budgets/pro/riot/Windows preserved, N0/human30secUNMEASURED/WindowsBLOCKED_EXTERNAL.
+- Next contracts/queue: scoped partial-draft recommendations(max3/no score/mastery unknown), actual jungle observations vs inference/routes, verified timers/allyCD, public ended-match timeline/video/strategy-version linkage. No new live permission/provider/video/game/paid calls.
+
+---
+
 # Plain Korean and matchup context — actual public completion
 - PR103 product11a78670fb4d8781d49c64c47db5627c024c7219; required feature/exact-source-main3PASS. Public5bbcf7c66cee2dc1a523b8a20272e926913c3b6f, nativePages39110092528 actualSUCCESS; HTTPS5manifesthashes/root/buildinfo/nojekyll exact,86manifest/81unchanged reused, pro/riot intact.
 - Actual PC1440/mobile390 A/E defaults and lane/operations/fight contexts PASS,0extra conditions. Authored 수급/처리 and abstract terms→specific minion/gold/experience/ally actions. Exact solo/duo and actual ten-pick capabilities explain our/opponent plans and interaction; no invented winner/importance. Raw quotes/official descriptions/trace bypass formatting.

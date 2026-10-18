@@ -3,7 +3,7 @@
   'use strict';
   const host=document.getElementById('coach-lessons');if(!host)return;
   let skillScope=[];
-  const el=(tag,text)=>{const n=document.createElement(tag);if(text)n.textContent=window.SkillDisplay?window.SkillDisplay.format(text,{champions:skillScope}):text;return n;};
+  const el=(tag,text)=>{const n=document.createElement(tag);if(text){const readable=window.LoadingPlanboard?.plainLanguage?window.LoadingPlanboard.plainLanguage(text):text;n.textContent=window.SkillDisplay?window.SkillDisplay.format(readable,{champions:skillScope}):readable;}return n;};
   try{
     const responses=await Promise.all([fetch('./loading-knowledge.json'),fetch('./loading-data.json')]);
     if(responses.some(r=>!r.ok))throw Error('공통 근거 자료를 불러오지 못했습니다.');
@@ -23,6 +23,6 @@
       section.append(q);const link=el('a','10픽 전략에서 조건 비교하기 →');link.href='./loading.html';section.append(link);host.append(section);
     }
     if(knowledge.lecture_candidates?.length){const d=el('details');d.className='coach-details';d.append(el('summary','사용자 제공 강의 후보 · 본문·관련 구간 검토 전'),el('p','영상 제목·설명만으로 전술 근거를 채택하지 않습니다. 아래 후보는 기존 영상 원장·진단 순서를 통과한 뒤 검토합니다.'));knowledge.lecture_candidates.forEach((v,i)=>{const p=el('p'),a=el('a','강의 후보 '+(i+1)+' ↗');a.href=v.url;a.target='_blank';a.rel='noopener noreferrer';p.append(a);d.append(p);});host.append(d);}
-    const target=document.getElementById(location.hash.slice(1));if(target&&host.contains(target))target.scrollIntoView({block:'start',behavior:'auto'});
+    const openLesson=()=>{const target=document.getElementById(location.hash.slice(1));if(target&&(target===host||host.contains(target))){for(let n=target.parentElement;n;n=n.parentElement)if(n.tagName==='DETAILS')n.open=true;target.scrollIntoView({block:'start',behavior:'auto'});}};window.addEventListener('hashchange',openLesson);openLesson();
   }catch(error){host.append(el('p',error.message+' 기존 6장면 연습은 아래에서 계속 사용할 수 있습니다.'));}
 })();

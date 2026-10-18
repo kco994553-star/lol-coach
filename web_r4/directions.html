@@ -6,12 +6,12 @@
   <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#101a23">
   <meta name="description" content="상황과 조건을 바꾸며 다음 움직임을 살펴보는 LoL 경기 전 학습·경기 후 복기 프로토타입입니다.">
-  <title>상황별 움직임 연습 · LoL Coach</title>
+  <title>학습실 · LoL Coach</title>
   <link rel="stylesheet" href="./directions.css">
   <script src="./coach-shell.js" defer></script><script src="./directions-engine.js" defer></script>
   <script src="./skill-data.js" defer></script>
   <script src="./skill-display.js" defer></script>
-  <script src="./loading-study.js" defer></script>
+  <script src="./loading-planboard.js" defer></script><script src="./loading-study.js" defer></script>
   <script src="./directions.js" defer></script>
 <link rel="stylesheet" href="./coach-theme.css"><link rel="stylesheet" href="./loading-coach.css"></head>
 <body class="coach-page"><div id="coach-shell" data-page="practice"></div>
@@ -20,13 +20,15 @@
 
   <main id="direction-app">
     <section class="hero" aria-labelledby="page-title">
-      <div class="hero-copy"><p class="eyebrow"><span aria-hidden="true"></span> SITUATIONAL DIRECTIONS</p><h1 id="page-title">상황을 읽고,<br>다음 움직임을 그려보세요.</h1><p class="hero-description">같은 골드 상황이어도, 조건이 달라지면 선택이 달라집니다.<br class="desktop-break"> 예시 장면을 고르고 지도와 함께 판단의 이유를 살펴보세요.</p></div>
+      <div class="hero-copy"><p class="eyebrow"><span aria-hidden="true"></span> 학습실</p><h1 id="page-title">상대법의 이유를 배우고,<br>상황을 바꿔 연습하세요.</h1><p class="hero-description">같은 골드 상황이어도, 조건이 달라지면 선택이 달라집니다.<br class="desktop-break"> 예시 장면을 고르고 지도와 함께 판단의 이유를 살펴보세요.</p></div>
       <div class="hero-aside"><span class="prototype-badge">DESIGN_HYPOTHESIS</span><p>경기 전에는 학습을,<br>경기 후에는 복기를.</p><span class="quiet">PC · 모바일 공통 학습 화면</span></div>
     </section>
 
+    <section id="learning-overview" class="coach-card"><h2>무엇을 배우고 싶나요?</h2><nav class="game-info-actions" aria-label="학습 주제"><a href="#coach-lessons">매치업 상대법과 근거</a><a href="#scenes">상황별 움직임 연습</a><a href="./loading.html">내 조합에 적용하기</a></nav><details class="coach-details"><summary>포지션·챔피언 역할 학습의 현재 범위</summary><p>현재는 탑·바텀의 기존 매치업과 귀환·사이드·목표물 여섯 장면에서 역할을 배웁니다. 전 포지션 기초 강의와 정글 추천 동선은 아직 없습니다.</p></details></section>
     <div class="learning-notice"><span class="notice-icon" aria-hidden="true">i</span><p><strong>직접 입력하는 가상 상황입니다.</strong> 실제 경기 추적 없이 학습·복기만 제공합니다. 지도 위치와 전술은 검증되지 않은 설명용 예시입니다.</p></div>
     <p id="app-message" class="app-message" role="status" aria-live="polite">학습 장면을 불러오고 있습니다…</p>
 
+<details id="matchup-library" class="coach-card"><summary>매치업 상대법 · 같은 근거로 배우기</summary><section id="coach-lessons" class="loading-coach" aria-label="로딩 전략과 같은 근거로 학습"><h2>매치업의 이유와 반례</h2><p>원문 주장과 조건을 로딩 전략과 함께 재사용합니다. 실전 효과 검증과는 별개입니다.</p></section></details>
     <section class="scene-section" aria-labelledby="scenes-title">
       <div class="section-heading"><div><p class="eyebrow">START WITH A SCENE</p><h2 id="scenes-title">어떤 상황을 연습할까요?</h2></div><span class="section-note">6개 예시 · 조건에 따른 선택 비교</span></div>
       <div id="scenes" class="scene-grid"></div>
@@ -77,7 +79,7 @@
         <details id="evidence" class="panel evidence-panel"><summary><span>근거와 해석의 경계 <small id="evidence-label">공식 사실과 설계 가설 구분</small></span><span class="summary-toggle" aria-hidden="true">⌄</span></summary><div class="details-content"><p class="evidence-notice">공식 설명은 기술의 사실을 확인하는 참고 자료입니다. 아래 행동 계획의 효과를 검증하거나 전술을 승인한 근거가 아닙니다.</p><div id="official-facts"></div><div class="evidence-absence"><div><h4>통계 근거</h4><p id="statistics-status"></p></div><div><h4>전문가 발언</h4><p id="expert-status"></p></div></div><ul id="evidence-limits" class="small-copy"></ul><details class="asset-evidence"><summary>지도·초상화 자료의 출처와 사용 조건</summary><div id="asset-sources"></div></details></div></details>
       </section>
     </div>
-    <section id="coach-lessons" class="loading-coach" aria-label="로딩 전략과 같은 근거로 학습"><h2>매치업의 이유와 반례</h2><p>원문 주장과 조건을 로딩 전략과 함께 재사용합니다. 실전 효과 검증과는 별개입니다.</p></section>
+
     <footer class="site-footer"><span>LoL Coach <span aria-hidden="true">/</span> 상황별 움직임 프로토타입</span><a href="./status.html">작업 상태와 현재 한계 ↗</a><p>PRE_GAME_LEARNING · POST_GAME_REVIEW만 제공 · 실시간 코칭 없음</p><p class="riot-disclaimer">LoL Coach isn’t endorsed by Riot Games and doesn’t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.</p></footer>
   </main>
 
