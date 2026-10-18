@@ -1,0 +1,56 @@
+{
+  "schema_version": "loading-coach-final-source-action-review-v1",
+  "checked_at": "2026-10-18T01:20:06.040205+00:00",
+  "workspace": "/workspace/worktrees/lol-coach-interactive",
+  "scope": "Read-only final review of loading-coach.js/loading-knowledge.json. No providers/network/product edits. Saved this scratch report only.",
+  "verification": {
+    "method": "Fresh local Node assertions against LoadingCoach.evaluate with existing catalog; static review of normalized source/claim metadata",
+    "passed": [
+      "B counter focus unselectable at LEVEL1/LEVEL2; selectable at LEVEL3_5/LEVEL6 under explicit counter conditions",
+      "C Q/E/UNKNOWN starting skill no longer yields W in trade start or summary",
+      "Unsupported first no longer names Ezreal Q/E",
+      "D LEVEL1 first explicitly says E learning not assumed",
+      "72 cases (4 matchups x 3 preferences x 6 override sets): selected.action equals wave.selected.steps[1].text and diagram.steps[1].text; selected action feasible=POSSIBLE",
+      "Preferences do not change objective period assessments or source claims",
+      "D growth retains actual Q/E evolution, mark/R access, conditional risk increase and global reversal UNDETERMINED",
+      "C/D original research_scope and metadata restored; concrete C conditions and D scope limits preserved",
+      "D historical Reddit dates retained as uncertain date_notes with date=null; no verified-date claim",
+      "Ambessa W actor name uses pinned official display name"
+    ]
+  },
+  "remaining_findings": [
+    {
+      "severity": "Important",
+      "id": "UNSUPPORTED_D_FALLTHROUGH_REMAINS",
+      "file": "web_r4/loading-coach.js",
+      "location": "end and tradeReason ternary default branches; returned trade.ours.end/selected.engagements[].end",
+      "trigger": "LoadingCoach.evaluate for Garen TOP vs Renekton TOP (unsupported matchup, no KaiSa in either input side)",
+      "actual": "trade.ours.end and every engagement end say 카이사의 표식·접근 각이 열리면 견제를 멈추고 아군 쪽으로 거리를 다시 만든다.; trade reason says 장거리 견제와 이탈을 활용한다.",
+      "impact": "Unsupported matchups still inherit a specific researched matchup enemy and ranged-poke plan, despite supported=false and corrected generic first. This is actionable unsupported coaching, not just a label.",
+      "required_fix": "Guard the whole unsupported response path, including end/reason and any other D-only fallback, with champion-neutral CS/support/resource guidance."
+    },
+    {
+      "severity": "Important",
+      "id": "WAVE_SKILL_AVAILABILITY_REMAINS",
+      "file": "web_r4/loading-coach.js",
+      "location": "makePlan().skills, applied to wave.selected and all plan alternatives",
+      "trigger": "D standard LEVEL1 Q start; C standard LEVEL1 W start",
+      "actual": [
+        "D wave.selected.skills tells preserving Ezreal E although first explicitly says not learned.",
+        "C W-start wave.selected.skills says watch Darius Q area hitting wave, although Q is unlearned."
+      ],
+      "impact": "The wave execution panel still relies on unavailable tools under its own declared standard, contradicting the corrected engagement action.",
+      "required_fix": "Use the same selected period/start-skill availability branch in plan skills/reserve as in first/action; explicitly defer unlearned skills instead of instructing their current use."
+    }
+  ],
+  "retained_limitations": [
+    "Standard assumptions are hypothetical; no live health, mana, wave, actual skill investment or cooldown observations are inferred.",
+    "B counterfocus is a historical guide-derived conditional response requiring Lulu W learned/ready, free action, sufficient health, KaiSa reach and remaining enemy tools; not a verified overall2v2 win.",
+    "C contact/CS-zone threat is qualitative and distance/cooldown dependent; no guaranteed5stacks, kill or chase.",
+    "D actual evolution/mark/access can raise punish risk without proving a fixed2-to3item whole-matchup reversal.",
+    "Source patch26.x/16.x namespace mapping remains unverified; guide labels and official16.20.1 retained separately.",
+    "Generic wave procedures remain explicit design hypotheses; not measured current-patch push/attrition winners.",
+    "No match accuracy/statistical validation, user comprehension measurement or USER/AUTO approval is created by these local semantic checks."
+  ],
+  "result": "2 remaining Important findings; no Critical finding in reviewed scope"
+}

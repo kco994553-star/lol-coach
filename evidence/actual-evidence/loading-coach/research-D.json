@@ -1,0 +1,378 @@
+{
+  "schema_version": "loading_coach_matchup_research.v1",
+  "matchup_id": "D",
+  "matchup": {
+    "my_champion": "Ezreal",
+    "enemy_champion": "Kaisa",
+    "role": "ADC"
+  },
+  "checked_at": "2026-10-18",
+  "target_patch": "16.20.1",
+  "research_only": true,
+  "no_user_or_auto_approval_recorded": true,
+  "hypothesis_ko": "동성장일 때 이즈리얼이2코어까지 앞서며3코어 이후 카이사가 위치 실수를 강하게 처벌한다.",
+  "verdict": "NARROW_CONDITIONAL_WARNING_SUPPORTED; FIXED_2_3_ITEM_CURVE_UNESTABLISHED",
+  "equal_growth_definition_ko": "같은 레벨·비슷한 누적 획득 및 실제 사용 골드, 큰 현상금/레벨차 없이 비교한다. 소지 골드와 완성품/하위템·신발·여눈 중첩·진화 상태를 따로 기록한다. 교전 비교는 시작 체력·마나, 스킬/소환사 주문, 버프, 아군 접근성도 맞춘다. 같은 코어 개수만으로 동성장을 선언하지 않는다.",
+  "build_assumptions": {
+    "Ezreal": "AD Trinity Force + Manamune/Muramana path in S2. Tear transformation must be observed separately. Third options, armor and haste materially change punishability. No current item cost or transformation timing was re-collected.",
+    "Kaisa": "S1 body Kraken Slayer + Berserker boots + Guinsoo Rageblade, then AP Nashor or AD Zeal branch; S3 older Shiv builds are historical only. Check actual Q/E evolves. AP W evolution can change poke/access and cannot be presumed at every third item.",
+    "level": "R learned at6; R range in official archive2000/2500/3000 by rank. Guide Q level10–11 is historical build advice, not adopted current timing. E actual evolution and R rank/availability are stronger observable conditions than a fabricated clock.",
+    "current_patch_limits": "Only champion official archive reused; no current official item-stat payload available in this task. Exact third-item evolution, component order, total build gold and damage crossover not verified. S1 header AP build and prose differ; S3 old14.9 and Reddit2021/2022 require patch caution."
+  },
+  "transition": {
+    "event_ko": "첫 코어 이후 성장이 진행되며 카이사의 Q 진화에 더해 E 진화가 실제로 활성화되는 순간. S1의 특정 빌드 설명은2코어+추가 공속 부품을 예로 든다.",
+    "beyond_one_core": true,
+    "event_type": "observed_evolution_state_not_fixed_time",
+    "not_universal_itemcount": true,
+    "required_access_conditions": [
+      "Kai'Sa alive/in range with R ready and enough mana; target carries Plasma from W/auto/ally immobilize or other legal source",
+      "Ezreal isolated from peel or E spent toward threat; Q can substantially concentrate on him",
+      "Kai'Sa has not already lost too much health to Ezreal poke; she can dodge his skillshots and safely follow",
+      "Vision and allied positions permit entry; enemy CC/peel and summoner spells considered"
+    ],
+    "before_plan_ko": "이즈리얼은 Q를 맞힐 수 있는 시야·각도에서 체력을 깎고 E를 보존한다. 카이사는 미니언으로 Q를 차단하며 파밍하고 실제 진화를 준비한다. 초기에도 고립+표식+E 사용 실수는 위험하므로 무적 구간처럼 설명하지 않는다.",
+    "after_plan_ko": "이즈리얼은 혼자 앞서 서지 말고 아군 지원 거리와 퇴로를 확보한다. 표식이 붙거나 카이사가 시야에서 사라지면 E를 공격적으로 쓰는 위험을 재평가한다. 카이사는 E를 무작정 앞으로 쓰기보다 회피·재배치에 쓰고, 표식과 R 및 고립 Q 각도가 함께 열렸을 때 추격한다.",
+    "preserved_Ezreal_strengths": [
+      "1150-range Q poke and cooldown reduction on hit",
+      "475-range E reposition retained if not spent",
+      "safe passive-stacked autos and full combo remain relevant",
+      "grouped positioning/peel and nearby Q-sharing units reduce isolated burst; neither guarantees safety"
+    ]
+  },
+  "advantage_fields": {
+    "early_total_advantage": "unestablished; support/wave/skillshot factors dominate unsupported blanket2item claim",
+    "midgame_total_advantage": "unestablished under equal gold; Ezreal has poke and mobility, Kai'Sa has conditional entry",
+    "late_total_advantage": "not adjudicated; do not label total matchup reversal",
+    "isolated_duel_punish_risk": "conditional elevated risk supported by mechanisms plus guide explanation",
+    "teamfight_advantage": "not established by1v1 anecdote; front-to-back poke versus flank/follow-up are different fights",
+    "mistake_punishability": "distinct from average power and can exist even when Kai'Sa is an item behind; anecdote not causal proof"
+  },
+  "conditions_and_exceptions": [
+    "Kai'Sa W miss/no mark or R unavailable: cannot assume long-range pursuit",
+    "Ezreal E ready, poke landed first and allied peel nearby: assassination may fail",
+    "Minions/allied units distribute Kai'Sa Q; early lane minions also block Ezreal Q, so wave effects benefit both in different ways",
+    "Ezreal defensive/armor choices and Kai'Sa crit/on-hit/AP branches change burst and sustained damage; historical Frozen Heart claims not current guarantees",
+    "A poke support may deny Kai'Sa the healthy approach or free farm assumed by S3",
+    "Actual skillshot execution and mana/cooldowns matter at every item count",
+    "Q/E upgrades add capability; they do not mathematically prove increased total matchup advantage at equal gold"
+  ],
+  "claims": [
+    {
+      "id": "D-C1",
+      "statement_ko": "카이사의 Q 진화·E 진화가 갖춰지고 플라즈마 표식과 궁극기 진입각까지 열리면, 혼자 떨어지거나 비전 이동을 먼저 쓴 이즈리얼의 위치 실수를 더 위험하게 처벌할 수 있다.",
+      "classification": "AI_tactical_inference_grounded_in_official_mechanism_and_guides",
+      "adoptable_scope": "conditional_punish_risk_warning",
+      "evidence_links": [
+        {
+          "source_id": "O_Kaisa",
+          "section": "allytips[0], enemytips[0]; spells Q/E/R; passive",
+          "supports": "isolated-target burst, evolution missile increase/invisibility, marked-target dash+shield; ally immobilize stacks Plasma"
+        },
+        {
+          "source_id": "S1",
+          "section": "How to build Kai'sa; E/R usage",
+          "supports": "beyond1core evolution event in described Kraken/Rageblade path; self-peel tools"
+        },
+        {
+          "source_id": "S3",
+          "section": "EZREAL matchup HOW YOU WIN",
+          "supports": "direct full-combo catch condition and Ezreal poke counterplay"
+        },
+        {
+          "source_id": "S5",
+          "section": "spent E engage comment",
+          "supports": "historical corroboration of spent E condition only"
+        }
+      ],
+      "does_not_establish": "Equal-growth duel win, total matchup advantage, or a universal fixed2/3item crossover."
+    },
+    {
+      "id": "D-C2",
+      "statement_ko": "아이템이 늘어도 이즈리얼의 장거리 Q 견제와 비전 이동의 거리 조절은 남는다. 카이사가 진입하기 전에 체력을 깎고 아군 쪽으로 빠질 공간을 확보하면 고립된 맞딜 상황을 피할 수 있다.",
+      "classification": "AI_plan_inference_grounded_in_official_mechanism_and_guide",
+      "adoptable_scope": "preserved_Ezreal_strengths",
+      "evidence_links": [
+        {
+          "source_id": "O_Ezreal",
+          "section": "spells Q range1150; E blink475; Q description cooldown reduction",
+          "supports": "persistent ranged poke and mobility; Q hits shorten cooldowns"
+        },
+        {
+          "source_id": "O_Kaisa",
+          "section": "enemytips[0:2], stats.attackrange525",
+          "supports": "grouping and range counterplay"
+        },
+        {
+          "source_id": "S2",
+          "section": "gameplay lines249–250",
+          "supports": "poke/passive/safe autos and preserve E"
+        },
+        {
+          "source_id": "S3",
+          "section": "EZREAL matchup",
+          "supports": "Ezreal poke and combo remain threatening"
+        }
+      ],
+      "does_not_establish": "Unconditional safe positioning or inability of Kai'Sa to access a grouped target; W and allied CC can still open R."
+    },
+    {
+      "id": "D-C3",
+      "statement_ko": "검토한 카이사 가이드는 크라켄·구인수 이후 추가 공격 속도로 E 진화를 여는 구간을 설명한다. 따라서 3코어라는 숫자보다 실제 Q/E 진화 여부를 경계 신호로 삼는 편이 근거에 맞다.",
+      "classification": "source_backed_guide_statement_plus_AI_trigger_selection",
+      "adoptable_scope": "beyond1core_event_candidate_without_fixed_item_or_time_promise",
+      "evidence_links": [
+        {
+          "source_id": "S1",
+          "section": "How to build Kai'sa lines395–397",
+          "supports": "described E evolution after two core items plus AS component"
+        },
+        {
+          "source_id": "O_Kaisa",
+          "section": "spells E description and effect[6]; Q effect[6]; W effect[2]",
+          "supports": "evolution mechanics and archived100 thresholds"
+        }
+      ],
+      "does_not_establish": "Current16.20 exact build/level requirement; guide level10–11 Q and E component thresholds need current item-stat verification."
+    },
+    {
+      "id": "D-C4",
+      "statement_ko": "동성장이면 이즈리얼이 2코어까지 앞서고 3코어부터 카이사 우위로 뒤집힌다는 전체 곡선은 이번 자료로 확정할 수 없다. 위치 실수 처벌 위험과 전체 상성 우위는 별도로 다뤄야 한다.",
+      "classification": "research_boundary",
+      "adoptable_scope": "reject_fixed_curve_publish_narrow_warning",
+      "evidence_links": [
+        {
+          "source_id": "S1",
+          "section": "evolve build path",
+          "supports": "different thresholds even before3core"
+        },
+        {
+          "source_id": "S3",
+          "section": "Ezreal matchup",
+          "supports": "outcome explicitly conditional on skillshots/combo"
+        },
+        {
+          "source_id": "S4",
+          "section": "fight context comments",
+          "supports": "unequal/context-confounded anecdote"
+        },
+        {
+          "source_id": "S5",
+          "section": "crit/Frozen Heart discussion",
+          "supports": "historical counterexample and build dependence"
+        }
+      ],
+      "does_not_establish": "Hypothesis is false in every specified build or fight type; no matched equal-gold experiment was performed."
+    }
+  ],
+  "sources": [
+    {
+      "id": "O_Ezreal",
+      "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ezreal.json",
+      "title": "Riot Data Dragon Ezreal ko_KR 16.20.1",
+      "author": "Riot Games",
+      "expertise": {
+        "kind": "official_publisher",
+        "verified_evidence": "Versioned official Riot payload, local SHA-256 equals archive manifest.",
+        "independent_rank_verification": null
+      },
+      "published_at": null,
+      "updated_at": null,
+      "collected_at": "2026-10-15T10:19:35.604285+00:00",
+      "target_patch": "16.20.1",
+      "checked_at": "2026-10-18",
+      "source_kind": "official_mechanism",
+      "access_status": "local_archive_read_hash_verified",
+      "local_path": "/workspace/lol-coach/data/official_catalog/versions/16.20.1/Ezreal-16.20.1.ko_KR.json",
+      "sha256": "39c164a7bcd1cc15390ddf3570c206ccf39ab8c33f70ce0c2374a8d3c0424448",
+      "excerpts": [
+        {
+          "section": "data.Ezreal.allytips / enemytips",
+          "exact_excerpt": "이즈리얼의 공격은 모두 원거리 스킬 기반이므로 미니언 뒤에 숨도록 하십시오."
+        }
+      ]
+    },
+    {
+      "id": "O_Kaisa",
+      "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Kaisa.json",
+      "title": "Riot Data Dragon Kaisa ko_KR 16.20.1",
+      "author": "Riot Games",
+      "expertise": {
+        "kind": "official_publisher",
+        "verified_evidence": "Versioned official Riot payload, local SHA-256 equals archive manifest.",
+        "independent_rank_verification": null
+      },
+      "published_at": null,
+      "updated_at": null,
+      "collected_at": "2026-10-15T10:19:35.604285+00:00",
+      "target_patch": "16.20.1",
+      "checked_at": "2026-10-18",
+      "source_kind": "official_mechanism",
+      "access_status": "local_archive_read_hash_verified",
+      "local_path": "/workspace/lol-coach/data/official_catalog/versions/16.20.1/Kaisa-16.20.1.ko_KR.json",
+      "sha256": "98544004fbc81a31b38a8856c301b5434e7881bb05fd4ec708dabb0827214ed3",
+      "excerpts": [
+        {
+          "section": "data.Kaisa.allytips / enemytips",
+          "exact_excerpt": "고립된 적 딜러를 쫓아 이케시아 폭우로 폭발적인 피해를 입히세요."
+        }
+      ]
+    },
+    {
+      "id": "S1",
+      "url": "https://www.mobafire.com/league-of-legends/build/26-9-rank-1-kaisa-world-in-depth-build-guide-564429",
+      "title": "[26.9] Rank 1 Kai'sa World In-Depth Build Guide",
+      "author": "ELOSANTA",
+      "expertise": {
+        "kind": "rank_and_competitive_background_self_claim_only",
+        "verified_evidence": "Guide is attributed to ELOSANTA, links author Twitch; introductory paragraph claims rank8/929LP, rank1 champion and semi-professional play. These claims were read, not independently corroborated.",
+        "independent_rank_verification": null
+      },
+      "published_at": null,
+      "updated_at": "2026-04-29",
+      "post_date": null,
+      "date_evidence": "MOBAFire champion index lists update date; S3 direct HTML timestamp1714584779",
+      "target_patch": "26.9",
+      "checked_at": "2026-10-18",
+      "source_kind": "authored_guide",
+      "access_status": "opened_readable_full_text",
+      "excerpts": [
+        {
+          "section": "Champion Build Guide / How to build Kai'sa, rendered lines395–400",
+          "exact_excerpt": "The E evolve comes after you get your two core items and then pick an attackspeed Dagger item."
+        },
+        {
+          "section": "Recommended Items / AD CORE, rendered lines133,168",
+          "exact_excerpt": "Kraken Slayer Berserker's Greaves Guinsoo's Rageblade"
+        }
+      ],
+      "summary": "Body recommends Kraken, Berserker boots, Rageblade, then AS component for E evolution; Q described at level10 with Kraken/boots/Pickaxe. Third branch Nashor for AP or Zeal for AD. Header AP items differ from body, so no guaranteed current build breakpoint. E described mainly for self-peel; R shield helps independence. No direct Ezreal matchup or fixed3item reversal.",
+      "target_patch_namespace": "verbatim_author_page_label; no official namespace mapping verified"
+    },
+    {
+      "id": "S2",
+      "url": "https://www.mobafire.com/league-of-legends/build/26-9-challenger-ezreal-guide-620056",
+      "title": "26.9 Challenger Ezreal Guide",
+      "author": "ELOSANTA",
+      "expertise": {
+        "kind": "rank_and_competitive_background_self_claim_only",
+        "verified_evidence": "Attributed author and linked Twitch. Intro claims rank77EUW/931LP S11 and consistent Challenger, semi-professional play; not independently checked. Same author as S1, not independent corroboration.",
+        "independent_rank_verification": null
+      },
+      "published_at": null,
+      "updated_at": "2026-04-29",
+      "post_date": null,
+      "date_evidence": "MOBAFire champion index lists update date; S3 direct HTML timestamp1714584779",
+      "target_patch": "26.9",
+      "checked_at": "2026-10-18",
+      "source_kind": "authored_guide",
+      "access_status": "opened_readable_full_text",
+      "excerpts": [
+        {
+          "section": "Champion Build Guide / final gameplay paragraph, rendered line250",
+          "exact_excerpt": "You should never greed and Arcane Shift forwards unless you are 100% sure you gonna be safe."
+        },
+        {
+          "section": "CORE, rendered line174 (first two items)",
+          "exact_excerpt": "Trinity Force Manamune"
+        }
+      ],
+      "summary": "Core listed Trinity/Manamune/Lucidity. Late options include Shojin, Serylda, Frozen Heart. Guidance is Q poke to stack passive, safe autos, preserving E unless safe. No claim he beats Kai'Sa through two items, and no measured equal-gold matchup curve.",
+      "target_patch_namespace": "verbatim_author_page_label; no official namespace mapping verified"
+    },
+    {
+      "id": "S3",
+      "url": "https://www.mobafire.com/league-of-legends/build/14-9-complete-kaisa-guide-to-dominate-your-games-601383",
+      "title": "[14.9] Complete Kai'sa Guide to Dominate Your Games",
+      "author": "Amberdragon",
+      "expertise": {
+        "kind": "champion_main_self_claim_only",
+        "verified_evidence": "Intro identifies BR ADC main and Kai'Sa main since S10, cites learning from FXN Saber. No rank or independent skilled-play evidence found. The author's named influence does not transfer expertise.",
+        "independent_rank_verification": null
+      },
+      "published_at": null,
+      "updated_at": "2024-05-01",
+      "post_date": null,
+      "date_evidence": "MOBAFire champion index lists update date; S3 direct HTML timestamp1714584779",
+      "target_patch": "14.9",
+      "checked_at": "2026-10-18",
+      "source_kind": "authored_guide",
+      "access_status": "initial_timeout_then_retry_opened_full_text",
+      "excerpts": [
+        {
+          "section": "Matchups / EZREAL - GOOD MATCHUP / HOW YOU WIN, rendered lines2085–2090",
+          "exact_excerpt": "If he gets caught and you hit full combo he should die"
+        }
+      ],
+      "summary": "Direct matchup guide says avoid Ezreal Q/W, use minions against poke; catches/full combo allow assassination and sticking. Warns Ezreal can burst/run down Kai'Sa after landing poke/combo and his poke-support changes lane. Old14.9 item paths cannot substantiate16.20 build timings.",
+      "target_patch_namespace": "verbatim_author_page_label; no official namespace mapping verified"
+    },
+    {
+      "id": "S4",
+      "url": "https://www.reddit.com/r/ezrealmains/comments/rqfk46/threeitem_kaisa_easily_hunted_fouritem_ezreal/",
+      "title": "Three-item Kai'sa easily hunted four-item Ezreal. What do you think? I feel perhaps mb, I should've blinked back earlier.🙈",
+      "author": "Kepreal1999 (post); Bachtier, HoboTheClown629, Worldly-Duty4521, XBladeSora, Anello-fattivo (comments)",
+      "expertise": {
+        "kind": "unverified_community_anecdote",
+        "verified_evidence": "Named handles visible, no independently established rank or competitive expertise. Some other comments self-identify Ezreal one-tricks, insufficient verification.",
+        "independent_rank_verification": null
+      },
+      "published_at": null,
+      "updated_at": null,
+      "post_date": "2021-12-28",
+      "date_evidence": "Reddit rendered related daily Top Posts date; exact creation timestamp not verified",
+      "target_patch": null,
+      "checked_at": "2026-10-18",
+      "source_kind": "community_text_discussion",
+      "access_status": "opened_readable_full_text",
+      "excerpts": [
+        {
+          "section": "Comments / Bachtier, rendered line49; additional context lines72,156,179,330",
+          "exact_excerpt": "> Kai’Sa is a really bad matchup for Ezreal plus you shouldn’t have been that far up without a teammate. She definitely caught you out of position."
+        }
+      ],
+      "summary": "Text comments blame isolation, distance from teammates and E direction; another notes Bard buff and Kai'Sa R versus no usable Ezreal R. Later comments note minion/allied units dilute Q. This is a confounded historical anecdote, not an equal-growth test. Embedded video was not opened or analyzed."
+    },
+    {
+      "id": "S5",
+      "url": "https://www.reddit.com/r/kaisamains/comments/zinkkk/im_starting_to_struggle_vs_the_ezreal_matchup/",
+      "title": "I’m starting to struggle vs the Ezreal matchup ever since I hit Platinum",
+      "author": "[deleted] (post); Lemonforce; [deleted] (engage advice); Delta5583",
+      "expertise": {
+        "kind": "unverified_community_discussion",
+        "verified_evidence": "Poster claims Platinum; one commenter explicitly describes self as Silver. No independent expertise verified.",
+        "independent_rank_verification": null
+      },
+      "published_at": null,
+      "updated_at": null,
+      "post_date": "2022-12-11",
+      "date_evidence": "Reddit rendered related daily Top Posts date; exact creation timestamp not verified",
+      "target_patch": null,
+      "checked_at": "2026-10-18",
+      "source_kind": "community_text_discussion",
+      "access_status": "opened_readable_full_text",
+      "excerpts": [
+        {
+          "section": "Comments / deleted author, rendered line75; build context lines20,59,67 and counterexample line92",
+          "exact_excerpt": "> Stay behind minions, bait out his W and E, once he E’s towards you a BIG portion of his mobility is gone and then it’s just dodging his skill shots."
+        }
+      ],
+      "summary": "Poster struggles even late against Frozen Heart Ezreal while playing crit; response suggests on-hit. Advice conditions engage on spent E and Q avoidance; another recommends W after E then R. Useful counterexample against item-count automatic win, not current item effectiveness proof."
+    }
+  ],
+  "methods": {
+    "external_meaningful_pages": 5,
+    "discovery": "web search -> original MOBAFire authored guides and Reddit text comments -> local official champion mechanisms",
+    "unadopted_search_results": "Automated matchup-stat/SEO summaries were search-discovery only; game-win rate and item-timing correlations not used as equal-growth evidence.",
+    "excluded": "No Gemini, video processing, model API, new match collection, paid service, or secrets; no product/review-history writes.",
+    "source_independence": "S1 and S2 same author; Reddit discussions anecdotal; independent high-rank verification not obtained. No claim of expert consensus."
+  },
+  "patch_namespace_policy": {
+    "official_archive_label": "16.20.1 (game_patch16.20 in local manifest)",
+    "authored_guide_labels_verbatim": [
+      "26.9",
+      "14.9"
+    ],
+    "mapping_verified": false,
+    "handling_ko": "가이드 제목의26.9를 공식16.9나16.20.1로 자동 치환하지 않았다. MOBAFire 현행 인덱스는26.20 제목과16.20 통계 표기를 함께 보여주지만, 이 관찰만으로 버전 대응을 확정하지 않는다. 정성적 전술과 공식16.20.1 메커니즘만 연결하며 가이드의 구매·레벨 임계값을 현행 수치로 승격하지 않는다."
+  }
+}

@@ -1,3 +1,9 @@
+# Loading Coach current scope — 2026-10-18
+READY: required CI → normal source PR merge → exact-main CI → Pages → actual PC/mobile HTTPS → results/Handoff. Default standard comparison and A/B/C/D source-scoped knowledge implemented; do not redo prior desktop/25hero/3gameplay assets or advice7.
+NEXT_EVIDENCE: current-patch wave/trade costs A; current four-actor sustain/counterfocus B; matched Lv1 start/distance C; equal-gold build/evolution positional-risk D. No fixed win/crossover claims. Prior3 lecture questions and video path/limits remain separate.
+
+---
+
 # Latest desktop composition public result
 - DONE: PR79 productab17d50, artifact4b7fb94, actualPages/HTTPS/PCmobile8geometry+existing25hero/3destinations proof. See publication/result.md.
 - READY: evidence/Handoff-only normal merge and exact remote/main required gates; no repeated product/browser/source collection.

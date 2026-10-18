@@ -23,6 +23,7 @@ MODIFIED={'coach_v1/pc_coach.py','.github/workflows/private-mvp-ci.yml',
     'web_r4/pc.js','web_r4/pregame.js','web_r4/pregame.html','web_r4/official_reference.js',
     'web_r4/review_queue.js','web_r4/review_queue.html'}
 CURRENT=MODIFIED|{
+    'contracts/loading-coach-v1.md','docs/superpowers/plans/2026-10-18-loading-coach.md','docs/superpowers/specs/2026-10-18-loading-coach.md','tests_pregame/test_loading_coach.py','web_r4/loading-coach.js','web_r4/loading-coach-view.js','web_r4/loading-coach.css','web_r4/loading-knowledge.json','web_r4/loading-study.js',
     'contracts/desktop-composition-v1.md',
     'contracts/gameplay-cards-v1.md','config/gameplay_cards_assets.json',
     *{'web_r4/home-assets/'+p for p in ('AsheBase.jpg', 'AsheSkin17.jpg', 'KaisaBase.jpg', 'KaisaSkin14.jpg', 'JinxBase.jpg', 'JinxSkin4.jpg', 'EzrealBase.jpg', 'EzrealSkin21.jpg', 'LuxBase.jpg', 'LuxSkin17.jpg', 'YasuoBase.jpg', 'YasuoSkin9.jpg', 'YoneBase.jpg', 'YoneSkin1.jpg', 'IreliaBase.jpg', 'IreliaSkin37.jpg', 'VayneBase.jpg', 'VayneSkin25.jpg', 'LeonaBase.jpg', 'LeonaSkin10.jpg', 'game-lane.webp', 'game-operations.webp', 'game-fight.webp')},
@@ -61,7 +62,7 @@ CURRENT=MODIFIED|{
     'tests_pregame/test_resource_view.py','tests_pregame/test_fixed_resource_checkpoint.py','tests_pregame/test_actual_evidence_binding.py',
     'docs/superpowers/plans/2026-10-16-actual-evidence.md','docs/superpowers/plans/2026-10-17-gemini-diagnostic.md','contracts/gemini-response-diagnostic-v3.md',
 }
-TESTS=['tests_pregame.test_exchange_preference','tests_pregame.test_lane_engagement','tests_pregame.test_account_dashboard','tests_pregame.test_loading_wave','tests_pregame.test_loading_interactive','tests_expert.test_video_diagnostic_payload','tests_expert.test_video_diagnostic_policy','tests_expert.test_video_diagnostic_cli','tests_expert.test_gemini_response_diagnostics','tests_expert.test_text_response_v2','tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
+TESTS=['tests_pregame.test_loading_coach','tests_pregame.test_exchange_preference','tests_pregame.test_lane_engagement','tests_pregame.test_account_dashboard','tests_pregame.test_loading_wave','tests_pregame.test_loading_interactive','tests_expert.test_video_diagnostic_payload','tests_expert.test_video_diagnostic_policy','tests_expert.test_video_diagnostic_cli','tests_expert.test_gemini_response_diagnostics','tests_expert.test_text_response_v2','tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
        'tests_pregame.test_resource_recovery','tests_pregame.test_resource_view','tests_pregame.test_fixed_resource_checkpoint',
        'tests_pregame.test_actual_evidence_binding','tests_pregame.test_directions','tests_pregame.test_directions_http',
        'tests_pregame.test_loading_catalog','tests_pregame.test_loading_strategy','tests_pregame.test_loading_http','tests_pregame.test_loading_context',
@@ -159,7 +160,7 @@ def affected_code_changed():
     content={'config/evidence_intake.json','config/pov_channels.json','config/video_api_diagnostic.json',
         'web_r4/directions-data.json','config/direction_asset_sources.json','web_r4/directions.html',
         'web_r4/directions.css','web_r4/directions-status.json','web_r4/status.html',
-        'web_r4/loading.html','web_r4/loading.css','web_r4/loading-data.json','web_r4/dashboard.html','web_r4/dashboard.css','web_r4/pro-dashboard.json','config/lck_verified_accounts.json',
+        'web_r4/loading-knowledge.json','web_r4/loading-coach.css','web_r4/loading.html','web_r4/loading.css','web_r4/loading-data.json','web_r4/dashboard.html','web_r4/dashboard.css','web_r4/pro-dashboard.json','config/lck_verified_accounts.json',
         'web_r4/pregame.html','web_r4/review_queue.html','web_r4/pc.html'}
     return bool(changed&(executable|content))
 
@@ -171,6 +172,7 @@ def selected_tests():
     if not before or set(before)=={'0'}:return TESTS
     changed=set(git('diff','--name-only',before,'HEAD').decode().splitlines())
     groups={
+        'tests_pregame.test_loading_coach':{'contracts/loading-coach-v1.md','tests_pregame/test_loading_coach.py','web_r4/loading-engine.js','web_r4/loading.js','web_r4/loading.html','web_r4/loading-coach.js','web_r4/loading-coach-view.js','web_r4/loading-coach.css','web_r4/loading-knowledge.json','web_r4/loading-study.js'},
         'tests_pregame.test_exchange_preference':{'contracts/exchange-preference-v1.md','web_r4/loading-exchange.js','web_r4/loading-exchange-view.js','web_r4/loading-engagement-view.js','web_r4/loading-interactive.js','web_r4/loading-engine.js','tests_pregame/test_exchange_preference.py'},
         'tests_pregame.test_lane_engagement':{'contracts/lane-engagement-v1.md','web_r4/loading-engagement.js','web_r4/loading-engagement-view.js','tests_pregame/test_lane_engagement.py','web_r4/loading-engine.js','web_r4/loading-interactive.js','web_r4/loading.html'},
         'tests_pregame.test_account_dashboard':{'web_r4/hero-art.json','web_r4/coach-shell.js','web_r4/coach-theme.css','coach_v1/account_dashboard.py','scripts/refresh_verified_pro_dashboard.py','scripts/publish_verified_pro_dashboard.py','config/lck_verified_accounts.json','web_r4/dashboard.html','web_r4/dashboard.js','web_r4/dashboard.css','web_r4/pro-dashboard.json','contracts/account-dashboard-v1.md','tests_pregame/test_account_dashboard.py'},

@@ -29,12 +29,13 @@
     RESPECT_TARGETED_CONTROL: { opponent_response: [{ text: 'R 후속', champion: 'Kaisa', slot: 'R', prefix: true }] },
     REASSESS_PURCHASE_AND_RETURN: { alternative: [{ text: '닻', champion: 'Nautilus', slot: 'Q' }] }, KEEP_FOLLOWUP_AFTER_CORE: {}
   };
-  const entryAreas={lane:{id:'interactive-flow',name:'라인전'},operations:{id:'loading-gameplan',name:'운영'},fight:{id:'teamfight',name:'한타'}},entryKey=location.hash.slice(1).replace(/^prepare-/,''),entry=location.hash.startsWith('#prepare-')&&Object.hasOwn(entryAreas,entryKey)?entryAreas[entryKey]:null;
+  const entryAreas={lane:{id:'loading-coach',name:'라인전'},operations:{id:'loading-coach',name:'운영'},fight:{id:'loading-coach',name:'한타'}},entryKey=location.hash.slice(1).replace(/^prepare-/,''),entry=location.hash.startsWith('#prepare-')&&Object.hasOwn(entryAreas,entryKey)?entryAreas[entryKey]:null;
   let catalog = null;
   let report = null;
   let filling = false;
   let importing = false;
   let exploration = null;
+  let coachView = null;
   let preference = 'BALANCED';
 
   function display(value, options) {
@@ -157,7 +158,7 @@
   function stale() {
     if (filling) return;
     updateRosterOptions();
-    if (report) { $('loading-results').hidden = true; if (exploration) exploration.destroy(); exploration = null; }
+    if (report) { $('loading-results').hidden = true; if(coachView)coachView.destroy();coachView=null; if (exploration) exploration.destroy(); exploration = null; }
     if (report) message('입력이 바뀌었습니다. ‘이번 판 방향 보기’를 눌러 새 픽과 조건을 반영하세요.', 'stale');
     else message('10개 픽과 내 챔피언·포지션을 선택하면 분석할 수 있습니다.');
   }
@@ -395,8 +396,17 @@
     if (exploration) exploration.destroy();
     exploration = window.LoadingInteractive.mount({ report, catalog, host:$('interactive-flow'), onPreference:risk=>{
       const next = window.LoadingStrategy.analyze({...report.input,preferences:{risk}},catalog);
-      preference = risk; report = next; return next;
+      preference = risk; report = next; if(coachView)coachView.update(next); return next;
     }});
+    if(coachView)coachView.destroy();
+    coachView=window.LoadingCoachView.mount({host:$('loading-coach'),report,catalog,onChange:({scenario,period,preference:risk})=>{
+      const next=window.LoadingStrategy.analyze({...report.input,schema_version:'lol-coach-loading-input-v3',scenario,preferences:{risk}},catalog);
+      next.coach=window.LoadingCoach.evaluate(next,catalog,scenario,period); preference=risk; report=next;
+      if(exploration)exploration.destroy();
+      exploration=window.LoadingInteractive.mount({report,catalog,host:$('interactive-flow'),onPreference:risk=>{const next=window.LoadingStrategy.analyze({...report.input,preferences:{risk}},catalog);preference=risk;report=next;coachView.update(next);return next;}});
+      return next;
+    }});
+    if(entry)coachView.setPanel(entryKey);
     $('loading-results').hidden = false;
   }
   function analyze() {
@@ -407,9 +417,9 @@
       const next = window.LoadingStrategy.analyze(input, catalog);
       report = next; fillForm(next.input); renderReport(); $('input-panel').open = false;
       message('입력한 10개 픽을 반영했습니다. 먼저 핵심 요약과 미확인 조건을 읽어보세요.');
-      const destination=entry?$(entry.id):$('loading-summary');$('loading-results').dataset.entryTarget=entry?entryKey:'summary';if(entry){destination.tabIndex=-1;message('입력한 10픽의 '+entry.name+' 분석으로 이동했습니다. 핵심 요약도 위에서 확인할 수 있습니다.');}destination.focus({preventScroll:true});destination.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+      const destination=$('loading-coach');$('loading-results').dataset.entryTarget=entry?entryKey:'summary';if(entry){destination.tabIndex=-1;message('입력한 10픽의 '+entry.name+' 분석으로 이동했습니다. 핵심 요약도 위에서 확인할 수 있습니다.');}destination.focus({preventScroll:true});destination.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
     } catch (error) {
-      if (exploration) exploration.destroy(); exploration = null;
+      if (exploration) exploration.destroy(); exploration = null; if(coachView)coachView.destroy();coachView=null;
       $('loading-results').hidden = true;
       $('input-panel').open = true;
       message((error && error.message) || '픽과 포지션 입력을 확인해 주세요.', 'error');
@@ -447,12 +457,15 @@
       const response = await fetch('./loading-data.json', { cache: 'no-store', credentials: 'same-origin', redirect: 'error' });
       if (!response.ok) throw new Error('자료 응답을 확인할 수 없습니다.');
       catalog = await response.json();
+      const knowledge=await fetch('./loading-knowledge.json',{cache:'no-store',credentials:'same-origin',redirect:'error'});
+      if(!knowledge.ok)throw Error('공략 적용 범위 자료를 불러오지 못했습니다.');
+      catalog.coaching_knowledge=await knowledge.json();
       if (!catalog || !catalog.champions || Array.isArray(catalog.champions) || !window.LoadingStrategy) throw new Error('챔피언 자료와 분석 엔진을 함께 불러오지 못했습니다.');
       const values = new Set();
       const searchOptions = [];
       Object.values(catalog.champions).sort((a, b) => a.name.localeCompare(b.name, 'ko')).forEach(item => [item.name, item.id, ...entries(item.aliases)].forEach(alias => { if (typeof alias !== 'string' || values.has(alias)) return; values.add(alias); const option = node('option'); option.value = alias; option.label = item.name + ' · ' + item.id; searchOptions.push(option); }));
       $('champion-names').replaceChildren(...searchOptions);
-      [0, 1].forEach(index => { const button = $('example-' + index); button.disabled = false; button.addEventListener('click', () => { fillForm(window.LoadingStrategy.exampleInput(catalog, index)); $('input-panel').open = true; stale(); if (report) message('예시 픽을 입력했습니다. ‘이번 판 방향 보기’를 누르면 요약이 바뀝니다.', 'stale'); else message('예시 픽을 입력했습니다. 내 챔피언과 포지션을 확인하고 ‘이번 판 방향 보기’를 눌러보세요.'); }); });
+      [0, 1, 2, 3, 4].forEach(index => { const button = $('example-' + index); button.disabled = false; button.addEventListener('click', () => { fillForm(window.LoadingStrategy.exampleInput(catalog, index)); $('input-panel').open = true; stale(); if (report) message('예시 픽을 입력했습니다. ‘이번 판 방향 보기’를 누르면 요약이 바뀝니다.', 'stale'); else message('예시 픽을 입력했습니다. 내 챔피언과 포지션을 확인하고 ‘이번 판 방향 보기’를 눌러보세요.'); }); });
       $('analyze').disabled = false; updateRosterOptions(); message((entry?entry.name+' 분석을 선택했습니다. 아직 분석 전입니다. ':'')+'10개 픽과 내 챔피언·포지션을 선택하세요. 분석 후 선택한 영역으로 이어집니다.');
     } catch (error) { message('자료를 불러오지 못했습니다. 페이지를 새로고침해 주세요. ' + (error && error.message || ''), 'error'); }
   }

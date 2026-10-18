@@ -1,8 +1,8 @@
 /* Shared PC/mobile pre-game analysis. Source facts and tactical hypotheses differ. */
 (function(root,factory){
-  if(typeof module==='object'&&module.exports)module.exports=factory(require('./directions-engine.js'),require('./loading-exploration.js'),require('./loading-wave.js'),require('./loading-engagement.js'),require('./loading-exchange.js'));
-  else root.LoadingStrategy=factory(root.DirectionEngine,root.LoadingExploration,root.LoadingWave,root.LoadingEngagement,root.LoadingExchange);
-})(typeof globalThis!=='undefined'?globalThis:this,function(DirectionEngine,LoadingExploration,LoadingWave,LoadingEngagement,LoadingExchange){
+  if(typeof module==='object'&&module.exports)module.exports=factory(require('./directions-engine.js'),require('./loading-exploration.js'),require('./loading-wave.js'),require('./loading-engagement.js'),require('./loading-exchange.js'),require('./loading-coach.js'));
+  else root.LoadingStrategy=factory(root.DirectionEngine,root.LoadingExploration,root.LoadingWave,root.LoadingEngagement,root.LoadingExchange,root.LoadingCoach);
+})(typeof globalThis!=='undefined'?globalThis:this,function(DirectionEngine,LoadingExploration,LoadingWave,LoadingEngagement,LoadingExchange,LoadingCoach){
   'use strict';
   const POSITIONS=['TOP','JUNGLE','MID','BOTTOM','SUPPORT'];
   const POSITION_NAMES={TOP:'탑',JUNGLE:'정글',MID:'미드',BOTTOM:'바텀',SUPPORT:'서포터'};
@@ -25,8 +25,10 @@
   }
   function validate(raw,catalog){
     const legacyKeys=['allies','enemies','own_champion','own_position','side','patch','opponent_mode','lane_opponent'];
-    const versioned=raw&&raw.schema_version==='lol-coach-loading-input-v2';
-    exact(raw,versioned?[...legacyKeys,'schema_version','preferences']:legacyKeys);
+    const v3=raw&&raw.schema_version==='lol-coach-loading-input-v3';
+    const versioned=v3||raw&&raw.schema_version==='lol-coach-loading-input-v2';
+    exact(raw,v3?[...legacyKeys,'schema_version','preferences','scenario']:versioned?[...legacyKeys,'schema_version','preferences']:legacyKeys);
+    if(v3)LoadingCoach.validateScenario(raw.scenario);
     if(versioned){exact(raw.preferences,['risk']);if(!['LOSS_LIMIT','BALANCED','OPPORTUNITY'].includes(raw.preferences.risk))throw Error('리스크 성향을 목록에서 선택해 주세요.');}
     const out={};
     for(const side of ['allies','enemies']){
@@ -58,14 +60,18 @@
     if(raw.opponent_mode==='MANUAL'){
       if(!out.lane_opponent||!out.enemies.some(s=>s.champion===out.lane_opponent))throw Error('직접 고른 라인 상대는 상대 5명 중에서 선택해 주세요.');
     }else if(raw.lane_opponent!==null)throw Error('라인 상대 직접 선택 값과 선택 방법을 맞춰 주세요.');
-    out.schema_version='lol-coach-loading-input-v2';out.preferences={risk:versioned?raw.preferences.risk:'BALANCED'};
+    if(v3)out.scenario=LoadingCoach.validateScenario(raw.scenario);
+    out.schema_version=v3?'lol-coach-loading-input-v3':'lol-coach-loading-input-v2';out.preferences={risk:versioned?raw.preferences.risk:'BALANCED'};
     return out;
   }
   function exampleInput(catalog,index=0){
     const teams=index===1?[
       ['Fiora','Graves','Ziggs','Ashe','Janna'],['Malphite','JarvanIV','Orianna','Jinx','Lulu']
     ]:[['Ornn','Sejuani','Ahri','Caitlyn','Lux'],['Fiora','LeeSin','Zed','Kaisa','Nautilus']];
-    return {allies:teams[0].map((champion,i)=>({champion,position:POSITIONS[i]})),enemies:teams[1].map((champion,i)=>({champion,position:POSITIONS[i]})),own_champion:index===1?'Fiora':'Caitlyn',own_position:index===1?'TOP':'BOTTOM',side:'BLUE',patch:'16.20',opponent_mode:'ASSIGNED',lane_opponent:null};
+    if(index===2){teams[0][3]='Yunara';teams[0][4]='Lulu';teams[1][4]='Alistar';}
+    if(index===3){teams[0][0]='Darius';teams[1][0]='Ambessa';}
+    if(index===4)teams[0][3]='Ezreal';
+    return {allies:teams[0].map((champion,i)=>({champion,position:POSITIONS[i]})),enemies:teams[1].map((champion,i)=>({champion,position:POSITIONS[i]})),own_champion:index===1?'Fiora':index===2?'Yunara':index===3?'Darius':index===4?'Ezreal':'Caitlyn',own_position:[1,3].includes(index)?'TOP':'BOTTOM',side:'BLUE',patch:'16.20',opponent_mode:'ASSIGNED',lane_opponent:null};
   }
   function fromDraft(draft,catalog){
     if(!draft||draft.phase!=='PRE_GAME'||!Array.isArray(draft.slots)||draft.slots.length!==10)throw Error('완료된 경기 전 10픽만 가져올 수 있습니다. 수동 입력을 사용할 수 있습니다.');
@@ -282,6 +288,7 @@
     result.wave=LoadingWave.evaluate(result,catalog,LoadingWave.defaultState(),result.exploration);
     result.engagement=LoadingEngagement.evaluate(result,catalog,LoadingEngagement.defaultState());
     result.exchange=LoadingExchange.evaluate(result,catalog,result.engagement,LoadingExchange.defaultState());
+    result.coach=LoadingCoach.evaluate(result,catalog);
     return result;
   }
   return {resolveChampion,exampleInput,fromDraft,analyze};

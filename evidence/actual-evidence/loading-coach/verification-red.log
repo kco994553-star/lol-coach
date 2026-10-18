@@ -1,0 +1,260 @@
+FFFFFFFFFF
+======================================================================
+FAIL: test_first_hit_does_not_force_retreat_and_remaining_tools (tests_pregame.test_loading_coach.LoadingCoachTests.test_first_hit_does_not_force_retreat_and_remaining_tools)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 22, in test_first_hit_does_not_force_retreat_and_remaining_tools
+    self.node("const b=run('B',{engage:'THEIRS'}).coach;assert(b.actions.some(a=>a.id==='COUNTER_FOCUS_ADC'));assert(b.selected.engagements.find(a=>a.id==='COUNTER_INIT').order.join(' ').includes('카이사'));assert(b.selected.engagements.find(a=>a.id==='COUNTER_INIT').exceptions.length);assert.equal(b.selected.engagements.find(a=>a.id==='COUNTER_INIT').kill,'UNDETERMINED');assert.equal(run('B',{engage:'THEIRS',resources:'LOW'}).coach.actions.find(a=>a.id==='COUNTER_FOCUS_ADC').feasible,'IMPOSSIBLE');const a=run('A',{enemy_key:'SPENT'}).coach;assert(a.selected.engagements.every(e=>e.kill==='UNDETERMINED'&&e.chase==='UNDETERMINED'));assert(a.trade.theirs.reason.includes('강력한 일격'));")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 12, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4500:])
+AssertionError: 1 != 0 : /workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24
+    if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).sort().join('|')!==[...keys].sort().join('|'))throw Error('입력 항목을 확인해 주세요.');
+                                                                                                                               ^
+
+Error: 입력 항목을 확인해 주세요.
+    at exact (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24:134)
+    at validate (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:29:5)
+    at Object.analyze (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:245:21)
+    at run ([eval]:3:190)
+    at [eval]:4:9
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_growth_event_is_not_fixed_three_item_reversal (tests_pregame.test_loading_coach.LoadingCoachTests.test_growth_event_is_not_fixed_three_item_reversal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 28, in test_growth_event_is_not_fixed_three_item_reversal
+    self.node("const d=run('D').coach;assert(d.growth.length);const g=d.growth.find(g=>g.id==='KAISA_EVOLVED_ACCESS');assert(g);assert.equal(g.global_reversal,'UNDETERMINED');assert.equal(g.positional_punish_risk,'INCREASED_CONDITIONAL');assert(g.remaining_strength.includes('견제'));assert(!d.growth.some(g=>g.kind==='TIME'||g.id==='THREE_ITEMS_WIN'));const k=require('./web_r4/loading-knowledge.json');const b=k.build_examples.D;assert.notEqual(b.costs.Ezreal,b.costs.Kaisa);assert.equal(b.equal_gold,false);")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 12, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4500:])
+AssertionError: 1 != 0 : /workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24
+    if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).sort().join('|')!==[...keys].sort().join('|'))throw Error('입력 항목을 확인해 주세요.');
+                                                                                                                               ^
+
+Error: 입력 항목을 확인해 주세요.
+    at exact (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24:134)
+    at validate (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:29:5)
+    at Object.analyze (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:245:21)
+    at run ([eval]:3:190)
+    at [eval]:4:9
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_matchup_binding_and_permutation (tests_pregame.test_loading_coach.LoadingCoachTests.test_matchup_binding_and_permutation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 16, in test_matchup_binding_and_permutation
+    self.node("for(const id of ['A','B','C','D']){const x=input(id),a=E.analyze(x,c).coach;x.allies.reverse();x.enemies.reverse();const b=E.analyze(x,c).coach;assert.equal(a.matchup_id,id);assert.deepEqual(a.periods,b.periods);}let x=input('A');x.allies[4].position=null;assert.equal(E.analyze(x,c).coach.supported,false);x=input('B');x.enemies[3].champion='Lucian';x.enemies[4].champion='Nautilus';assert.notEqual(E.analyze(x,c).coach.matchup_id,'B');")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 12, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4500:])
+AssertionError: 1 != 0 : [eval]:4
+for(const id of ['A','B','C','D']){const x=input(id),a=E.analyze(x,c).coach;x.allies.reverse();x.enemies.reverse();const b=E.analyze(x,c).coach;assert.equal(a.matchup_id,id);assert.deepEqual(a.periods,b.periods);}let x=input('A');x.allies[4].position=null;assert.equal(E.analyze(x,c).coach.supported,false);x=input('B');x.enemies[3].champion='Lucian';x.enemies[4].champion='Nautilus';assert.notEqual(E.analyze(x,c).coach.matchup_id,'B');
+                                                                                                                                                               ^
+
+TypeError: Cannot read properties of undefined (reading 'matchup_id')
+    at [eval]:4:160
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_preference_does_not_change_advantage_or_unlock (tests_pregame.test_loading_coach.LoadingCoachTests.test_preference_does_not_change_advantage_or_unlock)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 18, in test_preference_does_not_change_advantage_or_unlock
+    self.node("for(const id of ['A','B','C','D']){const rows=['LOSS_LIMIT','BALANCED','OPPORTUNITY'].map(r=>run(id,{},r).coach);assert.deepEqual(rows[0].periods,rows[2].periods);assert.deepEqual(rows[0].evidence.claims,rows[2].evidence.claims);const low=run(id,{resources:'LOW'},'OPPORTUNITY').coach;assert(low.actions.every(a=>a.id!==low.selection.id||a.feasible==='POSSIBLE'));assert.notEqual(low.wave.selected_plan_id,'CRASH');}assert.notEqual(run('A',{},'LOSS_LIMIT').coach.selection.id,run('A',{},'OPPORTUNITY').coach.selection.id);assert.equal(run('A',{resources:'LOW'},'LOSS_LIMIT').coach.selection.id,run('A',{resources:'LOW'},'OPPORTUNITY').coach.selection.id);")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 12, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4500:])
+AssertionError: 1 != 0 : /workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24
+    if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).sort().join('|')!==[...keys].sort().join('|'))throw Error('입력 항목을 확인해 주세요.');
+                                                                                                                               ^
+
+Error: 입력 항목을 확인해 주세요.
+    at exact (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24:134)
+    at validate (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:29:5)
+    at Object.analyze (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:245:21)
+    at run ([eval]:3:190)
+    at [eval]:4:94
+    at Array.map (<anonymous>)
+    at [eval]:4:87
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_shields_and_sustain_actors_are_distinct (tests_pregame.test_loading_coach.LoadingCoachTests.test_shields_and_sustain_actors_are_distinct)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 26, in test_shields_and_sustain_actors_are_distinct
+    self.node("const a=run('A').coach,b=run('B').coach;assert.equal(a.sustain.actors.length,4);assert.equal(b.sustain.actors.length,4);assert(a.sustain.actors.find(a=>a.champion==='Lux').shield.includes('회복'));assert(b.sustain.actors.find(a=>a.champion==='Alistar').between_trade.includes('회복'));assert(b.sustain.summary.includes('반복'));assert.notEqual(b.trade.ours.label,b.trade.actual_advantage);")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 12, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4500:])
+AssertionError: 1 != 0 : /workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24
+    if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).sort().join('|')!==[...keys].sort().join('|'))throw Error('입력 항목을 확인해 주세요.');
+                                                                                                                               ^
+
+Error: 입력 항목을 확인해 주세요.
+    at exact (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24:134)
+    at validate (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:29:5)
+    at Object.analyze (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:245:21)
+    at run ([eval]:3:190)
+    at [eval]:4:9
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_source_quotes_bound_and_review_is_not_user_grade (tests_pregame.test_loading_coach.LoadingCoachTests.test_source_quotes_bound_and_review_is_not_user_grade)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 32, in test_source_quotes_bound_and_review_is_not_user_grade
+    p=ROOT/'web_r4/loading-knowledge.json';self.assertTrue(p.exists(),'knowledge file absent')
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : knowledge file absent
+
+======================================================================
+FAIL: test_start_skill_branch_does_not_copy_duel_result (tests_pregame.test_loading_coach.LoadingCoachTests.test_start_skill_branch_does_not_copy_duel_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 24, in test_start_skill_branch_does_not_copy_duel_result
+    self.node("const w=run('C',{start_skill:'W'}).coach,q=run('C',{start_skill:'Q'}).coach,u=run('C',{start_skill:'UNKNOWN'}).coach;assert.notEqual(w.selected.action,q.selected.action);assert.equal(u.selected.metrics.EXTENDED.assessment,'INSUFFICIENT');assert(w.selected.action.includes('CS'));assert(w.selected.engagements.every(e=>e.chase==='UNDETERMINED'));assert(q.sustain.actors[0].in_fight_heal.includes('바깥날'));")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 12, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4500:])
+AssertionError: 1 != 0 : /workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24
+    if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).sort().join('|')!==[...keys].sort().join('|'))throw Error('입력 항목을 확인해 주세요.');
+                                                                                                                               ^
+
+Error: 입력 항목을 확인해 주세요.
+    at exact (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24:134)
+    at validate (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:29:5)
+    at Object.analyze (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:245:21)
+    at run ([eval]:3:190)
+    at [eval]:4:9
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_ten_picks_default_plan_without_setting_controls (tests_pregame.test_loading_coach.LoadingCoachTests.test_ten_picks_default_plan_without_setting_controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 14, in test_ten_picks_default_plan_without_setting_controls
+    self.node("const r=E.analyze(input('A'),c);assert(r.coach,'default coach missing');assert.equal(r.coach.matchup_id,'A');assert.equal(r.coach.context.observations.resources,null);assert.equal(r.coach.context.assumptions.origin,'STANDARD_COMPARISON');assert(r.coach.summary.lane.length>15);assert.notEqual(r.coach.wave.selected_plan_id,'CHECK_WAVE');assert.equal(r.coach.periods.length,6);assert.equal(r.coach.periods[0].metrics.SHORT.assessment,'ALLY');")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 12, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4500:])
+AssertionError: 1 != 0 : node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: default coach missing
+    at [eval]:4:33
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_unknown_is_not_contested_or_safe (tests_pregame.test_loading_coach.LoadingCoachTests.test_unknown_is_not_contested_or_safe)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 20, in test_unknown_is_not_contested_or_safe
+    self.node("const r=run('A',{wave:'UNKNOWN',resources:'UNKNOWN',enemy_key:'UNKNOWN'}).coach;assert.equal(r.selected.metrics.PUSH.assessment,'INSUFFICIENT');assert.equal(r.wave.selected_plan_id,'CHECK_WAVE');assert(!r.actions.some(a=>a.id===r.selection.id&&a.feasible!=='POSSIBLE'));assert.equal(r.context.assumptions.scenario.overrides.resources,'UNKNOWN');")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 12, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4500:])
+AssertionError: 1 != 0 : /workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24
+    if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).sort().join('|')!==[...keys].sort().join('|'))throw Error('입력 항목을 확인해 주세요.');
+                                                                                                                               ^
+
+Error: 입력 항목을 확인해 주세요.
+    at exact (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24:134)
+    at validate (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:29:5)
+    at Object.analyze (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:245:21)
+    at run ([eval]:3:190)
+    at [eval]:4:9
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_versioned_input_does_not_accept_live_observation (tests_pregame.test_loading_coach.LoadingCoachTests.test_versioned_input_does_not_accept_live_observation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 30, in test_versioned_input_does_not_accept_live_observation
+    self.node("assert.equal(E.analyze(input('A'),c).input.schema_version,'lol-coach-loading-input-v2');const x=input('A');x.schema_version='lol-coach-loading-input-v3';x.preferences={risk:'BALANCED'};x.scenario={standard:'lane-standard-v1',overrides:{enemy_location:'TOP'}};assert.throws(()=>E.analyze(x,c));assert.equal(run('A').input.schema_version,'lol-coach-loading-input-v3');")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 12, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4500:])
+AssertionError: 1 != 0 : /workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24
+    if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).sort().join('|')!==[...keys].sort().join('|'))throw Error('입력 항목을 확인해 주세요.');
+                                                                                                                               ^
+
+Error: 입력 항목을 확인해 주세요.
+    at exact (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24:134)
+    at validate (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:29:5)
+    at Object.analyze (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:245:21)
+    at run ([eval]:3:190)
+    at [eval]:4:307
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.775s
+
+FAILED (failures=10)

@@ -9,6 +9,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = {
+    'loading-coach.js':'loading-coach.js','loading-coach-view.js':'loading-coach-view.js','loading-coach.css':'loading-coach.css','loading-knowledge.json':'loading-knowledge.json','loading-study.js':'loading-study.js',
     'coach-theme.css':'coach-theme.css','coach-shell.js':'coach-shell.js','hero-art.json':'hero-art.json','home-assets/strategy-panels.webp':'home-assets/strategy-panels.webp',
     **{'home-assets/'+p:'home-assets/'+p for p in ('Ahri.jpg','Caitlyn.jpg','AhriSkin27.jpg','LuxSkin7.jpg','Moonlit.webp','strategy-objectives.webp','lane.jpg','fight.jpg')},
     **{'home-assets/'+p:'home-assets/'+p for p in ('AsheBase.jpg', 'AsheSkin17.jpg', 'KaisaBase.jpg', 'KaisaSkin14.jpg', 'JinxBase.jpg', 'JinxSkin4.jpg', 'EzrealBase.jpg', 'EzrealSkin21.jpg', 'LuxBase.jpg', 'LuxSkin17.jpg', 'YasuoBase.jpg', 'YasuoSkin9.jpg', 'YoneBase.jpg', 'YoneSkin1.jpg', 'IreliaBase.jpg', 'IreliaSkin37.jpg', 'VayneBase.jpg', 'VayneSkin25.jpg', 'LeonaBase.jpg', 'LeonaSkin10.jpg', 'game-lane.webp', 'game-operations.webp', 'game-fight.webp')},
