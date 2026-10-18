@@ -1,3 +1,19 @@
+# Riot game information / wave counterplay delivered — writer released
+- run_token: `main-20261018-riot-game-info`
+- status: `COMPLETED`
+- writer_active: false
+- owner_branch: `work/riot-game-info-results-20261018`
+- final_main: `8d3f8f281e3920dd34a39381c04acb19dd4ef935` PR93 results/Handoff-only normal merge; PR and exact-main required3 SUCCESS, product bytes unchanged. No redundant product redeploy.
+- product_source: `446d6b67f2d95462107c4cc14f5e26737eb97f37` PR92 normal merge, source PR/exactmain required3 SUCCESS.
+- actual_public_artifact: `f3640fe56b014a277fbd41527127e207acfb8e34`; native Pages39098324368 build/report/deploy SUCCESS. Actual HTTPS15hashes+root/build-info/nojekyll,86manifest bound; pro/riot byte-preserved. Actual public PC1440/mobile390 coach/default/conditions/preferences/wave/paired plans/diagram/zoom/Why/growth/study and manual item workflow PASS.
+- final_exact_main_ci:39098537203 pregame117589873021 /39098537218 regression117589872949 and browser-regression117589873079, all SUCCESS; current_sources=true/new_tests_executed=false and all unchanged browser checks reused. Receipt `riot-game-info-final-proof.json` on this claim branch.
+- result: `evidence/actual-evidence/game-info/publication/result.md`; actual screens/probes, source-main CI and source gate preserved on main. New scoped source2/claim3, reverseB conditional perspective without strength inversion, explicit team plans, wave success/opponent-response; shared bounded private observation service/held inventory math. Public/manual tool; HTTP snapshot withheld until real field/policy proof.
+- preservation: advice7/AUTO30/HOLD20/USER0/Frozen350/source/hold/failure/video/pro/riot/Windows histories. No new Riot authenticated/Gemini/video/paid calls, no duplicated schedules.8user Eve URLs unreviewed bodies/segments; existing18KST schedule active and10/17 execution confirmed, not provider/quota proof. N0/30secunmeasured/WindowsBLOCKED_EXTERNAL. No fake timers, hidden positions, strength probabilities or expired-key inference.
+- next evidence/integration: current-patch full matchup resource/sustain/allin/build comparisons; actual local CA/schema and live display permission; verified event/respawn rules. These remain bounded gaps, not repeated UNKNOWN registration or synthetic-to-real promotion.
+- workspace: primary main and linked result worktree clean and aligned with final main; worktree/history retained.
+
+---
+
 # Riot game information integration — execution claim
 - run_token: `main-20261018-riot-game-info`
 - status: `RUNNING`
