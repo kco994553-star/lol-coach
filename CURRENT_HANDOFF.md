@@ -1,3 +1,17 @@
+# Loading direction and evidence bridge delivered — writer released
+- run_token: `main-20261018-loading-direction`
+- status: `COMPLETED`
+- writer_active: false
+- owner_branch: `work/loading-direction-20261018`
+- final_main: `11b115b94cf83caaac278c389cfe49a6b3effe37`
+- product_source: `404f9840c7024fc677c6d3bb42da7c36cdabbfe3`; PR100/101 product, PR102 results; required feature/exactmain3 allSUCCESS. Result-only CI explicitly reuses source-bound completed checks with new_tests_executed=false.
+- public_artifact: `2008be4c3b738ad3d7f3bbf23634c25e009cd44c`; nativePages39107598998 actualSUCCESS; finalHTTPS4hashes/root/build-info/nojekyll,86manifest/82unchanged reused. Initial deployment0fcdfab4 and all stage proofs retained. Actual PC1440/mobile390 default/methods/keyboard/steps/bridge/unknown PASS; source labels and six dimensions verified.
+- delivered: Four L0 directions with one conclusion+support and max3shared switches; optional wave/counterplay/cost/diagrams and scenarios. E preserved Riot aggregates→named specialist guide judgment→selected counterplay bridge, with actual scope/conditions/patch/conflicts. No single fullgame outcome promotion to fight strength.25sources/29claims/old packets unchanged,5direct limited matchups+reverseB not universal coverage. Text518→506,PCheight686→517/mobile903→898,requiredextra inputs0→0; no human understanding claim.
+- result: evidence/actual-evidence/loading-direction/publication/result.md on main. Final exactmain CI/merge/public proof here: evidence/actual-evidence/loading-direction/final-handoff.json. Product bytes unchanged by result PR, no republish.
+- remaining: condition-matched push/trade/allin/attrition/build knowledge, source/video questions within existing ledger, real Windows/private API access. No provider/video/game/paid calls or budget changes; AUTO30/HOLD20/USER0/advice7/Frozen350/raw/holds/failures/pro/riot/Windows/manual intact. CoachingN0/human30secunmeasured/WindowsBLOCKED_EXTERNAL unchanged. Workspaces clean, no pending publication.
+
+---
+
 # Loading direction and evidence bridge — active writer
 - run_token: `main-20261018-loading-direction`
 - status: `RUNNING`
