@@ -1,3 +1,15 @@
+# Loading Coach public verified — final growth skill labels PR85
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-coach-growth-skills-20261018`
+- current_main: `8ed668568e5a84dce41b4ff2323062d92b240465`
+- latest_feature_head: `f05f9cf1af44fdb0ab785632b6997c454aa2dcce` PR85
+- public_artifact: `457211be7b604318f835973c084df475a9425095` nativePages39088318466 actualSUCCESS; HTTPS79 hashes and changed public PC/mobile headings/Why/study PASS.
+- scope: Remaining growth explanation lacked E-name key; C/D warning shorthand also now explicit canonical champion-slot helper. Tactical meaning/conditions/quotes/grades unchanged, independent review no material finding. Local growth contract and PC/mobile delta; required85/exactmainCI then final display artifact/HTTPS/results-only PR. Initial948 full flow and all public receipts preserved. No provider/video/game/paid; N0/30secunmeasured/Windowsblocked/history retained.
+
+---
+
 # Loading Coach final display compatibility — PR84
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
