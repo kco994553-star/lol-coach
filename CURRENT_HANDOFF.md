@@ -1,3 +1,15 @@
+# Riot ownership proof — actual public verified, results PR89
+- run_token: `main-20261018-riot-ownership`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/riot-ownership-results-20261018`
+- current_main/source: `9201248e9ce49f21204a35627876105149c1d17f` PR88 feature/postmain required3 SUCCESS.
+- latest_feature_head: `0ba48092739ce61ff13fd236716961519594850f` results-only PR89
+- actual_public_artifact: `fb6e11c4927f24f8452c8c51e524226c50de7595`, nativePages39091127798 build/report/deploy SUCCESS. HTTPS target200 exact36ASCII bytes/noquotes/newline; old79files byte-identical;80files/root/manifest/nojekyll hashes PASS. Only riot.txt added and build-info.json updated. Future allowlist retains proof. No API key added.
+- scope: Results/Handoff/CI/seal only, no product republish; local actual-evidence PASS/newtestsfalse. Wait89 normal gate/merge/exactpostmain3 then release writer. Portal Product URL edit/VERIFY URL remain USER actions; portal approval not claimed. Frozen/web/tests/history/privacy/Windows/provider/video budgets unchanged; Riot/Gemini/video/newgame/paid0.
+
+---
+
 # Riot ownership proof — D1/D2 execution claim
 - run_token: `main-20261018-riot-ownership`
 - status: `RUNNING`
