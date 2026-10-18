@@ -33,7 +33,7 @@
     const referencePeriod=pid=>reference?.periods?.[pid];
     const unknown=s.resources==='UNKNOWN'||s.wave==='UNKNOWN'||patchMismatch||(id==='E'&&!reference),low=s.resources==='LOW';
     const bounds=['같은 레벨, 체력·마나가 충분한 출발을 비교한다. 실제 경기 상태는 관측하지 않았다.','초반 구매 예시는 도란의 검, 첫 귀환은 롱소드 추가 전후다. 최적 구매·실제 구매 기록을 뜻하지 않는다.','현재 골드·총 획득 골드·아이템 가치를 서로 대신하지 않는다. 룬·소환사 주문 차이는 동등하다고 가정하되 정밀 피해·처치 계산에는 쓰지 않는다.','웨이브가 중앙에 만나고 서로 퇴로가 있으며 외부 개입이 없는 대결이다. 상대 정글 위치를 안다는 뜻은 아니다.',`Lv1 대표 기술은 A: ${z.cq}·${z.le} / ${z.kaq}·${z.nq}, B: ${z.yq}·${z.lue} / ${z.kaq}·${z.aq}, C: ${z.dw} / ${skill('Ambessa','Q')}, D: ${z.eq} / ${z.kaq}다. Lv2부터 제어·이탈기 습득 여부가 갈리는 분기를 함께 본다. 실제 스킬 투자를 추정하지 않는다.`];
-    if(reference){bounds[1]='시작 구매의 정량 우열은 가정하지 않는다. 첫 귀환은 상대 덤불 조끼·내 처리 부품, 첫 코어는 내 굶주린 히드라 예시다. 같은 골드·같은 코어 수·최적 구매를 뜻하지 않는다.';bounds.splice(4,1,'피오라·말파이트는 Lv1 Q 시작, Lv2 피오라 W 추가, Lv3~5 기본 기술 습득을 비교한다. 실제 투자·적중을 관측한 것이 아니다. 첫 귀환은 상대 덤불 조끼/내 처리 부품, 첫 코어는 내 굶주린 히드라 예시이며 같은 골드나 최적 빌드가 아니다.');}
+    if(reference){bounds[1]='시작 구매의 정량 우열은 가정하지 않는다. 첫 귀환은 상대 덤불 조끼·내 처리 부품, 첫 코어는 내 굶주린 히드라 예시다. 같은 골드·같은 코어 수·최적 구매를 뜻하지 않는다.';bounds.splice(4,1,'피오라·말파이트는 Lv1 Q 시작, Lv2 피오라 W·말파이트 E 추가, Lv3~5 기본 기술 습득을 비교한다. 실제 투자·적중을 관측한 것이 아니다. 첫 귀환은 상대 덤불 조끼/내 처리 부품, 첫 코어는 내 굶주린 히드라 예시이며 같은 골드나 최적 빌드가 아니다.');}
     if(id==='D')bounds.push(`가이드가 제시한 2개 완성 예시는 이즈리얼 삼위일체·무라마나(${k.build_examples?.D?.costs?.Ezreal}골드), 카이사 크라켄 학살자·구인수의 격노검(${k.build_examples?.D?.costs?.Kaisa}골드)다. 같은 아이템 수이며 같은 골드 비교가 아니다. 진화·변신 달성을 별도로 확인한다.`);
     const defaultPlans={A:'먼저 미니언 처리 우위를 만들고, 확보 뒤 속도를 낮춰 쌓으며 막타 접근을 압박한다. 진입선이 열리면 전진을 멈춘다.',B:'유나라의 강화 공격과 룰루의 지원이 함께 닿는 자리에서 웨이브를 다루고, 카이사의 표식 누적 전에 교환을 끊는다.',C:'평타·마비의 일격(W)이 닿는 막타 자리를 지키고, 암베사가 끝거리로 빠지면 추격 대신 CS와 공간을 얻는다.',D:'신비한 화살(Q)로 접근 전에 체력을 깎고, 비전 이동(E)을 남긴 채 웨이브와 아군을 이용해 고립을 피한다.'};
     const strong={A:'초반 사거리 밖 짧은 견제·웨이브 접근을 기본 강점으로 본다. 선레벨·올인 승리는 별개다.',B:'강화 공격·룰루 지원이 동시에 남은 반격 창이 후보다. 6레벨 이후 전체 2대2 우세는 미확인이다.',C:`${z.dw} 시작으로 근접 공격을 이어갈 때 우세로 추론한다. 암베사의 끝거리 견제·이탈 후 추격 승리와는 다르다.`,D:'접근 전 견제는 계속 유효하다. 카이사의 진화·표식·접근 수단이 겹치면 고립된 위치의 응징 위험이 커진다.'};
@@ -58,7 +58,7 @@
     function stageAction(pid){
       if(low)return '처리량을 줄여 아군 쪽에서 수급하고, 귀환 전 버틸 체력·마나와 놓칠 경험치를 비교한다.';
       if(unknown)return '막타 접근과 상대 처리 방향을 먼저 보고, 미확인인 채로 전진·추격하거나 프리징 성공을 가정하지 않는다.';
-      if(referencePeriod(pid)){if(s.enemy_key==='SPENT'&&pid!=='LEVEL1'&&pid!=='LEVEL2')return skill('Malphite','E')+'를 소모했다면 공격 속도 감소 창이 줄어든다. '+skill('Malphite','Q')+'·강화 공격과 궁극기는 따로 남아 있으므로 닿는 급소·CS 공간만 얻고 긴 추격은 강제하지 않는다.';return referencePeriod(pid).action;}
+      if(referencePeriod(pid)){if(s.enemy_key==='SPENT'&&pid!=='LEVEL1'&&pid!=='LEVEL2')return skill('Malphite','E')+'를 소모했다면 공격 속도 감소 창이 줄어든다. '+skill('Malphite','Q')+'·배운 강화 공격, 6레벨 이후 궁극기는 따로 남아 있으므로 닿는 급소·CS 공간만 얻고 긴 추격은 강제하지 않는다.';return referencePeriod(pid).action;}
       if(id==='C')return s.start_skill==='W'?`CS 자리에서 평타·${z.dw}가 닿는지 보고 압박한다. 암베사가 빠지면 웨이브 쪽으로 돌아온다.`:s.start_skill==='Q'?`${z.dq}의 바깥날을 맞힐 거리와 빗나갔을 때 빈틈을 비교하며 CS를 받는다.`:`시작 기술에 맞는 거리에서 CS를 받고 지속 접촉 승리를 가정하지 않는다.`;
       if(id==='B'&&s.engage==='THEIRS'&&['LEVEL3_5','LEVEL6','FIRST_PURCHASE','FIRST_CORE'].includes(pid))return `룰루가 행동 가능하고 카이사에게 닿으면 ${z.luw}의 적 대상 제어와 유나라의 남은 공격으로 카이사를 함께 압박한다. 후속이 끊기면 아군 쪽으로 끝낸다.`;
       if(id==='A')return ({LEVEL1:`${applicationReady?'중앙 경합에서는 먼저 미니언 처리 우위를 만든 뒤 견제로 공간을 지킨다.':'막타 접근을 짧게 견제하며 웨이브를 쌓는다.'} ${z.le}·${z.cq}가 미니언에도 닿아 의도보다 빨리 밀리는지 본다.`,LEVEL2:`양쪽이 추가 기술을 배웠다는 가정에서 ${z.lq}와 ${z.ce}를 남길지 정한다. 노틸러스가 옆으로 나오면 견제보다 퇴로와 웨이브 접근을 먼저 지킨다.`,LEVEL3_5:'자원을 처리와 견제에 나눠 쓰고, 상대가 웨이브를 줄이면 퇴로가 남는 사거리에서만 방해한다.',LEVEL6:`${z.nr}를 쓸 수 있는 상대에게 혼자 전진하지 않는다. 럭스의 보호·속박 후속이 닿는 자리에서 웨이브를 처리한다.`,FIRST_PURCHASE:'실제 구매 차이를 보기 전에는 롱소드 하나를 교전 승리로 바꾸지 않는다. 처리 자원을 남긴 뒤 밀어 넣기 가능성을 확인한다.',FIRST_CORE:'완성 아이템 이름·레벨·상대 방어 수단을 확인한다. 사거리 끝 견제는 후보지만 동일 코어 수만으로 올인하지 않는다.'})[pid]||defaultPlans.A;
@@ -110,10 +110,10 @@
       result.source_plan={...clone(reference),selected:clone(referencePeriod(selected.id)||reference.periods.LEVEL1)};
       result.summary.lane=referencePeriod(selected.id)?.purpose||reference.overall_goal;
       result.trade.ours.label='급소 접근 후 짧게 · 실제 우열은 별도';result.trade.ours.start=[first];result.trade.ours.order=[first,low||unknown?'받을 CS·경험치와 수급·이탈 자원을 남긴다.':referencePeriod(selected.id)?.reserve||reference.warnings[0]];
-      result.trade.theirs={...result.trade.theirs,label:'견제 후 이탈·보호막 재정비',reason:reference.opponent.means,order:[reference.opponent.look_for],end:[reference.opponent.switch_when]};
+      const opponent=referencePeriod(selected.id)?.opponent||reference.opponent;result.trade.theirs={...result.trade.theirs,label:'견제 후 이탈·보호막 재정비',reason:opponent.means,order:[opponent.look_for],end:[opponent.switch_when]};
       result.sustain.summary=reference.repeat_plan;
       for(const actor of result.sustain.actors){if(actor.champion==='Fiora')actor.in_fight_heal=skill('Fiora','P')+'의 급소 적중 회복과 이동 속도로 접근·복귀를 얻는다. 양쪽 누적 회복 우열은 별도다.';if(actor.champion==='Malphite')actor.shield=skill('Malphite','P')+'는 피해를 흡수하는 보호막이며 이미 잃은 체력을 회복하지 않는다.';}
-      result.exceptions.find(e=>e.id==='enemy_key').label=skill('Malphite','E')+' 가정';
+      result.exceptions.find(e=>e.id==='enemy_key').label=skill('Malphite','E')+' 가정';if(selected.id==='LEVEL1')result.exceptions=result.exceptions.filter(e=>e.id!=='enemy_key');
     }
     const entry=applicable&&applicationReady?candidate:null;
     const stats=applicable?k.statistical_context?.matchups[id]:null;

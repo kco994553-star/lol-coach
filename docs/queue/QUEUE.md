@@ -1,3 +1,9 @@
+# Fiora–Malphite learned-spell correction — final source pending
+- Initial PR97/source3ce1099/public8448e3d3 actual CI/Pages/HTTPS/PCmobile passed; final content inspection found Lv1 opponent E/Fiora W leakage. Keep initial reference/deployment and RED history. Revision2 shares Lv1 Q/P and Lv2 Q/E vsQ/W opponent plan across trade/playbook, hides impossible Lv1 E control/shortcut. No source quote, claim, grade or strength promotion.
+- Affected42unit +PCmobile E flow PASS. Followup requiredCI/normalmerge/exactmainCI/finalPages/public receipt next. Evidence evidence/actual-evidence/fiora-malphite/report.md. N0/30secunmeasured/WindowsBLOCKED_EXTERNAL; provider/video/game/paid0 and all prior history/budgets preserved.
+
+---
+
 # Fiora–Malphite reference plan — source ready, publication pending
 - Intake ec48ed0/publicdd2ac217. Screenshot example1 unsupported because only4matchups registered. Append E source2/claim1 with six sourced period purposes/actions and two-sided plans; original23sources/28claims preserved. Current-header farming vs archived early-pressure conflict retained. No directional winner from unblocked-poke outcome assumption.
 - Six-stage basic-plan selector first, full unknown strength matrix retained in details. Guard low/unknown detailed trade and engagements, learned skills, source absence/patch/risk. Wave/action/line geometry same selected state. Evidence: evidence/actual-evidence/fiora-malphite/report.md. Affected41unit PASS; browser/requiredCI/publication pending.
