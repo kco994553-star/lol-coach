@@ -19,3 +19,7 @@ PC1440/mobile390 actual exported-subpath E flow passes: no extra condition input
 PR97/source3ce1099/public8448e3d3 nativePages39103456809 and actualHTTPS/PCmobile succeeded, but final content inspection found the selected Lv1 opponent plan borrowed Malphite E and Fiora W. Original initial reference is preserved in initial-reference-plan.json and first deployment receipt in initial-publication.json; source quotes and claim are unchanged. New RED reproduced. Revision2 scopes opponent plan to Q/P atLv1, Q/E vsQ/W atLv2; removes unavailable Lv1 E control/shortcut and keeps remaining tools conditional. Source of skill inference not promoted. Detailed trade and paired counterplay use the same phase-specific opponent plan. Intermediate old shortcut test was updated to assert absentLv1/presentLv2, not waived. Related42unit and PCmobile pass recorded below. Followup requiredCI/normalmerge/exactmainCI/Pages remains before final publication result.
 
 Selected-period exception was also borrowing a cross-game W/R warning; same learned-scope RED now asserts Lv1 exception excludes W/R/attack-speed control. Use that period end condition and explicitly label global R warning6+.42affected checks and actual final-scope PCmobile passed. Superseded head3631f22 CI39103779338/39103779344 succeeded but is not final proof for this additional correction.
+
+## Actual publication followup
+
+RequiredCI/source merge/Pages/actualHTTPS and public PC/mobile completed. See [actual result](publication/result.md). Prior pending entries above remain as stage history.

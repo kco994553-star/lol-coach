@@ -1,3 +1,10 @@
+# Fiora–Malphite source-backed plan — actual public completion
+- PR97/98 source main374a2a93c83bf712ec66c655522e24eb6220b1d6; required PR/exactmain3 PASS. Publicac63be28dffd0b54d06aeba96e1f42f9b1c9ba87, nativePages39104283315 actualSUCCESS; HTTPS5hashes/root/buildinfo/nojekyll,86manifest/81unchanged reused, actual PC1440/mobile390 E flow PASS. Existing pro/riot preserved.
+- Screenshot gap was unregistered existing Fiora example. Append2source/1claim and E six-stage basic purpose/action/parry/resource/purchase/two-sided/wave plans. Preserve original23sources/28claims and old applications. No outcome-conditioned directional winner; original strength matrix remains unknown in details, not30filled comparisons. Guide conflict/current-header vs archived14.9 scope disclosed.
+- Result evidence/actual-evidence/fiora-malphite/publication/result.md. Next P0 exact scope-consistent push/trade/attrition/build judgments, not universal own experiments. Video questions/budgets independent; no provider/video/game/paid calls. AUTO30/HOLD20/USER0/advice7/Frozen350/Windows/manual/pro/riot/history preserved. N0/30secunmeasured/WindowsBLOCKED_EXTERNAL. Results-only finalCI/common claim release follows; no product republish.
+
+---
+
 # Fiora–Malphite learned-spell correction — final source pending
 - Initial PR97/source3ce1099/public8448e3d3 actual CI/Pages/HTTPS/PCmobile passed; final content inspection found Lv1 opponent E/Fiora W leakage. Keep initial reference/deployment and RED history. Revision2 shares Lv1 Q/P and Lv2 Q/E vsQ/W opponent plan across trade/playbook, hides impossible Lv1 E control/shortcut. No source quote, claim, grade or strength promotion.
 - Affected42unit +PCmobile E flow PASS. Followup requiredCI/normalmerge/exactmainCI/finalPages/public receipt next. Evidence evidence/actual-evidence/fiora-malphite/report.md. N0/30secunmeasured/WindowsBLOCKED_EXTERNAL; provider/video/game/paid0 and all prior history/budgets preserved.
