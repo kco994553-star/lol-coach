@@ -89,3 +89,24 @@ strength support. No paid LOL.PS content accessed/copied; attached screens guide
 information hierarchy only. Preserve account/guest flow and stats metadata. No new
 voice, community, insignia, HUD, subscription or unrelated feature. If voice is added
 later it must read the same result, not create judgment.
+
+
+## Loading priority correction — USER2026-10-18
+
+ADAPT only the first-screen priority: loading_summary v1 has exactly lane/growth/operations/fight,
+one conclusion plus one supporting sentence each and at most three changes. No per-wave procedure
+is required on L0. The original engine wave axes, period matrix, paired counterplans and diagrams
+remain; their procedure is behind an initially closed “방법 보기”. Quick hypothetical scenarios move
+into the existing closed conditions panel. Team composition details remain in the standard/scope panel.
+No extra required inputs; scenario assumptions/preferences remain distinct from observations.
+
+Append evidence_bridge v1 referencing the current application, actual archive projection and selected
+counterplay. Statistics describe trends/limits, not validate tactical superiority. E gains a separate
+projection from existing275 power /50 outcome datasets: no exact10/15 paired observations; one full
+match outcome, not a lane/fight win rate. General TOP observations stay separate and confidence
+intervals spanning zero do not establish superiority. No new collection or old visibility relaxation.
+Source originals/application/review history unchanged; the bridge's archive calculation review is
+separate from the earlier E application’s historical NOT_APPLIED state. Named guide plans are usable
+within their recorded conditions without mandatory own experiments. Conflicts, old-patch limitations,
+N0 and unmeasured human comprehension remain visible in details. No competitor tips copied/API used.
+Rollback by restoring1dd8b3f consumer/export; retain all added evidence and source history.

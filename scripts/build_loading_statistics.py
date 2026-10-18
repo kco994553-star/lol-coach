@@ -6,7 +6,7 @@ ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 from coach_v1.outcome_stats import _wilson
 POWER='data/riot/2026-10-13/archives/full-power-16.20-CHALLENGER.json.gz'
 OUTCOME='data/riot/2026-10-11/outcome-data.json.gz'
-PAIRS={'A':('Caitlyn','Kaisa','BOTTOM'),'B':('Yunara','Kaisa','BOTTOM'),'BR':('Kaisa','Yunara','BOTTOM'),'C':('Darius','Ambessa','TOP'),'D':('Ezreal','Kaisa','BOTTOM')}
+PAIRS={'A':('Caitlyn','Kaisa','BOTTOM'),'B':('Yunara','Kaisa','BOTTOM'),'BR':('Kaisa','Yunara','BOTTOM'),'C':('Darius','Ambessa','TOP'),'D':('Ezreal','Kaisa','BOTTOM'),'E':('Fiora','Malphite','TOP')}
 def read(name):return json.loads(gzip.decompress((ROOT/name).read_bytes()))
 def source(data,name):
  s=data['source'];return dict(local_source=name,sha256=hashlib.sha256((ROOT/name).read_bytes()).hexdigest(),provider=s['provider'],patch=s['patch'],queue_id=s['queue_id'],platform=s['platform'],tier=s['tier'],tier_scope='CURRENT_LEAGUE_SEED_COHORT_NOT_EVERY_PARTICIPANT_RANK',window_start=datetime.fromtimestamp(s['window_start'],timezone.utc).isoformat(),window_end=datetime.fromtimestamp(s['window_end'],timezone.utc).isoformat(),retrieved_at=s['retrieved_at'],matches=data['samples']['real_matches'],formula_version=s['formula_version'],population_formula_version=s.get('population_reference',{}).get('formula_version'))

@@ -1,0 +1,43 @@
+/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py:15: SyntaxWarning: invalid escape sequence '\.'
+  self.node("for(const state of [{wave:'UNKNOWN'},{wave:'UNDER_TOWER'},{wave:'INCOMING'},{engage:'THEIRS'},{engage:'OURS'}]){const a=run(0,state).coach.planboard.loading_summary.items[0];assert(!/사거리 견제로 막타 접근을 늦추고|먼저 처리 여유/.test(a.conclusion+' '+a.support));}const a=run(0,{}, {goal:'RECALL'}).coach.planboard.loading_summary.items[0];assert.match(a.conclusion,/귀환|구매/);assert(!/먼저 처리 여유/.test(a.support));for(const i of [0,1,2,3,4]){const b=run(i).coach.planboard.loading_summary;assert(!b.items.slice(2).some(x=>/바꾼다|끊기면/.test(x.support)),'do not append extra switches beyond shared three');assert(b.items.every(x=>(x.conclusion.match(/\. /g)||[]).length===0));}")
+<unknown>:1: SyntaxWarning: invalid escape sequence '\.'
+F
+======================================================================
+FAIL: test_loading_conclusion_tracks_active_scope_not_initial_pressure (tests_pregame.test_player_planboard.PlayerPlanboardTests.test_loading_conclusion_tracks_active_scope_not_initial_pressure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 15, in test_loading_conclusion_tracks_active_scope_not_initial_pressure
+    self.node("for(const state of [{wave:'UNKNOWN'},{wave:'UNDER_TOWER'},{wave:'INCOMING'},{engage:'THEIRS'},{engage:'OURS'}]){const a=run(0,state).coach.planboard.loading_summary.items[0];assert(!/사거리 견제로 막타 접근을 늦추고|먼저 처리 여유/.test(a.conclusion+' '+a.support));}const a=run(0,{}, {goal:'RECALL'}).coach.planboard.loading_summary.items[0];assert.match(a.conclusion,/귀환|구매/);assert(!/먼저 처리 여유/.test(a.support));for(const i of [0,1,2,3,4]){const b=run(i).coach.planboard.loading_summary;assert(!b.items.slice(2).some(x=>/바꾼다|끊기면/.test(x.support)),'do not append extra switches beyond shared three');assert(b.items.every(x=>(x.conclusion.match(/\. /g)||[]).length===0));}")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 11, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4000:])
+AssertionError: 1 != 0 : node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(!/사거리 견제로 막타 접근을 늦추고|먼저 처리 여유/.test(a.conclusion+' '+a.support))
+
+    at [eval]:3:175
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.143s
+
+FAILED (failures=1)

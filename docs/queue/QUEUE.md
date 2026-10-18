@@ -1,3 +1,10 @@
+# Loading direction / evidence bridge — source ready, publication pending
+- Intake main1dd8b3f/publicac63be28 reused. L0 now four conclusions: lane purpose/basic approach, growth/strength, macro, teamfight; max3shared change conditions. Detailed wave/counterplay/costs behind 방법 보기, quick hypotheticals in closed conditions; old composition details retained.0extra required condition inputs.
+- Reuse original25sources/29claims/5supported exact matchups (reverseB separate); no expansion or grade changes. Add E offline statistical context:275power no paired10/15 E; separate50outcome1fullgame result, not fight win. General TOP35notmatchup. Typed stats→named guide judgment→selected paired counterplay, inactive scope/conditions/patch/conflicts preserved.
+-45affected unit + PCmobile changed flow passed, readonly review fixes/RED retained. MandatoryCI/normalmerge/exactmainCI/Pages/actualHTTPS pending. Evidence evidence/actual-evidence/loading-direction/report.md. No provider/video/game/paid calls; AUTO30HOLD20USER0/advice7/Frozen350/raw/holds/failures/pro/riot/Windows intact. N0/human30secunmeasured/WindowsBLOCKED_EXTERNAL. NextP0 meaningful matched comparative push/trade/attrition/build knowledge; no forced UNKNOWN fill, no renewed7→30rewrite.
+
+---
+
 # Fiora–Malphite source-backed plan — actual public completion
 - PR97/98 source main374a2a93c83bf712ec66c655522e24eb6220b1d6; required PR/exactmain3 PASS. Publicac63be28dffd0b54d06aeba96e1f42f9b1c9ba87, nativePages39104283315 actualSUCCESS; HTTPS5hashes/root/buildinfo/nojekyll,86manifest/81unchanged reused, actual PC1440/mobile390 E flow PASS. Existing pro/riot preserved.
 - Screenshot gap was unregistered existing Fiora example. Append2source/1claim and E six-stage basic purpose/action/parry/resource/purchase/two-sided/wave plans. Preserve original23sources/28claims and old applications. No outcome-conditioned directional winner; original strength matrix remains unknown in details, not30filled comparisons. Guide conflict/current-header vs archived14.9 scope disclosed.
