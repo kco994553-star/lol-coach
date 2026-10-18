@@ -1,3 +1,15 @@
+# Player operation board — source merged, publication pending
+- run_token: `main-20261018-player-planboard`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/player-planboard-20261018`
+- current_main: `877711bc898d6d9410f40f52cb3a7a989026f808` PR90 normalmerge; feature required3 SUCCESS, exactmain CI running.
+- actual_public_artifact: `fb6e11c4927f24f8452c8c51e524226c50de7595` (unchanged)
+- prepared_not_published: `af06f7d14e34c6ac403d3a5377687fc61e4c32a3`; update gh-pages only after exactmain required3 and fresh lease.
+- scope: compact player planboard, inputv4 optional hypothetical planning, wave/space/combat/next-wave independent axes, paired exact-duo counterplans. A conditional baseline; B/C/D conditional references, unsupported not counted. Independent review fixed learned-skill/resource/support/scenario defects; focused PC/mobile and featureCI PASS. Preserve sources/grades/holds/Frozen/advice/Windows/manual/riot/pro. No provider/video/game/paid; N0/30secunmeasured/Windowsblocked.
+
+---
+
 # Player operation board — execution claim
 - run_token: `main-20261018-player-planboard`
 - status: `RUNNING`
