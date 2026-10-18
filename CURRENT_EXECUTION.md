@@ -1,3 +1,17 @@
+# Loading Coach merged — post-main verification and publication pending
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-coach-20261018`
+- current_main: `51ebdeeb61617e3a97c80ec4671f1559a2f51019`
+- product_pr: `81`
+- feature_head: `07380ac1f4b9715b31da0172471dfcd68d147fd2`
+- required_feature_ci: `39086487989,39086488021` all3 SUCCESS; exact tested tree/claim/head/base verified before normal merge.
+- prepared_export_tree: `35ac03a2072acd332702e7ad50eb28bd25ba1970` NOT_PUBLISHED; public79files and previous pro projection bytes preserved. Wait exact post-main CI39086639835/39086639925, then Pages/actual HTTPS/browser/results.
+- scope: Default standard comparison/source-scoped A/B/C/D wave/trade/sustain/growth view and study implemented. No provider/video/game/paid calls; N0/30secunmeasured/Windowsblocked and legacy history retained.
+
+---
+
 # Loading Coach implementation — required CI pending
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
