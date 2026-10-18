@@ -193,9 +193,41 @@
     if(supportCase)quick.push({id:'SUPPORT_ABSENT',label:'상대 서포터 부재',scenario:{},planning:{enemy_support:'ABSENT'},reason:'남은 원딜·정글·복귀 위험을 고려한 제한적 압박'});
     const reverseClaims = reverse ? allKnowledge.matchups.find(m=>m.id==='B')?.claims.filter(c=>claims.includes(c.id)) || [] : [];
     const allClaims = [...knownMatches.flatMap(m => m.claims),...reverseClaims], sourceIds = new Set(allClaims.flatMap(c => c.source_ids));
+    // Loading conclusions are not the execution procedure. Keep detailed wave axes intact.
+    const laneConclusion = unknown ? '받을 자원을 확보하며 기본 계획을 적용할 상황을 좁힌다.' : low ? '체력·마나를 남기며 받을 CS·경험치를 확보한다.' : ['RECALL','FARM'].includes(p.goal) ? purpose : s.engage!=='NONE' ? '남은 동료 후속과 퇴로 안에서 교환을 정리하고 수급을 잇는다.' : ['UNDER_TOWER','INCOMING','RETURNING'].includes(s.wave) ? '받아올 자원을 지키고 다음 압박·구매 선택권을 남긴다.' : p.goal==='PRESSURE'?'닿는 막타 자리에서 공간과 처리 선택권을 얻는다.':reference?'체력·마나를 남기며 수급하고 닿는 급소만 압박한다.':overallGoal;
+    const laneSupport=unknown?'깊은 압박을 확정하지 않고 닿는 수급·복귀 자원을 남긴다.':low?'추가 교환보다 다음 수급과 대응에 쓸 자원을 확보한다.':p.goal==='RECALL'?'추가 교환보다 구매 시간과 복귀할 자원을 얻는 것이 목적이다.':p.goal==='FARM'?'상대가 양보하는 공간은 얻되 수급 자원을 교환에 모두 쓰지 않는다.':s.engage!=='NONE'?'선처리 경쟁보다 남은 반격·동료 연결·복귀를 비교한다.':['UNDER_TOWER','INCOMING','RETURNING'].includes(s.wave)?'상대 미니언을 필요한 만큼 줄이고 깊은 수급으로 생길 부담을 낮춘다.':id==='E'?'걸어서 돌아올 공간을 남긴다.':id==='A'&&early?'먼저 처리 여유를 만든 뒤 사거리 견제로 상대 수급을 제한한다.':id==='C'?'상대가 이탈하면 추격 대신 가까운 막타 자리와 공간을 얻는다.':id==='D'?'장거리 견제로 수급을 잇고, 고립된 맞딜은 강제하지 않는다.':'동료의 후속과 남은 보호가 함께 닿는 교환을 고른다.';
+    const growthCopy = {
+      A: '초반 사거리·짧은 견제를 활용하되, 이후 지속 교전·올인 우세는 별도다.',
+      B: '유나라의 강화 공격과 룰루 지원이 겹치는 창을 활용한다.',
+      BR: '알리스타의 접근과 카이사 후속이 함께 가능한 성장 구간을 기다린다.',
+      C: period==='LEVEL1'&&coach.selected.metrics.EXTENDED.assessment==='ALLY' ? 'Lv1 근접 지속 교전 우세를 CS 자리 압박으로 바꾼다.' : '시작 기술·접촉 거리가 달라지면 Lv1 근접 우세를 이어 쓰지 않는다.',
+      D: '실제 진화·접근 수단과 무라마나 변신 때 교환 거리를 다시 잡는다.',
+      E: '말파이트 방어 구매 뒤에는 처리·성장으로 전환한다.'
+    };
+    const growthConclusion = usable ? growth ? growth.change : growthCopy[id] : '구간별 우열을 정할 매치업 자료가 아직 없다.';
+    const loadingSummary = {
+      schema_version:'lol-coach-loading-direction-v1',
+      items:[
+        {id:'lane',title:'라인전 목적과 기본 방식',conclusion:laneConclusion,support:laneSupport},
+        {id:'growth',title:'강한 구간과 성장 전환',conclusion:growthConclusion,support:usable?(growth?'전체 상성 역전과 특정 접근·위치의 위험 증가는 다르다.':id==='E'?'방어 구매 전 저마나에서 압박 기회를 더 본다.':'교환 방식의 강점을 처치·추격 가능으로 확대하지 않는다.'):'자료 부족을 동률이나 안전으로 대신하지 않는다.'},
+        {id:'operations',title:'운영 방향',conclusion:sideRole?'복귀 가능한 사이드 자원을 맡고 본대와 연결한다.':bottom?'아군과 연결된 중앙 수급을 포탑·목표물 접근으로 바꾼다.':'가까운 자원과 본대 후속 거리를 연결한다.',support:sideRole?'본대 합류와 돌아올 자원을 함께 남긴다.':'먼 싸움의 합류 손실과 가까운 자원을 비교한다.'},
+        {id:'fight',title:'한타 역할과 공격 시작',conclusion:self==='Caitlyn'?'아군 제어가 맞으면 보호 연결 안에서 닿는 대상을 공격한다.':self==='Ezreal'?'접근 전 견제하고 이탈 수단을 남긴 채 공격한다.':self==='Fiora'?'받아칠 수단과 본대 복귀 경로를 정한 뒤 접근한다.':self==='Yunara'?'강화 공격과 아군 지원이 같은 대상에 닿을 때 공격한다.':self==='Darius'?'걸어서 닿는 가까운 대상을 아군 후속과 함께 공격한다.':'보호·후속과 퇴로가 연결된 자리에서 닿는 대상을 공격한다.',support:'닿는 대상부터 아군 후속과 함께 공격한다.'}
+      ],
+      changes:[id==='E'&&period==='LEVEL1'&&!low&&!unknown?skill('Malphite','Q')+' 뒤 퇴로가 길어지면 교환 종료.':id==='A'&&!low&&!unknown?'측면 진입·동료 후속 단절이면 교환 종료.':changeIf,low?'수급에 쓸 자원까지 줄면 귀환·구매를 비교한다.':id==='E'?'방어 구매 뒤에는 압박보다 처리·구매를 우선한다.':'교환으로 다음 처리·대응 자원이 부족해지면 수급으로 바꾼다.',jungleNear?'개입 후속과 퇴로가 겹치면 깊은 전진을 끝낸다.':'정글 개입·후속 단절이면 전진 폭을 줄인다.'],
+      origin:'ANALYSIS_ASSUMPTIONS_NOT_OBSERVATION',method_label:'방법 보기'
+    };
+    const application=coach.knowledge_application;
+    const evidenceBridge=application?.supported?{
+      schema_version:'lol-coach-counterplay-evidence-bridge-v1',
+      statistics:{matchup:application.statistics||null,tactical_confirmation:false,calculation:'PRESERVED_ARCHIVE_PROJECTION_NOT_TACTICAL_VALIDATION',role:'추세·반례 점검 자료이며 개별 교전 우세나 최적 행동의 증명은 아니다.'},
+      expert:{plan:application.recommended_plan,reason:application.reason,source_ids:application.direct_sources.map(s=>s.source_id),sources:clone(application.direct_sources),conditions:clone(application.conditions),exceptions:clone(application.exceptions)},
+      counterplay:{purpose:ours.purpose,opponent_goal:theirs.purpose,wave_plan:wave.label,trade:ours.means,punish:ours.look_for,growth:growthConclusion},
+      inference:clone(application.inference),application_active:application.active,real_effect:'NOT_MEASURED_N0'
+    }:null;
     return {
       schema_version: 'lol-coach-player-planboard-v1', context: { origin: 'HYPOTHETICAL_LOADING_EXAMPLE', planning, actual_enemy_positions: null, standard: coach.context.assumptions.label, patch: coach.context.patch.label },
       brief: { lane: labels[planId] + ' · ' + (id==='C'&&coach.selected.metrics.EXTENDED.assessment==='ALLY'?'근접 지속 교전 우세 추론':valid ? coach.trade.ours.label : '교전 자료 부족'), operations: sideRole ? '복귀할 수 있는 사이드 압박을 맡고 본대와 연결한다.' : bottom ? '중앙 수급을 아군과 잇고 제어 뒤 목표물로 전환한다.' : '가까운 자원과 본대 후속 거리를 연결한다.', fight: self === 'Caitlyn' ? '아군 제어가 맞으면 보호 연결 안에서 닿는 대상을 공격한다.' : self === 'Ezreal' ? '접근 전 견제하고 이탈 수단을 남긴 채 공격한다.' : self === 'Fiora' ? '사이드 복귀와 받아칠 수단을 정한 뒤 접근한다.' : self === 'Yunara' ? '강화·아군 지원이 함께 닿을 때 공격하고 후속이 끊기면 바꾼다.' : fight.start },
+      loading_summary:loadingSummary, evidence_bridge:evidenceBridge,
       composition: {ours:report.summary?.our_plan?.split('. ')[0],theirs:report.summary?.enemy_plan?.split('. ')[0],ours_full:report.summary?.our_plan,theirs_full:report.summary?.enemy_plan,role:report.summary?.my_role,basis:'DESIGN_HYPOTHESIS'},
       headline: usable ? overallGoal : '확인된 수단으로 수급·연결부터 준비한다.',
       lane: { overall_goal: overallGoal, milestone: { id: period, label: coach.selected.label, goal: milestoneGoal }, can_push: coach.wave.can_push, should_push: coach.wave.should_push,
