@@ -23,6 +23,7 @@ MODIFIED={'coach_v1/pc_coach.py','.github/workflows/private-mvp-ci.yml',
     'web_r4/pc.js','web_r4/pregame.js','web_r4/pregame.html','web_r4/official_reference.js',
     'web_r4/review_queue.js','web_r4/review_queue.html'}
 CURRENT=MODIFIED|{
+    'web_r4/riot.txt',
     'contracts/loading-coach-v1.md','docs/superpowers/plans/2026-10-18-loading-coach.md','docs/superpowers/specs/2026-10-18-loading-coach.md','tests_pregame/test_loading_coach.py','web_r4/loading-coach.js','web_r4/loading-coach-view.js','web_r4/loading-coach.css','web_r4/loading-knowledge.json','web_r4/loading-study.js',
     'contracts/desktop-composition-v1.md',
     'contracts/gameplay-cards-v1.md','config/gameplay_cards_assets.json',
