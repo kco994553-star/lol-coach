@@ -307,6 +307,8 @@ class PregameHandler(Handler):
             '/coach-theme.css':('coach-theme.css','text/css; charset=utf-8'),
             '/coach-shell.js':('coach-shell.js','text/javascript; charset=utf-8'),
             '/hero-art.json':('hero-art.json','application/json; charset=utf-8'),
+            **{'/home-assets/'+p:('home-assets/'+p,'image/jpeg') for p in ('AsheBase.jpg', 'AsheSkin17.jpg', 'KaisaBase.jpg', 'KaisaSkin14.jpg', 'JinxBase.jpg', 'JinxSkin4.jpg', 'EzrealBase.jpg', 'EzrealSkin21.jpg', 'LuxBase.jpg', 'LuxSkin17.jpg', 'YasuoBase.jpg', 'YasuoSkin9.jpg', 'YoneBase.jpg', 'YoneSkin1.jpg', 'IreliaBase.jpg', 'IreliaSkin37.jpg', 'VayneBase.jpg', 'VayneSkin25.jpg', 'LeonaBase.jpg', 'LeonaSkin10.jpg')},
+            **{'/home-assets/'+p:('home-assets/'+p,'image/webp') for p in ('game-lane.webp', 'game-operations.webp', 'game-fight.webp')},
             '/home-assets/strategy-panels.webp':('home-assets/strategy-panels.webp','image/webp'),
             **{'/home-assets/'+p:('home-assets/'+p,'image/webp') for p in ('Moonlit.webp','strategy-objectives.webp')},
             '/dashboard.html':('dashboard.html','text/html; charset=utf-8'),

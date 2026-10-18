@@ -1,3 +1,9 @@
+# Current actual gameplay /25hero work
+- READY: requiredCI→normalPR→postmainCI→Pages→actual74file/PCmobile verification, source/provenance/failure history retained.
+- No coaching/engine/video budget expansion; prior completed checks reused outside changed display/assets.
+
+---
+
 # Latest art refresh public result
 - DONE: PR75 source64eb52f, artifact1dfb4a3, actualPages/HTTPS/PCmobile proofs. Publication result.md.
 - READY: evidence/Handoff-only normal merge and exact remote/main required gates; no repeated product/browser/source collection.
