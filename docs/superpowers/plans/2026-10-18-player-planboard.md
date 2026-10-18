@@ -40,5 +40,7 @@ Consumes planboard; produces compact L0 and 4-line wave with existing controls/W
 Files: source inventory/seal/browser SOURCES/affected mapping; evidence/Handoff/queue.
 - [x] Bind new sources and tests, preserve public riot.txt, reuse old completed proof.
 - [x] Independent whole-branch review, resolve material findings with targeted regression.
-- [ ] Normal source PR/required3/exactmain3; export existing allowlist preserving pro JSON/riot proof; actual nativePages/HTTPS hashes/changed public PC/mobile.
-- [ ] Results/Handoff-only PR and exactmainCI, release common writer. Report actual outputs/changed required actions and knowledge gaps, not test counts as quality.
+- [x] Normal source PR/required3/exactmain3; export existing allowlist preserving pro JSON/riot proof; actual nativePages/HTTPS hashes/changed public PC/mobile.
+- [ ] Results/Handoff-only PR and exactmainCI, release common writer (final receipts appended to common claim after this results merge). Report actual outputs/changed required actions and knowledge gaps, not test counts as quality.
+
+Publication: source90/nativePages/actualHTTPS complete. Results/Handoff PR uses completed source checks and only mandatory evidence-delta CI; exact final main/lease receipts are append-only on execution claim.
