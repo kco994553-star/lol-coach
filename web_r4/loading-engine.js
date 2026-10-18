@@ -25,10 +25,12 @@
   }
   function validate(raw,catalog){
     const legacyKeys=['allies','enemies','own_champion','own_position','side','patch','opponent_mode','lane_opponent'];
-    const v3=raw&&raw.schema_version==='lol-coach-loading-input-v3';
+    const v4=raw&&raw.schema_version==='lol-coach-loading-input-v4';
+    const v3=v4||raw&&raw.schema_version==='lol-coach-loading-input-v3';
     const versioned=v3||raw&&raw.schema_version==='lol-coach-loading-input-v2';
-    exact(raw,v3?[...legacyKeys,'schema_version','preferences','scenario']:versioned?[...legacyKeys,'schema_version','preferences']:legacyKeys);
+    exact(raw,v4?[...legacyKeys,'schema_version','preferences','scenario','planning']:v3?[...legacyKeys,'schema_version','preferences','scenario']:versioned?[...legacyKeys,'schema_version','preferences']:legacyKeys);
     if(v3)LoadingCoach.validateScenario(raw.scenario);
+    if(v4)LoadingCoach.validatePlanning(raw.planning);
     if(versioned){exact(raw.preferences,['risk']);if(!['LOSS_LIMIT','BALANCED','OPPORTUNITY'].includes(raw.preferences.risk))throw Error('리스크 성향을 목록에서 선택해 주세요.');}
     const out={};
     for(const side of ['allies','enemies']){
@@ -61,7 +63,8 @@
       if(!out.lane_opponent||!out.enemies.some(s=>s.champion===out.lane_opponent))throw Error('직접 고른 라인 상대는 상대 5명 중에서 선택해 주세요.');
     }else if(raw.lane_opponent!==null)throw Error('라인 상대 직접 선택 값과 선택 방법을 맞춰 주세요.');
     if(v3)out.scenario=LoadingCoach.validateScenario(raw.scenario);
-    out.schema_version=v3?'lol-coach-loading-input-v3':'lol-coach-loading-input-v2';out.preferences={risk:versioned?raw.preferences.risk:'BALANCED'};
+    if(v4)out.planning=LoadingCoach.validatePlanning(raw.planning);
+    out.schema_version=v4?'lol-coach-loading-input-v4':v3?'lol-coach-loading-input-v3':'lol-coach-loading-input-v2';out.preferences={risk:versioned?raw.preferences.risk:'BALANCED'};
     return out;
   }
   function exampleInput(catalog,index=0){

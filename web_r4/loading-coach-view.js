@@ -19,6 +19,9 @@
     let current = report, destroyed = false, request = 0, zoomOpener = null;
     let focusHint = null;
     function coach() { return current && current.coach || {}; }
+    function board() { return coach().planboard || {}; }
+    function planning() { return board().context?.planning || {basis:'loading-plan-example-v1',overrides:{}}; }
+    function diagramData() { return board().wave?.diagram || coach().diagram || {}; }
     function format(value) {
       const text = plain(value), input = current && current.input || {};
       return root.SkillDisplay ? root.SkillDisplay.format(text, { champions: [...arr(input.allies), ...arr(input.enemies)].map(p => p.champion), own: input.own_champion }) : text;
@@ -36,7 +39,7 @@
     }
     function change(patch) {
       if (state.busy || destroyed || typeof onChange !== 'function') return;
-      const payload = { scenario: scenario(), period: coach().selected_period || 'LEVEL1', preference: coach().context?.preferences?.risk || 'BALANCED', ...patch };
+      const payload = { planning: planning(), scenario: scenario(), period: coach().selected_period || 'LEVEL1', preference: coach().context?.preferences?.risk || 'BALANCED', ...patch };
       focusHint = document.activeElement?.dataset?.coachFocus || null;
       const seq = ++request; state.busy = true; state.error = ''; syncBusy();
       try {
@@ -53,7 +56,7 @@
       const n = host.querySelector('.coach-live'); if (n) n.textContent = state.busy ? '비교 갱신 중' : state.error;
     }
     function why(ids, key, title) {
-      const c = coach(), evidence = c.evidence || {}, claims = arr(evidence.claims).filter(claim => arr(ids).includes(claim.id));
+      const c = coach(), evidence = { claims:[...new Map([...arr(c.evidence?.claims),...arr(board().evidence?.claims)].map(x=>[x.id,x])).values()], sources:[...new Map([...arr(c.evidence?.sources),...arr(board().evidence?.sources)].map(x=>[x.id,x])).values()] }, claims = arr(evidence.claims).filter(claim => arr(ids).includes(claim.id));
       const wrap = details('why-' + key, title || '왜? · 출처와 적용 조건');
       wrap.append(el('p', '가이드 원문 검토는 인용·적용 범위의 확인입니다. AI 해석 가설은 원문에서 확장한 설명이며, 실제 효과 검증과 구분합니다.', 'coach-muted'));
       if (!claims.length) wrap.append(el('p', '이 항목에 연결된 주장 근거가 아직 없습니다.', 'coach-muted'));
@@ -90,7 +93,10 @@
         select.value = def.value; select.addEventListener('change', () => { const next = scenario(); next.overrides[def.id] = select.value; change({ scenario: next }); });
         label.append(el('span', def.label), select); fields.append(label);
       });
-      const reset=button('기본 비교로 되돌리기','reset-scenario',()=>change({scenario:{standard:'lane-standard-v1',overrides:{}}}));reset.dataset.coachChange='';wrap.append(reset);
+      const reset=button('기본 비교로 되돌리기','reset-scenario',()=>change({scenario:{standard:'lane-standard-v1',overrides:{}},planning:{basis:'loading-plan-example-v1',overrides:{}}}));reset.dataset.coachChange='';wrap.append(reset);
+      const extra=[['enemy_jungle','상대 정글',{UNKNOWN:'미확인',AWAY:'반대편 확인 가정',NEAR:'가까운 개입 가정'}],['goal','이번 웨이브 목적',{AUTO:'구간 기본 목적',PRESSURE:'CS·공간 압박',FARM:'수급 보존',RECALL:'귀환 준비'}],['clear_window','포탑 도달 여유',{UNCONFIRMED:'미확인',OPEN:'다음 웨이브까지 처리·도달 여유 가정'}]];
+      if(c.supported&&['A','B'].includes(c.matchup_id))extra.push(['enemy_support','상대 서포터',{PRESENT:'함께 있는 예시',ABSENT:'부재 가정',UNKNOWN:'미확인'}]);
+      extra.forEach(([key,title,options])=>{const label=el('label'),select=el('select');select.dataset.coachFocus='planning-'+key;select.dataset.coachChange='';Object.entries(options).forEach(([value,text])=>{const o=el('option',text);o.value=value;select.append(o);});select.value=planning().overrides[key]||Object.keys(options)[0];select.addEventListener('change',()=>change({planning:{...planning(),overrides:{...planning().overrides,[key]:select.value}}}));label.append(el('span',title),select);fields.append(label);});
       wrap.append(fields, block(c.context?.assumptions?.label || '표준 비교 가정', c.context?.assumptions?.details), block('패치 · 자료 범위', [c.context?.patch?.label, ...arr(c.context?.patch?.limits)].filter(Boolean)));
       return wrap;
     }
@@ -102,15 +108,15 @@
       const chosen=arr(c.actions).find(a=>a.id===c.selection?.id), alternative=arr(c.actions).find(a=>a.id!==chosen?.id&&a.feasible==='POSSIBLE');
       const comparison=el('div',null,'coach-choice-comparison');
       [[chosen,'기본 선택'],[alternative,'가능한 대안']].forEach(([action,title])=>{if(!action)return;const box=el('section',null,'coach-choice');box.append(el('h4',title+' · '+action.label),block('얻을 것',action.goal),block('비용',action.costs),block('성립 조건',action.requirements),block('중단',action.abort));comparison.append(box);});
-      field.append(comparison);
-      field.append(controls, el('p', c.selection?.reason || '성향은 가능한 행동 후보의 선택에만 적용됩니다.', 'coach-muted'), el('p', '성향을 바꿔도 매치업 우열·실행 조건·근거는 바뀌지 않습니다.', 'coach-muted'));
+      if(board().choice?.id===c.selection?.id)field.append(comparison);else field.append(block('목적에 맞춘 선택',board().wave?.purpose),block('비용',board().choice?.cost),block('남길 자원',board().choice?.reserve));
+      field.append(controls, el('p', board().choice?.reason || c.selection?.reason || '성향은 가능한 행동 후보의 선택에만 적용됩니다.', 'coach-muted'), el('p', '성향을 바꿔도 매치업 우열·실행 조건·근거는 바뀌지 않습니다.', 'coach-muted'));
       return field;
     }
     function matrix() {
-      const c = coach(), wrap = el('div', null, 'coach-matrix-scroll'); wrap.tabIndex = 0; wrap.dataset.coachScroll = 'matrix'; wrap.setAttribute('role', 'region'); wrap.setAttribute('aria-label', '구간별 비교표 · 좌우로 스크롤');
+      const c = coach(), wrap = el('div', null, 'coach-matrix-scroll'); wrap.tabIndex = 0; wrap.dataset.coachScroll = 'matrix'; wrap.setAttribute('role', 'region'); wrap.setAttribute('aria-label', '구간별 비교표 · 우리/상대는 조건부 우세, 부족은 자료 부족');
       const table = el('table', null, 'coach-matrix'), caption = el('caption', '동일한 표준 조건의 구간별 비교 · 실제 시간이나 승률이 아닙니다.'); table.append(caption);
       const head = el('thead'), tr = el('tr'); tr.append(el('th', '구간')); metrics.forEach(([, label]) => { const th = el('th', label); th.scope = 'col'; tr.append(th); }); head.append(tr); table.append(head);
-      const body = el('tbody'); arr(c.periods).forEach(row => { const r = el('tr'); r.dataset.selected = String(row.id === c.selected_period); const th = el('th'); th.scope = 'row'; const b = button(row.label, 'period-' + row.id, () => change({ period: row.id })); b.dataset.coachChange = ''; b.setAttribute('aria-pressed', String(row.id === c.selected_period)); th.append(b); r.append(th); metrics.forEach(([key]) => { const metric = row.metrics?.[key] || {}, td = el('td', assessments[metric.assessment] || assessments.INSUFFICIENT); td.dataset.assessment = metric.assessment || 'INSUFFICIENT'; if (metric.scope || metric.reason) td.title = format([metric.scope, metric.reason].filter(Boolean).join(' · ')); r.append(td); }); body.append(r); }); table.append(body); wrap.append(table); return wrap;
+      const body = el('tbody'); arr(c.periods).forEach(row => { const r = el('tr'); r.dataset.selected = String(row.id === c.selected_period); const th = el('th'); th.scope = 'row'; const b = button(row.label, 'period-' + row.id, () => change({ period: row.id })); b.dataset.coachChange = ''; b.setAttribute('aria-pressed', String(row.id === c.selected_period)); th.append(b); r.append(th); metrics.forEach(([key]) => { const metric = row.metrics?.[key] || {}, td = el('td', ({ALLY:'우리',ENEMY:'상대',CONTESTED:'경합',INSUFFICIENT:'부족'})[metric.assessment] || '부족'); td.dataset.assessment = metric.assessment || 'INSUFFICIENT'; if (metric.scope || metric.reason) td.title = format([metric.scope, metric.reason].filter(Boolean).join(' · ')); r.append(td); }); body.append(r); }); table.append(body); wrap.append(table); return wrap;
     }
     function growth() {
       const wrap = el('div', null, 'coach-growth'); arr(coach().growth).forEach(event => {
@@ -128,19 +134,19 @@
     }
     function stepControls(where) {
       const group = el('div', null, 'coach-step-controls'); group.setAttribute('role', 'group'); group.setAttribute('aria-label', '같은 실행의 단계 선택');
-      arr(coach().diagram?.steps).forEach((step, index) => { const number = Number(step.number) || index + 1, b = button(String(number) + '단계', where + '-step-' + number, () => selectStep(number)); b.dataset.coachStep = number; b.setAttribute('aria-pressed', String(state.step === number)); b.addEventListener('keydown', event => { if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return; event.preventDefault(); const buttons = Array.from(group.children), at = buttons.indexOf(b), target = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : (at + (event.key === 'ArrowRight' ? 1 : -1) + buttons.length) % buttons.length; buttons[target].click(); buttons[target].focus(); }); group.append(b); }); return group;
+      arr(diagramData().steps).forEach((step, index) => { const number = Number(step.number) || index + 1, b = button(String(number) + '단계', where + '-step-' + number, () => selectStep(number)); b.dataset.coachStep = number; b.setAttribute('aria-pressed', String(state.step === number)); b.addEventListener('keydown', event => { if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return; event.preventDefault(); const buttons = Array.from(group.children), at = buttons.indexOf(b), target = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : (at + (event.key === 'ArrowRight' ? 1 : -1) + buttons.length) % buttons.length; buttons[target].click(); buttons[target].focus(); }); group.append(b); }); return group;
     }
     function selectStep(number) { state.step = number; syncSteps(); }
     function syncSteps() {
-      const steps = arr(coach().diagram?.steps), step = steps.find(s => Number(s.number) === state.step) || steps[0];
+      const steps = arr(diagramData().steps), step = steps.find(s => Number(s.number) === state.step) || steps[0];
       host.querySelectorAll('[data-coach-step]').forEach(n => { const selected = Number(n.dataset.coachStep) === state.step; if (n.tagName === 'BUTTON') n.setAttribute('aria-pressed', String(selected)); else n.dataset.active = String(selected); });
       host.querySelectorAll('.coach-step-copy').forEach(n => { n.textContent = step ? format(String(step.number) + '. ' + step.text) : ''; });
       host.querySelectorAll('.coach-line').forEach(n => { n.dataset.step = String(state.step); });
     }
     function lineDiagram(zoom) {
-      const c = coach(), d = c.diagram || {}, wrap = el('div', null, 'coach-line-wrap');
+      const c = coach(), d = diagramData(), wrap = el('div', null, 'coach-line-wrap');
       if (!d.supported || d.kind !== 'LINE') { wrap.append(el('p', '현재 조건에 연결된 라인 도식이 없습니다.', 'coach-muted')); return wrap; }
-      const line = el('div', null, 'coach-line'); line.dataset.plan = d.plan_id || ''; line.dataset.step = state.step; line.setAttribute('role', 'img'); line.setAttribute('aria-label', '선택된 웨이브 계획의 상징 도식. 적 위치는 모두 가상이며 실제 거리·사거리·시간을 나타내지 않습니다.');
+      const line = el('div', null, 'coach-line'); line.dataset.plan = d.plan_id || ''; line.dataset.step = state.step; line.setAttribute('role', 'group'); line.setAttribute('aria-label', '선택된 웨이브 계획의 상징 도식. 적 위치는 모두 가상이며 실제 거리·사거리·시간을 나타내지 않습니다.');
       const terrain = el('div', null, 'coach-lane-track'); line.append(terrain, el('span', '아군 방향', 'coach-line-home'), el('span', '상대 방향', 'coach-line-away'));
       const symbol = el('span', ({ SLOW_PUSH: '→', FAST_PUSH: '⇉', CRASH: '→│', TRIM_RECEIVE: '←', TOWER_CS: '│', RETURNING: '⇇', FREEZE: '↔', CHECK_WAVE: '?' })[d.plan_id] || '?', 'coach-wave-symbol'); symbol.setAttribute('aria-hidden', 'true'); line.append(symbol);
       const geometry = {
@@ -149,24 +155,33 @@
       geometry.forEach((x, i) => { const group = el('span', '● ● ●', 'coach-minions ' + (i < 2 ? 'coach-minions-ally' : 'coach-minions-enemy')); group.style.left = x + '%'; group.style.top = (i % 2 ? 57 : 44) + '%'; group.setAttribute('aria-hidden', 'true'); line.append(group); });
       const own = d.own || current?.input?.own_champion;
       [['ALLY', Array.from(new Set([own, ...arr(d.allies)].filter(Boolean))), 22], ['ENEMY', Array.from(new Set(arr(d.enemies))), 78]].forEach(([team, ids, x]) => { ids.forEach((id, i) => { const unit = el('span', null, 'coach-line-unit ' + (team === 'ALLY' ? 'coach-line-ally' : 'coach-line-enemy')); unit.style.left = (ids.length > 2 ? 15 + i * 70 / (ids.length - 1) : x) + '%'; unit.style.top = (ids.length > 2 ? team === 'ALLY' ? 12 : 72 : ids.length > 1 ? i % 2 ? 72 : 12 : 12) + '%'; const champion = catalog?.champions?.[id]; if (root.LoadingMap?.portrait) unit.append(root.LoadingMap.portrait(champion, id === own)); else unit.append(el('span', champion?.name?.slice(0, 1) || '?')); unit.title = (champion?.name || id) + (team === 'ENEMY' ? ' · 가상 적 위치' : ' · 설명용 아군 위치'); line.append(unit); }); });
-      const steps = arr(d.steps); steps.forEach((s, index) => { const n = el('span', String(s.number || index + 1), 'coach-line-number'); n.style.left = (28 + index * 22) + '%'; n.dataset.coachStep = s.number || index + 1; n.setAttribute('aria-hidden', 'true'); line.append(n); });
+      const steps = arr(d.steps); steps.forEach((s, index) => { const n = button(String(s.number || index + 1),'map-step-'+(s.number||index+1),()=>selectStep(s.number||index+1)); n.className='coach-line-number'; n.style.left = (28 + index * 22) + '%'; n.dataset.coachStep = s.number || index + 1; n.setAttribute('aria-label',(s.number||index+1)+'단계 행동 보기'); line.append(n); });
       let touchX = null; line.addEventListener('pointerdown', event => { touchX = event.clientX; }); line.addEventListener('pointerup', event => { if (touchX == null || Math.abs(event.clientX - touchX) < 45) return; const at = steps.findIndex(s => Number(s.number) === state.step), next = Math.max(0, Math.min(steps.length - 1, at + (event.clientX < touchX ? 1 : -1))); if (steps[next]) selectStep(Number(steps[next].number)); touchX = null; });
       wrap.append(line, el('p', '초상화: 공식 자료 · 미니언: 상징 묶음 · 모든 적 위치는 가상 예시', 'coach-muted'), stepControls(zoom ? 'zoom' : 'line'), el('p', '', 'coach-step-copy'));
       return wrap;
     }
     function wave() {
-      const c = coach(), w = c.wave || {}, plan = w.selected, section = card('웨이브 · 실행');
-      section.append(block('밀 수 있는가', w.can_push), block('밀어야 하는가', w.should_push));
-      if (!plan) { section.append(el('p', '현재 조건에서 연결된 실행 계획이 없습니다.', 'coach-muted')); return section; }
-      section.append(el('p','웨이브 절차 · 조건부 설계 가설','coach-badge'),el('h4', plan.label), block('목표', plan.goal));
-      const steps = el('ol', null, 'coach-execution-steps'); arr(c.diagram?.supported ? c.diagram.steps : plan.steps).forEach((step, index) => { const li = el('li'), number = Number(step.number) || index + 1; li.dataset.coachStep = number; const b = button(step.text, 'card-step-' + number, () => selectStep(number)); b.dataset.coachStep = number; li.append(b); steps.append(li); }); section.append(steps);
-      section.append(lineDiagram(false));
-      if (c.diagram?.supported) { const b = button('도식 크게 보기', 'open-zoom', () => openZoom(b)); section.append(b); }
-      const procedure = details('wave-procedure', '시작 · 처리 · 남길 자원 · 중단과 다음 행동');
-      [['시작 조건', 'start'], ['처리 방식', 'processing'], ['기술 사용', 'skills'], ['남길 자원', 'reserve'], ['완료 확인', 'complete'], ['중단 조건', 'abort'], ['다음 행동', 'next'], ['상대 접근에 대한 우리 대응', 'punishment'], ['이득 전환', 'conversion'], ['비용', 'costs']].forEach(([label, key]) => procedure.append(block(label, plan[key])));
-      section.append(procedure, why(plan.claim_ids, 'wave'));
-      const alternatives = details('wave-alternatives', '다른 웨이브 계획의 지원 범위'); arr(w.plans).forEach(p => { alternatives.append(block(p.label || '계획', [p.goal, p.reason, p.feasible === 'UNKNOWN' ? '실행 여건 미확인' : p.feasible === 'IMPOSSIBLE' ? '현재 조건에서 실행 불가' : ''].filter(Boolean))); }); section.append(alternatives);
-      return section;
+      const c=coach(), w=board().wave, legacy=c.wave?.selected, section=card('이번 웨이브 · 상황별 참고 계획');
+      if(!w)return section;
+      section.dataset.boardPlan=w.plan_id;
+      const copy=el('dl',null,'coach-wave-four');
+      [['목적',w.purpose],['처리',w.handling],['위치·교전',w.position+' '+w.combat],['다음 웨이브 / 변경',w.next_wave+' '+w.change_if]].forEach(([key,value])=>copy.append(el('dt',key),el('dd',value)));
+      section.append(copy);
+      const axes=el('div',null,'coach-axes');Object.entries(w.axes).forEach(([key,value])=>{const chip=el('span',value.label);chip.dataset.axis=key;axes.append(chip);});section.append(axes);
+      const steps=el('ol',null,'coach-execution-steps');arr(w.steps).forEach(step=>{const li=el('li'),b=button(step.number+' · '+step.text,'card-step-'+step.number,()=>selectStep(step.number));li.dataset.coachStep=step.number;b.dataset.coachStep=step.number;li.append(b);steps.append(li);});
+      const d=details('execution-steps','처리 → 응징 → 다음 선택');d.append(steps);section.append(d,lineDiagram(false));
+      if(diagramData().supported){const b=button('도식 크게 보기','open-zoom',()=>openZoom(b));section.append(b);}
+      const procedure=details('wave-procedure','밀 수 있는가 / 밀어야 하는가 · 원리와 중단');
+      procedure.append(block('밀 수 있는가',board().lane?.can_push),block('밀어야 하는가',board().lane?.should_push));
+      if(legacy)[['시작 조건','start'],['처리 방식','processing'],['기술 사용','skills'],['남길 자원','reserve'],['완료 확인','complete'],['중단 조건','abort'],['다음 행동','next'],['상대 접근에 대한 우리 대응','punishment'],['이득 전환','conversion'],['비용','costs']].forEach(([label,key])=>procedure.append(block(label,legacy[key])));
+      section.append(procedure,why(w.claim_ids,'wave'));return section;
+    }
+    function counterplans(){
+      const p=board().matchup_playbook,section=card('양쪽 상대법');
+      if(!p)return section;
+      section.append(el('p',p.supported?'같은 구간·웨이브 가정의 조건부 계획 · 상대 의도를 관측한 정보가 아닙니다.':'이 매치업의 개별 상대법은 아직 지원하지 않습니다.','coach-muted'));
+      const grid=el('div',null,'coach-counterplans');
+      [['ours','우리의 상대법'],['theirs','상대의 가능한 상대법']].forEach(([key,title])=>{const n=el('section');n.dataset.counterplan=key;n.append(el('h4',title));[['목적','purpose'],['수단','means'],['노릴 행동','look_for'],['피할 행동','avoid'],['계획 변경','switch_when']].forEach(([label,field])=>n.append(block(label,p[key][field])));grid.append(n);});section.append(grid,why(p.claim_ids,'counterplans'));return section;
     }
     function trade() {
       const t = coach().trade || {}, section = card('교환 길이 · 상대의 남은 대응'); section.append(block('실제 매치업 우열', t.actual_advantage));
@@ -177,22 +192,28 @@
       arr(s.actors).forEach(actor => { const d = details('sustain-' + actor.champion, actor.name || catalog?.champions?.[actor.champion]?.name || '각 챔피언'); [['교전 중 회복', 'in_fight_heal'], ['교환 사이 회복', 'between_trade'], ['피해 방지 · 보호막', 'shield'], ['자원', 'resources'], ['수급 · 행동 공백', 'downtime'], ['위험', 'risks']].forEach(([label, key]) => d.append(block(label, actor[key]))); section.append(d); }); section.append(block('재정비', s.reset), block('한계', s.limits)); return section;
     }
     function lane() {
-      const n = el('div', null, 'coach-lane-panel'); n.append(matrix(), growth(), selected(), preferences()); const grid = el('div', null, 'coach-execution-grid'); grid.append(wave(), trade(), sustain()); n.append(grid);
-      if (arr(coach().actions).length) { const d = details('actions', '행동 후보 · 비용과 실행 조건'); arr(coach().actions).forEach(action => { const a = card(action.label); a.append(el('p', ({ POSSIBLE: '조건 내 실행 후보', UNKNOWN: '실행 여건 미확인', IMPOSSIBLE: '현재 조건에서 실행 불가' })[action.feasible] || '실행 여건 미확인', 'coach-badge'), block('목표', action.goal), block('필요 조건', action.requirements), block('비용', action.costs), block('중단', action.abort), block('대안', action.alternative), why(action.claim_ids, 'action-' + action.id)); d.append(a); }); n.append(d); } return n;
+      const n=el('div',null,'coach-lane-panel');n.append(matrix(),growth());
+      const purpose=card(board().lane?.milestone?.label||'선택 구간');purpose.append(block('이번 구간 목적',board().lane?.milestone?.goal));
+      const whyPeriod=details('selected-reason','이 구간의 이유 · 교전 유형별 판단');whyPeriod.append(selected());purpose.append(whyPeriod);n.append(purpose,wave(),counterplans(),preferences());
+      const comparison=details('trade-sustain','교환 길이 · 반복 교환과 유지력');comparison.append(trade(),sustain());n.append(comparison);return n;
     }
     function operations() {
-      const g = current?.gameplan || {}, n = card('운영 · 다음 이득으로 연결');
-      [['기본 계획', 'base'], ['준비', 'prepare'], ['대안', 'fallback'], ['전환 조건', 'switch_when'], ['사이드와 합류', 'side_vs_group'], ['오브젝트', 'objectives'], ['이득 전환', 'conversion']].forEach(([label, key]) => n.append(block(label, g[key])));
-      arr(g.stages).forEach(stage => { const section = el('section'); section.append(block(stage.label || stage.stage || '단계', stage.role), block('조건', stage.conditions)); n.append(section); }); return n;
+      const g=board().operations,n=card('운영 · 어디에서 무엇을 얻는가');
+      [['기본 계획','placement'],['우선할 이득','priority'],['누구와 연결','connection'],['양보와 교환','concede'],['막히면','fallback'],['성장 후 변화','growth']].forEach(([label,key])=>n.append(block(label,g?.[key])));
+      n.append(list(g?.steps,true),why(g?.claim_ids,'operations'));
+      // No independent geometry exists for this projected macro plan. Do not relabel a teamfight map.
+      n.append(el('p','이 운영 배치의 전체 지도는 미지원입니다. 아래 한타 탭의 역할 배치와 구분합니다.','coach-muted'));return n;
     }
     function fight() {
-      const f = current?.teamfight || {}, n = card('한타 · 내 역할과 전환');
-      [['내 역할', 'role'], ['전투 전 배치', 'setup'], ['행동 순서', 'actions'], ['전환 조건', 'switch_when'], ['이탈', 'exit'], ['전투 후', 'after']].forEach(([label, key]) => n.append(block(label, f[key])));
-      if (f.map && root.LoadingMap?.create && current.input) { const d = details('fight-map', '전체 지도 · 실제 픽의 역할 배치 예시'); try { const steps = arr(f.actions).slice(0, 3).map((text, i) => ({ number: i + 1, text: plain(text) })); d.append(root.LoadingMap.create({ map: f.map, plan: { steps } }, catalog, current.input)); n.append(d); } catch (_) { d.append(el('p', '이 보고서의 지도 표시는 지원되지 않습니다.', 'coach-muted')); n.append(d); } }
-      return n;
+      const f=board().fight,n=card('한타 · 내 공격 시작 기준');
+      [['내 역할','role'],['공격할 대상','target'],['공격 시작','start'],['시작 전 배치','setup'],['중단·위치 변경','stop'],['교전 뒤','after']].forEach(([label,key])=>n.append(block(label,f?.[key])));
+      const threats=details('fight-threats','행동을 바꾸는 접근 수단 · 유형별 후보');arr(f?.threats).forEach(t=>{const d=el('section');d.append(block(t.label,t.action),block('조건',t.condition));threats.append(d);});n.append(threats);
+      const map=current?.teamfight?.map;
+      if(map&&root.LoadingMap?.create){const d=details('fight-map','전체 지도 · 실제 픽의 역할 배치 예시');try{const steps=[f.setup,f.start,f.stop].map((text,i)=>({number:i+1,text}));d.append(root.LoadingMap.create({map,plan:{steps}},catalog,current.input,{selectedStep:String(state.step),onSelect:step=>{if(step!=='ALL'){state.step=Number(step);syncSteps();}}}));}catch(_){d.append(el('p','이 보고서의 지도 표시는 지원되지 않습니다.','coach-muted'));}n.append(d);}
+      n.append(why(f?.claim_ids,'fight'));return n;
     }
     function officialFacts() {
-      const facts = arr(coach().evidence?.official_facts), d = details('official-facts', '공식 기전 · 비교에 연결된 사실');
+      const facts = [...new Map([...arr(coach().evidence?.official_facts),...arr(board().evidence?.official_facts)].map(f=>[f.champion+':'+f.slot,f])).values()], d = details('official-facts', '공식 기전 · 비교에 연결된 사실');
       if (!facts.length) return el('div');
       facts.forEach((fact, index) => {
         const section = el('section', null, 'coach-claim');
@@ -222,11 +243,20 @@
       const scroll = Array.from(host.querySelectorAll('[data-coach-scroll]'), n => [n.dataset.coachScroll, n.scrollLeft, n.scrollTop]);
       const pageX = root.scrollX, pageY = root.scrollY;
       const c = coach(), container = el('section', null, 'loading-coach'); container.id = prefix;container.dataset.matchup=c.matchup_id||'UNSUPPORTED';container.dataset.selectedAction=c.selection?.id||'';container.dataset.period=c.selected_period||''; container.setAttribute('aria-label', '로딩 코치 · 표준 비교');
-      const hero = el('div', null, 'coach-overview'), eyebrow = el('p', '표준 조건으로 먼저 보는 계획', 'coach-eyebrow'); hero.append(eyebrow, el('h2', c.title || '로딩 코치'));
-      hero.append(el('p', c.summary?.our_plan || '현재 보고서에 연결된 비교 계획이 없습니다.', 'coach-main-plan'));
-      const overview = el('dl', null, 'coach-overview-facts'); [['상대 계획', c.summary?.enemy_plan], ['강한 구간', c.summary?.strong_phase], ['내 역할', c.summary?.role], ['라인전 기본',c.summary?.lane], ['한타 핵심',c.summary?.fight]].forEach(([title, value]) => { if (plain(value)) overview.append(el('dt', title), el('dd', value)); }); hero.append(overview);
-      if (arr(c.summary?.exceptions).length) hero.append(block('먼저 볼 예외', arr(c.summary.exceptions).slice(0, 3), 'coach-summary-exceptions'));
-      hero.append(el('p', [c.context?.observations?.label, c.context?.assumptions?.label, c.context?.patch?.label].filter(Boolean).join(' · '), 'coach-muted')); container.append(hero, conditions());
+      const b=board(),hero=el('div',null,'coach-overview coach-board');hero.append(el('p','이번 판 작전판','coach-eyebrow'));
+      const matchup=el('div',null,'coach-matchup-portraits');
+      const rosterLane=arr(b.overall?.lanes).find(l=>l.position===current.input.own_position);
+      [['우리',rosterLane?.allies],['상대',rosterLane?.enemies]].forEach(([label,ids])=>{const team=el('div',null,'coach-board-team');team.append(el('span',label));arr(ids).forEach(id=>{if(root.LoadingMap?.portrait)team.append(root.LoadingMap.portrait(catalog.champions[id],id===current.input.own_champion));team.append(el('span',catalog.champions[id]?.name||id));});matchup.append(team);});hero.append(matchup,el('h2',b.headline||c.title));
+      const tiles=el('div',null,'coach-board-tiles');
+      const compact=(title,lead,reason,key)=>{const tile=button('', 'board-'+key,()=>{if(key==='overall'){const d=host.querySelector('details[id$="-overall-plan"]');d.open=!d.open;d.querySelector('summary').focus({preventScroll:true});}else{state.tab=key;render();host.querySelector('[role=tabpanel]')?.scrollIntoView({block:'start',behavior:'instant'});}});tile.className='coach-board-tile';tile.setAttribute('aria-label',title+' 상세: '+lead);tile.append(el('span',title,'coach-tile-label'),el('span',lead,'coach-tile-copy'),el('span','↗','coach-tile-arrow'));tiles.append(tile);};
+      compact('라인전',b.brief?.lane,'','lane');
+      compact('전체 구도',arr(b.overall?.lanes).map(l=>l.label+' '+({ALLY:'우리 우세',ENEMY:'상대 우세',CONTESTED:'경합',INSUFFICIENT:'자료 부족'})[l.priority]).join(' · '),'','overall');
+      compact('운영',b.brief?.operations,'','operations');compact('한타',b.brief?.fight,'','fight');hero.append(tiles);
+      const overallDetails=details('overall-plan','기본 가정 · 전체 구도 · 지원 범위');arr(b.overall?.lanes).forEach(l=>overallDetails.append(block(l.label,l.reason)));overallDetails.append(el('p',b.overall?.risk));arr(b.overall?.jungle_links).forEach(l=>overallDetails.append(block(({TOP:'탑',MID:'미드',BOTTOM:'바텀'})[l.position]+' 연계 후보',l.means?l.means+' · '+l.condition:l.condition)));hero.append(overallDetails);
+      const shortReminders=[b.reminders?.[0],'교환 뒤 처리·대응 자원을 남긴다.',b.growth?'성장 뒤에도 남는 견제·연결을 활용한다.':'정글 미확인: 처리와 전진 폭을 따로 고른다.'];hero.append(block('기억할 것 3개',shortReminders,'coach-summary-exceptions'));
+      const quick=el('div',null,'coach-quick');arr(b.quick_scenarios).forEach(q=>{const n=button(q.label,'quick-'+q.id,()=>change({scenario:{...scenario(),overrides:{...scenario().overrides,...q.scenario}},planning:{...planning(),overrides:{...planning().overrides,...q.planning}}}));n.dataset.coachChange='';quick.append(n);});hero.append(quick);
+      hero.append(el('p','비교용 기본 가정 · '+c.context?.patch?.label,'coach-muted'));
+      const scope=overallDetails;scope.append(el('p',b.coverage?.plan_scope),el('p',b.coverage?.gaps),block(c.context?.assumptions?.label,c.context?.assumptions?.details));container.dataset.boardChoice=b.choice?.id||'';container.append(hero,conditions());
       const deep = el('section', null, 'coach-execution'), tabs = el('div', null, 'coach-tabs'); deep.setAttribute('aria-label', '구간별 실행'); tabs.setAttribute('role', 'tablist'); tabs.setAttribute('aria-label', '실행 영역');
       [['lane', '라인'], ['operations', '운영'], ['fight', '한타']].forEach(([key, label]) => { const b = button(label, 'tab-' + key, () => { state.tab = key; render(); }); b.id = prefix + '-tab-' + key; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', String(state.tab === key)); b.setAttribute('aria-controls', prefix + '-panel'); b.tabIndex = state.tab === key ? 0 : -1; b.addEventListener('keydown', event => { const keys = ['lane', 'operations', 'fight']; if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return; event.preventDefault(); const at = keys.indexOf(key), next = event.key === 'Home' ? 0 : event.key === 'End' ? 2 : (at + (event.key === 'ArrowRight' ? 1 : -1) + 3) % 3; state.tab = keys[next]; render(); host.querySelector('[data-coach-focus="tab-' + state.tab + '"]')?.focus({ preventScroll: true }); }); tabs.append(b); });
       const panel = el('div', null, 'coach-panel'); panel.id = prefix + '-panel'; panel.setAttribute('role', 'tabpanel'); panel.setAttribute('aria-labelledby', prefix + '-tab-' + state.tab); panel.append(state.tab === 'lane' ? lane() : state.tab === 'operations' ? operations() : fight()); deep.append(tabs, panel); container.append(deep, officialFacts(), lesson());

@@ -399,8 +399,8 @@
       preference = risk; report = next; if(coachView)coachView.update(next); return next;
     }});
     if(coachView)coachView.destroy();
-    coachView=window.LoadingCoachView.mount({host:$('loading-coach'),report,catalog,onChange:({scenario,period,preference:risk})=>{
-      const next=window.LoadingStrategy.analyze({...report.input,schema_version:'lol-coach-loading-input-v3',scenario,preferences:{risk}},catalog);
+    coachView=window.LoadingCoachView.mount({host:$('loading-coach'),report,catalog,onChange:({scenario,planning,period,preference:risk})=>{
+      const next=window.LoadingStrategy.analyze({...report.input,schema_version:'lol-coach-loading-input-v4',scenario,planning,preferences:{risk}},catalog);
       next.coach=window.LoadingCoach.evaluate(next,catalog,scenario,period); preference=risk; report=next;
       if(exploration)exploration.destroy();
       exploration=window.LoadingInteractive.mount({report,catalog,host:$('interactive-flow'),onPreference:risk=>{const next=window.LoadingStrategy.analyze({...report.input,preferences:{risk}},catalog);preference=risk;report=next;coachView.update(next);return next;}});

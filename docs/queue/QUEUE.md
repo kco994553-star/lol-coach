@@ -1,3 +1,9 @@
+# Player planboard P0 — publication in progress
+- Reuse main19fe7ea/publicfb6e and existing source/review evidence. Pure projection/inputv4, compact operation board, linked period→four-line wave→two-sided exact-duo plans and preference cost/conditions; no new required controls. Coverage A conditional baseline, B/C/D conditional references, unsupported stays unsupported. Independent review findings fixed with focused regression.
+- RequiredCI/normal source merge/exactmainCI→Pages→actual PC/mobile HTTPS proof pending; not published yet. Evidence player-planboard/report.md. No source/video/Riot/Gemini/paid calls; protected advice7/AUTO30/HOLD20USER0/Frozen350/riot/pro/Windows histories retained. N0/30secunmeasured/Windowsblocked unchanged.
+
+---
+
 # Riot ownership public proof — DONE
 - PR88 source9201248, artifactfb6e11c, nativePages/actualHTTPS exact36bytes verified; old79file hashes unchanged. Result: evidence/actual-evidence/riot-ownership/publication/result.md.
 - USER_ONLY: Riot Developer Portal Product URL edit and VERIFY URL click; not performed by Codex. Results-only CI/claim metadata records final exact main without product redeploy.

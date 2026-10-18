@@ -320,6 +320,7 @@ class PregameHandler(Handler):
             '/loading':('loading.html','text/html; charset=utf-8'),
             '/loading.html':('loading.html','text/html; charset=utf-8'),
             '/loading.js':('loading.js','text/javascript; charset=utf-8'),
+            '/loading-planboard.js':('loading-planboard.js','text/javascript; charset=utf-8'),
             '/loading-coach.js':('loading-coach.js','text/javascript; charset=utf-8'),
             '/loading-coach-view.js':('loading-coach-view.js','text/javascript; charset=utf-8'),
             '/loading-coach.css':('loading-coach.css','text/css; charset=utf-8'),

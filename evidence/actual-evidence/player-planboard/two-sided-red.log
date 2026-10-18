@@ -1,0 +1,71 @@
+FF
+======================================================================
+FAIL: test_both_sides_counterplans_are_matched_to_duo_and_period (tests_pregame.test_player_planboard.PlayerPlanboardTests.test_both_sides_counterplans_are_matched_to_duo_and_period)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 31, in test_both_sides_counterplans_are_matched_to_duo_and_period
+    self.node("const a=run().coach.planboard;assert(a.matchup_playbook,'missing two-sided playbook');for(const side of ['ours','theirs'])for(const k of ['purpose','means','look_for','avoid','switch_when'])assert(a.matchup_playbook[side][k]);assert(a.matchup_playbook.theirs.means.includes('노틸러스'));assert(a.matchup_playbook.theirs.means.includes('카이사'));assert.equal(a.coverage.status,'BASIC_PLAN_CONDITIONAL');const b=run(2).coach.planboard;assert(b.matchup_playbook.theirs.means.includes('알리스타'));assert(b.matchup_playbook.ours.means.includes('룰루'));assert(!b.matchup_playbook.theirs.means.includes('노틸러스'));const f=run(1).coach.planboard;assert.equal(f.coverage.status,'UNSUPPORTED');assert.equal(f.matchup_playbook.supported,false);")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 11, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4000:])
+AssertionError: 1 != 0 : node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: missing two-sided playbook
+    at [eval]:3:31
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_key_spent_changes_allowed_gain_not_kill_or_entire_strength (tests_pregame.test_player_planboard.PlayerPlanboardTests.test_key_spent_changes_allowed_gain_not_kill_or_entire_strength)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 33, in test_key_spent_changes_allowed_gain_not_kill_or_entire_strength
+    self.node("const a=run(),b=run(0,{enemy_key:'SPENT'});assert.notEqual(a.coach.planboard.wave.combat,b.coach.planboard.wave.combat);assert(b.coach.planboard.matchup_playbook.ours.look_for.includes('소모'));assert.deepEqual(a.coach.periods,b.coach.periods);assert.equal(b.coach.planboard.fight.kill,'UNDETERMINED');assert(b.coach.planboard.wave.combat.includes('강력한 일격(P)'));")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 11, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4000:])
+AssertionError: 1 != 0 : node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to:
+
+'상대가 막타에 접근하면 사거리 끝 짧은 공격으로 공간을 지키고, 물러나면 CS·처리 시간을 얻는다.'
+    at [eval]:3:51
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '상대가 막타에 접근하면 사거리 끝 짧은 공격으로 공간을 지키고, 물러나면 CS·처리 시간을 얻는다.',
+  expected: '상대가 막타에 접근하면 사거리 끝 짧은 공격으로 공간을 지키고, 물러나면 CS·처리 시간을 얻는다.',
+  operator: 'notStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.276s
+
+FAILED (failures=2)

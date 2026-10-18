@@ -1,3 +1,9 @@
+# Player planboard and paired counterplay — source implementation
+- Reuse main19fe7ea/publicfb6e and existing source/review evidence. Pure projection/inputv4, compact operation board, linked period→four-line wave→two-sided exact-duo plans and preference cost/conditions; no new required controls. Coverage A conditional baseline, B/C/D conditional references, unsupported stays unsupported. Independent review findings fixed with focused regression.
+- RequiredCI/normal source merge/exactmainCI→Pages→actual PC/mobile HTTPS proof pending; not published yet. Evidence player-planboard/report.md. No source/video/Riot/Gemini/paid calls; protected advice7/AUTO30/HOLD20USER0/Frozen350/riot/pro/Windows histories retained. N0/30secunmeasured/Windowsblocked unchanged.
+
+---
+
 # Riot ownership proof — actual public verification complete
 - PR88 source9201248e9ce49f21204a35627876105149c1d17f, artifactfb6e11c4927f24f8452c8c51e524226c50de7595, previous222ae171744d55aa3099539e9852d8f1948c7f35. Feature/exactmain required3 SUCCESS; nativePages39091127798 build/report/deploy actualSUCCESS.
 - Actual HTTPS https://kco994553-star.github.io/lol-coach/riot.txt HTTP200 exact36ASCII bytes, no quotes/newline, SHA2561d5490369d06a243de54fbc7bc3f05aeb3664a49866c76404a669344ddf93892. Public UUID only, not API key. All79 old public files/pro JSON byte-identical,80files+root/manifest/nojekyll HTTP/hash PASS; future export keeps riot.txt.
