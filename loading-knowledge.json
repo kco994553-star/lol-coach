@@ -1164,6 +1164,29 @@
             "원문 패치·미갱신 경고 보존; 현재 매치업 승패로 일반화하지 않음."
           ],
           "review": "SOURCE_SCOPE_CHECKED_CONDITIONAL"
+        },
+        {
+          "id": "A-INITIAL-ORDER-v1",
+          "text": "먼저 미니언 처리 우위를 만든 뒤, 우위가 생기면 막타 중심으로 낮춰 쌓고 상대의 CS 접근을 압박한다.",
+          "basis": "MECHANISM_INFERENCE",
+          "source_ids": [
+            "A:S2",
+            "A:S1"
+          ],
+          "conditions": [
+            "같은 레벨·충분한 체력과 마나, 중앙 경합, 정상 합류라는 로딩 비교 가정",
+            "케이틀린 Q·럭스 E 시작 예시이며 미니언 처리 중에도 노틸러스 접근선과 걸어서 돌아올 거리를 남긴다."
+          ],
+          "counterexamples": [
+            "맞밀기에 밀리거나 진입선이 열리면 체력을 더 써 선푸시를 강제하지 않고 일부 줄이며 받는다.",
+            "귀환·합류가 목적이고 실제 처리 여유가 있으면 쌓기 대신 빠른 처리와 크래시 가능성을 비교한다."
+          ],
+          "patch_limits": [
+            "원문 연도·패치와 현재 보관 기전의 질적 적용 범위만 확인. 수치 동등성·모든 패치 호환을 보장하지 않음."
+          ],
+          "review": "TYPE_SCOPED_ADOPTION_NOT_USER_OR_AUTO",
+          "outcome_proven": false,
+          "application_id": "A-INITIAL-ORDER-v1"
         }
       ],
       "source_ids": [
@@ -1815,6 +1838,29 @@
           },
           "display_text": "다리우스의 학살(Q)를 배운 뒤 바깥날을 맞혀 회복하고 교환을 끊을 수 있을 때만 반복 교환의 회복 이득을 계산한다. 암베사 돌진에 다리우스의 학살(Q) 자루가 맞거나 빗나가면 그 회복을 기대하지 않는다. 다리우스의 마비의 일격(W) 시작 1레벨에는 다리우스의 학살(Q) 회복이 없다.",
           "display_policy": "OFFICIAL_SLOT_LABELS_ONLY; original text and source excerpts preserved"
+        },
+        {
+          "id": "C-CLOSE-CONTACT-v1",
+          "text": "마비의 일격(W) 시작으로 근접 공격을 이어 갈 수 있는 싸움은 다리우스 우세로 보고 막타 자리를 지킨다. 암베사가 이탈하면 CS·공간을 얻고 추격은 별도로 판단한다.",
+          "basis": "MECHANISM_INFERENCE",
+          "source_ids": [
+            "C:C-S3",
+            "C:C-S5"
+          ],
+          "conditions": [
+            "양쪽 Lv1·비슷한 시작 구매 단계와 충분한 체력, 다리우스 W·암베사 Q 시작 비교",
+            "큰 적 미니언·포탑·외부 개입 없이 다리우스가 평타와 W를 이어갈 근접 거리"
+          ],
+          "counterexamples": [
+            "암베사가 Q 끝거리만 맞히고 이탈하면 근접 지속 교전 비교가 아니다.",
+            "다리우스 Q·E 시작, 체력·룬·주문·미니언 차이 또는 근접 접촉 단절이면 이 우세를 승계하지 않는다."
+          ],
+          "patch_limits": [
+            "원문 연도·패치와 현재 보관 기전의 질적 적용 범위만 확인. 수치 동등성·모든 패치 호환을 보장하지 않음."
+          ],
+          "review": "TYPE_SCOPED_ADOPTION_NOT_USER_OR_AUTO",
+          "outcome_proven": false,
+          "application_id": "C-CLOSE-CONTACT-v1"
         }
       ],
       "source_ids": [
@@ -2371,5 +2417,1088 @@
       "matching_claims": [],
       "expert_claim_adopted": false
     }
-  ]
+  ],
+  "statistical_context": {
+    "format": "lol-coach-statistical-context-v1",
+    "datasets": {
+      "power": {
+        "local_source": "data/riot/2026-10-13/archives/full-power-16.20-CHALLENGER.json.gz",
+        "sha256": "ea0cd9a5f6f20896511e774e0ebe07b28c8a97ced5b070e61f9677ec65f76a41",
+        "provider": "RIOT_API",
+        "patch": "16.20",
+        "queue_id": 420,
+        "platform": "KR",
+        "tier": "CHALLENGER",
+        "tier_scope": "CURRENT_LEAGUE_SEED_COHORT_NOT_EVERY_PARTICIPANT_RANK",
+        "window_start": "2026-10-06T11:56:21+00:00",
+        "window_end": "2026-10-13T11:56:21+00:00",
+        "retrieved_at": "2026-10-13T11:56:21.583629+00:00",
+        "matches": 275,
+        "formula_version": "PAIRED_ROLE_DELTA_STUDENT_T95.v1",
+        "population_formula_version": "POOLED_ROLE_RATE_MATCH_INFLUENCE_T95.v1"
+      },
+      "outcome": {
+        "local_source": "data/riot/2026-10-11/outcome-data.json.gz",
+        "sha256": "597a14e6d104bd914b60953abddfb9f2ef57ce307d8a38db7fd43153f78a1a10",
+        "provider": "RIOT_API",
+        "patch": "16.20",
+        "queue_id": 420,
+        "platform": "KR",
+        "tier": "CHALLENGER",
+        "tier_scope": "CURRENT_LEAGUE_SEED_COHORT_NOT_EVERY_PARTICIPANT_RANK",
+        "window_start": "2026-10-04T11:26:56+00:00",
+        "window_end": "2026-10-11T11:26:56+00:00",
+        "retrieved_at": "2026-10-11T11:26:56.874140+00:00",
+        "matches": 50,
+        "formula_version": "WILSON_SCORE_95.v1",
+        "population_formula_version": null
+      }
+    },
+    "matchups": {
+      "A": {
+        "matchup": {
+          "pair": [
+            "Caitlyn",
+            "Kaisa"
+          ],
+          "position": "BOTTOM",
+          "comparison": "PAIRED_ROLE_DELTA_NOT_DUO",
+          "dataset": "power",
+          "points": []
+        },
+        "role_context": {
+          "champion": "Caitlyn",
+          "position": "BOTTOM",
+          "comparison": "ROLE_POPULATION_RATE",
+          "dataset": "power",
+          "points": [
+            {
+              "metric": "gold_delta",
+              "minute": 10,
+              "n": 273,
+              "mean": 4.498856184144692,
+              "ci95": {
+                "high": 131.82689026209903,
+                "low": -122.82917789380963
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "골드 / 분",
+              "champion_n": 35,
+              "reference_n": 546
+            },
+            {
+              "metric": "gold_delta",
+              "minute": 15,
+              "n": 272,
+              "mean": -2.171003083896149,
+              "ci95": {
+                "high": 141.16905062557734,
+                "low": -145.51105679336965
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "골드 / 분",
+              "champion_n": 35,
+              "reference_n": 544
+            },
+            {
+              "metric": "xp_delta",
+              "minute": 10,
+              "n": 273,
+              "mean": 15.201629633767526,
+              "ci95": {
+                "high": 134.46355523108883,
+                "low": -104.06029596355377
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "경험치 / 분",
+              "champion_n": 35,
+              "reference_n": 546
+            },
+            {
+              "metric": "xp_delta",
+              "minute": 15,
+              "n": 272,
+              "mean": 4.947045894852849,
+              "ci95": {
+                "high": 132.79763703531876,
+                "low": -122.90354524561306
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "경험치 / 분",
+              "champion_n": 35,
+              "reference_n": 544
+            },
+            {
+              "metric": "cs_delta",
+              "minute": 10,
+              "n": 273,
+              "mean": 0.5325427736925155,
+              "ci95": {
+                "high": 3.203107966752449,
+                "low": -2.1380224193674175
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "CS / 분",
+              "champion_n": 35,
+              "reference_n": 546
+            },
+            {
+              "metric": "cs_delta",
+              "minute": 15,
+              "n": 272,
+              "mean": 0.3418398251983751,
+              "ci95": {
+                "high": 3.081417150091912,
+                "low": -2.3977374996951615
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "CS / 분",
+              "champion_n": 35,
+              "reference_n": 544
+            }
+          ]
+        },
+        "outcome": {
+          "scope": "FULL_MATCH_RESULT_NOT_FIGHT_WIN",
+          "dataset": "outcome",
+          "n": 0,
+          "wins": null,
+          "win_rate": null,
+          "ci95": {
+            "low": null,
+            "high": null
+          }
+        },
+        "duo_verified": false,
+        "support_pair": null,
+        "interpretation": "표본과 구간이 다른 참고 통계. 원딜 상대 통계는 서포터 포함 2대2를 입증하지 않으며 자원 차이·승률은 교전력이나 최적 행동이 아니다."
+      },
+      "B": {
+        "matchup": {
+          "pair": [
+            "Yunara",
+            "Kaisa"
+          ],
+          "position": "BOTTOM",
+          "comparison": "PAIRED_ROLE_DELTA_NOT_DUO",
+          "dataset": "power",
+          "points": [
+            {
+              "metric": "cs_delta",
+              "minute": 10,
+              "n": 2,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "CI_TOO_WIDE",
+              "unit": "CS"
+            },
+            {
+              "metric": "cs_delta",
+              "minute": 15,
+              "n": 2,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "CI_TOO_WIDE",
+              "unit": "CS"
+            },
+            {
+              "metric": "gold_delta",
+              "minute": 10,
+              "n": 2,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "CI_TOO_WIDE",
+              "unit": "골드"
+            },
+            {
+              "metric": "gold_delta",
+              "minute": 15,
+              "n": 2,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "CI_TOO_WIDE",
+              "unit": "골드"
+            },
+            {
+              "metric": "xp_delta",
+              "minute": 10,
+              "n": 2,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "CI_TOO_WIDE",
+              "unit": "경험치"
+            },
+            {
+              "metric": "xp_delta",
+              "minute": 15,
+              "n": 2,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "CI_TOO_WIDE",
+              "unit": "경험치"
+            }
+          ]
+        },
+        "role_context": {
+          "champion": "Yunara",
+          "position": "BOTTOM",
+          "comparison": "ROLE_POPULATION_RATE",
+          "dataset": "power",
+          "points": [
+            {
+              "metric": "gold_delta",
+              "minute": 10,
+              "n": 273,
+              "mean": 18.75120536979985,
+              "ci95": {
+                "high": 155.24044959782307,
+                "low": -117.73803885822336
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "골드 / 분",
+              "champion_n": 33,
+              "reference_n": 546
+            },
+            {
+              "metric": "gold_delta",
+              "minute": 15,
+              "n": 272,
+              "mean": 39.25779068932606,
+              "ci95": {
+                "high": 200.17708979662115,
+                "low": -121.66150841796902
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "골드 / 분",
+              "champion_n": 33,
+              "reference_n": 544
+            },
+            {
+              "metric": "xp_delta",
+              "minute": 10,
+              "n": 273,
+              "mean": -7.54953854148214,
+              "ci95": {
+                "high": 109.49361147429542,
+                "low": -124.59268855725969
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "경험치 / 분",
+              "champion_n": 33,
+              "reference_n": 546
+            },
+            {
+              "metric": "xp_delta",
+              "minute": 15,
+              "n": 272,
+              "mean": 3.630744062772063,
+              "ci95": {
+                "high": 136.15632462516797,
+                "low": -128.89483649962384
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "경험치 / 분",
+              "champion_n": 33,
+              "reference_n": 544
+            },
+            {
+              "metric": "cs_delta",
+              "minute": 10,
+              "n": 273,
+              "mean": 0.11935938737673848,
+              "ci95": {
+                "high": 2.7655448844300436,
+                "low": -2.5268261096765667
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "CS / 분",
+              "champion_n": 33,
+              "reference_n": 546
+            },
+            {
+              "metric": "cs_delta",
+              "minute": 15,
+              "n": 272,
+              "mean": 0.292478779317869,
+              "ci95": {
+                "high": 3.1193521308391086,
+                "low": -2.5343945722033707
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "CS / 분",
+              "champion_n": 33,
+              "reference_n": 544
+            }
+          ]
+        },
+        "outcome": {
+          "scope": "FULL_MATCH_RESULT_NOT_FIGHT_WIN",
+          "dataset": "outcome",
+          "n": 1,
+          "wins": 1,
+          "win_rate": 1.0,
+          "ci95": {
+            "low": 0.20654931437723745,
+            "high": 1.0
+          }
+        },
+        "duo_verified": false,
+        "support_pair": null,
+        "interpretation": "표본과 구간이 다른 참고 통계. 원딜 상대 통계는 서포터 포함 2대2를 입증하지 않으며 자원 차이·승률은 교전력이나 최적 행동이 아니다."
+      },
+      "BR": {
+        "matchup": {
+          "pair": [
+            "Kaisa",
+            "Yunara"
+          ],
+          "position": "BOTTOM",
+          "comparison": "PAIRED_ROLE_DELTA_NOT_DUO",
+          "dataset": "power",
+          "points": [
+            {
+              "metric": "cs_delta",
+              "minute": 10,
+              "n": 2,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "CI_TOO_WIDE",
+              "unit": "CS"
+            },
+            {
+              "metric": "cs_delta",
+              "minute": 15,
+              "n": 2,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "CI_TOO_WIDE",
+              "unit": "CS"
+            },
+            {
+              "metric": "gold_delta",
+              "minute": 10,
+              "n": 2,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "CI_TOO_WIDE",
+              "unit": "골드"
+            },
+            {
+              "metric": "gold_delta",
+              "minute": 15,
+              "n": 2,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "CI_TOO_WIDE",
+              "unit": "골드"
+            },
+            {
+              "metric": "xp_delta",
+              "minute": 10,
+              "n": 2,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "CI_TOO_WIDE",
+              "unit": "경험치"
+            },
+            {
+              "metric": "xp_delta",
+              "minute": 15,
+              "n": 2,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "CI_TOO_WIDE",
+              "unit": "경험치"
+            }
+          ]
+        },
+        "role_context": {
+          "champion": "Kaisa",
+          "position": "BOTTOM",
+          "comparison": "ROLE_POPULATION_RATE",
+          "dataset": "power",
+          "points": [
+            {
+              "metric": "gold_delta",
+              "minute": 10,
+              "n": 273,
+              "mean": -12.417252851088552,
+              "ci95": {
+                "high": 100.22617695734353,
+                "low": -125.06068265952062
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "골드 / 분",
+              "champion_n": 40,
+              "reference_n": 546
+            },
+            {
+              "metric": "gold_delta",
+              "minute": 15,
+              "n": 272,
+              "mean": -15.451452332133238,
+              "ci95": {
+                "high": 114.39964048598986,
+                "low": -145.30254515025635
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "골드 / 분",
+              "champion_n": 39,
+              "reference_n": 544
+            },
+            {
+              "metric": "xp_delta",
+              "minute": 10,
+              "n": 273,
+              "mean": -14.162067558958002,
+              "ci95": {
+                "high": 87.5955881738869,
+                "low": -115.9197232918029
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "경험치 / 분",
+              "champion_n": 40,
+              "reference_n": 546
+            },
+            {
+              "metric": "xp_delta",
+              "minute": 15,
+              "n": 272,
+              "mean": -16.434813039224316,
+              "ci95": {
+                "high": 97.2920474411199,
+                "low": -130.16167351956852
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "경험치 / 분",
+              "champion_n": 39,
+              "reference_n": 544
+            },
+            {
+              "metric": "cs_delta",
+              "minute": 10,
+              "n": 273,
+              "mean": -0.30311016698853815,
+              "ci95": {
+                "high": 1.9410754628345452,
+                "low": -2.5472957968116217
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "CS / 분",
+              "champion_n": 40,
+              "reference_n": 546
+            },
+            {
+              "metric": "cs_delta",
+              "minute": 15,
+              "n": 272,
+              "mean": -0.3313855341492154,
+              "ci95": {
+                "high": 2.049284325966135,
+                "low": -2.712055394264566
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "CS / 분",
+              "champion_n": 39,
+              "reference_n": 544
+            }
+          ]
+        },
+        "outcome": {
+          "scope": "FULL_MATCH_RESULT_NOT_FIGHT_WIN",
+          "dataset": "outcome",
+          "n": 1,
+          "wins": 0,
+          "win_rate": 0.0,
+          "ci95": {
+            "low": 0.0,
+            "high": 0.7934506856227626
+          }
+        },
+        "duo_verified": false,
+        "support_pair": null,
+        "interpretation": "표본과 구간이 다른 참고 통계. 원딜 상대 통계는 서포터 포함 2대2를 입증하지 않으며 자원 차이·승률은 교전력이나 최적 행동이 아니다."
+      },
+      "C": {
+        "matchup": {
+          "pair": [
+            "Darius",
+            "Ambessa"
+          ],
+          "position": "TOP",
+          "comparison": "PAIRED_ROLE_DELTA_NOT_DUO",
+          "dataset": "power",
+          "points": [
+            {
+              "metric": "cs_delta",
+              "minute": 10,
+              "n": 1,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "N_LT_2",
+              "unit": "CS"
+            },
+            {
+              "metric": "cs_delta",
+              "minute": 15,
+              "n": 1,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "N_LT_2",
+              "unit": "CS"
+            },
+            {
+              "metric": "gold_delta",
+              "minute": 10,
+              "n": 1,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "N_LT_2",
+              "unit": "골드"
+            },
+            {
+              "metric": "gold_delta",
+              "minute": 15,
+              "n": 1,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "N_LT_2",
+              "unit": "골드"
+            },
+            {
+              "metric": "xp_delta",
+              "minute": 10,
+              "n": 1,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "N_LT_2",
+              "unit": "경험치"
+            },
+            {
+              "metric": "xp_delta",
+              "minute": 15,
+              "n": 1,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "N_LT_2",
+              "unit": "경험치"
+            }
+          ]
+        },
+        "role_context": {
+          "champion": "Darius",
+          "position": "TOP",
+          "comparison": "ROLE_POPULATION_RATE",
+          "dataset": "power",
+          "points": [
+            {
+              "metric": "gold_delta",
+              "minute": 10,
+              "n": 273,
+              "mean": -0.02210916827343539,
+              "ci95": {
+                "high": 287.40030474384884,
+                "low": -287.44452308039575
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "골드 / 분",
+              "champion_n": 6,
+              "reference_n": 546
+            },
+            {
+              "metric": "gold_delta",
+              "minute": 15,
+              "n": 272,
+              "mean": -2.7919009111605466,
+              "ci95": {
+                "high": 330.11861150118887,
+                "low": -335.70241332351
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "골드 / 분",
+              "champion_n": 5,
+              "reference_n": 544
+            },
+            {
+              "metric": "xp_delta",
+              "minute": 10,
+              "n": 273,
+              "mean": -11.412755950666025,
+              "ci95": {
+                "high": 366.2048392003412,
+                "low": -389.0303511016732
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "경험치 / 분",
+              "champion_n": 6,
+              "reference_n": 546
+            },
+            {
+              "metric": "xp_delta",
+              "minute": 15,
+              "n": 272,
+              "mean": 5.372157286592574,
+              "ci95": {
+                "high": 496.8955030193194,
+                "low": -486.1511884461342
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "경험치 / 분",
+              "champion_n": 5,
+              "reference_n": 544
+            },
+            {
+              "metric": "cs_delta",
+              "minute": 10,
+              "n": 273,
+              "mean": -0.0036422421382037917,
+              "ci95": {
+                "high": 6.130678716721964,
+                "low": -6.137963200998372
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "CS / 분",
+              "champion_n": 6,
+              "reference_n": 546
+            },
+            {
+              "metric": "cs_delta",
+              "minute": 15,
+              "n": 272,
+              "mean": 0.4955265662682501,
+              "ci95": {
+                "high": 7.874415105366337,
+                "low": -6.883361972829837
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "CS / 분",
+              "champion_n": 5,
+              "reference_n": 544
+            }
+          ]
+        },
+        "outcome": {
+          "scope": "FULL_MATCH_RESULT_NOT_FIGHT_WIN",
+          "dataset": "outcome",
+          "n": 0,
+          "wins": null,
+          "win_rate": null,
+          "ci95": {
+            "low": null,
+            "high": null
+          }
+        },
+        "duo_verified": false,
+        "support_pair": null,
+        "interpretation": "표본과 구간이 다른 참고 통계. 원딜 상대 통계는 서포터 포함 2대2를 입증하지 않으며 자원 차이·승률은 교전력이나 최적 행동이 아니다."
+      },
+      "D": {
+        "matchup": {
+          "pair": [
+            "Ezreal",
+            "Kaisa"
+          ],
+          "position": "BOTTOM",
+          "comparison": "PAIRED_ROLE_DELTA_NOT_DUO",
+          "dataset": "power",
+          "points": [
+            {
+              "metric": "cs_delta",
+              "minute": 10,
+              "n": 3,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "CI_TOO_WIDE",
+              "unit": "CS"
+            },
+            {
+              "metric": "cs_delta",
+              "minute": 15,
+              "n": 3,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "CI_TOO_WIDE",
+              "unit": "CS"
+            },
+            {
+              "metric": "gold_delta",
+              "minute": 10,
+              "n": 3,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "CI_TOO_WIDE",
+              "unit": "골드"
+            },
+            {
+              "metric": "gold_delta",
+              "minute": 15,
+              "n": 3,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "CI_TOO_WIDE",
+              "unit": "골드"
+            },
+            {
+              "metric": "xp_delta",
+              "minute": 10,
+              "n": 3,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "CI_TOO_WIDE",
+              "unit": "경험치"
+            },
+            {
+              "metric": "xp_delta",
+              "minute": 15,
+              "n": 3,
+              "mean": null,
+              "ci95": {
+                "low": null,
+                "high": null
+              },
+              "legacy_visible": false,
+              "omission_reason": "CI_TOO_WIDE",
+              "unit": "경험치"
+            }
+          ]
+        },
+        "role_context": {
+          "champion": "Ezreal",
+          "position": "BOTTOM",
+          "comparison": "ROLE_POPULATION_RATE",
+          "dataset": "power",
+          "points": [
+            {
+              "metric": "gold_delta",
+              "minute": 10,
+              "n": 273,
+              "mean": 3.736309473284979,
+              "ci95": {
+                "high": 109.89841260589145,
+                "low": -102.4257936593215
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "골드 / 분",
+              "champion_n": 47,
+              "reference_n": 546
+            },
+            {
+              "metric": "gold_delta",
+              "minute": 15,
+              "n": 272,
+              "mean": -1.226434866728708,
+              "ci95": {
+                "high": 118.26626127843119,
+                "low": -120.7191310118886
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "골드 / 분",
+              "champion_n": 47,
+              "reference_n": 544
+            },
+            {
+              "metric": "xp_delta",
+              "minute": 10,
+              "n": 273,
+              "mean": 2.8191244253262515,
+              "ci95": {
+                "high": 99.72437270171064,
+                "low": -94.08612385105813
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "경험치 / 분",
+              "champion_n": 47,
+              "reference_n": 546
+            },
+            {
+              "metric": "xp_delta",
+              "minute": 15,
+              "n": 272,
+              "mean": 6.135696123452682,
+              "ci95": {
+                "high": 113.6186137752357,
+                "low": -101.34722152833032
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "경험치 / 분",
+              "champion_n": 47,
+              "reference_n": 544
+            },
+            {
+              "metric": "cs_delta",
+              "minute": 10,
+              "n": 273,
+              "mean": 0.20831193144466134,
+              "ci95": {
+                "high": 2.3711369655736725,
+                "low": -1.9545131026843496
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "CS / 분",
+              "champion_n": 47,
+              "reference_n": 546
+            },
+            {
+              "metric": "cs_delta",
+              "minute": 15,
+              "n": 272,
+              "mean": 0.17867726918443055,
+              "ci95": {
+                "high": 2.440596416877967,
+                "low": -2.0832418785091056
+              },
+              "legacy_visible": true,
+              "omission_reason": null,
+              "unit": "CS / 분",
+              "champion_n": 47,
+              "reference_n": 544
+            }
+          ]
+        },
+        "outcome": {
+          "scope": "FULL_MATCH_RESULT_NOT_FIGHT_WIN",
+          "dataset": "outcome",
+          "n": 1,
+          "wins": 1,
+          "win_rate": 1.0,
+          "ci95": {
+            "low": 0.20654931437723745,
+            "high": 1.0
+          }
+        },
+        "duo_verified": false,
+        "support_pair": null,
+        "interpretation": "표본과 구간이 다른 참고 통계. 원딜 상대 통계는 서포터 포함 2대2를 입증하지 않으며 자원 차이·승률은 교전력이나 최적 행동이 아니다."
+      }
+    },
+    "claims_of_fight_strength": false
+  },
+  "knowledge_applications": {
+    "format": "lol-coach-knowledge-applications-v1",
+    "policy": "TYPE_SCOPED_ADOPTION_V1_NOT_LEGACY_AUTO_REVIEW",
+    "A": {
+      "id": "A-INITIAL-ORDER-v1",
+      "schema_version": "lol-coach-knowledge-application-v1",
+      "evidence_kinds": [
+        "EXPERT_JUDGMENT",
+        "MECHANISM_INFERENCE"
+      ],
+      "recommended_plan": "먼저 미니언 처리 우위를 만든 뒤, 우위가 생기면 막타 중심으로 낮춰 쌓고 상대의 CS 접근을 압박한다.",
+      "reason": "공략은 주도권 확보 전 처리와 확보 후 견제를 구분한다. 중앙에서 막타만 기다리는 시작과는 다르다.",
+      "direct_sources": [
+        {
+          "source_id": "A:S2",
+          "locator": "Abilities > Piltover Peacemaker; Early Game > level1 push lead before last-hit control",
+          "supports": "우위 전 미니언 처리 우선, 우위 후 처리량 조절과 막타 접근 견제"
+        },
+        {
+          "source_id": "A:S1",
+          "locator": "Melee matchups; Early Game > Laning",
+          "supports": "럭스의 초반 웨이브 경합과 상대 막타 접근 견제"
+        }
+      ],
+      "conditions": [
+        "같은 레벨·충분한 체력과 마나, 중앙 경합, 정상 합류라는 로딩 비교 가정",
+        "케이틀린 Q·럭스 E 시작 예시이며 미니언 처리 중에도 노틸러스 접근선과 걸어서 돌아올 거리를 남긴다."
+      ],
+      "exceptions": [
+        "맞밀기에 밀리거나 진입선이 열리면 체력을 더 써 선푸시를 강제하지 않고 일부 줄이며 받는다.",
+        "귀환·합류가 목적이고 실제 처리 여유가 있으면 쌓기 대신 빠른 처리와 크래시 가능성을 비교한다."
+      ],
+      "inference": [
+        "이 일반 케이틀린 공략의 순서를 럭스 동료·노틸러스 접근·카이사 후속을 포함한 대표 구도에 제한 적용한다.",
+        "원문 freeze 표현은 이 문맥에서 처리 속도 억제이며, 별도 유지 조건을 갖춘 프리징 성공으로 채택하지 않는다."
+      ],
+      "open_questions": [
+        "상대 맞밀기·자원 차이가 현재 패치의 처리 우위를 뒤집는 범위",
+        "반복 견제의 누적 손익과 실제 올인 승자를 구분할 추가 매치업 설명"
+      ],
+      "official_fact_refs": [
+        "official:Caitlyn:Q",
+        "official:Lux:E",
+        "official:Nautilus:Q",
+        "official:Nautilus:P"
+      ],
+      "reviews": {
+        "source_scope": "EXCERPT_AND_CONTEXT_CHECKED",
+        "mechanism": "ARCHIVED_16.20.1_QUALITATIVE_SCOPE",
+        "statistical_calculation": "PRESERVED_AGGREGATE_PROJECTION",
+        "tactical_interpretation": "LIMITED_INFERENCE_NOT_OPTIMALITY_PROOF",
+        "real_effect": "NOT_MEASURED_N0"
+      },
+      "repeat_plan": "반복 견제는 적중·피해 흡수·남는 마나를 보고 이어 간다. 보호막에 막히거나 빗나가 처리 자원이 줄면 견제보다 수급·다음 처리 자원을 남긴다."
+    },
+    "C": {
+      "id": "C-CLOSE-CONTACT-v1",
+      "schema_version": "lol-coach-knowledge-application-v1",
+      "evidence_kinds": [
+        "EXPERT_JUDGMENT",
+        "MECHANISM_INFERENCE"
+      ],
+      "recommended_plan": "마비의 일격(W) 시작으로 근접 공격을 이어 갈 수 있는 싸움은 다리우스 우세로 보고 막타 자리를 지킨다. 암베사가 이탈하면 CS·공간을 얻고 추격은 별도로 판단한다.",
+      "reason": "암베사 장인 공략은 다리우스에게 평타 시작을 허용하지 말고 Q 끝거리에서 교환하라고 설명한다. 출혈과 W의 근접 압박 기전을 함께 적용한 제한적 추론이다.",
+      "direct_sources": [
+        {
+          "source_id": "C:C-S3",
+          "locator": "Matchups - 16.3!I12:J12 Darius",
+          "supports": "Q 끝거리 교환·다리우스 평타 시작 차단, 다리우스의 라인 압박 인정"
+        },
+        {
+          "source_id": "C:C-S5",
+          "locator": "Sheet1!F9 Ambessa",
+          "supports": "암베사의 초반 기술 공백을 이용하되 남은 돌진 때문에 추격이 실패할 수 있음"
+        }
+      ],
+      "conditions": [
+        "양쪽 Lv1·비슷한 시작 구매 단계와 충분한 체력, 다리우스 W·암베사 Q 시작 비교",
+        "큰 적 미니언·포탑·외부 개입 없이 다리우스가 평타와 W를 이어갈 근접 거리"
+      ],
+      "exceptions": [
+        "암베사가 Q 끝거리만 맞히고 이탈하면 근접 지속 교전 비교가 아니다.",
+        "다리우스 Q·E 시작, 체력·룬·주문·미니언 차이 또는 근접 접촉 단절이면 이 우세를 승계하지 않는다."
+      ],
+      "inference": [
+        "원문이 직접 모든 시작 기술의 승패를 판정한 것은 아니다. 근접 접촉이 유지되는 W 시작 분기의 상대적 우세만 기전과 함께 종합한다.",
+        "선타 피격 뒤 작은 손실과 큰 체력 열세를 동일시하지 않으며, 처치·추격·전체 라인 승리를 확정하지 않는다."
+      ],
+      "open_questions": [
+        "다른 시작 기술·룬·주문에서 남는 우세 범위",
+        "아이템 성장 후 암베사의 보호막·기동성에 따른 계획 변화"
+      ],
+      "official_fact_refs": [
+        "official:Darius:P",
+        "official:Darius:W",
+        "official:Ambessa:P",
+        "official:Ambessa:Q"
+      ],
+      "reviews": {
+        "source_scope": "EXCERPT_AND_CONTEXT_CHECKED",
+        "mechanism": "ARCHIVED_16.20.1_QUALITATIVE_SCOPE",
+        "statistical_calculation": "PRESERVED_AGGREGATE_PROJECTION",
+        "tactical_interpretation": "LIMITED_INFERENCE_NOT_OPTIMALITY_PROOF",
+        "real_effect": "NOT_MEASURED_N0"
+      }
+    }
+  }
 }
