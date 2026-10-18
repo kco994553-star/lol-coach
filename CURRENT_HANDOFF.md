@@ -1,3 +1,13 @@
+# Fiora–Malphite unsupported knowledge gap — execution claim
+- run_token: `main-20261018-fiora-malphite`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/fiora-malphite-20261018`
+- intake_main: `ec48ed03e29fff4c1e01e0345d4d38f13fff8e42`
+- scope: User screenshot all-insufficient Fiora/Malphite. Investigate source vs engine gap; adopt only source-supported scoped basic plan, periods, two-sided counterplay and synchronized wave. No provider/video/paid call increase or old approval/history changes. Affected tests + mandatory CI/normal publish/Pages/PCmobile/Handoff; N0 and Windows external unchanged.
+
+---
+
 # Evidence adoption delivered — writer released
 - run_token: `main-20261018-evidence-adoption`
 - status: `COMPLETED`
