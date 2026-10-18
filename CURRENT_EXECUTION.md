@@ -1,3 +1,23 @@
+# Latest common execution claim — PARKED_EXTERNAL
+- run_token: `main-20261017-exchange-preference`
+- status: `PARKED_EXTERNAL`
+- writer_active: false
+- final_main: `d264a8d2db162117692a00c31c6a9d7d92ee8f6f`
+- product_source_main: `0e1be2e0044708aad42372d0c8a3056a9ff799a3`
+- artifact: `3f328ce8ab11ad6a5e6db9a18473727ec2ecf1ff`
+- completed_prs: 77,78
+- feature_and_product_main_required_ci: all3 SUCCESS
+- results_main_required_ci: `39082625285`, `39082625198` — all3 SUCCESS, unchanged source/unit/browser proofs reused
+- native_pages_run: `39082477385` — build/report/deploy SUCCESS
+- public_proof: actual HTTPS74files+root/build-info/.nojekyll hashes; actual PC1440/mobile39025hero/session/cycle/focus/input/failure/retry/guest10pick/3card destinations/map/textzoom PASS, pageerror0/HTTPerror0/provider0. Previous pro JSON byte-identical.
+- user_request: 3cards now ACTUAL_GAMEPLAY_STILL wave handling / official Riot Ryze team movement / ElderDragon group combat; no verified pro-match identity.20new official backgrounds+old5=25, old5 unchanged, no visible AI label. Sources/publishers/hashes/usage boundaries retained; old assets/history preserved.
+- handoff: `evidence/actual-evidence/gameplay-cards/publication/result.md`
+- final_receipt: `/workspace/gameplay-final-receipt.json`
+- receipt_sha256: `422a0227c41448b2edf1bed912a26eb4e87f8cc8e47f9ad98f13bb1af9100e3d`
+- remaining: preexisting source/video allowed-window/privateAPI/realWindows external dependencies; no ready card/background request left. Gemini/imagegen/newgames0/paidplan0. AUTO30HOLD20USER0/advice7/Frozen350/videoledgers/N0/30secunmeasured/WindowsBLOCKED_EXTERNAL retained.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
