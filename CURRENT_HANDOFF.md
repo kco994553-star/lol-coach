@@ -1,3 +1,12 @@
+# Loading Coach intake and implementation — 2026-10-18
+- Fresh main8b7ec8c/PR79–80 and published74file evidence reused. New additive coach-v1 + inputv3 scenario assumptions, source-scoped A/B/C/D knowledge; legacy inputv1/v2 and older engines/views preserved in collapsed full comparison.
+- Default10pick→plan/strong phases/6period categorical grid→wave execution→trade/sustain→exceptions; risk only feasible action selection, explanation/diagram step2 same result. Named D evolution/access and Muramana events; no fixed3core reversal. Same registry reused in study.
+- Source research/conditions/counterexamples/oldpatch/author expertise limits retained. B counterfocus adaptation is DESIGN_HYPOTHESIS; C sustained win and B 6+overall win unknown. Learned spell and unsupported foreign-skill bugs found/fixed by independent review. Initial legacy CSS leak retained and scoped grid reset.
+- Local affected60 + amendednew11 and real PC1440/mobile390 flows passed. RequiredCI/normalmerge/exactmainCI→Pages→actual HTTPS remains next; no claim of publication yet. Evidence: evidence/actual-evidence/loading-coach/report.md.
+- AUTO30/HOLD20/USER0/advice7/Frozen350/raw/holds/failures/video quotas/Windows/manual/pro projection retained. Gemini/video/game/paid0; N0/30secunmeasured/WindowsBLOCKED_EXTERNAL unchanged.
+
+---
+
 # Desktop composition — actual public completion
 - PR79 product sourceab17d505546f63d339851cb672c2e7db298a84c9, artifact4b7fb944b5e8b910e6c5cc69c5ce36207ba5d614, Pages39083506747 actualSUCCESS. Feature/main required3 PASS; actual HTTPS74files+root/build-info/nojekyll hashes, PC/mobile8geometry viewports/25hero/session/input/focus/errors/card3destinations/guest10pick/maps PASS.
 - Desktop height now content-driven:980width800/1800height both stage684.36; narrow CTA aligned48px; contained cards16px gutters;952x688 contains3cards. Guest below search, identity/public API note retained, errors natural flow. Reference-like shared SVG icons; operations map path unchanged.
