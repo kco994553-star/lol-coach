@@ -1,3 +1,10 @@
+# Actual gameplay card /25background intake — 2026-10-18
+- Latestmain58ad8e3/prior51file public receipts reused. User wants3 real LoL gameplay cards and20extra backgrounds. Selected actual wave/official Ryze relocation/ElderDragon combat, no verified pro-match identity or new expert/tactical fact. Source/publisher/hash/provenance in config/gameplay_cards_assets.json, previous sources/AI assets retained.
+- Original5+official20=25; official names/slots/version verified. Strict fixed25paths, first-selected-only/session/cycle/input/focus/scroll guards. Visible cards eager; not preload all25. Initial blank PC capture timing retained; final await decode and actual painted screens verified.
+- Affected16 + real PC/mobile changed flows PASS, independentreview no material finding. RequiredCI/normalmerge/postmainCI→Pages→actual74file/PCmobile proof next. Source questions/provider calls/quota/grades/Windows/manual unaffected; Gemini/imagegen/newgames0/paidplan0, N0/30secunmeasured/Windowsblocked retained.
+
+---
+
 # Art refresh — actual public completion
 - PR75 source64eb52fbe4723301adbbae540fb76d006050a525, artifact1dfb4a3d62e772761dfeb7b579a86f955b836e68, Pages39078923918 actualSUCCESS. Feature/main all3 requiredCI PASS; HTTPS51files+root/buildinfo/nojekyll hashes; actual PC/mobile hero5/state/card3destinations/guest10pick/map PASS.
 - User-visible AI badges/footer label removed; operations strategic movement and fight dragon-pit battle, lane art retained. Mixed base2/officialskin2/generatedtheme1. Actual provenance/raw/hash preserved in config/hero catalog, no false official attribution. First-only/session/input/focus/scroll/failure guards retained.
