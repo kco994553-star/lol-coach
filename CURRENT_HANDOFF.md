@@ -1,3 +1,17 @@
+# Fiora–Malphite source-backed plans delivered — writer released
+- run_token: `main-20261018-fiora-malphite`
+- status: `COMPLETED`
+- writer_active: false
+- owner_branch: `work/fiora-malphite-20261018`
+- final_main: `1dd8b3ffa36c7ab024cf814c2a0b4c43b654313c`
+- source_main: `374a2a93c83bf712ec66c655522e24eb6220b1d6`; PR97/98 product and PR99 results, required PR/exactmain3 allPASS.
+- public_artifact: `ac63be28dffd0b54d06aeba96e1f42f9b1c9ba87`; nativePages39104283315 actualSUCCESS, HTTPS5hashes/root/buildinfo/nojekyll,86manifest/81unchanged reused; actual public PC1440/mobile390 E flows passed. Product unchanged after deployment.
+- result: evidence/actual-evidence/fiora-malphite/publication/result.md; exact final CI/merge/public proof on this branch: evidence/actual-evidence/fiora-malphite/final-handoff.json.
+- delivered: Register screenshot's unregistered Fiora example with2primary specialist sources/1new claim, source-bound6phase farming/parry/mana/purchase/wave/two-sided plan. Original23sources/28claims kept. Guide pressure disagreement remains; no outcome-conditioned winner, no claim30directional strength cells filled. Initial reference/publication and learned-scope RED/failure history retained; selected Lv1 uses only Q/P, Lv2 explicit Q/E vsQ/W, trade/playbook/exception same scope. Old comparison accessible; main view shows actual supported plans.
+- remaining: exact condition-matched push/trade/allin/attrition and same-gold build judgments, other unsupported matchup knowledge. Existing source questions3/video diagnosis/ledger/quotas independent. Provider/video/game/paid0; AUTO30/HOLD20/USER0/advice7/Frozen350/Windows/manual/pro/riot/history preserved. Coaching N0/human30secunmeasured/WindowsBLOCKED_EXTERNAL unchanged. Workspaces clean; no pending product publication.
+
+---
+
 # Fiora–Malphite unsupported knowledge gap — execution claim
 - run_token: `main-20261018-fiora-malphite`
 - status: `RUNNING`
