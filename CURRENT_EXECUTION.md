@@ -1,3 +1,122 @@
+# Riot ownership proof delivered — writer released
+- run_token: `main-20261018-riot-ownership`
+- status: `COMPLETED`
+- writer_active: false
+- owner_branch: `work/riot-ownership-results-20261018`
+- final_main: `19fe7eac131a9c7c311a6f13c31447d8ccea40ec` PR89 results-only normalmerge, exactpostmain required3 SUCCESS; source hashes and completed checks reused. No product republish from results89.
+- product_source: `9201248e9ce49f21204a35627876105149c1d17f` PR88 normalmerge, feature/postmain required3 SUCCESS.
+- actual_public_artifact: `fb6e11c4927f24f8452c8c51e524226c50de7595`, nativePages39091127798 build/report/deploy actualSUCCESS. Public https://kco994553-star.github.io/lol-coach/riot.txt HTTPS200 exact36ASCII bytes/noquotes/newline; SHA2561d5490369d06a243de54fbc7bc3f05aeb3664a49866c76404a669344ddf93892. Final fresh HTTPS check after results89 SUCCESS.
+- preserved: Only riot.txt added, build-info updated; all79previous public file blobs and actualHTTPS hashes byte-identical;80files/root/build-info/nojekyll verified. Canonical web_r4/riot.txt in future explicit export and source inventory. Frozen Design/web/data/test definitions/CI/deployment ancestors/history/privacy/provider/video/Windows preserved. No API key or other secret added; no Riot API/Gemini/video/newgame/paid calls.
+- USER_ONLY_PENDING: Riot Developer Portal Product URL change and VERIFY URL click were NOT performed. Public proof serving verified; portal ownership approval NOT claimed. No automatic portal/browser/background action created.
+- evidence/handoff: CURRENT_HANDOFF.md; docs/queue/QUEUE.md; evidence/actual-evidence/riot-ownership/publication/result.md and source/raw CI/HTTPS receipts. Primary main and linked worktree clean/synced. D1/D2 bounded work complete; no active writer.
+
+## Results-only PR89 gate and exact-main receipts
+```json
+{
+  "feature-ci": [
+    {
+      "id": 39091238746,
+      "head": "0ba48092739ce61ff13fd236716961519594850f",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 117568255797,
+          "name": "regression",
+          "conclusion": "success",
+          "log_sha256": "be1287fae9566b4d4ecf3db474d5642c56bf857bee2ae8721ea4ff530b329a4b"
+        },
+        {
+          "id": 117568255990,
+          "name": "browser-regression",
+          "conclusion": "success",
+          "log_sha256": "62a4b94b81207ba090baf56ed0a34ee51758092c5a385e1664d0d34a552b8ffa"
+        }
+      ]
+    },
+    {
+      "id": 39091238725,
+      "head": "0ba48092739ce61ff13fd236716961519594850f",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 117568255790,
+          "name": "pregame",
+          "conclusion": "success",
+          "log_sha256": "758475b6720c1ce5eab691a87d936cd287a7f9908b065410f135d1252bf97731"
+        }
+      ]
+    }
+  ],
+  "main-ci": [
+    {
+      "id": 39091309500,
+      "head": "19fe7eac131a9c7c311a6f13c31447d8ccea40ec",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 117568481623,
+          "name": "regression",
+          "conclusion": "success",
+          "log_sha256": "835cc92d21ccf2433bba4240ba144a2f80b329a1ef79801b200553e822aac55d"
+        },
+        {
+          "id": 117568481682,
+          "name": "browser-regression",
+          "conclusion": "success",
+          "log_sha256": "7e14da71cacc7892fb58ab6a9a46d109f80e01106e7952efb4fb3cc0eba2c2d9"
+        }
+      ]
+    },
+    {
+      "id": 39091309514,
+      "head": "19fe7eac131a9c7c311a6f13c31447d8ccea40ec",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 117568482620,
+          "name": "pregame",
+          "conclusion": "success",
+          "log_sha256": "d10efaf994b3c96fbacff9e10c33b6597d75b8d83b6dadac5490970718cc4ed6"
+        }
+      ]
+    }
+  ],
+  "merge-gate": {
+    "pr": 89,
+    "url": "https://github.com/kco994553-star/lol-coach/pull/89",
+    "head": "0ba48092739ce61ff13fd236716961519594850f",
+    "base": "9201248e9ce49f21204a35627876105149c1d17f",
+    "tested_merge": "ce4a58f3755367629e4f8e9c491e1f6fd3ca07fd",
+    "tree": "260578829ee5c618dcde0cb1cf6f43599de46b50",
+    "required_jobs": [
+      {
+        "id": 117568255797,
+        "name": "regression",
+        "conclusion": "success",
+        "log_sha256": "be1287fae9566b4d4ecf3db474d5642c56bf857bee2ae8721ea4ff530b329a4b"
+      },
+      {
+        "id": 117568255990,
+        "name": "browser-regression",
+        "conclusion": "success",
+        "log_sha256": "62a4b94b81207ba090baf56ed0a34ee51758092c5a385e1664d0d34a552b8ffa"
+      },
+      {
+        "id": 117568255790,
+        "name": "pregame",
+        "conclusion": "success",
+        "log_sha256": "758475b6720c1ce5eab691a87d936cd287a7f9908b065410f135d1252bf97731"
+      }
+    ],
+    "merge_method": "merge",
+    "coaching_accuracy": null,
+    "gate": "PASS"
+  }
+}
+```
+
+---
+
 # Riot ownership proof — actual public verified, results PR89
 - run_token: `main-20261018-riot-ownership`
 - status: `RUNNING`
