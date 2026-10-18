@@ -1,3 +1,10 @@
+# Loading Coach patch boundary correction — publication not started
+- PR81 main51ebdee implemented new coach and passed feature CI. Prepared79file export is NOT_PUBLISHED.
+- Pre-publication counterexample: input1.1 retained A early ALLY despite official-source MISMATCH. Correct new consumer to show input/analysis patch, all affected metrics INSUFFICIENT, CHECK_WAVE only, no line diagram. Null patch remains explicit standard comparison, never observed match.
+- New focused pure/browser counterexample; inherited guide namespace26.x vs official16.x remains separately unverified. No provider/grade/history change. MandatoryCI/normalmerge/exactmainCI/public proof before publication.
+
+---
+
 # Loading Coach intake and implementation — 2026-10-18
 - Fresh main8b7ec8c/PR79–80 and published74file evidence reused. New additive coach-v1 + inputv3 scenario assumptions, source-scoped A/B/C/D knowledge; legacy inputv1/v2 and older engines/views preserved in collapsed full comparison.
 - Default10pick→plan/strong phases/6period categorical grid→wave execution→trade/sustain→exceptions; risk only feasible action selection, explanation/diagram step2 same result. Named D evolution/access and Muramana events; no fixed3core reversal. Same registry reused in study.
