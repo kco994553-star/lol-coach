@@ -1,3 +1,23 @@
+# Latest common execution claim — PARKED_EXTERNAL
+- run_token: `main-20261017-exchange-preference`
+- status: `PARKED_EXTERNAL`
+- writer_active: false
+- final_main: `8b7ec8c4fb0bf348beb333c593f700cfcb2779da`
+- product_source_main: `ab17d505546f63d339851cb672c2e7db298a84c9`
+- artifact: `4b7fb944b5e8b910e6c5cc69c5ce36207ba5d614`
+- completed_prs: 79,80
+- feature_and_product_main_required_ci: all3 SUCCESS
+- results_main_required_ci: `39083697491`, `39083697516` — all3 SUCCESS; unchanged unit/browser proofs reused
+- native_pages_run: `39083506747` — build/report/deploy SUCCESS
+- public_proof: actual HTTPS74files+root/build-info/.nojekyll hashes; real PC1440/mobile390 plus980x800/1800,952x688,1920x1080,701x900,282x690 geometry. Same980width stage684.36 at both heights; input/select/CTA48px single row,16px contained card gutters, reference all3cards bottom660.36.25hero/session/input/focus/failure/retry/guest10pick/3destinations/maps PASS; pageerror0/HTTPerror0/provider0. Pro projection and all images unchanged.
+- user_request: desktop reference composition / no tall viewport stretching or card collisions; guest below search with privacy retained; reference-inspired common SVG icons inclbrand/home/swords/group/prep/review/menu; operations map path exactly unchanged. No engine/data/source/Windows/manual change.
+- handoff: `evidence/actual-evidence/desktop-composition/publication/result.md`
+- final_receipt: `/workspace/desktop-composition-final-receipt.json`
+- receipt_sha256: `29c860090f5057910b07430efffbcdd4232c95586373d71fea819ea8a3b7934c`
+- remaining: existing source/video allowed-window/privateAPI/realWindows external dependencies; no READY desktop correction task left. Gemini/imagegen/newgames/paid0; advice7/AUTO30HOLD20USER0/Frozen350/holds/failures/ledgers/N0/30secunmeasured/WindowsBLOCKED_EXTERNAL retained. Before/failure/intermediate/CI wrapper-format observation preserved, no product test criteria relaxed.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
