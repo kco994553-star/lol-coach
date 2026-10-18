@@ -1,3 +1,18 @@
+# Plain Korean and matchup context — completed
+- run_token: `main-20261018-plain-context`
+- status: `COMPLETED`
+- writer_active: false
+- final_main: `c4468626bf855fdfaada120d7b74a2f77a6e9ac4` (PR103/104)
+- product_main: `11a78670fb4d8781d49c64c47db5627c024c7219`
+- public_artifact: `5bbcf7c66cee2dc1a523b8a20272e926913c3b6f`; nativePages39110092528 actualSUCCESS.
+- Feature/exact-product-main/results/exact-final-main required3PASS. Final39110312047/39110312058 source-bound logs current_sources true, finished tests and all browser evidence reused. Final gatePASS; product files unchanged in results commit.
+- Actual HTTPS5hashes/root/buildinfo/nojekyll and PC1440/mobile390 A/E defaults +lane/operations/fight contextsPASS.0new required conditions. Original raw sources/official descriptions/trace and objective metrics/legacy grades preserved.
+- Scope: authored Korean terms made concrete; actual duo/team capabilities explain plans and interactions without invented winners. Review/scope fixes and initial CI old-map-text failure retained.
+- Final proof: `evidence/actual-evidence/plain-context/final-handoff.json` on this claim branch; product evidence/public screens on main under `evidence/actual-evidence/plain-context/publication/`.
+- N0/human30secUNMEASURED/WindowsBLOCKED_EXTERNAL unchanged; no provider/video/game/paid calls. NextP0 conditional comparative matchup knowledge, no cosmetic unknown-to-winner fill.
+
+---
+
 # Plain Korean and matchup context — active writer
 - run_token: `main-20261018-plain-context`
 - status: `RUNNING`
