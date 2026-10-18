@@ -1,3 +1,12 @@
+# Teamfight formation — actual public completion
+- PR107 productd6230fee829235a1b7ef12dfe0f13f63d8f0bdb1, required PR/exact-product-main3PASS. Public6497d334bec4c03636878ae0b4f380894feffc1b; nativePages39121022230 actualSUCCESS; changed-file HTTPS hashes/root/buildinfo/nojekyll exact, pro projection and riot proof retained.
+- Learning first lesson and gameplan fight share conditional ten-portrait frontal vs flank/isolation model. Actual picks/own marker, scene/step/actor/zoom+keyboard focus in sync. Existing maps/6scenes separate. Frontal5v5 not a win guarantee; scatter alone not a plan. New geometry/sequence DESIGN_HYPOTHESIS, official mechanics/archived guide scope separate.
+- Future new statistics limited to MASTER/GM/CHALLENGER current seed cohorts before network; old archives/core fixtures/publish-only preserved. Manual MASTER same-patch auxiliary, existing schedule/auth/budgets unchanged. Historical allparticipant ranks unverified; no new collection or sample added.
+-64affected tests/current coach delta + protected full loading/directions and actual public PC/mobile/320/200% flow PASS. Review crash/focus and initial local401/probe timing failures preserved. Evidence evidence/actual-evidence/teamfight-formation/publication/. Existing source/claim/AUTO30HOLD20USER0/advice7/Frozen350/budgets/Windows retained; N0/30secUNMEASURED/WindowsBLOCKED_EXTERNAL.
+- Results-only finalCI and common writer release proof follow, no identical product republish. Next: better scoped teaching evidence/other compositions, no unsupported ideal/winner claims. No initiated provider/game/video/paid calls.
+
+---
+
 # Teamfight formations — source ready, publication pending
 - Inherit mainabd0872/public742bb62 and existing completed IA checks. Shared ten-portrait conditional frontal/flank comparison in gameplan fight and first learning lesson; original map/6scenes remain separate. Same input/report, actual picks, own highlight, step/zoom state; no live positions/win/range/path prediction.
 - Future statistics CLI MASTER/GRANDMASTER/CHALLENGER seed guard before network; existing schedule/auth/budgets/primary insufficiency preserved, manual MASTER auxiliary enabled. Historical scopes and original synthetic lower-tier core preserved; seed rank is not allparticipants historical rank. No new collection.
