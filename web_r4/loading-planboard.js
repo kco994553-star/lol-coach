@@ -17,6 +17,27 @@
     return clone(value);
   }
   const roleNames = { TOP: '탑', MID: '미드', BOTTOM: '바텀' };
+  // Authored strategy display only. Never apply to quotes, official descriptions or traces.
+  function plainLanguage(value) {
+    let text=String(value??'');
+    const phrases=[
+      ['접근·처리 선택권을 만든다','상대에게 다가갈 기회와 미니언을 먼저 잡을 여유를 만든다'],['아군 제어와 연결해','아군의 속박·기절에 맞춰 움직여'],['아군 제어가 적중하고','아군의 속박·기절이 맞고'],['사이드 CS·포탑 압박을 얻되 본대가 버틸 수 없는 싸움은 미리 접는다.','다른 라인에서 미니언을 잡고 포탑을 압박하되, 아군이 버티기 어려운 싸움이 열리면 더 깊게 밀지 않는다.'],['피오라는 응수(W)로 받아낼 수단과 복귀 경로를 정한 뒤 접근한다.','피오라는 응수(W)로 막을 기술과 빠져나올 길을 정한 뒤 접근한다.'],
+      ['측면 진입·동료 후속 단절이면 교환 종료.','상대가 옆으로 들어오거나 동료가 함께 공격할 수 없으면 교환을 끝낸다.'],['정글 개입·후속 단절이면 전진 폭을 줄인다.','정글러가 개입하거나 아군이 함께 공격할 수 없으면 더 앞으로 나가지 않는다.'],['상대 서포터 복귀·정글 개입·동료 후속 단절이면 압박을 접는다.','상대 서포터가 돌아오거나 정글러가 개입하거나 동료가 함께 공격할 수 없으면 압박을 멈춘다.'],['수급 아이템','미니언을 잡기 좋은 아이템'],['처리·회복 수단','미니언을 잡거나 체력을 회복할 수단'],['본대 합류를','아군이 모인 곳으로 이동하는지를'],['기본 수급을','미니언을 잡으며 성장하기를'],['수급을 기본으로 기회 압박','미니언을 잡으며 성장하고, 기회가 생기면 압박'],['동료 후속','동료의 추가 공격'],
+      ['후속 거리가 끊기면','아군이 함께 공격할 수 없으면'],['수급할','미니언을 잡을'],['수급하는','미니언을 잡는'],['수급하며','미니언을 잡으며'],['처리할','미니언을 잡을'],['처리하는','미니언을 잡는'],['처리한다','미니언을 잡는다'],['처리하면','미니언을 잡으면'],['처리해야','미니언을 잡아야'],['수급을 잇는다','미니언을 계속 잡는다'],['수급을 이어','미니언을 계속 잡아'],['수급하고','미니언을 잡아 골드·경험치를 얻고'],['수급한다','미니언을 잡아 골드·경험치를 얻는다'],
+      ['수급 공간','미니언을 잡을 자리'],['수급 위치','미니언을 잡을 위치'],['수급선','미니언을 잡고 돌아올 위치'],['수급 거리','미니언을 잡고 돌아올 거리'],['수급 자원','미니언을 잡는 데 쓸 체력·마나·기술'],['수급 목표','챙길 미니언과 경험치'],['수급 손실','놓치는 미니언 골드·경험치'],['수급 보존','골드·경험치 챙기기'],['수급 유지','미니언을 계속 잡기'],['수급 접근','미니언에 다가가기'],
+      ['중앙 수급','중앙 라인에서 미니언 잡기'],['포탑 아래 수급','포탑 아래에서 미니언 잡기'],['포탑 수급','포탑 아래에서 미니언 잡기'],
+      ['처리·교환·대응 자원','미니언 잡기·견제·방어에 쓸 체력·마나·기술'],['처리 자원','미니언을 잡는 데 쓸 마나·기술'],['처리 수단','미니언을 잡을 기술'],['처리 기술','미니언을 잡는 기술'],['처리 능력','미니언을 잡는 능력'],['처리 우위','상대보다 미니언을 먼저 잡을 여유'],['처리 여유','미니언을 먼저 잡고 움직일 시간'],['처리 선택권','미니언을 빨리 잡거나 막타만 칠 선택'],['처리 시간','미니언을 잡을 시간'],['처리량','미니언을 잡는 속도'],['처리 방향','미니언이 어느 쪽으로 밀리는지'],['처리 방식','미니언을 잡는 방법'],['처리 속도','미니언을 잡는 속도'],['빠른 처리','미니언을 빠르게 잡기'],['선처리 경쟁','미니언을 먼저 잡는 경쟁'],['선처리','상대보다 먼저 미니언 잡기'],
+      ['후속이 끊기면','추가 공격이 이어지지 않으면'],['후속 단절','추가 공격을 이어갈 수 없음'],['후속 거리','같이 공격할 수 있는 거리'],['카이사 후속','카이사의 추가 공격'],['아군 후속','아군의 추가 공격'],['동료 후속','동료의 추가 공격'],
+      ['본대와 연결한다','아군이 모인 곳에 합류할 준비를 한다'],['본대와 연결','아군이 모인 곳에 합류할 준비'],['본대 복귀 경로','아군이 모인 곳으로 돌아갈 길'],['본대 합류','아군이 모인 곳에 합류'],['본대 후속','아군이 함께 공격할 수 있는'],['본대','아군이 모인 곳'],['보호 연결','아군 보호 기술이 닿는 거리'],['동료 연결','함께 싸울 아군과의 거리'],
+      ['사이드 자원','사이드 라인의 미니언·포탑'],['가까운 자원','가까이서 얻을 골드·경험치'],['남길 자원','아껴둘 체력·마나·기술'],['성장 자원','골드·경험치'],['대응 자원','반격·방어에 쓸 체력·마나·기술'],['이탈 자원','빠져나올 기술'],
+      ['아군 제어가 맞으면','아군의 속박·기절이 맞으면'],['제어 적중','속박·기절 적중'],['제어 뒤','적을 묶은 뒤'],['CS 접근','미니언 막타를 칠 자리'],['교전 우열','싸울 때 어느 쪽이 강한지'],['강약세','강한 구간과 약한 구간']
+    ];
+    const replacePhrase=(from,to)=>{const re=new RegExp(from.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(으로|로|을|를|이|가|은|는|과|와)?','g');text=text.replace(re,(_,particle)=>{if(!particle)return to;const n=to.charCodeAt(to.length-1)-0xAC00;if(n<0||n>11171)return to+particle;const end=n%28,pairs=[['을','를'],['이','가'],['은','는'],['과','와']];if(particle==='으로'||particle==='로')return to+(end&&end!==8?'으로':'로');const pair=pairs.find(p=>p.includes(particle));return to+(pair?pair[end?0:1]:particle);});};
+    for(const [from,to]of phrases.sort((a,b)=>b[0].length-a[0].length))replacePhrase(from,to);
+    text=text.replace(/수급을/g,'미니언을 잡아 골드·경험치를 얻는 일을').replace(/수급이/g,'미니언을 잡는 일이').replace(/수급에/g,'미니언을 잡는 데').replace(/수급으로/g,'미니언을 잡는 쪽으로').replace(/수급/g,'미니언 잡기');
+    text=text.replace(/처리하고/g,'미니언을 잡고').replace(/처리에/g,'미니언을 잡는 데').replace(/처리를/g,'미니언을 잡는 일을').replace(/처리가/g,'미니언 잡기가').replace(/처리/g,'미니언 잡기');
+    return text;
+  }
   function evaluate(report, catalog, coach, supplied, knowledge) {
     const input = report.input, planning = validate(supplied || input.planning || defaults());
     const p = { enemy_support: 'PRESENT', enemy_jungle: 'UNKNOWN', ally_jungle: 'UNCONFIRMED', goal: 'AUTO', clear_window: 'UNCONFIRMED', ...planning.overrides };
@@ -216,18 +237,64 @@
       changes:[id==='E'&&period==='LEVEL1'&&!low&&!unknown?skill('Malphite','Q')+' 뒤 퇴로가 길어지면 교환 종료.':id==='A'&&!low&&!unknown?'측면 진입·동료 후속 단절이면 교환 종료.':changeIf,low?'수급에 쓸 자원까지 줄면 귀환·구매를 비교한다.':id==='E'?'방어 구매 뒤에는 압박보다 처리·구매를 우선한다.':'교환으로 다음 처리·대응 자원이 부족해지면 수급으로 바꾼다.',jungleNear?'개입 후속과 퇴로가 겹치면 깊은 전진을 끝낸다.':'정글 개입·후속 단절이면 전진 폭을 줄인다.'],
       origin:'ANALYSIS_ASSUMPTIONS_NOT_OBSERVATION',method_label:'방법 보기'
     };
+    // Explain opposing plans from the same exact lane and ten-pick capabilities.
+    // A capability is not a measured matchup winner or an observed player intention.
+    const ownLaneName=[self,...(bottom?[slot('allies','SUPPORT')]:[])].filter(Boolean).map(name).join('·');
+    const enemyLaneName=[slot('enemies',input.own_position),...(bottom?[slot('enemies','SUPPORT')]:[])].filter(Boolean).map(name).join('·')||'상대 배치 미확인';
+    const laneViews={
+      A:['케이틀린·럭스는 멀리서 공격해 상대가 미니언에 다가오기 어렵게 만드는 조합이다.','카이사·노틸러스는 거리를 좁혀 두 명이 함께 공격할 기회를 노릴 수 있다.','먼 거리의 짧은 견제와 접근 후 함께 때리는 싸움이 맞붙는 라인이다.'],
+      B:['유나라·룰루는 강화 공격에 보호·지원 기술을 겹치는 방식으로 싸운다.','카이사·알리스타는 한 명에게 접근해 두 명이 함께 공격할 기회를 노릴 수 있다.','누가 먼저 맞았는지만이 아니라 강화·보호와 원딜의 추가 공격이 남는지가 중요하다.'],
+      BR:['카이사·알리스타는 체력을 아껴 미니언을 잡고, 접근과 원딜 공격을 함께 쓸 기회를 만든다.','유나라·룰루는 강화 공격과 보호 기술을 함께 써서 가까이 오는 상대를 압박할 수 있다.','상대 강화·보호가 겹친 싸움과 알리스타 접근 뒤 카이사 공격이 닿는 싸움을 나눠 본다.'],
+      C:['다리우스는 가까이 붙은 싸움에서 계속 공격할 수 있는지를 본다.','암베사는 기술 끝거리에서 공격하거나 남은 이동 수단으로 거리를 벌릴 수 있다.','Lv1 시작 기술과 붙어 있을 수 있는지가 핵심이며, 상대가 빠져나간 뒤의 추격은 별도다.'],
+      D:['이즈리얼은 멀리서 공격하고 상대가 다가올 때 빠져나올 수단을 남기는 방식이다.','카이사는 표식·진화와 접근 수단이 갖춰진 뒤 가까운 싸움을 노릴 수 있다.','견제가 닿는 거리와 카이사가 접근한 뒤의 싸움은 다르며, 서포터에 따른 2대2 우열은 별도다.'],
+      E:['피오라는 닿는 급소를 짧게 공격하면서 미니언 골드·경험치를 놓치지 않는 것이 기본이다.','말파이트는 원거리 견제로 급소·미니언에 다가오는 피오라의 체력을 깎고 거리를 벌릴 수 있다.','급소에 닿고 빠지는 피오라와 멀리서 견제하는 말파이트가 맞붙는 라인이다.']
+    };
+    const view=usable?laneViews[id]?.slice():null;
+    if(view&&id==='C'&&period!=='LEVEL1')view[2]='이 구간의 교환 우열은 자료가 부족하므로 Lv1 판단을 그대로 적용하지 않고 남은 기술과 이탈 가능성을 다시 본다.';
+    const signals=side=>(report.composition?.[side]?.signals||[]).filter(v=>v.evidence_ids?.length).slice().sort((a,b)=>(a.champion+':'+a.kind).localeCompare(b.champion+':'+b.kind));
+    const oursSignals=signals('allies'),theirSignals=signals('enemies');
+    const has=(rows,k)=>rows.some(v=>v.kind===k);
+    const group=(rows,k)=>rows.filter(v=>v.kind===k).map(v=>({champion:v.champion,name:name(v.champion),skills:v.evidence_ids.map(ref=>{const [,c,key]=ref.split(':');return skill(c,key);}),fact_ids:v.evidence_ids}));
+    let ourStyle=has(oursSignals,'PICK')?(has(oursSignals,'COVER')?'적을 묶는 기술과 아군을 지키는 기술을 함께 쓸 수 있다.':'적을 묶고 같은 대상을 함께 공격할 기회를 만들 수 있다.'):has(oursSignals,'PRESSURE')?'적이 다가오기 전에 견제로 체력을 깎을 수 있다.':'확인된 공격 수단과 아군이 함께 공격할 거리를 먼저 맞춘다.';
+    const theirStyle=has(theirSignals,'ACCESS')?'상대는 거리를 좁혀 떨어진 아군을 먼저 공격할 수 있다.':has(theirSignals,'PRESSURE')?'상대는 멀리서 체력을 깎아 우리를 물러나게 할 수 있다.':'상대가 싸움을 여는 주된 방법은 현재 자료에서 분명하지 않다.';
+    if(usable&&id==='A')ourStyle='케이틀린의 먼 거리 공격을 럭스의 속박·보호와 함께 쓰는 조합이다.';
+    if(usable&&id==='E')ourStyle=oursSignals.some(v=>v.champion!==self&&['COVER','PICK'].includes(v.kind))?'피오라는 다른 라인에서 포탑을 압박하고, 나머지 아군은 보호·방해 기술로 합류할 시간을 버는 계획이다.':'피오라는 다른 라인에서 포탑을 압박할 수 있지만, 아군이 싸움을 피하며 기다릴 수 있는지는 따로 봐야 한다.';
+    if(usable&&id==='B')ourStyle='유나라가 강화 공격을 이어갈 동안 룰루가 보호·방해 기술로 돕는 조합이다.';
+    const accessNames=[...new Set(theirSignals.filter(v=>v.kind==='ACCESS').map(v=>v.champion))].map(name).join('·');
+    const opposingStyle=accessNames?accessNames+'처럼 거리를 좁히는 상대가 떨어진 아군을 먼저 잡는 싸움을 노릴 수 있다.':theirStyle;
+    const means={ours:Object.fromEntries(['PICK','COVER','PRESSURE','ACCESS'].map(k=>[k,group(oursSignals,k)])),theirs:Object.fromEntries(['PICK','COVER','PRESSURE','ACCESS'].map(k=>[k,group(theirSignals,k)]))};
+    const macroMatchup=sideRole?(has(theirSignals,'ACCESS')?'우리의 사이드 압박과 상대의 강제 교전이 충돌하므로, 따로 미는 동안 아군이 먼저 잡히지 않을 거리가 중요하다.':'사이드에서 얻는 골드·포탑과 아군이 함께 싸울 수 있는 시간을 맞추는 구도다.'):(has(theirSignals,'ACCESS')?'아군이 함께 때릴 수 있는 거리와 상대가 뛰어들 거리가 부딪히는 구도다.':'먼저 미니언을 밀고 움직일 시간과 상대의 견제를 버틸 체력이 중요한 구도다.');
+    const fightMatchup=has(theirSignals,'ACCESS')?(has(oursSignals,'COVER')?'상대가 뛰어든 뒤 아군 보호가 닿고 같은 대상을 함께 때릴 수 있는지가 공격 기회를 만든다.':'상대가 다가올 때 빠져나올 길과 아군이 함께 공격할 거리가 중요하다.'):'먼 거리의 공격으로 체력을 깎는 동안 누가 먼저 적을 묶거나 가까워질 수 있는지가 중요하다.';
+    const areaContext={
+      lane:{ours:view?.[0]||ownLaneName+'의 공격·방어 수단을 같은 라인 안에서 비교한다.',theirs:view?.[1]||enemyLaneName+'의 이 매치업 계획은 아직 자료가 부족하다.',matchup:view?.[2]||'구체적인 상성 근거가 없는 상대에게 기존 예시의 유리·불리 판단을 옮기지 않는다.',action:ours.means,basis:usable?'CONDITIONAL_REFERENCE':'INSUFFICIENT',claim_ids:claims,winner:'UNDETERMINED'},
+      operations:{ours:ourStyle,theirs:opposingStyle,matchup:macroMatchup,action:operations.priority,basis:'DESIGN_HYPOTHESIS',means,claim_ids:claims,winner:'UNDETERMINED'},
+      fight:{ours:ourStyle,theirs:opposingStyle,matchup:fightMatchup,action:fight.start,basis:'DESIGN_HYPOTHESIS',means,claim_ids:claims,winner:'UNDETERMINED'},
+      origin:'ANALYSIS_ASSUMPTIONS_NOT_OBSERVATION'
+    };
+    loadingSummary.items[0].support=unknown||low||s.engage!=='NONE'||!['EVEN','BUILDING'].includes(s.wave)||p.goal!=='AUTO'?laneSupport:areaContext.lane.matchup;
+    loadingSummary.items[2].support=sideRole&&has(theirSignals,'ACCESS')?'내가 다른 라인을 미는 동안 상대가 아군에게 먼저 싸움을 걸 수 있다.':'함께 공격할 아군과 상대의 접근·견제를 함께 고려한다.';
+    loadingSummary.items[3].support=fightMatchup;
+    const summary=loadingSummary.items;
+    if(!unknown&&!low&&p.goal==='AUTO'&&s.engage==='NONE'&&['EVEN','BUILDING'].includes(s.wave)){
+      if(id==='E')summary[0].conclusion='체력을 아끼며 미니언을 잡고, 닿는 급소만 짧게 공격한다.';
+      if(id==='A'&&early)summary[0].conclusion='멀리서 견제해 상대의 막타를 방해하고 먼저 움직일 기회를 만든다.';
+    }
+    if(usable&&id==='E')summary[1]={...summary[1],conclusion:'말파이트가 방어 아이템을 사면 무리한 공격보다 내 아이템을 갖춘다.',support:'방어 아이템이 없고 마나도 적을 때는 급소를 공격할 기회를 본다.'};
+    summary[2].conclusion=sideRole?'사이드 라인에서 미니언을 잡고 포탑을 압박하되, 아군에게 합류할 길을 남긴다.':bottom?'아군 가까이에서 미니언을 잡고, 함께 포탑·드래곤·바론을 노린다.':'가까운 라인에서 성장하고 아군이 싸울 때 함께 공격할 거리를 유지한다.';
+    if(self==='Fiora')summary[3].conclusion='피오라의 응수(W)로 막을 기술과 빠져나올 길을 정한 뒤 접근한다.';
+    if(self==='Caitlyn')summary[3].conclusion='아군의 속박·기절이 맞으면 보호받을 거리에서 닿는 적을 공격한다.';
     const application=coach.knowledge_application;
     const evidenceBridge=application?.supported?{
       schema_version:'lol-coach-counterplay-evidence-bridge-v1',
       statistics:{matchup:application.statistics||null,tactical_confirmation:false,calculation:'PRESERVED_ARCHIVE_PROJECTION_NOT_TACTICAL_VALIDATION',role:'추세·반례 점검 자료이며 개별 교전 우세나 최적 행동의 증명은 아니다.'},
       expert:{plan:application.recommended_plan,reason:application.reason,source_ids:application.direct_sources.map(s=>s.source_id),sources:clone(application.direct_sources),conditions:clone(application.conditions),exceptions:clone(application.exceptions)},
-      counterplay:{purpose:ours.purpose,opponent_goal:theirs.purpose,wave_plan:wave.label,trade:ours.means,punish:ours.look_for,growth:growthConclusion},
+      counterplay:{purpose:ours.purpose,opponent_goal:theirs.purpose,wave_plan:wave.label,trade:ours.means,punish:ours.look_for,growth:loadingSummary.items[1].conclusion},
       inference:clone(application.inference),application_active:application.active,real_effect:'NOT_MEASURED_N0'
     }:null;
     return {
       schema_version: 'lol-coach-player-planboard-v1', context: { origin: 'HYPOTHETICAL_LOADING_EXAMPLE', planning, actual_enemy_positions: null, standard: coach.context.assumptions.label, patch: coach.context.patch.label },
       brief: { lane: labels[planId] + ' · ' + (id==='C'&&coach.selected.metrics.EXTENDED.assessment==='ALLY'?'근접 지속 교전 우세 추론':valid ? coach.trade.ours.label : '교전 자료 부족'), operations: sideRole ? '복귀할 수 있는 사이드 압박을 맡고 본대와 연결한다.' : bottom ? '중앙 수급을 아군과 잇고 제어 뒤 목표물로 전환한다.' : '가까운 자원과 본대 후속 거리를 연결한다.', fight: self === 'Caitlyn' ? '아군 제어가 맞으면 보호 연결 안에서 닿는 대상을 공격한다.' : self === 'Ezreal' ? '접근 전 견제하고 이탈 수단을 남긴 채 공격한다.' : self === 'Fiora' ? '사이드 복귀와 받아칠 수단을 정한 뒤 접근한다.' : self === 'Yunara' ? '강화·아군 지원이 함께 닿을 때 공격하고 후속이 끊기면 바꾼다.' : fight.start },
-      loading_summary:loadingSummary, evidence_bridge:evidenceBridge,
+      loading_summary:loadingSummary, evidence_bridge:evidenceBridge, area_context:areaContext,
       composition: {ours:report.summary?.our_plan?.split('. ')[0],theirs:report.summary?.enemy_plan?.split('. ')[0],ours_full:report.summary?.our_plan,theirs_full:report.summary?.enemy_plan,role:report.summary?.my_role,basis:'DESIGN_HYPOTHESIS'},
       headline: usable ? overallGoal : '확인된 수단으로 수급·연결부터 준비한다.',
       lane: { overall_goal: overallGoal, milestone: { id: period, label: coach.selected.label, goal: milestoneGoal }, can_push: coach.wave.can_push, should_push: coach.wave.should_push,
@@ -240,5 +307,5 @@
       evidence: { claims: allClaims, sources: allKnowledge.sources.filter(s => sourceIds.has(s.id)), official_facts: threats.map(t => ({ ...fact(t.champion, t.slot), champion: t.champion })) }
     };
   }
-  return Object.freeze({ evaluate, validate, defaults });
+  return Object.freeze({ evaluate, validate, defaults, plainLanguage });
 });

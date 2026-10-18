@@ -110,3 +110,24 @@ separate from the earlier E application’s historical NOT_APPLIED state. Named 
 within their recorded conditions without mandatory own experiments. Conflicts, old-patch limitations,
 N0 and unmeasured human comprehension remain visible in details. No competitor tips copied/API used.
 Rollback by restoring1dd8b3f consumer/export; retain all added evidence and source history.
+
+## Plain-language and contextual explanation — USER2026-10-18
+
+Additive area_context lane/operations/fight exposes ours, theirs, matchup, action,
+basis and claim_ids. Lane uses the actual assigned solo opponent or bottom duo;
+other-lane composition is considered separately for operations/fight. Source-linked
+composition capabilities are not importance scores, observed intent or matchup wins.
+No evidence-free capability or Lv1 judgment transfers to a later period. Patch mismatch
+cannot reinstate the source-specific growth plan. Conditional composition application
+remains DESIGN_HYPOTHESIS; winner stays UNDETERMINED, existing metric evidence unchanged.
+
+Authored consumer copy is rendered in plain Korean: minions/gold/experience instead of
+수급, and specific minion actions instead of 처리; abstract follow-up/group terms are
+expanded in context. Display-only formatting must be idempotent and use valid particles.
+Official facts, stored source excerpts/quotes, review originals and trace JSON bypass
+this formatting. Official owner/skill-name(key) presentation is retained. No new input,
+source collection, objective-strength rule or historical grade modification. Verify
+actual duo/array order/support swap, actual ally capabilities, scope/period guards and
+PC/mobile tabs/maps. Rollback consumer files to product404f9840/public2008be4, retaining
+added evidence and all original history. Functional checks do not establish coaching
+accuracy, 30sec comprehension or Windows connectivity.
