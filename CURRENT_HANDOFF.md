@@ -1,3 +1,17 @@
+# Loading Coach final source merged — exact main CI pending
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-coach-patch-boundary-20261018`
+- current_main: `94831694242bf5072e75e149627a3375bb108b9e`
+- product_prs: `81,82`
+- latest_feature_head: `8442b5d8527b056bc9fb4f6990558748c8e92f90`
+- latest_feature_ci: `39087118087,39087118194` all3 SUCCESS; normalmerge exact head/base/tree/claim gate PASS.
+- prepared_export_tree: `cc361a6ae472f836118fbf77142f24152a1a87ea` NOT_PUBLISHED; previous PR81 prepared export retained unexecuted. Wait exact main checks then publish79files/previousprobytes and actualHTTPS+PCmobile+results/Handoff.
+- scope: Standard default coach/source-scoped4matchups/wave-trade-sustain-growth/study plus patch mismatch and mobile diagram boundary. No provider/video/game/paid; N0/30secunmeasured/Windowsblocked and protected histories retained.
+
+---
+
 # Loading Coach pre-publication patch boundary — PR82
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
