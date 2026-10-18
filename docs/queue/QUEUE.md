@@ -1,3 +1,9 @@
+# Riot ownership public proof — DONE
+- PR88 source9201248, artifactfb6e11c, nativePages/actualHTTPS exact36bytes verified; old79file hashes unchanged. Result: evidence/actual-evidence/riot-ownership/publication/result.md.
+- USER_ONLY: Riot Developer Portal Product URL edit and VERIFY URL click; not performed by Codex. Results-only CI/claim metadata records final exact main without product redeploy.
+
+---
+
 # Loading Coach actual public result
 - DONE: PR81+82+83+84+85+86 product704f68c, artifact222ae17, actualPages/HTTPS79files/PCmobile default/risk/condition/actioncost/map/source/study/3destinations. See loading-coach/publication/result.md.
 - Publication evidence/Handoff packaged; results-only normal merge/exact requiredCI recorded on common execution claim. No product republish or repeated completed source collection.
