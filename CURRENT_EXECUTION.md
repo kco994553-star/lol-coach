@@ -1,3 +1,14 @@
+# Riot ownership proof — D1/D2 execution claim
+- run_token: `main-20261018-riot-ownership`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/riot-ownership-20261018`
+- current_main: `2fb64aa92e693f20b9aafbe0b13d1031a0fbed89`
+- public_artifact: `222ae171744d55aa3099539e9852d8f1948c7f35`
+- scope: User explicitly requests public riot.txt proof UUID, not API key. Add only file/export inventory and handoff/seal; preserve Frozen/web/assets/tests/history/secrets. Existing export checks and exact36byte proof, requiredCI/normalmerge/exactmain, additive gh-pages/Pages/HTTPS exact bytes. Product URL edit and VERIFY URL remain USER actions. No Riot/Gemini/video/paid calls.
+
+---
+
 # Loading Coach delivered — writer released
 - run_token: `main-20261017-exchange-preference`
 - status: `COMPLETED`
