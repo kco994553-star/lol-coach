@@ -23,7 +23,7 @@
     function planning() { return board().context?.planning || {basis:'loading-plan-example-v1',overrides:{}}; }
     function diagramData() { return board().wave?.diagram || coach().diagram || {}; }
     function format(value) {
-      const text = plain(value), input = current && current.input || {};
+      const original=plain(value),text=root.LoadingPlanboard?.plainLanguage?root.LoadingPlanboard.plainLanguage(original):original, input = current && current.input || {};
       return root.SkillDisplay ? root.SkillDisplay.format(text, { champions: [...arr(input.allies), ...arr(input.enemies)].map(p => p.champion), own: input.own_champion }) : text;
     }
     function el(tag, text, cls) { const n = document.createElement(tag); if (text != null) n.textContent = format(text); if (cls) n.className = cls; return n; }
@@ -229,21 +229,28 @@
       meta('outcome','전체 경기 결과 집계');const o=s.outcome;wrap.append(block('선택한 맞상대 전체 결과',o.n?`${o.wins}승 / ${o.n}경기 · 표본 승률 ${(100*o.win_rate).toFixed(1)}% · 95% 구간 ${(100*o.ci95.low).toFixed(1)}~${(100*o.ci95.high).toFixed(1)}%. 작은 표본의 기술 통계이며 안정적 상성 판단이 아닙니다.`:'일치하는 결과 집계 없음'));
       wrap.append(el('p','집계 기간과 분모가 다른 자료를 합치지 않았습니다. 이 수치로 기본 교전 우세를 변경하지 않습니다.'));const trace=details('statistics-lineage','통계 출처 · 계산식 · 추적');const pre=el('pre');pre.textContent=JSON.stringify(s.datasets,null,2);trace.append(pre);wrap.append(trace);return wrap;
     }
+    function contextExplanation(area){
+      const v=board().area_context?.[area],n=card(area==='lane'?'라인전 구도와 상성':area==='operations'?'운영에서의 조합 구도와 상성':'한타 조합 구도와 상성');
+      n.dataset.areaContext=area;if(!v)return n;
+      [['우리의 방식','ours'],['상대가 노리는 것','theirs'],['맞붙는 구도','matchup'],['그래서 내가 할 일','action']].forEach(([title,key])=>n.append(block(title,v[key])));
+      if(v.means){const d=details('context-means-'+area,'챔피언별 기술과 이유');[['ours','우리'],['theirs','상대']].forEach(([side,title])=>{for(const [kind,rows]of Object.entries(v.means[side])){if(!rows.length)continue;d.append(block(title+' · '+({PICK:'적을 묶는 기술',COVER:'아군을 지키는 기술',PRESSURE:'멀리서 공격하는 기술',ACCESS:'거리를 좁히는 기술'})[kind],rows.map(r=>r.skills.join(' · '))));}});d.append(el('p','이 기술을 배워 사용할 수 있는 이후의 계획입니다. 실제 위치·사용 가능 상태와 조합 전체의 승패를 확인한 정보는 아닙니다.','coach-muted'));n.append(d);}
+      n.append(el('p',area==='lane'?'선택한 구간·기본 가정의 상대법입니다.':'조합의 기술을 적용한 조건부 계획이며 승패 예측은 아닙니다.','coach-muted'));return n;
+    }
     function lane() {
-      const n=el('div',null,'coach-lane-panel');n.append(matrix(),growth());
+      const n=el('div',null,'coach-lane-panel');n.append(contextExplanation('lane'),matrix(),growth());
       const purpose=card(board().lane?.milestone?.label||'선택 구간');purpose.append(block('이번 구간 목적',board().lane?.milestone?.goal));
       const whyPeriod=details('selected-reason','이 구간의 이유 · 교전 유형별 판단');whyPeriod.append(selected());purpose.append(whyPeriod);n.append(purpose);const methods=details('methods','방법 보기 · 웨이브·교환·양쪽 상대법');methods.append(wave(),counterplans(),preferences());n.append(methods,evidenceBridge(),application(),statistics());
       const comparison=details('trade-sustain','교환 길이 · 반복 교환과 유지력');comparison.append(trade(),sustain());n.append(comparison);return n;
     }
     function operations() {
-      const g=board().operations,n=card('운영 · 어디에서 무엇을 얻는가');
+      const g=board().operations,n=card('운영 · 어디에서 무엇을 얻는가');n.append(contextExplanation('operations'));
       [['기본 계획','placement'],['우선할 이득','priority'],['누구와 연결','connection'],['양보와 교환','concede'],['막히면','fallback'],['성장 후 변화','growth']].forEach(([label,key])=>n.append(block(label,g?.[key])));
       n.append(list(g?.steps,true),why(g?.claim_ids,'operations'));
       // No independent geometry exists for this projected macro plan. Do not relabel a teamfight map.
       n.append(el('p','이 운영 배치의 전체 지도는 미지원입니다. 아래 한타 탭의 역할 배치와 구분합니다.','coach-muted'));return n;
     }
     function fight() {
-      const f=board().fight,n=card('한타 · 내 공격 시작 기준');
+      const f=board().fight,n=card('한타 · 내 공격 시작 기준');n.append(contextExplanation('fight'));
       [['내 역할','role'],['공격할 대상','target'],['공격 시작','start'],['시작 전 배치','setup'],['중단·위치 변경','stop'],['교전 뒤','after']].forEach(([label,key])=>n.append(block(label,f?.[key])));
       const threats=details('fight-threats','행동을 바꾸는 접근 수단 · 유형별 후보');arr(f?.threats).forEach(t=>{const d=el('section');d.append(block(t.label,t.action),block('조건',t.condition));threats.append(d);});n.append(threats);
       const map=current?.teamfight?.map;
@@ -256,7 +263,7 @@
       facts.forEach((fact, index) => {
         const section = el('section', null, 'coach-claim');
         const label = root.SkillDisplay?.factLabel ? root.SkillDisplay.factLabel(fact.champion, fact) : fact.name;
-        section.append(el('h4', label), el('p', fact.text));
+        const original=el('p');original.textContent=fact.text;section.append(el('h4', label),original);
         const link = urlLink('공식 출처 ↗', fact.url); if (link) section.append(link);
         const trace = details('official-trace-' + index, '자료 식별 · Trace'), pre = el('pre'); pre.textContent = JSON.stringify({ id: fact.id, sha256: fact.sha256 }, null, 2); trace.append(pre); section.append(trace); d.append(section);
       }); return d;

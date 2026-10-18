@@ -5,7 +5,7 @@
   const styles = { MOVE: { color: '#90d7ee', label: '이동' }, PRESSURE: { color: '#f3bf69', dash: '24 17', label: '압박' }, RETREAT: { color: '#d3a4ee', dash: '5 17', label: '후퇴' } };
   let sequence = 0;
   let activeZoom = null;
-  const display = (text, options) => root.SkillDisplay ? root.SkillDisplay.format(String(text), { champions: [], ...options }) : String(text);
+  const display = (text, options) => { const value=root.LoadingPlanboard?.plainLanguage?root.LoadingPlanboard.plainLanguage(text):String(text);return root.SkillDisplay ? root.SkillDisplay.format(value, { champions: [], ...options }) : value; };
   const node = (tag, cls, text, options) => { const el = document.createElement(tag); if (cls) el.className = cls; if (text != null) el.textContent = display(text, options); return el; };
   function svg(tag, attrs, text, options) {
     const el = document.createElementNS(NS, tag);

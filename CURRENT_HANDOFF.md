@@ -1,3 +1,12 @@
+# Plain Korean and matchup context — publication pending
+- Inherit main11b115b/public2008be4; existing evidence and completed publication reused.
+- Replace authored 수급/처리 and abstract follow-up/group wording at display only; source quotes, official descriptions, review/trace originals unchanged. Add actual lane/operations/fight ours/opponent/matchup/action explanations. No new winner/score/grade or required input.
+- Exact bottom duo/solo context; composition means from actual source-linked ten picks. Review fixes: patch gate, actual ally capability gate, Lv1 scope.48affected checks passed; current PC1440/mobile390 and mandatoryCI/publication next.
+- Source25/claims29/application/reviews, AUTO30HOLD20USER0/advice7/Frozen350/quotas/pro/riot/Windows preserved. No provider/video/game/paid calls. CoachingN0,30secunmeasured,WindowsBLOCKED_EXTERNAL.
+- Evidence evidence/actual-evidence/plain-context/report.md. RemainingP0: missing condition-matched comparative matchup knowledge; no cosmetic unknown→winner conversion.
+
+---
+
 # Loading direction and evidence bridge — actual public completion
 - PR100 initial and PR101 display followup product source404f9840c7024fc677c6d3bb42da7c36cdabbfe3; required feature/exactmain3 allPASS. Public2008be4c3b738ad3d7f3bbf23634c25e009cd44c, nativePages39107598998 actualSUCCESS; HTTPS4hashes/root/buildinfo/nojekyll,86manifest/82unchanged reused and actual PC1440/mobile390 default/methods/keyboard/step/bridge/unknown PASS. Pro/riot preserved.
 - L0 four directions +max3shared changes; detailed wave/counterplay/costs behind 방법 보기, scenarios optional. Existing source25/claim29/packets unchanged; E old Riot archive context and typed stats→named guide judgment→selected6counterplay dimensions, inactive scope/conditions/conflicts preserved. Single fullgame result never becomes fight strength.
