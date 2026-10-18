@@ -1,0 +1,40 @@
+................................F.........
+======================================================================
+FAIL: test_quick_actions_have_scoped_effect_and_other_lane_evidence_is_independent (tests_pregame.test_player_planboard.PlayerPlanboardTests.test_quick_actions_have_scoped_effect_and_other_lane_evidence_is_independent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 37, in test_quick_actions_have_scoped_effect_and_other_lane_evidence_is_independent
+    self.node("assert(run(1).coach.planboard.quick_scenarios.some(q=>q.id==='KEY_SPENT'));for(const i of [3,4])assert(!run(i).coach.planboard.quick_scenarios.some(q=>q.id==='KEY_SPENT'||q.id==='JUNGLE_LINK'));const x=run().input;x.own_champion='Ornn';x.own_position='TOP';const b=E.analyze(x,c).coach.planboard;assert.equal(b.overall.lanes.find(l=>l.position==='BOTTOM').priority,'ALLY');assert.equal(b.coverage.status,'UNSUPPORTED');")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 11, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4000:])
+AssertionError: 1 != 0 : node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(run(1).coach.planboard.quick_scenarios.some(q=>q.id==='KEY_SPENT'))
+
+    at [eval]:3:1
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 42 tests in 4.881s
+
+FAILED (failures=1)

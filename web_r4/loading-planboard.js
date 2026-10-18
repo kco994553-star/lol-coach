@@ -176,7 +176,7 @@
       ours.look_for = low || unknown ? '닿는 막타·경험치와 걸어서 돌아올 공간을 얻는다.' : recallOpen ? '상대가 처리를 방해하지 않는 여유를 구매 시간으로 바꾼다.' : '상대가 양보한 CS·처리 시간을 얻는다.';
       ours.switch_when = changeIf;
     }
-    if(reference){Object.assign(ours,{purpose,means:combat,look_for:'말파이트의 마나 부족·반격 기술 소모와 닿는 급소를 CS·공간 이득으로 바꾼다.',avoid:reference.selected.reserve,switch_when:changeIf});theirs=clone(reference.opponent);}
+    if(reference){Object.assign(ours,{purpose,means:combat,look_for:'말파이트의 마나 부족·반격 기술 소모와 닿는 급소를 CS·공간 이득으로 바꾼다.',avoid:reference.selected.reserve,switch_when:changeIf});theirs=clone(reference.selected.opponent||reference.opponent);}
     if (absent) {
       ours.means = combat;
       theirs.means = name(slot('enemies', 'BOTTOM')) + '만 남은 부재 예시다. 지원 없는 진입 대신 닿는 막타와 퇴로를 확보한다.';
@@ -189,7 +189,7 @@
       gaps: reference?'공략 기반 수급·대응과 조건부 견제 판단. 전체 올인·동일 골드 빌드별 역전·누적 유지력 우열은 자료 부족.':id === 'A' && valid ? '초반 사거리·푸시 공략 범위. 지속 교전·올인·후반 전체 우열 자료 부족.' : usable ? '기전·조건부 참고. 전체 2대2/근접 지속 교전 승패는 미확인.' : '이 조합의 구간별 공략 근거가 연결되지 않았다.', effect_sample: 0 };
     const quick = [];
     if(valid && id === 'A')quick.push({id:'KEY_SPENT',label:'노틸러스 핵심 기술 소모',scenario:{enemy_key:'SPENT'},planning:{},reason:'남은 평타 제어·카이사 후속은 유지하고 CS 접근·짧은 교환 창만 비교'});
-    if(reference)quick.push({id:'KEY_SPENT',label:skill('Malphite','E')+' 소모',scenario:{enemy_key:'SPENT'},planning:{},reason:'공격 속도 감소 창은 줄지만 Q·강화 공격·궁극기와 마나는 별도로 남음. 올인 승리로 바꾸지 않음'});
+    if(reference&&period!=='LEVEL1')quick.push({id:'KEY_SPENT',label:skill('Malphite','E')+' 소모',scenario:{enemy_key:'SPENT'},planning:{},reason:'공격 속도 감소 창은 줄지만 Q·강화 공격·궁극기와 마나는 별도로 남음. 올인 승리로 바꾸지 않음'});
     if(supportCase)quick.push({id:'SUPPORT_ABSENT',label:'상대 서포터 부재',scenario:{},planning:{enemy_support:'ABSENT'},reason:'남은 원딜·정글·복귀 위험을 고려한 제한적 압박'});
     const reverseClaims = reverse ? allKnowledge.matchups.find(m=>m.id==='B')?.claims.filter(c=>claims.includes(c.id)) || [] : [];
     const allClaims = [...knownMatches.flatMap(m => m.claims),...reverseClaims], sourceIds = new Set(allClaims.flatMap(c => c.source_ids));
