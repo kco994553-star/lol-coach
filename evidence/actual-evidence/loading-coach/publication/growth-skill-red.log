@@ -1,0 +1,37 @@
+F
+======================================================================
+FAIL: test_growth_event_is_not_fixed_three_item_reversal (tests_pregame.test_loading_coach.LoadingCoachTests.test_growth_event_is_not_fixed_three_item_reversal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 28, in test_growth_event_is_not_fixed_three_item_reversal
+    self.node("const d=run('D').coach;assert(d.growth.length);const g=d.growth.find(g=>g.id==='KAISA_EVOLVED_ACCESS');assert(g);assert.equal(g.global_reversal,'UNDETERMINED');assert.equal(g.positional_punish_risk,'INCREASED_CONDITIONAL');assert(g.remaining_strength.includes('견제'));for(const field of ['change','after','remaining_strength'])assert(g[field].includes('이즈리얼의 비전 이동(E)'),'growth skill label missing: '+field);assert(d.periods[0].exception.includes('카이사의 고속 충전(E)'));assert(!d.growth.some(g=>g.kind==='TIME'||g.id==='THREE_ITEMS_WIN'));const k=require('./web_r4/loading-knowledge.json');const b=k.build_examples.D;assert.notEqual(b.costs.Ezreal,b.costs.Kaisa);assert.equal(b.equal_gold,false);")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 12, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4500:])
+AssertionError: 1 != 0 : node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: growth skill label missing: change
+    at [eval]:4:327
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.152s
+
+FAILED (failures=1)

@@ -1,0 +1,49 @@
+{
+  "schema_version": "loading-coach-patch-boundary-review-v1",
+  "checked_at": "2026-10-18T01:32:50.683304+00:00",
+  "scope": "Read-only focused review of new patch applicability gate only; local code/Node evaluation; no providers, network, publication or broad repeat review.",
+  "result": "PASS_IN_REVIEWED_SCOPE",
+  "important_or_critical_findings": [],
+  "checks": [
+    {
+      "id": "mismatch_all_matchups_periods",
+      "status": "PASS",
+      "evidence": "A/B/C/D input.patch=1.1 returns parent evidence MISMATCH. All6 normal periods plus2 D growth selections (26 cases total) have coach.supported=false, every period/selected metric INSUFFICIENT, selection=CHECK_WAVE, wave.selected_plan_id=CHECK_WAVE, diagram.supported=false."
+    },
+    {
+      "id": "patch_context",
+      "status": "PASS",
+      "evidence": "Context includes observed input patch1.1, statusMISMATCH, analysis16.20.1 and explicit version-difference label."
+    },
+    {
+      "id": "sources_remain_references",
+      "status": "PASS",
+      "evidence": "Sources and their claim scope retained on mismatch, without retaining positive metric assessments."
+    },
+    {
+      "id": "null_patch_not_observation",
+      "status": "PASS",
+      "evidence": "For all4 matchups patch=null remains observation.patch=null, label 미확인 and originSTANDARD_COMPARISON."
+    },
+    {
+      "id": "matching_major_patch",
+      "status": "PASS",
+      "evidence": "A patch16.20 normalizes to SOURCE_MAJOR_MATCH and keeps supported standard-comparison source-scoped A earlySHORT assessment."
+    },
+    {
+      "id": "visible_patch_label_and_diagram_guard",
+      "status": "PASS_STATIC_CODE_REVIEW",
+      "evidence": "View hero renders context.patch.label before conditions(); lineDiagram immediately returns no-diagram message when diagram.supported=false. No new browser execution claimed by this reviewer."
+    }
+  ],
+  "retained_limits": [
+    "Patch match is applicability to the pinned champion mechanism snapshot, not independent verification of guide26.x/16.x namespace mapping or actual matchup outcome.",
+    "Null patch remains an explicit standard hypothetical comparison, not observed current game patch.",
+    "Source references remain source-limited guidance with their recorded historical/author/condition limits.",
+    "This review does not publish the existing export or attest PC/mobile screenshots; publication status follows Main record."
+  ],
+  "files": {
+    "web_r4/loading-coach.js": "6b4bba33e17f6ccef980578c8876923682469504a01aa43fd04ade1ccf827bc9",
+    "web_r4/loading-coach-view.js": "4358dcdce56db3706c3db38f24df9a9de78f7308c12726c09c456d4ef78b24ff"
+  }
+}

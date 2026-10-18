@@ -1,3 +1,11 @@
+# Loading Coach — actual public completion
+- PR81+82+83+84+85+86 product source704f68c9c778c927f02673d0831acd3cbb154284, artifact222ae171744d55aa3099539e9852d8f1948c7f35, Pages39088973285 actualSUCCESS. Feature/main required3 PASS; actual HTTPS79files+root/build-info/nojekyll hashes and PC/mobile default→risk/condition→cost/action/diagram→source/study plus3home destinations PASS.
+- Explicit standard comparison v3 input/additive coach-v1; default10pick needs no scenario/economy controls. Existing v1/v2 and engines/detail kept. Categorical6period grid; A source-scoped early push/short poke, B conditional support/counterfocus, C local CS pressure, D actual evolution/access/Muramana events not fixed3core reversal. Same source registry in study. Future conditions/preferences are never observations.
+- Research originals/conditions/counterexamples/oldpatch/selfclaimed expertise and source quote hashes retained; B3 adaptation DESIGN_HYPOTHESIS. No whole B2v2/CWduel/Dwholecurve win claims. Independent review resolved unlearned-skill/unsupported-foreign-text/scope-loss findings; canonical owner/slot labels in Why/study preserve raw quotes and tactical meaning; legacy grid CSS isolated. Screens/CI/report: evidence/actual-evidence/loading-coach/publication/result.md.
+- Existing pro projection byte-identical; advice7/AUTO30HOLD20USER0/Frozen350/raw/holds/failures/video quotas/25hero/3gameplay/Windows/manual unchanged. Gemini/video/game/paid0; N0/30secunmeasured/WindowsBLOCKED_EXTERNAL retained. Remaining source questions/video/private API/real Windows external dependencies separate.
+
+---
+
 # Loading Coach authored shorthand audit
 - Followup source diff checks all new coach authored standalone start-key mentions: C contact reason/sustain and A Lv1 reserve. Replace only those explicit champion-slot references via existing helper; no tactical/assumption/claim changes. Existing source quotes remain raw.
 - Focused start-skill regression extended and pending exact requiredCI. Sourcef28 PR85 export99104192 is PREPARED_NOT_PUBLISHED; actual public remains8ed/artifact457, all receipts retained. No provider/video/game/paid; N0/30secunmeasured/Windowsblocked/history retained.

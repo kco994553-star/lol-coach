@@ -1,3 +1,10 @@
+# Loading Coach actual public result
+- DONE: PR81+82+83+84+85+86 product704f68c, artifact222ae17, actualPages/HTTPS79files/PCmobile default/risk/condition/actioncost/map/source/study/3destinations. See loading-coach/publication/result.md.
+- Publication evidence/Handoff packaged; results-only normal merge/exact requiredCI recorded on common execution claim. No product republish or repeated completed source collection.
+- NEXT_EVIDENCE: narrow current-patch A/B/C/D questions; video limits and predecision linkage remain separate. No fixed win/crossover or real-effect claim.
+
+---
+
 # Loading Coach current scope — 2026-10-18
 READY: required CI → normal source PR merge → exact-main CI → Pages → actual PC/mobile HTTPS → results/Handoff. Default standard comparison and A/B/C/D source-scoped knowledge implemented; do not redo prior desktop/25hero/3gameplay assets or advice7.
 NEXT_EVIDENCE: current-patch wave/trade costs A; current four-actor sustain/counterfocus B; matched Lv1 start/distance C; equal-gold build/evolution positional-risk D. No fixed win/crossover claims. Prior3 lecture questions and video path/limits remain separate.

@@ -1,0 +1,40 @@
+F
+======================================================================
+FAIL: test_start_skill_branch_does_not_copy_duel_result (tests_pregame.test_loading_coach.LoadingCoachTests.test_start_skill_branch_does_not_copy_duel_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 24, in test_start_skill_branch_does_not_copy_duel_result
+    self.node("const w=run('C',{start_skill:'W'}).coach,q=run('C',{start_skill:'Q'}).coach,u=run('C',{start_skill:'UNKNOWN'}).coach;assert.notEqual(w.selected.action,q.selected.action);assert.equal(u.selected.metrics.EXTENDED.assessment,'INSUFFICIENT');assert(w.selected.action.includes('CS'));assert(w.trade.ours.reason.includes('다리우스의 마비의 일격(W)'));assert(!w.trade.ours.reason.includes(' W 시작'));assert(w.selected.engagements.every(e=>e.chase==='UNDETERMINED'));assert(q.sustain.actors[0].in_fight_heal.includes('바깥날'));")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_loading_coach.py", line 12, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4500:])
+AssertionError: 1 != 0 : node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(w.trade.ours.reason.includes('다리우스의 마비의 일격(W)'))
+
+    at [eval]:4:280
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.150s
+
+FAILED (failures=1)
