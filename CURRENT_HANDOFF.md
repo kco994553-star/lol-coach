@@ -1,3 +1,10 @@
+# Riot ownership proof — actual public verification complete
+- PR88 source9201248e9ce49f21204a35627876105149c1d17f, artifactfb6e11c4927f24f8452c8c51e524226c50de7595, previous222ae171744d55aa3099539e9852d8f1948c7f35. Feature/exactmain required3 SUCCESS; nativePages39091127798 build/report/deploy actualSUCCESS.
+- Actual HTTPS https://kco994553-star.github.io/lol-coach/riot.txt HTTP200 exact36ASCII bytes, no quotes/newline, SHA2561d5490369d06a243de54fbc7bc3f05aeb3664a49866c76404a669344ddf93892. Public UUID only, not API key. All79 old public files/pro JSON byte-identical,80files+root/manifest/nojekyll HTTP/hash PASS; future export keeps riot.txt.
+- Scope evidence: evidence/actual-evidence/riot-ownership/publication/result.md. Existing web/Frozen/tests/history/source/video/Windows/privacy preserved. No Riot portal changes; Product URL edit and VERIFY URL remain USER actions, portal verification not claimed. Results-only gate receipts on common execution claim, no product republish.
+
+---
+
 # Riot Developer Portal ownership preparation — 2026-10-18
 - Fresh main2fb64aa/publicartifact222ae17/common claim completed. D1/D2 user-authorized public UUID proof only, no Riot API key or private authentication material. Add web_r4/riot.txt to explicit Pages export allowlist; target https://kco994553-star.github.io/lol-coach/riot.txt.
 - Preserve all existing web/Frozen/CI/deployment histories. Verify exact36bytes locally, existing affected export checks and requiredCI; then append-only gh-pages change retaining every old public file, nativePages and actualHTTPS exact-content proof. Product URL changes/VERIFY URL click remain USER actions; no portal login or verification-success claim.
