@@ -1,3 +1,12 @@
+# Five-menu IA — actual public completion
+- PR105 product19d31f18565117a17c7e77dca5d9b24ba5dbe11f; required PR/exact-product-main3PASS. Public742bb62383b8d5d9bf3f428d6fb1a50c9c832b57, nativePages39117544461 actualSUCCESS; HTTPS15hashes/root/buildinfo/nojekyll,86manifest/71unchanged reused. Latest scheduled pro refresh e7b5470 preserved, riot proof intact.
+- Five menus +commonPCsidebar/mobilebottomnav; work status separate. Guest1click→10pick→four-sentence summary→three focused details; method/context/comparison/trade/sustain/maps/Why optional, same report. PublicPC1440/mobile390/320/200%+input edit+step/empty statesPASS, privateAPIrequests0. Actual public1verified pro profile/5recent rows selected into PRO_REFERENCE review prep; analysis explicitly unconnected.
+- Map/data contracts contracts/information-architecture-v1.md. First-board674→376chars, extra conditions0→0, guest2→1clicks; not comprehension/effect proof.65affected +protected fullbrowser +current coach/readability checks passed; reviewREDs/failures preserved. Evidence evidence/actual-evidence/information-architecture/publication/result.md.
+- Static account API still unavailable; existing private path retained. Missing: scoped draft recommendations/bans/mastery, jungle risk/routes, timers/allyCD, public full review/timeline/video/strategy linkage, full-position lessons. No fake controls/records/winners. Sources25/claims29/AUTO30HOLD20USER0/advice7/Frozen350/quotas/Windows unchanged; N0/human30secUNMEASURED/WindowsBLOCKED_EXTERNAL.
+- Results-only final CI/common writer release proof follows without republishing identical product files. No provider/video/game/paid requests initiated; independent pro schedule preserved.
+
+---
+
 # Five-menu information architecture — publication pending
 - Fresh mainc446862/public5bbcf7c reused; full KEEP/ADAPT/MISSING/data map contracts/information-architecture-v1.md.
 - Five primary menus/common PCsidebar+mobilebottomnav; work status separate. Search/dashboard/review routed views, guest direct10pick, actual safe recent-record→review prep USER/PRO distinction. No fake public analysis.

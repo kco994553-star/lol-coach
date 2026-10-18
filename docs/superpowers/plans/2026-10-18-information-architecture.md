@@ -54,8 +54,8 @@ Consume unchanged GameInfo/knowledge/status. No new observation or tactical rule
 - [x] GREEN targeted browser, preserved data and no private public calls.
 
 ###4 Verify and publish
-- [ ] Record fresh public audit, official field/policy read, source-preservation proofs.
-- [ ] Relevant tests/full protected browser; review current diff, fix substantive issues.
-- [ ] Source seal, normal PR/required CI/merge/exactmainCI, Pages/pro/riot preservation.
-- [ ] Actual HTTPS and PC/mobile, result-only PR/Handoff with finished-check reuse.
-- [ ] Final exact-main CI/common writer release. Report functional/knowledge/effect separately.
+- [x] Record fresh public audit, official field/policy read, source-preservation proofs.
+- [x] Relevant tests/full protected browser; review current diff, fix substantive issues.
+- [x] Source seal, normal PR/required CI/merge/exactmainCI, Pages/pro/riot preservation.
+- [x] Actual HTTPS and PC/mobile, result-only PR/Handoff with finished-check reuse.
+- [ ] Final exact-main CI/common writer release — final receipt is on the shared claim to avoid recursive evidence commits. Report functional/knowledge/effect separately.
