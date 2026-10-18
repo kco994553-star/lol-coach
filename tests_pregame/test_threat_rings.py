@@ -1,0 +1,19 @@
+"""Selected threat mechanisms, approach costs and source geometry, never combat odds."""
+import json,subprocess,unittest
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[1]
+class ThreatRingTests(unittest.TestCase):
+ def node(self,body):
+  pre="const assert=require('node:assert/strict'),E=require('./web_r4/loading-engine.js'),c=require('./web_r4/loading-data.json'),d=require('./web_r4/formation-ranges.js');"
+  r=subprocess.run(['node','-e',pre+body],cwd=ROOT,capture_output=True,text=True);self.assertEqual(r.returncode,0,r.stderr[-4500:])
+ def test_official_direct_and_conditional_approach_profiles(self):
+  self.node("const s=d.champions.Sejuani.threat,z=d.champions.Zed.threat;assert(s,'missing threat profiles');assert.equal(s.direct.radius,1300);assert.equal(s.approach.radius,1950);assert.equal(z.direct.radius,625);assert.equal(z.approach.radius,1275);assert(z.approach.conditions.join(' ').includes('위치'));assert.equal(z.approach.formula,'W.range[0] + R.range[0]');assert.equal(s.approach.interpretation,'CONDITIONAL_CAST_RANGE_BOUND');for(const id of ['Caitlyn','Lux','Ornn']){assert.equal(d.champions[id].threat.approach,null);assert(d.champions[id].threat.approach_missing_reason);}assert.equal(d.champions.Caitlyn.threat.direct.radius,650);assert.equal(d.champions.Zed.threat.additional[0].radius,900);")
+ def test_fallback_is_explicitly_partial_and_never_claims_full_spell_coverage(self):
+  self.node("const t=d.champions.Sona.threat;assert(t);assert.equal(t.status,'BASIC_ONLY');assert.equal(t.direct.kind,'BASIC_REFERENCE');assert.equal(t.approach,null);assert(t.scope.includes('미확인'));assert(d.champions.Ornn.threat.direct.radius<25000);for(const v of Object.values(d.champions)){assert.equal(v.threat.observation,false);assert(v.threat.direct?.radius>0||v.threat.direct===null);}")
+ def test_same_analysis_contains_full_frame_and_source_linked_ten_profiles(self):
+  self.node("const r=E.analyze(E.exampleInput(c,0),c),f=r.coach.planboard.fight.formations;assert(f.threat_reference,'missing threat model');assert.equal(Object.keys(f.threat_reference.champions).length,10);assert(f.threat_reference.view.width>2000);assert.equal(f.range_reference.board_width_game_units,2000);assert.equal(f.threat_reference.risk_verdict,'NOT_COMPUTED');for(const s of f.scenes)assert.equal(s.winner,'UNDETERMINED');const x=E.exampleInput(c,0);x.schema_version='lol-coach-loading-input-v3';x.preferences={risk:'OPPORTUNITY'};x.scenario={standard:'lane-standard-v1',overrides:{}};assert.deepEqual(E.analyze(x,c).coach.planboard.fight.formations,f);")
+ def test_plain_trade_action_explains_wave_cost_and_has_linked_stop_condition(self):
+  self.node("const r=E.analyze(E.exampleInput(c,0),c),b=r.coach.planboard,a=b.action_summaries.lane.items.find(v=>v.kind==='TRADE');assert(!a.text.includes('여유를 늦추'));assert(a.text.includes('막타를 치러'));assert(a.text.includes('미니언을 먼저'));assert(b.wave.combat.includes('늦어지면'));assert(a.source_paths.includes('wave.combat'));")
+ def test_profile_sources_are_exact_retained_spell_fields(self):
+  self.node("const fs=require('node:fs'),crypto=require('node:crypto');for(const row of Object.values(d.champions))for(const item of [row.threat.direct,row.threat.approach,...row.threat.additional].filter(Boolean))for(const s of item.sources){const raw=fs.readFileSync(s.local_source);assert.equal(crypto.createHash('sha256').update(raw).digest('hex'),s.sha256);assert(s.locator&&s.url&&s.patch);}")
+if __name__=='__main__':unittest.main()

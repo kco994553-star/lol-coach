@@ -1,0 +1,26 @@
+E
+======================================================================
+ERROR: test_curated_profile_with_missing_source_keeps_unknown (tests_pregame.test_formation_ranges.FormationRangeTests.test_curated_profile_with_missing_source_keeps_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-threat/tests_pregame/test_formation_ranges.py", line 72, in test_curated_profile_with_missing_source_keeps_unknown
+    entry=builder.build_data(root)['champions']['Sejuani'];self.assertIsNone(entry['base_attack_range']);self.assertIsNone(entry['threat']['direct']);self.assertIsNone(entry['threat']['approach']);self.assertIn('미확인',entry['threat']['scope'])
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/worktrees/lol-coach-threat/scripts/build_formation_ranges.py", line 102, in build_data
+    'champions': add_threats(champions, root),
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/worktrees/lol-coach-threat/scripts/build_formation_ranges.py", line 54, in add_threats
+    'basis': 'DESIGN_HYPOTHESIS_WITH_OFFICIAL_FIELDS', 'direct': ring([profile['direct'] if profile else 'AA'], 'DIRECT' if profile else 'BASIC_REFERENCE'),
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/worktrees/lol-coach-threat/scripts/build_formation_ranges.py", line 42, in ring
+    parts = [component(slot) for slot in slots]
+             ^^^^^^^^^^^^^^^
+  File "/workspace/worktrees/lol-coach-threat/scripts/build_formation_ranges.py", line 33, in component
+    spell = raw.get('spells', [])[index]
+            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+IndexError: list index out of range
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)

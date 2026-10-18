@@ -1,0 +1,67 @@
+....F.................................F.....
+======================================================================
+FAIL: test_same_analysis_contains_full_frame_and_source_linked_ten_profiles (tests_pregame.test_threat_rings.ThreatRingTests.test_same_analysis_contains_full_frame_and_source_linked_ten_profiles)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-threat/tests_pregame/test_threat_rings.py", line 14, in test_same_analysis_contains_full_frame_and_source_linked_ten_profiles
+    self.node("const r=E.analyze(E.exampleInput(c,0),c),f=r.coach.planboard.fight.formations;assert(f.threat_reference,'missing threat model');assert.equal(Object.keys(f.threat_reference.champions).length,10);assert(f.threat_reference.view.width>2000);assert.equal(f.range_reference.board_width_game_units,2000);assert.equal(f.threat_reference.risk_verdict,'NOT_COMPUTED');for(const s of f.scenes)assert.equal(s.winner,'UNDETERMINED');const x=E.exampleInput(c,0);x.schema_version='lol-coach-loading-input-v3';x.preferences={risk:'OPPORTUNITY'};assert.deepEqual(E.analyze(x,c).coach.planboard.fight.formations,f);")
+  File "/workspace/worktrees/lol-coach-threat/tests_pregame/test_threat_rings.py", line 8, in node
+    r=subprocess.run(['node','-e',pre+body],cwd=ROOT,capture_output=True,text=True);self.assertEqual(r.returncode,0,r.stderr[-4500:])
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : /workspace/worktrees/lol-coach-threat/web_r4/loading-engine.js:24
+    if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).sort().join('|')!==[...keys].sort().join('|'))throw Error('입력 항목을 확인해 주세요.');
+                                                                                                                               ^
+
+Error: 입력 항목을 확인해 주세요.
+    at exact (/workspace/worktrees/lol-coach-threat/web_r4/loading-engine.js:24:134)
+    at validate (/workspace/worktrees/lol-coach-threat/web_r4/loading-engine.js:31:5)
+    at Object.analyze (/workspace/worktrees/lol-coach-threat/web_r4/loading-engine.js:255:21)
+    at [eval]:1:714
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_risk_changes_feasible_execution_not_strength_or_source (tests_pregame.test_player_planboard.PlayerPlanboardTests.test_risk_changes_feasible_execution_not_strength_or_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-threat/tests_pregame/test_player_planboard.py", line 37, in test_risk_changes_feasible_execution_not_strength_or_source
+    self.node("const a=run(0,{}, {},'LOSS_LIMIT'),b=run(0,{}, {},'OPPORTUNITY');assert.deepEqual(a.coach.periods,b.coach.periods);assert.deepEqual(a.coach.evidence,b.coach.evidence);assert.notEqual(a.coach.planboard.wave.combat,b.coach.planboard.wave.combat);assert(b.coach.planboard.choice.cost);assert(b.coach.planboard.choice.reserve);const x=run(0,{wave:'BUILDING'},{goal:'RECALL',clear_window:'OPEN'},'LOSS_LIMIT'),y=run(0,{wave:'BUILDING'},{goal:'RECALL',clear_window:'OPEN'},'OPPORTUNITY');assert.equal(x.coach.planboard.choice.id,y.coach.planboard.choice.id);assert.equal(y.coach.planboard.choice.same_across_preferences,true);")
+  File "/workspace/worktrees/lol-coach-threat/tests_pregame/test_player_planboard.py", line 11, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4000:])
+AssertionError: 1 != 0 : node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to:
+
+'미니언을 먼저 잡는 흐름을 유지하면서, 상대가 막타를 치러 나오면 사거리 끝에서 짧게 견제한다. 견제 때문에 미니언 잡기가 늦어지면 견제를 멈추고, 남긴 기술로 진입에 대응한다.'
+    at [eval]:3:175
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '미니언을 먼저 잡는 흐름을 유지하면서, 상대가 막타를 치러 나오면 사거리 끝에서 짧게 견제한다. 견제 때문에 미니언 잡기가 늦어지면 견제를 멈추고, 남긴 기술로 진입에 대응한다.',
+  expected: '미니언을 먼저 잡는 흐름을 유지하면서, 상대가 막타를 치러 나오면 사거리 끝에서 짧게 견제한다. 견제 때문에 미니언 잡기가 늦어지면 견제를 멈추고, 남긴 기술로 진입에 대응한다.',
+  operator: 'notStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 44 tests in 6.686s
+
+FAILED (failures=2)

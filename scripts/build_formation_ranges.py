@@ -17,6 +17,58 @@ LIMITS = [
 ]
 
 
+def add_threats(champions, root):
+    path = root / 'config/formation_threat_profiles.json'
+    config = json.loads(path.read_text()) if path.is_file() else {'patch': PATCH, 'profiles': {}}
+    if config['patch'] != PATCH:
+        raise ValueError('THREAT_PROFILE_PATCH_MISMATCH')
+    for champion, row in champions.items():
+        profile = config['profiles'].get(champion)
+        document = json.loads((root / row['source']['local_source']).read_text()) if row['source']['sha256'] else {}
+        raw = document.get('data', {}).get(champion, {})
+        if not row['source']['sha256']:
+            profile = None
+        def component(slot):
+            if slot == 'AA':
+                return {'slot': slot, 'name': '기본 공격', 'value': row['base_attack_range'], 'source': dict(row['source'])}
+            index = 'QWER'.index(slot)
+            spells = raw.get('spells', [])
+            if len(spells) <= index:
+                return None
+            spell = spells[index]
+            values = spell.get('range', [])
+            value = values[0] if values else None
+            if type(value) not in (int, float) or not math.isfinite(value) or value <= 1:
+                return None
+            return {'slot': slot, 'name': spell['name'] + '(' + slot + ')', 'value': value,
+                    'source': {**row['source'], 'locator': f'data.{champion}.spells.{index}.range.0'},
+                    'mechanism': spell.get('description'), 'mechanism_source': {**row['source'], 'locator': f'data.{champion}.spells.{index}.tooltip'}}
+        def ring(slots, kind, conditions=(), cost=None):
+            parts = [component(slot) for slot in slots]
+            if any(p is None or p['value'] is None for p in parts):
+                return None
+            return {'radius': sum(p['value'] for p in parts), 'kind': kind,
+                    'label': raw.get('name', champion) + '의 ' + ' → '.join(p['name'] for p in parts),
+                    'formula': ' + '.join('stats.attackrange' if p['slot']=='AA' else p['slot']+'.range[0]' for p in parts),
+                    'components': [{k:v for k,v in p.items() if k not in ('source','mechanism_source')} for p in parts],
+                    'sources': [q for p in parts for q in [p['source'], p.get('mechanism_source')] if q],
+                    'conditions': list(conditions), 'cost': cost,
+                    'interpretation': 'CONDITIONAL_CAST_RANGE_BOUND' if kind=='COMMITTED' else 'SELECTED_MECHANISM_REFERENCE',
+                    'rank_assumption': '범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음'}
+        row['threat'] = {'status': 'PROFILED' if profile else 'BASIC_ONLY', 'observation': False,
+            'basis': 'DESIGN_HYPOTHESIS_WITH_OFFICIAL_FIELDS', 'direct': ring([profile['direct'] if profile else 'AA'], 'DIRECT' if profile else 'BASIC_REFERENCE'),
+            'approach': ring(profile['approach'], 'COMMITTED', profile['conditions'], profile['cost']) if profile and profile['approach'] else None,
+            'approach_mode': profile['approach_mode'] if profile else None,
+            'approach_missing_reason': profile['approach_missing_reason'] if profile else '기술·접근 조합의 범위는 아직 검토하지 않았습니다.',
+            'additional': [r for slot in profile.get('additional', []) if (r := ring([slot], 'ADDITIONAL')) is not None] if profile else [],
+            'scope': '대표 교전 수단을 고른 설명용 범위. 원 밖의 다른 기술도 별도 확인.' if profile else '기본 공격만 표시. 기술 위협 범위는 미확인.'}
+        if profile and profile['approach'] and row['threat']['approach'] is None:
+            row['threat'].update(status='PROFILE_PARTIAL', approach_missing_reason='접근에 필요한 공식 범위 필드가 누락되어 추가 접근 범위는 미확인입니다.')
+        if row['threat']['direct'] is None:
+            row['threat'].update(status='SOURCE_INCOMPLETE', scope='공식 수단 범위를 확인할 수 없어 미확인으로 남깁니다.', approach_missing_reason='공식 원문 또는 필요한 범위 필드가 없습니다.')
+    return champions
+
+
 def build_data(root=ROOT):
     root = Path(root)
     catalog = json.loads((root / 'web_r4/loading-data.json').read_text(encoding='utf-8'))
@@ -56,7 +108,7 @@ def build_data(root=ROOT):
     return {
         'format': 'lol-coach-formation-ranges-v1',
         'source_patch': PATCH,
-        'champions': champions,
+        'champions': add_threats(champions, root),
         'limits': list(LIMITS),
     }
 
