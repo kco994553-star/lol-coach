@@ -1,3 +1,13 @@
+# Teamfight formation and future statistics — active writer
+- run_token: `main-20261018-teamfight-formation`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/teamfight-formation-20261018`
+- base_main: `abd0872911b15c4b79a12ec6ecb7569631254e9e`
+- scope: conditional Caitlyn/Kaisa ten-portrait formation comparison shared by loading and first study lesson; future collection Master+ seed guard, preserve historic cohorts/source/grades/budgets/Windows.
+
+---
+
 # Information architecture — completed
 - run_token: `main-20261018-information-architecture`
 - status: `COMPLETED`
