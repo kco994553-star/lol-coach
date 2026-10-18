@@ -243,7 +243,7 @@
       const scroll = Array.from(host.querySelectorAll('[data-coach-scroll]'), n => [n.dataset.coachScroll, n.scrollLeft, n.scrollTop]);
       const pageX = root.scrollX, pageY = root.scrollY;
       const c = coach(), container = el('section', null, 'loading-coach'); container.id = prefix;container.dataset.matchup=c.matchup_id||'UNSUPPORTED';container.dataset.selectedAction=c.selection?.id||'';container.dataset.period=c.selected_period||''; container.setAttribute('aria-label', '로딩 코치 · 표준 비교');
-      const b=board(),hero=el('div',null,'coach-overview coach-board');hero.append(el('p','이번 판 작전판','coach-eyebrow'));
+      const b=board(),hero=el('div',null,'coach-overview coach-board');hero.append(el('p','이번 판 작전판 · 새 행동 연결은 설계 가설','coach-eyebrow'));
       const matchup=el('div',null,'coach-matchup-portraits');
       const rosterLane=arr(b.overall?.lanes).find(l=>l.position===current.input.own_position);
       [['우리',rosterLane?.allies],['상대',rosterLane?.enemies]].forEach(([label,ids])=>{const team=el('div',null,'coach-board-team');team.append(el('span',label));arr(ids).forEach(id=>{if(root.LoadingMap?.portrait)team.append(root.LoadingMap.portrait(catalog.champions[id],id===current.input.own_champion));team.append(el('span',catalog.champions[id]?.name||id));});matchup.append(team);});hero.append(matchup,el('h2',b.headline||c.title));
