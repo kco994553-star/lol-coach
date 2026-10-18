@@ -1,3 +1,15 @@
+# Loading Coach actual public completion — results PR87
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-coach-results-20261018`
+- current_main/product_source: `704f68c9c778c927f02673d0831acd3cbb154284`
+- latest_feature_head: `c03835e4b64e00ea46dab0a145f80e4d21fc3ad5` results-only PR87
+- product_prs:81–86 normal merged; feature/main required3 SUCCESS. Actual public artifact`222ae171744d55aa3099539e9852d8f1948c7f35`, nativePages39088973285 build/report/deploy SUCCESS,79file/root/buildinfo/nojekyll HTTP/hash PASS; actualHTTPS PC/mobile changed headings/canonical skills PASS. Full unchanged flow source948 and display8ed evidence reused, originals and failed/unpublished stages preserved.
+- scope: Results/screens/CI/Handoff/seal only, no product republish or completed test repeat; local actual-evidence PASS new_tests_executed=false. Wait results-only required3/exact gate/normalmerge/postmain3, then PARK writer. Source/question/privacy/quota/history boundaries unchanged; Gemini/video/game/paid0; N0/30secunmeasured/WindowsBLOCKED_EXTERNAL retained.
+
+---
+
 # Loading Coach remaining start-key display — PR86
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
