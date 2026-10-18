@@ -1,3 +1,13 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/gameplay-cards-20261018`
+- current_main: `58ad8e389142016d7c9a06d8746778f64b762770`
+- scope: Replace three decorative cards with real LoL gameplay screenshots and add20 official backgrounds to existing5. Preserve provenance/old sources/session/input/private API/tactics/provider budgets; no AI generation/Gemini/new match collection. Normal requiredCI/Pages/public proof before completion.
+
+---
+
 # Latest common execution claim — PARKED_EXTERNAL
 - run_token: `main-20261017-exchange-preference`
 - status: `PARKED_EXTERNAL`
