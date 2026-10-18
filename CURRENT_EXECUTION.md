@@ -1,3 +1,16 @@
+# Loading Coach public baseline verified — subject-heading delta PR83
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-coach-subject-labels-20261018`
+- current_main: `94831694242bf5072e75e149627a3375bb108b9e`
+- public_artifact: `257aa8c8bd54e77a2568201e4698d3aef410df00`
+- native_pages: `39087446571` actualSUCCESS; HTTPS79file/root/buildinfo/nojekyll hash match; actual public PC/mobile full default/risk/conditions/diagram/sources/study/3home destinations PASS with0errors.
+- latest_feature_head: `f581b444df923d6e5c7a906bf30edb66c4ae4ebe` PR83
+- scope: Last consumer review found two inverted actor headings (OUR preserved strength, OUR wave response). Display-only correction; no rule/source/grade change. PC/mobile heading check PASS; pending required83/exactmainCI then new artifact and changed public view proof. Reuse unchanged published948 flows; preserve initial publication receipts/screens. Then results/Handoff-only PR. No provider/video/game/paid; N0/30secunmeasured/Windowsblocked/history retained.
+
+---
+
 # Loading Coach final source merged — exact main CI pending
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
