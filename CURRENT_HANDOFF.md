@@ -1,3 +1,123 @@
+# Loading Coach delivered — writer released
+- run_token: `main-20261017-exchange-preference`
+- status: `COMPLETED`
+- writer_active: false
+- owner_branch: `work/loading-coach-results-20261018`
+- final_main: `2fb64aa92e693f20b9aafbe0b13d1031a0fbed89` PR87 results-only normal merged; exact postmain required3 SUCCESS, source/hash preservation and completed browser/test reuse confirmed.
+- product_source: `704f68c9c778c927f02673d0831acd3cbb154284` PR81–86 normal merged, feature/postmain required3 SUCCESS.
+- actual_public_artifact: `222ae171744d55aa3099539e9852d8f1948c7f35`; nativePages39088973285 build/report/deploy actualSUCCESS; HTTPS79file/root/build-info/nojekyll SHA PASS; actual PC1440/mobile390 changed headings/canonical skills PASS, errors0. Unchanged full flow source948 and display8ed evidence reused and separately retained. Results87 caused no republish.
+- delivered: Explicit standard comparisons separate from observations/preferences; default10pick→plan/strong phases/categorical6periods→wave/trade/sustain→optional exceptions, scoped A/B/C/D guide claims and actual named D growth events, same knowledge registry for study. No fixed3core/global2v2/duel win or accuracy promotion. Remaining A current-patch costs/B four-player sustain/C starting-spell contact/D equal-gold-build evidence questions OPEN, not claimed all externally blocked.
+- preserved: AUTO30/HOLD20/USER0/advice7/Frozen350/raw/holds/failures/quotas/Windows/manual/account/pro/25hero/3actualgame cards. Gemini/video/newgames/paid requests0. Real coachingN0/30secunderstandingUNMEASURED/WindowsBLOCKED_EXTERNAL unchanged. No new automatic background work created.
+- evidence_and_handoff: main CURRENT_HANDOFF.md; docs/queue/QUEUE.md; evidence/actual-evidence/loading-coach/publication/result.md, original research/report and all failed/unpublished stages.
+- local worktrees clean and primary main fast-forward synced; task-owned temporary preview servers stopped. No active writer; next task can claim ownership normally.
+
+## Results-only PR87 exact gate receipts (no product changes)
+```json
+{
+  "feature-ci": [
+    {
+      "id": 39089151150,
+      "head": "c03835e4b64e00ea46dab0a145f80e4d21fc3ad5",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 117561928917,
+          "name": "pregame",
+          "conclusion": "success",
+          "log_sha256": null
+        }
+      ]
+    },
+    {
+      "id": 39089151143,
+      "head": "c03835e4b64e00ea46dab0a145f80e4d21fc3ad5",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 117561928891,
+          "name": "browser-regression",
+          "conclusion": "success",
+          "log_sha256": null
+        },
+        {
+          "id": 117561929107,
+          "name": "regression",
+          "conclusion": "success",
+          "log_sha256": null
+        }
+      ]
+    }
+  ],
+  "main-ci": [
+    {
+      "id": 39089229538,
+      "head": "2fb64aa92e693f20b9aafbe0b13d1031a0fbed89",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 117562172321,
+          "name": "pregame",
+          "conclusion": "success",
+          "log_sha256": null
+        }
+      ]
+    },
+    {
+      "id": 39089229532,
+      "head": "2fb64aa92e693f20b9aafbe0b13d1031a0fbed89",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 117562172209,
+          "name": "regression",
+          "conclusion": "success",
+          "log_sha256": null
+        },
+        {
+          "id": 117562172413,
+          "name": "browser-regression",
+          "conclusion": "success",
+          "log_sha256": null
+        }
+      ]
+    }
+  ],
+  "merge-gate": {
+    "pr": 87,
+    "url": "https://github.com/kco994553-star/lol-coach/pull/87",
+    "head": "c03835e4b64e00ea46dab0a145f80e4d21fc3ad5",
+    "base": "704f68c9c778c927f02673d0831acd3cbb154284",
+    "tested_merge": "2dd7977e8e44ee9600ebe214edae36923ad84871",
+    "tree": "c04df8008df1d246127e4a94b93be4e38d0acf14",
+    "required_jobs": [
+      {
+        "id": 117561928917,
+        "name": "pregame",
+        "conclusion": "success",
+        "log_sha256": "726ee21d8d4ea4510b6e7ccc0307e67b0349e3bcd2c1c17f5227533e6cba8282"
+      },
+      {
+        "id": 117561928891,
+        "name": "browser-regression",
+        "conclusion": "success",
+        "log_sha256": "f6a89ae73414dda114f43e2bd2c84778359044efa3fbfb6ab1833f5d5aa313cf"
+      },
+      {
+        "id": 117561929107,
+        "name": "regression",
+        "conclusion": "success",
+        "log_sha256": "673dff096af05c3e23baee87a5f363658d3c97b714731760cea54f74ff08de29"
+      }
+    ],
+    "merge_method": "merge",
+    "coaching_accuracy": null,
+    "gate": "PASS"
+  }
+}
+```
+
+---
+
 # Loading Coach actual public completion — results PR87
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
