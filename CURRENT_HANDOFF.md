@@ -1,3 +1,9 @@
+# Loading Coach study/Why skill display compatibility
+- Reuse prior source/guide/flow/CI proof. New authored knowledge paraphrases in Why/study still contained bare skill keys (source quotes remain intentionally raw). Add display-only official owner/slot labels from explicit per-claim declarations; preserve original text, quote hashes, conditions, review and tactics. Study now uses existing SkillDisplay, same as Why.
+- No new advice/claim approval/strategy/source collection. Related display owner counterexample plus targeted PC/mobile study/Why check and required CI before final source publication. PR83 label artifact prepared but not yet published; source948 initial public proof retained.
+
+---
+
 # Loading Coach consumer subject-label correction
 - PR81/82 source9483169 and artifact257aa8c8 nativePages39087446571 actualSUCCESS; public79files/root/manifest/nojekyll hashes PASS. Initial public flow proof is being recorded separately.
 - Consumer semantic review found two actor headings reversed: growth.remaining_strength is OUR preserved strength; wave.punishment is OUR response to enemy access. Correct display headings only; no tactical rule/source/grade change. Related real browser heading checks added. Preserve prior publication and subject-review evidence.
