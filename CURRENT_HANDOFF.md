@@ -1,3 +1,10 @@
+# Loading Coach consumer subject-label correction
+- PR81/82 source9483169 and artifact257aa8c8 nativePages39087446571 actualSUCCESS; public79files/root/manifest/nojekyll hashes PASS. Initial public flow proof is being recorded separately.
+- Consumer semantic review found two actor headings reversed: growth.remaining_strength is OUR preserved strength; wave.punishment is OUR response to enemy access. Correct display headings only; no tactical rule/source/grade change. Related real browser heading checks added. Preserve prior publication and subject-review evidence.
+- RequiredCI/normalmerge/exactmainCI and final Pages/changed public PC/mobile proof remain before completion. No new provider/video/game/paid calls; N0/30secunmeasured/Windowsblocked retained.
+
+---
+
 # Loading Coach patch boundary correction — publication not started
 - PR81 main51ebdee implemented new coach and passed feature CI. Prepared79file export is NOT_PUBLISHED.
 - Pre-publication counterexample: input1.1 retained A early ALLY despite official-source MISMATCH. Correct new consumer to show input/analysis patch, all affected metrics INSUFFICIENT, CHECK_WAVE only, no line diagram. Null patch remains explicit standard comparison, never observed match.
