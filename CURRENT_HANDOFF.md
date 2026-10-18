@@ -1,3 +1,17 @@
+# Evidence adoption delivered — writer released
+- run_token: `main-20261018-evidence-adoption`
+- status: `COMPLETED`
+- writer_active: false
+- owner_branch: `work/evidence-adoption-20261018`
+- final_main: `ec48ed03e29fff4c1e01e0345d4d38f13fff8e42`
+- source_main: `d5060b0425ca92b756b13c77e311eef7fd5585c5` (PR94/95), results PR96; all required PR/exact-main3 passed.
+- published_artifact: `dd2ac2179db462957ae5815ff5524362744c2bd4`; nativePages39101679933 actualSUCCESS, HTTPS6hashes/root/buildinfo/nojekyll,86manifest/80unchanged reused; actual PC1440/mobile390 flow passed. Product bytes unchanged after deployment.
+- result: evidence/actual-evidence/evidence-adoption/publication/result.md; final CI/gate/public proof: evidence/actual-evidence/evidence-adoption/final-handoff.json on this common claim branch. Initial results CI failure preserved; hashes/evidence suffix fixed without waiving checks.
+- delivered: A acquire processing margin before slow build; C Lv1 W/Q maintained-close-contact sustained advantage is scoped mechanism inference, not allin/kill/chase.275power+separate50outcome projected offline with unchanged precision suppression, no pooling/duo extrapolation. Original source23/claims26 retained,2new versions, no legacy grade inheritance.
+- next_ready: exact scoped full-duo focus/resources/repeat net gain and same-gold build crossover source evidence. Existing3questions/video diagnostic/quotas stay independent. No provider/video/game/paid calls. AUTO30/HOLD20/USER0/advice7/Frozen350/Windows/pro/riot histories preserved. N0/30secunmeasured/WindowsBLOCKED_EXTERNAL unchanged.
+
+---
+
 # Evidence adoption / initial wave sequence — execution claim
 - run_token: `main-20261018-evidence-adoption`
 - status: `RUNNING`
