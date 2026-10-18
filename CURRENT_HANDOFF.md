@@ -1,3 +1,16 @@
+# Threat rings and clear wave action — completed
+- run_token: `main-20261018-threat-rings`
+- status: `COMPLETED`
+- writer_active: false
+- final_main: `78d6f04265c280d04545c3d1ec1e64bcdd1ac219` (PR111/112)
+- product_main: `d6583085ba6a71a7d1d32b2cc229a73ce90231a0`; public `fc36a774fdf77ad8d850993e4b473e4d61ad7a0a`, nativePages39126638509 actualSUCCESS.
+- Required feature/product-main/results/final-main3PASS; final39126912333/39126912349 source-bound current_sources=true and unchanged tests/browser reused. Actual HTTPS changed hashes/root/buildinfo/nojekyll and actual public PC/mobile320/200% verified; pro/riot retained; no identical product republish.
+- Shared clear minion/poke/stop source, preserved risk execution and special branches. All10direct +7conditional approach circles in default roster;10curated official-field profiles, others BASIC_ONLY/unknown spells. SejR1300/Q+R1950, ZedR625/Wnew+swap+R1275 are conditional references, not full threat/danger/win verdicts.
+- Small portraits, selfgold, stable full-circle overview/layout zoom, actor/step/modal and accessible name-picker focus/disclosure checked. Sources/grades/AUTO30HOLD20USER0/advice7/Frozen350/holds/quotas/Master+/Windows preserved; N0/30secUNMEASURED/WindowsBLOCKED_EXTERNAL; no provider/game/video/paid requests.
+- Final proof: `evidence/actual-evidence/threat-rings/final-handoff.json` on this coordination branch. Product/publication/RED/failure history on main. Next: remaining source-scoped threat/movement profiles and matchup knowledge, no generic maximum-distance guesses.
+
+---
+
 # Threat rings and clear wave language — active writer
 - run_token: `main-20261018-threat-rings`
 - status: `RUNNING`
