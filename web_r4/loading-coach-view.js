@@ -65,7 +65,11 @@
         arr(evidence.sources).filter(source => arr(claim.source_ids).includes(source.id)).forEach(source => {
           const quote = el('div', null, 'coach-source'), link = urlLink(source.title || '원문 보기 ↗', source.url);
           quote.append(link || el('p', source.title || '출처 URL 미확인'));
-          quote.append(el('p', [source.author, source.expertise, source.date, source.patch].filter(Boolean).join(' · '), 'coach-muted'));
+          const expertise=typeof source.expertise==='string'?source.expertise:[source.expertise?.self_claimed,source.expertise?.evidence,source.expertise?.details,source.expertise?.verified_evidence,typeof source.expertise?.verified==='string'?source.expertise.verified:null].filter(Boolean).join(' · ');
+          quote.append(el('p',[source.author,'작성·수정일: '+(source.date||'미확인'),'공략 표기 패치: '+(source.patch||'미확인')].filter(Boolean).join(' · '),'coach-muted'));
+          if(expertise)quote.append(block('작성자·전문성 확인 범위',expertise));
+          if(source.date_note)quote.append(block('날짜 확인 한계',source.date_note));
+          if(arr(source.limits).length)quote.append(block('출처 한계',source.limits));
           arr(source.excerpts).forEach(excerpt => { const raw=el('blockquote');raw.textContent=excerpt.text;quote.append(raw); if (excerpt.locator) quote.append(el('p', excerpt.locator, 'coach-muted')); });
           section.append(quote);
         });
