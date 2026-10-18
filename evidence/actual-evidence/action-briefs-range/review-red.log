@@ -1,0 +1,73 @@
+...F.......F.
+======================================================================
+FAIL: test_threat_summary_uses_actual_candidates_and_correct_phase_and_fallback_source (tests_pregame.test_action_briefs.ActionBriefTests.test_threat_summary_uses_actual_candidates_and_correct_phase_and_fallback_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-actions/tests_pregame/test_action_briefs.py", line 18, in test_threat_summary_uses_actual_candidates_and_correct_phase_and_fallback_source
+    self.node("const P=require('./web_r4/loading-planboard.js'),r=run(1),b=r.coach.planboard;const t=b.action_summaries.fight.items.find(v=>v.kind==='THREAT');assert(t.threat_ids.includes('Malphite:R'));assert.equal(t.applicability.phase,'POST_LANE_LEARNED_KIT');assert.equal(t.applicability.lane_reference_period,'LEVEL1');assert(!('period' in t.applicability));assert(t.conditions.some(s=>s.includes('6レベル')||s.includes('6레벨')));assert.equal(b.action_summaries.fight.items[0].detail_target,'fight-methods');const z=run(),copy=structuredClone(z.coach.planboard);copy.fight.threats=copy.fight.threats.filter(v=>['LeeSin','Zed'].includes(v.champion));const actual=P.actionSummaries(copy,z.coach,z).fight.items.find(v=>v.kind==='THREAT');assert(actual.threat_ids.length);assert(actual.source_paths.includes('fight.threats'));copy.fight.threats=[];const fallback=P.actionSummaries(copy,z.coach,z).fight.items.find(v=>v.kind==='THREAT');assert.deepEqual(fallback.source_paths,['fight.stop']);assert.equal(fallback.detail_target,'fight-plan');assert.equal(fallback.threat_ids.length,0);")
+  File "/workspace/worktrees/lol-coach-actions/tests_pregame/test_action_briefs.py", line 8, in node
+    r=subprocess.run(['node','-e',PRE+body],cwd=ROOT,capture_output=True,text=True);self.assertEqual(r.returncode,0,r.stderr[-4000:])
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(t.threat_ids.includes('Malphite:R'))
+
+    at [eval]:1:647
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_relocated_front_does_not_overlap_non_flanking_backline (tests_pregame.test_teamfight_formation.FormationTests.test_relocated_front_does_not_overlap_non_flanking_backline)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-actions/tests_pregame/test_teamfight_formation.py", line 25, in test_relocated_front_does_not_overlap_non_flanking_backline
+    self.node("const x=E.exampleInput(c,0);['Malphite','Ivern','Ziggs','Kaisa','Janna'].forEach((id,i)=>x.enemies[i].champion=id);const f=run(x).coach.planboard.fight.formations;assert(f.supported);const a=f.scenes[1].actors;for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++){const p=a[i].positions[1],q=a[j].positions[1];assert(Math.hypot(p.x-q.x,p.y-q.y)>=16,a[i].champion+' overlaps '+a[j].champion);}")
+  File "/workspace/worktrees/lol-coach-actions/tests_pregame/test_teamfight_formation.py", line 9, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4500:])
+AssertionError: 1 != 0 : node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: Ornn overlaps Janna
+    at [eval]:1:486
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 13 tests in 1.945s
+
+FAILED (failures=2)

@@ -106,3 +106,13 @@
 .formation-arrows path{fill:none;stroke-width:.7;stroke-dasharray:2 1;stroke:#8abfe8}
 .formation-arrows path.enemy{stroke:#e694ac}
 @media(max-width:520px){.formation-explorer .formation-actor{width:52px;min-height:52px;padding:0}.formation-name{font-size:12px}.formation-arena{aspect-ratio:1;min-height:310px}}
+.coach-action-list{list-style:none;padding:0;margin:0;display:grid;gap:8px}.coach-action-list>li{min-width:0}.loading-coach .coach-action-list button{display:grid;grid-template-columns:24px minmax(110px,.4fr) minmax(0,1.6fr) 18px;align-items:start;gap:8px;width:100%;text-align:left;padding:12px;background:var(--inset,#0d1321);font-size:14px;line-height:1.65;white-space:normal}.coach-action-number{color:var(--accent,#ad91ff);font-weight:700}.coach-action-label{color:var(--muted,#bfc6da)}.coach-action-text{min-width:0;overflow-wrap:anywhere}.coach-action-arrow{color:var(--accent,#ad91ff)}.coach-action-role{color:#c6b5e5}.coach-summary-state{font-size:14px;color:var(--muted,#bfc6da);margin-bottom:12px!important}@media(max-width:650px){.loading-coach .coach-action-list button{grid-template-columns:24px minmax(0,1fr) 18px;gap:4px 8px;font-size:14px}.coach-action-label{grid-column:2}.coach-action-text{grid-column:2}.coach-action-arrow{grid-column:3;grid-row:1/3}}
+/* Square reference geometry keeps radius circles and portrait coordinates aligned. */
+.formation-explorer .formation-arena{aspect-ratio:1;min-height:0;height:auto}
+.formation-ranges{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.formation-range{fill:#6aacf51a;stroke:#7dbeed;stroke-width:.45}.formation-range.enemy{fill:#e87a9818;stroke:#ef95aa}
+.formation-connection{stroke:#91bed1;stroke-width:.4;stroke-dasharray:1.2 1;opacity:.7}.formation-connection.enemy{stroke:#d89aaa}
+.formation-cohesion{font-size:14px;color:var(--muted,#bfc6da);padding:8px 0}
+.formation-range-values{font-size:14px;color:var(--ink,#edf0fa);padding:4px 0}@media(max-width:520px){.formation-range-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.formation-range-controls button{width:100%}}
+/* The diagram coordinate is the portrait centre, not the portrait-plus-label box. */
+.formation-explorer .formation-actor{padding:0;min-height:0;transform:translate(-50%,clamp(-24px,-1.7vw,-16px))}

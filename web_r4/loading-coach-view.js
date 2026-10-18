@@ -237,29 +237,45 @@
       n.append(el('p',area==='lane'?'선택한 구간·기본 가정의 상대법입니다.':'조합의 기술을 적용한 조건부 계획이며 승패 예측은 아닙니다.','coach-muted'));return n;
     }
     function contextualDetails(area){const d=details(area+'-context','조합 구도와 상성 · 양쪽의 방식');d.classList.add('coach-context-details');d.append(contextExplanation(area));return d;}
+    function actionSummary(area){
+      const data=board().action_summaries?.[area],titles={lane:'라인전 — 이렇게 시작하세요',operations:'운영 — 이렇게 이득을 만드세요',fight:'한타 — 이렇게 싸우세요'},n=card(titles[area]);n.dataset.areaIntro=area;n.dataset.actionSummary=area;
+      if(!data){n.append(el('p','이 결과의 행동 요약이 연결되지 않았습니다. 아래 상세를 사용해 주세요.'));return n;}
+      if(data.assumption)n.append(el('p',data.assumption,'coach-summary-state'));
+      if(data.judgment)n.append(el('p',data.judgment.label+' · 전체 승패와는 별도입니다.','coach-summary-state'));
+      const rows=el('ol',null,'coach-action-list');
+      data.items.forEach((item,i)=>{
+        const li=el('li'),b=button(null,'summary-'+area+'-'+item.kind,()=>{
+          const target=Array.from(host.querySelectorAll('[data-action-detail]')).find(v=>v.dataset.actionDetail===item.detail_target);if(!target)return;
+          for(let a=target;a&&a!==host;a=a.parentElement)if(a.tagName==='DETAILS')a.open=true;
+          target.tabIndex=-1;target.focus({preventScroll:true});target.scrollIntoView({block:'nearest',behavior:'auto'});
+        });b.dataset.actionKind=item.kind;b.dataset.actionTarget=item.detail_target;
+        b.append(el('span',String(i+1),'coach-action-number'),el('span',item.label,'coach-action-label'));const text=el('span',item.text,'coach-action-text');
+        if(item.role)text.prepend(el('span',item.role+' · ','coach-action-role'));b.append(text,el('span','↗','coach-action-arrow'));li.append(b);rows.append(li);
+      });n.append(rows);return n;
+    }
     function lane() {
       const n=el('div',null,'coach-lane-panel'),b=board(),lead=card('이번 라인전의 기본 방향');lead.dataset.areaIntro='lane';
-      lead.append(block('이번 구간 목적',b.lane?.milestone?.goal),block('구도가 갈리는 이유',b.area_context?.lane?.matchup));n.append(lead,matrix());
+      delete lead.dataset.areaIntro;lead.dataset.actionDetail='lane-goal';lead.append(block('이번 구간 목적',b.lane?.milestone?.goal),block('구도가 갈리는 이유',b.area_context?.lane?.matchup));const overview=details('lane-overview','목표·구도의 이유');overview.append(lead);n.append(actionSummary('lane'),overview,matrix());
       const direction=card('기본 웨이브와 교환');direction.append(block('미니언을 어떻게 잡을까',b.wave?.label),block('싸움의 기본 방식',b.lane?.strong_fight),block('계획을 바꿀 때',b.wave?.change_if));n.append(direction);
       n.append(contextualDetails('lane'));const periodWhy=details('selected-reason','이 구간의 이유 · 교전 유형별 판단');periodWhy.append(selected());n.append(periodWhy);const growthDetail=details('growth-detail','성장 전환점 · 이전과 이후의 계획');growthDetail.append(growth());n.append(growthDetail);
-      const methods=details('methods','방법 보기 · 웨이브·교환·양쪽 상대법');methods.append(wave(),counterplans(),preferences());n.append(methods,evidenceBridge(),application(),statistics());const comparison=details('trade-sustain','교환 길이 · 반복 교환과 유지력');comparison.append(trade(),sustain());n.append(comparison);return n;
+      const methods=details('methods','방법 보기 · 웨이브·교환·양쪽 상대법');methods.dataset.actionDetail='lane-methods';const pair=counterplans();pair.dataset.actionDetail='lane-counterplay';methods.append(wave(),pair,preferences());n.append(methods,evidenceBridge(),application(),statistics());const comparison=details('trade-sustain','교환 길이 · 반복 교환과 유지력');comparison.append(trade(),sustain());n.append(comparison);return n;
     }
     function operations() {
-      const g=board().operations,n=card('운영 · 어디에서 무엇을 얻는가');n.dataset.areaIntro='operations';
-      n.append(block('본대와 사이드의 방향',g?.placement),block('함께 움직일 아군과 노리는 이득',[g?.connection,g?.priority]),block('기본 계획이 막히면',g?.fallback),contextualDetails('operations'));
-      const method=details('operations-methods','방법 · 양보할 싸움과 성장 후 변화');[['양보와 교환','concede'],['성장 후 변화','growth']].forEach(([label,key])=>method.append(block(label,g?.[key])));method.append(list(g?.steps,true),el('p','이 운영 배치의 전체 지도는 미지원입니다. 한타 탭의 역할 배치와 구분합니다.','coach-muted'));n.append(method,why(g?.claim_ids,'operations'));return n;
+      const g=board().operations,n=el('div'),lead=card('운영 · 어디에서 무엇을 얻는가');lead.dataset.actionDetail='operations-plan';n.append(actionSummary('operations'));
+      lead.append(block('본대와 사이드의 방향',g?.placement),block('함께 움직일 아군과 노리는 이득',[g?.connection,g?.priority]),block('기본 계획이 막히면',g?.fallback),contextualDetails('operations'));const overview=details('operations-overview','배치·연결의 이유');overview.append(lead);n.append(overview);
+      const method=details('operations-methods','방법 · 양보할 싸움과 성장 후 변화');method.dataset.actionDetail='operations-methods';[['양보와 교환','concede'],['성장 후 변화','growth']].forEach(([label,key])=>method.append(block(label,g?.[key])));method.append(list(g?.steps,true),el('p','이 운영 배치의 전체 지도는 미지원입니다. 한타 탭의 역할 배치와 구분합니다.','coach-muted'));n.append(method,why(g?.claim_ids,'operations'));return n;
     }
     function fight() {
-      const f=board().fight,n=card('한타 · 내 공격 시작 기준');n.dataset.areaIntro='fight';
+      const f=board().fight,n=el('div'),lead=card('한타 · 내 공격 시작 기준');lead.dataset.actionDetail='fight-plan';n.append(actionSummary('fight'));
       const kinds=[...new Set(arr(f?.threats).map(t=>({BLOCK_LINE:'투사체와 맞은 뒤의 접근',EXPOSURE_AND_FOLLOWUP:'피격 뒤 이어지는 상대의 공격',MARK_AND_ACCESS:'표식이 생긴 뒤의 접근',DISTANCE_AND_ESCAPE:'거리를 좁히는 수단',RESERVE_DEFENSE:'대응 기술을 남겨야 하는 공격'})[t.response_kind]||'상대의 접근과 추가 공격'))];
-      n.append(block('내 역할',f?.role),block('행동을 바꾸는 위협',kinds.length?kinds:'확인한 위협 자료가 부족합니다.'),block('공격을 시작할 때',f?.start),block('이탈·위치를 바꿀 때',f?.stop),contextualDetails('fight'));
+      lead.append(block('내 역할',f?.role),block('행동을 바꾸는 위협',kinds.length?kinds:'확인한 위협 자료가 부족합니다.'),block('공격을 시작할 때',f?.start),block('이탈·위치를 바꿀 때',f?.stop),contextualDetails('fight'));const overview=details('fight-overview','역할·위치·공격 조건의 이유');overview.append(lead);n.append(overview);
       const formation=el('section',null,'coach-formation');formation.append(el('h3','어떤 한타 모양을 만들까?'),el('p','초상화로 비교하는 설명용 배치 · 실제 위치나 승패 예측이 아닙니다.','coach-muted'));
       if(root.LoadingFormation)formation.append(root.LoadingFormation.create(f?.formations,catalog));
       const formationWhy=details('formation-why','배치의 근거와 해석 범위');formationWhy.append(el('p',f?.formations?.evidence?.scope||'이 조합의 배치 근거가 연결되지 않았습니다.'));
       arr(f?.formations?.evidence?.official).forEach(v=>formationWhy.append(block(catalog.champions[v.champion].name+'의 '+v.name+'('+v.slot+')',v.text),urlLink('공식 기술 설명 · '+v.patch,v.url)));
       arr(f?.formations?.evidence?.sources).forEach(s=>{formationWhy.append(urlLink(s.author+' · '+s.title,s.url),el('p','공략 표기 패치: '+(s.patch||'미확인')+' · 작성·수정일: '+(s.date||s.research_metadata?.updated_at||'미확인'),'coach-muted'),block('공략의 적용 한계',s.limits));});formation.append(formationWhy);n.append(formation);
-      const method=details('fight-methods','방법 · 공격 대상과 교전 전후 배치');[['공격할 대상','target'],['시작 전 배치','setup'],['교전 뒤','after']].forEach(([label,key])=>method.append(block(label,f?.[key])));n.append(method);
-      const threats=details('fight-threats','챔피언별 위협 기술 · 대응과 조건');arr(f?.threats).forEach(t=>{const d=el('section');d.append(block(t.label,t.action),block('조건',t.condition));threats.append(d);});n.append(threats);
+      const method=details('fight-methods','방법 · 공격 대상과 교전 전후 배치');method.dataset.actionDetail='fight-methods';[['공격할 대상','target'],['시작 전 배치','setup'],['교전 뒤','after']].forEach(([label,key])=>method.append(block(label,f?.[key])));n.append(method);
+      const threats=details('fight-threats','챔피언별 위협 기술 · 대응과 조건');threats.dataset.actionDetail='fight-threats';arr(f?.threats).forEach(t=>{const d=el('section');d.append(block(t.label,t.action),block('조건',t.condition));threats.append(d);});n.append(threats);
       const map=current?.teamfight?.map;
       if(map&&root.LoadingMap?.create){const d=details('fight-map','기존 전체 지도 · 이동 설명 참고');try{const steps=[f.setup,f.start,f.stop].map((text,i)=>({number:i+1,text}));d.append(root.LoadingMap.create({map,plan:{steps}},catalog,current.input,{selectedStep:String(state.step),onSelect:step=>{if(step!=='ALL'){state.step=Number(step);syncSteps();}}}));}catch(_){d.append(el('p','이 보고서의 지도 표시는 지원되지 않습니다.','coach-muted'));}n.append(d);}
       n.append(why(f?.claim_ids,'fight'));return n;
