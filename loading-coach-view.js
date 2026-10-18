@@ -209,7 +209,7 @@
       else d.append(block('① Riot 경기 관측','연결된 집계 없음 · 공략의 정성적 기본 계획과 별도로 관리합니다.'));
       d.append(block(b.application_active?'② 전문가 공략의 판단':'② 공략의 기본 판단 · 현재 조건에는 미적용',b.expert.plan),block('조건·견해 차이',b.expert.reason),block('적용 조건',b.expert.conditions),block('대표 반례',b.expert.exceptions));
       b.expert.sources.forEach(ref=>{const src=arr(coach().evidence.sources).find(s=>s.id===ref.source_id);if(src){d.append(urlLink(src.author+' · '+src.title,src.url),el('p',ref.locator+' · '+ref.supports),el('p','공략 패치: '+src.patch+' · 문단 개별 수정일은 미확인','coach-muted'));}});
-      const c=b.counterplay;d.append(block(b.application_active?'③ 현재 구간의 상대법':'③ 현재 조건에 제한된 상대법',[c.purpose,c.opponent_goal,c.wave_plan,c.trade,c.punish,c.growth]),block('자료를 넘어선 해석',b.inference),el('p','통계는 전문가 계획의 승리 증명이 아닙니다. 원문·조건·반례를 종합한 기본 계획이며 실전 효과는 미측정입니다.','coach-muted'));return d;
+      const c=b.counterplay;d.append(block(b.application_active?'③ 현재 구간의 상대법':'③ 현재 조건에 제한된 상대법',['기본 목적: '+c.purpose,'상대가 노리는 것: '+c.opponent_goal,'웨이브 계획: '+c.wave_plan,'교환·기술 대응: '+c.trade,'응징 기회: '+c.punish,'성장 후 변경: '+c.growth]),block('자료를 넘어선 해석',b.inference),el('p','통계는 전문가 계획의 승리 증명이 아닙니다. 원문·조건·반례를 종합한 기본 계획이며 실전 효과는 미측정입니다.','coach-muted'));return d;
     }
     function statistics() {
       const s=coach().knowledge_application?.statistics,wrap=details('statistical-context','기존 경기 통계 · 매치업과 일반 참고 구분');
