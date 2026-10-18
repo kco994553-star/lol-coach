@@ -1,3 +1,10 @@
+# Latest desktop composition public result
+- DONE: PR79 productab17d50, artifact4b7fb94, actualPages/HTTPS/PCmobile8geometry+existing25hero/3destinations proof. See publication/result.md.
+- READY: evidence/Handoff-only normal merge and exact remote/main required gates; no repeated product/browser/source collection.
+- SEPARATE: existing source questions/video allowed-window/privateAPI/realWindows dependencies unchanged.
+
+---
+
 # Current desktop composition correction
 - READY: exact requiredCI/normalPR/postmainCI/Pages/actualHTTPS; source-bound local geometry/screens and changed-flow proof complete. Preserve all existing gameplay/source/quota/history.
 - Previous PR78/results main d264a8d was completed with required3 SUCCESS; prior READY line is historical, not pending duplicate work. Source/video/privateAPI/realWindows remain separate external dependencies.
