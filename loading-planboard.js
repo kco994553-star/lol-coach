@@ -35,7 +35,9 @@
     const jungleNear = p.enemy_jungle === 'NEAR';
     const claims = id === 'A' ? ['A-WAVE', 'A-SHORT', 'A-RECALL', 'A-WAVE-SPACE',...(coach.knowledge_application?.supported?['A-INITIAL-ORDER-v1']:[])] : reverse ? ['B-ALI-RESOURCE','B-ALI-POLY'] : coach.evidence.claim_ids;
     const growth = coach.growth.find(g => g.id === period) || null;
+    const reference=valid?coach.source_plan:null;
     const laneGoals = {
+      E:reference?.overall_goal,
       BR: '체력을 보존해 CS·경험치를 받고, 알리스타 접근과 카이사 후속을 함께 쓸 여건을 남긴다.',
       A: early ? '사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다.' : '받을 CS와 퇴로를 지키며 아군 제어 뒤 짧게 공격한다.',
       B: '유나라의 강화 공격과 룰루 지원이 겹치는 교환을 만들고 성장 자원을 남긴다.',
@@ -43,15 +45,15 @@
       D: '장거리 견제로 수급을 잇되, 성장 후 고립된 맞딜을 허용하지 않는다.'
     };
     let overallGoal = usable ? laneGoals[id] : '확인된 수단으로 CS·경험치를 확보하고 복귀 선택권을 남긴다.';
-    let milestoneGoal = growth ? growth.after : id === 'C' ? coach.selected.action : overallGoal;
+    let milestoneGoal = reference?.selected?.purpose || (growth ? growth.after : id === 'C' ? coach.selected.action : overallGoal);
     if(reverse)milestoneGoal = period==='LEVEL1' ? '알리스타에게 아직 연속 진입 수단이 없는 구간: 체력·경험치와 닿는 CS를 지킨다.' : period==='LEVEL2' ? '알리스타가 박치기(W)·분쇄(Q)를 배웠다면 접근·후속 창이 생긴다. 체력을 써 선레벨 경쟁부터 강제하지 않는다.' : '룰루의 보호·변이와 유나라 강화 창을 피하고, 아군 후속이 닿는 교환만 비교한다.';
     if (low) milestoneGoal = '처리에 쓸 체력·마나를 남기며 받을 CS·경험치를 확보한다.';
     if (coach.context.patch.status === 'MISMATCH') overallGoal = milestoneGoal = '자료 버전이 달라 우세 적용을 제한하고 수급·복귀 계획부터 세운다.';
     const recallOpen = valid && !low && !unknown && p.goal === 'RECALL' && p.clear_window === 'OPEN' && !jungleNear && ['EVEN', 'BUILDING'].includes(s.wave);
-    let planId = unknown ? 'CHECK_WAVE' : low ? 'TRIM_RECEIVE' : valid && coach.knowledge_application?.supported && id==='A' && s.engage==='NONE' && early && s.wave==='EVEN' && !['FARM','RECALL'].includes(p.goal) ? 'ACQUIRE_PUSH' : ({ INCOMING: 'TRIM_RECEIVE', UNDER_TOWER: 'TOWER_CS', RETURNING: 'RETURNING' })[s.wave] || (p.goal === 'FARM' || reverse || id === 'A' && !early ? 'TRIM_RECEIVE' : 'SLOW_PUSH');
+    let planId = unknown ? 'CHECK_WAVE' : low ? 'TRIM_RECEIVE' : valid && coach.knowledge_application?.supported && id==='A' && s.engage==='NONE' && early && s.wave==='EVEN' && !['FARM','RECALL'].includes(p.goal) ? 'ACQUIRE_PUSH' : ({ INCOMING: 'TRIM_RECEIVE', UNDER_TOWER: 'TOWER_CS', RETURNING: 'RETURNING' })[s.wave] || (p.goal === 'FARM' || reference || reverse || id === 'A' && !early ? 'TRIM_RECEIVE' : 'SLOW_PUSH');
     if (recallOpen) planId = 'FAST_PUSH';
     const labels = { ACQUIRE_PUSH:'선푸시 확보 후 처리량 조절', CHECK_WAVE: '수급 거리에서 처리 방향 파악', SLOW_PUSH: '막타 중심으로 천천히 쌓기', TRIM_RECEIVE: '필요한 만큼 줄이며 받기', TOWER_CS: '포탑 아래 수급', RETURNING: '돌아오는 웨이브 받기', FAST_PUSH: '빠른 처리 후 포탑 도달 확인' };
-    const handling = {
+    let handling = {
       ACQUIRE_PUSH:'막타만 기다리지 않고 미니언에 평타를 보태 처리 우위를 만든다. 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E)를 필요할 때 처리에 배분하고 진입 대응 자원을 남긴다.',
       CHECK_WAVE: '닿는 막타·경험치를 받으며 양쪽 처리 방향을 파악한다. 미확인인 채로 유지·크래시 성공을 가정하지 않는다.',
       SLOW_PUSH: '막타를 우선하고, 상대가 줄이는 속도보다 조금 더 처리할 여유가 있을 때만 쌓는다.',
@@ -60,6 +62,7 @@
       RETURNING: '이전 크래시가 완료됐다는 예시에서 돌아오는 미니언을 아군 쪽에서 받는다. 상대가 유지하면 더 나가지 않는다.',
       FAST_PUSH: '귀환 전 남긴 처리 자원을 써 현재 웨이브를 줄인다. 다음 웨이브에 막히면 포탑 도달·귀환 창을 얻었다고 보지 않는다.'
     }[planId];
+    if(reference&&planId==='TRIM_RECEIVE'&&!low&&!unknown)handling='막타 중심으로 수급하고, 상대가 밀어올 때만 과도한 미니언을 일부 줄인다. 억지로 프리징을 만들기 위해 체력을 내주지 않는다.';
     const purpose = p.goal === 'RECALL' ? recallOpen ? '처리 여유를 귀환·구매 시간으로 바꾼다.' : '귀환 전 잃을 자원을 줄이고 밀어 넣을 여유를 마련한다.' : p.goal === 'FARM' || low ? '교환보다 CS·경험치와 다음 수급 자원을 확보한다.' : milestoneGoal;
     const reserve = coach.wave.selected.reserve[0];
     const pace = { id: planId === 'ACQUIRE_PUSH' ? 'ACQUIRE_THEN_MODULATE' : planId === 'FAST_PUSH' ? 'FAST' : planId === 'SLOW_PUSH' ? 'LAST_HIT_PLUS' : planId === 'CHECK_WAVE' ? 'OBSERVE_FROM_ACCESS' : 'SELECTIVE_CLEAR', label: labels[planId] };
@@ -76,7 +79,7 @@
     if(id==='A'&&s.engage!=='NONE'&&!low&&!unknown)combat='이미 교전을 시작한 가정에서는 선처리 경쟁보다 남은 동료 후속·제어·퇴로를 먼저 비교한다. 반격과 연결이 남으면 대응하고, 끊기면 교환을 끝낸 뒤 처리 계획을 다시 고른다.';
     if (unknown) combat = '막타·경험치 접근부터 확보한다. 모르는 상대 위치를 확인하러 깊게 나가지 않는다.';
     if (id === 'C' && !low && !unknown && !jungleNear && !recallOpen) combat = coach.selected.action;
-    const position = jungleNear ? '아군 쪽 퇴로와 후속이 닿는 자리에 서고, 웨이브를 따라 깊게 전진하지 않는다.' : '아군 후속과 걸어서 돌아올 거리가 남는 쪽에 선다. 미니언은 일부 투사체 대응 수단이며 전체 안전선이 아니다.';
+    const position = reference&&!jungleNear&&!unknown?'앞 급소에 닿고 걸어서 돌아올 자리에서 CS를 받는다. '+skill('Malphite','Q')+' 뒤 이동 속도 차이로 퇴로가 길어지면 전진 폭을 줄인다.':jungleNear ? '아군 쪽 퇴로와 후속이 닿는 자리에 서고, 웨이브를 따라 깊게 전진하지 않는다.' : '아군 후속과 걸어서 돌아올 거리가 남는 쪽에 선다. 미니언은 일부 투사체 대응 수단이며 전체 안전선이 아니다.';
     const nextWave = planId==='ACQUIRE_PUSH' ? '처리 우위를 얻었으면 막타 중심으로 낮춰 쌓고 상대의 CS 접근을 압박한다. 맞밀기에 밀리면 더 전진하지 않고 일부 줄이며 받는다. 선레벨·크래시는 별도다. 상대 쪽에 웨이브가 멈추면 다음 수급의 전진 부담도 다시 본다.' : recallOpen ? '웨이브가 실제 상대 포탑에 닿은 뒤 귀환·구매를 비교한다. 도달하지 못하면 다음 웨이브에 더 노출될 부담을 먼저 줄인다.' : planId === 'TOWER_CS' ? '받은 뒤 체력·구매와 다음 웨이브 복귀를 비교한다. 다이브 인원·퇴로가 나쁘면 경험치·생존을 우선한다.' : planId === 'RETURNING' ? '돌아오는 웨이브가 멈추면 다시 처리량을 조절한다. 멀리 나가 상대 쪽에 묶이지 않는다.' : '상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다.';
     const changeIf = absent ? '상대 서포터 복귀·정글 개입·동료 후속 단절이면 압박을 접는다.' : jungleNear ? '상대 쪽에서 웨이브가 멈추거나 퇴로가 끊기면 추가 전진을 끝낸다.' : p.goal === 'RECALL' ? '처리를 방해받거나 포탑 도달 여유가 사라지면 귀환 계획을 바꾼다.' : coach.trade.ours.end[0];
     const choiceId = reverse ? 'PRESERVE_FOLLOWUP' : recallOpen ? 'PROCESS_FOR_RECALL' : p.goal === 'FARM' ? 'FARM_ACCESS' : coach.selection.id;
@@ -91,6 +94,7 @@
     wave.diagram = { ...clone(coach.diagram), plan_id: planId, steps: wave.steps, supported: coach.diagram.supported && !unknown };
     if (absent) wave.diagram.enemies = wave.diagram.enemies.filter(c => c !== slot('enemies', 'SUPPORT'));
     if(usable && id==='A'){wave.opponent_response='노틸러스는 선처리를 노려도 진입 공간이 사라질 만큼 빨리 밀지 않을 수 있다. 상대의 느린 처리를 처리 능력 부족으로 단정하지 않는다.';wave.success='사거리·자원·퇴로를 남긴 채 CS 접근과 다음 처리 선택권을 얻는 것. 킬·선레벨·크래시 보장은 아니다.';}
+    if(reference){wave.opponent_response=reference.opponent.means;wave.success='체력·마나와 다음 막타 접근을 남기며 급소·수급 공간을 얻는 것. 강제 선푸시·처치가 성공 조건은 아니다.';}
     const allKnowledge = knowledge || { matchups: [], sources: [] };
     const knownMatches = allKnowledge.matchups.filter(m => slot('allies', m.role) === m.allies[0] && slot('enemies', m.role) === m.enemies[0] && (m.role !== 'BOTTOM' || m.carry_only || slot('allies', 'SUPPORT') === m.allies[1] && slot('enemies', 'SUPPORT') === m.enemies[1]));
     const lanes = ['TOP', 'MID', 'BOTTOM'].map(position => {
@@ -172,6 +176,7 @@
       ours.look_for = low || unknown ? '닿는 막타·경험치와 걸어서 돌아올 공간을 얻는다.' : recallOpen ? '상대가 처리를 방해하지 않는 여유를 구매 시간으로 바꾼다.' : '상대가 양보한 CS·처리 시간을 얻는다.';
       ours.switch_when = changeIf;
     }
+    if(reference){Object.assign(ours,{purpose,means:combat,look_for:'말파이트의 마나 부족·반격 기술 소모와 닿는 급소를 CS·공간 이득으로 바꾼다.',avoid:reference.selected.reserve,switch_when:changeIf});theirs=clone(reference.opponent);}
     if (absent) {
       ours.means = combat;
       theirs.means = name(slot('enemies', 'BOTTOM')) + '만 남은 부재 예시다. 지원 없는 진입 대신 닿는 막타와 퇴로를 확보한다.';
@@ -181,9 +186,10 @@
     const playbook = { supported: usable, ours, theirs, claim_ids: claims, basis: 'DESIGN_HYPOTHESIS', enemy_intent: 'POSSIBLE_PLAN_NOT_OBSERVED' };
     const coverage = { status: !usable ? 'UNSUPPORTED' : id === 'A' ? 'BASIC_PLAN_CONDITIONAL' : 'CONDITIONAL_REFERENCE', matchup: id,
       plan_scope: usable ? '조건부 기본 목적·웨이브·양쪽 상대법 연결' : '일반 역할만 제공 · 개별 상대법 미지원',
-      gaps: id === 'A' && valid ? '초반 사거리·푸시 공략 범위. 지속 교전·올인·후반 전체 우열 자료 부족.' : usable ? '기전·조건부 참고. 전체 2대2/근접 지속 교전 승패는 미확인.' : '이 조합의 구간별 공략 근거가 연결되지 않았다.', effect_sample: 0 };
+      gaps: reference?'공략 기반 수급·대응과 조건부 견제 판단. 전체 올인·동일 골드 빌드별 역전·누적 유지력 우열은 자료 부족.':id === 'A' && valid ? '초반 사거리·푸시 공략 범위. 지속 교전·올인·후반 전체 우열 자료 부족.' : usable ? '기전·조건부 참고. 전체 2대2/근접 지속 교전 승패는 미확인.' : '이 조합의 구간별 공략 근거가 연결되지 않았다.', effect_sample: 0 };
     const quick = [];
     if(valid && id === 'A')quick.push({id:'KEY_SPENT',label:'노틸러스 핵심 기술 소모',scenario:{enemy_key:'SPENT'},planning:{},reason:'남은 평타 제어·카이사 후속은 유지하고 CS 접근·짧은 교환 창만 비교'});
+    if(reference)quick.push({id:'KEY_SPENT',label:skill('Malphite','E')+' 소모',scenario:{enemy_key:'SPENT'},planning:{},reason:'공격 속도 감소 창은 줄지만 Q·강화 공격·궁극기와 마나는 별도로 남음. 올인 승리로 바꾸지 않음'});
     if(supportCase)quick.push({id:'SUPPORT_ABSENT',label:'상대 서포터 부재',scenario:{},planning:{enemy_support:'ABSENT'},reason:'남은 원딜·정글·복귀 위험을 고려한 제한적 압박'});
     const reverseClaims = reverse ? allKnowledge.matchups.find(m=>m.id==='B')?.claims.filter(c=>claims.includes(c.id)) || [] : [];
     const allClaims = [...knownMatches.flatMap(m => m.claims),...reverseClaims], sourceIds = new Set(allClaims.flatMap(c => c.source_ids));
