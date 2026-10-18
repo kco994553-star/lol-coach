@@ -1,3 +1,13 @@
+# Evidence adoption / initial wave sequence — execution claim
+- run_token: `main-20261018-evidence-adoption`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/evidence-adoption-20261018`
+- current_main: `8d3f8f281e3920dd34a39381c04acb19dd4ef935`
+- scope: USER evidence-kind-specific adoption; reuse sources/stats/history, fill supportable qualitative judgments, correct acquire-push-before-build, attach exact statistical populations/omissions. Additive synthesis contract; old claims/grades/precision gates unchanged. No provider/video/paid expansion. Affected +requiredCI, normalPR/exactmain/Pages/PCmobile/Handoff. N0/30secunmeasured/WindowsBLOCKED_EXTERNAL.
+
+---
+
 # Riot game information / wave counterplay delivered — writer released
 - run_token: `main-20261018-riot-game-info`
 - status: `COMPLETED`
