@@ -9,6 +9,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = {
+    'riot.txt':'riot.txt',  # Public Riot app ownership proof; not an API credential.
     'loading-coach.js':'loading-coach.js','loading-coach-view.js':'loading-coach-view.js','loading-coach.css':'loading-coach.css','loading-knowledge.json':'loading-knowledge.json','loading-study.js':'loading-study.js',
     'coach-theme.css':'coach-theme.css','coach-shell.js':'coach-shell.js','hero-art.json':'hero-art.json','home-assets/strategy-panels.webp':'home-assets/strategy-panels.webp',
     **{'home-assets/'+p:'home-assets/'+p for p in ('Ahri.jpg','Caitlyn.jpg','AhriSkin27.jpg','LuxSkin7.jpg','Moonlit.webp','strategy-objectives.webp','lane.jpg','fight.jpg')},

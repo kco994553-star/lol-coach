@@ -1,3 +1,9 @@
+# Riot Developer Portal ownership preparation — 2026-10-18
+- Fresh main2fb64aa/publicartifact222ae17/common claim completed. D1/D2 user-authorized public UUID proof only, no Riot API key or private authentication material. Add web_r4/riot.txt to explicit Pages export allowlist; target https://kco994553-star.github.io/lol-coach/riot.txt.
+- Preserve all existing web/Frozen/CI/deployment histories. Verify exact36bytes locally, existing affected export checks and requiredCI; then append-only gh-pages change retaining every old public file, nativePages and actualHTTPS exact-content proof. Product URL changes/VERIFY URL click remain USER actions; no portal login or verification-success claim.
+
+---
+
 # Loading Coach — actual public completion
 - PR81+82+83+84+85+86 product source704f68c9c778c927f02673d0831acd3cbb154284, artifact222ae171744d55aa3099539e9852d8f1948c7f35, Pages39088973285 actualSUCCESS. Feature/main required3 PASS; actual HTTPS79files+root/build-info/nojekyll hashes and PC/mobile default→risk/condition→cost/action/diagram→source/study plus3home destinations PASS.
 - Explicit standard comparison v3 input/additive coach-v1; default10pick needs no scenario/economy controls. Existing v1/v2 and engines/detail kept. Categorical6period grid; A source-scoped early push/short poke, B conditional support/counterfocus, C local CS pressure, D actual evolution/access/Muramana events not fixed3core reversal. Same source registry in study. Future conditions/preferences are never observations.
