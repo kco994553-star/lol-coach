@@ -9,6 +9,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = {
+    **{p:p for p in ('game-info.html','game-info.js','game-info-engine.js','game-info.css','game-info-items.json')},
     'riot.txt':'riot.txt',  # Public Riot app ownership proof; not an API credential.
     'loading-planboard.js':'loading-planboard.js','loading-coach.js':'loading-coach.js','loading-coach-view.js':'loading-coach-view.js','loading-coach.css':'loading-coach.css','loading-knowledge.json':'loading-knowledge.json','loading-study.js':'loading-study.js',
     'coach-theme.css':'coach-theme.css','coach-shell.js':'coach-shell.js','hero-art.json':'hero-art.json','home-assets/strategy-panels.webp':'home-assets/strategy-panels.webp',
@@ -45,6 +46,8 @@ def build(output):
         shutil.copyfile(p,target)
         if source=='dashboard.html':
             target.write_text(target.read_text().replace('data-account-backend="PC_LOOPBACK"','data-account-backend="PUBLIC_STATIC"'))
+        if source=='game-info.html':
+            target.write_text(target.read_text().replace('data-game-backend="PC_LOOPBACK"','data-game-backend="PUBLIC_STATIC"'))
         hashes[destination]=hashlib.sha256(target.read_bytes()).hexdigest()
     commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     manifest=dict(format='lol-coach-loading-public-export-v1',source_commit=commit,

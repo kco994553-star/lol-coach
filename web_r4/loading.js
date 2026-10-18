@@ -465,7 +465,7 @@
       const searchOptions = [];
       Object.values(catalog.champions).sort((a, b) => a.name.localeCompare(b.name, 'ko')).forEach(item => [item.name, item.id, ...entries(item.aliases)].forEach(alias => { if (typeof alias !== 'string' || values.has(alias)) return; values.add(alias); const option = node('option'); option.value = alias; option.label = item.name + ' · ' + item.id; searchOptions.push(option); }));
       $('champion-names').replaceChildren(...searchOptions);
-      [0, 1, 2, 3, 4].forEach(index => { const button = $('example-' + index); button.disabled = false; button.addEventListener('click', () => { fillForm(window.LoadingStrategy.exampleInput(catalog, index)); $('input-panel').open = true; stale(); if (report) message('예시 픽을 입력했습니다. ‘이번 판 방향 보기’를 누르면 요약이 바뀝니다.', 'stale'); else message('예시 픽을 입력했습니다. 내 챔피언과 포지션을 확인하고 ‘이번 판 방향 보기’를 눌러보세요.'); }); });
+      [0, 1, 2, 3, 4, 5].forEach(index => { const button = $('example-' + index); button.disabled = false; button.addEventListener('click', () => { fillForm(window.LoadingStrategy.exampleInput(catalog, index)); $('input-panel').open = true; stale(); if (report) message('예시 픽을 입력했습니다. ‘이번 판 방향 보기’를 누르면 요약이 바뀝니다.', 'stale'); else message('예시 픽을 입력했습니다. 내 챔피언과 포지션을 확인하고 ‘이번 판 방향 보기’를 눌러보세요.'); }); });
       $('analyze').disabled = false; updateRosterOptions(); message((entry?entry.name+' 분석을 선택했습니다. 아직 분석 전입니다. ':'')+'10개 픽과 내 챔피언·포지션을 선택하세요. 분석 후 선택한 영역으로 이어집니다.');
     } catch (error) { message('자료를 불러오지 못했습니다. 페이지를 새로고침해 주세요. ' + (error && error.message || ''), 'error'); }
   }

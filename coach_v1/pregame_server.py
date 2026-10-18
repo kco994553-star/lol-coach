@@ -320,6 +320,7 @@ class PregameHandler(Handler):
             '/loading':('loading.html','text/html; charset=utf-8'),
             '/loading.html':('loading.html','text/html; charset=utf-8'),
             '/loading.js':('loading.js','text/javascript; charset=utf-8'),
+            **{'/'+p:(p,'application/json; charset=utf-8' if p.endswith('.json') else 'text/css; charset=utf-8' if p.endswith('.css') else 'text/html; charset=utf-8' if p.endswith('.html') else 'text/javascript; charset=utf-8') for p in ('game-info.html','game-info.js','game-info-engine.js','game-info.css','game-info-items.json')},
             '/loading-planboard.js':('loading-planboard.js','text/javascript; charset=utf-8'),
             '/loading-coach.js':('loading-coach.js','text/javascript; charset=utf-8'),
             '/loading-coach-view.js':('loading-coach-view.js','text/javascript; charset=utf-8'),
@@ -385,6 +386,15 @@ class PregameHandler(Handler):
             filename,ctype=assets[route];file=ROOT/'web_r4'/filename
             if not file.exists():raise ServiceError(404,'PREGAME_UI_NOT_INSTALLED')
             return self.reply(200,file.read_bytes(),ctype)
+        if route=='/dev/v1/game-info' and self.command=='GET':
+            self.authorize()
+            from .game_info import GameInfoService
+            with self.server.job_lock:
+                if not hasattr(self.server,'game_info_service'):self.server.game_info_service=GameInfoService()
+                service=self.server.game_info_service
+            data=service.read()
+            # Ingestion availability does not authorize live dynamic display (Frozen mode gate).
+            return self.bounded_reply(200,{k:data[k] for k in ('status','reason','session') if k in data}|dict(current=False,snapshot=None,transport_current=data['current'],display_eligible=False,reason_display='LIVE_DISPLAY_POLICY_UNVERIFIED'))
         if route=='/dev/v1/account/lookup' and self.command=='POST':
             self.authorize()
             from .account_dashboard import AccountDashboardService

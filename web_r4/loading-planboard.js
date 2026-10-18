@@ -21,31 +21,34 @@
     const input = report.input, planning = validate(supplied || input.planning || defaults());
     const p = { enemy_support: 'PRESENT', enemy_jungle: 'UNKNOWN', ally_jungle: 'UNCONFIRMED', goal: 'AUTO', clear_window: 'UNCONFIRMED', ...planning.overrides };
     const s = { wave: 'EVEN', resources: 'SUFFICIENT', enemy_key: 'AVAILABLE', engage: 'NONE', start_skill: 'W', ...coach.context.assumptions.scenario.overrides };
-    const id = coach.matchup_id, period = coach.selected_period, early = ['LEVEL1', 'LEVEL2', 'LEVEL3_5'].includes(period);
-    const valid = coach.supported === true, low = s.resources === 'LOW', unknown = !valid || s.resources === 'UNKNOWN' || s.wave === 'UNKNOWN';
+    const reverse = input.own_champion === 'Kaisa' && input.own_position === 'BOTTOM' && input.opponent_mode === 'ASSIGNED' && input.allies.some(p=>p.position==='SUPPORT'&&p.champion==='Alistar') && input.enemies.some(p=>p.position==='BOTTOM'&&p.champion==='Yunara') && input.enemies.some(p=>p.position==='SUPPORT'&&p.champion==='Lulu') && coach.context.patch.status !== 'MISMATCH';
+    const id = reverse ? 'BR' : coach.matchup_id, period = coach.selected_period, early = ['LEVEL1', 'LEVEL2', 'LEVEL3_5'].includes(period);
+    const valid = coach.supported === true, usable = valid || reverse, low = s.resources === 'LOW', unknown = !usable || s.resources === 'UNKNOWN' || s.wave === 'UNKNOWN';
     const slot = (team, position) => input[team].find(r => r.position === position)?.champion || null;
     const name = c => catalog.champions[c]?.name || c || '배치 미확인';
     const fact = (c, k) => catalog.champions[c]?.facts.find(f => f.slot === k);
     const skill = (c, k) => fact(c, k) ? name(c) + '의 ' + fact(c, k).name + '(' + k + ')' : name(c) + '의 기술(키 미확인)';
     const self = input.own_champion, role = report.roles?.proposed?.id || report.roles?.base?.id;
     const sideRole = role === 'SIDE_RETURN', bottom = input.own_position === 'BOTTOM';
-    const supportCase = valid && bottom && ['A', 'B'].includes(id) && !!slot('allies', 'SUPPORT') && !!slot('enemies', 'SUPPORT');
+    const supportCase = usable && bottom && ['A', 'B', 'BR'].includes(id) && !!slot('allies', 'SUPPORT') && !!slot('enemies', 'SUPPORT');
     const absent = supportCase && p.enemy_support === 'ABSENT';
     const jungleNear = p.enemy_jungle === 'NEAR';
-    const claims = id === 'A' ? ['A-WAVE', 'A-SHORT', 'A-RECALL'] : coach.evidence.claim_ids;
+    const claims = id === 'A' ? ['A-WAVE', 'A-SHORT', 'A-RECALL', 'A-WAVE-SPACE'] : reverse ? ['B-ALI-RESOURCE','B-ALI-POLY'] : coach.evidence.claim_ids;
     const growth = coach.growth.find(g => g.id === period) || null;
     const laneGoals = {
+      BR: '체력을 보존해 CS·경험치를 받고, 알리스타 접근과 카이사 후속을 함께 쓸 여건을 남긴다.',
       A: early ? '사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다.' : '받을 CS와 퇴로를 지키며 아군 제어 뒤 짧게 공격한다.',
       B: '유나라의 강화 공격과 룰루 지원이 겹치는 교환을 만들고 성장 자원을 남긴다.',
       C: '가까운 막타 자리를 압박하고, 상대 이탈을 쫓는 대신 CS·공간을 얻는다.',
       D: '장거리 견제로 수급을 잇되, 성장 후 고립된 맞딜을 허용하지 않는다.'
     };
-    let overallGoal = valid ? laneGoals[id] : '확인된 수단으로 CS·경험치를 확보하고 복귀 선택권을 남긴다.';
+    let overallGoal = usable ? laneGoals[id] : '확인된 수단으로 CS·경험치를 확보하고 복귀 선택권을 남긴다.';
     let milestoneGoal = growth ? growth.after : id === 'C' ? coach.selected.action : overallGoal;
+    if(reverse)milestoneGoal = period==='LEVEL1' ? '알리스타에게 아직 연속 진입 수단이 없는 구간: 체력·경험치와 닿는 CS를 지킨다.' : period==='LEVEL2' ? '알리스타가 박치기(W)·분쇄(Q)를 배웠다면 접근·후속 창이 생긴다. 체력을 써 선레벨 경쟁부터 강제하지 않는다.' : '룰루의 보호·변이와 유나라 강화 창을 피하고, 아군 후속이 닿는 교환만 비교한다.';
     if (low) milestoneGoal = '처리에 쓸 체력·마나를 남기며 받을 CS·경험치를 확보한다.';
     if (coach.context.patch.status === 'MISMATCH') overallGoal = milestoneGoal = '자료 버전이 달라 우세 적용을 제한하고 수급·복귀 계획부터 세운다.';
     const recallOpen = valid && !low && !unknown && p.goal === 'RECALL' && p.clear_window === 'OPEN' && !jungleNear && ['EVEN', 'BUILDING'].includes(s.wave);
-    let planId = unknown ? 'CHECK_WAVE' : low ? 'TRIM_RECEIVE' : ({ INCOMING: 'TRIM_RECEIVE', UNDER_TOWER: 'TOWER_CS', RETURNING: 'RETURNING' })[s.wave] || (p.goal === 'FARM' || id === 'A' && !early ? 'TRIM_RECEIVE' : 'SLOW_PUSH');
+    let planId = unknown ? 'CHECK_WAVE' : low ? 'TRIM_RECEIVE' : ({ INCOMING: 'TRIM_RECEIVE', UNDER_TOWER: 'TOWER_CS', RETURNING: 'RETURNING' })[s.wave] || (p.goal === 'FARM' || reverse || id === 'A' && !early ? 'TRIM_RECEIVE' : 'SLOW_PUSH');
     if (recallOpen) planId = 'FAST_PUSH';
     const labels = { CHECK_WAVE: '수급 거리에서 처리 방향 파악', SLOW_PUSH: '막타 중심으로 천천히 쌓기', TRIM_RECEIVE: '필요한 만큼 줄이며 받기', TOWER_CS: '포탑 아래 수급', RETURNING: '돌아오는 웨이브 받기', FAST_PUSH: '빠른 처리 후 포탑 도달 확인' };
     const handling = {
@@ -62,6 +65,7 @@
     const pressure = { id: jungleNear || low || unknown || p.goal === 'FARM' || p.goal === 'RECALL' ? 'LIMITED' : absent ? 'CS_SPACE' : 'CS_EDGE', label: jungleNear ? '줄이기 · CS 자리 밖 추격 금지' : absent ? '남은 원딜의 막타 접근 제한' : '닿는 막타 자리만 압박' };
     const exposure = { id: jungleNear ? 'HOME_CONNECTED' : 'ALLY_CONNECTED', label: jungleNear ? '아군 쪽 퇴로에 붙기' : '동료·미니언과 연결된 자리' };
     let combat = coach.selection.id === 'SHORT_POKE' ? coach.selected.action : id === 'A' ? '상대가 막타에 접근하면 사거리 끝 짧은 공격으로 공간을 지키고, 물러나면 CS·처리 시간을 얻는다.' : coach.selected.action;
+    if(reverse)combat = period==='LEVEL1' ? skill('Kaisa','Q')+'로 받을 수 있는 CS를 확보하고 동료와 연결한다. 아직 배우지 않은 알리스타의 연속 진입을 전제하지 않는다.' : '배운 '+skill('Alistar','W')+'·'+skill('Alistar','Q')+'에 '+skill('Kaisa','P')+' 후속이 닿을 때만 교환을 비교한다. 룰루의 보호·변이가 남으면 연장을 강제하지 않는다.';
     if (valid && id === 'A' && s.enemy_key === 'SPENT') combat = skill('Nautilus', 'Q') + ' 소모 뒤 막타 자리로 접근하거나 짧게 공격한다. ' + skill('Nautilus', 'P') + '와 카이사의 후속은 남아 있으므로 붙어서 추격하지 않는다.';
     if (absent) combat = name(slot('enemies', 'BOTTOM')) + '의 막타 접근과 웨이브만 제한적으로 압박한다. 서포터 부재를 추격·다이브 허가로 쓰지 않는다.';
     if (jungleNear) combat = '앞으로 나가는 교환 폭은 줄이고 막타·처리 선택권을 지킨다. 상대의 전진이 지원군과 연결됐을 가능성도 다시 본다.';
@@ -72,10 +76,10 @@
     const position = jungleNear ? '아군 쪽 퇴로와 후속이 닿는 자리에 서고, 웨이브를 따라 깊게 전진하지 않는다.' : '아군 후속과 걸어서 돌아올 거리가 남는 쪽에 선다. 미니언은 일부 투사체 대응 수단이며 전체 안전선이 아니다.';
     const nextWave = recallOpen ? '웨이브가 실제 상대 포탑에 닿은 뒤 귀환·구매를 비교한다. 도달하지 못하면 다음 웨이브에 더 노출될 부담을 먼저 줄인다.' : planId === 'TOWER_CS' ? '받은 뒤 체력·구매와 다음 웨이브 복귀를 비교한다. 다이브 인원·퇴로가 나쁘면 경험치·생존을 우선한다.' : planId === 'RETURNING' ? '돌아오는 웨이브가 멈추면 다시 처리량을 조절한다. 멀리 나가 상대 쪽에 묶이지 않는다.' : '상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다.';
     const changeIf = absent ? '상대 서포터 복귀·정글 개입·동료 후속 단절이면 압박을 접는다.' : jungleNear ? '상대 쪽에서 웨이브가 멈추거나 퇴로가 끊기면 추가 전진을 끝낸다.' : p.goal === 'RECALL' ? '처리를 방해받거나 포탑 도달 여유가 사라지면 귀환 계획을 바꾼다.' : coach.trade.ours.end[0];
-    const choiceId = recallOpen ? 'PROCESS_FOR_RECALL' : p.goal === 'FARM' ? 'FARM_ACCESS' : coach.selection.id;
-    const choice = { id: choiceId, same_across_preferences: recallOpen || low || unknown || p.goal === 'FARM' || coach.selection.same_across_preferences,
-      cost: recallOpen ? '지금의 견제·킬 기회를 일부 포기하고 처리·구매 시간을 얻는다.' : coach.actions.find(a => a.id === coach.selection.id)?.costs[0] || '앞으로 선 자리와 처리 자원이 비용이다.',
-      reserve, reason: recallOpen || p.goal === 'FARM' ? '현재 목적에서는 성향을 바꿔도 선택이 같습니다. 필요한 수급·처리 조건이 우선입니다.' : coach.selection.reason };
+    const choiceId = reverse ? 'PRESERVE_FOLLOWUP' : recallOpen ? 'PROCESS_FOR_RECALL' : p.goal === 'FARM' ? 'FARM_ACCESS' : coach.selection.id;
+    const choice = { id: choiceId, same_across_preferences: reverse || recallOpen || low || unknown || p.goal === 'FARM' || coach.selection.same_across_preferences,
+      cost: reverse ? '일부 즉시 압박과 선처리 기회를 양보하고 체력·후속 자원을 남긴다.' : recallOpen ? '지금의 견제·킬 기회를 일부 포기하고 처리·구매 시간을 얻는다.' : coach.actions.find(a => a.id === coach.selection.id)?.costs[0] || '앞으로 선 자리와 처리 자원이 비용이다.',
+      reserve, reason: reverse ? '이 조건부 참고에서는 성향을 바꿔도 선택이 같습니다. 새로운 공격 후보의 실행 근거가 필요합니다.' : recallOpen || p.goal === 'FARM' ? '현재 목적에서는 성향을 바꿔도 선택이 같습니다. 필요한 수급·처리 조건이 우선입니다.' : coach.selection.reason };
     const wave = { plan_id: planId, label: labels[planId], purpose, handling, position, combat, next_wave: nextWave, change_if: changeIf, completed: false,
       state: { position: s.wave, minion_size: 'UNOBSERVED', reinforcements: 'UNOBSERVED', origin: 'HYPOTHETICAL_LOADING_EXAMPLE' },
       conditions: { resources: s.resources, enemy_key: s.enemy_key, enemy_jungle: p.enemy_jungle, clear_window: p.clear_window },
@@ -83,6 +87,7 @@
       steps: [{ number: 1, text: handling }, { number: 2, text: combat }, { number: 3, text: nextWave }], claim_ids: claims, basis: 'DESIGN_HYPOTHESIS' };
     wave.diagram = { ...clone(coach.diagram), plan_id: planId, steps: wave.steps, supported: coach.diagram.supported && !unknown };
     if (absent) wave.diagram.enemies = wave.diagram.enemies.filter(c => c !== slot('enemies', 'SUPPORT'));
+    if(usable && id==='A'){wave.opponent_response='노틸러스는 선처리를 노려도 진입 공간이 사라질 만큼 빨리 밀지 않을 수 있다. 상대의 느린 처리를 처리 능력 부족으로 단정하지 않는다.';wave.success='사거리·자원·퇴로를 남긴 채 CS 접근과 다음 처리 선택권을 얻는 것. 킬·선레벨·크래시 보장은 아니다.';}
     const allKnowledge = knowledge || { matchups: [], sources: [] };
     const knownMatches = allKnowledge.matchups.filter(m => slot('allies', m.role) === m.allies[0] && slot('enemies', m.role) === m.enemies[0] && (m.role !== 'BOTTOM' || m.carry_only || slot('allies', 'SUPPORT') === m.allies[1] && slot('enemies', 'SUPPORT') === m.enemies[1]));
     const lanes = ['TOP', 'MID', 'BOTTOM'].map(position => {
@@ -143,7 +148,7 @@
       ours.means = early ? skill('Caitlyn', 'Q') + '와 배운 ' + skill('Lux', 'E') + '로 접근·처리 선택권을 만든다. 견제가 미니언까지 맞아 원치 않게 밀리지 않도록 처리량을 조절한다.' : '배운 ' + skill('Lux', 'Q') + ' 적중 뒤 짧게 잇고, ' + skill('Caitlyn', 'E') + '를 접근 대응에 남긴다. 구매만으로 올인 우세를 가정하지 않는다.';
       ours.look_for = s.enemy_key === 'SPENT' ? skill('Nautilus', 'Q') + ' 소모 뒤 남은 평타 제어·카이사 후속 밖에서 CS 접근·짧은 교환을 얻는다.' : '상대가 막타·처리에 집중할 때 사거리 끝 공간을 얻는다. 일부러 훅을 맞아 유도하지 않는다.';
       ours.avoid = '견제에 다음 처리·이탈 자원을 모두 쓰거나 미니언 뒤를 절대 안전선으로 여기지 않는다.';
-      theirs = { purpose: '사거리 견제를 오래 받기보다 접근과 원딜 후속이 겹치는 교환을 만든다.', means: skill('Nautilus', 'Q') + '·' + skill('Nautilus', 'P') + '로 접근·제어하고, 배운 ' + skill('Kaisa', 'Q') + '와 ' + skill('Kaisa', 'P') + ' 후속을 잇는 후보.', look_for: '상대 처리 기술·이탈 소모 또는 두 동료가 벌어진 순간을 노린다. 실제 적중·후속 거리는 별도다.', avoid: '후속 없이 긴 견제를 받거나 웨이브·포탑 안쪽까지 깊게 추격하지 않는다.', switch_when: absent ? '서포터 부재 예시이므로 남은 원딜은 깊은 맞교환 대신 받을 CS·퇴로를 확보한다.' : '접근이 막히거나 원딜 후속이 끊기면 수급·재정비로 바꾼다.' };
+      theirs = { purpose: '사거리 견제를 오래 받기보다 접근과 원딜 후속이 겹치는 교환을 만든다. 진입할 거리가 사라질 만큼 과하게 밀지 않는 선택도 있다.', means: skill('Nautilus', 'Q') + '·' + skill('Nautilus', 'P') + '로 접근·제어하고, 배운 ' + skill('Kaisa', 'Q') + '와 ' + skill('Kaisa', 'P') + ' 후속을 잇는 후보.', look_for: '상대 처리 기술·이탈 소모 또는 두 동료가 벌어진 순간을 노린다. 실제 적중·후속 거리는 별도다.', avoid: '후속 없이 긴 견제를 받거나 웨이브·포탑 안쪽까지 깊게 추격하지 않는다.', switch_when: absent ? '서포터 부재 예시이므로 남은 원딜은 깊은 맞교환 대신 받을 CS·퇴로를 확보한다.' : '접근이 막히거나 원딜 후속이 끊기면 수급·재정비로 바꾼다.' };
     } else if (valid && id === 'B') {
       ours.means = skill('Yunara', 'Q') + ' 강화와 룰루의 배운 보호·제어를 겹친다. 상대 선진입 뒤에도 룰루가 자유롭고 카이사에게 닿을 때만 집중 반격을 비교한다.';
       ours.look_for = '상대 제어 소모 뒤에도 강화·보호·후속이 남는 창을 본다. 피격만으로 후퇴나 반격 승리를 고정하지 않는다.';
@@ -157,6 +162,7 @@
       ours.look_for = '카이사가 접근할 표식·고립·진화 조건을 얻기 전에 닿는 견제·처리 시간을 얻는다.';
       theirs = { purpose: '진화·표식과 접근이 겹치는 고립된 교환 기회를 찾는 후보.', means: '카이사의 실제 진화 상태·' + skill('Kaisa', 'P') + ' 표식' + (early ? '을 만드는 공격·후속을 비교한다. 이 구간에는 궁극기 접근을 전제하지 않는다.' : '과 배운 ' + skill('Kaisa', 'R') + ' 접근을 비교한다.'), look_for: period === 'LEVEL1' ? '이즈리얼이 걸어서 돌아갈 거리·동료 연결을 잃는 고립. 미습득 이동기 소모를 기다리지 않는다.' : skill('Ezreal', 'E') + ' 소모·고립. 고정 3코어 전체 역전과는 다르다.', avoid: '견제만 받으면서 조건 없는 추격·올인을 강제하지 않는다.', switch_when: '상대 이탈·보호가 남거나 진입 후 후속이 끊기면 수급·정비로 바꾼다.' };
     }
+    if(reverse){ours.means=combat;ours.purpose=purpose;ours.look_for='상대가 막타 자리를 양보하면 수급·공간을 얻는다. 룰루 지원이 끊긴 기회는 남은 강화·퇴로까지 비교한다.';ours.avoid='레벨 경쟁에 진입에 쓸 체력을 모두 소모하거나 원딜 후속 없는 진입을 강제하지 않는다.';theirs={purpose:'유나라 강화와 룰루 지원을 겹쳐 아군의 수급 접근을 압박하는 후보.',means:skill('Yunara','Q')+' 강화와 룰루의 배운 보호·제어를 함께 쓴다.',look_for:'알리스타의 접근과 카이사 후속이 갈라지거나 자원이 부족한 순간을 비교한다.',avoid:'서포터 제어만 보고 카이사의 남은 후속까지 사라졌다고 생각하지 않는다.',switch_when:'강화·보호가 끊기거나 진입 후 반격이 닿으면 교환 길이·위치를 바꾼다.'};}
     if (valid && id === 'A' && s.enemy_key === 'SPENT') { theirs.means = skill('Nautilus', 'P') + '와 카이사의 남은 후속은 있지만, 훅으로 여는 계획은 다시 사용 가능해질 때까지 미룬다.'; theirs.look_for = '상대가 스스로 평타 제어·카이사 후속 거리로 들어오는 경우만 비교한다. 훅 소모를 새 진입 수단으로 쓰지 않는다.'; }
     if (low || unknown || p.goal === 'FARM' || recallOpen) {
       ours.purpose = purpose; ours.means = combat;
@@ -169,21 +175,23 @@
       theirs.look_for = '상대 처리·견제가 닿지 않는 수급 창을 이용한다.';
     }
     if (jungleNear) { ours.means = combat; ours.look_for = '전진 압박은 낮추되 가까운 CS·처리 선택권을 남긴다.'; }
-    const playbook = { supported: valid, ours, theirs, claim_ids: claims, basis: 'DESIGN_HYPOTHESIS', enemy_intent: 'POSSIBLE_PLAN_NOT_OBSERVED' };
-    const coverage = { status: !valid ? 'UNSUPPORTED' : id === 'A' ? 'BASIC_PLAN_CONDITIONAL' : 'CONDITIONAL_REFERENCE', matchup: id,
-      plan_scope: valid ? '조건부 기본 목적·웨이브·양쪽 상대법 연결' : '일반 역할만 제공 · 개별 상대법 미지원',
-      gaps: id === 'A' && valid ? '초반 사거리·푸시 공략 범위. 지속 교전·올인·후반 전체 우열 자료 부족.' : valid ? '기전·조건부 참고. 전체 2대2/근접 지속 교전 승패는 미확인.' : '이 조합의 구간별 공략 근거가 연결되지 않았다.', effect_sample: 0 };
+    const playbook = { supported: usable, ours, theirs, claim_ids: claims, basis: 'DESIGN_HYPOTHESIS', enemy_intent: 'POSSIBLE_PLAN_NOT_OBSERVED' };
+    const coverage = { status: !usable ? 'UNSUPPORTED' : id === 'A' ? 'BASIC_PLAN_CONDITIONAL' : 'CONDITIONAL_REFERENCE', matchup: id,
+      plan_scope: usable ? '조건부 기본 목적·웨이브·양쪽 상대법 연결' : '일반 역할만 제공 · 개별 상대법 미지원',
+      gaps: id === 'A' && valid ? '초반 사거리·푸시 공략 범위. 지속 교전·올인·후반 전체 우열 자료 부족.' : usable ? '기전·조건부 참고. 전체 2대2/근접 지속 교전 승패는 미확인.' : '이 조합의 구간별 공략 근거가 연결되지 않았다.', effect_sample: 0 };
     const quick = [];
     if(valid && id === 'A')quick.push({id:'KEY_SPENT',label:'노틸러스 핵심 기술 소모',scenario:{enemy_key:'SPENT'},planning:{},reason:'남은 평타 제어·카이사 후속은 유지하고 CS 접근·짧은 교환 창만 비교'});
     if(supportCase)quick.push({id:'SUPPORT_ABSENT',label:'상대 서포터 부재',scenario:{},planning:{enemy_support:'ABSENT'},reason:'남은 원딜·정글·복귀 위험을 고려한 제한적 압박'});
-    const allClaims = knownMatches.flatMap(m => m.claims), sourceIds = new Set(allClaims.flatMap(c => c.source_ids));
+    const reverseClaims = reverse ? allKnowledge.matchups.find(m=>m.id==='B')?.claims.filter(c=>claims.includes(c.id)) || [] : [];
+    const allClaims = [...knownMatches.flatMap(m => m.claims),...reverseClaims], sourceIds = new Set(allClaims.flatMap(c => c.source_ids));
     return {
       schema_version: 'lol-coach-player-planboard-v1', context: { origin: 'HYPOTHETICAL_LOADING_EXAMPLE', planning, actual_enemy_positions: null, standard: coach.context.assumptions.label, patch: coach.context.patch.label },
       brief: { lane: labels[planId] + ' · ' + (valid ? coach.trade.ours.label : '교전 자료 부족'), operations: sideRole ? '복귀할 수 있는 사이드 압박을 맡고 본대와 연결한다.' : bottom ? '중앙 수급을 아군과 잇고 제어 뒤 목표물로 전환한다.' : '가까운 자원과 본대 후속 거리를 연결한다.', fight: self === 'Caitlyn' ? '아군 제어가 맞으면 보호 연결 안에서 닿는 대상을 공격한다.' : self === 'Ezreal' ? '접근 전 견제하고 이탈 수단을 남긴 채 공격한다.' : self === 'Fiora' ? '사이드 복귀와 받아칠 수단을 정한 뒤 접근한다.' : self === 'Yunara' ? '강화·아군 지원이 함께 닿을 때 공격하고 후속이 끊기면 바꾼다.' : fight.start },
-      headline: valid ? overallGoal : '확인된 수단으로 수급·연결부터 준비한다.',
+      composition: {ours:report.summary?.our_plan?.split('. ')[0],theirs:report.summary?.enemy_plan?.split('. ')[0],ours_full:report.summary?.our_plan,theirs_full:report.summary?.enemy_plan,role:report.summary?.my_role,basis:'DESIGN_HYPOTHESIS'},
+      headline: usable ? overallGoal : '확인된 수단으로 수급·연결부터 준비한다.',
       lane: { overall_goal: overallGoal, milestone: { id: period, label: coach.selected.label, goal: milestoneGoal }, can_push: coach.wave.can_push, should_push: coach.wave.should_push,
-        strong_fight: valid ? coach.trade.ours.label : '개별 매치업 자료 부족', avoid: id === 'A' ? '사거리 안쪽에 붙은 장기전·올인 승리는 별도 판단' : '처치·추격을 교환 선호와 동일시하지 않기',
-        induce: absent ? '남은 상대가 막타에 접근할 때 제한적 압박' : '상대의 막타 접근·처리 기술 사용을 짧은 공간 이득으로 연결', gain: 'CS 접근·처리 시간·귀환 선택권', basis: valid ? id === 'A' && early ? 'GUIDE_BASED' : 'CONDITIONAL' : 'INSUFFICIENT', claim_ids: claims },
+        strong_fight: reverse ? '상대 강화·보호가 겹치지 않는 조건부 후속 창 · 전체 우열 미확인' : valid ? coach.trade.ours.label : '개별 매치업 자료 부족', avoid: id === 'A' ? '사거리 안쪽에 붙은 장기전·올인 승리는 별도 판단' : '처치·추격을 교환 선호와 동일시하지 않기',
+        induce: absent ? '남은 상대가 막타에 접근할 때 제한적 압박' : '상대의 막타 접근·처리 기술 사용을 짧은 공간 이득으로 연결', gain: 'CS 접근·처리 시간·귀환 선택권', basis: usable ? id === 'A' && early ? 'GUIDE_BASED' : 'CONDITIONAL' : 'INSUFFICIENT', claim_ids: claims },
       overall: { lanes, jungle_links: jungleLinks, risk: [slot('enemies', 'JUNGLE'), slot('enemies', 'MID')].filter(Boolean).map(name).join('·') + '의 개입 가능성을 전진 비용에 포함한다. 실제 로밍·정글 동선은 미관측이다.', route_prediction: false },
       operations, fight, wave, choice, growth, matchup_playbook: playbook, coverage,
       reminders: [valid && id === 'A' ? '측면 진입·럭스 후속 단절이면 교환 종료.' : changeIf, p.goal === 'RECALL' ? '빠른 처리와 실제 포탑 도달은 별개다.' : '교환에 다음 처리·대응 자원을 모두 쓰지 않는다.', growth ? '성장 후에도 남는 견제·연결 수단을 활용한다.' : '정글 미확인은 전진 폭을 조절할 이유이며 모든 처리·교전 금지가 아니다.'],

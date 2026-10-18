@@ -1,3 +1,10 @@
+# Riot game-info and wave evidence delta — source ready, publication pending
+- Reuse main74e93ca/PR91 and prior planboard/public proof. New held-inventory manual screen, shared bounded private observation service (HTTP exposes status only, snapshot withheld), official Riot path audit. No actual client/key proof or exact camp/allyCD timers. No fake key expiry.
+- Append2primary guide sources/3scoped claims, retain old originals. Kai/Alistar reverse B conditional perspective (no strength inversion, full2v2 unknown); explicit own/enemy gameplans and wave success/opponent-response. Register8user Eve URLs, body/segment unreviewed, no Gemini/video calls or schedule duplication.
+- Affected unit/browser + independent review fixes recorded in evidence/actual-evidence/game-info/report.md. RequiredCI/publication pending. Preserve advice7/AUTO30/HOLD20/USER0, source/hold/failure/video/pro/riot/Windows. N0/30secunmeasured/WindowsBLOCKED_EXTERNAL unchanged.
+
+---
+
 # Player planboard P0 — actual public completion
 - PR90 source877711bc898d6d9410f40f52cb3a7a989026f808; feature/exactmain required3 PASS. Publicartifactaf06f7d14e34c6ac403d3a5377687fc61e4c32a3, nativePages39094727344 actualSUCCESS. Changed7+riot/pro HTTPS9hashes/root/buildinfo/nojekyll PASS,81manifest bound/74oldfiles reused. Actual PC/mobile default→period/wave/pairedcounterplans/risk/conditions/costs/diagram/zoom/Why/study PASS.
 - Compact operation board and v4 hypothetical projection, old strengths/sources untouched. A1conditional baseline/B-C-D3conditional references; other unsupported. New action links DESIGN_HYPOTHESIS.0extra required inputs before/after; visible summary615→416chars, PCheight498→714/mobile922→866, no human-comprehension claim.21source/23claim registry (initial27claim report typo corrected separately).

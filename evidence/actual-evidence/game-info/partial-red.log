@@ -1,0 +1,41 @@
+F
+======================================================================
+FAIL: test_malformed_partial_inventory_and_unknown_patch_do_not_erase_or_invent_subtotals (tests_pregame.test_riot_game_info.GameInfoTeamTests.test_malformed_partial_inventory_and_unknown_patch_do_not_erase_or_invent_subtotals)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_riot_game_info.py", line 58, in test_malformed_partial_inventory_and_unknown_patch_do_not_erase_or_invent_subtotals
+    self.node("const x=M.teams([{slot:0,team:'ORDER',items:[{slot:0,id:'1055',count:1},{slot:1,id:'3031',count:null}]}],cat,'16.20');assert.equal(x.ORDER.total,null);assert.equal(x.ORDER.known_subtotal,450);assert.equal(M.teams([{team:'ORDER',items:[]}],cat,null).ORDER.known_subtotal,null);")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_riot_game_info.py", line 45, in node
+    r=subprocess.run(['node','-e',"const assert=require('assert/strict'),M=require('./web_r4/game-info-engine.js');const cat={version:'16.20.1',patch:'16.20',items:{'1055':{name:'도란의 검',total:450,from:[]},'3031':{name:'완성품',total:3000,from:['1055']},'0':{name:'무료',total:0,from:[]}}};"+code],capture_output=True,text=True);self.assertEqual(r.returncode,0,r.stderr[-2200:])
+                                                                                                                                                                                                                                                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+0 !== 450
+
+    at [eval]:1:408
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 450,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.055s
+
+FAILED (failures=1)
