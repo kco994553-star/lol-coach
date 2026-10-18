@@ -1,3 +1,14 @@
+# Riot game information integration — execution claim
+- run_token: `main-20261018-riot-game-info`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/riot-game-info-20261018`
+- current_main: `74e93cad3dbd1ede9435c6ba515d82d79c98bafc`
+- actual_public_artifact: `af06f7d14e34c6ac403d3a5377687fc61e4c32a3`
+- scope: USER integrated direction; reuse prior board/source/CI, audit KEEP/ADAPT/MISSING, source-scoped A wave-cost/side plans and concise board, one shared Riot game-info projection + manual item value comparison + local authenticated observational route, supported-field/timer policy matrix. Register8USER lecture candidates, no video body adoption without approved budget/process. No paid calls, no keys/publicidentities/rawlive persistence, no game automation/dynamic live recommendations, no fake timers. RequiredCI/normalmerge/exactmain/Pages/HTTPS/PCmobile/Handoff; Windows and real coaching remain unverified.
+
+---
+
 # Player planboard delivered — writer released
 - run_token: `main-20261018-player-planboard`
 - status: `COMPLETED`
