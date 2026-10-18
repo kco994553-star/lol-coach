@@ -1,3 +1,11 @@
+# Loading direction and evidence bridge — actual public completion
+- PR100 initial and PR101 display followup product source404f9840c7024fc677c6d3bb42da7c36cdabbfe3; required feature/exactmain3 allPASS. Public2008be4c3b738ad3d7f3bbf23634c25e009cd44c, nativePages39107598998 actualSUCCESS; HTTPS4hashes/root/buildinfo/nojekyll,86manifest/82unchanged reused and actual PC1440/mobile390 default/methods/keyboard/step/bridge/unknown PASS. Pro/riot preserved.
+- L0 four directions +max3shared changes; detailed wave/counterplay/costs behind 방법 보기, scenarios optional. Existing source25/claim29/packets unchanged; E old Riot archive context and typed stats→named guide judgment→selected6counterplay dimensions, inactive scope/conditions/conflicts preserved. Single fullgame result never becomes fight strength.
+-0extra required condition inputs before/after; rendered text518→506chars, PCheight686→517/mobile903→898px, not human-comprehension or accuracy evidence. Result evidence/actual-evidence/loading-direction/publication/result.md. Source/RED/initial-public/display-fix history retained. No provider/video/game/paid calls; AUTO30HOLD20USER0/advice7/Frozen350/raw/holds/failures/Windows intact. N0/30secunmeasured/WindowsBLOCKED_EXTERNAL unchanged.
+- RemainingP0 condition-matched comparative push/trade/attrition/build knowledge, not mandatory own experiments for every qualitative guide plan. Video/source questions independent. Results-only finalCI/common claim release proof is recorded on the common execution claim; no product republish.
+
+---
+
 # Loading direction — initial public verified, display followup pending
 - PR100 sourcec0ec341 requiredPR/exactmain3PASS; public0fcdfab4/nativePages39106940476 actualSUCCESS; HTTPS6hashes/root/buildinfo/nojekyll and actual PC/mobile flow passed. Retain initial receipt/output.
 - Display-only followup: source-bound Malphite Q owner/name/slot in Lv1 opponent purpose, six bridge dimension labels. Raw source/application, tactics/conditions/grades unchanged. RED and45affected/current local PCmobile passed; final requiredCI/Pages next. Prior scope/history/quotas/N0/30sec/Windowsblocked preserved.
