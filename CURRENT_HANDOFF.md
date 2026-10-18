@@ -1,3 +1,9 @@
+# Loading Coach growth display followup
+- Source8ed6685/artifact457211be nativePages39088318466 actualSUCCESS; HTTPS79file hash and changed PC/mobile headings/Why/study PASS. Preserve these receipts; final display inspection caught growth E-name without key and C/D shorthand in warnings. Use existing explicit champion-slot catalog helper; no new tactical condition/rule/source/grade.
+- Extend existing growth counterexample; targeted check then requiredCI/normalmerge/exactmainCI/changed public check. Reuse completed full flow948 and last public display proof. Provider/video/game/paid0; N0/30secunmeasured/Windowsblocked/history retained.
+
+---
+
 # Loading Coach study/Why skill display compatibility
 - Reuse prior source/guide/flow/CI proof. New authored knowledge paraphrases in Why/study still contained bare skill keys (source quotes remain intentionally raw). Add display-only official owner/slot labels from explicit per-claim declarations; preserve original text, quote hashes, conditions, review and tactics. Study now uses existing SkillDisplay, same as Why.
 - No new advice/claim approval/strategy/source collection. Related display owner counterexample plus targeted PC/mobile study/Why check and required CI before final source publication. PR83 label artifact prepared but not yet published; source948 initial public proof retained.
