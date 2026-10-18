@@ -1,3 +1,12 @@
+# Threat rings and clear wave action — actual public completion
+- PR111 productd6583085ba6a71a7d1d32b2cc229a73ce90231a0; required PR/exact-product-main3PASS. Publicfc36a774fdf77ad8d850993e4b473e4d61ad7a0a; nativePages39126638509 actualSUCCESS; HTTPS changed hashes/root/buildinfo/nojekyll verified, pro/riot retained.
+- Concrete minion/poke/stop wording projected from wave.combat; prior risk execution/special branches retained. All10small portraits and direct rings,7conditional approach rings in default roster.10curated profiles, other champs BASIC_ONLY/unknown spells; no fabricated approach or full threat/risk/win prediction.
+- SejR1300/Q+R1950; ZedR625/Wnew+swap+R1275 source-bound conditional references. Stable full-circle frame and same-coordinate layout zoom; selfgold/selection/step/modal/picker focus shared. Original formation/AA fields/history retained.
+-58affected/currentPCmobile/protected loading/directions/game-info and actual publicPC1440/mobile390/320/200% PASS. Raw RED/source fallback/picker/color/old-selector failure preserved. Evidence evidence/actual-evidence/threat-rings/publication/result.md. No new provider/game/video/paid calls; original sources/grades/AUTO30HOLD20USER0/advice7/Frozen350/holds/quotas/Master+/Windows retained.
+- N0/30secUNMEASURED/WindowsBLOCKED_EXTERNAL. Results-only finalCI/common writer release proof follows without identical product republish. Next: remaining source-scoped threat/approach profiles and matchup knowledge, not generic maximum-distance guesses.
+
+---
+
 # Threat rings and clear wave action — source ready, publication pending
 - Inherit main28c2057/publicbdfd450 and completed PR109/110 evidence. Replace unclear ACQUIRE_PUSH combat source with concrete minion/poke/stop wording, keep risk execution and special branches. Same result powers summary/method/counterplay.
 - Official archived16.20.1 fields support10representative direct/conditional-approach profiles; other champions BASIC_ONLY/unknown spells, no fabricated outer. SejR1300/Q+R1950 and ZedR625/Wswap+R1275 are conditional reference bounds, not full live threat/danger/win verdict.
