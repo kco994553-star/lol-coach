@@ -209,7 +209,7 @@ class RiotCollectorTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             output=Path(tmp)/'safe.json';diagnostics=Path(tmp)/'diagnostics.json';env=dict(os.environ);env.pop('RIOT_API_KEY',None)
             output.write_text('stale previous aggregate')
-            r=subprocess.run([sys.executable,'scripts/collect_power_stats.py','--output',str(output),'--tier','GOLD',
+            r=subprocess.run([sys.executable,'scripts/collect_power_stats.py','--output',str(output),'--tier','MASTER',
                 '--diagnostics-output',str(diagnostics)],
                 env=env,capture_output=True,text=True)
             self.assertEqual(r.returncode,0,r.stderr)
@@ -246,7 +246,7 @@ class RiotCollectorTests(unittest.TestCase):
             power=Path(tmp)/'power.json';movement=Path(tmp)/'movement.json';env=dict(os.environ);env.pop('RIOT_API_KEY',None)
             movement.write_text('stale prior aggregate')
             result=subprocess.run([sys.executable,'scripts/collect_power_stats.py','--output',str(power),
-                '--movement-output',str(movement),'--tier','GOLD'],env=env,capture_output=True,text=True)
+                '--movement-output',str(movement),'--tier','MASTER'],env=env,capture_output=True,text=True)
             self.assertEqual(result.returncode,0,result.stderr)
             self.assertFalse(movement.exists())
             self.assertEqual(json.loads(result.stdout.splitlines()[-1])['movement_status'],'BLOCKED_EXTERNAL')

@@ -3,6 +3,13 @@ from datetime import datetime,timezone
 import re
 from .power_stats import validate_power_dataset
 
+FUTURE_STATISTICS_TIERS=('MASTER','GRANDMASTER','CHALLENGER')
+
+def validate_new_statistics_tier(tier):
+    """Current ranked seed eligibility, not every participant's historic rank."""
+    if tier not in FUTURE_STATISTICS_TIERS:raise ValueError('MASTER_PLUS_REQUIRED')
+    return tier
+
 
 def resolve_patch(versions,*,explicit=None):
     if explicit:

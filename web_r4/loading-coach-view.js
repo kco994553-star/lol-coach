@@ -253,10 +253,15 @@
       const f=board().fight,n=card('한타 · 내 공격 시작 기준');n.dataset.areaIntro='fight';
       const kinds=[...new Set(arr(f?.threats).map(t=>({BLOCK_LINE:'투사체와 맞은 뒤의 접근',EXPOSURE_AND_FOLLOWUP:'피격 뒤 이어지는 상대의 공격',MARK_AND_ACCESS:'표식이 생긴 뒤의 접근',DISTANCE_AND_ESCAPE:'거리를 좁히는 수단',RESERVE_DEFENSE:'대응 기술을 남겨야 하는 공격'})[t.response_kind]||'상대의 접근과 추가 공격'))];
       n.append(block('내 역할',f?.role),block('행동을 바꾸는 위협',kinds.length?kinds:'확인한 위협 자료가 부족합니다.'),block('공격을 시작할 때',f?.start),block('이탈·위치를 바꿀 때',f?.stop),contextualDetails('fight'));
+      const formation=el('section',null,'coach-formation');formation.append(el('h3','어떤 한타 모양을 만들까?'),el('p','초상화로 비교하는 설명용 배치 · 실제 위치나 승패 예측이 아닙니다.','coach-muted'));
+      if(root.LoadingFormation)formation.append(root.LoadingFormation.create(f?.formations,catalog));
+      const formationWhy=details('formation-why','배치의 근거와 해석 범위');formationWhy.append(el('p',f?.formations?.evidence?.scope||'이 조합의 배치 근거가 연결되지 않았습니다.'));
+      arr(f?.formations?.evidence?.official).forEach(v=>formationWhy.append(block(catalog.champions[v.champion].name+'의 '+v.name+'('+v.slot+')',v.text),urlLink('공식 기술 설명 · '+v.patch,v.url)));
+      arr(f?.formations?.evidence?.sources).forEach(s=>{formationWhy.append(urlLink(s.author+' · '+s.title,s.url),el('p','공략 표기 패치: '+(s.patch||'미확인')+' · 작성·수정일: '+(s.date||s.research_metadata?.updated_at||'미확인'),'coach-muted'),block('공략의 적용 한계',s.limits));});formation.append(formationWhy);n.append(formation);
       const method=details('fight-methods','방법 · 공격 대상과 교전 전후 배치');[['공격할 대상','target'],['시작 전 배치','setup'],['교전 뒤','after']].forEach(([label,key])=>method.append(block(label,f?.[key])));n.append(method);
       const threats=details('fight-threats','챔피언별 위협 기술 · 대응과 조건');arr(f?.threats).forEach(t=>{const d=el('section');d.append(block(t.label,t.action),block('조건',t.condition));threats.append(d);});n.append(threats);
       const map=current?.teamfight?.map;
-      if(map&&root.LoadingMap?.create){const d=details('fight-map','전체 지도 · 실제 픽의 역할 배치 예시');try{const steps=[f.setup,f.start,f.stop].map((text,i)=>({number:i+1,text}));d.append(root.LoadingMap.create({map,plan:{steps}},catalog,current.input,{selectedStep:String(state.step),onSelect:step=>{if(step!=='ALL'){state.step=Number(step);syncSteps();}}}));}catch(_){d.append(el('p','이 보고서의 지도 표시는 지원되지 않습니다.','coach-muted'));}n.append(d);}
+      if(map&&root.LoadingMap?.create){const d=details('fight-map','기존 전체 지도 · 이동 설명 참고');try{const steps=[f.setup,f.start,f.stop].map((text,i)=>({number:i+1,text}));d.append(root.LoadingMap.create({map,plan:{steps}},catalog,current.input,{selectedStep:String(state.step),onSelect:step=>{if(step!=='ALL'){state.step=Number(step);syncSteps();}}}));}catch(_){d.append(el('p','이 보고서의 지도 표시는 지원되지 않습니다.','coach-muted'));}n.append(d);}
       n.append(why(f?.claim_ids,'fight'));return n;
     }
     function officialFacts() {

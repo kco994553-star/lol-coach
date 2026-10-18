@@ -15,7 +15,7 @@ BASE_TREE='0e2a5f3f883f149495054e624d2e0e48b09d22c2'
 SEAL='contracts/amendments/2026-10-16-actual-evidence.json'
 PARENT_CI='evidence/actual-evidence/parent/ci-main-pr40.json'
 PARENT_CI_SHA='0a5c757eb4a0a069d754369009421a76f1522161091902ebb3502bb91489f892'
-MODIFIED={'coach_v1/pc_coach.py','.github/workflows/private-mvp-ci.yml',
+MODIFIED={'coach_v1/riot_collection_policy.py','scripts/collect_power_stats.py','scripts/resolve_riot_collection.py','config/riot_collection_policy.json','.github/workflows/riot-power-collection.yml','tests_pregame/test_riot_collector.py','coach_v1/pc_coach.py','.github/workflows/private-mvp-ci.yml',
     '.github/workflows/pregame-ci.yml','.github/workflows/expert-video-collection.yml',
     '.github/workflows/pro-reference-collection.yml','scripts/collect_expert_claims.py',
     'scripts/diagnose_expert_front.py','scripts/diagnose_expert_video.py',
@@ -23,6 +23,7 @@ MODIFIED={'coach_v1/pc_coach.py','.github/workflows/private-mvp-ci.yml',
     'web_r4/pc.js','web_r4/pregame.js','web_r4/pregame.html','web_r4/official_reference.js',
     'web_r4/review_queue.js','web_r4/review_queue.html'}
 CURRENT=MODIFIED|{
+    'contracts/teamfight-formation-v1.md','web_r4/loading-formation.js','tests_pregame/test_teamfight_formation.py','tests_pregame/test_master_statistics_policy.py','coach_v1/riot_collection_policy.py','scripts/collect_power_stats.py','scripts/resolve_riot_collection.py','config/riot_collection_policy.json','.github/workflows/riot-power-collection.yml','tests_pregame/test_riot_collector.py',
     'contracts/information-architecture-v1.md','docs/superpowers/plans/2026-10-18-information-architecture.md',
     'contracts/evidence-adoption-v1.md','scripts/build_loading_statistics.py','tests_pregame/test_evidence_adoption.py',
     'coach_v1/game_info.py','config/user_lesson_candidates.json','contracts/riot-game-info-v1.md','docs/superpowers/plans/2026-10-18-riot-game-info.md','scripts/browser_game_info.py','scripts/build_game_info_catalog.py','tests_pregame/test_riot_game_info.py','tests_pregame/test_wave_evidence_delta.py','web_r4/game-info.html','web_r4/game-info.js','web_r4/game-info.css','web_r4/game-info-engine.js','web_r4/game-info-items.json',
@@ -67,7 +68,7 @@ CURRENT=MODIFIED|{
     'tests_pregame/test_resource_view.py','tests_pregame/test_fixed_resource_checkpoint.py','tests_pregame/test_actual_evidence_binding.py',
     'docs/superpowers/plans/2026-10-16-actual-evidence.md','docs/superpowers/plans/2026-10-17-gemini-diagnostic.md','contracts/gemini-response-diagnostic-v3.md',
 }
-TESTS=['tests_pregame.test_evidence_adoption','tests_pregame.test_riot_game_info','tests_pregame.test_wave_evidence_delta','tests_pregame.test_player_planboard','tests_pregame.test_loading_coach','tests_pregame.test_exchange_preference','tests_pregame.test_lane_engagement','tests_pregame.test_account_dashboard','tests_pregame.test_loading_wave','tests_pregame.test_loading_interactive','tests_expert.test_video_diagnostic_payload','tests_expert.test_video_diagnostic_policy','tests_expert.test_video_diagnostic_cli','tests_expert.test_gemini_response_diagnostics','tests_expert.test_text_response_v2','tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
+TESTS=['tests_pregame.test_riot_collection_policy','tests_pregame.test_teamfight_formation','tests_pregame.test_master_statistics_policy','tests_pregame.test_riot_collector','tests_pregame.test_evidence_adoption','tests_pregame.test_riot_game_info','tests_pregame.test_wave_evidence_delta','tests_pregame.test_player_planboard','tests_pregame.test_loading_coach','tests_pregame.test_exchange_preference','tests_pregame.test_lane_engagement','tests_pregame.test_account_dashboard','tests_pregame.test_loading_wave','tests_pregame.test_loading_interactive','tests_expert.test_video_diagnostic_payload','tests_expert.test_video_diagnostic_policy','tests_expert.test_video_diagnostic_cli','tests_expert.test_gemini_response_diagnostics','tests_expert.test_text_response_v2','tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
        'tests_pregame.test_resource_recovery','tests_pregame.test_resource_view','tests_pregame.test_fixed_resource_checkpoint',
        'tests_pregame.test_actual_evidence_binding','tests_pregame.test_directions','tests_pregame.test_directions_http',
        'tests_pregame.test_loading_catalog','tests_pregame.test_loading_strategy','tests_pregame.test_loading_http','tests_pregame.test_loading_context',
@@ -177,6 +178,10 @@ def selected_tests():
     if not before or set(before)=={'0'}:return TESTS
     changed=set(git('diff','--name-only',before,'HEAD').decode().splitlines())
     groups={
+        'tests_pregame.test_riot_collection_policy':{'config/riot_collection_policy.json','coach_v1/riot_collection_policy.py','scripts/resolve_riot_collection.py'},
+        'tests_pregame.test_teamfight_formation':{'web_r4/loading-formation.js','web_r4/loading-planboard.js','web_r4/loading-coach-view.js','web_r4/loading-coach.css','web_r4/loading.html','web_r4/loading-study.js','web_r4/directions.html'},
+        'tests_pregame.test_master_statistics_policy':{'config/riot_collection_policy.json','coach_v1/riot_collection_policy.py','scripts/collect_power_stats.py','scripts/resolve_riot_collection.py','.github/workflows/riot-power-collection.yml'},
+        'tests_pregame.test_riot_collector':{'scripts/collect_power_stats.py','coach_v1/riot_collection_policy.py'},
         'tests_pregame.test_evidence_adoption':{'contracts/evidence-adoption-v1.md','scripts/build_loading_statistics.py','web_r4/loading-coach.js','web_r4/loading-planboard.js','web_r4/loading-knowledge.json'},
         'tests_pregame.test_riot_game_info':{'config/user_lesson_candidates.json', 'docs/superpowers/plans/2026-10-18-riot-game-info.md', 'coach_v1/game_info.py', 'web_r4/game-info.css', 'contracts/riot-game-info-v1.md', 'scripts/browser_game_info.py', 'tests_pregame/test_riot_game_info.py', 'tests_pregame/test_wave_evidence_delta.py', 'web_r4/game-info-engine.js', 'web_r4/game-info-items.json', 'web_r4/game-info.html', 'coach_v1/pregame_server.py', 'scripts/build_game_info_catalog.py', 'web_r4/game-info.js', 'scripts/build_directions_web.py'},
         'tests_pregame.test_wave_evidence_delta':{'web_r4/loading-planboard.js','web_r4/loading-knowledge.json','web_r4/loading-engine.js'},
