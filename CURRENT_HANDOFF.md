@@ -1,3 +1,14 @@
+# Loading Coach final display compatibility — PR84
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-coach-study-skills-20261018`
+- current_main: `4fd5f48d33488a9727e99cdd15bc594c3b42ec38`
+- latest_feature_head: `ae1cef48c95af37cc4f755af12e0c1b942a5ae06` PR84
+- scope: Final display-only official owner/slot formatting in Why and study; all13 claim paraphrases reviewed against canonical slots, original quotes/hashes/tactics unchanged. PR83 feature/main all3 SUCCESS. Actual public948/artifact257 full flow proof reused. Prepared PR83 artifact8b3b is NOT_PUBLISHED, superseded. Required84/exactmainCI then finalPages/changedHTTPS proof/results-only PR. No provider/video/game/paid; N0/30secunmeasured/Windowsblocked/history retained.
+
+---
+
 # Loading Coach public baseline verified — subject-heading delta PR83
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
