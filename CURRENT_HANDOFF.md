@@ -1,3 +1,10 @@
+# Evidence adoption / acquire-before-build — source ready, publication pending
+- Base8d3f8f2/publicf3640fe reused. A neutral contest acquires processing margin before slowing to build; C Lv1 W/Q sustained close contact gets limited mechanism-inference advantage, not allin/kill/chase. Original23sources/26claims and legacy grades preserved,2new versions appended. Separate source/statistical/tactical/effect review states.
+- Existing275power + separate50outcome aggregates projected offline with exact scope/denominators/period/hash. No275/291/89 conflation, no duo claim from ADC stats, no suppression threshold relaxation. Public typed/source panels and statistics linked; no required inputs added.
+- Affected37tests + PCmobile flow, independent review fixes; mandatoryCI/publication pending. Report evidence/actual-evidence/evidence-adoption/report.md. No new provider/video/paid calls; AUTO30/HOLD20/USER0/advice7/Windows/pro/riot/old evidence intact. N0/30secunmeasured/WindowsBLOCKED_EXTERNAL.
+
+---
+
 # Integrated wave coach / Riot information — actual public completion
 - PR92 main446d6b67f2d95462107c4cc14f5e26737eb97f37; requiredPR3/exactmain3 PASS. Publicartifactf3640fe56b014a277fbd41527127e207acfb8e34/nativePages39098324368 actualSUCCESS. HTTPS15hashes+root/buildinfo/nojekyll,86manifest bound. Pro/riot byte-preserved. Actual public PC/mobile coach+manual item flows PASS.
 - New scoped source2/claim3, explicit own/enemy board plans, Kai/Alistar reverse conditional reference (not strength inversion/full2v2 winner), wave opponent/success links. Eight user Eve URLs remain body-unreviewed. No new provider/game/paid calls. Existing18KST workflow active,10/17 scheduled execution verified, not provider-success proof.
