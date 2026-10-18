@@ -5,7 +5,7 @@
   const metrics = [['PUSH', '밀기'], ['SHORT', '짧은 교환'], ['EXTENDED', '지속 교전'], ['ALLIN', '올인'], ['ATTRITION', '소모전']];
   const assessments = { ALLY: '우리 우세', ENEMY: '상대 우세', CONTESTED: '조건 경합', INSUFFICIENT: '근거 부족' };
   const risks = { LOSS_LIMIT: '손실 제한', BALANCED: '균형', OPPORTUNITY: '기회 추구' };
-  const basis = { GUIDE_BASED: '가이드 원문 검토', DESIGN_HYPOTHESIS: 'AI 해석 가설', OFFICIAL_MECHANISM: '공식 기전' };
+  const basis = { GUIDE_BASED: '가이드 원문 검토', DESIGN_HYPOTHESIS: 'AI 해석 가설', OFFICIAL_MECHANISM: '공식 기전', MECHANISM_INFERENCE:'기전·공략 종합 추론', STATISTICAL_TREND:'관측 통계', EXPERT_JUDGMENT:'공략 판단 기반' };
   const arr = value => Array.isArray(value) ? value : value == null || value === '' ? [] : [value];
   function plain(value) {
     if (value == null) return '';
@@ -116,7 +116,7 @@
       const c = coach(), wrap = el('div', null, 'coach-matrix-scroll'); wrap.tabIndex = 0; wrap.dataset.coachScroll = 'matrix'; wrap.setAttribute('role', 'region'); wrap.setAttribute('aria-label', '구간별 비교표 · 우리/상대는 조건부 우세, 부족은 자료 부족');
       const table = el('table', null, 'coach-matrix'), caption = el('caption', '동일한 표준 조건의 구간별 비교 · 실제 시간이나 승률이 아닙니다.'); table.append(caption);
       const head = el('thead'), tr = el('tr'); tr.append(el('th', '구간')); metrics.forEach(([, label]) => { const th = el('th', label); th.scope = 'col'; tr.append(th); }); head.append(tr); table.append(head);
-      const body = el('tbody'); arr(c.periods).forEach(row => { const r = el('tr'); r.dataset.selected = String(row.id === c.selected_period); const th = el('th'); th.scope = 'row'; const b = button(row.label, 'period-' + row.id, () => change({ period: row.id })); b.dataset.coachChange = ''; b.setAttribute('aria-pressed', String(row.id === c.selected_period)); th.append(b); r.append(th); metrics.forEach(([key]) => { const metric = row.metrics?.[key] || {}, td = el('td', ({ALLY:'우리',ENEMY:'상대',CONTESTED:'경합',INSUFFICIENT:'부족'})[metric.assessment] || '부족'); td.dataset.assessment = metric.assessment || 'INSUFFICIENT'; if (metric.scope || metric.reason) td.title = format([metric.scope, metric.reason].filter(Boolean).join(' · ')); r.append(td); }); body.append(r); }); table.append(body); wrap.append(table); return wrap;
+      const body = el('tbody'); arr(c.periods).forEach(row => { const r = el('tr'); r.dataset.selected = String(row.id === c.selected_period); const th = el('th'); th.scope = 'row'; const b = button(row.label, 'period-' + row.id, () => change({ period: row.id })); b.dataset.coachChange = ''; b.setAttribute('aria-pressed', String(row.id === c.selected_period)); th.append(b); r.append(th); metrics.forEach(([key]) => { const metric = row.metrics?.[key] || {}, td = el('td', ({ALLY:'우리',ENEMY:'상대',CONTESTED:'경합',INSUFFICIENT:'부족'})[metric.assessment] || '부족'); if(metric.evidence_kind==='MECHANISM_INFERENCE')td.textContent+=' · '+(metric.qualifier||'조건부')+' 추론';td.dataset.assessment = metric.assessment || 'INSUFFICIENT'; if (metric.scope || metric.reason) td.title = format([metric.scope, metric.reason].filter(Boolean).join(' · ')); r.append(td); }); body.append(r); }); table.append(body); wrap.append(table); return wrap;
     }
     function growth() {
       const wrap = el('div', null, 'coach-growth'); arr(coach().growth).forEach(event => {
@@ -148,9 +148,9 @@
       if (!d.supported || d.kind !== 'LINE') { wrap.append(el('p', '현재 조건에 연결된 라인 도식이 없습니다.', 'coach-muted')); return wrap; }
       const line = el('div', null, 'coach-line'); line.dataset.plan = d.plan_id || ''; line.dataset.step = state.step; line.setAttribute('role', 'group'); line.setAttribute('aria-label', '선택된 웨이브 계획의 상징 도식. 적 위치는 모두 가상이며 실제 거리·사거리·시간을 나타내지 않습니다.');
       const terrain = el('div', null, 'coach-lane-track'); line.append(terrain, el('span', '아군 방향', 'coach-line-home'), el('span', '상대 방향', 'coach-line-away'));
-      const symbol = el('span', ({ SLOW_PUSH: '→', FAST_PUSH: '⇉', CRASH: '→│', TRIM_RECEIVE: '←', TOWER_CS: '│', RETURNING: '⇇', FREEZE: '↔', CHECK_WAVE: '?' })[d.plan_id] || '?', 'coach-wave-symbol'); symbol.setAttribute('aria-hidden', 'true'); line.append(symbol);
+      const symbol = el('span', ({ ACQUIRE_PUSH: '⇢', SLOW_PUSH: '→', FAST_PUSH: '⇉', CRASH: '→│', TRIM_RECEIVE: '←', TOWER_CS: '│', RETURNING: '⇇', FREEZE: '↔', CHECK_WAVE: '?' })[d.plan_id] || '?', 'coach-wave-symbol'); symbol.setAttribute('aria-hidden', 'true'); line.append(symbol);
       const geometry = {
-        SLOW_PUSH: [34, 43, 54, 63], FAST_PUSH: [36, 45, 57, 66], CRASH: [51, 61, 74, 83], TRIM_RECEIVE: [24, 34, 45, 55], TOWER_CS: [17, 26, 37, 46], RETURNING: [30, 40, 54, 64], FREEZE: [24, 33, 44, 53], CHECK_WAVE: [35, 44, 56, 65]
+        ACQUIRE_PUSH: [32, 41, 54, 63], SLOW_PUSH: [34, 43, 54, 63], FAST_PUSH: [36, 45, 57, 66], CRASH: [51, 61, 74, 83], TRIM_RECEIVE: [24, 34, 45, 55], TOWER_CS: [17, 26, 37, 46], RETURNING: [30, 40, 54, 64], FREEZE: [24, 33, 44, 53], CHECK_WAVE: [35, 44, 56, 65]
       }[d.plan_id] || [35, 44, 56, 65];
       geometry.forEach((x, i) => { const group = el('span', '● ● ●', 'coach-minions ' + (i < 2 ? 'coach-minions-ally' : 'coach-minions-enemy')); group.style.left = x + '%'; group.style.top = (i % 2 ? 57 : 44) + '%'; group.setAttribute('aria-hidden', 'true'); line.append(group); });
       const own = d.own || current?.input?.own_champion;
@@ -191,10 +191,35 @@
       const s = coach().sustain || {}, section = card('유지력 · 피해를 버티는 방식'); section.append(el('p', s.summary));
       arr(s.actors).forEach(actor => { const d = details('sustain-' + actor.champion, actor.name || catalog?.champions?.[actor.champion]?.name || '각 챔피언'); [['교전 중 회복', 'in_fight_heal'], ['교환 사이 회복', 'between_trade'], ['피해 방지 · 보호막', 'shield'], ['자원', 'resources'], ['수급 · 행동 공백', 'downtime'], ['위험', 'risks']].forEach(([label, key]) => d.append(block(label, actor[key]))); section.append(d); }); section.append(block('재정비', s.reset), block('한계', s.limits)); return section;
     }
+    function application() {
+      const a=coach().knowledge_application,wrap=details('knowledge-application','이 기본 판단을 채택한 이유');
+      if(!a?.supported)return wrap;
+      wrap.append(block(a.active?'추천 기본 계획':'기본 구도 참고 · 현재 조건에는 미적용',a.recommended_plan),block('판단 이유',a.reason),block('현재 적용',a.active?'선택한 구간·가정에서 적용':'이 구간·가정에는 기본 분기를 그대로 적용하지 않습니다.'),block('적용 조건',a.conditions),block('계획을 바꿀 예외',a.exceptions),block('자료를 넘어선 제한적 추론',a.inference),block('남은 핵심 질문',a.open_questions));
+      for(const ref of arr(a.direct_sources)){const source=arr(coach().evidence?.sources).find(s=>s.id===ref.source_id);if(source){wrap.append(urlLink(source.title,source.url),el('p',ref.locator+' · '+ref.supports));}}
+      wrap.append(why([a.id],'application'));return wrap;
+    }
+    function statistics() {
+      const s=coach().knowledge_application?.statistics,wrap=details('statistical-context','기존 경기 통계 · 매치업과 일반 참고 구분');
+      if(!s){wrap.append(el('p','연결된 통계가 없습니다. 다른 포지션·조합의 수치로 채우지 않습니다.'));return wrap;}
+      wrap.dataset.statisticalScope=s.matchup.comparison;
+      wrap.append(el('p','원딜 상대 또는 솔로 라인 관측이며 서포터 포함 2대2 증거가 아닙니다. 자원 차이와 전체 승률은 교전 승률이 아닙니다.'));
+      const meta=(key,title)=>{const d=s.datasets[key];wrap.append(block(title,`패치 ${d.patch} · ${d.platform} · 솔로/듀오 랭크 · 챌린저 시드 모집단 ${d.matches}경기 · ${d.window_start.slice(0,10)}~${d.window_end.slice(0,10)} · 조회 ${d.retrieved_at.slice(0,10)}. 모든 참가자가 챌린저였다는 뜻은 아닙니다.`));};
+      const table=(title,points,role)=>{wrap.append(el('h4',title));if(!points.length){wrap.append(el('p','일치하는 집계 없음 · 일반 포지션 자료로 대체하지 않음'));return;}
+        const scroll=el('div',null,'coach-matrix-scroll');scroll.tabIndex=0;scroll.setAttribute('role','region');scroll.setAttribute('aria-label',title);const t=el('table',null,'coach-stat-table'),h=el('tr');['시점','지표','유효 표본','평균 차이 · 95% 구간'].forEach(x=>h.append(el('th',x)));t.append(h);
+        for(const p of points){const row=el('tr');row.dataset.statVisible=String(p.legacy_visible);const metric=({gold_delta:'총 획득 골드',xp_delta:'경험치',cs_delta:'미니언+정글 CS'})[p.metric],n=role?`챔피언 ${p.champion_n}관측 / 대조 ${p.reference_n}관측 (${p.n}경기)`:`${p.n}경기`,value=p.mean==null?`${p.omission_reason==='N_LT_2'?'단일 표본':'추정 범위 넓음'} · 기존 정밀도 기준에 따라 수치 보류`:`${p.mean.toFixed(1)} ${p.unit} (${p.ci95.low.toFixed(1)}~${p.ci95.high.toFixed(1)})`;
+          for(const x of [p.minute+'분',metric,n,value])row.append(el('td',x));t.append(row);}
+        scroll.append(t);wrap.append(scroll);};
+      meta('power','시간대별 자원 집계');table('선택한 챔피언 대 맞상대 · 해당 포지션',s.matchup.points,false);
+      const general=details('general-statistics','일반 포지션 참고 — 매치업 근거와 별도'); // General population stays explicitly separate.
+      general.append(el('p','전체 같은 포지션의 분당 자원 평균과 비교합니다. 총량 차이나 특정 상대와의 2대2 우위가 아닙니다.'));
+      wrap.append(general);const count=wrap.childNodes.length;table('일반 포지션 분당 차이',s.role_context.points,true);while(wrap.childNodes.length>count)general.append(wrap.childNodes[count]);
+      meta('outcome','전체 경기 결과 집계');const o=s.outcome;wrap.append(block('선택한 맞상대 전체 결과',o.n?`${o.wins}승 / ${o.n}경기 · 표본 승률 ${(100*o.win_rate).toFixed(1)}% · 95% 구간 ${(100*o.ci95.low).toFixed(1)}~${(100*o.ci95.high).toFixed(1)}%. 작은 표본의 기술 통계이며 안정적 상성 판단이 아닙니다.`:'일치하는 결과 집계 없음'));
+      wrap.append(el('p','집계 기간과 분모가 다른 자료를 합치지 않았습니다. 이 수치로 기본 교전 우세를 변경하지 않습니다.'));const trace=details('statistics-lineage','통계 출처 · 계산식 · 추적');const pre=el('pre');pre.textContent=JSON.stringify(s.datasets,null,2);trace.append(pre);wrap.append(trace);return wrap;
+    }
     function lane() {
       const n=el('div',null,'coach-lane-panel');n.append(matrix(),growth());
       const purpose=card(board().lane?.milestone?.label||'선택 구간');purpose.append(block('이번 구간 목적',board().lane?.milestone?.goal));
-      const whyPeriod=details('selected-reason','이 구간의 이유 · 교전 유형별 판단');whyPeriod.append(selected());purpose.append(whyPeriod);n.append(purpose,wave(),counterplans(),preferences());
+      const whyPeriod=details('selected-reason','이 구간의 이유 · 교전 유형별 판단');whyPeriod.append(selected());purpose.append(whyPeriod);n.append(purpose,wave(),application(),statistics(),counterplans(),preferences());
       const comparison=details('trade-sustain','교환 길이 · 반복 교환과 유지력');comparison.append(trade(),sustain());n.append(comparison);return n;
     }
     function operations() {
@@ -247,6 +272,7 @@
       const matchup=el('div',null,'coach-matchup-portraits');
       const rosterLane=arr(b.overall?.lanes).find(l=>l.position===current.input.own_position);
       [['우리',rosterLane?.allies],['상대',rosterLane?.enemies]].forEach(([label,ids])=>{const team=el('div',null,'coach-board-team');team.append(el('span',label));arr(ids).forEach(id=>{if(root.LoadingMap?.portrait)team.append(root.LoadingMap.portrait(catalog.champions[id],id===current.input.own_champion));team.append(el('span',catalog.champions[id]?.name||id));});matchup.append(team);});hero.append(matchup,el('h2',b.headline||c.title));
+      const applied=c.knowledge_application;if(applied?.supported)hero.append(el('p',applied.active?(c.matchup_id==='C'?'기전·공략 종합 추론 · 근접 접촉 유지 조건':'공략 판단 기반 · 확보 전 처리 / 확보 후 쌓기'):'조건 변경으로 기본 근거 적용 범위 제한','coach-evidence-kind'));
       const tiles=el('div',null,'coach-board-tiles');
       const compact=(title,lead,reason,key)=>{const tile=button('', 'board-'+key,()=>{if(key==='overall'){const d=host.querySelector('details[id$="-overall-plan"]');d.open=!d.open;d.querySelector('summary').focus({preventScroll:true});}else{state.tab=key;render();host.querySelector('[role=tabpanel]')?.scrollIntoView({block:'start',behavior:'instant'});}});tile.className='coach-board-tile';tile.setAttribute('aria-label',title+' 상세: '+lead);tile.append(el('span',title,'coach-tile-label'),el('span',lead,'coach-tile-copy'),el('span','↗','coach-tile-arrow'));tiles.append(tile);};
       compact('라인전',b.brief?.lane,'','lane');
@@ -255,6 +281,7 @@
       const overallDetails=details('overall-plan','기본 가정 · 전체 구도 · 지원 범위');overallDetails.append(block('우리 계획',b.composition?.ours_full),block('상대의 가능한 계획',b.composition?.theirs_full),block('내 역할',b.composition?.role));arr(b.overall?.lanes).forEach(l=>overallDetails.append(block(l.label,l.reason)));overallDetails.append(el('p',b.overall?.risk));arr(b.overall?.jungle_links).forEach(l=>overallDetails.append(block(({TOP:'탑',MID:'미드',BOTTOM:'바텀'})[l.position]+' 연계 후보',l.means?l.means+' · '+l.condition:l.condition)));hero.append(overallDetails);
       const shortReminders=[b.reminders?.[0],'교환 뒤 처리·대응 자원을 남긴다.',b.growth?'성장 뒤에도 남는 견제·연결을 활용한다.':'정글 미확인: 처리와 전진 폭을 따로 고른다.'];hero.append(block('기억할 것 3개',shortReminders,'coach-summary-exceptions'));
       const quick=el('div',null,'coach-quick');arr(b.quick_scenarios).forEach(q=>{const n=button(q.label,'quick-'+q.id,()=>change({scenario:{...scenario(),overrides:{...scenario().overrides,...q.scenario}},planning:{...planning(),overrides:{...planning().overrides,...q.planning}}}));n.dataset.coachChange='';quick.append(n);});hero.append(quick);
+
       hero.append(el('p','비교용 기본 가정 · '+c.context?.patch?.label,'coach-muted'));
       const scope=overallDetails;scope.append(el('p',b.coverage?.plan_scope),el('p',b.coverage?.gaps),block(c.context?.assumptions?.label,c.context?.assumptions?.details));container.dataset.boardChoice=b.choice?.id||'';container.append(hero,conditions());
       const deep = el('section', null, 'coach-execution'), tabs = el('div', null, 'coach-tabs'); deep.setAttribute('aria-label', '구간별 실행'); tabs.setAttribute('role', 'tablist'); tabs.setAttribute('aria-label', '실행 영역');
