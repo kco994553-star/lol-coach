@@ -8,6 +8,12 @@
     const responses=await Promise.all([fetch('./loading-knowledge.json'),fetch('./loading-data.json')]);
     if(responses.some(r=>!r.ok))throw Error('공통 근거 자료를 불러오지 못했습니다.');
     const [knowledge,catalog]=await Promise.all(responses.map(r=>r.json()));
+    const formationHost=document.getElementById('formation-study');
+    if(formationHost&&window.LoadingFormation){
+      const input={patch:catalog.source_patch,own_champion:'Caitlyn',own_position:'BOTTOM',allies:[['Ornn','TOP'],['Sejuani','JUNGLE'],['Ahri','MID'],['Caitlyn','BOTTOM'],['Lux','SUPPORT']].map(([champion,position])=>({champion,position})),enemies:[['Fiora','TOP'],['LeeSin','JUNGLE'],['Zed','MID'],['Kaisa','BOTTOM'],['Nautilus','SUPPORT']].map(([champion,position])=>({champion,position}))};
+      const model=window.LoadingFormation.evaluate(input,{...catalog,coaching_knowledge:knowledge});formationHost.append(window.LoadingFormation.create(model,catalog));
+      const why=document.getElementById('formation-study-why');if(why){why.append(el('p',model.evidence?.scope||model.reason));for(const s of model.evidence?.sources||[]){const a=el('a',s.author+' · '+s.title+' ↗');a.href=s.url;a.target='_blank';a.rel='noopener noreferrer';why.append(a,el('p','공략 표기 패치: '+(s.patch||'미확인')+' · 작성·수정일: '+(s.date||s.research_metadata?.updated_at||'미확인')),el('p','공략의 적용 한계: '+(Array.isArray(s.limits)?s.limits.join(' '):s.limits||'미확인')));}}
+    }
     for(const m of knowledge.matchups){
       skillScope=[...m.allies,...m.enemies];
       const section=el('article');section.id='coach-lesson-'+m.id;section.className='coach-card';
