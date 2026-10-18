@@ -1,3 +1,20 @@
+# Information architecture — completed
+- run_token: `main-20261018-information-architecture`
+- status: `COMPLETED`
+- writer_active: false
+- final_main: `abd0872911b15c4b79a12ec6ecb7569631254e9e` (PR105/106)
+- product_main: `19d31f18565117a17c7e77dca5d9b24ba5dbe11f`
+- public_artifact: `742bb62383b8d5d9bf3f428d6fb1a50c9c832b57`; native Pages39117544461 actual SUCCESS.
+- Required feature/product-main/results/final-main three jobs PASS. Final39118251705/39118251707 source-bound current_sources=true; completed test/browser evidence reused. Final gate PASS; product files unchanged after publication.
+- Five shared menus/PC sidebar/mobile bottom navigation; work status separate. Guest→10pick directly; four one-sentence briefing and focused lane/operations/fight from same report; methods/cost/trade/sustain/maps/evidence optional. Safe actual record→review preparation preserves USER vs PRO_REFERENCE and explicit analysis unconnected.
+- Actual public PC1440/mobile390/320/200% input/edit/tab/step/helper/learning/review passed; confirmed pro1profile/5recent records selected on both devices. HTTPS15hashes/root/buildinfo/nojekyll exact; public privateAPIrequests0. Scheduled pro projection and riot verification preserved.
+- Source/data ownership and deferred contracts: contracts/information-architecture-v1.md; full evidence and screenshots: evidence/actual-evidence/information-architecture/publication/. First summary674→376characters; guest2→1clicks,0extra condition inputs. These are UI measures, not human comprehension/coaching effect.
+- Missing: partial-draft/ban/mastery recommendations; jungle risk/routes; verified timers/allyCD; public full review/timeline/video/strategy linkage; public personalAPI; full-position lessons. No fake controls/records/countdowns; local authenticated boundaries retained.
+- Sources/claims/official facts/grades/holds/failures/budgets/Windows unchanged. AUTO30/HOLD20/USER0/advice7/Frozen350; coachingN0/human30secUNMEASURED/WindowsBLOCKED_EXTERNAL. No provider/game/video/paid calls initiated. Existing independent pro refresh retained.
+- Complete final proof: evidence/actual-evidence/information-architecture/final-handoff.json on this common coordination branch. Prior history preserved below.
+
+---
+
 # Information architecture — active writer
 - run_token: `main-20261018-information-architecture`
 - status: `RUNNING`
