@@ -38,6 +38,47 @@
     text=text.replace(/처리하고/g,'미니언을 잡고').replace(/처리에/g,'미니언을 잡는 데').replace(/처리를/g,'미니언을 잡는 일을').replace(/처리가/g,'미니언 잡기가').replace(/처리/g,'미니언 잡기');
     return text;
   }
+  function actionSummaries(b,coach,report) {
+    const sentence=value=>{const text=plainLanguage(value||'').trim().split(/(?<=[.!?])\s+/)[0];return text?(/[.!?]$/.test(text)?text:text+'.'):'공격을 강제하지 않고 닿는 미니언과 경험치를 챙긴다.';};
+    const assessments=Object.fromEntries(Object.entries(coach.selected.metrics).map(([k,v])=>[k,v.assessment]));
+    const app=coach.knowledge_application,override=coach.context.assumptions.scenario?.overrides||{};
+    const conditional=Object.values(override).some(v=>['LOW','UNKNOWN','THEIRS'].includes(v));
+    let kind=b.coverage.status==='UNSUPPORTED'?'KNOWLEDGE_GAP':app?.active&&app?.reference_plan?'EXECUTION_DEPENDENT':'CONDITION_DEPENDENT';
+    if(kind!=='KNOWLEDGE_GAP'&&!conditional&&Object.values(assessments).some(v=>['ALLY','ENEMY'].includes(v)))kind='CLEAR_IN_SCOPE';
+    const labels={CLEAR_IN_SCOPE:'일부 구간·교전 방식의 우열 근거 있음',CONDITION_DEPENDENT:'보호·거리·남은 수단에 따라 행동이 달라짐',EXECUTION_DEPENDENT:'접근·적중·이탈 실행에 따라 기회가 달라짐',KNOWLEDGE_GAP:'매치업 판단 부족 · 적용 가능한 일반 원칙'};
+    const laneJudgment={kind,label:labels[kind],axis_assessments:assessments,outcome:'UNDETERMINED',scope:'행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.',missing_axes:Object.keys(assessments).filter(k=>assessments[k]==='INSUFFICIENT')};
+    const contextConditions=[coach.context.assumptions.label,coach.selected.label+'의 비교 가정이며 실제 상태를 관측하지 않았습니다.'];
+    const phaseLabel=area=>area==='fight'?'라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.':'라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.';
+    const make=(area,kind,label,value,paths,target,extra={})=>({kind,label,text:sentence(value),source_paths:paths,detail_target:target,conditions:[...(area==='lane'?contextConditions:[phaseLabel(area)]),...(area==='lane'?(coach.actions.find(a=>a.id===coach.selection.id)?.requirements||[]):(report.roles?.proposed?.conditions||[]))],applicability:{champion:report.input.own_champion,position:report.input.own_position,patch:coach.context.patch.status,...(area==='lane'?{period:coach.selected_period}:{phase:area==='fight'?'POST_LANE_LEARNED_KIT':'POST_LANE_ASSUMPTION',lane_reference_period:coach.selected_period}),scenario:coach.context.assumptions.scenario,planning:b.context.planning},provenance_scope:'LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF',judgment:area==='lane'?laneJudgment:{kind:'CONDITION_DEPENDENT',label:'입력한 조합의 수단을 적용한 조건부 계획',outcome:'UNDETERMINED'},knowledge_state:b.coverage.status==='UNSUPPORTED'?'GENERAL_PRINCIPLE':'SOURCE_SCOPE_LIMITED',basis:'DESIGN_HYPOTHESIS',claim_ids:[...(b[area]?.claim_ids||b.wave.claim_ids||[])],rule_ids:['player-planboard-v1',...paths.map(p=>'projection:'+p)],observation:false,...extra});
+    const support=report.input.enemies.find(p=>p.position==='SUPPORT')?.champion;
+    const counterpart=report.input.enemies.find(p=>p.position===report.input.own_position)?.champion;
+    // A context example, never a global importance ranking; preserve all actual candidates in details.
+    const candidates=[b.fight.threats.filter(t=>t.champion===support),b.fight.threats.filter(t=>t.champion===counterpart),b.fight.threats];
+    const group=candidates.find(ts=>ts.length)||[];
+    const example=group.find(t=>t.slot==='R')||group[0];
+    const threatText=example?example.label+' · '+plainLanguage(example.action):b.fight.stop;
+    return {schema_version:'lol-coach-action-summaries-v1',origin:'ANALYSIS_ASSUMPTIONS_NOT_OBSERVATION',standard:coach.context.assumptions.label,
+      lane:{judgment:laneJudgment,items:[
+        make('lane','GOAL','이번 라인전 목표',b.lane.milestone.goal,['lane.milestone.goal'],'lane-goal'),
+        make('lane','WAVE','기본 웨이브 방향',b.wave.handling,['wave.handling'],'lane-methods'),
+        make('lane','TRADE','교환·응징 방법',b.wave.combat,['wave.combat'],'lane-methods'),
+        make('lane','CAUTION','조심할 상황',b.matchup_playbook.ours.avoid,['matchup_playbook.ours.avoid'],'lane-counterplay'),
+        make('lane','SWITCH','계획을 바꿀 조건',b.wave.change_if,['wave.change_if'],'lane-methods')
+      ]},operations:{assumption:phaseLabel('operations'),items:[
+        make('operations','POSITION','기본 활동 위치',b.operations.placement,['operations.placement'],'operations-plan'),
+        make('operations','PARTNER','연결할 아군',b.operations.connection,['operations.connection'],'operations-plan'),
+        make('operations','GAIN','우선할 이득',b.operations.priority,['operations.priority'],'operations-plan'),
+        make('operations','AVOID','피할 행동',b.operations.concede,['operations.concede'],'operations-methods'),
+        make('operations','FALLBACK','막히거나 불리할 때',b.operations.fallback,['operations.fallback'],'operations-plan')
+      ]},fight:{assumption:phaseLabel('fight'),items:[
+        make('fight','ROLE_POSITION','내 역할·기본 위치',b.fight.setup,['fight.role','fight.setup'],'fight-methods',{role:b.fight.role}),
+        make('fight','START','공격 시작 조건',b.fight.start,['fight.start'],'fight-plan'),
+        make('fight','TARGET','우선 공격 대상',b.fight.target,['fight.target'],'fight-methods'),
+        make('fight','THREAT','대응할 위협',threatText,example?['fight.threats']:['fight.stop'],example?'fight-threats':'fight-plan',{threat_ids:example?[example.id]:[],conditions:example?[phaseLabel('fight'),example.condition]:[phaseLabel('fight')],selection_scope:example?'조합에서 실제 연결된 위협 수단 예시 · 전체 중요도 순위 아님':'연결된 위협 자료 없음 · 기존 이탈 원칙만 제공'}),
+        make('fight','EXIT','이탈·재배치 조건',b.fight.stop,['fight.stop'],'fight-plan')
+      ]}
+    };
+  }
   function evaluate(report, catalog, coach, supplied, knowledge) {
     const input = report.input, planning = validate(supplied || input.planning || defaults());
     const p = { enemy_support: 'PRESENT', enemy_jungle: 'UNKNOWN', ally_jungle: 'UNCONFIRMED', goal: 'AUTO', clear_window: 'UNCONFIRMED', ...planning.overrides };
@@ -298,7 +339,7 @@
       counterplay:{purpose:ours.purpose,opponent_goal:theirs.purpose,wave_plan:wave.label,trade:ours.means,punish:ours.look_for,growth:loadingSummary.items[1].conclusion},
       inference:clone(application.inference),application_active:application.active,real_effect:'NOT_MEASURED_N0'
     }:null;
-    return {
+    const result = {
       schema_version: 'lol-coach-player-planboard-v1', context: { origin: 'HYPOTHETICAL_LOADING_EXAMPLE', planning, actual_enemy_positions: null, standard: coach.context.assumptions.label, patch: coach.context.patch.label },
       brief: { lane: labels[planId] + ' · ' + (id==='C'&&coach.selected.metrics.EXTENDED.assessment==='ALLY'?'근접 지속 교전 우세 추론':valid ? coach.trade.ours.label : '교전 자료 부족'), operations: sideRole ? '복귀할 수 있는 사이드 압박을 맡고 본대와 연결한다.' : bottom ? '중앙 수급을 아군과 잇고 제어 뒤 목표물로 전환한다.' : '가까운 자원과 본대 후속 거리를 연결한다.', fight: self === 'Caitlyn' ? '아군 제어가 맞으면 보호 연결 안에서 닿는 대상을 공격한다.' : self === 'Ezreal' ? '접근 전 견제하고 이탈 수단을 남긴 채 공격한다.' : self === 'Fiora' ? '사이드 복귀와 받아칠 수단을 정한 뒤 접근한다.' : self === 'Yunara' ? '강화·아군 지원이 함께 닿을 때 공격하고 후속이 끊기면 바꾼다.' : fight.start },
       loading_summary:loadingSummary, briefing_v2:briefing, evidence_bridge:evidenceBridge, area_context:areaContext,
@@ -313,6 +354,7 @@
       quick_scenarios: quick,
       evidence: { claims: allClaims, sources: allKnowledge.sources.filter(s => sourceIds.has(s.id)), official_facts: threats.map(t => ({ ...fact(t.champion, t.slot), champion: t.champion })) }
     };
+    result.action_summaries=actionSummaries(result,coach,report);return result;
   }
-  return Object.freeze({ evaluate, validate, defaults, plainLanguage });
+  return Object.freeze({ evaluate, validate, defaults, plainLanguage, actionSummaries });
 });

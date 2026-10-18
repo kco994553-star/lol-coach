@@ -9,6 +9,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = {
+    'formation-ranges.js':'formation-ranges.js',
     'loading-formation.js':'loading-formation.js',
     **{p:p for p in ('game-info.html','game-info.js','game-info-engine.js','game-info.css','game-info-items.json')},
     'riot.txt':'riot.txt',  # Public Riot app ownership proof; not an API credential.

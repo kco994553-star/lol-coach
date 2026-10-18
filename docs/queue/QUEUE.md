@@ -1,3 +1,11 @@
+# Action briefs and range geometry — source ready, publication pending
+- Inherit main ee1d0ee /public6497d33 and completed PR107/108. First five linked actions per lane/operations/fight from the same strategy report; conditions/provenance and limited A/B/C/D judgment, no new winner/tie or extra input. Original details/metrics/maps/evidence retained.
+- Official retained DataDragon16.20.1 base attackrange173champions offline projection, hypothetical2000unit square circles/nearest-ally links, actual picks/actor/step/zoom in sync; no live positions/full threat/attack eligibility or protection/isolation inference.
+-58affected checks and current localPC/mobile/320/200% passed. Review source/phase/detail-link/variant-overlap fixes with RED history retained. MandatoryCI/publication next. Contract contracts/action-briefs-range-v1.md, evidence evidence/actual-evidence/action-briefs-range/.
+- Prior sources/AUTO30HOLD20USER0/advice7/Frozen350/holds/failures/quotas/pro/riot/Windows retained, no new provider/game/video/paid call. N0/30secUNMEASURED/WindowsBLOCKED_EXTERNAL. Remaining: actual condition-matched comparative matchup knowledge, not cosmetic unknown→tie/win or efficacy claims.
+
+---
+
 # Teamfight formation — actual public completion
 - PR107 productd6230fee829235a1b7ef12dfe0f13f63d8f0bdb1, required PR/exact-product-main3PASS. Public6497d334bec4c03636878ae0b4f380894feffc1b; nativePages39121022230 actualSUCCESS; changed-file HTTPS hashes/root/buildinfo/nojekyll exact, pro projection and riot proof retained.
 - Learning first lesson and gameplan fight share conditional ten-portrait frontal vs flank/isolation model. Actual picks/own marker, scene/step/actor/zoom+keyboard focus in sync. Existing maps/6scenes separate. Frontal5v5 not a win guarantee; scatter alone not a plan. New geometry/sequence DESIGN_HYPOTHESIS, official mechanics/archived guide scope separate.
