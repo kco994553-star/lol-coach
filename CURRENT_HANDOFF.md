@@ -1,3 +1,10 @@
+# Desktop composition correction intake — 2026-10-18
+- Fresh main d264a8d and PR77/78/public74file/25hero/gameplay3 reused. User desktop-mode tall screenshot reproduced980x800→1800 with stage800→1800; CTAwrap74vs47; card aspect/minheight overflow. Fix content-flow desktop/no viewport-height dependency, intrinsic one-row CTA/rem heights, guest below panel/privacy retained, card minwidth0/aspectauto.
+- Shared reference-inspired SVG brand/home/swords/group/prep/review/menu/user/controls; operations map path unchanged. Same session25/assets/engine/picks/data/Windows/manual/provider boundaries retained.
+- Affected20 + actual changed PC/mobile25hero/3destinations/error/focus/menus/maps and8geometry viewports PASS; independent review next. Evidence desktop-composition/report.md. Required CI/Pages/actual HTTPS publication next. Gemini/imagegen/game/paid0; N0/30secunmeasured/Windowsblocked preserved.
+
+---
+
 # Actual gameplay cards — published completion
 - PR77 product source0e1be2e0044708aad42372d0c8a3056a9ff799a3, artifact3f328ce8ab11ad6a5e6db9a18473727ec2ecf1ff, Pages39082477385 actualSUCCESS. Feature/main required3 PASS; actual HTTPS74files+root/build-info/nojekyll hashes, PC1440/mobile39025hero/session/input/focus/scroll/failure/card3destinations/guest10pick/map PASS.
 - Current3cards use actual LoL wave/Riot Ryze movement/ElderDragon combat; no verified professional-match identity claimed. Sources/publishers/hash/rights boundaries in config/gameplay_cards_assets.json; previous AI assets/history retained. Official20extra backgrounds+existing5=25, original5 unchanged. No AI label added.
