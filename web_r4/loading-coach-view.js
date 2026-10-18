@@ -115,7 +115,7 @@
     function growth() {
       const wrap = el('div', null, 'coach-growth'); arr(coach().growth).forEach(event => {
         const b = button(event.label, 'growth-' + event.id, () => change({ period: event.id })); b.dataset.coachChange = ''; b.setAttribute('aria-pressed', String(event.id === coach().selected_period)); wrap.append(b);
-        if (event.id === coach().selected_period) { const card = el('div', null, 'coach-growth-detail'); card.append(block('변화가 생기는 조건', event.trigger), block('무엇이 달라지나', event.change), block('변화 전', event.before), block('변화 후', event.after), block('상대에게 남은 강점', event.remaining_strength), block('위치에 따른 응징 위험', event.positional_punish_risk==='INCREASED_CONDITIONAL'?'조건부 증가': '미확인'), block('예외', event.exceptions)); if (event.global_reversal != null) card.append(block('전체 구도 역전', typeof event.global_reversal === 'boolean' ? (event.global_reversal ? '근거가 제시된 범위에서 역전' : '전체 구도 역전으로 해석하지 않습니다.') : event.global_reversal==='UNDETERMINED'?'미확인':event.global_reversal)); card.append(why(event.claim_ids, 'growth-' + event.id)); wrap.append(card); }
+        if (event.id === coach().selected_period) { const card = el('div', null, 'coach-growth-detail'); card.append(block('변화가 생기는 조건', event.trigger), block('무엇이 달라지나', event.change), block('변화 전', event.before), block('변화 후', event.after), block('우리에게 남는 강점', event.remaining_strength), block('위치에 따른 응징 위험', event.positional_punish_risk==='INCREASED_CONDITIONAL'?'조건부 증가': '미확인'), block('예외', event.exceptions)); if (event.global_reversal != null) card.append(block('전체 구도 역전', typeof event.global_reversal === 'boolean' ? (event.global_reversal ? '근거가 제시된 범위에서 역전' : '전체 구도 역전으로 해석하지 않습니다.') : event.global_reversal==='UNDETERMINED'?'미확인':event.global_reversal)); card.append(why(event.claim_ids, 'growth-' + event.id)); wrap.append(card); }
       }); return wrap;
     }
     function selected() {
@@ -163,7 +163,7 @@
       section.append(lineDiagram(false));
       if (c.diagram?.supported) { const b = button('도식 크게 보기', 'open-zoom', () => openZoom(b)); section.append(b); }
       const procedure = details('wave-procedure', '시작 · 처리 · 남길 자원 · 중단과 다음 행동');
-      [['시작 조건', 'start'], ['처리 방식', 'processing'], ['기술 사용', 'skills'], ['남길 자원', 'reserve'], ['완료 확인', 'complete'], ['중단 조건', 'abort'], ['다음 행동', 'next'], ['상대의 응징', 'punishment'], ['이득 전환', 'conversion'], ['비용', 'costs']].forEach(([label, key]) => procedure.append(block(label, plan[key])));
+      [['시작 조건', 'start'], ['처리 방식', 'processing'], ['기술 사용', 'skills'], ['남길 자원', 'reserve'], ['완료 확인', 'complete'], ['중단 조건', 'abort'], ['다음 행동', 'next'], ['상대 접근에 대한 우리 대응', 'punishment'], ['이득 전환', 'conversion'], ['비용', 'costs']].forEach(([label, key]) => procedure.append(block(label, plan[key])));
       section.append(procedure, why(plan.claim_ids, 'wave'));
       const alternatives = details('wave-alternatives', '다른 웨이브 계획의 지원 범위'); arr(w.plans).forEach(p => { alternatives.append(block(p.label || '계획', [p.goal, p.reason, p.feasible === 'UNKNOWN' ? '실행 여건 미확인' : p.feasible === 'IMPOSSIBLE' ? '현재 조건에서 실행 불가' : ''].filter(Boolean))); }); section.append(alternatives);
       return section;
