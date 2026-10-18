@@ -1,3 +1,11 @@
+# Desktop composition — actual public completion
+- PR79 product sourceab17d505546f63d339851cb672c2e7db298a84c9, artifact4b7fb944b5e8b910e6c5cc69c5ce36207ba5d614, Pages39083506747 actualSUCCESS. Feature/main required3 PASS; actual HTTPS74files+root/build-info/nojekyll hashes, PC/mobile8geometry viewports/25hero/session/input/focus/errors/card3destinations/guest10pick/maps PASS.
+- Desktop height now content-driven:980width800/1800height both stage684.36; narrow CTA aligned48px; contained cards16px gutters;952x688 contains3cards. Guest below search, identity/public API note retained, errors natural flow. Reference-like shared SVG icons; operations map path unchanged.
+- Evidence screens/receipts/report: evidence/actual-evidence/desktop-composition/publication/result.md. Initial failure/before/intermediate histories retained, independent review no material findings including200%/auth/focus. Previous25images/actualgame3/pro projection unchanged.
+- No strategy/source/privateAPI/Windows/manual/provider budget change; Gemini/imagegen/game/paid0; advice7/AUTO30HOLD20USER0/Frozen350/N0/30secunmeasured/WindowsBLOCKED_EXTERNAL retained. Results-only gates recorded on common execution claim; no product republish.
+
+---
+
 # Desktop composition correction intake — 2026-10-18
 - Fresh main d264a8d and PR77/78/public74file/25hero/gameplay3 reused. User desktop-mode tall screenshot reproduced980x800→1800 with stage800→1800; CTAwrap74vs47; card aspect/minheight overflow. Fix content-flow desktop/no viewport-height dependency, intrinsic one-row CTA/rem heights, guest below panel/privacy retained, card minwidth0/aspectauto.
 - Shared reference-inspired SVG brand/home/swords/group/prep/review/menu/user/controls; operations map path unchanged. Same session25/assets/engine/picks/data/Windows/manual/provider boundaries retained.
