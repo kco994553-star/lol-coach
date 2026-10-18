@@ -1,3 +1,9 @@
+# Current desktop composition correction
+- READY: exact requiredCI/normalPR/postmainCI/Pages/actualHTTPS; source-bound local geometry/screens and changed-flow proof complete. Preserve all existing gameplay/source/quota/history.
+- Previous PR78/results main d264a8d was completed with required3 SUCCESS; prior READY line is historical, not pending duplicate work. Source/video/privateAPI/realWindows remain separate external dependencies.
+
+---
+
 # Latest actual gameplay card publication
 - DONE: PR77 product0e1be2e, artifact3f328ce, actualPages/HTTPS/PCmobile25backgrounds/3realgamecards proofs. See publication/result.md.
 - READY: results/Handoff-only normal merge and exact remote/main required gates; no repeated product/browser/source collection.
