@@ -1,3 +1,10 @@
+# Fiora–Malphite reference plan — source ready, publication pending
+- Intake ec48ed0/publicdd2ac217. Screenshot example1 unsupported because only4matchups registered. Append E source2/claim1 with six sourced period purposes/actions and two-sided plans; original23sources/28claims preserved. Current-header farming vs archived early-pressure conflict retained. No directional winner from unblocked-poke outcome assumption.
+- Six-stage basic-plan selector first, full unknown strength matrix retained in details. Guard low/unknown detailed trade and engagements, learned skills, source absence/patch/risk. Wave/action/line geometry same selected state. Evidence: evidence/actual-evidence/fiora-malphite/report.md. Affected41unit PASS; browser/requiredCI/publication pending.
+- No provider/video/game/paid calls or quota changes. AUTO30/HOLD20/USER0/advice7/Frozen350/raw/holds/failures/pro/riot/Windows preserved. N0/30secunmeasured/WindowsBLOCKED_EXTERNAL unchanged. Remaining exact combat/push/repeat/build judgments need scope-consistent source evidence, not universal own experiments.
+
+---
+
 # Evidence adoption — actual public completion
 - Source PR94/95 maind5060b0425ca92b756b13c77e311eef7fd5585c5; required PR/exactmain3 PASS. Artifactdd2ac2179db462957ae5815ff5524362744c2bd4, nativePages39101679933 actualSUCCESS. HTTPS hashes/root/buildinfo/nojekyll +actual PC1440/mobile390 adoption/conditions/diagrams/Why/statistics PASS;86manifest/80unchanged reused, riot/pro preserved.
 - A acquires processing margin before building; C Lv1 W/Q maintained-close-contact EXTENDED=ALLY is limited mechanism inference, not allin/kill/chase. Separate source-scope/statistical/tactical/effect states; no inherited USER/AUTO grade. Existing275power +separate50outcome projected offline, suppressed points stay null; no dataset pooling or ADC-to-duo inference.
