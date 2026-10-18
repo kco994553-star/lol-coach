@@ -1,3 +1,9 @@
+# Loading Coach authored shorthand audit
+- Followup source diff checks all new coach authored standalone start-key mentions: C contact reason/sustain and A Lv1 reserve. Replace only those explicit champion-slot references via existing helper; no tactical/assumption/claim changes. Existing source quotes remain raw.
+- Focused start-skill regression extended and pending exact requiredCI. Sourcef28 PR85 export99104192 is PREPARED_NOT_PUBLISHED; actual public remains8ed/artifact457, all receipts retained. No provider/video/game/paid; N0/30secunmeasured/Windowsblocked/history retained.
+
+---
+
 # Loading Coach growth display followup
 - Source8ed6685/artifact457211be nativePages39088318466 actualSUCCESS; HTTPS79file hash and changed PC/mobile headings/Why/study PASS. Preserve these receipts; final display inspection caught growth E-name without key and C/D shorthand in warnings. Use existing explicit champion-slot catalog helper; no new tactical condition/rule/source/grade.
 - Extend existing growth counterexample; targeted check then requiredCI/normalmerge/exactmainCI/changed public check. Reuse completed full flow948 and last public display proof. Provider/video/game/paid0; N0/30secunmeasured/Windowsblocked/history retained.
