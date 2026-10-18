@@ -283,6 +283,13 @@
     summary[2].conclusion=sideRole?'사이드 라인에서 미니언을 잡고 포탑을 압박하되, 아군에게 합류할 길을 남긴다.':bottom?'아군 가까이에서 미니언을 잡고, 함께 포탑·드래곤·바론을 노린다.':'가까운 라인에서 성장하고 아군이 싸울 때 함께 공격할 거리를 유지한다.';
     if(self==='Fiora')summary[3].conclusion='피오라의 응수(W)로 막을 기술과 빠져나올 길을 정한 뒤 접근한다.';
     if(self==='Caitlyn')summary[3].conclusion='아군의 속박·기절이 맞으면 보호받을 거리에서 닿는 적을 공격한다.';
+    const sentence=value=>{const text=plainLanguage(value).trim().split(/(?<=[.!?])\s+/)[0]||'이 조건의 자료가 부족합니다.';return /[.!?]$/.test(text)?text:text+'.';};
+    const briefing={schema_version:'lol-coach-loading-brief-v2',origin:'ANALYSIS_ASSUMPTIONS_NOT_OBSERVATION',basis:'DESIGN_HYPOTHESIS',items:[
+      {id:'our_plan',title:'우리 팀의 승리 방식',text:sentence(!sideRole&&has(oursSignals,'PICK')&&has(oursSignals,'COVER')?'아군이 적을 묶으면 보호받는 거리에서 함께 공격하고, 포탑·목표물을 노린다.':ourStyle),target:'operations'},
+      {id:'enemy_plan',title:'상대 팀의 가능한 승리 방식',text:sentence(theirStyle),target:'operations'},
+      {id:'my_role',title:'이번 판의 내 역할',text:sentence(summary[3].conclusion),target:'fight'},
+      {id:'key_change',title:'가장 중요한 변경 조건',text:sentence(loadingSummary.changes[0]),target:'lane'}
+    ],limits:'실제 관측이 아닌 비교용 조건입니다. 개별 매치업의 근거 범위는 상세에서 구분합니다.'};
     const application=coach.knowledge_application;
     const evidenceBridge=application?.supported?{
       schema_version:'lol-coach-counterplay-evidence-bridge-v1',
@@ -294,7 +301,7 @@
     return {
       schema_version: 'lol-coach-player-planboard-v1', context: { origin: 'HYPOTHETICAL_LOADING_EXAMPLE', planning, actual_enemy_positions: null, standard: coach.context.assumptions.label, patch: coach.context.patch.label },
       brief: { lane: labels[planId] + ' · ' + (id==='C'&&coach.selected.metrics.EXTENDED.assessment==='ALLY'?'근접 지속 교전 우세 추론':valid ? coach.trade.ours.label : '교전 자료 부족'), operations: sideRole ? '복귀할 수 있는 사이드 압박을 맡고 본대와 연결한다.' : bottom ? '중앙 수급을 아군과 잇고 제어 뒤 목표물로 전환한다.' : '가까운 자원과 본대 후속 거리를 연결한다.', fight: self === 'Caitlyn' ? '아군 제어가 맞으면 보호 연결 안에서 닿는 대상을 공격한다.' : self === 'Ezreal' ? '접근 전 견제하고 이탈 수단을 남긴 채 공격한다.' : self === 'Fiora' ? '사이드 복귀와 받아칠 수단을 정한 뒤 접근한다.' : self === 'Yunara' ? '강화·아군 지원이 함께 닿을 때 공격하고 후속이 끊기면 바꾼다.' : fight.start },
-      loading_summary:loadingSummary, evidence_bridge:evidenceBridge, area_context:areaContext,
+      loading_summary:loadingSummary, briefing_v2:briefing, evidence_bridge:evidenceBridge, area_context:areaContext,
       composition: {ours:report.summary?.our_plan?.split('. ')[0],theirs:report.summary?.enemy_plan?.split('. ')[0],ours_full:report.summary?.our_plan,theirs_full:report.summary?.enemy_plan,role:report.summary?.my_role,basis:'DESIGN_HYPOTHESIS'},
       headline: usable ? overallGoal : '확인된 수단으로 수급·연결부터 준비한다.',
       lane: { overall_goal: overallGoal, milestone: { id: period, label: coach.selected.label, goal: milestoneGoal }, can_push: coach.wave.can_push, should_push: coach.wave.should_push,
