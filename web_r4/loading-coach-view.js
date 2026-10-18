@@ -199,6 +199,18 @@
       for(const ref of arr(a.direct_sources)){const source=arr(coach().evidence?.sources).find(s=>s.id===ref.source_id);if(source){wrap.append(urlLink(source.title,source.url),el('p',ref.locator+' · '+ref.supports));}}
       wrap.append(why([a.id],'application'));return wrap;
     }
+    function evidenceBridge(){
+      const b=board().evidence_bridge,d=details('evidence-bridge','통계 → 공략 판단 → 이번 상대법');
+      if(!b){d.append(el('p','이 매치업의 종합 근거가 아직 연결되지 않았습니다.'));return d;}
+      d.dataset.evidenceBridge='';const s=b.statistics.matchup;
+      if(s){const points=s.matchup.points,counts=[...new Set(points.map(p=>p.n))];d.append(block('① Riot 경기 관측',points.length?`10·15분 맞상대 자원 관측 ${counts.join('/')}경기 · 세부 지표·누락은 아래 통계에서 확인합니다.`:'10·15분 맞상대 자원 집계 없음 · 일반 포지션 통계로 대신하지 않습니다.'));
+        const data=s.datasets;d.append(el('p',`패치 ${data.power.patch} · ${data.power.platform} · queue 420 · 챌린저 시드 모집단(모든 참가자의 티어 보장 아님)`,'coach-muted'),el('p',`자원 집계 ${data.power.matches}경기 ${data.power.window_start.slice(0,10)}~${data.power.window_end.slice(0,10)} / 결과 집계 ${data.outcome.matches}경기 ${data.outcome.window_start.slice(0,10)}~${data.outcome.window_end.slice(0,10)} · 서로 합산하지 않음`,'coach-muted'));
+        d.append(block('전체 경기 결과',s.outcome.n?`${s.outcome.wins}승 / ${s.outcome.n}경기 · 라인전·교전 승률이 아닙니다.`:'일치하는 경기 결과 집계 없음'),el('p',b.statistics.role,'coach-muted'));}
+      else d.append(block('① Riot 경기 관측','연결된 집계 없음 · 공략의 정성적 기본 계획과 별도로 관리합니다.'));
+      d.append(block(b.application_active?'② 전문가 공략의 판단':'② 공략의 기본 판단 · 현재 조건에는 미적용',b.expert.plan),block('조건·견해 차이',b.expert.reason),block('적용 조건',b.expert.conditions),block('대표 반례',b.expert.exceptions));
+      b.expert.sources.forEach(ref=>{const src=arr(coach().evidence.sources).find(s=>s.id===ref.source_id);if(src){d.append(urlLink(src.author+' · '+src.title,src.url),el('p',ref.locator+' · '+ref.supports),el('p','공략 패치: '+src.patch+' · 문단 개별 수정일은 미확인','coach-muted'));}});
+      const c=b.counterplay;d.append(block(b.application_active?'③ 현재 구간의 상대법':'③ 현재 조건에 제한된 상대법',[c.purpose,c.opponent_goal,c.wave_plan,c.trade,c.punish,c.growth]),block('자료를 넘어선 해석',b.inference),el('p','통계는 전문가 계획의 승리 증명이 아닙니다. 원문·조건·반례를 종합한 기본 계획이며 실전 효과는 미측정입니다.','coach-muted'));return d;
+    }
     function statistics() {
       const s=coach().knowledge_application?.statistics,wrap=details('statistical-context','기존 경기 통계 · 매치업과 일반 참고 구분');
       if(!s){wrap.append(el('p','연결된 통계가 없습니다. 다른 포지션·조합의 수치로 채우지 않습니다.'));return wrap;}
@@ -220,7 +232,7 @@
     function lane() {
       const n=el('div',null,'coach-lane-panel');n.append(matrix(),growth());
       const purpose=card(board().lane?.milestone?.label||'선택 구간');purpose.append(block('이번 구간 목적',board().lane?.milestone?.goal));
-      const whyPeriod=details('selected-reason','이 구간의 이유 · 교전 유형별 판단');whyPeriod.append(selected());purpose.append(whyPeriod);n.append(purpose,wave(),application(),statistics(),counterplans(),preferences());
+      const whyPeriod=details('selected-reason','이 구간의 이유 · 교전 유형별 판단');whyPeriod.append(selected());purpose.append(whyPeriod);n.append(purpose);const methods=details('methods','방법 보기 · 웨이브·교환·양쪽 상대법');methods.append(wave(),counterplans(),preferences());n.append(methods,evidenceBridge(),application(),statistics());
       const comparison=details('trade-sustain','교환 길이 · 반복 교환과 유지력');comparison.append(trade(),sustain());n.append(comparison);return n;
     }
     function operations() {
@@ -269,22 +281,20 @@
       const scroll = Array.from(host.querySelectorAll('[data-coach-scroll]'), n => [n.dataset.coachScroll, n.scrollLeft, n.scrollTop]);
       const pageX = root.scrollX, pageY = root.scrollY;
       const c = coach(), container = el('section', null, 'loading-coach'); container.id = prefix;container.dataset.matchup=c.matchup_id||'UNSUPPORTED';container.dataset.selectedAction=c.selection?.id||'';container.dataset.period=c.selected_period||''; container.setAttribute('aria-label', '로딩 코치 · 표준 비교');
-      const b=board(),hero=el('div',null,'coach-overview coach-board');hero.append(el('p','이번 판 작전판 · 새 행동 연결은 설계 가설','coach-eyebrow'));
+      const b=board(),hero=el('div',null,'coach-overview coach-board');hero.append(el('p','이번 판 작전판 · 운영·한타는 가설','coach-eyebrow'));
       const matchup=el('div',null,'coach-matchup-portraits');
       const rosterLane=arr(b.overall?.lanes).find(l=>l.position===current.input.own_position);
-      [['우리',rosterLane?.allies],['상대',rosterLane?.enemies]].forEach(([label,ids])=>{const team=el('div',null,'coach-board-team');team.append(el('span',label));arr(ids).forEach(id=>{if(root.LoadingMap?.portrait)team.append(root.LoadingMap.portrait(catalog.champions[id],id===current.input.own_champion));team.append(el('span',catalog.champions[id]?.name||id));});matchup.append(team);});hero.append(matchup,el('h2',b.headline||c.title));
+      [['우리',rosterLane?.allies],['상대',rosterLane?.enemies]].forEach(([label,ids])=>{const team=el('div',null,'coach-board-team');team.append(el('span',label));arr(ids).forEach(id=>{if(root.LoadingMap?.portrait)team.append(root.LoadingMap.portrait(catalog.champions[id],id===current.input.own_champion));team.append(el('span',catalog.champions[id]?.name||id));});matchup.append(team);});hero.append(matchup,el('h2','이번 판의 방향','sr-only'));
       const applied=c.knowledge_application;if(applied?.supported)hero.append(el('p',applied.active?(applied.display_label||(c.matchup_id==='C'?'기전·공략 종합 추론 · 근접 접촉 유지 조건':'공략 판단 기반 · 확보 전 처리 / 확보 후 쌓기')):'조건 변경으로 기본 근거 적용 범위 제한','coach-evidence-kind'));
       const tiles=el('div',null,'coach-board-tiles');
-      const compact=(title,lead,reason,key)=>{const tile=button('', 'board-'+key,()=>{if(key==='overall'){const d=host.querySelector('details[id$="-overall-plan"]');d.open=!d.open;d.querySelector('summary').focus({preventScroll:true});}else{state.tab=key;render();host.querySelector('[role=tabpanel]')?.scrollIntoView({block:'start',behavior:'instant'});}});tile.className='coach-board-tile';tile.setAttribute('aria-label',title+' 상세: '+lead);tile.append(el('span',title,'coach-tile-label'),el('span',lead,'coach-tile-copy'),el('span','↗','coach-tile-arrow'));tiles.append(tile);};
-      compact('라인전',b.brief?.lane,'','lane');
-      compact('우리·상대 게임플랜','우리: '+b.composition?.ours+'\n상대: '+b.composition?.theirs,'','overall');
-      compact('운영',b.brief?.operations,'','operations');compact('한타',b.brief?.fight,'','fight');hero.append(tiles);
+      const compact=item=>{const tile=button('', 'board-'+item.id,()=>{state.tab=item.id==='growth'?'lane':item.id;render();if(item.id==='growth')host.querySelector('.coach-matrix,.coach-phase-plans')?.scrollIntoView({block:'start',behavior:'instant'});else host.querySelector('[role=tabpanel]')?.scrollIntoView({block:'start',behavior:'instant'});});tile.className='coach-board-tile';tile.dataset.loadingDecision=item.id;tile.setAttribute('aria-label',item.title+' 상세');tile.append(el('span',item.title,'coach-tile-label'),el('span',item.conclusion,'coach-tile-copy'),el('span',item.support,'coach-tile-support'),el('span','↗','coach-tile-arrow'));tiles.append(tile);};
+      arr(b.loading_summary?.items).forEach(compact);hero.append(tiles);
       const overallDetails=details('overall-plan','기본 가정 · 전체 구도 · 지원 범위');overallDetails.append(block('우리 계획',b.composition?.ours_full),block('상대의 가능한 계획',b.composition?.theirs_full),block('내 역할',b.composition?.role));arr(b.overall?.lanes).forEach(l=>overallDetails.append(block(l.label,l.reason)));overallDetails.append(el('p',b.overall?.risk));arr(b.overall?.jungle_links).forEach(l=>overallDetails.append(block(({TOP:'탑',MID:'미드',BOTTOM:'바텀'})[l.position]+' 연계 후보',l.means?l.means+' · '+l.condition:l.condition)));hero.append(overallDetails);
-      const shortReminders=[b.reminders?.[0],'교환 뒤 처리·대응 자원을 남긴다.',b.growth?'성장 뒤에도 남는 견제·연결을 활용한다.':'정글 미확인: 처리와 전진 폭을 따로 고른다.'];hero.append(block('기억할 것 3개',shortReminders,'coach-summary-exceptions'));
-      const quick=el('div',null,'coach-quick');arr(b.quick_scenarios).forEach(q=>{const n=button(q.label,'quick-'+q.id,()=>change({scenario:{...scenario(),overrides:{...scenario().overrides,...q.scenario}},planning:{...planning(),overrides:{...planning().overrides,...q.planning}}}));n.dataset.coachChange='';quick.append(n);});hero.append(quick);
+      hero.append(block('계획을 바꾸는 조건',b.loading_summary?.changes,'coach-summary-exceptions'));
+      const quick=el('div',null,'coach-quick');arr(b.quick_scenarios).forEach(q=>{const n=button(q.label,'quick-'+q.id,()=>change({scenario:{...scenario(),overrides:{...scenario().overrides,...q.scenario}},planning:{...planning(),overrides:{...planning().overrides,...q.planning}}}));n.dataset.coachChange='';quick.append(n);});
 
       hero.append(el('p','비교용 기본 가정 · '+c.context?.patch?.label,'coach-muted'));
-      const scope=overallDetails;scope.append(el('p',b.coverage?.plan_scope),el('p',b.coverage?.gaps),block(c.context?.assumptions?.label,c.context?.assumptions?.details));container.dataset.boardChoice=b.choice?.id||'';container.append(hero,conditions());
+      const scope=overallDetails;scope.append(el('p',b.coverage?.plan_scope),el('p',b.coverage?.gaps),block(c.context?.assumptions?.label,c.context?.assumptions?.details));container.dataset.boardChoice=b.choice?.id||'';const optional=conditions();optional.insertBefore(quick,optional.children[1]||null);container.append(hero,optional);
       const deep = el('section', null, 'coach-execution'), tabs = el('div', null, 'coach-tabs'); deep.setAttribute('aria-label', '구간별 실행'); tabs.setAttribute('role', 'tablist'); tabs.setAttribute('aria-label', '실행 영역');
       [['lane', '라인'], ['operations', '운영'], ['fight', '한타']].forEach(([key, label]) => { const b = button(label, 'tab-' + key, () => { state.tab = key; render(); }); b.id = prefix + '-tab-' + key; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', String(state.tab === key)); b.setAttribute('aria-controls', prefix + '-panel'); b.tabIndex = state.tab === key ? 0 : -1; b.addEventListener('keydown', event => { const keys = ['lane', 'operations', 'fight']; if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return; event.preventDefault(); const at = keys.indexOf(key), next = event.key === 'Home' ? 0 : event.key === 'End' ? 2 : (at + (event.key === 'ArrowRight' ? 1 : -1) + 3) % 3; state.tab = keys[next]; render(); host.querySelector('[data-coach-focus="tab-' + state.tab + '"]')?.focus({ preventScroll: true }); }); tabs.append(b); });
       const panel = el('div', null, 'coach-panel'); panel.id = prefix + '-panel'; panel.setAttribute('role', 'tabpanel'); panel.setAttribute('aria-labelledby', prefix + '-tab-' + state.tab); panel.append(state.tab === 'lane' ? lane() : state.tab === 'operations' ? operations() : fight()); deep.append(tabs, panel); container.append(deep, officialFacts(), lesson());
