@@ -59,7 +59,7 @@
       if (!claims.length) wrap.append(el('p', '이 항목에 연결된 주장 근거가 아직 없습니다.', 'coach-muted'));
       claims.forEach((claim, index) => {
         const section = el('section', null, 'coach-claim');
-        section.append(el('span', basis[claim.basis] || '근거 범위 미확인', 'coach-badge'), el('p', claim.text));
+        section.append(el('span', basis[claim.basis] || '근거 범위 미확인', 'coach-badge'), el('p', claim.display_text || claim.text));
         if (claim.review) section.append(block('검토 범위', claim.review==='SOURCE_SCOPE_CHECKED_CONDITIONAL'?'원문과 적용 범위 확인 · 실전 효과 미검증':claim.review));
         section.append(block('적용 조건', claim.conditions), block('반례 · 적용을 멈출 조건', claim.counterexamples), block('패치 한계', claim.patch_limits));
         arr(evidence.sources).filter(source => arr(claim.source_ids).includes(source.id)).forEach(source => {

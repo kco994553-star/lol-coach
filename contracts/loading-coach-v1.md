@@ -93,3 +93,5 @@ Actual PC/mobile initial reading/conditions/claimWhy/period/growth/map/zoom/inpu
 learning and old core routes. Functional checks !=30sec comprehension or coaching effectN0.
 Normal PR→requiredCI→merge→exactmainCI→Pages→actualHTTPS→Handoff. Rollback prior artifact or
 new module/entry wiring, preserve sources/history. WindowsBLOCKED_EXTERNAL remains.
+
+Authored claims may add display_text with explicit official champion/slot labels. This is display-only; original claim text and quoted source excerpts/hashes remain immutable. Both Why and study use this field and the existing SkillDisplay consumer. A bare key is never assigned by own/first-pick guessing.
