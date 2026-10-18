@@ -1,3 +1,12 @@
+# Action briefs and range geometry — actual public completion
+- PR109 product89b73bda3c0ac603c66fed4ce54f8952c75a1f79; required PR/exact-product-main3PASS. Publicbdfd4503f4dcca50137b5a8d269f91c05d879dda; nativePages39123582704 actualSUCCESS, changed HTTPS hashes/root/buildinfo/nojekyll checked; pro/riot retained.
+- Five actions first in each lane/operations/fight tab, derived from same report with conditions/provenance and actual detail links. Scope-clear/conditional/execution-dependent/knowledge-gap remain distinct; no unsupported all-in winner/tie or extra required input. Old metrics/maps/methods/Why retained.
+- Official retained16.20.1 base attackrange173champions projected offline.2000unit square circles, closest-ally links/illustrative distances and portrait-centred anchors share actor/scene/step/zoom state. Geometry is not live attack/protection/isolation verdict. Supported-roster collision fixes/REDs preserved.
+-58affected +currentPCmobile flow/protected loading/directions/game-info and actual publicPC1440/mobile390/320/200% PASS. Evidence evidence/actual-evidence/action-briefs-range/publication/result.md,15generated originals and uncertainty cases in parent report/data.
+- Original sources/grades/AUTO30HOLD20USER0/advice7/Frozen350/holds/failures/quotas/pro/riot/Master+/Windows retained; no provider/game/video/paid requests. N0/30secUNMEASURED/WindowsBLOCKED_EXTERNAL. Results-only finalCI/common writer release proof follows, no identical product republish. Next: scoped comparative matchup knowledge, not unsupported all-in/ideal-shape claims.
+
+---
+
 # Action briefs and range geometry — source ready, publication pending
 - Inherit main ee1d0ee /public6497d33 and completed PR107/108. First five linked actions per lane/operations/fight from the same strategy report; conditions/provenance and limited A/B/C/D judgment, no new winner/tie or extra input. Original details/metrics/maps/evidence retained.
 - Official retained DataDragon16.20.1 base attackrange173champions offline projection, hypothetical2000unit square circles/nearest-ally links, actual picks/actor/step/zoom in sync; no live positions/full threat/attack eligibility or protection/isolation inference.
