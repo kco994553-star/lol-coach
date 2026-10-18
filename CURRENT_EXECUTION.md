@@ -1,3 +1,13 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-coach-20261018`
+- current_main: `8b7ec8c4fb0bf348beb333c593f700cfcb2779da`
+- scope: User integrated Loading Coach direction. Actual text evidence for4matchups; explicit standard assumptions separate observations/preferences; default source-backed plans, trade/sustain/growth event grid and compact exception exploration; preserve legacy engines/contracts/AUTO30HOLD20/history/25hero/Windows/provider limits. Free text research only; no Gemini/video/game/paid calls. Main owns schema and integration; independent research writes scratch only. Normal requiredCI/Pages/public proof before completion.
+
+---
+
 # Latest common execution claim — PARKED_EXTERNAL
 - run_token: `main-20261017-exchange-preference`
 - status: `PARKED_EXTERNAL`
