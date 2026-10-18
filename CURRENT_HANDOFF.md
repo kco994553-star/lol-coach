@@ -1,3 +1,10 @@
+# Evidence adoption — actual public completion
+- Source PR94/95 maind5060b0425ca92b756b13c77e311eef7fd5585c5; required PR/exactmain3 PASS. Artifactdd2ac2179db462957ae5815ff5524362744c2bd4, nativePages39101679933 actualSUCCESS. HTTPS hashes/root/buildinfo/nojekyll +actual PC1440/mobile390 adoption/conditions/diagrams/Why/statistics PASS;86manifest/80unchanged reused, riot/pro preserved.
+- A acquires processing margin before building; C Lv1 W/Q maintained-close-contact EXTENDED=ALLY is limited mechanism inference, not allin/kill/chase. Separate source-scope/statistical/tactical/effect states; no inherited USER/AUTO grade. Existing275power +separate50outcome projected offline, suppressed points stay null; no dataset pooling or ADC-to-duo inference.
+- Evidence: evidence/actual-evidence/evidence-adoption/publication/result.md. Remaining P0: exact focus/resource full2v2/attrition and same-gold build crossover source evidence; video questions/budgets independent. No provider/video/game/paid calls; original23sources/26claims retained plus2new versions. AUTO30/HOLD20/USER0/advice7/Frozen350/Windows/pro/riot preserved. N0/30secunmeasured/WindowsBLOCKED_EXTERNAL unchanged. Results-only finalCI/common claim release follows, no product republish.
+
+---
+
 # Evidence adoption / acquire-before-build — source ready, publication pending
 - Base8d3f8f2/publicf3640fe reused. A neutral contest acquires processing margin before slowing to build; C Lv1 W/Q sustained close contact gets limited mechanism-inference advantage, not allin/kill/chase. Original23sources/26claims and legacy grades preserved,2new versions appended. Separate source/statistical/tactical/effect review states.
 - Existing275power + separate50outcome aggregates projected offline with exact scope/denominators/period/hash. No275/291/89 conflation, no duo claim from ADC stats, no suppression threshold relaxation. Public typed/source panels and statistics linked; no required inputs added.
