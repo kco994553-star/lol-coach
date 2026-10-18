@@ -1,3 +1,14 @@
+# Loading Coach pre-publication patch boundary — PR82
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-coach-patch-boundary-20261018`
+- current_main: `51ebdeeb61617e3a97c80ec4671f1559a2f51019`
+- product_head: `1ae050d4208714dbeaf31b0ee2fa28c383756664`
+- scope: PR81 feature/postmain all3 PASS, but prepared export35ac03a NOT_PUBLISHED after Main found patch1.1 retained A ALLY. PR82 restricts MISMATCH to INSUFFICIENT/CHECK_WAVE/no diagram and shows patch status; null input stays comparison assumption. Unit12, actual focused PC/mobile and independent26case boundary review PASS. Required82 CI→normalmerge→exactmainCI→Pages→actualHTTPS→results next. No provider/video/game/paid; legacy N0/30secunmeasured/Windowsblocked intact.
+
+---
+
 # Loading Coach merged — post-main verification and publication pending
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
