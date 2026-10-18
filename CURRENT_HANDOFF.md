@@ -1,3 +1,13 @@
+# Information architecture — active writer
+- run_token: `main-20261018-information-architecture`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/information-architecture-20261018`
+- base_main: `c4468626bf855fdfaada120d7b74a2f77a6e9ac4`
+- scope: five-menu navigation/mobile bottom bar; bounded rearrangement of existing dashboard/loading/detail/live-reference/practice/review entry; unsupported recommendations/timers/replay explicitly queued; preserve engine, evidence, budgets and launcher.
+
+---
+
 # Plain Korean and matchup context — completed
 - run_token: `main-20261018-plain-context`
 - status: `COMPLETED`
