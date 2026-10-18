@@ -1,3 +1,13 @@
+# Threat rings and clear wave language — active writer
+- run_token: `main-20261018-threat-rings`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/threat-rings-20261018`
+- base_main: `28c2057c118f1e388117bf0f041351994c49282e`
+- scope: clear trade/wave wording; all ten small portraits and source-bound direct vs committed-approach threat rings, no live state/win/risk scores. Preserve previous scopes/evidence/holds/quotas/Windows.
+
+---
+
 # Action briefs and range/cohesion — completed
 - run_token: `main-20261018-action-briefs-range`
 - status: `COMPLETED`
