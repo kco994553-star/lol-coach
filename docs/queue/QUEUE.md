@@ -1,3 +1,11 @@
+# Plain Korean and matchup context — actual public completion
+- PR103 product11a78670fb4d8781d49c64c47db5627c024c7219; required feature/exact-source-main3PASS. Public5bbcf7c66cee2dc1a523b8a20272e926913c3b6f, nativePages39110092528 actualSUCCESS; HTTPS5manifesthashes/root/buildinfo/nojekyll exact,86manifest/81unchanged reused, pro/riot intact.
+- Actual PC1440/mobile390 A/E defaults and lane/operations/fight contexts PASS,0extra conditions. Authored 수급/처리 and abstract terms→specific minion/gold/experience/ally actions. Exact solo/duo and actual ten-pick capabilities explain our/opponent plans and interaction; no invented winner/importance. Raw quotes/official descriptions/trace bypass formatting.
+-48affected checks+full local loading/game-info and requiredCI passed. Preserve initial CI old map-caption expectation failure, RED/read-only guard fixes. Source25/claims29/application/review history, AUTO30HOLD20USER0/advice7/Frozen350/quotas/Windows preserved. N0/human30secunmeasured/WindowsBLOCKED_EXTERNAL.
+- Evidence evidence/actual-evidence/plain-context/publication/result.md. Results-only finalCI/common writer-release proof follows without product republish. NextP0 condition-matched push/trade/attrition/build evidence; not unsupported unknown→winner conversion. No provider/video/game/paid calls.
+
+---
+
 # Plain Korean and matchup context — publication pending
 - Inherit main11b115b/public2008be4; existing evidence and completed publication reused.
 - Replace authored 수급/처리 and abstract follow-up/group wording at display only; source quotes, official descriptions, review/trace originals unchanged. Add actual lane/operations/fight ours/opponent/matchup/action explanations. No new winner/score/grade or required input.
