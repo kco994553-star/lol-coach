@@ -1,0 +1,2065 @@
+{
+  "default": {
+    "input": {
+      "allies": [
+        {
+          "champion": "Ornn",
+          "position": "TOP"
+        },
+        {
+          "champion": "Sejuani",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Ahri",
+          "position": "MID"
+        },
+        {
+          "champion": "Caitlyn",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Lux",
+          "position": "SUPPORT"
+        }
+      ],
+      "enemies": [
+        {
+          "champion": "Fiora",
+          "position": "TOP"
+        },
+        {
+          "champion": "LeeSin",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Zed",
+          "position": "MID"
+        },
+        {
+          "champion": "Kaisa",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Nautilus",
+          "position": "SUPPORT"
+        }
+      ],
+      "own_champion": "Caitlyn",
+      "own_position": "BOTTOM",
+      "side": "BLUE",
+      "patch": "16.20",
+      "opponent_mode": "ASSIGNED",
+      "lane_opponent": null,
+      "schema_version": "lol-coach-loading-input-v4",
+      "preferences": {
+        "risk": "BALANCED"
+      },
+      "scenario": {
+        "standard": "lane-standard-v1",
+        "overrides": {}
+      },
+      "planning": {
+        "basis": "loading-plan-example-v1",
+        "overrides": {}
+      }
+    },
+    "period": {
+      "id": "LEVEL1",
+      "label": "Lv1",
+      "goal": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다."
+    },
+    "coverage": {
+      "status": "BASIC_PLAN_CONDITIONAL",
+      "matchup": "A",
+      "plan_scope": "조건부 기본 목적·웨이브·양쪽 상대법 연결",
+      "gaps": "초반 사거리·푸시 공략 범위. 지속 교전·올인·후반 전체 우열 자료 부족.",
+      "effect_sample": 0
+    },
+    "wave": {
+      "plan_id": "SLOW_PUSH",
+      "label": "막타 중심으로 천천히 쌓기",
+      "purpose": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다.",
+      "handling": "막타를 우선하고, 상대가 줄이는 속도보다 조금 더 처리할 여유가 있을 때만 쌓는다.",
+      "position": "아군 후속과 걸어서 돌아올 거리가 남는 쪽에 선다. 미니언은 일부 투사체 대응 수단이며 전체 안전선이 아니다.",
+      "combat": "상대가 막타에 접근하면 사거리 끝 짧은 공격으로 공간을 지키고, 물러나면 CS·처리 시간을 얻는다.",
+      "next_wave": "상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다.",
+      "change_if": "노틸러스가 옆 진입선이나 평타 거리로 들어오거나 럭스 후속이 끊기면 교환을 끝낸다.",
+      "completed": false,
+      "state": {
+        "position": "EVEN",
+        "minion_size": "UNOBSERVED",
+        "reinforcements": "UNOBSERVED",
+        "origin": "HYPOTHETICAL_LOADING_EXAMPLE"
+      },
+      "conditions": {
+        "resources": "SUFFICIENT",
+        "enemy_key": "AVAILABLE",
+        "enemy_jungle": "UNKNOWN",
+        "clear_window": "UNCONFIRMED"
+      },
+      "axes": {
+        "pace": {
+          "id": "LAST_HIT_PLUS",
+          "label": "막타 중심으로 천천히 쌓기"
+        },
+        "pressure": {
+          "id": "CS_EDGE",
+          "label": "닿는 막타 자리만 압박"
+        },
+        "exposure": {
+          "id": "ALLY_CONNECTED",
+          "label": "동료·미니언과 연결된 자리"
+        },
+        "resources": {
+          "id": "RESERVE_RESPONSE",
+          "label": "처리·교환·대응 자원을 따로 남김",
+          "reserve": "Lv1 대표 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E) 시작에는 아직 럭스의 빛의 속박(Q)·케이틀린의 90구경 투망(E)를 배웠다고 가정하지 않는다. 걸어서 돌아올 거리와 자원을 남긴다."
+        }
+      },
+      "steps": [
+        {
+          "number": 1,
+          "text": "막타를 우선하고, 상대가 줄이는 속도보다 조금 더 처리할 여유가 있을 때만 쌓는다."
+        },
+        {
+          "number": 2,
+          "text": "상대가 막타에 접근하면 사거리 끝 짧은 공격으로 공간을 지키고, 물러나면 CS·처리 시간을 얻는다."
+        },
+        {
+          "number": 3,
+          "text": "상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다."
+        }
+      ],
+      "claim_ids": [
+        "A-WAVE",
+        "A-SHORT",
+        "A-RECALL"
+      ],
+      "basis": "DESIGN_HYPOTHESIS",
+      "diagram": {
+        "supported": true,
+        "kind": "LINE",
+        "own": "Caitlyn",
+        "allies": [
+          "Caitlyn",
+          "Lux"
+        ],
+        "enemies": [
+          "Kaisa",
+          "Nautilus"
+        ],
+        "plan_id": "SLOW_PUSH",
+        "steps": [
+          {
+            "number": 1,
+            "text": "막타를 우선하고, 상대가 줄이는 속도보다 조금 더 처리할 여유가 있을 때만 쌓는다."
+          },
+          {
+            "number": 2,
+            "text": "상대가 막타에 접근하면 사거리 끝 짧은 공격으로 공간을 지키고, 물러나면 CS·처리 시간을 얻는다."
+          },
+          {
+            "number": 3,
+            "text": "상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다."
+          }
+        ]
+      }
+    },
+    "choice": {
+      "id": "CONTROL_WAVE",
+      "same_across_preferences": false,
+      "cost": "즉시 견제 기회 일부를 포기하지만 처리·이탈 자원을 남긴다.",
+      "reserve": "Lv1 대표 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E) 시작에는 아직 럭스의 빛의 속박(Q)·케이틀린의 90구경 투망(E)를 배웠다고 가정하지 않는다. 걸어서 돌아올 거리와 자원을 남긴다.",
+      "reason": "웨이브·자원을 먼저 확보하는 선택을 강조합니다. 즉시 견제 기회 일부를 포기할 수 있습니다."
+    },
+    "counterplans": {
+      "supported": true,
+      "ours": {
+        "purpose": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다.",
+        "means": "케이틀린의 필트오버 피스메이커(Q)와 배운 럭스의 광휘의 특이점(E)로 접근·처리 선택권을 만든다. 견제가 미니언까지 맞아 원치 않게 밀리지 않도록 처리량을 조절한다.",
+        "look_for": "상대가 막타·처리에 집중할 때 사거리 끝 공간을 얻는다. 일부러 훅을 맞아 유도하지 않는다.",
+        "avoid": "견제에 다음 처리·이탈 자원을 모두 쓰거나 미니언 뒤를 절대 안전선으로 여기지 않는다.",
+        "switch_when": "노틸러스가 옆 진입선이나 평타 거리로 들어오거나 럭스 후속이 끊기면 교환을 끝낸다."
+      },
+      "theirs": {
+        "purpose": "사거리 견제를 오래 받기보다 접근과 원딜 후속이 겹치는 교환을 만든다.",
+        "means": "노틸러스의 닻줄 견인(Q)·노틸러스의 강력한 일격(P)로 접근·제어하고, 배운 카이사의 이케시아 폭우(Q)와 카이사의 두 번째 피부(P) 후속을 잇는 후보.",
+        "look_for": "상대 처리 기술·이탈 소모 또는 두 동료가 벌어진 순간을 노린다. 실제 적중·후속 거리는 별도다.",
+        "avoid": "후속 없이 긴 견제를 받거나 웨이브·포탑 안쪽까지 깊게 추격하지 않는다.",
+        "switch_when": "접근이 막히거나 원딜 후속이 끊기면 수급·재정비로 바꾼다."
+      },
+      "claim_ids": [
+        "A-WAVE",
+        "A-SHORT",
+        "A-RECALL"
+      ],
+      "basis": "DESIGN_HYPOTHESIS",
+      "enemy_intent": "POSSIBLE_PLAN_NOT_OBSERVED"
+    },
+    "metrics": {
+      "PUSH": {
+        "assessment": "ALLY",
+        "reason": "케이틀린·럭스 가이드는 초반 웨이브 접근과 푸시를 기본 강점으로 설명한다. 선2레벨·크래시 보장은 아니다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE"
+        ]
+      },
+      "SHORT": {
+        "assessment": "ALLY",
+        "reason": "반격 사거리와 훅 선을 넘지 않는 짧은 견제 구도를 공략이 권한다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-SHORT"
+        ]
+      },
+      "EXTENDED": {
+        "assessment": "INSUFFICIENT",
+        "reason": "지속 접촉·남는 기술을 맞춘 승패 근거가 없다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      },
+      "ALLIN": {
+        "assessment": "INSUFFICIENT",
+        "reason": "체력·주문·적중·후속을 맞춘 처치 근거가 없다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      },
+      "ATTRITION": {
+        "assessment": "INSUFFICIENT",
+        "reason": "4인의 자원·회복 대기·반복 수급까지 비교한 누적 손익은 미측정이다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      }
+    }
+  },
+  "jungleNear": {
+    "input": {
+      "allies": [
+        {
+          "champion": "Ornn",
+          "position": "TOP"
+        },
+        {
+          "champion": "Sejuani",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Ahri",
+          "position": "MID"
+        },
+        {
+          "champion": "Caitlyn",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Lux",
+          "position": "SUPPORT"
+        }
+      ],
+      "enemies": [
+        {
+          "champion": "Fiora",
+          "position": "TOP"
+        },
+        {
+          "champion": "LeeSin",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Zed",
+          "position": "MID"
+        },
+        {
+          "champion": "Kaisa",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Nautilus",
+          "position": "SUPPORT"
+        }
+      ],
+      "own_champion": "Caitlyn",
+      "own_position": "BOTTOM",
+      "side": "BLUE",
+      "patch": "16.20",
+      "opponent_mode": "ASSIGNED",
+      "lane_opponent": null,
+      "schema_version": "lol-coach-loading-input-v4",
+      "preferences": {
+        "risk": "BALANCED"
+      },
+      "scenario": {
+        "standard": "lane-standard-v1",
+        "overrides": {}
+      },
+      "planning": {
+        "basis": "loading-plan-example-v1",
+        "overrides": {
+          "enemy_jungle": "NEAR"
+        }
+      }
+    },
+    "period": {
+      "id": "LEVEL1",
+      "label": "Lv1",
+      "goal": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다."
+    },
+    "coverage": {
+      "status": "BASIC_PLAN_CONDITIONAL",
+      "matchup": "A",
+      "plan_scope": "조건부 기본 목적·웨이브·양쪽 상대법 연결",
+      "gaps": "초반 사거리·푸시 공략 범위. 지속 교전·올인·후반 전체 우열 자료 부족.",
+      "effect_sample": 0
+    },
+    "wave": {
+      "plan_id": "SLOW_PUSH",
+      "label": "막타 중심으로 천천히 쌓기",
+      "purpose": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다.",
+      "handling": "막타를 우선하고, 상대가 줄이는 속도보다 조금 더 처리할 여유가 있을 때만 쌓는다.",
+      "position": "아군 쪽 퇴로와 후속이 닿는 자리에 서고, 웨이브를 따라 깊게 전진하지 않는다.",
+      "combat": "앞으로 나가는 교환 폭은 줄이고 막타·처리 선택권을 지킨다. 상대의 전진이 지원군과 연결됐을 가능성도 다시 본다.",
+      "next_wave": "상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다.",
+      "change_if": "상대 쪽에서 웨이브가 멈추거나 퇴로가 끊기면 추가 전진을 끝낸다.",
+      "completed": false,
+      "state": {
+        "position": "EVEN",
+        "minion_size": "UNOBSERVED",
+        "reinforcements": "UNOBSERVED",
+        "origin": "HYPOTHETICAL_LOADING_EXAMPLE"
+      },
+      "conditions": {
+        "resources": "SUFFICIENT",
+        "enemy_key": "AVAILABLE",
+        "enemy_jungle": "NEAR",
+        "clear_window": "UNCONFIRMED"
+      },
+      "axes": {
+        "pace": {
+          "id": "LAST_HIT_PLUS",
+          "label": "막타 중심으로 천천히 쌓기"
+        },
+        "pressure": {
+          "id": "LIMITED",
+          "label": "줄이기 · CS 자리 밖 추격 금지"
+        },
+        "exposure": {
+          "id": "HOME_CONNECTED",
+          "label": "아군 쪽 퇴로에 붙기"
+        },
+        "resources": {
+          "id": "RESERVE_RESPONSE",
+          "label": "처리·교환·대응 자원을 따로 남김",
+          "reserve": "Lv1 대표 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E) 시작에는 아직 럭스의 빛의 속박(Q)·케이틀린의 90구경 투망(E)를 배웠다고 가정하지 않는다. 걸어서 돌아올 거리와 자원을 남긴다."
+        }
+      },
+      "steps": [
+        {
+          "number": 1,
+          "text": "막타를 우선하고, 상대가 줄이는 속도보다 조금 더 처리할 여유가 있을 때만 쌓는다."
+        },
+        {
+          "number": 2,
+          "text": "앞으로 나가는 교환 폭은 줄이고 막타·처리 선택권을 지킨다. 상대의 전진이 지원군과 연결됐을 가능성도 다시 본다."
+        },
+        {
+          "number": 3,
+          "text": "상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다."
+        }
+      ],
+      "claim_ids": [
+        "A-WAVE",
+        "A-SHORT",
+        "A-RECALL"
+      ],
+      "basis": "DESIGN_HYPOTHESIS",
+      "diagram": {
+        "supported": true,
+        "kind": "LINE",
+        "own": "Caitlyn",
+        "allies": [
+          "Caitlyn",
+          "Lux"
+        ],
+        "enemies": [
+          "Kaisa",
+          "Nautilus"
+        ],
+        "plan_id": "SLOW_PUSH",
+        "steps": [
+          {
+            "number": 1,
+            "text": "막타를 우선하고, 상대가 줄이는 속도보다 조금 더 처리할 여유가 있을 때만 쌓는다."
+          },
+          {
+            "number": 2,
+            "text": "앞으로 나가는 교환 폭은 줄이고 막타·처리 선택권을 지킨다. 상대의 전진이 지원군과 연결됐을 가능성도 다시 본다."
+          },
+          {
+            "number": 3,
+            "text": "상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다."
+          }
+        ]
+      }
+    },
+    "choice": {
+      "id": "CONTROL_WAVE",
+      "same_across_preferences": false,
+      "cost": "즉시 견제 기회 일부를 포기하지만 처리·이탈 자원을 남긴다.",
+      "reserve": "Lv1 대표 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E) 시작에는 아직 럭스의 빛의 속박(Q)·케이틀린의 90구경 투망(E)를 배웠다고 가정하지 않는다. 걸어서 돌아올 거리와 자원을 남긴다.",
+      "reason": "웨이브·자원을 먼저 확보하는 선택을 강조합니다. 즉시 견제 기회 일부를 포기할 수 있습니다."
+    },
+    "counterplans": {
+      "supported": true,
+      "ours": {
+        "purpose": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다.",
+        "means": "앞으로 나가는 교환 폭은 줄이고 막타·처리 선택권을 지킨다. 상대의 전진이 지원군과 연결됐을 가능성도 다시 본다.",
+        "look_for": "전진 압박은 낮추되 가까운 CS·처리 선택권을 남긴다.",
+        "avoid": "견제에 다음 처리·이탈 자원을 모두 쓰거나 미니언 뒤를 절대 안전선으로 여기지 않는다.",
+        "switch_when": "상대 쪽에서 웨이브가 멈추거나 퇴로가 끊기면 추가 전진을 끝낸다."
+      },
+      "theirs": {
+        "purpose": "사거리 견제를 오래 받기보다 접근과 원딜 후속이 겹치는 교환을 만든다.",
+        "means": "노틸러스의 닻줄 견인(Q)·노틸러스의 강력한 일격(P)로 접근·제어하고, 배운 카이사의 이케시아 폭우(Q)와 카이사의 두 번째 피부(P) 후속을 잇는 후보.",
+        "look_for": "상대 처리 기술·이탈 소모 또는 두 동료가 벌어진 순간을 노린다. 실제 적중·후속 거리는 별도다.",
+        "avoid": "후속 없이 긴 견제를 받거나 웨이브·포탑 안쪽까지 깊게 추격하지 않는다.",
+        "switch_when": "접근이 막히거나 원딜 후속이 끊기면 수급·재정비로 바꾼다."
+      },
+      "claim_ids": [
+        "A-WAVE",
+        "A-SHORT",
+        "A-RECALL"
+      ],
+      "basis": "DESIGN_HYPOTHESIS",
+      "enemy_intent": "POSSIBLE_PLAN_NOT_OBSERVED"
+    },
+    "metrics": {
+      "PUSH": {
+        "assessment": "ALLY",
+        "reason": "케이틀린·럭스 가이드는 초반 웨이브 접근과 푸시를 기본 강점으로 설명한다. 선2레벨·크래시 보장은 아니다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE"
+        ]
+      },
+      "SHORT": {
+        "assessment": "ALLY",
+        "reason": "반격 사거리와 훅 선을 넘지 않는 짧은 견제 구도를 공략이 권한다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-SHORT"
+        ]
+      },
+      "EXTENDED": {
+        "assessment": "INSUFFICIENT",
+        "reason": "지속 접촉·남는 기술을 맞춘 승패 근거가 없다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      },
+      "ALLIN": {
+        "assessment": "INSUFFICIENT",
+        "reason": "체력·주문·적중·후속을 맞춘 처치 근거가 없다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      },
+      "ATTRITION": {
+        "assessment": "INSUFFICIENT",
+        "reason": "4인의 자원·회복 대기·반복 수급까지 비교한 누적 손익은 미측정이다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      }
+    }
+  },
+  "keySpent": {
+    "input": {
+      "allies": [
+        {
+          "champion": "Ornn",
+          "position": "TOP"
+        },
+        {
+          "champion": "Sejuani",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Ahri",
+          "position": "MID"
+        },
+        {
+          "champion": "Caitlyn",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Lux",
+          "position": "SUPPORT"
+        }
+      ],
+      "enemies": [
+        {
+          "champion": "Fiora",
+          "position": "TOP"
+        },
+        {
+          "champion": "LeeSin",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Zed",
+          "position": "MID"
+        },
+        {
+          "champion": "Kaisa",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Nautilus",
+          "position": "SUPPORT"
+        }
+      ],
+      "own_champion": "Caitlyn",
+      "own_position": "BOTTOM",
+      "side": "BLUE",
+      "patch": "16.20",
+      "opponent_mode": "ASSIGNED",
+      "lane_opponent": null,
+      "schema_version": "lol-coach-loading-input-v4",
+      "preferences": {
+        "risk": "BALANCED"
+      },
+      "scenario": {
+        "standard": "lane-standard-v1",
+        "overrides": {
+          "enemy_key": "SPENT"
+        }
+      },
+      "planning": {
+        "basis": "loading-plan-example-v1",
+        "overrides": {}
+      }
+    },
+    "period": {
+      "id": "LEVEL1",
+      "label": "Lv1",
+      "goal": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다."
+    },
+    "coverage": {
+      "status": "BASIC_PLAN_CONDITIONAL",
+      "matchup": "A",
+      "plan_scope": "조건부 기본 목적·웨이브·양쪽 상대법 연결",
+      "gaps": "초반 사거리·푸시 공략 범위. 지속 교전·올인·후반 전체 우열 자료 부족.",
+      "effect_sample": 0
+    },
+    "wave": {
+      "plan_id": "SLOW_PUSH",
+      "label": "막타 중심으로 천천히 쌓기",
+      "purpose": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다.",
+      "handling": "막타를 우선하고, 상대가 줄이는 속도보다 조금 더 처리할 여유가 있을 때만 쌓는다.",
+      "position": "아군 후속과 걸어서 돌아올 거리가 남는 쪽에 선다. 미니언은 일부 투사체 대응 수단이며 전체 안전선이 아니다.",
+      "combat": "노틸러스의 닻줄 견인(Q) 소모 뒤 막타 자리로 접근하거나 짧게 공격한다. 노틸러스의 강력한 일격(P)와 카이사의 후속은 남아 있으므로 붙어서 추격하지 않는다.",
+      "next_wave": "상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다.",
+      "change_if": "노틸러스가 옆 진입선이나 평타 거리로 들어오거나 럭스 후속이 끊기면 교환을 끝낸다.",
+      "completed": false,
+      "state": {
+        "position": "EVEN",
+        "minion_size": "UNOBSERVED",
+        "reinforcements": "UNOBSERVED",
+        "origin": "HYPOTHETICAL_LOADING_EXAMPLE"
+      },
+      "conditions": {
+        "resources": "SUFFICIENT",
+        "enemy_key": "SPENT",
+        "enemy_jungle": "UNKNOWN",
+        "clear_window": "UNCONFIRMED"
+      },
+      "axes": {
+        "pace": {
+          "id": "LAST_HIT_PLUS",
+          "label": "막타 중심으로 천천히 쌓기"
+        },
+        "pressure": {
+          "id": "CS_EDGE",
+          "label": "닿는 막타 자리만 압박"
+        },
+        "exposure": {
+          "id": "ALLY_CONNECTED",
+          "label": "동료·미니언과 연결된 자리"
+        },
+        "resources": {
+          "id": "RESERVE_RESPONSE",
+          "label": "처리·교환·대응 자원을 따로 남김",
+          "reserve": "Lv1 대표 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E) 시작에는 아직 럭스의 빛의 속박(Q)·케이틀린의 90구경 투망(E)를 배웠다고 가정하지 않는다. 걸어서 돌아올 거리와 자원을 남긴다."
+        }
+      },
+      "steps": [
+        {
+          "number": 1,
+          "text": "막타를 우선하고, 상대가 줄이는 속도보다 조금 더 처리할 여유가 있을 때만 쌓는다."
+        },
+        {
+          "number": 2,
+          "text": "노틸러스의 닻줄 견인(Q) 소모 뒤 막타 자리로 접근하거나 짧게 공격한다. 노틸러스의 강력한 일격(P)와 카이사의 후속은 남아 있으므로 붙어서 추격하지 않는다."
+        },
+        {
+          "number": 3,
+          "text": "상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다."
+        }
+      ],
+      "claim_ids": [
+        "A-WAVE",
+        "A-SHORT",
+        "A-RECALL"
+      ],
+      "basis": "DESIGN_HYPOTHESIS",
+      "diagram": {
+        "supported": true,
+        "kind": "LINE",
+        "own": "Caitlyn",
+        "allies": [
+          "Caitlyn",
+          "Lux"
+        ],
+        "enemies": [
+          "Kaisa",
+          "Nautilus"
+        ],
+        "plan_id": "SLOW_PUSH",
+        "steps": [
+          {
+            "number": 1,
+            "text": "막타를 우선하고, 상대가 줄이는 속도보다 조금 더 처리할 여유가 있을 때만 쌓는다."
+          },
+          {
+            "number": 2,
+            "text": "노틸러스의 닻줄 견인(Q) 소모 뒤 막타 자리로 접근하거나 짧게 공격한다. 노틸러스의 강력한 일격(P)와 카이사의 후속은 남아 있으므로 붙어서 추격하지 않는다."
+          },
+          {
+            "number": 3,
+            "text": "상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다."
+          }
+        ]
+      }
+    },
+    "choice": {
+      "id": "CONTROL_WAVE",
+      "same_across_preferences": false,
+      "cost": "즉시 견제 기회 일부를 포기하지만 처리·이탈 자원을 남긴다.",
+      "reserve": "Lv1 대표 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E) 시작에는 아직 럭스의 빛의 속박(Q)·케이틀린의 90구경 투망(E)를 배웠다고 가정하지 않는다. 걸어서 돌아올 거리와 자원을 남긴다.",
+      "reason": "웨이브·자원을 먼저 확보하는 선택을 강조합니다. 즉시 견제 기회 일부를 포기할 수 있습니다."
+    },
+    "counterplans": {
+      "supported": true,
+      "ours": {
+        "purpose": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다.",
+        "means": "케이틀린의 필트오버 피스메이커(Q)와 배운 럭스의 광휘의 특이점(E)로 접근·처리 선택권을 만든다. 견제가 미니언까지 맞아 원치 않게 밀리지 않도록 처리량을 조절한다.",
+        "look_for": "노틸러스의 닻줄 견인(Q) 소모 뒤 남은 평타 제어·카이사 후속 밖에서 CS 접근·짧은 교환을 얻는다.",
+        "avoid": "견제에 다음 처리·이탈 자원을 모두 쓰거나 미니언 뒤를 절대 안전선으로 여기지 않는다.",
+        "switch_when": "노틸러스가 옆 진입선이나 평타 거리로 들어오거나 럭스 후속이 끊기면 교환을 끝낸다."
+      },
+      "theirs": {
+        "purpose": "사거리 견제를 오래 받기보다 접근과 원딜 후속이 겹치는 교환을 만든다.",
+        "means": "노틸러스의 강력한 일격(P)와 카이사의 남은 후속은 있지만, 훅으로 여는 계획은 다시 사용 가능해질 때까지 미룬다.",
+        "look_for": "상대가 스스로 평타 제어·카이사 후속 거리로 들어오는 경우만 비교한다. 훅 소모를 새 진입 수단으로 쓰지 않는다.",
+        "avoid": "후속 없이 긴 견제를 받거나 웨이브·포탑 안쪽까지 깊게 추격하지 않는다.",
+        "switch_when": "접근이 막히거나 원딜 후속이 끊기면 수급·재정비로 바꾼다."
+      },
+      "claim_ids": [
+        "A-WAVE",
+        "A-SHORT",
+        "A-RECALL"
+      ],
+      "basis": "DESIGN_HYPOTHESIS",
+      "enemy_intent": "POSSIBLE_PLAN_NOT_OBSERVED"
+    },
+    "metrics": {
+      "PUSH": {
+        "assessment": "ALLY",
+        "reason": "케이틀린·럭스 가이드는 초반 웨이브 접근과 푸시를 기본 강점으로 설명한다. 선2레벨·크래시 보장은 아니다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE"
+        ]
+      },
+      "SHORT": {
+        "assessment": "ALLY",
+        "reason": "반격 사거리와 훅 선을 넘지 않는 짧은 견제 구도를 공략이 권한다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-SHORT"
+        ]
+      },
+      "EXTENDED": {
+        "assessment": "INSUFFICIENT",
+        "reason": "지속 접촉·남는 기술을 맞춘 승패 근거가 없다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      },
+      "ALLIN": {
+        "assessment": "INSUFFICIENT",
+        "reason": "체력·주문·적중·후속을 맞춘 처치 근거가 없다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      },
+      "ATTRITION": {
+        "assessment": "INSUFFICIENT",
+        "reason": "4인의 자원·회복 대기·반복 수급까지 비교한 누적 손익은 미측정이다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      }
+    }
+  },
+  "returnWave": {
+    "input": {
+      "allies": [
+        {
+          "champion": "Ornn",
+          "position": "TOP"
+        },
+        {
+          "champion": "Sejuani",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Ahri",
+          "position": "MID"
+        },
+        {
+          "champion": "Caitlyn",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Lux",
+          "position": "SUPPORT"
+        }
+      ],
+      "enemies": [
+        {
+          "champion": "Fiora",
+          "position": "TOP"
+        },
+        {
+          "champion": "LeeSin",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Zed",
+          "position": "MID"
+        },
+        {
+          "champion": "Kaisa",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Nautilus",
+          "position": "SUPPORT"
+        }
+      ],
+      "own_champion": "Caitlyn",
+      "own_position": "BOTTOM",
+      "side": "BLUE",
+      "patch": "16.20",
+      "opponent_mode": "ASSIGNED",
+      "lane_opponent": null,
+      "schema_version": "lol-coach-loading-input-v4",
+      "preferences": {
+        "risk": "BALANCED"
+      },
+      "scenario": {
+        "standard": "lane-standard-v1",
+        "overrides": {
+          "wave": "RETURNING"
+        }
+      },
+      "planning": {
+        "basis": "loading-plan-example-v1",
+        "overrides": {}
+      }
+    },
+    "period": {
+      "id": "LEVEL1",
+      "label": "Lv1",
+      "goal": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다."
+    },
+    "coverage": {
+      "status": "BASIC_PLAN_CONDITIONAL",
+      "matchup": "A",
+      "plan_scope": "조건부 기본 목적·웨이브·양쪽 상대법 연결",
+      "gaps": "초반 사거리·푸시 공략 범위. 지속 교전·올인·후반 전체 우열 자료 부족.",
+      "effect_sample": 0
+    },
+    "wave": {
+      "plan_id": "RETURNING",
+      "label": "돌아오는 웨이브 받기",
+      "purpose": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다.",
+      "handling": "이전 크래시가 완료됐다는 예시에서 돌아오는 미니언을 아군 쪽에서 받는다. 상대가 유지하면 더 나가지 않는다.",
+      "position": "아군 후속과 걸어서 돌아올 거리가 남는 쪽에 선다. 미니언은 일부 투사체 대응 수단이며 전체 안전선이 아니다.",
+      "combat": "상대가 막타에 접근하면 사거리 끝 짧은 공격으로 공간을 지키고, 물러나면 CS·처리 시간을 얻는다.",
+      "next_wave": "돌아오는 웨이브가 멈추면 다시 처리량을 조절한다. 멀리 나가 상대 쪽에 묶이지 않는다.",
+      "change_if": "노틸러스가 옆 진입선이나 평타 거리로 들어오거나 럭스 후속이 끊기면 교환을 끝낸다.",
+      "completed": false,
+      "state": {
+        "position": "RETURNING",
+        "minion_size": "UNOBSERVED",
+        "reinforcements": "UNOBSERVED",
+        "origin": "HYPOTHETICAL_LOADING_EXAMPLE"
+      },
+      "conditions": {
+        "resources": "SUFFICIENT",
+        "enemy_key": "AVAILABLE",
+        "enemy_jungle": "UNKNOWN",
+        "clear_window": "UNCONFIRMED"
+      },
+      "axes": {
+        "pace": {
+          "id": "SELECTIVE_CLEAR",
+          "label": "돌아오는 웨이브 받기"
+        },
+        "pressure": {
+          "id": "CS_EDGE",
+          "label": "닿는 막타 자리만 압박"
+        },
+        "exposure": {
+          "id": "ALLY_CONNECTED",
+          "label": "동료·미니언과 연결된 자리"
+        },
+        "resources": {
+          "id": "RESERVE_RESPONSE",
+          "label": "처리·교환·대응 자원을 따로 남김",
+          "reserve": "Lv1 대표 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E) 시작에는 아직 럭스의 빛의 속박(Q)·케이틀린의 90구경 투망(E)를 배웠다고 가정하지 않는다. 걸어서 돌아올 거리와 자원을 남긴다."
+        }
+      },
+      "steps": [
+        {
+          "number": 1,
+          "text": "이전 크래시가 완료됐다는 예시에서 돌아오는 미니언을 아군 쪽에서 받는다. 상대가 유지하면 더 나가지 않는다."
+        },
+        {
+          "number": 2,
+          "text": "상대가 막타에 접근하면 사거리 끝 짧은 공격으로 공간을 지키고, 물러나면 CS·처리 시간을 얻는다."
+        },
+        {
+          "number": 3,
+          "text": "돌아오는 웨이브가 멈추면 다시 처리량을 조절한다. 멀리 나가 상대 쪽에 묶이지 않는다."
+        }
+      ],
+      "claim_ids": [
+        "A-WAVE",
+        "A-SHORT",
+        "A-RECALL"
+      ],
+      "basis": "DESIGN_HYPOTHESIS",
+      "diagram": {
+        "supported": true,
+        "kind": "LINE",
+        "own": "Caitlyn",
+        "allies": [
+          "Caitlyn",
+          "Lux"
+        ],
+        "enemies": [
+          "Kaisa",
+          "Nautilus"
+        ],
+        "plan_id": "RETURNING",
+        "steps": [
+          {
+            "number": 1,
+            "text": "이전 크래시가 완료됐다는 예시에서 돌아오는 미니언을 아군 쪽에서 받는다. 상대가 유지하면 더 나가지 않는다."
+          },
+          {
+            "number": 2,
+            "text": "상대가 막타에 접근하면 사거리 끝 짧은 공격으로 공간을 지키고, 물러나면 CS·처리 시간을 얻는다."
+          },
+          {
+            "number": 3,
+            "text": "돌아오는 웨이브가 멈추면 다시 처리량을 조절한다. 멀리 나가 상대 쪽에 묶이지 않는다."
+          }
+        ]
+      }
+    },
+    "choice": {
+      "id": "CONTROL_WAVE",
+      "same_across_preferences": false,
+      "cost": "즉시 견제 기회 일부를 포기하지만 처리·이탈 자원을 남긴다.",
+      "reserve": "Lv1 대표 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E) 시작에는 아직 럭스의 빛의 속박(Q)·케이틀린의 90구경 투망(E)를 배웠다고 가정하지 않는다. 걸어서 돌아올 거리와 자원을 남긴다.",
+      "reason": "웨이브·자원을 먼저 확보하는 선택을 강조합니다. 즉시 견제 기회 일부를 포기할 수 있습니다."
+    },
+    "counterplans": {
+      "supported": true,
+      "ours": {
+        "purpose": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다.",
+        "means": "케이틀린의 필트오버 피스메이커(Q)와 배운 럭스의 광휘의 특이점(E)로 접근·처리 선택권을 만든다. 견제가 미니언까지 맞아 원치 않게 밀리지 않도록 처리량을 조절한다.",
+        "look_for": "상대가 막타·처리에 집중할 때 사거리 끝 공간을 얻는다. 일부러 훅을 맞아 유도하지 않는다.",
+        "avoid": "견제에 다음 처리·이탈 자원을 모두 쓰거나 미니언 뒤를 절대 안전선으로 여기지 않는다.",
+        "switch_when": "노틸러스가 옆 진입선이나 평타 거리로 들어오거나 럭스 후속이 끊기면 교환을 끝낸다."
+      },
+      "theirs": {
+        "purpose": "사거리 견제를 오래 받기보다 접근과 원딜 후속이 겹치는 교환을 만든다.",
+        "means": "노틸러스의 닻줄 견인(Q)·노틸러스의 강력한 일격(P)로 접근·제어하고, 배운 카이사의 이케시아 폭우(Q)와 카이사의 두 번째 피부(P) 후속을 잇는 후보.",
+        "look_for": "상대 처리 기술·이탈 소모 또는 두 동료가 벌어진 순간을 노린다. 실제 적중·후속 거리는 별도다.",
+        "avoid": "후속 없이 긴 견제를 받거나 웨이브·포탑 안쪽까지 깊게 추격하지 않는다.",
+        "switch_when": "접근이 막히거나 원딜 후속이 끊기면 수급·재정비로 바꾼다."
+      },
+      "claim_ids": [
+        "A-WAVE",
+        "A-SHORT",
+        "A-RECALL"
+      ],
+      "basis": "DESIGN_HYPOTHESIS",
+      "enemy_intent": "POSSIBLE_PLAN_NOT_OBSERVED"
+    },
+    "metrics": {
+      "PUSH": {
+        "assessment": "ALLY",
+        "reason": "케이틀린·럭스 가이드는 초반 웨이브 접근과 푸시를 기본 강점으로 설명한다. 선2레벨·크래시 보장은 아니다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE"
+        ]
+      },
+      "SHORT": {
+        "assessment": "ALLY",
+        "reason": "반격 사거리와 훅 선을 넘지 않는 짧은 견제 구도를 공략이 권한다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-SHORT"
+        ]
+      },
+      "EXTENDED": {
+        "assessment": "INSUFFICIENT",
+        "reason": "지속 접촉·남는 기술을 맞춘 승패 근거가 없다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      },
+      "ALLIN": {
+        "assessment": "INSUFFICIENT",
+        "reason": "체력·주문·적중·후속을 맞춘 처치 근거가 없다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      },
+      "ATTRITION": {
+        "assessment": "INSUFFICIENT",
+        "reason": "4인의 자원·회복 대기·반복 수급까지 비교한 누적 손익은 미측정이다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      }
+    }
+  },
+  "recallUnconfirmed": {
+    "input": {
+      "allies": [
+        {
+          "champion": "Ornn",
+          "position": "TOP"
+        },
+        {
+          "champion": "Sejuani",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Ahri",
+          "position": "MID"
+        },
+        {
+          "champion": "Caitlyn",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Lux",
+          "position": "SUPPORT"
+        }
+      ],
+      "enemies": [
+        {
+          "champion": "Fiora",
+          "position": "TOP"
+        },
+        {
+          "champion": "LeeSin",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Zed",
+          "position": "MID"
+        },
+        {
+          "champion": "Kaisa",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Nautilus",
+          "position": "SUPPORT"
+        }
+      ],
+      "own_champion": "Caitlyn",
+      "own_position": "BOTTOM",
+      "side": "BLUE",
+      "patch": "16.20",
+      "opponent_mode": "ASSIGNED",
+      "lane_opponent": null,
+      "schema_version": "lol-coach-loading-input-v4",
+      "preferences": {
+        "risk": "BALANCED"
+      },
+      "scenario": {
+        "standard": "lane-standard-v1",
+        "overrides": {
+          "wave": "BUILDING"
+        }
+      },
+      "planning": {
+        "basis": "loading-plan-example-v1",
+        "overrides": {
+          "goal": "RECALL"
+        }
+      }
+    },
+    "period": {
+      "id": "LEVEL1",
+      "label": "Lv1",
+      "goal": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다."
+    },
+    "coverage": {
+      "status": "BASIC_PLAN_CONDITIONAL",
+      "matchup": "A",
+      "plan_scope": "조건부 기본 목적·웨이브·양쪽 상대법 연결",
+      "gaps": "초반 사거리·푸시 공략 범위. 지속 교전·올인·후반 전체 우열 자료 부족.",
+      "effect_sample": 0
+    },
+    "wave": {
+      "plan_id": "SLOW_PUSH",
+      "label": "막타 중심으로 천천히 쌓기",
+      "purpose": "귀환 전 잃을 자원을 줄이고 밀어 넣을 여유를 마련한다.",
+      "handling": "막타를 우선하고, 상대가 줄이는 속도보다 조금 더 처리할 여유가 있을 때만 쌓는다.",
+      "position": "아군 후속과 걸어서 돌아올 거리가 남는 쪽에 선다. 미니언은 일부 투사체 대응 수단이며 전체 안전선이 아니다.",
+      "combat": "상대가 막타에 접근하면 사거리 끝 짧은 공격으로 공간을 지키고, 물러나면 CS·처리 시간을 얻는다.",
+      "next_wave": "상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다.",
+      "change_if": "처리를 방해받거나 포탑 도달 여유가 사라지면 귀환 계획을 바꾼다.",
+      "completed": false,
+      "state": {
+        "position": "BUILDING",
+        "minion_size": "UNOBSERVED",
+        "reinforcements": "UNOBSERVED",
+        "origin": "HYPOTHETICAL_LOADING_EXAMPLE"
+      },
+      "conditions": {
+        "resources": "SUFFICIENT",
+        "enemy_key": "AVAILABLE",
+        "enemy_jungle": "UNKNOWN",
+        "clear_window": "UNCONFIRMED"
+      },
+      "axes": {
+        "pace": {
+          "id": "LAST_HIT_PLUS",
+          "label": "막타 중심으로 천천히 쌓기"
+        },
+        "pressure": {
+          "id": "LIMITED",
+          "label": "닿는 막타 자리만 압박"
+        },
+        "exposure": {
+          "id": "ALLY_CONNECTED",
+          "label": "동료·미니언과 연결된 자리"
+        },
+        "resources": {
+          "id": "RESERVE_RESPONSE",
+          "label": "처리·교환·대응 자원을 따로 남김",
+          "reserve": "Lv1 대표 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E) 시작에는 아직 럭스의 빛의 속박(Q)·케이틀린의 90구경 투망(E)를 배웠다고 가정하지 않는다. 걸어서 돌아올 거리와 자원을 남긴다."
+        }
+      },
+      "steps": [
+        {
+          "number": 1,
+          "text": "막타를 우선하고, 상대가 줄이는 속도보다 조금 더 처리할 여유가 있을 때만 쌓는다."
+        },
+        {
+          "number": 2,
+          "text": "상대가 막타에 접근하면 사거리 끝 짧은 공격으로 공간을 지키고, 물러나면 CS·처리 시간을 얻는다."
+        },
+        {
+          "number": 3,
+          "text": "상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다."
+        }
+      ],
+      "claim_ids": [
+        "A-WAVE",
+        "A-SHORT",
+        "A-RECALL"
+      ],
+      "basis": "DESIGN_HYPOTHESIS",
+      "diagram": {
+        "supported": true,
+        "kind": "LINE",
+        "own": "Caitlyn",
+        "allies": [
+          "Caitlyn",
+          "Lux"
+        ],
+        "enemies": [
+          "Kaisa",
+          "Nautilus"
+        ],
+        "plan_id": "SLOW_PUSH",
+        "steps": [
+          {
+            "number": 1,
+            "text": "막타를 우선하고, 상대가 줄이는 속도보다 조금 더 처리할 여유가 있을 때만 쌓는다."
+          },
+          {
+            "number": 2,
+            "text": "상대가 막타에 접근하면 사거리 끝 짧은 공격으로 공간을 지키고, 물러나면 CS·처리 시간을 얻는다."
+          },
+          {
+            "number": 3,
+            "text": "상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다."
+          }
+        ]
+      }
+    },
+    "choice": {
+      "id": "CONTROL_WAVE",
+      "same_across_preferences": false,
+      "cost": "즉시 견제 기회 일부를 포기하지만 처리·이탈 자원을 남긴다.",
+      "reserve": "Lv1 대표 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E) 시작에는 아직 럭스의 빛의 속박(Q)·케이틀린의 90구경 투망(E)를 배웠다고 가정하지 않는다. 걸어서 돌아올 거리와 자원을 남긴다.",
+      "reason": "웨이브·자원을 먼저 확보하는 선택을 강조합니다. 즉시 견제 기회 일부를 포기할 수 있습니다."
+    },
+    "counterplans": {
+      "supported": true,
+      "ours": {
+        "purpose": "귀환 전 잃을 자원을 줄이고 밀어 넣을 여유를 마련한다.",
+        "means": "케이틀린의 필트오버 피스메이커(Q)와 배운 럭스의 광휘의 특이점(E)로 접근·처리 선택권을 만든다. 견제가 미니언까지 맞아 원치 않게 밀리지 않도록 처리량을 조절한다.",
+        "look_for": "상대가 막타·처리에 집중할 때 사거리 끝 공간을 얻는다. 일부러 훅을 맞아 유도하지 않는다.",
+        "avoid": "견제에 다음 처리·이탈 자원을 모두 쓰거나 미니언 뒤를 절대 안전선으로 여기지 않는다.",
+        "switch_when": "처리를 방해받거나 포탑 도달 여유가 사라지면 귀환 계획을 바꾼다."
+      },
+      "theirs": {
+        "purpose": "사거리 견제를 오래 받기보다 접근과 원딜 후속이 겹치는 교환을 만든다.",
+        "means": "노틸러스의 닻줄 견인(Q)·노틸러스의 강력한 일격(P)로 접근·제어하고, 배운 카이사의 이케시아 폭우(Q)와 카이사의 두 번째 피부(P) 후속을 잇는 후보.",
+        "look_for": "상대 처리 기술·이탈 소모 또는 두 동료가 벌어진 순간을 노린다. 실제 적중·후속 거리는 별도다.",
+        "avoid": "후속 없이 긴 견제를 받거나 웨이브·포탑 안쪽까지 깊게 추격하지 않는다.",
+        "switch_when": "접근이 막히거나 원딜 후속이 끊기면 수급·재정비로 바꾼다."
+      },
+      "claim_ids": [
+        "A-WAVE",
+        "A-SHORT",
+        "A-RECALL"
+      ],
+      "basis": "DESIGN_HYPOTHESIS",
+      "enemy_intent": "POSSIBLE_PLAN_NOT_OBSERVED"
+    },
+    "metrics": {
+      "PUSH": {
+        "assessment": "ALLY",
+        "reason": "케이틀린·럭스 가이드는 초반 웨이브 접근과 푸시를 기본 강점으로 설명한다. 선2레벨·크래시 보장은 아니다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE"
+        ]
+      },
+      "SHORT": {
+        "assessment": "ALLY",
+        "reason": "반격 사거리와 훅 선을 넘지 않는 짧은 견제 구도를 공략이 권한다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-SHORT"
+        ]
+      },
+      "EXTENDED": {
+        "assessment": "INSUFFICIENT",
+        "reason": "지속 접촉·남는 기술을 맞춘 승패 근거가 없다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      },
+      "ALLIN": {
+        "assessment": "INSUFFICIENT",
+        "reason": "체력·주문·적중·후속을 맞춘 처치 근거가 없다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      },
+      "ATTRITION": {
+        "assessment": "INSUFFICIENT",
+        "reason": "4인의 자원·회복 대기·반복 수급까지 비교한 누적 손익은 미측정이다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      }
+    }
+  },
+  "recallOpen": {
+    "input": {
+      "allies": [
+        {
+          "champion": "Ornn",
+          "position": "TOP"
+        },
+        {
+          "champion": "Sejuani",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Ahri",
+          "position": "MID"
+        },
+        {
+          "champion": "Caitlyn",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Lux",
+          "position": "SUPPORT"
+        }
+      ],
+      "enemies": [
+        {
+          "champion": "Fiora",
+          "position": "TOP"
+        },
+        {
+          "champion": "LeeSin",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Zed",
+          "position": "MID"
+        },
+        {
+          "champion": "Kaisa",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Nautilus",
+          "position": "SUPPORT"
+        }
+      ],
+      "own_champion": "Caitlyn",
+      "own_position": "BOTTOM",
+      "side": "BLUE",
+      "patch": "16.20",
+      "opponent_mode": "ASSIGNED",
+      "lane_opponent": null,
+      "schema_version": "lol-coach-loading-input-v4",
+      "preferences": {
+        "risk": "BALANCED"
+      },
+      "scenario": {
+        "standard": "lane-standard-v1",
+        "overrides": {
+          "wave": "BUILDING"
+        }
+      },
+      "planning": {
+        "basis": "loading-plan-example-v1",
+        "overrides": {
+          "goal": "RECALL",
+          "clear_window": "OPEN"
+        }
+      }
+    },
+    "period": {
+      "id": "LEVEL1",
+      "label": "Lv1",
+      "goal": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다."
+    },
+    "coverage": {
+      "status": "BASIC_PLAN_CONDITIONAL",
+      "matchup": "A",
+      "plan_scope": "조건부 기본 목적·웨이브·양쪽 상대법 연결",
+      "gaps": "초반 사거리·푸시 공략 범위. 지속 교전·올인·후반 전체 우열 자료 부족.",
+      "effect_sample": 0
+    },
+    "wave": {
+      "plan_id": "FAST_PUSH",
+      "label": "빠른 처리 후 포탑 도달 확인",
+      "purpose": "처리 여유를 귀환·구매 시간으로 바꾼다.",
+      "handling": "귀환 전 남긴 처리 자원을 써 현재 웨이브를 줄인다. 다음 웨이브에 막히면 포탑 도달·귀환 창을 얻었다고 보지 않는다.",
+      "position": "아군 후속과 걸어서 돌아올 거리가 남는 쪽에 선다. 미니언은 일부 투사체 대응 수단이며 전체 안전선이 아니다.",
+      "combat": "추가 교환보다 귀환용 처리·이탈 자원을 남긴다. 상대가 처리를 막으면 밀어 넣기를 중단한다.",
+      "next_wave": "웨이브가 실제 상대 포탑에 닿은 뒤 귀환·구매를 비교한다. 도달하지 못하면 다음 웨이브에 더 노출될 부담을 먼저 줄인다.",
+      "change_if": "처리를 방해받거나 포탑 도달 여유가 사라지면 귀환 계획을 바꾼다.",
+      "completed": false,
+      "state": {
+        "position": "BUILDING",
+        "minion_size": "UNOBSERVED",
+        "reinforcements": "UNOBSERVED",
+        "origin": "HYPOTHETICAL_LOADING_EXAMPLE"
+      },
+      "conditions": {
+        "resources": "SUFFICIENT",
+        "enemy_key": "AVAILABLE",
+        "enemy_jungle": "UNKNOWN",
+        "clear_window": "OPEN"
+      },
+      "axes": {
+        "pace": {
+          "id": "FAST",
+          "label": "빠른 처리 후 포탑 도달 확인"
+        },
+        "pressure": {
+          "id": "LIMITED",
+          "label": "닿는 막타 자리만 압박"
+        },
+        "exposure": {
+          "id": "ALLY_CONNECTED",
+          "label": "동료·미니언과 연결된 자리"
+        },
+        "resources": {
+          "id": "PROCESS_AND_EXIT",
+          "label": "처리·교환·대응 자원을 따로 남김",
+          "reserve": "Lv1 대표 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E) 시작에는 아직 럭스의 빛의 속박(Q)·케이틀린의 90구경 투망(E)를 배웠다고 가정하지 않는다. 걸어서 돌아올 거리와 자원을 남긴다."
+        }
+      },
+      "steps": [
+        {
+          "number": 1,
+          "text": "귀환 전 남긴 처리 자원을 써 현재 웨이브를 줄인다. 다음 웨이브에 막히면 포탑 도달·귀환 창을 얻었다고 보지 않는다."
+        },
+        {
+          "number": 2,
+          "text": "추가 교환보다 귀환용 처리·이탈 자원을 남긴다. 상대가 처리를 막으면 밀어 넣기를 중단한다."
+        },
+        {
+          "number": 3,
+          "text": "웨이브가 실제 상대 포탑에 닿은 뒤 귀환·구매를 비교한다. 도달하지 못하면 다음 웨이브에 더 노출될 부담을 먼저 줄인다."
+        }
+      ],
+      "claim_ids": [
+        "A-WAVE",
+        "A-SHORT",
+        "A-RECALL"
+      ],
+      "basis": "DESIGN_HYPOTHESIS",
+      "diagram": {
+        "supported": true,
+        "kind": "LINE",
+        "own": "Caitlyn",
+        "allies": [
+          "Caitlyn",
+          "Lux"
+        ],
+        "enemies": [
+          "Kaisa",
+          "Nautilus"
+        ],
+        "plan_id": "FAST_PUSH",
+        "steps": [
+          {
+            "number": 1,
+            "text": "귀환 전 남긴 처리 자원을 써 현재 웨이브를 줄인다. 다음 웨이브에 막히면 포탑 도달·귀환 창을 얻었다고 보지 않는다."
+          },
+          {
+            "number": 2,
+            "text": "추가 교환보다 귀환용 처리·이탈 자원을 남긴다. 상대가 처리를 막으면 밀어 넣기를 중단한다."
+          },
+          {
+            "number": 3,
+            "text": "웨이브가 실제 상대 포탑에 닿은 뒤 귀환·구매를 비교한다. 도달하지 못하면 다음 웨이브에 더 노출될 부담을 먼저 줄인다."
+          }
+        ]
+      }
+    },
+    "choice": {
+      "id": "PROCESS_FOR_RECALL",
+      "same_across_preferences": true,
+      "cost": "지금의 견제·킬 기회를 일부 포기하고 처리·구매 시간을 얻는다.",
+      "reserve": "Lv1 대표 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E) 시작에는 아직 럭스의 빛의 속박(Q)·케이틀린의 90구경 투망(E)를 배웠다고 가정하지 않는다. 걸어서 돌아올 거리와 자원을 남긴다.",
+      "reason": "현재 목적에서는 성향을 바꿔도 선택이 같습니다. 필요한 수급·처리 조건이 우선입니다."
+    },
+    "counterplans": {
+      "supported": true,
+      "ours": {
+        "purpose": "처리 여유를 귀환·구매 시간으로 바꾼다.",
+        "means": "추가 교환보다 귀환용 처리·이탈 자원을 남긴다. 상대가 처리를 막으면 밀어 넣기를 중단한다.",
+        "look_for": "상대가 처리를 방해하지 않는 여유를 구매 시간으로 바꾼다.",
+        "avoid": "견제에 다음 처리·이탈 자원을 모두 쓰거나 미니언 뒤를 절대 안전선으로 여기지 않는다.",
+        "switch_when": "처리를 방해받거나 포탑 도달 여유가 사라지면 귀환 계획을 바꾼다."
+      },
+      "theirs": {
+        "purpose": "사거리 견제를 오래 받기보다 접근과 원딜 후속이 겹치는 교환을 만든다.",
+        "means": "노틸러스의 닻줄 견인(Q)·노틸러스의 강력한 일격(P)로 접근·제어하고, 배운 카이사의 이케시아 폭우(Q)와 카이사의 두 번째 피부(P) 후속을 잇는 후보.",
+        "look_for": "상대 처리 기술·이탈 소모 또는 두 동료가 벌어진 순간을 노린다. 실제 적중·후속 거리는 별도다.",
+        "avoid": "후속 없이 긴 견제를 받거나 웨이브·포탑 안쪽까지 깊게 추격하지 않는다.",
+        "switch_when": "접근이 막히거나 원딜 후속이 끊기면 수급·재정비로 바꾼다."
+      },
+      "claim_ids": [
+        "A-WAVE",
+        "A-SHORT",
+        "A-RECALL"
+      ],
+      "basis": "DESIGN_HYPOTHESIS",
+      "enemy_intent": "POSSIBLE_PLAN_NOT_OBSERVED"
+    },
+    "metrics": {
+      "PUSH": {
+        "assessment": "ALLY",
+        "reason": "케이틀린·럭스 가이드는 초반 웨이브 접근과 푸시를 기본 강점으로 설명한다. 선2레벨·크래시 보장은 아니다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE"
+        ]
+      },
+      "SHORT": {
+        "assessment": "ALLY",
+        "reason": "반격 사거리와 훅 선을 넘지 않는 짧은 견제 구도를 공략이 권한다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-SHORT"
+        ]
+      },
+      "EXTENDED": {
+        "assessment": "INSUFFICIENT",
+        "reason": "지속 접촉·남는 기술을 맞춘 승패 근거가 없다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      },
+      "ALLIN": {
+        "assessment": "INSUFFICIENT",
+        "reason": "체력·주문·적중·후속을 맞춘 처치 근거가 없다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      },
+      "ATTRITION": {
+        "assessment": "INSUFFICIENT",
+        "reason": "4인의 자원·회복 대기·반복 수급까지 비교한 누적 손익은 미측정이다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      }
+    }
+  },
+  "riskLoss": {
+    "input": {
+      "allies": [
+        {
+          "champion": "Ornn",
+          "position": "TOP"
+        },
+        {
+          "champion": "Sejuani",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Ahri",
+          "position": "MID"
+        },
+        {
+          "champion": "Caitlyn",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Lux",
+          "position": "SUPPORT"
+        }
+      ],
+      "enemies": [
+        {
+          "champion": "Fiora",
+          "position": "TOP"
+        },
+        {
+          "champion": "LeeSin",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Zed",
+          "position": "MID"
+        },
+        {
+          "champion": "Kaisa",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Nautilus",
+          "position": "SUPPORT"
+        }
+      ],
+      "own_champion": "Caitlyn",
+      "own_position": "BOTTOM",
+      "side": "BLUE",
+      "patch": "16.20",
+      "opponent_mode": "ASSIGNED",
+      "lane_opponent": null,
+      "schema_version": "lol-coach-loading-input-v4",
+      "preferences": {
+        "risk": "LOSS_LIMIT"
+      },
+      "scenario": {
+        "standard": "lane-standard-v1",
+        "overrides": {}
+      },
+      "planning": {
+        "basis": "loading-plan-example-v1",
+        "overrides": {}
+      }
+    },
+    "period": {
+      "id": "LEVEL1",
+      "label": "Lv1",
+      "goal": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다."
+    },
+    "coverage": {
+      "status": "BASIC_PLAN_CONDITIONAL",
+      "matchup": "A",
+      "plan_scope": "조건부 기본 목적·웨이브·양쪽 상대법 연결",
+      "gaps": "초반 사거리·푸시 공략 범위. 지속 교전·올인·후반 전체 우열 자료 부족.",
+      "effect_sample": 0
+    },
+    "wave": {
+      "plan_id": "SLOW_PUSH",
+      "label": "막타 중심으로 천천히 쌓기",
+      "purpose": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다.",
+      "handling": "막타를 우선하고, 상대가 줄이는 속도보다 조금 더 처리할 여유가 있을 때만 쌓는다.",
+      "position": "아군 후속과 걸어서 돌아올 거리가 남는 쪽에 선다. 미니언은 일부 투사체 대응 수단이며 전체 안전선이 아니다.",
+      "combat": "상대가 막타에 접근하면 사거리 끝 짧은 공격으로 공간을 지키고, 물러나면 CS·처리 시간을 얻는다.",
+      "next_wave": "상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다.",
+      "change_if": "노틸러스가 옆 진입선이나 평타 거리로 들어오거나 럭스 후속이 끊기면 교환을 끝낸다.",
+      "completed": false,
+      "state": {
+        "position": "EVEN",
+        "minion_size": "UNOBSERVED",
+        "reinforcements": "UNOBSERVED",
+        "origin": "HYPOTHETICAL_LOADING_EXAMPLE"
+      },
+      "conditions": {
+        "resources": "SUFFICIENT",
+        "enemy_key": "AVAILABLE",
+        "enemy_jungle": "UNKNOWN",
+        "clear_window": "UNCONFIRMED"
+      },
+      "axes": {
+        "pace": {
+          "id": "LAST_HIT_PLUS",
+          "label": "막타 중심으로 천천히 쌓기"
+        },
+        "pressure": {
+          "id": "CS_EDGE",
+          "label": "닿는 막타 자리만 압박"
+        },
+        "exposure": {
+          "id": "ALLY_CONNECTED",
+          "label": "동료·미니언과 연결된 자리"
+        },
+        "resources": {
+          "id": "RESERVE_RESPONSE",
+          "label": "처리·교환·대응 자원을 따로 남김",
+          "reserve": "Lv1 대표 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E) 시작에는 아직 럭스의 빛의 속박(Q)·케이틀린의 90구경 투망(E)를 배웠다고 가정하지 않는다. 걸어서 돌아올 거리와 자원을 남긴다."
+        }
+      },
+      "steps": [
+        {
+          "number": 1,
+          "text": "막타를 우선하고, 상대가 줄이는 속도보다 조금 더 처리할 여유가 있을 때만 쌓는다."
+        },
+        {
+          "number": 2,
+          "text": "상대가 막타에 접근하면 사거리 끝 짧은 공격으로 공간을 지키고, 물러나면 CS·처리 시간을 얻는다."
+        },
+        {
+          "number": 3,
+          "text": "상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다."
+        }
+      ],
+      "claim_ids": [
+        "A-WAVE",
+        "A-SHORT",
+        "A-RECALL"
+      ],
+      "basis": "DESIGN_HYPOTHESIS",
+      "diagram": {
+        "supported": true,
+        "kind": "LINE",
+        "own": "Caitlyn",
+        "allies": [
+          "Caitlyn",
+          "Lux"
+        ],
+        "enemies": [
+          "Kaisa",
+          "Nautilus"
+        ],
+        "plan_id": "SLOW_PUSH",
+        "steps": [
+          {
+            "number": 1,
+            "text": "막타를 우선하고, 상대가 줄이는 속도보다 조금 더 처리할 여유가 있을 때만 쌓는다."
+          },
+          {
+            "number": 2,
+            "text": "상대가 막타에 접근하면 사거리 끝 짧은 공격으로 공간을 지키고, 물러나면 CS·처리 시간을 얻는다."
+          },
+          {
+            "number": 3,
+            "text": "상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다."
+          }
+        ]
+      }
+    },
+    "choice": {
+      "id": "CONTROL_WAVE",
+      "same_across_preferences": false,
+      "cost": "즉시 견제 기회 일부를 포기하지만 처리·이탈 자원을 남긴다.",
+      "reserve": "Lv1 대표 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E) 시작에는 아직 럭스의 빛의 속박(Q)·케이틀린의 90구경 투망(E)를 배웠다고 가정하지 않는다. 걸어서 돌아올 거리와 자원을 남긴다.",
+      "reason": "웨이브·자원을 먼저 확보하는 선택을 강조합니다. 즉시 견제 기회 일부를 포기할 수 있습니다."
+    },
+    "counterplans": {
+      "supported": true,
+      "ours": {
+        "purpose": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다.",
+        "means": "케이틀린의 필트오버 피스메이커(Q)와 배운 럭스의 광휘의 특이점(E)로 접근·처리 선택권을 만든다. 견제가 미니언까지 맞아 원치 않게 밀리지 않도록 처리량을 조절한다.",
+        "look_for": "상대가 막타·처리에 집중할 때 사거리 끝 공간을 얻는다. 일부러 훅을 맞아 유도하지 않는다.",
+        "avoid": "견제에 다음 처리·이탈 자원을 모두 쓰거나 미니언 뒤를 절대 안전선으로 여기지 않는다.",
+        "switch_when": "노틸러스가 옆 진입선이나 평타 거리로 들어오거나 럭스 후속이 끊기면 교환을 끝낸다."
+      },
+      "theirs": {
+        "purpose": "사거리 견제를 오래 받기보다 접근과 원딜 후속이 겹치는 교환을 만든다.",
+        "means": "노틸러스의 닻줄 견인(Q)·노틸러스의 강력한 일격(P)로 접근·제어하고, 배운 카이사의 이케시아 폭우(Q)와 카이사의 두 번째 피부(P) 후속을 잇는 후보.",
+        "look_for": "상대 처리 기술·이탈 소모 또는 두 동료가 벌어진 순간을 노린다. 실제 적중·후속 거리는 별도다.",
+        "avoid": "후속 없이 긴 견제를 받거나 웨이브·포탑 안쪽까지 깊게 추격하지 않는다.",
+        "switch_when": "접근이 막히거나 원딜 후속이 끊기면 수급·재정비로 바꾼다."
+      },
+      "claim_ids": [
+        "A-WAVE",
+        "A-SHORT",
+        "A-RECALL"
+      ],
+      "basis": "DESIGN_HYPOTHESIS",
+      "enemy_intent": "POSSIBLE_PLAN_NOT_OBSERVED"
+    },
+    "metrics": {
+      "PUSH": {
+        "assessment": "ALLY",
+        "reason": "케이틀린·럭스 가이드는 초반 웨이브 접근과 푸시를 기본 강점으로 설명한다. 선2레벨·크래시 보장은 아니다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE"
+        ]
+      },
+      "SHORT": {
+        "assessment": "ALLY",
+        "reason": "반격 사거리와 훅 선을 넘지 않는 짧은 견제 구도를 공략이 권한다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-SHORT"
+        ]
+      },
+      "EXTENDED": {
+        "assessment": "INSUFFICIENT",
+        "reason": "지속 접촉·남는 기술을 맞춘 승패 근거가 없다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      },
+      "ALLIN": {
+        "assessment": "INSUFFICIENT",
+        "reason": "체력·주문·적중·후속을 맞춘 처치 근거가 없다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      },
+      "ATTRITION": {
+        "assessment": "INSUFFICIENT",
+        "reason": "4인의 자원·회복 대기·반복 수급까지 비교한 누적 손익은 미측정이다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      }
+    }
+  },
+  "riskOpportunity": {
+    "input": {
+      "allies": [
+        {
+          "champion": "Ornn",
+          "position": "TOP"
+        },
+        {
+          "champion": "Sejuani",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Ahri",
+          "position": "MID"
+        },
+        {
+          "champion": "Caitlyn",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Lux",
+          "position": "SUPPORT"
+        }
+      ],
+      "enemies": [
+        {
+          "champion": "Fiora",
+          "position": "TOP"
+        },
+        {
+          "champion": "LeeSin",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Zed",
+          "position": "MID"
+        },
+        {
+          "champion": "Kaisa",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Nautilus",
+          "position": "SUPPORT"
+        }
+      ],
+      "own_champion": "Caitlyn",
+      "own_position": "BOTTOM",
+      "side": "BLUE",
+      "patch": "16.20",
+      "opponent_mode": "ASSIGNED",
+      "lane_opponent": null,
+      "schema_version": "lol-coach-loading-input-v4",
+      "preferences": {
+        "risk": "OPPORTUNITY"
+      },
+      "scenario": {
+        "standard": "lane-standard-v1",
+        "overrides": {}
+      },
+      "planning": {
+        "basis": "loading-plan-example-v1",
+        "overrides": {}
+      }
+    },
+    "period": {
+      "id": "LEVEL1",
+      "label": "Lv1",
+      "goal": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다."
+    },
+    "coverage": {
+      "status": "BASIC_PLAN_CONDITIONAL",
+      "matchup": "A",
+      "plan_scope": "조건부 기본 목적·웨이브·양쪽 상대법 연결",
+      "gaps": "초반 사거리·푸시 공략 범위. 지속 교전·올인·후반 전체 우열 자료 부족.",
+      "effect_sample": 0
+    },
+    "wave": {
+      "plan_id": "SLOW_PUSH",
+      "label": "막타 중심으로 천천히 쌓기",
+      "purpose": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다.",
+      "handling": "막타를 우선하고, 상대가 줄이는 속도보다 조금 더 처리할 여유가 있을 때만 쌓는다.",
+      "position": "아군 후속과 걸어서 돌아올 거리가 남는 쪽에 선다. 미니언은 일부 투사체 대응 수단이며 전체 안전선이 아니다.",
+      "combat": "상대 막타 접근에 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E) 또는 평타를 사거리 끝에서 사용한다.",
+      "next_wave": "상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다.",
+      "change_if": "노틸러스가 옆 진입선이나 평타 거리로 들어오거나 럭스 후속이 끊기면 교환을 끝낸다.",
+      "completed": false,
+      "state": {
+        "position": "EVEN",
+        "minion_size": "UNOBSERVED",
+        "reinforcements": "UNOBSERVED",
+        "origin": "HYPOTHETICAL_LOADING_EXAMPLE"
+      },
+      "conditions": {
+        "resources": "SUFFICIENT",
+        "enemy_key": "AVAILABLE",
+        "enemy_jungle": "UNKNOWN",
+        "clear_window": "UNCONFIRMED"
+      },
+      "axes": {
+        "pace": {
+          "id": "LAST_HIT_PLUS",
+          "label": "막타 중심으로 천천히 쌓기"
+        },
+        "pressure": {
+          "id": "CS_EDGE",
+          "label": "닿는 막타 자리만 압박"
+        },
+        "exposure": {
+          "id": "ALLY_CONNECTED",
+          "label": "동료·미니언과 연결된 자리"
+        },
+        "resources": {
+          "id": "RESERVE_RESPONSE",
+          "label": "처리·교환·대응 자원을 따로 남김",
+          "reserve": "Lv1 대표 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E) 시작에는 아직 럭스의 빛의 속박(Q)·케이틀린의 90구경 투망(E)를 배웠다고 가정하지 않는다. 걸어서 돌아올 거리와 자원을 남긴다."
+        }
+      },
+      "steps": [
+        {
+          "number": 1,
+          "text": "막타를 우선하고, 상대가 줄이는 속도보다 조금 더 처리할 여유가 있을 때만 쌓는다."
+        },
+        {
+          "number": 2,
+          "text": "상대 막타 접근에 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E) 또는 평타를 사거리 끝에서 사용한다."
+        },
+        {
+          "number": 3,
+          "text": "상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다."
+        }
+      ],
+      "claim_ids": [
+        "A-WAVE",
+        "A-SHORT",
+        "A-RECALL"
+      ],
+      "basis": "DESIGN_HYPOTHESIS",
+      "diagram": {
+        "supported": true,
+        "kind": "LINE",
+        "own": "Caitlyn",
+        "allies": [
+          "Caitlyn",
+          "Lux"
+        ],
+        "enemies": [
+          "Kaisa",
+          "Nautilus"
+        ],
+        "plan_id": "SLOW_PUSH",
+        "steps": [
+          {
+            "number": 1,
+            "text": "막타를 우선하고, 상대가 줄이는 속도보다 조금 더 처리할 여유가 있을 때만 쌓는다."
+          },
+          {
+            "number": 2,
+            "text": "상대 막타 접근에 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E) 또는 평타를 사거리 끝에서 사용한다."
+          },
+          {
+            "number": 3,
+            "text": "상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다."
+          }
+        ]
+      }
+    },
+    "choice": {
+      "id": "SHORT_POKE",
+      "same_across_preferences": false,
+      "cost": "마나·기술을 쓰며 의도보다 빨리 밀거나 역진입 각을 열 수 있다.",
+      "reserve": "Lv1 대표 케이틀린의 필트오버 피스메이커(Q)·럭스의 광휘의 특이점(E) 시작에는 아직 럭스의 빛의 속박(Q)·케이틀린의 90구경 투망(E)를 배웠다고 가정하지 않는다. 걸어서 돌아올 거리와 자원을 남긴다.",
+      "reason": "실행 조건을 만족하는 짧은 견제를 강조합니다. 자원 소모와 역진입 비용을 함께 부담합니다."
+    },
+    "counterplans": {
+      "supported": true,
+      "ours": {
+        "purpose": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다.",
+        "means": "케이틀린의 필트오버 피스메이커(Q)와 배운 럭스의 광휘의 특이점(E)로 접근·처리 선택권을 만든다. 견제가 미니언까지 맞아 원치 않게 밀리지 않도록 처리량을 조절한다.",
+        "look_for": "상대가 막타·처리에 집중할 때 사거리 끝 공간을 얻는다. 일부러 훅을 맞아 유도하지 않는다.",
+        "avoid": "견제에 다음 처리·이탈 자원을 모두 쓰거나 미니언 뒤를 절대 안전선으로 여기지 않는다.",
+        "switch_when": "노틸러스가 옆 진입선이나 평타 거리로 들어오거나 럭스 후속이 끊기면 교환을 끝낸다."
+      },
+      "theirs": {
+        "purpose": "사거리 견제를 오래 받기보다 접근과 원딜 후속이 겹치는 교환을 만든다.",
+        "means": "노틸러스의 닻줄 견인(Q)·노틸러스의 강력한 일격(P)로 접근·제어하고, 배운 카이사의 이케시아 폭우(Q)와 카이사의 두 번째 피부(P) 후속을 잇는 후보.",
+        "look_for": "상대 처리 기술·이탈 소모 또는 두 동료가 벌어진 순간을 노린다. 실제 적중·후속 거리는 별도다.",
+        "avoid": "후속 없이 긴 견제를 받거나 웨이브·포탑 안쪽까지 깊게 추격하지 않는다.",
+        "switch_when": "접근이 막히거나 원딜 후속이 끊기면 수급·재정비로 바꾼다."
+      },
+      "claim_ids": [
+        "A-WAVE",
+        "A-SHORT",
+        "A-RECALL"
+      ],
+      "basis": "DESIGN_HYPOTHESIS",
+      "enemy_intent": "POSSIBLE_PLAN_NOT_OBSERVED"
+    },
+    "metrics": {
+      "PUSH": {
+        "assessment": "ALLY",
+        "reason": "케이틀린·럭스 가이드는 초반 웨이브 접근과 푸시를 기본 강점으로 설명한다. 선2레벨·크래시 보장은 아니다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE"
+        ]
+      },
+      "SHORT": {
+        "assessment": "ALLY",
+        "reason": "반격 사거리와 훅 선을 넘지 않는 짧은 견제 구도를 공략이 권한다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-SHORT"
+        ]
+      },
+      "EXTENDED": {
+        "assessment": "INSUFFICIENT",
+        "reason": "지속 접촉·남는 기술을 맞춘 승패 근거가 없다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      },
+      "ALLIN": {
+        "assessment": "INSUFFICIENT",
+        "reason": "체력·주문·적중·후속을 맞춘 처치 근거가 없다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      },
+      "ATTRITION": {
+        "assessment": "INSUFFICIENT",
+        "reason": "4인의 자원·회복 대기·반복 수급까지 비교한 누적 손익은 미측정이다.",
+        "scope": "명시된 비교 가정·공략 적용 범위",
+        "claim_ids": [
+          "A-WAVE",
+          "A-SHORT",
+          "A-ALLIN",
+          "A-SUSTAINED",
+          "A-ATTRITION",
+          "A-RECALL"
+        ]
+      }
+    }
+  }
+}
