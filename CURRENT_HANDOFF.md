@@ -1,3 +1,13 @@
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/desktop-composition-20261018`
+- current_main: `d264a8d2db162117692a00c31c6a9d7d92ee8f6f`
+- scope: Fix desktop/tall-desktop viewport hero proportions and compact reference search/card composition; shared reference-like icons except preserve operations map icon. Preserve25hero/gameplay3/analysis/mobile/quotas; normal CI/Pages/public proof. No provider/art/game collection.
+
+---
+
 # Latest common execution claim — PARKED_EXTERNAL
 - run_token: `main-20261017-exchange-preference`
 - status: `PARKED_EXTERNAL`
