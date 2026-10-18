@@ -33,3 +33,7 @@ RED: sequence, typed applications, statistics/suppression, Cbranch; review RED: 
 Unfilled: A sustained/allin winner and repeated-trade total net gain need source judging this exact four-champion focus/remaining tools (not merely lack of own experiment). B complete4champion outcome, D exact same-gold build crossover similarly lack exact scoped judgment. Specialist and mechanism facts remain visible where usable; N0 is not used to erase them. C adverse rune/item/resource or escape branches are limited, not asserted equal. Source review is not app effect; N0,30secunmeasured,WindowsBLOCKED_EXTERNAL remain.
 
 No new required input, source-row USER decision, video call/budget, pro refresh, secret/API/Windows route, riot.txt or old failure/hold history changes. Rollback previous source8d3f8f2/publicf3640fe; new typed fields/initial wave branch removable without deleting originals.
+
+## Actual publication followup
+
+Source/label changes and mandatoryCI/publication completed; see [actual result](publication/result.md). Prior pending entries above describe their original stage and remain preserved.
