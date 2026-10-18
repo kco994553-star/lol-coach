@@ -1,0 +1,1186 @@
+{
+  "input": {
+    "allies": [
+      {
+        "champion": "Ornn",
+        "position": "TOP"
+      },
+      {
+        "champion": "Sejuani",
+        "position": "JUNGLE"
+      },
+      {
+        "champion": "Ahri",
+        "position": "MID"
+      },
+      {
+        "champion": "Caitlyn",
+        "position": "BOTTOM"
+      },
+      {
+        "champion": "Lux",
+        "position": "SUPPORT"
+      }
+    ],
+    "enemies": [
+      {
+        "champion": "Fiora",
+        "position": "TOP"
+      },
+      {
+        "champion": "LeeSin",
+        "position": "JUNGLE"
+      },
+      {
+        "champion": "Zed",
+        "position": "MID"
+      },
+      {
+        "champion": "Kaisa",
+        "position": "BOTTOM"
+      },
+      {
+        "champion": "Nautilus",
+        "position": "SUPPORT"
+      }
+    ],
+    "own_champion": "Caitlyn",
+    "own_position": "BOTTOM",
+    "side": "BLUE",
+    "patch": "16.20",
+    "opponent_mode": "ASSIGNED",
+    "lane_opponent": null,
+    "schema_version": "lol-coach-loading-input-v2",
+    "preferences": {
+      "risk": "BALANCED"
+    }
+  },
+  "trade": {
+    "kind": "TRADE",
+    "label": "교환·응징 방법",
+    "text": "미니언을 먼저 잡는 흐름을 유지하면서, 상대가 막타를 치러 나오면 사거리 끝에서 짧게 견제한다.",
+    "source_paths": [
+      "wave.combat"
+    ],
+    "detail_target": "lane-methods",
+    "conditions": [
+      "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+      "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+      "지원 거리와 막타 접근을 유지한다."
+    ],
+    "applicability": {
+      "champion": "Caitlyn",
+      "position": "BOTTOM",
+      "patch": "SOURCE_MAJOR_MATCH",
+      "period": "LEVEL1",
+      "scenario": {
+        "standard": "lane-standard-v1",
+        "overrides": {}
+      },
+      "planning": {
+        "basis": "loading-plan-example-v1",
+        "overrides": {}
+      }
+    },
+    "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+    "judgment": {
+      "kind": "CLEAR_IN_SCOPE",
+      "label": "일부 구간·교전 방식의 우열 근거 있음",
+      "axis_assessments": {
+        "PUSH": "ALLY",
+        "SHORT": "ALLY",
+        "EXTENDED": "INSUFFICIENT",
+        "ALLIN": "INSUFFICIENT",
+        "ATTRITION": "INSUFFICIENT"
+      },
+      "outcome": "UNDETERMINED",
+      "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+      "missing_axes": [
+        "EXTENDED",
+        "ALLIN",
+        "ATTRITION"
+      ]
+    },
+    "knowledge_state": "SOURCE_SCOPE_LIMITED",
+    "basis": "DESIGN_HYPOTHESIS",
+    "claim_ids": [
+      "A-WAVE",
+      "A-SHORT",
+      "A-RECALL",
+      "A-WAVE-SPACE",
+      "A-INITIAL-ORDER-v1"
+    ],
+    "rule_ids": [
+      "player-planboard-v1",
+      "projection:wave.combat"
+    ],
+    "observation": false
+  },
+  "full_trade": "미니언을 먼저 잡는 흐름을 유지하면서, 상대가 막타를 치러 나오면 사거리 끝에서 짧게 견제한다. 견제 때문에 미니언 잡기가 늦어지면 견제를 멈추고, 남긴 기술로 진입에 대응한다. 중앙 경합에서는 먼저 미니언 처리 우위를 만든 뒤 견제로 공간을 지킨다. 럭스의 광휘의 특이점(E)·케이틀린의 필트오버 피스메이커(Q)가 미니언에도 닿아 의도보다 빨리 밀리는지 본다.",
+  "threats": {
+    "champions": {
+      "Caitlyn": {
+        "status": "PROFILED",
+        "observation": false,
+        "basis": "DESIGN_HYPOTHESIS_WITH_OFFICIAL_FIELDS",
+        "direct": {
+          "radius": 650,
+          "kind": "DIRECT",
+          "label": "케이틀린의 기본 공격",
+          "formula": "stats.attackrange",
+          "components": [
+            {
+              "slot": "AA",
+              "name": "기본 공격",
+              "value": 650
+            }
+          ],
+          "sources": [
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Caitlyn.json",
+              "patch": "16.20.1",
+              "sha256": "d3215fc64246d7014dbd924cf1b76620756f84184c01191f0f6ffa65c3625029",
+              "local_source": "data/official_catalog/versions/16.20.1/Caitlyn-16.20.1.ko_KR.json",
+              "locator": "data.Caitlyn.stats.attackrange"
+            }
+          ],
+          "conditions": [],
+          "cost": null,
+          "interpretation": "SELECTED_MECHANISM_REFERENCE",
+          "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+        },
+        "approach": null,
+        "approach_mode": "SUM",
+        "approach_missing_reason": "90구경 투망(E)의 투사체 사거리를 반동 이동 거리로 더하지 않습니다.",
+        "additional": [
+          {
+            "radius": 1250,
+            "kind": "ADDITIONAL",
+            "label": "케이틀린의 필트오버 피스메이커(Q)",
+            "formula": "Q.range[0]",
+            "components": [
+              {
+                "slot": "Q",
+                "name": "필트오버 피스메이커(Q)",
+                "value": 1250,
+                "mechanism": "케이틀린이 소총을 1초 동안 조준한 후 관통하는 탄환을 발사하여 물리 피해를 입힙니다. (다음 명중하는 대상에게는 더 낮은 피해가 들어갑니다.)"
+              }
+            ],
+            "sources": [
+              {
+                "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Caitlyn.json",
+                "patch": "16.20.1",
+                "sha256": "d3215fc64246d7014dbd924cf1b76620756f84184c01191f0f6ffa65c3625029",
+                "local_source": "data/official_catalog/versions/16.20.1/Caitlyn-16.20.1.ko_KR.json",
+                "locator": "data.Caitlyn.spells.0.range.0"
+              },
+              {
+                "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Caitlyn.json",
+                "patch": "16.20.1",
+                "sha256": "d3215fc64246d7014dbd924cf1b76620756f84184c01191f0f6ffa65c3625029",
+                "local_source": "data/official_catalog/versions/16.20.1/Caitlyn-16.20.1.ko_KR.json",
+                "locator": "data.Caitlyn.spells.0.tooltip"
+              }
+            ],
+            "conditions": [],
+            "cost": null,
+            "interpretation": "SELECTED_MECHANISM_REFERENCE",
+            "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+          },
+          {
+            "radius": 3500,
+            "kind": "ADDITIONAL",
+            "label": "케이틀린의 비장의 한 발(R)",
+            "formula": "R.range[0]",
+            "components": [
+              {
+                "slot": "R",
+                "name": "비장의 한 발(R)",
+                "value": 3500,
+                "mechanism": "케이틀린이 공을 들인 완벽한 사격을 하여 먼 거리에서 하나의 대상에게 큰 피해를 입힙니다. 적 챔피언이 자신의 아군을 위해 총알을 막아낼 수 있습니다."
+              }
+            ],
+            "sources": [
+              {
+                "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Caitlyn.json",
+                "patch": "16.20.1",
+                "sha256": "d3215fc64246d7014dbd924cf1b76620756f84184c01191f0f6ffa65c3625029",
+                "local_source": "data/official_catalog/versions/16.20.1/Caitlyn-16.20.1.ko_KR.json",
+                "locator": "data.Caitlyn.spells.3.range.0"
+              },
+              {
+                "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Caitlyn.json",
+                "patch": "16.20.1",
+                "sha256": "d3215fc64246d7014dbd924cf1b76620756f84184c01191f0f6ffa65c3625029",
+                "local_source": "data/official_catalog/versions/16.20.1/Caitlyn-16.20.1.ko_KR.json",
+                "locator": "data.Caitlyn.spells.3.tooltip"
+              }
+            ],
+            "conditions": [],
+            "cost": null,
+            "interpretation": "SELECTED_MECHANISM_REFERENCE",
+            "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+          }
+        ],
+        "scope": "대표 교전 수단을 고른 설명용 범위. 원 밖의 다른 기술도 별도 확인."
+      },
+      "Ahri": {
+        "status": "PROFILED",
+        "observation": false,
+        "basis": "DESIGN_HYPOTHESIS_WITH_OFFICIAL_FIELDS",
+        "direct": {
+          "radius": 975,
+          "kind": "DIRECT",
+          "label": "아리의 매혹(E)",
+          "formula": "E.range[0]",
+          "components": [
+            {
+              "slot": "E",
+              "name": "매혹(E)",
+              "value": 975,
+              "mechanism": "아리가 입맞춤을 날려 피해를 주며 맞은 적을 홀립니다. 홀린 적은 즉시 이동 스킬을 멈추고 아리 쪽으로 무작정 다가갑니다."
+            }
+          ],
+          "sources": [
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ahri.json",
+              "patch": "16.20.1",
+              "sha256": "867e69e9bd23b3d722db513714270807b7ba262c04392fb9c8c007adfa5eb02b",
+              "local_source": "data/official_catalog/versions/16.20.1/Ahri-16.20.1.ko_KR.json",
+              "locator": "data.Ahri.spells.2.range.0"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ahri.json",
+              "patch": "16.20.1",
+              "sha256": "867e69e9bd23b3d722db513714270807b7ba262c04392fb9c8c007adfa5eb02b",
+              "local_source": "data/official_catalog/versions/16.20.1/Ahri-16.20.1.ko_KR.json",
+              "locator": "data.Ahri.spells.2.tooltip"
+            }
+          ],
+          "conditions": [],
+          "cost": null,
+          "interpretation": "SELECTED_MECHANISM_REFERENCE",
+          "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+        },
+        "approach": {
+          "radius": 1425,
+          "kind": "COMMITTED",
+          "label": "아리의 혼령 질주(R) → 매혹(E)",
+          "formula": "R.range[0] + E.range[0]",
+          "components": [
+            {
+              "slot": "R",
+              "name": "혼령 질주(R)",
+              "value": 450,
+              "mechanism": "아리가 전방으로 질주하며 근처 적 챔피언들에게 혼령의 정기를 쏘아냅니다. 재사용 대기시간이 적용되기 전에 최대 세 번까지 사용할 수 있으며, 적 챔피언 처치 관여 시 재사용 가능 횟수가 늘어납니다."
+            },
+            {
+              "slot": "E",
+              "name": "매혹(E)",
+              "value": 975,
+              "mechanism": "아리가 입맞춤을 날려 피해를 주며 맞은 적을 홀립니다. 홀린 적은 즉시 이동 스킬을 멈추고 아리 쪽으로 무작정 다가갑니다."
+            }
+          ],
+          "sources": [
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ahri.json",
+              "patch": "16.20.1",
+              "sha256": "867e69e9bd23b3d722db513714270807b7ba262c04392fb9c8c007adfa5eb02b",
+              "local_source": "data/official_catalog/versions/16.20.1/Ahri-16.20.1.ko_KR.json",
+              "locator": "data.Ahri.spells.3.range.0"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ahri.json",
+              "patch": "16.20.1",
+              "sha256": "867e69e9bd23b3d722db513714270807b7ba262c04392fb9c8c007adfa5eb02b",
+              "local_source": "data/official_catalog/versions/16.20.1/Ahri-16.20.1.ko_KR.json",
+              "locator": "data.Ahri.spells.3.tooltip"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ahri.json",
+              "patch": "16.20.1",
+              "sha256": "867e69e9bd23b3d722db513714270807b7ba262c04392fb9c8c007adfa5eb02b",
+              "local_source": "data/official_catalog/versions/16.20.1/Ahri-16.20.1.ko_KR.json",
+              "locator": "data.Ahri.spells.2.range.0"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ahri.json",
+              "patch": "16.20.1",
+              "sha256": "867e69e9bd23b3d722db513714270807b7ba262c04392fb9c8c007adfa5eb02b",
+              "local_source": "data/official_catalog/versions/16.20.1/Ahri-16.20.1.ko_KR.json",
+              "locator": "data.Ahri.spells.2.tooltip"
+            }
+          ],
+          "conditions": [
+            "혼령 질주(R) 한 번과 매혹(E)을 사용할 수 있음",
+            "돌진 후 매혹(E)의 투사체 선과 적중 조건이 맞아야 함"
+          ],
+          "cost": "돌진 횟수를 접근에 써서 피하거나 물러날 선택권이 줄어든다.",
+          "interpretation": "CONDITIONAL_CAST_RANGE_BOUND",
+          "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+        },
+        "approach_mode": "SUM",
+        "approach_missing_reason": "",
+        "additional": [
+          {
+            "radius": 970,
+            "kind": "ADDITIONAL",
+            "label": "아리의 현혹의 구슬(Q)",
+            "formula": "Q.range[0]",
+            "components": [
+              {
+                "slot": "Q",
+                "name": "현혹의 구슬(Q)",
+                "value": 970,
+                "mechanism": "아리가 구슬을 던지고 다시 받습니다. 던질 때는 마법 피해를 주며 돌아올 때는 고정 피해를 줍니다. "
+              }
+            ],
+            "sources": [
+              {
+                "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ahri.json",
+                "patch": "16.20.1",
+                "sha256": "867e69e9bd23b3d722db513714270807b7ba262c04392fb9c8c007adfa5eb02b",
+                "local_source": "data/official_catalog/versions/16.20.1/Ahri-16.20.1.ko_KR.json",
+                "locator": "data.Ahri.spells.0.range.0"
+              },
+              {
+                "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ahri.json",
+                "patch": "16.20.1",
+                "sha256": "867e69e9bd23b3d722db513714270807b7ba262c04392fb9c8c007adfa5eb02b",
+                "local_source": "data/official_catalog/versions/16.20.1/Ahri-16.20.1.ko_KR.json",
+                "locator": "data.Ahri.spells.0.tooltip"
+              }
+            ],
+            "conditions": [],
+            "cost": null,
+            "interpretation": "SELECTED_MECHANISM_REFERENCE",
+            "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+          }
+        ],
+        "scope": "대표 교전 수단을 고른 설명용 범위. 원 밖의 다른 기술도 별도 확인."
+      },
+      "Lux": {
+        "status": "PROFILED",
+        "observation": false,
+        "basis": "DESIGN_HYPOTHESIS_WITH_OFFICIAL_FIELDS",
+        "direct": {
+          "radius": 1175,
+          "kind": "DIRECT",
+          "label": "럭스의 빛의 속박(Q)",
+          "formula": "Q.range[0]",
+          "components": [
+            {
+              "slot": "Q",
+              "name": "빛의 속박(Q)",
+              "value": 1175,
+              "mechanism": "럭스가 빛의 구를 발사하여 최대 2명의 적 유닛을 속박하며 피해를 입힙니다."
+            }
+          ],
+          "sources": [
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+              "patch": "16.20.1",
+              "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+              "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+              "locator": "data.Lux.spells.0.range.0"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+              "patch": "16.20.1",
+              "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+              "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+              "locator": "data.Lux.spells.0.tooltip"
+            }
+          ],
+          "conditions": [],
+          "cost": null,
+          "interpretation": "SELECTED_MECHANISM_REFERENCE",
+          "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+        },
+        "approach": null,
+        "approach_mode": "SUM",
+        "approach_missing_reason": "기본 이동이나 점멸을 임의의 추가 접근 거리로 환산하지 않습니다.",
+        "additional": [
+          {
+            "radius": 1100,
+            "kind": "ADDITIONAL",
+            "label": "럭스의 광휘의 특이점(E)",
+            "formula": "E.range[0]",
+            "components": [
+              {
+                "slot": "E",
+                "name": "광휘의 특이점(E)",
+                "value": 1100,
+                "mechanism": "지정한 지역에 뒤틀린 빛의 구체를 띄워 주변 적의 속도를 늦춥니다. 럭스는 이 빛을 폭발시켜 피해를 입힐 수 있습니다."
+              }
+            ],
+            "sources": [
+              {
+                "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+                "patch": "16.20.1",
+                "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+                "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+                "locator": "data.Lux.spells.2.range.0"
+              },
+              {
+                "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+                "patch": "16.20.1",
+                "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+                "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+                "locator": "data.Lux.spells.2.tooltip"
+              }
+            ],
+            "conditions": [],
+            "cost": null,
+            "interpretation": "SELECTED_MECHANISM_REFERENCE",
+            "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+          },
+          {
+            "radius": 3340,
+            "kind": "ADDITIONAL",
+            "label": "럭스의 최후의 섬광(R)",
+            "formula": "R.range[0]",
+            "components": [
+              {
+                "slot": "R",
+                "name": "최후의 섬광(R)",
+                "value": 3340,
+                "mechanism": "럭스가 에너지를 모아 빛 기둥을 발사하며 목표 지역에 있는 모든 대상에게 피해를 입힙니다. 또한 이는 럭스의 기본 지속 효과 스킬을 발동시키고 광채 효과의 지속시간을 갱신합니다."
+              }
+            ],
+            "sources": [
+              {
+                "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+                "patch": "16.20.1",
+                "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+                "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+                "locator": "data.Lux.spells.3.range.0"
+              },
+              {
+                "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Lux.json",
+                "patch": "16.20.1",
+                "sha256": "93a8e2062496941166b55bea23541f428ac6f1511c8c15c2eb2a8efcc5f93d9b",
+                "local_source": "data/official_catalog/versions/16.20.1/Lux-16.20.1.ko_KR.json",
+                "locator": "data.Lux.spells.3.tooltip"
+              }
+            ],
+            "conditions": [],
+            "cost": null,
+            "interpretation": "SELECTED_MECHANISM_REFERENCE",
+            "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+          }
+        ],
+        "scope": "대표 교전 수단을 고른 설명용 범위. 원 밖의 다른 기술도 별도 확인."
+      },
+      "Ornn": {
+        "status": "PROFILED",
+        "observation": false,
+        "basis": "DESIGN_HYPOTHESIS_WITH_OFFICIAL_FIELDS",
+        "direct": {
+          "radius": 2500,
+          "kind": "DIRECT",
+          "label": "오른의 대장장이 신의 부름(R)",
+          "formula": "R.range[0]",
+          "components": [
+            {
+              "slot": "R",
+              "name": "대장장이 신의 부름(R)",
+              "value": 2500,
+              "mechanism": "오른이 목표 위치에 거대한 불의 정령을 소환합니다. 불의 정령은 오른에게로 다가오며 점점 이동 속도가 빨라집니다. 정령이 밟고 지나간 적은 피해를 입고 둔화되며 불안정 상태가 됩니다. 오른이 대장장이 신의 부름을 재시전하면 정령 쪽으로 돌진합니다. 오른이 돌진해 정령에 부딪히면 정령의 진행 방향이 바뀝니다. 진행 방향이 바뀐 정령은 부딪힌 모든 적을 공중으로 띄우며 전과 동일한 피해를 입히고 다시 불안정 상태로 만듭니다."
+            }
+          ],
+          "sources": [
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ornn.json",
+              "patch": "16.20.1",
+              "sha256": "020b57331afb32ee120f4157b4db72550c4ad93b8f43987d164bf3f57e129aaf",
+              "local_source": "data/official_catalog/versions/16.20.1/Ornn-16.20.1.ko_KR.json",
+              "locator": "data.Ornn.spells.3.range.0"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ornn.json",
+              "patch": "16.20.1",
+              "sha256": "020b57331afb32ee120f4157b4db72550c4ad93b8f43987d164bf3f57e129aaf",
+              "local_source": "data/official_catalog/versions/16.20.1/Ornn-16.20.1.ko_KR.json",
+              "locator": "data.Ornn.spells.3.tooltip"
+            }
+          ],
+          "conditions": [],
+          "cost": null,
+          "interpretation": "SELECTED_MECHANISM_REFERENCE",
+          "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+        },
+        "approach": null,
+        "approach_mode": "SUM",
+        "approach_missing_reason": "화염 돌진(E)의 보존 range 필드를 실제 이동 거리로 확정하지 않아 R과 더하지 않습니다.",
+        "additional": [
+          {
+            "radius": 800,
+            "kind": "ADDITIONAL",
+            "label": "오른의 용암 균열(Q)",
+            "formula": "Q.range[0]",
+            "components": [
+              {
+                "slot": "Q",
+                "name": "용암 균열(Q)",
+                "value": 800,
+                "mechanism": "오른이 지면을 내려쳐 적에게 물리 피해를 입히고 둔화시키는 균열을 만들어냅니다. 잠시 후 목표 지점에 용암 기둥이 생성됩니다."
+              }
+            ],
+            "sources": [
+              {
+                "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ornn.json",
+                "patch": "16.20.1",
+                "sha256": "020b57331afb32ee120f4157b4db72550c4ad93b8f43987d164bf3f57e129aaf",
+                "local_source": "data/official_catalog/versions/16.20.1/Ornn-16.20.1.ko_KR.json",
+                "locator": "data.Ornn.spells.0.range.0"
+              },
+              {
+                "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Ornn.json",
+                "patch": "16.20.1",
+                "sha256": "020b57331afb32ee120f4157b4db72550c4ad93b8f43987d164bf3f57e129aaf",
+                "local_source": "data/official_catalog/versions/16.20.1/Ornn-16.20.1.ko_KR.json",
+                "locator": "data.Ornn.spells.0.tooltip"
+              }
+            ],
+            "conditions": [],
+            "cost": null,
+            "interpretation": "SELECTED_MECHANISM_REFERENCE",
+            "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+          }
+        ],
+        "scope": "대표 교전 수단을 고른 설명용 범위. 원 밖의 다른 기술도 별도 확인."
+      },
+      "Sejuani": {
+        "status": "PROFILED",
+        "observation": false,
+        "basis": "DESIGN_HYPOTHESIS_WITH_OFFICIAL_FIELDS",
+        "direct": {
+          "radius": 1300,
+          "kind": "DIRECT",
+          "label": "세주아니의 빙하 감옥(R)",
+          "formula": "R.range[0]",
+          "components": [
+            {
+              "slot": "R",
+              "name": "빙하 감옥(R)",
+              "value": 1300,
+              "mechanism": "세주아니가 올가미를 던져 첫 번째로 맞힌 챔피언을 얼리고 기절시킵니다. 올가미는 적들을 둔화시키는 얼음 폭풍을 일으킵니다."
+            }
+          ],
+          "sources": [
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Sejuani.json",
+              "patch": "16.20.1",
+              "sha256": "73609f3746b26b2d2f7b5bdd6a03f2647e32741005fd80bcdac341dfae3056b8",
+              "local_source": "data/official_catalog/versions/16.20.1/Sejuani-16.20.1.ko_KR.json",
+              "locator": "data.Sejuani.spells.3.range.0"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Sejuani.json",
+              "patch": "16.20.1",
+              "sha256": "73609f3746b26b2d2f7b5bdd6a03f2647e32741005fd80bcdac341dfae3056b8",
+              "local_source": "data/official_catalog/versions/16.20.1/Sejuani-16.20.1.ko_KR.json",
+              "locator": "data.Sejuani.spells.3.tooltip"
+            }
+          ],
+          "conditions": [],
+          "cost": null,
+          "interpretation": "SELECTED_MECHANISM_REFERENCE",
+          "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+        },
+        "approach": {
+          "radius": 1950,
+          "kind": "COMMITTED",
+          "label": "세주아니의 혹한의 맹습(Q) → 빙하 감옥(R)",
+          "formula": "Q.range[0] + R.range[0]",
+          "components": [
+            {
+              "slot": "Q",
+              "name": "혹한의 맹습(Q)",
+              "value": 650,
+              "mechanism": "세주아니가 전방으로 돌진해 적들을 공중으로 띄웁니다. 적 챔피언에게 한 번 부딪히면 돌진을 멈춥니다."
+            },
+            {
+              "slot": "R",
+              "name": "빙하 감옥(R)",
+              "value": 1300,
+              "mechanism": "세주아니가 올가미를 던져 첫 번째로 맞힌 챔피언을 얼리고 기절시킵니다. 올가미는 적들을 둔화시키는 얼음 폭풍을 일으킵니다."
+            }
+          ],
+          "sources": [
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Sejuani.json",
+              "patch": "16.20.1",
+              "sha256": "73609f3746b26b2d2f7b5bdd6a03f2647e32741005fd80bcdac341dfae3056b8",
+              "local_source": "data/official_catalog/versions/16.20.1/Sejuani-16.20.1.ko_KR.json",
+              "locator": "data.Sejuani.spells.0.range.0"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Sejuani.json",
+              "patch": "16.20.1",
+              "sha256": "73609f3746b26b2d2f7b5bdd6a03f2647e32741005fd80bcdac341dfae3056b8",
+              "local_source": "data/official_catalog/versions/16.20.1/Sejuani-16.20.1.ko_KR.json",
+              "locator": "data.Sejuani.spells.0.tooltip"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Sejuani.json",
+              "patch": "16.20.1",
+              "sha256": "73609f3746b26b2d2f7b5bdd6a03f2647e32741005fd80bcdac341dfae3056b8",
+              "local_source": "data/official_catalog/versions/16.20.1/Sejuani-16.20.1.ko_KR.json",
+              "locator": "data.Sejuani.spells.3.range.0"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Sejuani.json",
+              "patch": "16.20.1",
+              "sha256": "73609f3746b26b2d2f7b5bdd6a03f2647e32741005fd80bcdac341dfae3056b8",
+              "local_source": "data/official_catalog/versions/16.20.1/Sejuani-16.20.1.ko_KR.json",
+              "locator": "data.Sejuani.spells.3.tooltip"
+            }
+          ],
+          "conditions": [
+            "세주아니의 혹한의 맹습(Q)과 빙하 감옥(R)을 배워 사용할 수 있음",
+            "돌진 경로가 열리고, 충돌로 앞에서 멈추지 않으며 돌진 뒤 투사체가 적중해야 함"
+          ],
+          "cost": "돌진을 앞으로 사용하면 몸이 노출되고 이탈에 쓸 이동기를 소모한다.",
+          "interpretation": "CONDITIONAL_CAST_RANGE_BOUND",
+          "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+        },
+        "approach_mode": "SUM",
+        "approach_missing_reason": "",
+        "additional": [],
+        "scope": "대표 교전 수단을 고른 설명용 범위. 원 밖의 다른 기술도 별도 확인."
+      },
+      "Kaisa": {
+        "status": "PROFILED",
+        "observation": false,
+        "basis": "DESIGN_HYPOTHESIS_WITH_OFFICIAL_FIELDS",
+        "direct": {
+          "radius": 525,
+          "kind": "DIRECT",
+          "label": "카이사의 기본 공격",
+          "formula": "stats.attackrange",
+          "components": [
+            {
+              "slot": "AA",
+              "name": "기본 공격",
+              "value": 525
+            }
+          ],
+          "sources": [
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Kaisa.json",
+              "patch": "16.20.1",
+              "sha256": "98544004fbc81a31b38a8856c301b5434e7881bb05fd4ec708dabb0827214ed3",
+              "local_source": "data/official_catalog/versions/16.20.1/Kaisa-16.20.1.ko_KR.json",
+              "locator": "data.Kaisa.stats.attackrange"
+            }
+          ],
+          "conditions": [],
+          "cost": null,
+          "interpretation": "SELECTED_MECHANISM_REFERENCE",
+          "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+        },
+        "approach": {
+          "radius": 2000,
+          "kind": "COMMITTED",
+          "label": "카이사의 사냥본능(R)",
+          "formula": "R.range[0]",
+          "components": [
+            {
+              "slot": "R",
+              "name": "사냥본능(R)",
+              "value": 2000,
+              "mechanism": "카이사가 적 챔피언 근처로 돌진합니다."
+            }
+          ],
+          "sources": [
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Kaisa.json",
+              "patch": "16.20.1",
+              "sha256": "98544004fbc81a31b38a8856c301b5434e7881bb05fd4ec708dabb0827214ed3",
+              "local_source": "data/official_catalog/versions/16.20.1/Kaisa-16.20.1.ko_KR.json",
+              "locator": "data.Kaisa.spells.3.range.0"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Kaisa.json",
+              "patch": "16.20.1",
+              "sha256": "98544004fbc81a31b38a8856c301b5434e7881bb05fd4ec708dabb0827214ed3",
+              "local_source": "data/official_catalog/versions/16.20.1/Kaisa-16.20.1.ko_KR.json",
+              "locator": "data.Kaisa.spells.3.tooltip"
+            }
+          ],
+          "conditions": [
+            "플라즈마 표식이 있는 적과 사냥본능(R)이 있으며 아군 후속이 연결됨",
+            "원은 궁극기 1레벨 기준2000의 대상 접근 참고이며 착지 위치·공격 성공은 별도"
+          ],
+          "cost": "대상 근처로 들어가며 고립·보호 단절과 착지 뒤 반격을 감수한다.",
+          "interpretation": "CONDITIONAL_CAST_RANGE_BOUND",
+          "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+        },
+        "approach_mode": "TARGET_REPOSITION",
+        "approach_missing_reason": "",
+        "additional": [
+          {
+            "radius": 3000,
+            "kind": "ADDITIONAL",
+            "label": "카이사의 공허추적자(W)",
+            "formula": "W.range[0]",
+            "components": [
+              {
+                "slot": "W",
+                "name": "공허추적자(W)",
+                "value": 3000,
+                "mechanism": "카이사가 장거리 광선을 발사하며, 광선에 적중한 적에게 플라즈마 중첩이 쌓입니다.<br><br>살아있는 무기: 공허추적자 적중 시 플라즈마 중첩이 추가로 쌓이며 챔피언에게 적중 시 재사용 대기시간이 감소합니다."
+              }
+            ],
+            "sources": [
+              {
+                "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Kaisa.json",
+                "patch": "16.20.1",
+                "sha256": "98544004fbc81a31b38a8856c301b5434e7881bb05fd4ec708dabb0827214ed3",
+                "local_source": "data/official_catalog/versions/16.20.1/Kaisa-16.20.1.ko_KR.json",
+                "locator": "data.Kaisa.spells.1.range.0"
+              },
+              {
+                "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Kaisa.json",
+                "patch": "16.20.1",
+                "sha256": "98544004fbc81a31b38a8856c301b5434e7881bb05fd4ec708dabb0827214ed3",
+                "local_source": "data/official_catalog/versions/16.20.1/Kaisa-16.20.1.ko_KR.json",
+                "locator": "data.Kaisa.spells.1.tooltip"
+              }
+            ],
+            "conditions": [],
+            "cost": null,
+            "interpretation": "SELECTED_MECHANISM_REFERENCE",
+            "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+          }
+        ],
+        "scope": "대표 교전 수단을 고른 설명용 범위. 원 밖의 다른 기술도 별도 확인."
+      },
+      "Fiora": {
+        "status": "PROFILED",
+        "observation": false,
+        "basis": "DESIGN_HYPOTHESIS_WITH_OFFICIAL_FIELDS",
+        "direct": {
+          "radius": 150,
+          "kind": "DIRECT",
+          "label": "피오라의 기본 공격",
+          "formula": "stats.attackrange",
+          "components": [
+            {
+              "slot": "AA",
+              "name": "기본 공격",
+              "value": 150
+            }
+          ],
+          "sources": [
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Fiora.json",
+              "patch": "16.20.1",
+              "sha256": "b11ce2d22e1688d05f135a46d7aaf3af4cf2284372dcd75155b7e0f6f451b078",
+              "local_source": "data/official_catalog/versions/16.20.1/Fiora-16.20.1.ko_KR.json",
+              "locator": "data.Fiora.stats.attackrange"
+            }
+          ],
+          "conditions": [],
+          "cost": null,
+          "interpretation": "SELECTED_MECHANISM_REFERENCE",
+          "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+        },
+        "approach": {
+          "radius": 550,
+          "kind": "COMMITTED",
+          "label": "피오라의 찌르기(Q) → 기본 공격",
+          "formula": "Q.range[0] + stats.attackrange",
+          "components": [
+            {
+              "slot": "Q",
+              "name": "찌르기(Q)",
+              "value": 400,
+              "mechanism": "피오라가 한 방향으로 돌진하며 근처 적 하나를 찔러 물리 피해를 입히고 적중 시 효과를 적용합니다."
+            },
+            {
+              "slot": "AA",
+              "name": "기본 공격",
+              "value": 150
+            }
+          ],
+          "sources": [
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Fiora.json",
+              "patch": "16.20.1",
+              "sha256": "b11ce2d22e1688d05f135a46d7aaf3af4cf2284372dcd75155b7e0f6f451b078",
+              "local_source": "data/official_catalog/versions/16.20.1/Fiora-16.20.1.ko_KR.json",
+              "locator": "data.Fiora.spells.0.range.0"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Fiora.json",
+              "patch": "16.20.1",
+              "sha256": "b11ce2d22e1688d05f135a46d7aaf3af4cf2284372dcd75155b7e0f6f451b078",
+              "local_source": "data/official_catalog/versions/16.20.1/Fiora-16.20.1.ko_KR.json",
+              "locator": "data.Fiora.spells.0.tooltip"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Fiora.json",
+              "patch": "16.20.1",
+              "sha256": "b11ce2d22e1688d05f135a46d7aaf3af4cf2284372dcd75155b7e0f6f451b078",
+              "local_source": "data/official_catalog/versions/16.20.1/Fiora-16.20.1.ko_KR.json",
+              "locator": "data.Fiora.stats.attackrange"
+            }
+          ],
+          "conditions": [
+            "찌르기(Q)로 전진한 뒤 기본 공격할 체력·거리·퇴로가 남음",
+            "돌진 끝에서 즉시 원하는 대상에게 닿는다고 보장하지 않음"
+          ],
+          "cost": "돌진으로 접근하면 이탈에 쓸 기술과 위치를 내주며 상대 반격에 노출된다.",
+          "interpretation": "CONDITIONAL_CAST_RANGE_BOUND",
+          "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+        },
+        "approach_mode": "SUM",
+        "approach_missing_reason": "",
+        "additional": [
+          {
+            "radius": 750,
+            "kind": "ADDITIONAL",
+            "label": "피오라의 응수(W)",
+            "formula": "W.range[0]",
+            "components": [
+              {
+                "slot": "W",
+                "name": "응수(W)",
+                "value": 750,
+                "mechanism": "피오라가 잠시 동안 받는 모든 공격과 이동 불가 효과를 막아낸 다음 대상이 있는 방향으로 검을 찌릅니다. 이 공격은 처음 맞은 적 챔피언을 둔화시키고, 피오라가 이동 불가 효과를 막아낼 경우 공격한 상대를 기절시킵니다."
+              }
+            ],
+            "sources": [
+              {
+                "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Fiora.json",
+                "patch": "16.20.1",
+                "sha256": "b11ce2d22e1688d05f135a46d7aaf3af4cf2284372dcd75155b7e0f6f451b078",
+                "local_source": "data/official_catalog/versions/16.20.1/Fiora-16.20.1.ko_KR.json",
+                "locator": "data.Fiora.spells.1.range.0"
+              },
+              {
+                "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Fiora.json",
+                "patch": "16.20.1",
+                "sha256": "b11ce2d22e1688d05f135a46d7aaf3af4cf2284372dcd75155b7e0f6f451b078",
+                "local_source": "data/official_catalog/versions/16.20.1/Fiora-16.20.1.ko_KR.json",
+                "locator": "data.Fiora.spells.1.tooltip"
+              }
+            ],
+            "conditions": [],
+            "cost": null,
+            "interpretation": "SELECTED_MECHANISM_REFERENCE",
+            "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+          }
+        ],
+        "scope": "대표 교전 수단을 고른 설명용 범위. 원 밖의 다른 기술도 별도 확인."
+      },
+      "LeeSin": {
+        "status": "PROFILED",
+        "observation": false,
+        "basis": "DESIGN_HYPOTHESIS_WITH_OFFICIAL_FIELDS",
+        "direct": {
+          "radius": 375,
+          "kind": "DIRECT",
+          "label": "리 신의 용의 분노(R)",
+          "formula": "R.range[0]",
+          "components": [
+            {
+              "slot": "R",
+              "name": "용의 분노(R)",
+              "value": 375,
+              "mechanism": "리 신이 강력한 돌려차기로 적 챔피언을 뒤로 밀어내고 공격 대상과 대상과 부딪히는 모든 적에게 물리 피해를 입힙니다. 공격 대상과 부딪힌 적은 짧은 시간 공중에 떠오릅니다. 이 기술은 제시 페링이 전수한 기술이지만, 리 신은 적을 맵 밖으로 날려버리지는 않습니다."
+            }
+          ],
+          "sources": [
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/LeeSin.json",
+              "patch": "16.20.1",
+              "sha256": "1c92048e3db2d83b93fddaa1cd3978e2dd93c60314fe27a11278f9610d14ae55",
+              "local_source": "data/official_catalog/versions/16.20.1/LeeSin-16.20.1.ko_KR.json",
+              "locator": "data.LeeSin.spells.3.range.0"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/LeeSin.json",
+              "patch": "16.20.1",
+              "sha256": "1c92048e3db2d83b93fddaa1cd3978e2dd93c60314fe27a11278f9610d14ae55",
+              "local_source": "data/official_catalog/versions/16.20.1/LeeSin-16.20.1.ko_KR.json",
+              "locator": "data.LeeSin.spells.3.tooltip"
+            }
+          ],
+          "conditions": [],
+          "cost": null,
+          "interpretation": "SELECTED_MECHANISM_REFERENCE",
+          "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+        },
+        "approach": {
+          "radius": 1100,
+          "kind": "COMMITTED",
+          "label": "리 신의 음파 / 공명의 일격(Q)",
+          "formula": "Q.range[0]",
+          "components": [
+            {
+              "slot": "Q",
+              "name": "음파 / 공명의 일격(Q)",
+              "value": 1100,
+              "mechanism": "음파: 리 신이 음파를 발사하여 적의 위치를 파악하며, 음파에 맞은 적에게 물리 피해를 입힙니다. 적이 음파에 명중하면 다음 3초 안에 공명의 일격을 시전할 수 있습니다.<br>공명의 일격: 리 신이 음파에 맞은 적에게 돌격해 적이 잃은 체력에 비례한 물리 피해를 입힙니다."
+            }
+          ],
+          "sources": [
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/LeeSin.json",
+              "patch": "16.20.1",
+              "sha256": "1c92048e3db2d83b93fddaa1cd3978e2dd93c60314fe27a11278f9610d14ae55",
+              "local_source": "data/official_catalog/versions/16.20.1/LeeSin-16.20.1.ko_KR.json",
+              "locator": "data.LeeSin.spells.0.range.0"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/LeeSin.json",
+              "patch": "16.20.1",
+              "sha256": "1c92048e3db2d83b93fddaa1cd3978e2dd93c60314fe27a11278f9610d14ae55",
+              "local_source": "data/official_catalog/versions/16.20.1/LeeSin-16.20.1.ko_KR.json",
+              "locator": "data.LeeSin.spells.0.tooltip"
+            }
+          ],
+          "conditions": [
+            "음파(Q)가 해당 대상에게 적중하고 공명의 일격(Q) 재사용이 가능함",
+            "대상에게 날아간 뒤 남는 반격·아군 후속·퇴로를 따로 판단함"
+          ],
+          "cost": "명중한 대상에게 몸이 들어가므로 공명의 일격(Q)을 쓰면 반격과 집중 공격에 노출된다.",
+          "interpretation": "CONDITIONAL_CAST_RANGE_BOUND",
+          "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+        },
+        "approach_mode": "SAME_TARGET_RECAST",
+        "approach_missing_reason": "",
+        "additional": [],
+        "scope": "대표 교전 수단을 고른 설명용 범위. 원 밖의 다른 기술도 별도 확인."
+      },
+      "Zed": {
+        "status": "PROFILED",
+        "observation": false,
+        "basis": "DESIGN_HYPOTHESIS_WITH_OFFICIAL_FIELDS",
+        "direct": {
+          "radius": 625,
+          "kind": "DIRECT",
+          "label": "제드의 죽음의 표식(R)",
+          "formula": "R.range[0]",
+          "components": [
+            {
+              "slot": "R",
+              "name": "죽음의 표식(R)",
+              "value": 625,
+              "mechanism": "제드가 잠시 대상으로 지정할 수 없는 상태가 되어 적 챔피언에게 돌진하며 표식을 남깁니다. 3초가 지나면 표식이 발동되며 표식이 적용된 동안 제드가 대상에게 가한 피해의 일부를 입힙니다."
+            }
+          ],
+          "sources": [
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Zed.json",
+              "patch": "16.20.1",
+              "sha256": "e2542b47e9deea121810152601f2568088512f040e659cf5ae21129a2ffaf224",
+              "local_source": "data/official_catalog/versions/16.20.1/Zed-16.20.1.ko_KR.json",
+              "locator": "data.Zed.spells.3.range.0"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Zed.json",
+              "patch": "16.20.1",
+              "sha256": "e2542b47e9deea121810152601f2568088512f040e659cf5ae21129a2ffaf224",
+              "local_source": "data/official_catalog/versions/16.20.1/Zed-16.20.1.ko_KR.json",
+              "locator": "data.Zed.spells.3.tooltip"
+            }
+          ],
+          "conditions": [],
+          "cost": null,
+          "interpretation": "SELECTED_MECHANISM_REFERENCE",
+          "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+        },
+        "approach": {
+          "radius": 1275,
+          "kind": "COMMITTED",
+          "label": "제드의 살아있는 그림자(W) → 죽음의 표식(R)",
+          "formula": "W.range[0] + R.range[0]",
+          "components": [
+            {
+              "slot": "W",
+              "name": "살아있는 그림자(W)",
+              "value": 650,
+              "mechanism": "<font color='#FF9900'>기본 지속 효과: </font>제드와 그림자가 같은 스킬로 동일한 대상을 공격하면 제드가 기력을 회복합니다. 기력 회복은 스킬 사용 시마다 한 번씩만 가능합니다.<br><br><font color='#FF9900'>사용 시:</font> 제드의 그림자가 전방으로 질주하여, 몇 초간 그 자리에 유지됩니다. 이 스킬을 다시 사용하면 제드가 그림자와 위치를 바꿉니다."
+            },
+            {
+              "slot": "R",
+              "name": "죽음의 표식(R)",
+              "value": 625,
+              "mechanism": "제드가 잠시 대상으로 지정할 수 없는 상태가 되어 적 챔피언에게 돌진하며 표식을 남깁니다. 3초가 지나면 표식이 발동되며 표식이 적용된 동안 제드가 대상에게 가한 피해의 일부를 입힙니다."
+            }
+          ],
+          "sources": [
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Zed.json",
+              "patch": "16.20.1",
+              "sha256": "e2542b47e9deea121810152601f2568088512f040e659cf5ae21129a2ffaf224",
+              "local_source": "data/official_catalog/versions/16.20.1/Zed-16.20.1.ko_KR.json",
+              "locator": "data.Zed.spells.1.range.0"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Zed.json",
+              "patch": "16.20.1",
+              "sha256": "e2542b47e9deea121810152601f2568088512f040e659cf5ae21129a2ffaf224",
+              "local_source": "data/official_catalog/versions/16.20.1/Zed-16.20.1.ko_KR.json",
+              "locator": "data.Zed.spells.1.tooltip"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Zed.json",
+              "patch": "16.20.1",
+              "sha256": "e2542b47e9deea121810152601f2568088512f040e659cf5ae21129a2ffaf224",
+              "local_source": "data/official_catalog/versions/16.20.1/Zed-16.20.1.ko_KR.json",
+              "locator": "data.Zed.spells.3.range.0"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Zed.json",
+              "patch": "16.20.1",
+              "sha256": "e2542b47e9deea121810152601f2568088512f040e659cf5ae21129a2ffaf224",
+              "local_source": "data/official_catalog/versions/16.20.1/Zed-16.20.1.ko_KR.json",
+              "locator": "data.Zed.spells.3.tooltip"
+            }
+          ],
+          "conditions": [
+            "살아있는 그림자(W)를 새로 만들고 재사용으로 위치를 바꿀 수 있으며 죽음의 표식(R)이 남아 있음",
+            "그림자를 목표 쪽에 놓고 위치를 바꾼 뒤 대상 지정·시야·거리 조건이 맞아야 함"
+          ],
+          "cost": "앞으로 위치를 바꾸며 이동·복귀 선택권을 소모하고 상대 제어·반격에 노출된다.",
+          "interpretation": "CONDITIONAL_CAST_RANGE_BOUND",
+          "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+        },
+        "approach_mode": "SUM",
+        "approach_missing_reason": "",
+        "additional": [
+          {
+            "radius": 900,
+            "kind": "ADDITIONAL",
+            "label": "제드의 예리한 표창(Q)",
+            "formula": "Q.range[0]",
+            "components": [
+              {
+                "slot": "Q",
+                "name": "예리한 표창(Q)",
+                "value": 900,
+                "mechanism": "제드와 그림자가 표창을 던집니다.<br><br>각 표창은 적에게 명중하면 피해를 입힙니다."
+              }
+            ],
+            "sources": [
+              {
+                "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Zed.json",
+                "patch": "16.20.1",
+                "sha256": "e2542b47e9deea121810152601f2568088512f040e659cf5ae21129a2ffaf224",
+                "local_source": "data/official_catalog/versions/16.20.1/Zed-16.20.1.ko_KR.json",
+                "locator": "data.Zed.spells.0.range.0"
+              },
+              {
+                "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Zed.json",
+                "patch": "16.20.1",
+                "sha256": "e2542b47e9deea121810152601f2568088512f040e659cf5ae21129a2ffaf224",
+                "local_source": "data/official_catalog/versions/16.20.1/Zed-16.20.1.ko_KR.json",
+                "locator": "data.Zed.spells.0.tooltip"
+              }
+            ],
+            "conditions": [],
+            "cost": null,
+            "interpretation": "SELECTED_MECHANISM_REFERENCE",
+            "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+          }
+        ],
+        "scope": "대표 교전 수단을 고른 설명용 범위. 원 밖의 다른 기술도 별도 확인."
+      },
+      "Nautilus": {
+        "status": "PROFILED",
+        "observation": false,
+        "basis": "DESIGN_HYPOTHESIS_WITH_OFFICIAL_FIELDS",
+        "direct": {
+          "radius": 825,
+          "kind": "DIRECT",
+          "label": "노틸러스의 폭뢰(R)",
+          "formula": "R.range[0]",
+          "components": [
+            {
+              "slot": "R",
+              "name": "폭뢰(R)",
+              "value": 825,
+              "mechanism": "지면에 충격파를 발사하면 상대방을 추적해 갑니다. 충격파는 위의 지면을 찢으며 적들을 공중으로 띄웁니다. 충격파가 상대방에게 닿으면 폭발하여 대상을 공중으로 띄우고 기절시킵니다."
+            }
+          ],
+          "sources": [
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+              "patch": "16.20.1",
+              "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+              "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+              "locator": "data.Nautilus.spells.3.range.0"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+              "patch": "16.20.1",
+              "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+              "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+              "locator": "data.Nautilus.spells.3.tooltip"
+            }
+          ],
+          "conditions": [],
+          "cost": null,
+          "interpretation": "SELECTED_MECHANISM_REFERENCE",
+          "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+        },
+        "approach": {
+          "radius": 1150,
+          "kind": "COMMITTED",
+          "label": "노틸러스의 닻줄 견인(Q)",
+          "formula": "Q.range[0]",
+          "components": [
+            {
+              "slot": "Q",
+              "name": "닻줄 견인(Q)",
+              "value": 1150,
+              "mechanism": "노틸러스가 전방으로 닻을 던집니다.  닻이 적을 맞히면 노틸러스와 대상이 가까이 당겨지며 대상에게 마법 피해를 입힙니다. 닻이 지형을 맞히면 노틸러스가 지형 쪽으로 끌려갑니다."
+            }
+          ],
+          "sources": [
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+              "patch": "16.20.1",
+              "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+              "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+              "locator": "data.Nautilus.spells.0.range.0"
+            },
+            {
+              "url": "https://ddragon.leagueoflegends.com/cdn/16.20.1/data/ko_KR/champion/Nautilus.json",
+              "patch": "16.20.1",
+              "sha256": "87cf8bdca7e108fc7214c921715298e04a350bca1d619a8aa8c0ab0450e7ce32",
+              "local_source": "data/official_catalog/versions/16.20.1/Nautilus-16.20.1.ko_KR.json",
+              "locator": "data.Nautilus.spells.0.tooltip"
+            }
+          ],
+          "conditions": [
+            "닻줄 견인(Q)이 원하는 대상에게 먼저 맞고 접근·후속 조건이 맞음",
+            "미니언·다른 챔피언·지형에 막힐 수 있으며 해당 대상 쪽으로 끌려감"
+          ],
+          "cost": "닻 적중 뒤 대상 쪽으로 몸이 이동하여 상대의 보호·반격에 노출된다.",
+          "interpretation": "CONDITIONAL_CAST_RANGE_BOUND",
+          "rank_assumption": "범위는 첫 스킬 레벨 기준. 실제 습득·쿨타임·적중 상태는 관측하지 않음"
+        },
+        "approach_mode": "CONTACT_APPROACH",
+        "approach_missing_reason": "",
+        "additional": [],
+        "scope": "대표 교전 수단을 고른 설명용 범위. 원 밖의 다른 기술도 별도 확인."
+      }
+    },
+    "risk_verdict": "NOT_COMPUTED",
+    "origin": "ILLUSTRATIVE_MECHANISM_REFERENCE",
+    "view": {
+      "x": -2171.0000000000005,
+      "y": -2431.0000000000005,
+      "width": 6402.000000000001
+    },
+    "layout_width_game_units": 2000,
+    "scope": "1차는 현재 자리에서 쓸 대표 수단, 2차는 접근 수단까지 쓰는 조건부 위협입니다. 원 밖의 다른 기술과 실제 피해·승패는 별도입니다."
+  }
+}

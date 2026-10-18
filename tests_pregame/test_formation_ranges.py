@@ -63,6 +63,14 @@ class FormationRangeTests(unittest.TestCase):
             self.assertIsNotNone(entries['MissingStat']['source']['sha256'])
             self.assertIsNone(entries['MissingSource']['source']['sha256'])
 
+    def test_curated_profile_with_missing_source_keeps_unknown(self):
+        builder=self.builder()
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);(root/'web_r4').mkdir();(root/'config').mkdir()
+            (root/'web_r4/loading-data.json').write_text(json.dumps({'source_patch':PATCH,'champions':{'Sejuani':{}}}))
+            (root/'config/formation_threat_profiles.json').write_text((ROOT/'config/formation_threat_profiles.json').read_text())
+            entry=builder.build_data(root)['champions']['Sejuani'];self.assertIsNone(entry['base_attack_range']);self.assertIsNone(entry['threat']['direct']);self.assertIsNone(entry['threat']['approach']);self.assertIn('미확인',entry['threat']['scope'])
+
     def test_present_source_must_match_retained_hash(self):
         builder = self.builder()
         with tempfile.TemporaryDirectory() as directory:

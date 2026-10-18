@@ -1,3 +1,11 @@
+# Threat rings and clear wave action — source ready, publication pending
+- Inherit main28c2057/publicbdfd450 and completed PR109/110 evidence. Replace unclear ACQUIRE_PUSH combat source with concrete minion/poke/stop wording, keep risk execution and special branches. Same result powers summary/method/counterplay.
+- Official archived16.20.1 fields support10representative direct/conditional-approach profiles; other champions BASIC_ONLY/unknown spells, no fabricated outer. SejR1300/Q+R1950 and ZedR625/Wswap+R1275 are conditional reference bounds, not full live threat/danger/win verdict.
+- All10circles default, small portraits/optional accessible names, selfgold; stable full-circle overview plus same-coordinate layout zoom/scene/step/actor/modal. Curated source fallback/picker focus/self-color review fixes, REDs preserved. Affected tests/browser and requiredCI/publication evidence follows in evidence/actual-evidence/threat-rings/.
+- Previous sources/AUTO30HOLD20USER0/advice7/Frozen350/holds/failures/budgets/Master+/pro/riot/Windows unchanged; no provider/game/video/paid calls. N0/30secUNMEASURED/WindowsBLOCKED_EXTERNAL. Next: source-scoped additional threat profiles and matchup knowledge, no generic maximum/spell-distance guess.
+
+---
+
 # Action briefs and range geometry — actual public completion
 - PR109 product89b73bda3c0ac603c66fed4ce54f8952c75a1f79; required PR/exact-product-main3PASS. Publicbdfd4503f4dcca50137b5a8d269f91c05d879dda; nativePages39123582704 actualSUCCESS, changed HTTPS hashes/root/buildinfo/nojekyll checked; pro/riot retained.
 - Five actions first in each lane/operations/fight tab, derived from same report with conditions/provenance and actual detail links. Scope-clear/conditional/execution-dependent/knowledge-gap remain distinct; no unsupported all-in winner/tie or extra required input. Old metrics/maps/methods/Why retained.

@@ -1,4 +1,4 @@
-/* Shared illustrative teamfight geometry. No live positions, ranges or win model. */
+/* Shared illustrative teamfight geometry. Source-bound threat references, no live positions or win model. */
 (function(root,factory){
   if(typeof module==='object'&&module.exports)module.exports=factory(require('./formation-ranges.js'));
   else root.LoadingFormation=factory(root.FormationRanges);
@@ -79,9 +79,14 @@
       const links=[...new Map(nearest.map(n=>[[n.team,...[n.champion,n.ally].sort()].join(':'),{team:n.team,from:n.champion,to:n.ally}])).values()];
       return {nearest,links,tactical_isolation:'NOT_INFERRED',label:s.id==='FRONT_CONNECTED'?'전방·후방 연결을 남기는 배치 예시':'여러 각도에서 접근하는 배치 예시 · 고립 여부는 보호·후속 단절 조건이 별도'};
     });
+    const threats=Object.fromEntries(base.map(a=>[a.champion,rangeData?.source_patch===catalog.source_patch?rangeData.champions[a.champion]?.threat:null]));
+    const extents=[frontal,flank].flatMap(s=>s.actors.flatMap(a=>a.positions.map(p=>{const t=threats[a.champion],radius=Math.max(t?.direct?.radius||0,t?.approach?.radius||0);return {x:p.x*scale/100,y:p.y*scale/100,radius};})));
+    const minX=Math.min(...extents.map(p=>p.x-p.radius)),maxX=Math.max(...extents.map(p=>p.x+p.radius)),minY=Math.min(...extents.map(p=>p.y-p.radius)),maxY=Math.max(...extents.map(p=>p.y+p.radius)),width=Math.max(maxX-minX,maxY-minY)*1.1;
+    const threatReference={champions:threats,risk_verdict:'NOT_COMPUTED',origin:'ILLUSTRATIVE_MECHANISM_REFERENCE',view:{x:(minX+maxX-width)/2,y:(minY+maxY-width)/2,width},layout_width_game_units:scale,
+      scope:'1차는 현재 자리에서 쓸 대표 수단, 2차는 접근 수단까지 쓰는 조건부 위협입니다. 원 밖의 다른 기술과 실제 피해·승패는 별도입니다.'};
     const sourceIds=new Set(['A:S3','D:S1']);
     const ranges=rangeData?.source_patch===catalog.source_patch?Object.fromEntries(base.map(a=>[a.champion,rangeData.champions[a.champion]])):{};
-    return {version:'teamfight-formation-v1',supported:true,origin:'ILLUSTRATIVE_HYPOTHESIS',actual_enemy_positions:null,default_scene:input.own_champion==='Kaisa'?'FLANK_ISOLATE':'FRONT_CONNECTED',scenes:[frontal,flank],range_reference:{origin:'ILLUSTRATIVE_SCALE',board_width_game_units:scale,champions:ranges,limits:rangeData?.limits||['공식 기본 공격 거리 자료가 없어 원을 표시하지 않습니다.']},
+    return {version:'teamfight-formation-v1',supported:true,origin:'ILLUSTRATIVE_HYPOTHESIS',actual_enemy_positions:null,default_scene:input.own_champion==='Kaisa'?'FLANK_ISOLATE':'FRONT_CONNECTED',scenes:[frontal,flank],threat_reference:threatReference,range_reference:{origin:'ILLUSTRATIVE_SCALE',board_width_game_units:scale,champions:ranges,limits:rangeData?.limits||['공식 기본 공격 거리 자료가 없어 원을 표시하지 않습니다.']},
       evidence:{official:[...['Caitlyn:W','Caitlyn:E','Kaisa:R'].map(ref=>{const [champion,slot]=ref.split(':');return {champion,...catalog.champions[champion].facts.find(f=>f.slot===slot)};}),{...catalog.champions.Kaisa.facts.find(f=>f.slot==='R'),champion:'Kaisa',locator:'data.Kaisa.spells.3.tooltip',text:'플라즈마 표식이 남은 적 챔피언 근처로 빠르게 돌진',raw_excerpt:'카이사가 <keywordMajor>플라즈마</keywordMajor> 표식이 남은 적 챔피언 근처로 빠르게 돌진하며,'}],sources:(catalog.coaching_knowledge?.sources||[]).filter(s=>sourceIds.has(s.id)),
         scope:'공식 기술은 수단을, 기존 공략은 거리·접근 조건을 뒷받침합니다. 열 명의 좌표·순서와 어느 대형을 선호하는지는 설명용 해석 가설이며 검토된 승패 판정이 아닙니다.'}};
   }
@@ -90,46 +95,66 @@
     const doc=document,prefix='formation-'+(++nextId),root=doc.createElement('section');root.className='formation-explorer';
     const el=(tag,text,cls)=>{const n=doc.createElement(tag);if(text)n.textContent=text;if(cls)n.className=cls;return n;};
     if(!model?.supported){root.append(el('p',model?.reason||'이 조합의 한타 배치 비교는 아직 지원하지 않습니다.','coach-muted'));return root;}
-    let scene=model.default_scene,step=0,actor=null,rangeMode='CARRIES',showLinks=true;
+    let scene=model.default_scene,step=0,actor=null,rangeMode='ALL',showLinks=true,viewMode='OVERVIEW',pickerOpen=false;
     const main=el('div'),dialog=el('dialog',null,'formation-dialog'),stage=el('div'),close=el('button','닫기');close.type='button';close.addEventListener('click',()=>dialog.close());dialog.append(close,stage);root.append(main,dialog);
     dialog.setAttribute('aria-label','한타 구도 확대');let zoomOpener=null;
     dialog.addEventListener('close',()=>{const opener=main.querySelector('[data-formation-zoom]')||zoomOpener;opener?.focus({preventScroll:true});});
     function render(target,isZoom){
       const focus=target.contains(doc.activeElement)?doc.activeElement.dataset.formationControl:null;
-      target.replaceChildren();const s=model.scenes.find(s=>s.id===scene);
+      target.replaceChildren();const s=model.scenes.find(s=>s.id===scene);const frame=viewMode==='OVERVIEW'?model.threat_reference.view:{x:0,y:0,width:model.threat_reference.layout_width_game_units};const project=p=>({x:(p.x*model.threat_reference.layout_width_game_units/100-frame.x)/frame.width*100,y:(p.y*model.threat_reference.layout_width_game_units/100-frame.y)/frame.width*100});
       const controls=el('div',null,'formation-controls');controls.setAttribute('role','group');controls.setAttribute('aria-label','비교할 한타 구도');
       const btn=(label,key,selected,fn)=>{const b=el('button',label);b.type='button';b.dataset.formationControl=key;b.setAttribute('aria-pressed',String(selected));b.addEventListener('click',fn);return b;};
       model.scenes.forEach(s=>controls.append(btn(s.favored_champion==='Caitlyn'?'정면 대형':'측면·고립',s.id,s.id===scene,()=>{scene=s.id;step=0;actor=null;refresh();})));target.append(controls,el('h4',s.goal),el('p',s.reason));
-      const rangeControls=el('div',null,'formation-controls');rangeControls.classList.add('formation-range-controls');rangeControls.setAttribute('role','group');rangeControls.setAttribute('aria-label','기본 공격 거리와 동료 연결 표시');[['CARRIES','양 팀 원딜 원'],['SELECTED','선택한 챔피언 원'],['OFF','원 숨기기']].forEach(([v,label])=>rangeControls.append(btn(label,'range-'+v,rangeMode===v,()=>{rangeMode=v;refresh();})));rangeControls.append(btn('동료 연결선','links',showLinks,()=>{showLinks=!showLinks;refresh();}));target.append(rangeControls);
-      const steps=el('div',null,'formation-controls');steps.setAttribute('role','group');steps.setAttribute('aria-label','한타 행동 단계');s.steps.forEach((v,i)=>steps.append(btn(v.title,'step-'+i,i===step,()=>{step=i;actor=null;refresh();})));target.append(steps);
+      const rangeControls=el('div',null,'formation-controls');rangeControls.classList.add('formation-range-controls');rangeControls.setAttribute('role','group');rangeControls.setAttribute('aria-label','위협 범위와 동료 연결 표시');[['ALL','전체 10명 원'],['SELECTED','선택한 챔피언 원'],['OFF','원 숨기기']].forEach(([v,label])=>rangeControls.append(btn(label,'range-'+v,rangeMode===v,()=>{rangeMode=v;refresh();})));rangeControls.append(btn('동료 연결선','links',showLinks,()=>{showLinks=!showLinks;refresh();}));target.append(rangeControls);
+      const steps=el('div',null,'formation-controls');steps.setAttribute('role','group');steps.setAttribute('aria-label','한타 행동 단계');s.steps.forEach((v,i)=>steps.append(btn(v.title,'step-'+i,i===step,()=>{step=i;actor=null;refresh();})));target.append(steps);const views=el('div',null,'formation-controls');views.setAttribute('role','group');views.setAttribute('aria-label','배치와 전체 위협 범위 보기');[['OVERVIEW','전체 범위 보기'],['LAYOUT','배치 확대']].forEach(([v,label])=>views.append(btn(label,'view-'+v,viewMode===v,()=>{viewMode=v;refresh();})));target.append(views);
       const arena=el('div',null,'formation-arena');arena.dataset.formationScene=s.id;arena.dataset.formationStep=step;arena.setAttribute('aria-label','가정한 양 팀 열 명의 배치');
       const line=el('div',null,'formation-contact');line.setAttribute('aria-hidden','true');arena.append(line);
       const ns='http://www.w3.org/2000/svg',overlay=doc.createElementNS(ns,'svg');overlay.setAttribute('viewBox','0 0 100 100');overlay.classList.add('formation-ranges');overlay.setAttribute('aria-hidden','true');
-      if(showLinks)for(const link of s.cohesion[step].links){const a=s.actors.find(a=>a.champion===link.from),b=s.actors.find(a=>a.champion===link.to),l=doc.createElementNS(ns,'line');for(const [k,v]of Object.entries({x1:a.positions[step].x,y1:a.positions[step].y,x2:b.positions[step].x,y2:b.positions[step].y}))l.setAttribute(k,v);l.setAttribute('class','formation-connection '+link.team.toLowerCase());overlay.append(l);}
-      for(const a of s.actors){const ref=model.range_reference.champions[a.champion],selected=actor?a.team+':'+a.champion===actor:a.self;if(rangeMode==='OFF'||rangeMode==='CARRIES'&&!['Caitlyn','Kaisa'].includes(a.champion)||rangeMode==='SELECTED'&&!selected||!(ref?.base_attack_range>0))continue;const circle=doc.createElementNS(ns,'circle');for(const [k,v]of Object.entries({cx:a.positions[step].x,cy:a.positions[step].y,r:ref.base_attack_range/model.range_reference.board_width_game_units*100,'data-range-champion':a.champion,'data-base-range':ref.base_attack_range}))circle.setAttribute(k,v);circle.setAttribute('class','formation-range '+a.team.toLowerCase());overlay.append(circle);}
+      if(showLinks)for(const link of s.cohesion[step].links){const a=s.actors.find(a=>a.champion===link.from),b=s.actors.find(a=>a.champion===link.to),l=doc.createElementNS(ns,'line');for(const [k,v]of Object.entries({x1:project(a.positions[step]).x,y1:project(a.positions[step]).y,x2:project(b.positions[step]).x,y2:project(b.positions[step]).y}))l.setAttribute(k,v);l.setAttribute('class','formation-connection '+link.team.toLowerCase());overlay.append(l);}
+      for(const a of s.actors){
+        const profile=model.threat_reference.champions[a.champion],selected=actor?a.team+':'+a.champion===actor:a.self;
+        if(rangeMode==='OFF'||rangeMode==='SELECTED'&&!selected)continue;
+        for(const [tier,ref]of [['COMMITTED',profile?.approach],['DIRECT',profile?.direct]]){
+          if(!(ref?.radius>0))continue;const p=project(a.positions[step]),circle=doc.createElementNS(ns,'circle');
+          for(const [k,v]of Object.entries({cx:p.x,cy:p.y,r:ref.radius/frame.width*100,'data-range-champion':a.champion,'data-range-tier':tier,'data-range-value':ref.radius}))circle.setAttribute(k,v);
+          circle.setAttribute('class','formation-range '+a.team.toLowerCase()+' '+tier.toLowerCase()+(a.self?' is-self':'')+(actor&&!selected?' is-muted':'')+(selected&&actor?' is-selected':'')+(profile.status==='BASIC_ONLY'?' is-partial':''));
+          const title=doc.createElementNS(ns,'title');title.textContent=ref.label+' · '+ref.radius+' · '+(tier==='DIRECT'?'1차 대표 위협':'2차 조건부 접근');circle.append(title);overlay.append(circle);
+        }
+      }
       arena.append(overlay);
       if(step){
+        const arrowScale=model.threat_reference.layout_width_game_units/frame.width;
         const ns='http://www.w3.org/2000/svg',svg=doc.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 100 100');svg.setAttribute('preserveAspectRatio','none');svg.setAttribute('aria-hidden','true');svg.classList.add('formation-arrows');
-        for(const a of s.actors){const from=a.positions[step-1],to=a.positions[step],dx=to.x-from.x,dy=to.y-from.y,len=Math.hypot(dx,dy);if(len<8)continue;const path=doc.createElementNS(ns,'path');path.setAttribute('d',`M ${from.x} ${from.y} L ${to.x-dx/len*6} ${to.y-dy/len*6}`);path.setAttribute('class',a.team.toLowerCase());svg.append(path);const tip=doc.createElementNS(ns,'path'),x=to.x-dx/len*5,y=to.y-dy/len*5;tip.setAttribute('d',`M ${x-dx/len*3+dy/len*2} ${y-dy/len*3-dx/len*2} L ${x} ${y} L ${x-dx/len*3-dy/len*2} ${y-dy/len*3+dx/len*2}`);tip.setAttribute('class',a.team.toLowerCase());svg.append(tip);}
+        for(const a of s.actors){const from=project(a.positions[step-1]),to=project(a.positions[step]),dx=to.x-from.x,dy=to.y-from.y,len=Math.hypot(dx,dy);if(len<8*arrowScale)continue;const path=doc.createElementNS(ns,'path');path.setAttribute('d',`M ${from.x} ${from.y} L ${to.x-dx/len*6*arrowScale} ${to.y-dy/len*6*arrowScale}`);path.setAttribute('class',a.team.toLowerCase());svg.append(path);const tip=doc.createElementNS(ns,'path'),x=to.x-dx/len*5*arrowScale,y=to.y-dy/len*5*arrowScale;tip.setAttribute('d',`M ${x-dx/len*3*arrowScale+dy/len*2*arrowScale} ${y-dy/len*3*arrowScale-dx/len*2*arrowScale} L ${x} ${y} L ${x-dx/len*3*arrowScale-dy/len*2*arrowScale} ${y-dy/len*3*arrowScale+dx/len*2*arrowScale}`);tip.setAttribute('class',a.team.toLowerCase());svg.append(tip);}
         arena.append(svg);
       }
       for(const a of s.actors){
-        const token=btn('',a.team+':'+a.champion,actor===a.team+':'+a.champion,()=>{actor=a.team+':'+a.champion;rangeMode='SELECTED';refresh();});token.className='formation-actor '+a.team.toLowerCase()+(a.self?' is-self':'');token.style.left=a.positions[step].x+'%';token.style.top=a.positions[step].y+'%';token.dataset.formationChampion=a.champion;token.dataset.team=a.team;token.setAttribute('aria-label',(a.team==='ALLY'?'아군 ':'상대 ')+a.name+' · '+a.role+' · 가정 위치');
+        const token=btn('',a.team+':'+a.champion,actor===a.team+':'+a.champion,()=>{actor=a.team+':'+a.champion;refresh();});token.className='formation-actor '+a.team.toLowerCase()+(a.self?' is-self':'');token.style.left=project(a.positions[step]).x+'%';token.style.top=project(a.positions[step]).y+'%';token.dataset.formationChampion=a.champion;token.dataset.team=a.team;token.setAttribute('aria-label',(a.team==='ALLY'?'아군 ':'상대 ')+a.name+' · '+a.role+' · 가정 위치');
         const p=catalog.champions[a.champion]?.portrait,portrait=el('span',null,'formation-portrait');portrait.setAttribute('aria-hidden','true');
         if(p){portrait.style.backgroundImage='url("./'+p.sprite+'")';portrait.style.backgroundSize=(p.sheet_width/p.w*100)+'% '+(p.sheet_height/p.h*100)+'%';portrait.style.backgroundPosition=(p.x/(p.sheet_width-p.w)*100)+'% '+(p.y/(p.sheet_height-p.h)*100)+'%';}else portrait.textContent=a.name.slice(0,1);
         token.append(portrait,el('span',a.name,'formation-name'));arena.append(token);
       }
-      target.append(arena,el('p','파랑: 아군 · 빨강: 상대 · 금색: 나 | 원: 공식 기본 공격 거리 참고 · 점선: 가까운 동료 연결','formation-legend'),el('p','가정 배치 · 화면 너비를 '+model.range_reference.board_width_game_units+' 게임 단위로 둔 예시 척도이며 원 안의 공격·보호 성공을 보장하지 않습니다.','formation-legend'));
-      const focused=s.actors.find(a=>actor?a.team+':'+a.champion===actor:a.self),near=s.cohesion[step].nearest.find(n=>n.champion===focused?.champion);if(near)target.append(el('p',focused.name+'의 가장 가까운 동료: '+catalog.champions[near.ally].name+' · 예시 거리 '+near.distance_game_units+' 게임 단위 (실제 관측 아님)','formation-cohesion'));
-      const shown=s.actors.filter(a=>rangeMode==='CARRIES'?['Caitlyn','Kaisa'].includes(a.champion):rangeMode==='SELECTED'&&a.champion===focused?.champion);if(shown.length)target.append(el('p','기본 공격: '+shown.map(a=>a.name+' '+(model.range_reference.champions[a.champion]?.base_attack_range??'미확인')).join(' · ')+' 게임 단위','formation-range-values'));
+      target.append(arena,el('p','파랑: 아군 · 빨강: 상대 · 금색: 나 | 실선: 1차 대표 위협 · 점선 원: 2차 접근 위협 · 직선 점선: 동료 연결','formation-legend'),el('p','1차: 매우 위험하게 볼 대표 수단 · 2차: 상대도 진입 비용·반격 위험을 감수하는 조건부 범위','formation-legend'),el('p',model.threat_reference.scope+' 가정 배치이며 관련 기술을 배워 사용할 수 있다는 전제입니다.','formation-legend'));
+      const focused=s.actors.find(a=>actor?a.team+':'+a.champion===actor:a.self),near=s.cohesion[step].nearest.find(n=>n.champion===focused?.champion),chosen=model.threat_reference.champions[focused?.champion];
+      if(near)target.append(el('p',focused.name+'의 가장 가까운 동료: '+catalog.champions[near.ally].name+' · 예시 거리 '+near.distance_game_units+' 게임 단위 (실제 관측 아님)','formation-cohesion'));
+      if(chosen){
+        const ref=el('div',null,'formation-threat-summary');ref.setAttribute('aria-live','polite');ref.append(el('h4',focused.name+'의 원 기준'),el('p','1차 · '+(chosen.direct?chosen.direct.label+' '+chosen.direct.radius:'미확인')));
+        if(chosen.approach)ref.append(el('p','2차 · '+chosen.approach.label+' '+chosen.approach.radius),el('p',chosen.approach.cost),el('p',chosen.approach.conditions.join(' · ')));
+        else ref.append(el('p','2차 미확인 · '+chosen.approach_missing_reason));
+        if(chosen.additional.length)ref.append(el('p','원 외에도 남는 위협: '+chosen.additional.map(v=>v.label+' '+v.radius).join(' · ')));
+        ref.append(el('p',chosen.scope,'coach-muted'));target.append(ref);
+      }
+      const roster=el('details',null,'coach-details formation-roster');roster.append(el('summary','10명 선택 · 작은 초상화 대신 이름으로 선택'));roster.open=pickerOpen;const picks=el('div',null,'formation-roster-buttons');
+      for(const a of s.actors)picks.append(btn((a.team==='ALLY'?'아군 ':'상대 ')+a.name,'pick-'+a.team+':'+a.champion,actor===a.team+':'+a.champion,()=>{actor=a.team+':'+a.champion;refresh();}));roster.append(picks);target.append(roster);
       const action=el('p',s.steps[step].action,'formation-action');action.setAttribute('aria-live','polite');target.append(action);
       if(actor){const a=s.actors.find(a=>a.team+':'+a.champion===actor);target.append(el('p',a.name+' · '+a.role+' · '+s.steps[step].action,'formation-actor-detail'));}
       const limits=el('details',null,'coach-details');limits.append(el('summary','성립 조건 · 실패하면 바꾸는 법'));const ul=el('ul');[...s.conditions,...s.failure].forEach(v=>ul.append(el('li',v)));limits.append(ul);target.append(limits);
-      const rangeWhy=el('details',null,'coach-details');rangeWhy.append(el('summary','사거리·응집·고립 표시의 기준과 한계'));const caveats=el('ul');[...model.range_reference.limits,'동료 연결선은 가까운 동료 관계이며 보호·합류 가능의 판정이 아닙니다. 거리가 멀다는 이유만으로 전술적 고립을 확정하지 않습니다.'].forEach(v=>caveats.append(el('li',v)));rangeWhy.append(caveats);for(const a of s.actors.filter(a=>rangeMode==='CARRIES'?['Caitlyn','Kaisa'].includes(a.champion):a.champion===focused?.champion)){const ref=model.range_reference.champions[a.champion];if(!ref)continue;const link=el('a',a.name+' 기본 공격 거리 '+(ref.base_attack_range??'미확인')+' · '+(ref.source?.patch||'미확인'));if(!ref.source?.url){rangeWhy.append(el('p',a.name+' · '+(ref.missing_reason||'공식 출처 미확인')));continue;}link.href=ref.source.url;link.target='_blank';link.rel='noopener noreferrer';rangeWhy.append(link,el('p',ref.source.locator));}target.append(rangeWhy);
+      const rangeWhy=el('details',null,'coach-details');rangeWhy.append(el('summary','원 기준·공식 출처·위험 판단의 한계'));const caveats=el('ul');['선택한 대표 기술의 시전 사거리 참고이며 전체 위협·실제 적중·확정 피해 판정은 아닙니다.','2차 합산은 방향·기술 가용·대상·이동 경로가 맞을 때의 상한 참고입니다. 두 기술을 더했다는 이유로 공격 성공을 보장하지 않습니다.','궁극기는 첫 스킬 레벨, 모든 수단을 배워 사용할 수 있다는 가정입니다. 실제 쿨타임·표식·적중은 관측하지 않습니다.','점선 연결은 가까운 동료 관계이며 거리만으로 보호 가능·전술적 고립을 확정하지 않습니다.','전체 범위는 원이 잘리지 않는 공통 척도이고 배치 확대에서는 원이 화면 밖까지 이어질 수 있습니다.'].forEach(v=>caveats.append(el('li',v)));rangeWhy.append(caveats);
+      const sourceRows=[chosen?.direct,chosen?.approach,...(chosen?.additional||[])].filter(Boolean);for(const source of [...new Map(sourceRows.flatMap(r=>r.sources).map(s=>[s.url+':'+s.locator,s])).values()]){const link=el('a','공식 '+source.patch+' · '+source.locator);link.href=source.url;link.target='_blank';link.rel='noopener noreferrer';rangeWhy.append(link);}target.append(rangeWhy);
       if(!isZoom){const zoom=el('button','배치 크게 보기');zoom.type='button';zoom.dataset.formationZoom='';zoom.addEventListener('click',()=>{zoomOpener=zoom;render(stage,true);dialog.showModal();});target.append(zoom);}
       if(focus)Array.from(target.querySelectorAll('[data-formation-control]')).find(n=>n.dataset.formationControl===focus)?.focus({preventScroll:true});
     }
-    function refresh(){render(main,false);if(dialog.open)render(stage,true);}
+    function refresh(){const old=(dialog.open?stage:main).querySelector('.formation-roster');if(old)pickerOpen=old.open;render(main,false);if(dialog.open)render(stage,true);}
     refresh();return root;
   }
   return Object.freeze({evaluate,create});
