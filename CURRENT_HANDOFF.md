@@ -1,3 +1,11 @@
+# Integrated wave coach / Riot information — actual public completion
+- PR92 main446d6b67f2d95462107c4cc14f5e26737eb97f37; requiredPR3/exactmain3 PASS. Publicartifactf3640fe56b014a277fbd41527127e207acfb8e34/nativePages39098324368 actualSUCCESS. HTTPS15hashes+root/buildinfo/nojekyll,86manifest bound. Pro/riot byte-preserved. Actual public PC/mobile coach+manual item flows PASS.
+- New scoped source2/claim3, explicit own/enemy board plans, Kai/Alistar reverse conditional reference (not strength inversion/full2v2 winner), wave opponent/success links. Eight user Eve URLs remain body-unreviewed. No new provider/game/paid calls. Existing18KST workflow active,10/17 scheduled execution verified, not provider-success proof.
+- Shared bounded local data projection and inventory math; public manual comparison. HTTP deliberately withholds live snapshot until field/policy proof. Exact timers/hidden positions unsupported, runtime key/actualPC absent not expired-key claim. N0/30secunmeasured/WindowsBLOCKED_EXTERNAL unchanged.
+- Result: evidence/actual-evidence/game-info/publication/result.md. Existing advice7/AUTO30HOLD20USER0/raw/holds/failures/Frozen350/Windows/pro/riot preserved. NextP0: full current-patch matchup resource/outcome evidence, actual local data/permission, event-specific timer rules. Results-only finalCI/common claim release next; no product republish.
+
+---
+
 # Riot game-info and wave evidence delta — source ready, publication pending
 - Reuse main74e93ca/PR91 and prior planboard/public proof. New held-inventory manual screen, shared bounded private observation service (HTTP exposes status only, snapshot withheld), official Riot path audit. No actual client/key proof or exact camp/allyCD timers. No fake key expiry.
 - Append2primary guide sources/3scoped claims, retain old originals. Kai/Alistar reverse B conditional perspective (no strength inversion, full2v2 unknown); explicit own/enemy gameplans and wave success/opponent-response. Register8user Eve URLs, body/segment unreviewed, no Gemini/video calls or schedule duplication.
