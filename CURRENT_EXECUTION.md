@@ -1,3 +1,14 @@
+# Loading Coach implementation — required CI pending
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-coach-20261018`
+- current_main: `8b7ec8c4fb0bf348beb333c593f700cfcb2779da`
+- product_head: `42cecaedd653f3cbbbfe205c38f0cd4a4e29b0ef`
+- scope: Source-scoped A/B/C/D default comparison and compact wave-first coach implemented; source/conditions/first-spell/unsupported fixes independently reviewed. Actual PC/mobile affected proof passed; mandatory exact PR/main CI, normal merge, Pages, actual HTTPS and results/Handoff next. No provider/video/game/paid calls; N0/30secunmeasured/Windowsblocked retained.
+
+---
+
 # Latest common execution claim — RUNNING
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
