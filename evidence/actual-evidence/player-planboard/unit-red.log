@@ -1,0 +1,280 @@
+FFFFFFFFFF
+======================================================================
+FAIL: test_context_order_and_role_changes_have_real_meaning (tests_pregame.test_player_planboard.PlayerPlanboardTests.test_context_order_and_role_changes_have_real_meaning)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 27, in test_context_order_and_role_changes_have_real_meaning
+    self.node("const x=run().input,a=E.analyze(x,c).coach.planboard;x.allies.reverse();x.enemies.reverse();assert.deepEqual(E.analyze(x,c).coach.planboard,a);const f=run(1).coach.planboard;assert.equal(f.operations.mode,'SIDE_RETURN');assert.notEqual(a.operations.placement,f.operations.placement);assert(f.fight.start.includes('피오라'));let y=run().input;y.allies.find(p=>p.position==='SUPPORT').position=null;assert.equal(E.analyze(y,c).coach.planboard.lane.basis,'INSUFFICIENT');")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 11, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4000:])
+AssertionError: 1 != 0 : /workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24
+    if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).sort().join('|')!==[...keys].sort().join('|'))throw Error('입력 항목을 확인해 주세요.');
+                                                                                                                               ^
+
+Error: 입력 항목을 확인해 주세요.
+    at exact (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24:134)
+    at validate (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:30:5)
+    at Object.analyze (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:251:21)
+    at run ([eval]:2:274)
+    at [eval]:3:9
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_default_has_three_time_scales_and_four_separate_axes (tests_pregame.test_player_planboard.PlayerPlanboardTests.test_default_has_three_time_scales_and_four_separate_axes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 13, in test_default_has_three_time_scales_and_four_separate_axes
+    self.node("const r=E.analyze(E.exampleInput(c,0),c),b=r.coach.planboard;assert(b,'missing player planboard');assert(b.lane.overall_goal);assert(b.lane.milestone.goal);assert(b.wave.purpose);assert.equal(b.wave.plan_id,'SLOW_PUSH');for(const k of ['pace','pressure','exposure','resources'])assert(b.wave.axes[k]);assert(b.wave.next_wave);assert.equal(b.wave.state.minion_size,'UNOBSERVED');assert.equal(b.wave.completed,false);assert.equal(b.reminders.length,3);assert(b.quick_scenarios.length<=2);")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 11, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4000:])
+AssertionError: 1 != 0 : node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: missing player planboard
+    at [eval]:3:62
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_growth_changes_plan_not_global_reversal (tests_pregame.test_player_planboard.PlayerPlanboardTests.test_growth_changes_plan_not_global_reversal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 29, in test_growth_changes_plan_not_global_reversal
+    self.node("const a=run(4).coach.planboard,b=run(4,{}, {},'BALANCED','KAISA_EVOLVED_ACCESS').coach.planboard;assert.notEqual(a.lane.milestone.goal,b.lane.milestone.goal);assert(b.operations.growth.includes('진화'));assert.equal(b.growth.global_reversal,'UNDETERMINED');assert(b.growth.remaining_strength.includes('견제'));assert(b.wave.change_if.length);")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 11, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4000:])
+AssertionError: 1 != 0 : /workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24
+    if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).sort().join('|')!==[...keys].sort().join('|'))throw Error('입력 항목을 확인해 주세요.');
+                                                                                                                               ^
+
+Error: 입력 항목을 확인해 주세요.
+    at exact (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24:134)
+    at validate (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:30:5)
+    at Object.analyze (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:251:21)
+    at run ([eval]:2:274)
+    at [eval]:3:9
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_jungle_exposure_is_not_processing_speed_or_automatic_retreat (tests_pregame.test_player_planboard.PlayerPlanboardTests.test_jungle_exposure_is_not_processing_speed_or_automatic_retreat)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 17, in test_jungle_exposure_is_not_processing_speed_or_automatic_retreat
+    self.node("const a=run().coach.planboard,b=run(0,{}, {enemy_jungle:'NEAR'}).coach.planboard;assert.equal(a.wave.plan_id,b.wave.plan_id);assert.equal(a.wave.axes.pace.id,b.wave.axes.pace.id);assert.notEqual(a.wave.axes.exposure.id,b.wave.axes.exposure.id);assert.notEqual(a.wave.axes.pressure.id,b.wave.axes.pressure.id);assert(b.wave.handling.includes('막타'));assert(b.wave.next_wave.includes('상대 쪽'));assert.equal(a.context.planning.overrides.enemy_jungle,undefined);")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 11, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4000:])
+AssertionError: 1 != 0 : /workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24
+    if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).sort().join('|')!==[...keys].sort().join('|'))throw Error('입력 항목을 확인해 주세요.');
+                                                                                                                               ^
+
+Error: 입력 항목을 확인해 주세요.
+    at exact (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24:134)
+    at validate (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:30:5)
+    at Object.analyze (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:251:21)
+    at run ([eval]:2:274)
+    at [eval]:3:9
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_risk_changes_feasible_execution_not_strength_or_source (tests_pregame.test_player_planboard.PlayerPlanboardTests.test_risk_changes_feasible_execution_not_strength_or_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 23, in test_risk_changes_feasible_execution_not_strength_or_source
+    self.node("const a=run(0,{}, {},'LOSS_LIMIT'),b=run(0,{}, {},'OPPORTUNITY');assert.deepEqual(a.coach.periods,b.coach.periods);assert.deepEqual(a.coach.evidence,b.coach.evidence);assert.notEqual(a.coach.planboard.wave.combat,b.coach.planboard.wave.combat);assert(b.coach.planboard.choice.cost);assert(b.coach.planboard.choice.reserve);const x=run(0,{wave:'BUILDING'},{goal:'RECALL',clear_window:'OPEN'},'LOSS_LIMIT'),y=run(0,{wave:'BUILDING'},{goal:'RECALL',clear_window:'OPEN'},'OPPORTUNITY');assert.equal(x.coach.planboard.choice.id,y.coach.planboard.choice.id);assert.equal(y.coach.planboard.choice.same_across_preferences,true);")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 11, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4000:])
+AssertionError: 1 != 0 : /workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24
+    if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).sort().join('|')!==[...keys].sort().join('|'))throw Error('입력 항목을 확인해 주세요.');
+                                                                                                                               ^
+
+Error: 입력 항목을 확인해 주세요.
+    at exact (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24:134)
+    at validate (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:30:5)
+    at Object.analyze (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:251:21)
+    at run ([eval]:2:274)
+    at [eval]:3:9
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_support_absence_opens_limited_space_not_guaranteed_kill (tests_pregame.test_player_planboard.PlayerPlanboardTests.test_support_absence_opens_limited_space_not_guaranteed_kill)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 21, in test_support_absence_opens_limited_space_not_guaranteed_kill
+    self.node("const a=run().coach.planboard,b=run(0,{}, {enemy_support:'ABSENT'}).coach.planboard;assert.notEqual(a.wave.combat,b.wave.combat);assert(b.wave.combat.includes('카이사'));assert(b.wave.change_if.includes('복귀'));assert(!b.wave.diagram.enemies.includes('Nautilus'));assert.equal(b.fight.kill,'UNDETERMINED');const near=run(0,{}, {enemy_support:'ABSENT',enemy_jungle:'NEAR'}).coach.planboard;assert.equal(near.wave.axes.pressure.id,'LIMITED');assert(!near.wave.combat.includes('무조건'));")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 11, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4000:])
+AssertionError: 1 != 0 : /workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24
+    if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).sort().join('|')!==[...keys].sort().join('|'))throw Error('입력 항목을 확인해 주세요.');
+                                                                                                                               ^
+
+Error: 입력 항목을 확인해 주세요.
+    at exact (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24:134)
+    at validate (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:30:5)
+    at Object.analyze (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:251:21)
+    at run ([eval]:2:274)
+    at [eval]:3:9
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_threat_categories_and_jungle_links_have_scoped_means (tests_pregame.test_player_planboard.PlayerPlanboardTests.test_threat_categories_and_jungle_links_have_scoped_means)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 31, in test_threat_categories_and_jungle_links_have_scoped_means
+    self.node("const a=run().coach.planboard,q=a.fight.threats.find(t=>t.champion==='Nautilus'&&t.slot==='Q'),r=a.fight.threats.find(t=>t.champion==='Nautilus'&&t.slot==='R');assert.equal(q.response_kind,'BLOCK_LINE');assert.equal(r.response_kind,'EXPOSURE_AND_FOLLOWUP');assert(q.label.includes('노틸러스의 닻줄 견인(Q)'));assert(r.label.includes('노틸러스의 폭뢰(R)'));assert(!r.action.includes('미니언 뒤면 안전'));const j=run(0,{}, {ally_jungle:'AVAILABLE'}).coach.planboard;assert(j.overall.jungle_links.every(l=>l.observed_route===false));assert(j.overall.jungle_links.every(l=>l.basis==='DESIGN_HYPOTHESIS'));assert(j.overall.jungle_links.some(l=>l.jungler==='Sejuani'));assert(j.fight.start&&j.fight.stop&&j.fight.target);")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 11, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4000:])
+AssertionError: 1 != 0 : /workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24
+    if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).sort().join('|')!==[...keys].sort().join('|'))throw Error('입력 항목을 확인해 주세요.');
+                                                                                                                               ^
+
+Error: 입력 항목을 확인해 주세요.
+    at exact (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24:134)
+    at validate (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:30:5)
+    at Object.analyze (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:251:21)
+    at run ([eval]:2:274)
+    at [eval]:3:9
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_unconfirmed_tower_reach_unknowns_and_patch_do_not_become_safe (tests_pregame.test_player_planboard.PlayerPlanboardTests.test_unconfirmed_tower_reach_unknowns_and_patch_do_not_become_safe)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 25, in test_unconfirmed_tower_reach_unknowns_and_patch_do_not_become_safe
+    self.node("const u=run(0,{wave:'UNKNOWN'}).coach.planboard;assert.equal(u.wave.diagram.supported,false);assert.equal(u.wave.plan_id,'CHECK_WAVE');assert.equal(u.overall.lanes.find(l=>l.position==='TOP').priority,'INSUFFICIENT');let x=E.exampleInput(c,0);x.patch='1.1';const r=E.analyze(x,c);assert.equal(r.coach.planboard.wave.diagram.supported,false);assert.equal(r.coach.planboard.lane.basis,'INSUFFICIENT');assert(!r.coach.planboard.headline.includes('우세'));")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 11, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4000:])
+AssertionError: 1 != 0 : /workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24
+    if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).sort().join('|')!==[...keys].sort().join('|'))throw Error('입력 항목을 확인해 주세요.');
+                                                                                                                               ^
+
+Error: 입력 항목을 확인해 주세요.
+    at exact (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24:134)
+    at validate (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:30:5)
+    at Object.analyze (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:251:21)
+    at run ([eval]:2:274)
+    at [eval]:3:9
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_versioned_hypotheses_are_not_observations (tests_pregame.test_player_planboard.PlayerPlanboardTests.test_versioned_hypotheses_are_not_observations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 15, in test_versioned_hypotheses_are_not_observations
+    self.node("const r=run(0,{}, {enemy_jungle:'AWAY',enemy_support:'ABSENT'});assert.equal(r.input.schema_version,'lol-coach-loading-input-v4');assert.equal(r.coach.context.observations.resources,null);assert.equal(r.coach.planboard.context.origin,'HYPOTHETICAL_LOADING_EXAMPLE');assert.equal(r.coach.planboard.context.actual_enemy_positions,null);let x=E.exampleInput(c,0);x.schema_version='lol-coach-loading-input-v3';x.preferences={risk:'BALANCED'};x.scenario={standard:'lane-standard-v1',overrides:{}};const a=E.analyze(x,c);assert(a.coach.planboard);x.planning={basis:'loading-plan-example-v1',overrides:{}};assert.throws(()=>E.analyze(x,c));x.schema_version='lol-coach-loading-input-v4';x.planning.overrides.actual_enemy_x=10;assert.throws(()=>E.analyze(x,c));")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 11, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4000:])
+AssertionError: 1 != 0 : /workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24
+    if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).sort().join('|')!==[...keys].sort().join('|'))throw Error('입력 항목을 확인해 주세요.');
+                                                                                                                               ^
+
+Error: 입력 항목을 확인해 주세요.
+    at exact (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24:134)
+    at validate (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:30:5)
+    at Object.analyze (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:251:21)
+    at run ([eval]:2:274)
+    at [eval]:3:9
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_wave_position_and_purpose_change_processing_but_crash_is_not_completed (tests_pregame.test_player_planboard.PlayerPlanboardTests.test_wave_position_and_purpose_change_processing_but_crash_is_not_completed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 19, in test_wave_position_and_purpose_change_processing_but_crash_is_not_completed
+    self.node("const incoming=run(0,{wave:'INCOMING'}).coach.planboard,tower=run(0,{wave:'UNDER_TOWER'}).coach.planboard,ret=run(0,{wave:'RETURNING'}).coach.planboard;assert.equal(incoming.wave.plan_id,'TRIM_RECEIVE');assert.equal(tower.wave.plan_id,'TOWER_CS');assert.equal(ret.wave.plan_id,'RETURNING');const no=run(0,{wave:'BUILDING'},{goal:'RECALL'}).coach.planboard,yes=run(0,{wave:'BUILDING'},{goal:'RECALL',clear_window:'OPEN'}).coach.planboard;assert.notEqual(no.wave.plan_id,'FAST_PUSH');assert.equal(yes.wave.plan_id,'FAST_PUSH');assert.equal(yes.wave.completed,false);assert(yes.wave.next_wave.includes('포탑'));assert.notEqual(yes.wave.purpose,no.wave.purpose);assert.notEqual(run(0,{resources:'LOW'},{goal:'RECALL',clear_window:'OPEN'}).coach.planboard.wave.plan_id,'FAST_PUSH');")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 11, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4000:])
+AssertionError: 1 != 0 : /workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24
+    if(!value||Array.isArray(value)||typeof value!=='object'||Object.keys(value).sort().join('|')!==[...keys].sort().join('|'))throw Error('입력 항목을 확인해 주세요.');
+                                                                                                                               ^
+
+Error: 입력 항목을 확인해 주세요.
+    at exact (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:24:134)
+    at validate (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:30:5)
+    at Object.analyze (/workspace/worktrees/lol-coach-interactive/web_r4/loading-engine.js:251:21)
+    at run ([eval]:2:274)
+    at [eval]:3:16
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.972s
+
+FAILED (failures=10)

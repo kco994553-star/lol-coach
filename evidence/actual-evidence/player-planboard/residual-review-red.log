@@ -1,0 +1,40 @@
+F
+======================================================================
+FAIL: test_paired_plan_respects_period_and_resource_gate (tests_pregame.test_player_planboard.PlayerPlanboardTests.test_paired_plan_respects_period_and_resource_gate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 35, in test_paired_plan_respects_period_and_resource_gate
+    self.node("const b=run(2).coach.planboard.matchup_playbook,d=run(4).coach.planboard.matchup_playbook;assert(!b.theirs.means.includes('박치기(W)'));assert(!d.ours.means.includes('비전 이동(E)'));assert(!d.theirs.means.includes('사냥본능(R)'));assert(!d.theirs.look_for.includes('비전 이동(E)'));const spent=run(0,{enemy_key:'SPENT'}).coach.planboard.matchup_playbook;assert(!spent.theirs.means.includes('닻줄 견인(Q)로'));assert(spent.theirs.means.includes('다시'));for(const i of [0,2,3,4]){const x=run(i,{resources:'LOW'}).coach.planboard;assert.equal(x.matchup_playbook.ours.means,x.wave.combat);assert(x.matchup_playbook.ours.purpose.includes('수급'));}const absent=run(0,{}, {enemy_support:'ABSENT'}).coach.planboard.matchup_playbook;assert(!absent.theirs.means.includes('닻줄 견인'));assert(absent.theirs.means.includes('카이사'));const unknown=run(0,{wave:'UNKNOWN'}).coach.planboard;assert.equal(unknown.matchup_playbook.ours.means,unknown.wave.combat);")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_player_planboard.py", line 11, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4000:])
+AssertionError: 1 != 0 : node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(!d.theirs.look_for.includes('비전 이동(E)'))
+
+    at [eval]:3:221
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.110s
+
+FAILED (failures=1)
