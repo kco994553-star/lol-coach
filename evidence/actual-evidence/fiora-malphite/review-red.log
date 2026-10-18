@@ -1,0 +1,38 @@
+F
+======================================================================
+FAIL: test_fiora_low_unknown_trade_and_engagement_share_guarded_actions (tests_pregame.test_evidence_adoption.EvidenceAdoptionTests.test_fiora_low_unknown_trade_and_engagement_share_guarded_actions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_evidence_adoption.py", line 15, in test_fiora_low_unknown_trade_and_engagement_share_guarded_actions
+    self.node("for(const s of [{resources:'LOW'},{resources:'UNKNOWN'},{wave:'UNKNOWN'}]){const a=run(s,'OPPORTUNITY',1,'LEVEL6');for(const text of [a.trade.ours.start.join(' '),a.trade.ours.order.join(' '),...a.selected.engagements.flatMap(e=>e.order)])assert(!/대결투\\(R\\).*급소 접근/.test(text),'low/unknown must not keep R pressure order');}const a=run({},'BALANCED',1);for(const risk of ['LOSS_LIMIT','OPPORTUNITY'])assert.equal(run({},risk,1).selection.id,a.selection.id);const k=structuredClone(require('./web_r4/loading-knowledge.json'));delete k.knowledge_applications.E;const cat={...c,coaching_knowledge:k},x=E.exampleInput(cat,1),u=E.analyze(x,cat).coach;assert.equal(u.supported,false);assert(!/신비한 화살|비전 이동/.test(u.trade.ours.order.join(' '))); ")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_evidence_adoption.py", line 5, in node
+    r=subprocess.run(['node','-e',"const assert=require('assert/strict'),E=require('./web_r4/loading-engine.js'),C=require('./web_r4/loading-coach.js'),c=require('./web_r4/loading-data.json');function run(s={},risk='BALANCED',i=0,period='LEVEL1'){let x=E.exampleInput(c,i);x.schema_version='lol-coach-loading-input-v3';x.preferences={risk};x.scenario={standard:'lane-standard-v1',overrides:s};const r=E.analyze(x,c);r.coach=C.evaluate(r,c,x.scenario,period);return r.coach;}"+code],capture_output=True,text=True);self.assertEqual(r.returncode,0,r.stderr[-2200:])
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: low/unknown must not keep R pressure order
+    at [eval]:1:679
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.128s
+
+FAILED (failures=1)

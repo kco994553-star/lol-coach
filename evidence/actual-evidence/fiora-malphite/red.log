@@ -1,0 +1,77 @@
+FF.
+======================================================================
+FAIL: test_fiora_malphite_has_sourced_plan_not_unsupported_fallback (tests_pregame.test_evidence_adoption.EvidenceAdoptionTests.test_fiora_malphite_has_sourced_plan_not_unsupported_fallback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_evidence_adoption.py", line 11, in test_fiora_malphite_has_sourced_plan_not_unsupported_fallback
+    self.node("const a=run({},'BALANCED',1,'LEVEL3_5');assert.equal(a.matchup_id,'E','pictured matchup needs its own knowledge');assert.equal(a.supported,true);assert.equal(a.selected.metrics.SHORT.assessment,'ENEMY');assert.match(a.selected.metrics.SHORT.qualifier,/견제/);assert.equal(a.selected.metrics.ALLIN.assessment,'INSUFFICIENT');assert.match(a.planboard.headline,/수급|마나/);assert.match(a.planboard.playbook.theirs.means,/말파이트/);assert(!/카이사|신비한 화살/.test(JSON.stringify([a.trade,a.selected.action])));assert(a.evidence.sources.some(s=>s.author.includes('Anoying')));const ids=new Set(a.evidence.claim_ids);assert(a.selected.metrics.SHORT.claim_ids.every(id=>ids.has(id))); ")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_evidence_adoption.py", line 5, in node
+    r=subprocess.run(['node','-e',"const assert=require('assert/strict'),E=require('./web_r4/loading-engine.js'),C=require('./web_r4/loading-coach.js'),c=require('./web_r4/loading-data.json');function run(s={},risk='BALANCED',i=0,period='LEVEL1'){let x=E.exampleInput(c,i);x.schema_version='lol-coach-loading-input-v3';x.preferences={risk};x.scenario={standard:'lane-standard-v1',overrides:s};const r=E.analyze(x,c);r.coach=C.evaluate(r,c,x.scenario,period);return r.coach;}"+code],capture_output=True,text=True);self.assertEqual(r.returncode,0,r.stderr[-2200:])
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: pictured matchup needs its own knowledge
+
+null !== 'E'
+
+    at [eval]:1:487
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: null,
+  expected: 'E',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_fiora_period_and_wave_flow_keep_learned_spells_and_resource_costs (tests_pregame.test_evidence_adoption.EvidenceAdoptionTests.test_fiora_period_and_wave_flow_keep_learned_spells_and_resource_costs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_evidence_adoption.py", line 13, in test_fiora_period_and_wave_flow_keep_learned_spells_and_resource_costs
+    self.node("const one=run({},'BALANCED',1),six=run({},'BALANCED',1,'LEVEL6'),buy=run({},'BALANCED',1,'FIRST_PURCHASE');assert(!/응수\\(W\\).*사용|응수\\(W\\).*막는다/.test(one.selected.action),'Lv1 Q example cannot use W');assert.match(six.trade.ours.end.join(' '),/응수|후속|이탈/);assert.match(buy.selected.reason,/덤불|방어 구매/);assert.notEqual(one.planboard.wave.combat,six.planboard.wave.combat);assert.match(buy.planboard.playbook.ours.purpose,/수급|구매/);const incoming=run({wave:'INCOMING'},'BALANCED',1);assert.equal(incoming.wave.selected_plan_id,incoming.planboard.wave.plan_id);assert.equal(incoming.diagram.plan_id,incoming.planboard.wave.plan_id);assert.equal(incoming.planboard.wave.plan_id,'TRIM_RECEIVE');")
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_evidence_adoption.py", line 5, in node
+    r=subprocess.run(['node','-e',"const assert=require('assert/strict'),E=require('./web_r4/loading-engine.js'),C=require('./web_r4/loading-coach.js'),c=require('./web_r4/loading-data.json');function run(s={},risk='BALANCED',i=0,period='LEVEL1'){let x=E.exampleInput(c,i);x.schema_version='lol-coach-loading-input-v3';x.preferences={risk};x.scenario={standard:'lane-standard-v1',overrides:s};const r=E.analyze(x,c);r.coach=C.evaluate(r,c,x.scenario,period);return r.coach;}"+code],capture_output=True,text=True);self.assertEqual(r.returncode,0,r.stderr[-2200:])
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : node:assert:885
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /덤불|방어 구매/. Input:
+
+'개별 매치업 근거가 연결되지 않았다.'
+
+    at [eval]:1:699
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '개별 매치업 근거가 연결되지 않았다.',
+  expected: /덤불|방어 구매/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.290s
+
+FAILED (failures=2)

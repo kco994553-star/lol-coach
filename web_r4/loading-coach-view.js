@@ -79,7 +79,7 @@
         const trace = details('claim-trace-' + key + '-' + index, '자료 식별 · Trace');
         const pre = el('pre'); pre.textContent = JSON.stringify({ id: claim.id, basis: claim.basis, review: claim.review, sources: arr(evidence.sources).filter(s => arr(claim.source_ids).includes(s.id)).map(s => ({ id: s.id, url: s.url, excerpts: arr(s.excerpts).map(e => ({ id: e.id, sha256: e.sha256 })) })) }, null, 2); trace.append(pre); section.append(trace); wrap.append(section);
       });
-      if (/^[ABCD]$/.test(c.matchup_id)) { const a = el('a', '같은 근거로 학습하기 →'); a.href = './directions.html#coach-lesson-' + c.matchup_id; wrap.append(a); }
+      if (/^[ABCDE]$/.test(c.matchup_id)) { const a = el('a', '같은 근거로 학습하기 →'); a.href = './directions.html#coach-lesson-' + c.matchup_id; wrap.append(a); }
       return wrap;
     }
     function conditions() {
@@ -113,10 +113,11 @@
       return field;
     }
     function matrix() {
-      const c = coach(), wrap = el('div', null, 'coach-matrix-scroll'); wrap.tabIndex = 0; wrap.dataset.coachScroll = 'matrix'; wrap.setAttribute('role', 'region'); wrap.setAttribute('aria-label', '구간별 비교표 · 우리/상대는 조건부 우세, 부족은 자료 부족');
+      const c = coach(), reference=!!c.source_plan,wrap = el('div', null, 'coach-matrix-scroll'); wrap.tabIndex = 0; wrap.dataset.coachScroll = 'matrix'; wrap.setAttribute('role', 'region'); wrap.setAttribute('aria-label', '구간별 비교표 · 우리/상대는 조건부 우세, 부족은 자료 부족');
       const table = el('table', null, 'coach-matrix'), caption = el('caption', '동일한 표준 조건의 구간별 비교 · 실제 시간이나 승률이 아닙니다.'); table.append(caption);
       const head = el('thead'), tr = el('tr'); tr.append(el('th', '구간')); metrics.forEach(([, label]) => { const th = el('th', label); th.scope = 'col'; tr.append(th); }); head.append(tr); table.append(head);
-      const body = el('tbody'); arr(c.periods).forEach(row => { const r = el('tr'); r.dataset.selected = String(row.id === c.selected_period); const th = el('th'); th.scope = 'row'; const b = button(row.label, 'period-' + row.id, () => change({ period: row.id })); b.dataset.coachChange = ''; b.setAttribute('aria-pressed', String(row.id === c.selected_period)); th.append(b); r.append(th); metrics.forEach(([key]) => { const metric = row.metrics?.[key] || {}, td = el('td', ({ALLY:'우리',ENEMY:'상대',CONTESTED:'경합',INSUFFICIENT:'부족'})[metric.assessment] || '부족'); if(metric.evidence_kind==='MECHANISM_INFERENCE')td.textContent+=' · '+(metric.qualifier||'조건부')+' 추론';td.dataset.assessment = metric.assessment || 'INSUFFICIENT'; if (metric.scope || metric.reason) td.title = format([metric.scope, metric.reason].filter(Boolean).join(' · ')); r.append(td); }); body.append(r); }); table.append(body); wrap.append(table); return wrap;
+      const body = el('tbody'); arr(c.periods).forEach(row => { const r = el('tr'); r.dataset.selected = String(row.id === c.selected_period); const th = el('th'); th.scope = 'row'; const b = reference?el('span',row.label):button(row.label, 'period-' + row.id, () => change({ period: row.id })); b.dataset.coachChange = ''; b.setAttribute('aria-pressed', String(row.id === c.selected_period)); th.append(b); r.append(th); metrics.forEach(([key]) => { const metric = row.metrics?.[key] || {}, td = el('td', ({ALLY:'우리',ENEMY:'상대',CONTESTED:'경합',INSUFFICIENT:'부족'})[metric.assessment] || '부족'); if(metric.evidence_kind==='MECHANISM_INFERENCE')td.textContent+=' · '+(metric.qualifier||'조건부')+' 추론';td.dataset.assessment = metric.assessment || 'INSUFFICIENT'; if (metric.scope || metric.reason) td.title = format([metric.scope, metric.reason].filter(Boolean).join(' · ')); r.append(td); }); body.append(r); }); table.append(body); wrap.append(table);
+      if(reference){const section=el('section',null,'coach-phase-plans');section.append(el('h3','구간별 기본 계획'),el('p','공략에서 채택한 계획입니다. 교환 우열은 조건·견해 차이가 있어 별도로 남겼습니다.','coach-muted'));const t=el('table',null,'coach-stat-table'),h=el('tr');['구간','기본 목적'].forEach(x=>h.append(el('th',x)));t.append(h);for(const row of arr(c.periods)){const r=el('tr'),head=el('th');r.dataset.selected=String(row.id===c.selected_period);const b=button(row.label,'period-'+row.id,()=>change({period:row.id}));b.dataset.coachChange='';b.setAttribute('aria-pressed',String(row.id===c.selected_period));head.append(b);r.append(head,el('td',c.source_plan.periods[row.id]?.purpose||row.action));t.append(r);}section.append(t);const raw=details('strength-data','교전 우열 표 · 아직 확정하지 않은 부분');raw.append(wrap);section.append(raw);return section;}return wrap;
     }
     function growth() {
       const wrap = el('div', null, 'coach-growth'); arr(coach().growth).forEach(event => {
@@ -251,7 +252,7 @@
     function lesson() {
       const c = coach(), l = c.lesson; if (!l) return el('div'); const d = details('lesson', '한 가지 확인 · 같은 지식으로 학습'); d.append(el('p', [l.role, l.type, l.plan].filter(Boolean).join(' → '), 'coach-muted'), el('h3', l.question));
       arr(l.options).forEach((option, index) => { const b = button(option, 'lesson-' + index, () => { const answer = d.querySelector('.coach-answer'); answer.hidden = false; answer.textContent = format((index === l.answer ? '맞습니다. ' : '이 선택을 다시 살펴보세요. ') + plain(l.explanation)); }); d.append(b); }); const answer = el('p', '', 'coach-answer'); answer.setAttribute('role', 'status'); answer.hidden = true; d.append(answer);
-      if (/^[ABCD]$/.test(c.matchup_id)) { const a = el('a', '학습 페이지에서 계속 →'); a.href = './directions.html#coach-lesson-' + c.matchup_id; d.append(a); } return d;
+      if (/^[ABCDE]$/.test(c.matchup_id)) { const a = el('a', '학습 페이지에서 계속 →'); a.href = './directions.html#coach-lesson-' + c.matchup_id; d.append(a); } return d;
     }
     function openZoom(opener) { zoomOpener = opener; state.zoom = true; const d = host.querySelector('.coach-zoom'); if (d && !d.open) { d.showModal(); d.querySelector('button')?.focus(); } }
     function zoomDialog() {
@@ -272,7 +273,7 @@
       const matchup=el('div',null,'coach-matchup-portraits');
       const rosterLane=arr(b.overall?.lanes).find(l=>l.position===current.input.own_position);
       [['우리',rosterLane?.allies],['상대',rosterLane?.enemies]].forEach(([label,ids])=>{const team=el('div',null,'coach-board-team');team.append(el('span',label));arr(ids).forEach(id=>{if(root.LoadingMap?.portrait)team.append(root.LoadingMap.portrait(catalog.champions[id],id===current.input.own_champion));team.append(el('span',catalog.champions[id]?.name||id));});matchup.append(team);});hero.append(matchup,el('h2',b.headline||c.title));
-      const applied=c.knowledge_application;if(applied?.supported)hero.append(el('p',applied.active?(c.matchup_id==='C'?'기전·공략 종합 추론 · 근접 접촉 유지 조건':'공략 판단 기반 · 확보 전 처리 / 확보 후 쌓기'):'조건 변경으로 기본 근거 적용 범위 제한','coach-evidence-kind'));
+      const applied=c.knowledge_application;if(applied?.supported)hero.append(el('p',applied.active?(applied.display_label||(c.matchup_id==='C'?'기전·공략 종합 추론 · 근접 접촉 유지 조건':'공략 판단 기반 · 확보 전 처리 / 확보 후 쌓기')):'조건 변경으로 기본 근거 적용 범위 제한','coach-evidence-kind'));
       const tiles=el('div',null,'coach-board-tiles');
       const compact=(title,lead,reason,key)=>{const tile=button('', 'board-'+key,()=>{if(key==='overall'){const d=host.querySelector('details[id$="-overall-plan"]');d.open=!d.open;d.querySelector('summary').focus({preventScroll:true});}else{state.tab=key;render();host.querySelector('[role=tabpanel]')?.scrollIntoView({block:'start',behavior:'instant'});}});tile.className='coach-board-tile';tile.setAttribute('aria-label',title+' 상세: '+lead);tile.append(el('span',title,'coach-tile-label'),el('span',lead,'coach-tile-copy'),el('span','↗','coach-tile-arrow'));tiles.append(tile);};
       compact('라인전',b.brief?.lane,'','lane');
