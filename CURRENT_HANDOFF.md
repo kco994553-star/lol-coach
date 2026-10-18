@@ -1,3 +1,13 @@
+# Plain Korean and matchup context — active writer
+- run_token: `main-20261018-plain-context`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/plain-context-20261018`
+- base_main: `11b115b94cf83caaac278c389cfe49a6b3effe37`
+- scope: plain authored strategy wording; lane/macro/fight matchup-composition explanation from existing contextual source signals. No new source/provider calls, objective strength/legacy grades preserved.
+
+---
+
 # Loading direction and evidence bridge delivered — writer released
 - run_token: `main-20261018-loading-direction`
 - status: `COMPLETED`
