@@ -2,6 +2,17 @@
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
 - writer_active: true
+- owner_branch: `work/gameplay-results-20261018`
+- current_main: `0e1be2e0044708aad42372d0c8a3056a9ff799a3`
+- active_pr: 78
+- scope: PR77 product/main mandatory3 PASS; actual Pages39082477385/74file HTTPS/PCmobile25backgrounds and3gameplay cards PASS. Results/Handoff-only exact gates remain; no product republish, provider/game/imagegen0. Preserve histories/N0/Windowsblocked.
+
+---
+
+# Latest common execution claim — RUNNING
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
 - owner_branch: `work/gameplay-cards-20261018`
 - current_main: `58ad8e389142016d7c9a06d8746778f64b762770`
 - scope: Replace three decorative cards with real LoL gameplay screenshots and add20 official backgrounds to existing5. Preserve provenance/old sources/session/input/private API/tactics/provider budgets; no AI generation/Gemini/new match collection. Normal requiredCI/Pages/public proof before completion.
