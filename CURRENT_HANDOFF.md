@@ -1,3 +1,13 @@
+# Loading direction and evidence bridge — active writer
+- run_token: `main-20261018-loading-direction`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-direction-20261018`
+- base_main: `1dd8b3ffa36c7ab024cf814c2a0b4c43b654313c`
+- scope: four L0 conclusions and max3 changes; optional methods; existing Riot aggregates + attributed guide counterplay bridge; no new provider/video/game/paid calls or legacy grade changes.
+
+---
+
 # Fiora–Malphite source-backed plans delivered — writer released
 - run_token: `main-20261018-fiora-malphite`
 - status: `COMPLETED`
