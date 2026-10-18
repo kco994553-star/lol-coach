@@ -1,3 +1,11 @@
+# Actual gameplay cards — published completion
+- PR77 product source0e1be2e0044708aad42372d0c8a3056a9ff799a3, artifact3f328ce8ab11ad6a5e6db9a18473727ec2ecf1ff, Pages39082477385 actualSUCCESS. Feature/main required3 PASS; actual HTTPS74files+root/build-info/nojekyll hashes, PC1440/mobile39025hero/session/input/focus/scroll/failure/card3destinations/guest10pick/map PASS.
+- Current3cards use actual LoL wave/Riot Ryze movement/ElderDragon combat; no verified professional-match identity claimed. Sources/publishers/hash/rights boundaries in config/gameplay_cards_assets.json; previous AI assets/history retained. Official20extra backgrounds+existing5=25, original5 unchanged. No AI label added.
+- Proof/report/screens: evidence/actual-evidence/gameplay-cards/publication/result.md. Initial capture timing and corrected final evidence preserved. Independent review no material findings, source masks/first-only/session guards retained. Previous pro JSON byte-identical.
+- No tactical/engine/privateAPI/Windows/manual/provider quota change; Gemini/imagegen/newgames0/paidplan0. Advice7/AUTO30HOLD20USER0/Frozen350/holds/failures/ledgers/N0/30secunmeasured/WindowsBLOCKED_EXTERNAL retained. Results-only normal merge/exact gates next; no product republish.
+
+---
+
 # Actual gameplay card /25background intake — 2026-10-18
 - Latestmain58ad8e3/prior51file public receipts reused. User wants3 real LoL gameplay cards and20extra backgrounds. Selected actual wave/official Ryze relocation/ElderDragon combat, no verified pro-match identity or new expert/tactical fact. Source/publisher/hash/provenance in config/gameplay_cards_assets.json, previous sources/AI assets retained.
 - Original5+official20=25; official names/slots/version verified. Strict fixed25paths, first-selected-only/session/cycle/input/focus/scroll guards. Visible cards eager; not preload all25. Initial blank PC capture timing retained; final await decode and actual painted screens verified.

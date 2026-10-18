@@ -1,3 +1,10 @@
+# Latest actual gameplay card publication
+- DONE: PR77 product0e1be2e, artifact3f328ce, actualPages/HTTPS/PCmobile25backgrounds/3realgamecards proofs. See publication/result.md.
+- READY: results/Handoff-only normal merge and exact remote/main required gates; no repeated product/browser/source collection.
+- SEPARATE: existing source questions/video allowed-window/privateAPI/realWindows dependencies; no new user review burden.
+
+---
+
 # Current actual gameplay /25hero work
 - READY: requiredCI→normalPR→postmainCI→Pages→actual74file/PCmobile verification, source/provenance/failure history retained.
 - No coaching/engine/video budget expansion; prior completed checks reused outside changed display/assets.
