@@ -1,3 +1,14 @@
+# Loading Coach remaining start-key display — PR86
+- run_token: `main-20261017-exchange-preference`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/loading-coach-contact-label-20261018`
+- current_main: `f28af0514db69298a41f34b45268ff7645ba9f0e`
+- latest_feature_head: `ef665de6d921edc04a24c35c0cd562f1f6ee0d25` PR86
+- scope: Canonical display only for final authored A reserve/C sustain/contact start-key mentions. Tactical meaning/conditions/source untouched; independent review no errors. PR85 main all3 SUCCESS; sourcef28 export991 is PREPARED_NOT_PUBLISHED superseded. Actual public8ed/artifact457 Pages39088318466/79hash/PCmobile PASS retained. Wait86 exactCI/normalmerge/exactmain→finalPages/public display→results-only. Provider/video/game/paid0; N0/unmeasured/Windowsblocked preserved.
+
+---
+
 # Loading Coach public verified — final growth skill labels PR85
 - run_token: `main-20261017-exchange-preference`
 - status: `RUNNING`
