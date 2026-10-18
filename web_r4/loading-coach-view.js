@@ -172,7 +172,7 @@
       const d=details('execution-steps','처리 → 응징 → 다음 선택');d.append(steps);section.append(d,lineDiagram(false));
       if(diagramData().supported){const b=button('도식 크게 보기','open-zoom',()=>openZoom(b));section.append(b);}
       const procedure=details('wave-procedure','밀 수 있는가 / 밀어야 하는가 · 원리와 중단');
-      procedure.append(block('밀 수 있는가',board().lane?.can_push),block('밀어야 하는가',board().lane?.should_push));
+      procedure.append(block('상대의 웨이브 대응',w.opponent_response),block('이번 목적의 성공 기준',w.success),block('밀 수 있는가',board().lane?.can_push),block('밀어야 하는가',board().lane?.should_push));
       if(legacy)[['시작 조건','start'],['처리 방식','processing'],['기술 사용','skills'],['남길 자원','reserve'],['완료 확인','complete'],['중단 조건','abort'],['다음 행동','next'],['상대 접근에 대한 우리 대응','punishment'],['이득 전환','conversion'],['비용','costs']].forEach(([label,key])=>procedure.append(block(label,legacy[key])));
       section.append(procedure,why(w.claim_ids,'wave'));return section;
     }
@@ -250,9 +250,9 @@
       const tiles=el('div',null,'coach-board-tiles');
       const compact=(title,lead,reason,key)=>{const tile=button('', 'board-'+key,()=>{if(key==='overall'){const d=host.querySelector('details[id$="-overall-plan"]');d.open=!d.open;d.querySelector('summary').focus({preventScroll:true});}else{state.tab=key;render();host.querySelector('[role=tabpanel]')?.scrollIntoView({block:'start',behavior:'instant'});}});tile.className='coach-board-tile';tile.setAttribute('aria-label',title+' 상세: '+lead);tile.append(el('span',title,'coach-tile-label'),el('span',lead,'coach-tile-copy'),el('span','↗','coach-tile-arrow'));tiles.append(tile);};
       compact('라인전',b.brief?.lane,'','lane');
-      compact('전체 구도',arr(b.overall?.lanes).map(l=>l.label+' '+({ALLY:'우리 우세',ENEMY:'상대 우세',CONTESTED:'경합',INSUFFICIENT:'자료 부족'})[l.priority]).join(' · '),'','overall');
+      compact('우리·상대 게임플랜','우리: '+b.composition?.ours+'\n상대: '+b.composition?.theirs,'','overall');
       compact('운영',b.brief?.operations,'','operations');compact('한타',b.brief?.fight,'','fight');hero.append(tiles);
-      const overallDetails=details('overall-plan','기본 가정 · 전체 구도 · 지원 범위');arr(b.overall?.lanes).forEach(l=>overallDetails.append(block(l.label,l.reason)));overallDetails.append(el('p',b.overall?.risk));arr(b.overall?.jungle_links).forEach(l=>overallDetails.append(block(({TOP:'탑',MID:'미드',BOTTOM:'바텀'})[l.position]+' 연계 후보',l.means?l.means+' · '+l.condition:l.condition)));hero.append(overallDetails);
+      const overallDetails=details('overall-plan','기본 가정 · 전체 구도 · 지원 범위');overallDetails.append(block('우리 계획',b.composition?.ours_full),block('상대의 가능한 계획',b.composition?.theirs_full),block('내 역할',b.composition?.role));arr(b.overall?.lanes).forEach(l=>overallDetails.append(block(l.label,l.reason)));overallDetails.append(el('p',b.overall?.risk));arr(b.overall?.jungle_links).forEach(l=>overallDetails.append(block(({TOP:'탑',MID:'미드',BOTTOM:'바텀'})[l.position]+' 연계 후보',l.means?l.means+' · '+l.condition:l.condition)));hero.append(overallDetails);
       const shortReminders=[b.reminders?.[0],'교환 뒤 처리·대응 자원을 남긴다.',b.growth?'성장 뒤에도 남는 견제·연결을 활용한다.':'정글 미확인: 처리와 전진 폭을 따로 고른다.'];hero.append(block('기억할 것 3개',shortReminders,'coach-summary-exceptions'));
       const quick=el('div',null,'coach-quick');arr(b.quick_scenarios).forEach(q=>{const n=button(q.label,'quick-'+q.id,()=>change({scenario:{...scenario(),overrides:{...scenario().overrides,...q.scenario}},planning:{...planning(),overrides:{...planning().overrides,...q.planning}}}));n.dataset.coachChange='';quick.append(n);});hero.append(quick);
       hero.append(el('p','비교용 기본 가정 · '+c.context?.patch?.label,'coach-muted'));

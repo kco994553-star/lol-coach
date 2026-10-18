@@ -74,7 +74,8 @@
     if(index===2){teams[0][3]='Yunara';teams[0][4]='Lulu';teams[1][4]='Alistar';}
     if(index===3){teams[0][0]='Darius';teams[1][0]='Ambessa';}
     if(index===4)teams[0][3]='Ezreal';
-    return {allies:teams[0].map((champion,i)=>({champion,position:POSITIONS[i]})),enemies:teams[1].map((champion,i)=>({champion,position:POSITIONS[i]})),own_champion:index===1?'Fiora':index===2?'Yunara':index===3?'Darius':index===4?'Ezreal':'Caitlyn',own_position:[1,3].includes(index)?'TOP':'BOTTOM',side:'BLUE',patch:'16.20',opponent_mode:'ASSIGNED',lane_opponent:null};
+    if(index===5){teams[0][3]='Kaisa';teams[0][4]='Alistar';teams[1][3]='Yunara';teams[1][4]='Lulu';}
+    return {allies:teams[0].map((champion,i)=>({champion,position:POSITIONS[i]})),enemies:teams[1].map((champion,i)=>({champion,position:POSITIONS[i]})),own_champion:index===5?'Kaisa':index===1?'Fiora':index===2?'Yunara':index===3?'Darius':index===4?'Ezreal':'Caitlyn',own_position:[1,3].includes(index)?'TOP':'BOTTOM',side:'BLUE',patch:'16.20',opponent_mode:'ASSIGNED',lane_opponent:null};
   }
   function fromDraft(draft,catalog){
     if(!draft||draft.phase!=='PRE_GAME'||!Array.isArray(draft.slots)||draft.slots.length!==10)throw Error('완료된 경기 전 10픽만 가져올 수 있습니다. 수동 입력을 사용할 수 있습니다.');

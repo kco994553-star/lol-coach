@@ -1,0 +1,49 @@
+EFF
+======================================================================
+ERROR: test_malformed_game_schema_and_huge_numbers_return_structured_failure (tests_pregame.test_riot_game_info.RiotGameInfoTests.test_malformed_game_schema_and_huge_numbers_return_structured_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_riot_game_info.py", line 32, in test_malformed_game_schema_and_huge_numbers_return_structured_failure
+    self.assertEqual(service.read()['status'],'DISCONNECTED');self.assertEqual(service.read()['status'],'DISCONNECTED')
+                     ^^^^^^^^^^^^^^
+  File "/workspace/worktrees/lol-coach-interactive/coach_v1/game_info.py", line 48, in read
+    raw=self.transport(GAME_URL,2_000_000,2,ca=self.ca);snap=project(strict_json(raw),received_at=now)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/worktrees/lol-coach-interactive/coach_v1/game_info.py", line 34, in project
+    return {'format':'lol-coach-game-observation-v1','source':GAME_URL,'source_kind':'LOCAL_UNVERIFIED','received_at':received_at,'game_time':stamp,'map_number':game.get('mapNumber') if type(game.get('mapNumber')) is int else None,'cash':cash if number(cash)else None,'earned_gold':None,'players':players,'players_observed':isinstance(rows,list),'player_omissions':omitted,'events':accepted,'event_omissions':bad,'event_conflicts':conflicts,'timers':{'camps':None,'objectives':None,'ally_ultimate':None},'patch':None,'coaching_enabled':False,'decision_eligible':False,'freshness_verified':False}
+                                                                                                                                                                                               ^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+======================================================================
+FAIL: test_slow_failure_is_shared_by_waiting_readers (tests_pregame.test_riot_game_info.RiotGameInfoTests.test_slow_failure_is_shared_by_waiting_readers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_riot_game_info.py", line 39, in test_slow_failure_is_shared_by_waiting_readers
+    self.assertEqual(len(calls),1);self.assertTrue(all(r['status']=='DISCONNECTED'for r in results))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 3 != 1
+
+======================================================================
+FAIL: test_verified_champion_names_normalize_without_retaining_arbitrary_names (tests_pregame.test_riot_game_info.RiotGameInfoTests.test_verified_champion_names_normalize_without_retaining_arbitrary_names)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-interactive/tests_pregame/test_riot_game_info.py", line 43, in test_verified_champion_names_normalize_without_retaining_arbitrary_names
+    self.assertEqual([p['champion']for p in x['players']],['Kaisa','Chogath','MissFortune','Kaisa']);self.assertEqual(x['player_omissions'],1);self.assertNotIn('private',json.dumps(x))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['privateName123'] != ['Kaisa', 'Chogath', 'MissFortune', 'Kaisa']
+
+First differing element 0:
+'privateName123'
+'Kaisa'
+
+Second list contains 3 additional elements.
+First extra element 1:
+'Chogath'
+
+- ['privateName123']
++ ['Kaisa', 'Chogath', 'MissFortune', 'Kaisa']
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.023s
+
+FAILED (failures=2, errors=1)
