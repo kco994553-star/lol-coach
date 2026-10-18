@@ -1,3 +1,24 @@
+# Action briefs and range/cohesion — active writer
+- run_token: `main-20261018-action-briefs-range`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/action-briefs-range-20261018`
+- base_main: `ee1d0ee16938e9a8ae0e3fe960f3e7b0d1339c83`
+- scope: five linked action items first in lane/macro/fight, typed uncertainty without changing objective evidence; official basicattack-range reference circles and explicit illustrative cohesion/scatter/isolation geometry. Preserve completed formation publication/stat-policy/old scopes/history/budgets/Windows.
+
+---
+
+# Teamfight formation — completed
+- run_token: `main-20261018-teamfight-formation`
+- status: `COMPLETED`
+- writer_active: false
+- final_main: `ee1d0ee16938e9a8ae0e3fe960f3e7b0d1339c83` (PR107/108)
+- product_main: `d6230fee829235a1b7ef12dfe0f13f63d8f0bdb1`; public `6497d334bec4c03636878ae0b4f380894feffc1b`, nativePages39121022230 actualSUCCESS.
+- Feature/product-main/results/final-main required3PASS; final39121248815/39121248821 source-bound current_sources=true and completed tests/browser reused. ActualHTTPS9hashes/root/buildinfo/nojekyll/pro/riot exact; PCmobile320/200% and scene/step/actor/zoom/focus/unsupported/studyPASS.
+- Shared conditional10portrait frontal/flank model, first learning lesson, oldmaps/6scenes preserved. Future Master+ seed-only intake before provider, no allparticipant historical rank guarantee, no fresh sample. N0/30secUNMEASURED/WindowsBLOCKED_EXTERNAL/source/grading/budgets preserved. Final proof evidence/actual-evidence/teamfight-formation/final-handoff.json on common coordination branch.
+
+---
+
 # Teamfight formation and future statistics — active writer
 - run_token: `main-20261018-teamfight-formation`
 - status: `RUNNING`
