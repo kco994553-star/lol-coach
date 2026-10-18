@@ -176,7 +176,7 @@
       ours.look_for = low || unknown ? '닿는 막타·경험치와 걸어서 돌아올 공간을 얻는다.' : recallOpen ? '상대가 처리를 방해하지 않는 여유를 구매 시간으로 바꾼다.' : '상대가 양보한 CS·처리 시간을 얻는다.';
       ours.switch_when = changeIf;
     }
-    if(reference){Object.assign(ours,{purpose,means:combat,look_for:'말파이트의 마나 부족·반격 기술 소모와 닿는 급소를 CS·공간 이득으로 바꾼다.',avoid:reference.selected.reserve,switch_when:changeIf});theirs=clone(reference.selected.opponent||reference.opponent);}
+    if(reference){Object.assign(ours,{purpose,means:combat,look_for:'말파이트의 마나 부족·반격 기술 소모와 닿는 급소를 CS·공간 이득으로 바꾼다.',avoid:reference.selected.reserve,switch_when:changeIf});theirs=clone(reference.selected.opponent||reference.opponent);theirs.purpose=theirs.purpose.replace(/^Q 견제/,skill('Malphite','Q')+' 견제');}
     if (absent) {
       ours.means = combat;
       theirs.means = name(slot('enemies', 'BOTTOM')) + '만 남은 부재 예시다. 지원 없는 진입 대신 닿는 막타와 퇴로를 확보한다.';
