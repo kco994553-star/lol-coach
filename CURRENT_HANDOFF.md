@@ -1,3 +1,13 @@
+# Gameplan condition-response cards — actual public completion
+- PR117 product `cf5907466483f887bd8b89aaf869352056c12fa3`; required PR/exact-product-main3PASS. Artifact `dee4d0862c57c65620a9b763ebae2811f19b748f`; nativePages392149521523SUCCESS; HTTPS/root/build-info/pro/riot verified.
+- Gold portrait/trigger/action with keep/stop/evidence. Lane A key-spent preview/applied result share combat precedence; compare/UNKNOWN reset retains other assumptions. Operations delayed join/side fallback; fight follow-up/protection loss, actual role-specific trigger.
+- Unsupported Ahri lane retains general scope, no copied Nautilus response. Operations/fight examples do not imply live detection, new observed fields or enemy skill availability. All five actions, legacy details, maps/formation/zoom/navigation and risk/strength separation preserved.
+- 74 affected checks; actual public PC/mobile apply/reset/refresh/low-resource/role-change/screens. Evidence evidence/actual-evidence/gameplan-conditions/publication/result.md. Local probe inventory failure preserved/corrected without relaxing rules. Final remote source binding is authoritative.
+- N0/30secUNMEASURED/WindowsBLOCKED_EXTERNAL; advice7/AUTO30/HOLD20/USER0/Frozen350/raw/holds/failures/quotas/Master+ unchanged; provider/game/video/paid0. Results-only finalCI and ownership release follow without identical product republish.
+- Next: source-scoped macro/fight enemy-spell-spent branches and remaining matchup/ratio evidence; no fabricated ratios.
+
+---
+
 # Gameplan condition-response cards — source work
 - Base main591953e and completed PR115/116 visual fidelity reused. Single writer main-20261019-gameplan-conditions.
 - Additive same-report conditional responses: lane spell-spent preview shares actual combat precedence; operations delayed join/side fallback; fight follow-up and lost protection. Conditional examples, not observed or automatically applied fight state.
