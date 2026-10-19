@@ -1,3 +1,14 @@
+# Gameplan condition-response cards — completed
+- run_token: `main-20261019-gameplan-conditions`
+- status: `COMPLETED`
+- writer_active: false
+- PR117/118 merged; final main `8d7f3d11d9b29b9cf1d05568d004a52395fdaedf`, final CI3 PASS with unchanged product checks reused.
+- Product `cf5907466483f887bd8b89aaf869352056c12fa3`; artifact `dee4d0862c57c65620a9b763ebae2811f19b748f`; native Pages3 PASS, HTTPS hashes/pro/riot verified, actual public PC/mobile condition apply/reset/refresh/role gates PASS.
+- Report: evidence/actual-evidence/gameplan-conditions/publication/result.md on main. Final source/CI proof and logs below on this claim branch; no identical product redeploy.
+- Source-bound trigger/action/keep/stop cards; lane comparison shares combat rule; macro/fight remain hypothetical examples. Knowledge/accuracy not promoted; N0/30secUNMEASURED/WindowsBLOCKED_EXTERNAL. Provider/game/video/paid0; protected histories preserved.
+
+---
+
 # Gameplan condition-response cards — active writer
 - run_token: `main-20261019-gameplan-conditions`
 - status: `RUNNING`
