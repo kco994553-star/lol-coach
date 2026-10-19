@@ -1,3 +1,13 @@
+# Gameplan actionable priorities — active writer
+- run_token: `main-20261019-gameplan-priorities`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/gameplan-priorities-20261019`
+- base_main: `8d7f3d11d9b29b9cf1d05568d004a52395fdaedf`
+- Scope: source-bound lane space gain, carry macro flank awareness and fight target/escape priorities; same summaries/details/condition cards. No new observations, matchup wins, provider or paid calls. Verify, publish and update Handoff.
+
+---
+
 # Gameplan condition-response cards — completed
 - run_token: `main-20261019-gameplan-conditions`
 - status: `COMPLETED`
