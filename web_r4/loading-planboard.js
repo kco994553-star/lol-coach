@@ -388,7 +388,7 @@
         '합류가 늦고 미니언도 많이 놓친다면',operations.concede,
         operations.connection,operations.fallback,
         ['operations.concede','operations.connection','operations.fallback'],[self,ownSupport!==self?ownSupport:null])],
-      fight:[condition('fight','FOLLOWUP_WINDOW','아군이 묶은 적에게 함께 공격할 수 있다면',
+      fight:[condition('fight','FOLLOWUP_WINDOW',self==='Caitlyn'&&controllers.length?'아군이 묶은 적에게 함께 공격할 수 있다면':'아군과 같은 대상을 공격할 수 있다면',
         fight.start,fight.target,fight.stop,['fight.start','fight.target','fight.stop'],[self]),
         condition('fight','CONNECTION_LOST','아군 보호가 멀어지거나 옆에서 적이 접근한다면',
         fight.stop,fight.setup,'아군 보호와 퇴로가 다시 이어지기 전에는 낮은 체력의 적을 쫓지 않는다.',['fight.stop','fight.setup','fight.target'],[self])]
