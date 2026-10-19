@@ -325,6 +325,8 @@ class PregameHandler(Handler):
             '/loading-formation.js':('loading-formation.js','text/javascript; charset=utf-8'),
             '/formation-ranges.js':('formation-ranges.js','text/javascript; charset=utf-8'),
             '/loading-coach.js':('loading-coach.js','text/javascript; charset=utf-8'),
+            '/loading-presentation.js':('loading-presentation.js','text/javascript; charset=utf-8'),
+            '/loading-presentation.css':('loading-presentation.css','text/css; charset=utf-8'),
             '/loading-coach-view.js':('loading-coach-view.js','text/javascript; charset=utf-8'),
             '/loading-coach.css':('loading-coach.css','text/css; charset=utf-8'),
             '/loading-knowledge.json':('loading-knowledge.json','application/json; charset=utf-8'),

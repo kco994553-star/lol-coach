@@ -37,6 +37,45 @@
   let exploration = null;
   let coachView = null;
   let preference = 'BALANCED';
+  let artwork = {assets:[]}, detailArea = null, restoring = false, routeGroup = null;
+  const savedPlanKey = 'lol-coach-loading-plan-v1';
+  function saveRoute(detail=detailArea, push=false) {
+    if(!report || !window.LoadingPresentation)return;
+    const hash=window.LoadingPresentation.encode(report.input,report.coach.selected_period||'LEVEL1',detail);
+    routeGroup=routeGroup||history.state?.planGroup||String(Date.now())+Math.random().toString(36).slice(2);
+    const state={...(history.state||{}),planGroup:routeGroup,planDetail:!!detail,baseY:push?window.scrollY:(history.state?.baseY||0),fromPlan:push?true:history.state?.fromPlan||false};
+    if(push)history.pushState(state,'',hash);else history.replaceState(state,'',hash);
+    try{sessionStorage.setItem(savedPlanKey,hash);}catch(_){/* URL remains sufficient. */}
+  }
+  function navigateDetail(detail) {
+    const wasDetail=!!detailArea;detailArea=detail;
+    if(detail)saveRoute(detail,!wasDetail);
+    else if(history.state?.fromPlan&&history.state?.planDetail)history.back();
+    else saveRoute(null);
+  }
+  function restoreRoute(event) {
+    if(!catalog||restoring)return;
+    try {
+      let route=window.LoadingPresentation.decode(location.hash);
+      if(!route)return;
+      if(event?.type==='popstate'&&report&&routeGroup&&history.state?.planGroup===routeGroup){route={...route,input:report.input,period:report.coach.selected_period};detailArea=route.detail;saveRoute(route.detail);}
+      routeGroup=history.state?.planGroup||null;
+      if(report&&coachView&&!$('loading-results').hidden&&JSON.stringify(route.input)===JSON.stringify(report.input)&&route.period===report.coach.selected_period){detailArea=route.detail;coachView?.setPanel(detailArea);return;}
+      restoring=true;
+      const next=window.LoadingStrategy.analyze(route.input,catalog);
+      if(!next.coach.periods.some(p=>p.id===route.period)&&!next.coach.growth.some(p=>p.id===route.period))throw Error('이 조합에서 지원하지 않는 선택 구간입니다.');
+      next.coach=window.LoadingCoach.evaluate(next,catalog,next.input.scenario,route.period);
+      report=next;preference=next.input.preferences?.risk||'BALANCED';detailArea=route.detail;fillForm(next.input);renderReport();$('input-panel').open=false;
+      message('공유한 조합과 선택 구간을 복원했습니다.');
+    }catch(e){report=null;coachView?.destroy();coachView=null;$('loading-results').hidden=true;$('input-panel').open=true;document.body.classList.remove('plan-ready');message(e.message||'게임플랜 링크를 읽을 수 없습니다.','error');}
+    finally{restoring=false;}
+  }
+  window.addEventListener('popstate',restoreRoute);
+  window.addEventListener('hashchange',()=>{
+    if(location.hash.startsWith('#plan=')){restoreRoute();return;}
+    const target=document.getElementById(location.hash.slice(1));
+    if(target&&$('loading-legacy-details').contains(target)){$('loading-legacy-details').open=true;target.scrollIntoView({block:'start',behavior:'auto'});}
+  });
 
   function display(value, options) {
     const input = report && report.input || {};
@@ -158,6 +197,8 @@
   function stale() {
     if (filling) return;
     updateRosterOptions();
+    document.body.classList.remove('plan-ready');
+    if(location.hash.startsWith('#plan='))history.replaceState(null,'',location.pathname+location.search);
     if (report) { $('loading-results').hidden = true; if(coachView)coachView.destroy();coachView=null; if (exploration) exploration.destroy(); exploration = null; }
     if (report) message('입력이 바뀌었습니다. ‘이번 판 방향 보기’를 눌러 새 픽과 조건을 반영하세요.', 'stale');
     else message('10개 픽과 내 챔피언·포지션을 선택하면 분석할 수 있습니다.');
@@ -381,7 +422,14 @@
     entries(catalog.assets).forEach(asset => { const item = node('div', 'fact-card'); item.append(node('p', 'source-note', readable(asset.path || asset.local_path || asset.id || asset.name)), node('code', 'fact-hash', '원본 URL · ' + (asset.url || asset.source_url || asset.requested_url || '자료 목록 참조')), node('code', 'fact-hash', 'SHA-256 · ' + (asset.sha256 || '미확인'))); assets.append(item); });
     target.append(details('지도·초상화 자산의 자료 기록', assets));
   }
+  function applyLegacyPreference(risk) {
+    const period=report.coach.selected_period;
+    const next=window.LoadingStrategy.analyze({...report.input,preferences:{risk}},catalog);
+    next.coach=window.LoadingCoach.evaluate(next,catalog,next.input.scenario,period);
+    preference=risk;report=next;saveRoute();coachView?.update(next);return next;
+  }
   function renderReport() {
+    document.body.classList.add('plan-ready');
     const summary = report.summary || {};
     const representative = report.lane && report.lane.matchup_id === 'Caitlyn_Lux__Kaisa_Nautilus_v2';
     const representativeAliases = representative ? { aliases: [{ text: '덫', champion: 'Caitlyn', slot: 'W' }] } : {};
@@ -394,19 +442,16 @@
     $('report-teams').replaceChildren(roster(report.input.allies, false, report.input.own_champion), roster(report.input.enemies, true));
     renderComposition(); renderGameplan(); renderLane(); renderFight(); renderScenarios(); renderEvidence();
     if (exploration) exploration.destroy();
-    exploration = window.LoadingInteractive.mount({ report, catalog, host:$('interactive-flow'), onPreference:risk=>{
-      const next = window.LoadingStrategy.analyze({...report.input,preferences:{risk}},catalog);
-      preference = risk; report = next; if(coachView)coachView.update(next); return next;
-    }});
+    exploration = window.LoadingInteractive.mount({ report, catalog, host:$('interactive-flow'), onPreference:applyLegacyPreference});
     if(coachView)coachView.destroy();
-    coachView=window.LoadingCoachView.mount({host:$('loading-coach'),report,catalog,onChange:({scenario,planning,period,preference:risk})=>{
+    coachView=window.LoadingCoachView.mount({host:$('loading-coach'),report,catalog,presentation:{art:artwork,initialDetail:detailArea,initialBaseY:history.state?.baseY||0,onNavigate:navigateDetail,onEdit:()=>{$('input-panel').open=true;$('input-panel').scrollIntoView({block:'start',behavior:'auto'});$('own-champion').focus({preventScroll:true});},onLegacy:()=>{$('loading-legacy-details').open=true;$('loading-legacy-details').scrollIntoView({block:'start',behavior:'auto'});}},onChange:({scenario,planning,period,preference:risk})=>{
       const next=window.LoadingStrategy.analyze({...report.input,schema_version:'lol-coach-loading-input-v4',scenario,planning,preferences:{risk}},catalog);
-      next.coach=window.LoadingCoach.evaluate(next,catalog,scenario,period); preference=risk; report=next;
+      next.coach=window.LoadingCoach.evaluate(next,catalog,scenario,period); preference=risk; report=next;saveRoute();
       if(exploration)exploration.destroy();
-      exploration=window.LoadingInteractive.mount({report,catalog,host:$('interactive-flow'),onPreference:risk=>{const next=window.LoadingStrategy.analyze({...report.input,preferences:{risk}},catalog);preference=risk;report=next;coachView.update(next);return next;}});
+      exploration=window.LoadingInteractive.mount({report,catalog,host:$('interactive-flow'),onPreference:applyLegacyPreference});
       return next;
     }});
-    if(entry)coachView.setPanel(entryKey);
+    if(entry&&!restoring){detailArea=entryKey;coachView.setPanel(entryKey);}
     $('loading-results').hidden = false;
   }
   function analyze() {
@@ -415,12 +460,12 @@
       const input = readInput();
       ['ALLY', 'ENEMY'].forEach(team => { for (let i = 0; i < 5; i += 1) { const el = $('pick-' + team + '-' + i); if (!resolve(el.value)) el.setAttribute('aria-invalid', 'true'); } });
       const next = window.LoadingStrategy.analyze(input, catalog);
-      report = next; fillForm(next.input); renderReport(); $('input-panel').open = false;
+      report = next;routeGroup=String(Date.now())+Math.random().toString(36).slice(2);detailArea=entry?entryKey:null; fillForm(next.input); renderReport(); $('input-panel').open = false;saveRoute();
       message('입력한 10개 픽을 반영했습니다. 먼저 핵심 요약과 미확인 조건을 읽어보세요.');
       const destination=$('loading-coach');$('loading-results').dataset.entryTarget=entry?entryKey:'summary';if(entry){destination.tabIndex=-1;message('입력한 10픽의 '+entry.name+' 분석으로 이동했습니다. 핵심 요약도 위에서 확인할 수 있습니다.');}destination.focus({preventScroll:true});destination.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
     } catch (error) {
       if (exploration) exploration.destroy(); exploration = null; if(coachView)coachView.destroy();coachView=null;
-      $('loading-results').hidden = true;
+      $('loading-results').hidden = true;document.body.classList.remove('plan-ready');
       $('input-panel').open = true;
       message((error && error.message) || '픽과 포지션 입력을 확인해 주세요.', 'error');
       const invalid = document.querySelector('#loading-form [aria-invalid="true"]');
@@ -460,6 +505,7 @@
       const knowledge=await fetch('./loading-knowledge.json',{cache:'no-store',credentials:'same-origin',redirect:'error'});
       if(!knowledge.ok)throw Error('공략 적용 범위 자료를 불러오지 못했습니다.');
       catalog.coaching_knowledge=await knowledge.json();
+      try{const art=await fetch('./hero-art.json',{credentials:'same-origin'});if(art.ok)artwork=await art.json();}catch(_){/* Portrait and all controls remain available. */}
       if (!catalog || !catalog.champions || Array.isArray(catalog.champions) || !window.LoadingStrategy) throw new Error('챔피언 자료와 분석 엔진을 함께 불러오지 못했습니다.');
       const values = new Set();
       const searchOptions = [];
@@ -467,6 +513,10 @@
       $('champion-names').replaceChildren(...searchOptions);
       [0, 1, 2, 3, 4, 5].forEach(index => { const button = $('example-' + index); button.disabled = false; button.addEventListener('click', () => { fillForm(window.LoadingStrategy.exampleInput(catalog, index)); $('input-panel').open = true; stale(); if (report) message('예시 픽을 입력했습니다. ‘이번 판 방향 보기’를 누르면 요약이 바뀝니다.', 'stale'); else message('예시 픽을 입력했습니다. 내 챔피언과 포지션을 확인하고 ‘이번 판 방향 보기’를 눌러보세요.'); }); });
       $('analyze').disabled = false; updateRosterOptions(); message((entry?entry.name+' 분석을 선택했습니다. 아직 분석 전입니다. ':'')+'10개 픽과 내 챔피언·포지션을 선택하세요. 분석 후 선택한 영역으로 이어집니다.');
+      if(location.hash.startsWith('#plan='))restoreRoute();
+      else if(/^#(?:loading-|teamfight)/.test(location.hash)){
+        const anchor=location.hash;try{const saved=sessionStorage.getItem(savedPlanKey);if(saved){history.replaceState(null,'',saved);restoreRoute();history.replaceState(null,'',anchor);$('loading-legacy-details').open=true;document.getElementById(anchor.slice(1))?.scrollIntoView({block:'start'});}}catch(_){}
+      }
     } catch (error) { message('자료를 불러오지 못했습니다. 페이지를 새로고침해 주세요. ' + (error && error.message || ''), 'error'); }
   }
   init();

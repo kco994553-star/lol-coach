@@ -1,0 +1,2655 @@
+{
+  "Caitlyn": {
+    "schema_version": "lol-coach-presentation-v1",
+    "own": {
+      "champion": "Caitlyn",
+      "position": "BOTTOM"
+    },
+    "teams": {
+      "allies": [
+        {
+          "champion": "Ornn",
+          "position": "TOP"
+        },
+        {
+          "champion": "Sejuani",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Ahri",
+          "position": "MID"
+        },
+        {
+          "champion": "Caitlyn",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Lux",
+          "position": "SUPPORT"
+        }
+      ],
+      "enemies": [
+        {
+          "champion": "Fiora",
+          "position": "TOP"
+        },
+        {
+          "champion": "LeeSin",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Zed",
+          "position": "MID"
+        },
+        {
+          "champion": "Kaisa",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Nautilus",
+          "position": "SUPPORT"
+        }
+      ]
+    },
+    "title": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다.",
+    "support": "바텀 케이틀린: 보호 연결을 남긴 제어 후속 공격.",
+    "cards": [
+      {
+        "id": "lane",
+        "label": "라인전",
+        "title": "멀리서 견제해 상대의 막타를 방해하고 먼저 움직일 기회를 만든다.",
+        "text": "먼 거리의 짧은 견제와 접근 후 함께 때리는 싸움이 맞붙는 라인이다.",
+        "perspectives": {
+          "ours": "케이틀린·럭스는 멀리서 공격해 상대가 미니언에 다가오기 어렵게 만드는 조합이다.",
+          "theirs": "카이사·노틸러스는 거리를 좁혀 두 명이 함께 공격할 기회를 노릴 수 있다.",
+          "matchup": "먼 거리의 짧은 견제와 접근 후 함께 때리는 싸움이 맞붙는 라인이다.",
+          "action": "케이틀린의 필트오버 피스메이커(Q)와 배운 럭스의 광휘의 특이점(E)로 접근·처리 선택권을 만든다. 견제가 미니언까지 맞아 원치 않게 밀리지 않도록 처리량을 조절한다.",
+          "basis": "CONDITIONAL_REFERENCE",
+          "claim_ids": [
+            "A-WAVE",
+            "A-SHORT",
+            "A-RECALL",
+            "A-WAVE-SPACE",
+            "A-INITIAL-ORDER-v1"
+          ],
+          "winner": "UNDETERMINED"
+        },
+        "actions": [
+          {
+            "kind": "GOAL",
+            "label": "이번 라인전 목표",
+            "text": "사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다.",
+            "source_paths": [
+              "lane.milestone.goal"
+            ],
+            "detail_target": "lane-goal",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "지원 거리와 막타 접근을 유지한다."
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CLEAR_IN_SCOPE",
+              "label": "일부 구간·교전 방식의 우열 근거 있음",
+              "axis_assessments": {
+                "PUSH": "ALLY",
+                "SHORT": "ALLY",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:lane.milestone.goal"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "WAVE",
+            "label": "기본 웨이브 방향",
+            "text": "막타만 기다리지 않고 미니언에 평타를 보태 상대보다 미니언을 먼저 잡을 여유를 만든다.",
+            "source_paths": [
+              "wave.handling"
+            ],
+            "detail_target": "lane-methods",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "지원 거리와 막타 접근을 유지한다."
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CLEAR_IN_SCOPE",
+              "label": "일부 구간·교전 방식의 우열 근거 있음",
+              "axis_assessments": {
+                "PUSH": "ALLY",
+                "SHORT": "ALLY",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:wave.handling"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "TRADE",
+            "label": "교환·응징 방법",
+            "text": "미니언을 먼저 잡는 흐름을 유지하면서, 상대가 막타를 치러 나오면 사거리 끝에서 짧게 견제한다.",
+            "source_paths": [
+              "wave.combat"
+            ],
+            "detail_target": "lane-methods",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "지원 거리와 막타 접근을 유지한다."
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CLEAR_IN_SCOPE",
+              "label": "일부 구간·교전 방식의 우열 근거 있음",
+              "axis_assessments": {
+                "PUSH": "ALLY",
+                "SHORT": "ALLY",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:wave.combat"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "CAUTION",
+            "label": "조심할 상황",
+            "text": "견제에 다음 미니언 잡기·빠져나올 기술을 모두 쓰거나 미니언 뒤를 절대 안전선으로 여기지 않는다.",
+            "source_paths": [
+              "matchup_playbook.ours.avoid"
+            ],
+            "detail_target": "lane-counterplay",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "지원 거리와 막타 접근을 유지한다."
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CLEAR_IN_SCOPE",
+              "label": "일부 구간·교전 방식의 우열 근거 있음",
+              "axis_assessments": {
+                "PUSH": "ALLY",
+                "SHORT": "ALLY",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:matchup_playbook.ours.avoid"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "SWITCH",
+            "label": "계획을 바꿀 조건",
+            "text": "노틸러스가 옆 진입선이나 평타 거리로 들어오거나 럭스 추가 공격이 이어지지 않으면 교환을 끝낸다.",
+            "source_paths": [
+              "wave.change_if"
+            ],
+            "detail_target": "lane-methods",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "지원 거리와 막타 접근을 유지한다."
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CLEAR_IN_SCOPE",
+              "label": "일부 구간·교전 방식의 우열 근거 있음",
+              "axis_assessments": {
+                "PUSH": "ALLY",
+                "SHORT": "ALLY",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:wave.change_if"
+            ],
+            "observation": false
+          }
+        ],
+        "judgment": {
+          "kind": "CLEAR_IN_SCOPE",
+          "label": "일부 구간·교전 방식의 우열 근거 있음",
+          "axis_assessments": {
+            "PUSH": "ALLY",
+            "SHORT": "ALLY",
+            "EXTENDED": "INSUFFICIENT",
+            "ALLIN": "INSUFFICIENT",
+            "ATTRITION": "INSUFFICIENT"
+          },
+          "outcome": "UNDETERMINED",
+          "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+          "missing_axes": [
+            "EXTENDED",
+            "ALLIN",
+            "ATTRITION"
+          ]
+        },
+        "source_paths": [
+          "loading_summary.items.lane",
+          "area_context.lane",
+          "action_summaries.lane"
+        ]
+      },
+      {
+        "id": "operations",
+        "label": "운영",
+        "title": "아군 가까이에서 미니언을 잡고, 함께 포탑·드래곤·바론을 노린다.",
+        "text": "함께 공격할 아군과 상대의 접근·견제를 함께 고려한다.",
+        "perspectives": {
+          "ours": "케이틀린의 먼 거리 공격을 럭스의 속박·보호와 함께 쓰는 조합이다.",
+          "theirs": "피오라·카이사·리 신·노틸러스·제드처럼 거리를 좁히는 상대가 떨어진 아군을 먼저 잡는 싸움을 노릴 수 있다.",
+          "matchup": "아군이 함께 때릴 수 있는 거리와 상대가 뛰어들 거리가 부딪히는 구도다.",
+          "action": "놓칠 웨이브를 먼저 정리하고 아군 제어와 연결해 포탑·목표물 접근 시간을 얻는다.",
+          "basis": "DESIGN_HYPOTHESIS",
+          "means": {
+            "ours": {
+              "PICK": [
+                {
+                  "champion": "Ahri",
+                  "name": "아리",
+                  "skills": [
+                    "아리의 매혹(E)"
+                  ],
+                  "fact_ids": [
+                    "official:Ahri:E"
+                  ]
+                },
+                {
+                  "champion": "Caitlyn",
+                  "name": "케이틀린",
+                  "skills": [
+                    "케이틀린의 요들잡이 덫(W)"
+                  ],
+                  "fact_ids": [
+                    "official:Caitlyn:W"
+                  ]
+                },
+                {
+                  "champion": "Lux",
+                  "name": "럭스",
+                  "skills": [
+                    "럭스의 빛의 속박(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Lux:Q"
+                  ]
+                },
+                {
+                  "champion": "Sejuani",
+                  "name": "세주아니",
+                  "skills": [
+                    "세주아니의 빙하 감옥(R)"
+                  ],
+                  "fact_ids": [
+                    "official:Sejuani:R"
+                  ]
+                }
+              ],
+              "COVER": [
+                {
+                  "champion": "Lux",
+                  "name": "럭스",
+                  "skills": [
+                    "럭스의 프리즘 보호막(W)"
+                  ],
+                  "fact_ids": [
+                    "official:Lux:W"
+                  ]
+                }
+              ],
+              "PRESSURE": [
+                {
+                  "champion": "Caitlyn",
+                  "name": "케이틀린",
+                  "skills": [
+                    "케이틀린의 필트오버 피스메이커(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Caitlyn:Q"
+                  ]
+                },
+                {
+                  "champion": "Lux",
+                  "name": "럭스",
+                  "skills": [
+                    "럭스의 광휘의 특이점(E)"
+                  ],
+                  "fact_ids": [
+                    "official:Lux:E"
+                  ]
+                }
+              ],
+              "ACCESS": [
+                {
+                  "champion": "Ornn",
+                  "name": "오른",
+                  "skills": [
+                    "오른의 화염 돌진(E)"
+                  ],
+                  "fact_ids": [
+                    "official:Ornn:E"
+                  ]
+                },
+                {
+                  "champion": "Sejuani",
+                  "name": "세주아니",
+                  "skills": [
+                    "세주아니의 혹한의 맹습(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Sejuani:Q"
+                  ]
+                }
+              ]
+            },
+            "theirs": {
+              "PICK": [
+                {
+                  "champion": "Nautilus",
+                  "name": "노틸러스",
+                  "skills": [
+                    "노틸러스의 닻줄 견인(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Nautilus:Q"
+                  ]
+                }
+              ],
+              "COVER": [
+                {
+                  "champion": "LeeSin",
+                  "name": "리 신",
+                  "skills": [
+                    "리 신의 방호 / 강철의 의지(W)"
+                  ],
+                  "fact_ids": [
+                    "official:LeeSin:W"
+                  ]
+                }
+              ],
+              "PRESSURE": [
+                {
+                  "champion": "Kaisa",
+                  "name": "카이사",
+                  "skills": [
+                    "카이사의 공허추적자(W)"
+                  ],
+                  "fact_ids": [
+                    "official:Kaisa:W"
+                  ]
+                },
+                {
+                  "champion": "Zed",
+                  "name": "제드",
+                  "skills": [
+                    "제드의 예리한 표창(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Zed:Q"
+                  ]
+                }
+              ],
+              "ACCESS": [
+                {
+                  "champion": "Fiora",
+                  "name": "피오라",
+                  "skills": [
+                    "피오라의 찌르기(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Fiora:Q"
+                  ]
+                },
+                {
+                  "champion": "Kaisa",
+                  "name": "카이사",
+                  "skills": [
+                    "카이사의 사냥본능(R)"
+                  ],
+                  "fact_ids": [
+                    "official:Kaisa:R"
+                  ]
+                },
+                {
+                  "champion": "LeeSin",
+                  "name": "리 신",
+                  "skills": [
+                    "리 신의 음파 / 공명의 일격(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:LeeSin:Q"
+                  ]
+                },
+                {
+                  "champion": "Nautilus",
+                  "name": "노틸러스",
+                  "skills": [
+                    "노틸러스의 닻줄 견인(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Nautilus:Q"
+                  ]
+                },
+                {
+                  "champion": "Zed",
+                  "name": "제드",
+                  "skills": [
+                    "제드의 죽음의 표식(R)"
+                  ],
+                  "fact_ids": [
+                    "official:Zed:R"
+                  ]
+                }
+              ]
+            }
+          },
+          "claim_ids": [
+            "A-WAVE",
+            "A-SHORT",
+            "A-RECALL",
+            "A-WAVE-SPACE",
+            "A-INITIAL-ORDER-v1"
+          ],
+          "winner": "UNDETERMINED"
+        },
+        "actions": [
+          {
+            "kind": "POSITION",
+            "label": "기본 활동 위치",
+            "text": "내가 아군과 연결된 중앙 라인에서 미니언 잡기를 맡고, 사이드는 복귀 가능한 아군이 받는 예시다.",
+            "source_paths": [
+              "operations.placement"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+              "상대의 접근·제어가 남아 있으면 공격 폭을 줄이고 접근 가능한 대상을 선택",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.placement"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "PARTNER",
+            "label": "연결할 아군",
+            "text": "럭스의 보호·제어가 닿는 거리와 전방 아군의 후속을 연결한다.",
+            "source_paths": [
+              "operations.connection"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+              "상대의 접근·제어가 남아 있으면 공격 폭을 줄이고 접근 가능한 대상을 선택",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.connection"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "GAIN",
+            "label": "우선할 이득",
+            "text": "놓칠 웨이브를 먼저 정리하고 아군의 속박·기절에 맞춰 움직여 포탑·목표물 접근 시간을 얻는다.",
+            "source_paths": [
+              "operations.priority"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+              "상대의 접근·제어가 남아 있으면 공격 폭을 줄이고 접근 가능한 대상을 선택",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.priority"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "AVOID",
+            "label": "피할 행동",
+            "text": "합류까지 멀고 놓치는 미니언 골드·경험치가 큰 싸움은 억지로 따라가지 않는다.",
+            "source_paths": [
+              "operations.concede"
+            ],
+            "detail_target": "operations-methods",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+              "상대의 접근·제어가 남아 있으면 공격 폭을 줄이고 접근 가능한 대상을 선택",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.concede"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "FALLBACK",
+            "label": "막히거나 불리할 때",
+            "text": "정면 연결이 막히면 아군 쪽 웨이브·회복·구매를 확보하고 다시 모일 조건을 만든다.",
+            "source_paths": [
+              "operations.fallback"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+              "상대의 접근·제어가 남아 있으면 공격 폭을 줄이고 접근 가능한 대상을 선택",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.fallback"
+            ],
+            "observation": false
+          }
+        ],
+        "source_paths": [
+          "loading_summary.items.operations",
+          "area_context.operations",
+          "action_summaries.operations"
+        ]
+      },
+      {
+        "id": "fight",
+        "label": "한타",
+        "title": "아군의 속박·기절이 맞으면 보호받을 거리에서 닿는 적을 공격한다.",
+        "text": "상대가 뛰어든 뒤 아군 보호가 닿고 같은 대상을 함께 때릴 수 있는지가 공격 기회를 만든다.",
+        "perspectives": {
+          "ours": "케이틀린의 먼 거리 공격을 럭스의 속박·보호와 함께 쓰는 조합이다.",
+          "theirs": "피오라·카이사·리 신·노틸러스·제드처럼 거리를 좁히는 상대가 떨어진 아군을 먼저 잡는 싸움을 노릴 수 있다.",
+          "matchup": "상대가 뛰어든 뒤 아군 보호가 닿고 같은 대상을 함께 때릴 수 있는지가 공격 기회를 만든다.",
+          "action": "아군 제어가 적중하고 후속 거리가 맞으면 사거리 끝에서 공격한다. 케이틀린의 요들잡이 덫(W) 연계는 설치·발동 여유가 있을 때만 잇는다.",
+          "basis": "DESIGN_HYPOTHESIS",
+          "means": {
+            "ours": {
+              "PICK": [
+                {
+                  "champion": "Ahri",
+                  "name": "아리",
+                  "skills": [
+                    "아리의 매혹(E)"
+                  ],
+                  "fact_ids": [
+                    "official:Ahri:E"
+                  ]
+                },
+                {
+                  "champion": "Caitlyn",
+                  "name": "케이틀린",
+                  "skills": [
+                    "케이틀린의 요들잡이 덫(W)"
+                  ],
+                  "fact_ids": [
+                    "official:Caitlyn:W"
+                  ]
+                },
+                {
+                  "champion": "Lux",
+                  "name": "럭스",
+                  "skills": [
+                    "럭스의 빛의 속박(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Lux:Q"
+                  ]
+                },
+                {
+                  "champion": "Sejuani",
+                  "name": "세주아니",
+                  "skills": [
+                    "세주아니의 빙하 감옥(R)"
+                  ],
+                  "fact_ids": [
+                    "official:Sejuani:R"
+                  ]
+                }
+              ],
+              "COVER": [
+                {
+                  "champion": "Lux",
+                  "name": "럭스",
+                  "skills": [
+                    "럭스의 프리즘 보호막(W)"
+                  ],
+                  "fact_ids": [
+                    "official:Lux:W"
+                  ]
+                }
+              ],
+              "PRESSURE": [
+                {
+                  "champion": "Caitlyn",
+                  "name": "케이틀린",
+                  "skills": [
+                    "케이틀린의 필트오버 피스메이커(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Caitlyn:Q"
+                  ]
+                },
+                {
+                  "champion": "Lux",
+                  "name": "럭스",
+                  "skills": [
+                    "럭스의 광휘의 특이점(E)"
+                  ],
+                  "fact_ids": [
+                    "official:Lux:E"
+                  ]
+                }
+              ],
+              "ACCESS": [
+                {
+                  "champion": "Ornn",
+                  "name": "오른",
+                  "skills": [
+                    "오른의 화염 돌진(E)"
+                  ],
+                  "fact_ids": [
+                    "official:Ornn:E"
+                  ]
+                },
+                {
+                  "champion": "Sejuani",
+                  "name": "세주아니",
+                  "skills": [
+                    "세주아니의 혹한의 맹습(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Sejuani:Q"
+                  ]
+                }
+              ]
+            },
+            "theirs": {
+              "PICK": [
+                {
+                  "champion": "Nautilus",
+                  "name": "노틸러스",
+                  "skills": [
+                    "노틸러스의 닻줄 견인(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Nautilus:Q"
+                  ]
+                }
+              ],
+              "COVER": [
+                {
+                  "champion": "LeeSin",
+                  "name": "리 신",
+                  "skills": [
+                    "리 신의 방호 / 강철의 의지(W)"
+                  ],
+                  "fact_ids": [
+                    "official:LeeSin:W"
+                  ]
+                }
+              ],
+              "PRESSURE": [
+                {
+                  "champion": "Kaisa",
+                  "name": "카이사",
+                  "skills": [
+                    "카이사의 공허추적자(W)"
+                  ],
+                  "fact_ids": [
+                    "official:Kaisa:W"
+                  ]
+                },
+                {
+                  "champion": "Zed",
+                  "name": "제드",
+                  "skills": [
+                    "제드의 예리한 표창(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Zed:Q"
+                  ]
+                }
+              ],
+              "ACCESS": [
+                {
+                  "champion": "Fiora",
+                  "name": "피오라",
+                  "skills": [
+                    "피오라의 찌르기(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Fiora:Q"
+                  ]
+                },
+                {
+                  "champion": "Kaisa",
+                  "name": "카이사",
+                  "skills": [
+                    "카이사의 사냥본능(R)"
+                  ],
+                  "fact_ids": [
+                    "official:Kaisa:R"
+                  ]
+                },
+                {
+                  "champion": "LeeSin",
+                  "name": "리 신",
+                  "skills": [
+                    "리 신의 음파 / 공명의 일격(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:LeeSin:Q"
+                  ]
+                },
+                {
+                  "champion": "Nautilus",
+                  "name": "노틸러스",
+                  "skills": [
+                    "노틸러스의 닻줄 견인(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Nautilus:Q"
+                  ]
+                },
+                {
+                  "champion": "Zed",
+                  "name": "제드",
+                  "skills": [
+                    "제드의 죽음의 표식(R)"
+                  ],
+                  "fact_ids": [
+                    "official:Zed:R"
+                  ]
+                }
+              ]
+            }
+          },
+          "claim_ids": [
+            "A-WAVE",
+            "A-SHORT",
+            "A-RECALL",
+            "A-WAVE-SPACE",
+            "A-INITIAL-ORDER-v1"
+          ],
+          "winner": "UNDETERMINED"
+        },
+        "actions": [
+          {
+            "kind": "ROLE_POSITION",
+            "label": "내 역할·기본 위치",
+            "text": "보호가 닿는 아군 뒤·옆에서 시작하고, 전방 제어가 닿은 대상과 연결한다.",
+            "source_paths": [
+              "fight.role",
+              "fight.setup"
+            ],
+            "detail_target": "fight-methods",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+              "상대의 접근·제어가 남아 있으면 공격 폭을 줄이고 접근 가능한 대상을 선택",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.role",
+              "projection:fight.setup"
+            ],
+            "observation": false,
+            "role": "보호 연결을 남긴 제어 후속 공격"
+          },
+          {
+            "kind": "START",
+            "label": "공격 시작 조건",
+            "text": "아군의 속박·기절이 맞고 같이 공격할 수 있는 거리가 맞으면 사거리 끝에서 공격한다.",
+            "source_paths": [
+              "fight.start"
+            ],
+            "detail_target": "fight-plan",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+              "상대의 접근·제어가 남아 있으면 공격 폭을 줄이고 접근 가능한 대상을 선택",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.start"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "TARGET",
+            "label": "우선 공격 대상",
+            "text": "보호·퇴로를 잃지 않고 닿는 상대부터 공격한다.",
+            "source_paths": [
+              "fight.target"
+            ],
+            "detail_target": "fight-methods",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+              "상대의 접근·제어가 남아 있으면 공격 폭을 줄이고 접근 가능한 대상을 선택",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.target"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "THREAT",
+            "label": "대응할 위협",
+            "text": "노틸러스의 폭뢰(R) · 6레벨 이후 대상 노출과 진입 후 같이 공격할 수 있는 거리를 관리한다.",
+            "source_paths": [
+              "fight.threats"
+            ],
+            "detail_target": "fight-threats",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "대상 추적형 수단이며 미니언 뒤가 전체 안전을 보장하지 않음"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.threats"
+            ],
+            "observation": false,
+            "threat_ids": [
+              "Nautilus:R"
+            ],
+            "selection_scope": "조합에서 실제 연결된 위협 수단 예시 · 전체 중요도 순위 아님"
+          },
+          {
+            "kind": "EXIT",
+            "label": "이탈·재배치 조건",
+            "text": "보호·후속이 끊기거나 상대 접근에 내 퇴로가 닫히면 공격 대상·위치를 바꾼다.",
+            "source_paths": [
+              "fight.stop"
+            ],
+            "detail_target": "fight-plan",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+              "상대의 접근·제어가 남아 있으면 공격 폭을 줄이고 접근 가능한 대상을 선택",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.stop"
+            ],
+            "observation": false
+          }
+        ],
+        "source_paths": [
+          "loading_summary.items.fight",
+          "area_context.fight",
+          "action_summaries.fight"
+        ]
+      }
+    ],
+    "remember": [
+      "측면 진입·동료 후속 단절이면 교환 종료.",
+      "교환으로 다음 처리·대응 자원이 부족해지면 수급으로 바꾼다.",
+      "정글 개입·후속 단절이면 전진 폭을 줄인다."
+    ],
+    "origin": "HYPOTHETICAL_LOADING_EXAMPLE"
+  },
+  "Ahri": {
+    "schema_version": "lol-coach-presentation-v1",
+    "own": {
+      "champion": "Ahri",
+      "position": "MID"
+    },
+    "teams": {
+      "allies": [
+        {
+          "champion": "Ornn",
+          "position": "TOP"
+        },
+        {
+          "champion": "Sejuani",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Ahri",
+          "position": "MID"
+        },
+        {
+          "champion": "Caitlyn",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Lux",
+          "position": "SUPPORT"
+        }
+      ],
+      "enemies": [
+        {
+          "champion": "Fiora",
+          "position": "TOP"
+        },
+        {
+          "champion": "LeeSin",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Zed",
+          "position": "MID"
+        },
+        {
+          "champion": "Kaisa",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Nautilus",
+          "position": "SUPPORT"
+        }
+      ]
+    },
+    "title": "확인된 수단으로 수급·연결부터 준비한다.",
+    "support": "미드 아리: 노출된 대상에 조건부 후속 진입.",
+    "cards": [
+      {
+        "id": "lane",
+        "label": "라인전",
+        "title": "받을 자원을 확보하며 기본 계획을 적용할 상황을 좁힌다.",
+        "text": "깊은 압박을 확정하지 않고 닿는 수급·복귀 자원을 남긴다.",
+        "perspectives": {
+          "ours": "아리의 공격·방어 수단을 같은 라인 안에서 비교한다.",
+          "theirs": "제드의 이 매치업 계획은 아직 자료가 부족하다.",
+          "matchup": "구체적인 상성 근거가 없는 상대에게 기존 예시의 유리·불리 판단을 옮기지 않는다.",
+          "action": "막타·경험치 접근부터 확보한다. 모르는 상대 위치를 확인하러 깊게 나가지 않는다.",
+          "basis": "INSUFFICIENT",
+          "claim_ids": [],
+          "winner": "UNDETERMINED"
+        },
+        "actions": [
+          {
+            "kind": "GOAL",
+            "label": "이번 라인전 목표",
+            "text": "확인된 수단으로 CS·경험치를 확보하고 복귀 선택권을 남긴다.",
+            "source_paths": [
+              "lane.milestone.goal"
+            ],
+            "detail_target": "lane-goal",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "정보 확인을 위해 미확인 지역으로 들어가지 않는다."
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "KNOWLEDGE_GAP",
+              "label": "매치업 판단 부족 · 적용 가능한 일반 원칙",
+              "axis_assessments": {
+                "PUSH": "INSUFFICIENT",
+                "SHORT": "INSUFFICIENT",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "PUSH",
+                "SHORT",
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:lane.milestone.goal"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "WAVE",
+            "label": "기본 웨이브 방향",
+            "text": "닿는 막타·경험치를 받으며 양쪽 미니언이 어느 쪽으로 밀리는지를 파악한다.",
+            "source_paths": [
+              "wave.handling"
+            ],
+            "detail_target": "lane-methods",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "정보 확인을 위해 미확인 지역으로 들어가지 않는다."
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "KNOWLEDGE_GAP",
+              "label": "매치업 판단 부족 · 적용 가능한 일반 원칙",
+              "axis_assessments": {
+                "PUSH": "INSUFFICIENT",
+                "SHORT": "INSUFFICIENT",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "PUSH",
+                "SHORT",
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:wave.handling"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "TRADE",
+            "label": "교환·응징 방법",
+            "text": "막타·경험치 접근부터 확보한다.",
+            "source_paths": [
+              "wave.combat"
+            ],
+            "detail_target": "lane-methods",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "정보 확인을 위해 미확인 지역으로 들어가지 않는다."
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "KNOWLEDGE_GAP",
+              "label": "매치업 판단 부족 · 적용 가능한 일반 원칙",
+              "axis_assessments": {
+                "PUSH": "INSUFFICIENT",
+                "SHORT": "INSUFFICIENT",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "PUSH",
+                "SHORT",
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:wave.combat"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "CAUTION",
+            "label": "조심할 상황",
+            "text": "아군의 추가 공격과 걸어서 돌아올 거리가 남는 쪽에 선다.",
+            "source_paths": [
+              "matchup_playbook.ours.avoid"
+            ],
+            "detail_target": "lane-counterplay",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "정보 확인을 위해 미확인 지역으로 들어가지 않는다."
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "KNOWLEDGE_GAP",
+              "label": "매치업 판단 부족 · 적용 가능한 일반 원칙",
+              "axis_assessments": {
+                "PUSH": "INSUFFICIENT",
+                "SHORT": "INSUFFICIENT",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "PUSH",
+                "SHORT",
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:matchup_playbook.ours.avoid"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "SWITCH",
+            "label": "계획을 바꿀 조건",
+            "text": "동료의 추가 공격·미니언을 잡고 돌아올 거리와 퇴로가 끊기면 교환을 끝내고 알려진 아군 위치와 연결한다.",
+            "source_paths": [
+              "wave.change_if"
+            ],
+            "detail_target": "lane-methods",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "정보 확인을 위해 미확인 지역으로 들어가지 않는다."
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "KNOWLEDGE_GAP",
+              "label": "매치업 판단 부족 · 적용 가능한 일반 원칙",
+              "axis_assessments": {
+                "PUSH": "INSUFFICIENT",
+                "SHORT": "INSUFFICIENT",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "PUSH",
+                "SHORT",
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:wave.change_if"
+            ],
+            "observation": false
+          }
+        ],
+        "judgment": {
+          "kind": "KNOWLEDGE_GAP",
+          "label": "매치업 판단 부족 · 적용 가능한 일반 원칙",
+          "axis_assessments": {
+            "PUSH": "INSUFFICIENT",
+            "SHORT": "INSUFFICIENT",
+            "EXTENDED": "INSUFFICIENT",
+            "ALLIN": "INSUFFICIENT",
+            "ATTRITION": "INSUFFICIENT"
+          },
+          "outcome": "UNDETERMINED",
+          "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+          "missing_axes": [
+            "PUSH",
+            "SHORT",
+            "EXTENDED",
+            "ALLIN",
+            "ATTRITION"
+          ]
+        },
+        "source_paths": [
+          "loading_summary.items.lane",
+          "area_context.lane",
+          "action_summaries.lane"
+        ]
+      },
+      {
+        "id": "operations",
+        "label": "운영",
+        "title": "가까운 라인에서 성장하고 아군이 싸울 때 함께 공격할 거리를 유지한다.",
+        "text": "함께 공격할 아군과 상대의 접근·견제를 함께 고려한다.",
+        "perspectives": {
+          "ours": "적을 묶는 기술과 아군을 지키는 기술을 함께 쓸 수 있다.",
+          "theirs": "피오라·카이사·리 신·노틸러스·제드처럼 거리를 좁히는 상대가 떨어진 아군을 먼저 잡는 싸움을 노릴 수 있다.",
+          "matchup": "아군이 함께 때릴 수 있는 거리와 상대가 뛰어들 거리가 부딪히는 구도다.",
+          "action": "놓칠 웨이브를 먼저 정리하고 아군 제어와 연결해 포탑·목표물 접근 시간을 얻는다.",
+          "basis": "DESIGN_HYPOTHESIS",
+          "means": {
+            "ours": {
+              "PICK": [
+                {
+                  "champion": "Ahri",
+                  "name": "아리",
+                  "skills": [
+                    "아리의 매혹(E)"
+                  ],
+                  "fact_ids": [
+                    "official:Ahri:E"
+                  ]
+                },
+                {
+                  "champion": "Caitlyn",
+                  "name": "케이틀린",
+                  "skills": [
+                    "케이틀린의 요들잡이 덫(W)"
+                  ],
+                  "fact_ids": [
+                    "official:Caitlyn:W"
+                  ]
+                },
+                {
+                  "champion": "Lux",
+                  "name": "럭스",
+                  "skills": [
+                    "럭스의 빛의 속박(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Lux:Q"
+                  ]
+                },
+                {
+                  "champion": "Sejuani",
+                  "name": "세주아니",
+                  "skills": [
+                    "세주아니의 빙하 감옥(R)"
+                  ],
+                  "fact_ids": [
+                    "official:Sejuani:R"
+                  ]
+                }
+              ],
+              "COVER": [
+                {
+                  "champion": "Lux",
+                  "name": "럭스",
+                  "skills": [
+                    "럭스의 프리즘 보호막(W)"
+                  ],
+                  "fact_ids": [
+                    "official:Lux:W"
+                  ]
+                }
+              ],
+              "PRESSURE": [
+                {
+                  "champion": "Caitlyn",
+                  "name": "케이틀린",
+                  "skills": [
+                    "케이틀린의 필트오버 피스메이커(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Caitlyn:Q"
+                  ]
+                },
+                {
+                  "champion": "Lux",
+                  "name": "럭스",
+                  "skills": [
+                    "럭스의 광휘의 특이점(E)"
+                  ],
+                  "fact_ids": [
+                    "official:Lux:E"
+                  ]
+                }
+              ],
+              "ACCESS": [
+                {
+                  "champion": "Ornn",
+                  "name": "오른",
+                  "skills": [
+                    "오른의 화염 돌진(E)"
+                  ],
+                  "fact_ids": [
+                    "official:Ornn:E"
+                  ]
+                },
+                {
+                  "champion": "Sejuani",
+                  "name": "세주아니",
+                  "skills": [
+                    "세주아니의 혹한의 맹습(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Sejuani:Q"
+                  ]
+                }
+              ]
+            },
+            "theirs": {
+              "PICK": [
+                {
+                  "champion": "Nautilus",
+                  "name": "노틸러스",
+                  "skills": [
+                    "노틸러스의 닻줄 견인(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Nautilus:Q"
+                  ]
+                }
+              ],
+              "COVER": [
+                {
+                  "champion": "LeeSin",
+                  "name": "리 신",
+                  "skills": [
+                    "리 신의 방호 / 강철의 의지(W)"
+                  ],
+                  "fact_ids": [
+                    "official:LeeSin:W"
+                  ]
+                }
+              ],
+              "PRESSURE": [
+                {
+                  "champion": "Kaisa",
+                  "name": "카이사",
+                  "skills": [
+                    "카이사의 공허추적자(W)"
+                  ],
+                  "fact_ids": [
+                    "official:Kaisa:W"
+                  ]
+                },
+                {
+                  "champion": "Zed",
+                  "name": "제드",
+                  "skills": [
+                    "제드의 예리한 표창(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Zed:Q"
+                  ]
+                }
+              ],
+              "ACCESS": [
+                {
+                  "champion": "Fiora",
+                  "name": "피오라",
+                  "skills": [
+                    "피오라의 찌르기(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Fiora:Q"
+                  ]
+                },
+                {
+                  "champion": "Kaisa",
+                  "name": "카이사",
+                  "skills": [
+                    "카이사의 사냥본능(R)"
+                  ],
+                  "fact_ids": [
+                    "official:Kaisa:R"
+                  ]
+                },
+                {
+                  "champion": "LeeSin",
+                  "name": "리 신",
+                  "skills": [
+                    "리 신의 음파 / 공명의 일격(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:LeeSin:Q"
+                  ]
+                },
+                {
+                  "champion": "Nautilus",
+                  "name": "노틸러스",
+                  "skills": [
+                    "노틸러스의 닻줄 견인(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Nautilus:Q"
+                  ]
+                },
+                {
+                  "champion": "Zed",
+                  "name": "제드",
+                  "skills": [
+                    "제드의 죽음의 표식(R)"
+                  ],
+                  "fact_ids": [
+                    "official:Zed:R"
+                  ]
+                }
+              ]
+            }
+          },
+          "claim_ids": [],
+          "winner": "UNDETERMINED"
+        },
+        "actions": [
+          {
+            "kind": "POSITION",
+            "label": "기본 활동 위치",
+            "text": "아리는 가까운 라인 자원과 아군이 모인 곳 같이 공격할 수 있는 거리를 연결하는 예시다.",
+            "source_paths": [
+              "operations.placement"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.placement"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "PARTNER",
+            "label": "연결할 아군",
+            "text": "럭스의 보호·제어가 닿는 거리와 전방 아군의 후속을 연결한다.",
+            "source_paths": [
+              "operations.connection"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.connection"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "GAIN",
+            "label": "우선할 이득",
+            "text": "놓칠 웨이브를 먼저 정리하고 아군의 속박·기절에 맞춰 움직여 포탑·목표물 접근 시간을 얻는다.",
+            "source_paths": [
+              "operations.priority"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.priority"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "AVOID",
+            "label": "피할 행동",
+            "text": "합류까지 멀고 놓치는 미니언 골드·경험치가 큰 싸움은 억지로 따라가지 않는다.",
+            "source_paths": [
+              "operations.concede"
+            ],
+            "detail_target": "operations-methods",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.concede"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "FALLBACK",
+            "label": "막히거나 불리할 때",
+            "text": "정면 연결이 막히면 아군 쪽 웨이브·회복·구매를 확보하고 다시 모일 조건을 만든다.",
+            "source_paths": [
+              "operations.fallback"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.fallback"
+            ],
+            "observation": false
+          }
+        ],
+        "source_paths": [
+          "loading_summary.items.operations",
+          "area_context.operations",
+          "action_summaries.operations"
+        ]
+      },
+      {
+        "id": "fight",
+        "label": "한타",
+        "title": "보호·후속과 퇴로가 연결된 자리에서 닿는 대상을 공격한다.",
+        "text": "상대가 뛰어든 뒤 아군 보호가 닿고 같은 대상을 함께 때릴 수 있는지가 공격 기회를 만든다.",
+        "perspectives": {
+          "ours": "적을 묶는 기술과 아군을 지키는 기술을 함께 쓸 수 있다.",
+          "theirs": "피오라·카이사·리 신·노틸러스·제드처럼 거리를 좁히는 상대가 떨어진 아군을 먼저 잡는 싸움을 노릴 수 있다.",
+          "matchup": "상대가 뛰어든 뒤 아군 보호가 닿고 같은 대상을 함께 때릴 수 있는지가 공격 기회를 만든다.",
+          "action": "내가 배운 공격·제어와 아군 후속이 같은 대상에 닿는 범위에서 시작한다.",
+          "basis": "DESIGN_HYPOTHESIS",
+          "means": {
+            "ours": {
+              "PICK": [
+                {
+                  "champion": "Ahri",
+                  "name": "아리",
+                  "skills": [
+                    "아리의 매혹(E)"
+                  ],
+                  "fact_ids": [
+                    "official:Ahri:E"
+                  ]
+                },
+                {
+                  "champion": "Caitlyn",
+                  "name": "케이틀린",
+                  "skills": [
+                    "케이틀린의 요들잡이 덫(W)"
+                  ],
+                  "fact_ids": [
+                    "official:Caitlyn:W"
+                  ]
+                },
+                {
+                  "champion": "Lux",
+                  "name": "럭스",
+                  "skills": [
+                    "럭스의 빛의 속박(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Lux:Q"
+                  ]
+                },
+                {
+                  "champion": "Sejuani",
+                  "name": "세주아니",
+                  "skills": [
+                    "세주아니의 빙하 감옥(R)"
+                  ],
+                  "fact_ids": [
+                    "official:Sejuani:R"
+                  ]
+                }
+              ],
+              "COVER": [
+                {
+                  "champion": "Lux",
+                  "name": "럭스",
+                  "skills": [
+                    "럭스의 프리즘 보호막(W)"
+                  ],
+                  "fact_ids": [
+                    "official:Lux:W"
+                  ]
+                }
+              ],
+              "PRESSURE": [
+                {
+                  "champion": "Caitlyn",
+                  "name": "케이틀린",
+                  "skills": [
+                    "케이틀린의 필트오버 피스메이커(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Caitlyn:Q"
+                  ]
+                },
+                {
+                  "champion": "Lux",
+                  "name": "럭스",
+                  "skills": [
+                    "럭스의 광휘의 특이점(E)"
+                  ],
+                  "fact_ids": [
+                    "official:Lux:E"
+                  ]
+                }
+              ],
+              "ACCESS": [
+                {
+                  "champion": "Ornn",
+                  "name": "오른",
+                  "skills": [
+                    "오른의 화염 돌진(E)"
+                  ],
+                  "fact_ids": [
+                    "official:Ornn:E"
+                  ]
+                },
+                {
+                  "champion": "Sejuani",
+                  "name": "세주아니",
+                  "skills": [
+                    "세주아니의 혹한의 맹습(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Sejuani:Q"
+                  ]
+                }
+              ]
+            },
+            "theirs": {
+              "PICK": [
+                {
+                  "champion": "Nautilus",
+                  "name": "노틸러스",
+                  "skills": [
+                    "노틸러스의 닻줄 견인(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Nautilus:Q"
+                  ]
+                }
+              ],
+              "COVER": [
+                {
+                  "champion": "LeeSin",
+                  "name": "리 신",
+                  "skills": [
+                    "리 신의 방호 / 강철의 의지(W)"
+                  ],
+                  "fact_ids": [
+                    "official:LeeSin:W"
+                  ]
+                }
+              ],
+              "PRESSURE": [
+                {
+                  "champion": "Kaisa",
+                  "name": "카이사",
+                  "skills": [
+                    "카이사의 공허추적자(W)"
+                  ],
+                  "fact_ids": [
+                    "official:Kaisa:W"
+                  ]
+                },
+                {
+                  "champion": "Zed",
+                  "name": "제드",
+                  "skills": [
+                    "제드의 예리한 표창(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Zed:Q"
+                  ]
+                }
+              ],
+              "ACCESS": [
+                {
+                  "champion": "Fiora",
+                  "name": "피오라",
+                  "skills": [
+                    "피오라의 찌르기(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Fiora:Q"
+                  ]
+                },
+                {
+                  "champion": "Kaisa",
+                  "name": "카이사",
+                  "skills": [
+                    "카이사의 사냥본능(R)"
+                  ],
+                  "fact_ids": [
+                    "official:Kaisa:R"
+                  ]
+                },
+                {
+                  "champion": "LeeSin",
+                  "name": "리 신",
+                  "skills": [
+                    "리 신의 음파 / 공명의 일격(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:LeeSin:Q"
+                  ]
+                },
+                {
+                  "champion": "Nautilus",
+                  "name": "노틸러스",
+                  "skills": [
+                    "노틸러스의 닻줄 견인(Q)"
+                  ],
+                  "fact_ids": [
+                    "official:Nautilus:Q"
+                  ]
+                },
+                {
+                  "champion": "Zed",
+                  "name": "제드",
+                  "skills": [
+                    "제드의 죽음의 표식(R)"
+                  ],
+                  "fact_ids": [
+                    "official:Zed:R"
+                  ]
+                }
+              ]
+            }
+          },
+          "claim_ids": [],
+          "winner": "UNDETERMINED"
+        },
+        "actions": [
+          {
+            "kind": "ROLE_POSITION",
+            "label": "내 역할·기본 위치",
+            "text": "보호가 닿는 아군 뒤·옆에서 시작하고, 전방 제어가 닿은 대상과 연결한다.",
+            "source_paths": [
+              "fight.role",
+              "fight.setup"
+            ],
+            "detail_target": "fight-methods",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.role",
+              "projection:fight.setup"
+            ],
+            "observation": false,
+            "role": "노출된 대상에 조건부 후속 진입"
+          },
+          {
+            "kind": "START",
+            "label": "공격 시작 조건",
+            "text": "내가 배운 공격·제어와 아군의 추가 공격이 같은 대상에 닿는 범위에서 시작한다.",
+            "source_paths": [
+              "fight.start"
+            ],
+            "detail_target": "fight-plan",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.start"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "TARGET",
+            "label": "우선 공격 대상",
+            "text": "보호·퇴로를 잃지 않고 닿는 상대부터 공격한다.",
+            "source_paths": [
+              "fight.target"
+            ],
+            "detail_target": "fight-methods",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.target"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "THREAT",
+            "label": "대응할 위협",
+            "text": "노틸러스의 폭뢰(R) · 6레벨 이후 대상 노출과 진입 후 같이 공격할 수 있는 거리를 관리한다.",
+            "source_paths": [
+              "fight.threats"
+            ],
+            "detail_target": "fight-threats",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "대상 추적형 수단이며 미니언 뒤가 전체 안전을 보장하지 않음"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.threats"
+            ],
+            "observation": false,
+            "threat_ids": [
+              "Nautilus:R"
+            ],
+            "selection_scope": "조합에서 실제 연결된 위협 수단 예시 · 전체 중요도 순위 아님"
+          },
+          {
+            "kind": "EXIT",
+            "label": "이탈·재배치 조건",
+            "text": "보호·후속이 끊기거나 상대 접근에 내 퇴로가 닫히면 공격 대상·위치를 바꾼다.",
+            "source_paths": [
+              "fight.stop"
+            ],
+            "detail_target": "fight-plan",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.stop"
+            ],
+            "observation": false
+          }
+        ],
+        "source_paths": [
+          "loading_summary.items.fight",
+          "area_context.fight",
+          "action_summaries.fight"
+        ]
+      }
+    ],
+    "remember": [
+      "동료 후속·수급 거리와 퇴로가 끊기면 교환을 끝내고 알려진 아군 위치와 연결한다.",
+      "교환으로 다음 처리·대응 자원이 부족해지면 수급으로 바꾼다.",
+      "정글 개입·후속 단절이면 전진 폭을 줄인다."
+    ],
+    "origin": "HYPOTHETICAL_LOADING_EXAMPLE"
+  }
+}

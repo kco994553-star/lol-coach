@@ -9,6 +9,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = {
+    **{p:p for p in ("loading-presentation.js","loading-presentation.css")},
     'formation-ranges.js':'formation-ranges.js',
     'loading-formation.js':'loading-formation.js',
     **{p:p for p in ('game-info.html','game-info.js','game-info-engine.js','game-info.css','game-info-items.json')},
