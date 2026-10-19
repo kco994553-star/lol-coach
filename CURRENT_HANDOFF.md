@@ -1,3 +1,12 @@
+# Gameplan reference visual fidelity — actual public completion
+- Fresh base40784cf; PR115 product `596fc066e084a791a818722ae059fe6818c07edc`; required PR/exact-product-main3PASS. Public `90b0814fec7deb0e4c3dfc9b3c70e72178d9cb4b`; Pages392085037103SUCCESS; changed HTTPS/root/buildinfo/nojekyll/pro/riot verified.
+- Approved visual composition: official own artwork masthead, large two-line operation, compact ten-picks/own-role edit, numbered shared-icon cards, round opposing portraits, execution rows, gold condition panel.1280+master/right panel; narrow/mobile full-width detail. Long actual conditions wrap; source tactics not replaced with mockup copy.
+- Existing selected-plan vocabulary only; no engine or knowledge rewrite. Same report and all five action/detail/condition/risk/matrix/map/formation/zoom/legacy routes preserved. Actual public Caitlyn/BOTTOM and Ahri/MID, keyboard/back/refresh/edits and prior protected regression verified.50affected checks; final immutable CI supplies complete source binding.
+- Evidence/report: evidence/actual-evidence/gameplan-visual/publication/result.md. Previous screens/evidence kept. Results-only publication follows; no identical product republish. Exact final result-mainCI/ownership release recorded on common claim branch.
+- N0/30secUNMEASURED/WindowsBLOCKED_EXTERNAL; advice7/AUTO30/HOLD20/USER0/Frozen350/raw sources/holds/failures/quotas/Master+ unchanged. Provider/game/video/paid calls0. Next: scoped matchup/ratio evidence; no invented6:4/5.5:4.5/5:5.
+
+---
+
 # Gameplan reference layout — actual public completion
 - PR113 producteaa22b87de0a256ce7ea5a17c8dc5d60696669b5; required PR/exact-product-main3PASS. Publice657f4056a8d3276c7c1973ace3c62cbe071347e; nativePages39196736169 actualSUCCESS; changed HTTPS hashes/root/buildinfo/nojekyll exact, pro/riot retained.
 - Ten picks/official own hero/operation/three cards/max3 reminders; actual report perspectives/five actions/change criteria/retained tools.1440+master/right detail, narrow/mobile full width; URL input/period/detail, fresh links/refresh/back/focus/latest conditions, formation state and previous feature routes preserved.
