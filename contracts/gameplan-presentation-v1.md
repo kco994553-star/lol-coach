@@ -18,7 +18,7 @@ actual MID analysis, its unmatched lane remains knowledge-limited. Hero art uses
 official registry base artwork; other unavailable art falls back to portrait, never another
 champion. Asset failure leaves text/actions available. No image generation or new calls.
 
->=1440px: master and right detail columns; narrower: detail replaces master at readable
+>=1280px: master and right detail columns; narrower: detail replaces master at readable
 width; mobile same full-width detail and shared bottom menu. Back restores master scroll
 and initiating card focus; selected report/period remains. URL fragment version1 carries
 only normalized loading input and selected period/detail (not report text/account/secrets).
@@ -39,3 +39,15 @@ not interchangeable or guaranteed optimal play. Do not derive numeric precision 
 qualitative labels, risk preference, overall win rate or the mockup. Current engine has
 no adopted scoped ratio; retain qualitative matrix and evidence access in lane detail.
 Numeric output remains an evidence task, not a fabricated 5:5 fallback.
+
+## Visual fidelity follow-up (2026-10-19)
+Approved references drive composition: official hero art spans brand/ten-picks/title;
+compact numbered/icon cards, round opposing portraits, gold condition box, violet
+selection. Shared icon factory reused. Short labels map existing plan IDs, do not select
+strategies or change evidence/assessment. Unsupported IDs keep original conclusions.
+Own role remains on edit pill; edit and all disclosures/navigation/legacy routes persist.
+At >=1280px the compact desktop rail permits side-by-side readable panels. Narrower
+views replace master; 200% text and mobile wrap, never clamp tactical conditions.
+Impact: rendering/projection names/breakpoint only. Alternative of shrinking all text
+rejected for readability. Revert these view/CSS changes to restore prior presentation;
+no engine or knowledge migration. Browser checks bind actual render and old routes.
