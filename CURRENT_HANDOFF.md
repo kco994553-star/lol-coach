@@ -1,3 +1,16 @@
+# Gameplan reference layout — completed
+- run_token: `main-20261019-gameplan-layout`
+- status: `COMPLETED`
+- writer_active: false
+- final_main: `40784cf9de6c5b4ea7c917107edbe7f00c973764` (PR113/114)
+- product_main: `eaa22b87de0a256ce7ea5a17c8dc5d60696669b5`; public `e657f4056a8d3276c7c1973ace3c62cbe071347e`, nativePages39196736169 actualSUCCESS.
+- Required PR/product-main/results/final-main CI3PASS; final runs39197202378/39197202272 reuse unchanged functional evidence, current_sources=true. Results first seal failure preserved and corrected without weakening checks.
+- Actual public PC1440/mobile390/reference1280/320/200%, cards/paired contexts/five actions/conditions/risk/formation/back/focus/refresh/direct link/input/image+data failure PASS; HTTPS hashes/pro/riot exact. Evidence main:evidence/actual-evidence/gameplan-layout/publication/result.md. Final exact gate adjacent final-ci-gate.json on this claim branch.
+- Same engine/knowledge; Ahri limited matchup retained. New lane6:4/5.5:4.5 user request needs scoped general-expectation vs both-core-execution knowledge; no fabricated ratios. Next knowledge work kept separate from completed display implementation.
+- AUTO30/HOLD20/USER0/advice7/Frozen350/originals/holds/failures/budgets/Master+/Windows preserved; no provider/game/video/paid calls. N0,30secUNMEASURED,WindowsBLOCKED_EXTERNAL.
+
+---
+
 # Gameplan reference layout — active writer
 - run_token: `main-20261019-gameplan-layout`
 - status: `RUNNING`
