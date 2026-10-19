@@ -1,3 +1,17 @@
+# Gameplan coaching priorities — completed
+- run_token: `main-20261019-gameplan-priorities`
+- status: `COMPLETED`
+- writer_active: false
+- PR119/120/121 merged; final main `e37f9b7cbb6a499b631e6e6e4ba841aa9baa1aa5`; exact final CI3 PASS with unchanged product checks reused.
+- Product source `1b3171f9ec10bad32f71975ca3d30c1917240bdd`; artifact `5b024a3387990500086220df65a710193b587138`; native Pages39222209602 build/deploy/report PASS, HTTPS manifest/pro/riot verified.
+- Actual public PC/mobile team comparison, role changes, five actions and conditional response checks PASS. All15 default action texts match the generated report on both devices.
+- Six functional team dimensions, three phases, role-specific Caitlyn/Ahri/Sejuani methods, actual flank actors, lost frontline protection and Fiora side defense. Protection role and frost-stack conditions retained. Existing engine/graphs/risk/maps/formation/legacy/manual/Windows histories preserved.
+- Report: evidence/actual-evidence/gameplan-priorities/publication/result.md on main. Final proof/CI logs/action binding below on this claim branch; no identical product redeploy for result documentation.
+- Tactical synthesis is scoped mechanism-linked inference; no matchup winner/ratio or source-grade promotion. N0/30secUNMEASURED/WindowsBLOCKED_EXTERNAL; runtimeAI/provider/game/video/paid0. Protected original histories and Master+ policy unchanged.
+- Results-only format failure (.txt probe snapshot) preserved and corrected as Markdown without relaxing allowed-file rules. Next: remaining matchup evidence and live/Windows validation; no unverified full-coverage claims.
+
+---
+
 # Gameplan actionable priorities — active writer
 - run_token: `main-20261019-gameplan-priorities`
 - status: `RUNNING`
