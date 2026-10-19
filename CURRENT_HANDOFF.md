@@ -3,6 +3,7 @@
 - Six functional team dimensions/three phases → role → five actions/situations. Carry macro/fight uses actual flank actors, protection-distance loss and side defense. Ahri MID/Sejuani JUNGLE scoped kit principles, no promoted matchup advantage.
 - Existing risk/metrics/maps/formation/legacy/URL routes preserved; mobile comparison stacks.78affected checks + actual public PC/mobile team/role/scenario screenshots. Failed old text-location/priority assertions preserved and corrected with behavior checks.
 - Evidence evidence/actual-evidence/gameplan-priorities/publication/result.md; runtimeAI0, provider/game/video/paid0. N0/30secUNMEASURED/WindowsBLOCKED_EXTERNAL and protected histories unchanged.
+- Results-only format check initially rejected a .txt probe snapshot; preserved it as Markdown, removed prohibited artifact and retained failure logs without relaxing rules.
 - Source facts vs tactical inference distinguished. Remaining unsupported matchups/ratios/live evidence stay limited. Results-only finalCI/claim release follows without duplicate deployment.
 
 ---

@@ -159,3 +159,10 @@ PR119/120 product source `1b3171f9ec10bad32f71975ca3d30c1917240bdd`, artifact `5
 Exact product-main CI3PASS; native Pages 39222209602 build/deploy/report3SUCCESS.
 HTTPS hashes/root/build-info/pro/riot and actual public PC/mobile verified.
 Results-only PR updates Handoff without identical product redeploy; final source-bound CI and claim release follow.
+
+### 검증 자료 형식 수정
+
+결과 기록 PR의 첫 검사는 공개 브라우저 검사 원문을 `.txt`로 저장해
+`bounded_changes=false`가 되었다. 원문을 Markdown의 코드 블록으로 보존하고
+금지 형식을 제거했다. 제품 코드·공개 배포는 바뀌지 않으며, 허용 범위 규칙도
+완화하지 않았다. 로컬·원격 실패 로그를 보존했다.

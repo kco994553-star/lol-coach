@@ -1,3 +1,8 @@
+# Public browser probe snapshot
+
+Read-only verification script preserved as documentation, not an executable product source.
+
+```javascript
 const fs=require('fs'),assert=require('node:assert/strict'),{chromium}=require('playwright');
 (async()=>{const b=await chromium.launch({executablePath:process.env.CHROMIUM_EXECUTABLE||'/usr/bin/chromium',args:['--no-sandbox']}),errors=[],results=[];
 for(const [device,width,height]of [['desktop',1600,1000],['mobile',390,844]]){
@@ -12,3 +17,5 @@ const actions={};for(const area of ['lane','operations','fight']){await p.locato
 for(const [own,pos] of [['Ahri','MID'],['Sejuani','JUNGLE']]){await p.locator('[data-plan-edit]').click();await p.locator('#own-champion').selectOption(own);await p.locator('#own-position').selectOption(pos);await p.locator('#analyze').click();await p.locator('[data-plan-area=fight]').click();assert.equal(await p.locator('[data-condition-response=FLANK_ENTRY]').count(),0);assert(await p.locator('[data-condition-response=ROLE_PLAN_BREAKS]').isVisible());assert.equal(await p.locator('.plan-detail [data-action-kind]').count(),5);await p.locator('.plan-detail-title').scrollIntoViewIfNeeded();await p.screenshot({path:process.env.OUT+'/'+device+'-'+own+'-fight.png'});await p.locator('[data-coach-focus=close-detail]').click();}examples.actions=actions;
 results.push({device,examples,applyResetRefresh:true,otherConditionsPreserved:true,unsupportedNotCopied:true,noOverflow:true});await p.close();}
 assert.deepEqual(errors,[]);fs.writeFileSync(process.env.OUT+'/conditions-result.json',JSON.stringify({results,errors},null,2));await b.close();})().catch(e=>{console.error(e);process.exit(1)});
+
+```
