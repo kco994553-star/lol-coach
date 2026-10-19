@@ -1,3 +1,13 @@
+# Gameplan reference visual fidelity — active writer
+- run_token: `main-20261019-gameplan-visual`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/gameplan-visual-20261019`
+- base_main: `40784cf9de6c5b4ea7c917107edbe7f00c973764`
+- scope: approved reference visual fidelity; official hero/compact cards/round opposing portraits/compact detail, same report/navigation/features. No new tactical adoption/provider calls. Required checks, Pages/public/Handoff.
+
+---
+
 # Gameplan reference layout — completed
 - run_token: `main-20261019-gameplan-layout`
 - status: `COMPLETED`
