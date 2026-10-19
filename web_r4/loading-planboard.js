@@ -285,7 +285,7 @@
       fight.concept='진입할지, 뒤의 딜러를 지킬지 먼저 나누기';
       fight.role='아군 공격이 닿는 진입과 후방 보호 사이를 선택하는 역할';
       fight.setup='아군 딜러와 너무 멀어지지 않는 앞쪽에서 시작하고, 다른 앞라인이 진입하면 후방 보호가 남는지 본다.';
-      fight.start=skill('Sejuani','R')+'을 배웠고 아군 공격이 닿는다면 적을 묶어 시작한다. 아군 딜러에게 적이 접근하면 진입보다 '+skill('Sejuani','Q')+'·배운 '+skill('Sejuani','E')+'의 방해를 보호에 남긴다.';
+      fight.start=skill('Sejuani','R')+'을 배웠고 아군 공격이 닿는다면 적을 묶어 시작한다. 아군 딜러에게 적이 접근하면 진입보다 '+skill('Sejuani','Q')+'를 보호에 남기고, 서리가 최대로 중첩된 적에게 배운 '+skill('Sejuani','E')+'를 쓴다.';
       fight.target='혼자 적 딜러를 쫓기보다 아군이 함께 때릴 적이나 아군 딜러에게 붙은 적을 먼저 묶는다.';
       fight.stop='아군이 따라오지 못하거나 뒤의 딜러가 물리면 더 깊게 진입하지 않고 아군 쪽으로 돌아와 접근한 적을 끊는다.';
     }
@@ -456,12 +456,13 @@
       const pressure=people('PRESSURE'),pick=people('PICK'),access=people('ACCESS'),cover=people('COVER');
       const front=input[team].filter(x=>catalog.champions[x.champion]?.official_tags?.includes('Tank')).map(x=>x.champion);
       const side=input[team].some(x=>x.champion==='Fiora')&&fact('Fiora','Q')&&fact('Fiora','W')?'Fiora':null;
-      const prepared=pressure.length>=2&&pick.length&&cover.length;
-      return {actors:{pressure,pick,access,cover,front,side:side?[side]:[]},
+      const rearCover=cover.filter(champion=>input[team].some(p=>p.champion===champion&&['SUPPORT','MID'].includes(p.position)));
+      const prepared=!!(pressure.length>=2&&pick.length&&rearCover.length);
+      return {actors:{pressure,pick,access,cover,rearCover,front,side:side?[side]:[]},
         win:prepared?'먼저 자리 잡고 견제해 접근을 어렵게 만든 뒤, 닿는 적을 함께 공격해 포탑·목표물로 바꾼다.':access.length?'아군이 같은 대상에 닿는 방향에서 접근해 떨어진 적을 노리고, 교전 뒤 포탑·목표물을 얻는다.':'확인된 공격 수단을 함께 쓸 거리를 만들고, 밀 수 있는 라인에서 이동 시간을 얻는다.',
         field:prepared?'아군과 시야를 먼저 확보한 포탑·목표물 주변에서 정면 거리를 유지한다.':access.length?'옆으로 접근할 길이 있는 전장에서 고립된 적을 노린다. 어두운 길이 접근하는 쪽에도 안전하다는 뜻은 아니다.':'퇴로와 아군의 공격이 이어지는 전장을 고른다.',
         opening:pick.length?names('PICK')+'의 방해 기술로 공격 기회를 만들되, 아군이 닿지 못하면 진입을 이어가지 않는다.':pressure.length?names('PRESSURE')+'의 견제로 체력을 깎으며 접근할 기회를 만든다.':'교전을 열 수단의 지식이 부족하므로 선진입 성공을 전제하지 않는다.',
-        damage:cover.length?names('COVER')+'의 보호가 실제로 닿는 동안 공격을 이어간다. '+(front.length?'앞라인이 모두 멀리 진입하면 뒤의 딜러 보호는 사라질 수 있다.':'보호 기술 하나가 모든 접근을 막지는 않는다.'):'서로 같은 적을 공격할 거리를 유지한다. 현재 연결된 보호 기술 자료가 없어 아군 수만으로 보호를 보장하지 않는다.',
+        damage:rearCover.length?rearCover.map(name).join('·')+'의 보호가 실제로 닿는 동안 공격을 이어간다. '+(front.length?'앞라인이 모두 멀리 진입하면 뒤의 딜러 보호는 사라질 수 있다.':'보호 기술 하나가 모든 접근을 막지는 않는다.'):access.length?names('ACCESS')+'의 접근을 같은 대상에 맞춰 공격을 집중한다. '+(cover.length?names('COVER')+'의 보호가 닿는지와 남은 수단은 별도로 확인한다.':'현재 연결된 후방 보호 자료가 없어, 접근 뒤 돌아갈 길을 남긴다.'):'서로 같은 적을 공격할 거리를 유지한다. 현재 연결된 보호 기술 자료가 없어 아군 수만으로 보호를 보장하지 않는다.',
         macro:side?name(side)+'의 사이드 압박과 중앙 움직임을 맞춘다. 사이드로 인원이 빠지면 중앙의 부족한 인원으로 교전을 강제하지 않는다.':prepared?'중앙 미니언을 먼저 잡고 함께 이동해 포탑·목표물 주변을 선점한다. 사이드 미니언을 받을 아군도 따로 정한다.':'밀어 넣을 라인과 함께 움직일 아군을 정하고, 상대가 갈라졌을 때 가까운 포탑·목표물을 노린다.',
         avoid:prepared?'진형이 갈라진 채 어두운 지역을 추격하거나, 앞라인과 뒤의 딜러가 서로 도울 수 없게 벌어지지 않는다.':access.length?'먼 거리 견제를 계속 맞으며 좁은 입구로 따로 진입하지 않는다.':'도와줄 아군보다 먼저 깊게 들어가지 않는다.',
         evidence_ids:[...new Set(rows.flatMap(r=>r.evidence_ids).concat(side?['official:Fiora:Q','official:Fiora:W']:[]))],

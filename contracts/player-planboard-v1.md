@@ -191,3 +191,10 @@ situation preview/apply/reset and protected browser. These verify rules/wiring, 
 coaching efficacy or expert adoption. Existing sources/claims retain their grade.
 Rollback: revert product delta and publish previous verified artifact while preserving
 latest verified pro-dashboard; keep evidence, history and all prior contracts.
+
+Follow-up review: a jungler's incidental shield (e.g. Lee Sin W) remains a COVER
+capability but does not alone select the prepared ranged-pressure plan. That selection
+requires a source-linked COVER actor in MID/SUPPORT plus multiple pressure actors
+and pick. `actors.rearCover` records this distinction; no actual protection availability
+or exhaustive best-composition classification is inferred. Default opponent retains
+side pressure and lateral access, while changed support/position is re-evaluated.

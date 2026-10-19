@@ -375,7 +375,6 @@
       else hero.append(root.LoadingMap.portrait(catalog.champions[v.own.champion],true));
       const copy=el('div',null,'plan-hero-copy');copy.append(el('p','이번 판의 작전','coach-eyebrow'),el('h2',v.hero_title,'plan-title'),el('p',v.support,'plan-subtitle'));hero.append(copy);masthead.append(hero);master.append(masthead);
       if(v.team_plan){const team=details('team-direction','전체 조합 방향 · 양 팀이 원하는 싸움');team.classList.add('plan-team-direction');
-        const intro=el('div',null,'plan-team-overview');intro.append(block('우리',b.composition.ours),block('상대',b.composition.theirs));team.append(intro);
         v.team_plan.rows.forEach(row=>{const item=el('section',null,'plan-team-dimension');item.append(el('h3',row.label));const pair=el('div',null,'plan-team-comparison');pair.append(block('우리',row.ours),block('상대',row.theirs));item.append(pair);team.append(item);});
         v.team_plan.phases.forEach(phase=>team.append(block(phase.label,phase.text)));team.append(el('p',v.team_plan.assumptions),el('p',v.team_plan.scope));master.append(team);}
       const cards=el('div',null,'plan-area-cards');v.cards.forEach((a,i)=>{const tile=button(null,'board-'+a.id,()=>navigateDetail(a.id));tile.className='plan-area-card coach-board-tile';tile.dataset.planArea=a.id;tile.dataset.loadingDecision=a.id;tile.setAttribute('aria-expanded',String(state.detail===a.id));tile.setAttribute('aria-controls',prefix+'-detail');
