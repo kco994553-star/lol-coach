@@ -1,0 +1,127 @@
+..........................FF.F
+======================================================================
+FAIL: test_projection_same_report_two_real_roles_and_unknown_scope (tests_pregame.test_loading_presentation.PresentationTests.test_projection_same_report_two_real_roles_and_unknown_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-priorities/tests_pregame/test_loading_presentation.py", line 14, in test_projection_same_report_two_real_roles_and_unknown_scope
+    self.node("for(const own of ['Caitlyn','Ahri']){const r=run(own),v=P.project(r);assert.equal(v.own.champion,own);assert.equal(v.cards.length,3);assert.equal(v.teams.allies.length+v.teams.enemies.length,10);assert(v.remember.length<=3);assert.equal(v.cards[0].actions,r.coach.planboard.action_summaries.lane.items);assert.equal(v.cards[0].perspectives,r.coach.planboard.area_context.lane);assert.equal(v.cards[0].text,r.coach.planboard.loading_summary.items[0].support);assert(v.cards.every(x=>x.source_paths.length));}assert.equal(P.project(run('Ahri')).cards[0].perspectives.basis,'INSUFFICIENT');assert.notEqual(P.project(run()).title,P.project(run('Ahri')).title);")
+  File "/workspace/worktrees/lol-coach-priorities/tests_pregame/test_loading_presentation.py", line 12, in node
+    r=subprocess.run(['node','-e',PRE+body],cwd=ROOT,capture_output=True,text=True);self.assertEqual(r.returncode,0,r.stderr[-3000:])
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'ROLE_PRINCIPLE_NOT_MATCHUP_ADVANTAGE'
+- 'INSUFFICIENT'
+
+    at [eval]:3:515
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'ROLE_PRINCIPLE_NOT_MATCHUP_ADVANTAGE',
+  expected: 'INSUFFICIENT',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_source_change_projects_without_champion_specific_copy (tests_pregame.test_loading_presentation.PresentationTests.test_source_change_projects_without_champion_specific_copy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-priorities/tests_pregame/test_loading_presentation.py", line 16, in test_source_change_projects_without_champion_specific_copy
+    self.node("const r=run();r.coach.planboard.loading_summary.items[0].conclusion='새 조건의 실제 결과';r.coach.planboard.loading_summary.changes=['변경 하나'];const v=P.project(r);assert.equal(v.cards[0].title,'새 조건의 실제 결과');assert.deepEqual(v.remember,['변경 하나']);assert.equal(r.coach.selected.metrics.ALLIN.assessment,'INSUFFICIENT');")
+  File "/workspace/worktrees/lol-coach-priorities/tests_pregame/test_loading_presentation.py", line 12, in node
+    r=subprocess.run(['node','-e',PRE+body],cwd=ROOT,capture_output=True,text=True);self.assertEqual(r.returncode,0,r.stderr[-3000:])
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  [
++   '노틸러스가 나에게 접근할 길이 열려 있나?',
++   '리 신·제드의 마지막 위치와 지금 접근할 길은 어디인가?',
++   '내가 공격받으면 바로 도와줄 아군이 옆에 있나?'
+-   '변경 하나'
+  ]
+
+    at [eval]:3:208
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [
+    '노틸러스가 나에게 접근할 길이 열려 있나?',
+    '리 신·제드의 마지막 위치와 지금 접근할 길은 어디인가?',
+    '내가 공격받으면 바로 도와줄 아군이 옆에 있나?'
+  ],
+  expected: [ '변경 하나' ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_visual_labels_follow_existing_plan_not_champion_or_new_judgment (tests_pregame.test_loading_presentation.PresentationTests.test_visual_labels_follow_existing_plan_not_champion_or_new_judgment)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-priorities/tests_pregame/test_loading_presentation.py", line 18, in test_visual_labels_follow_existing_plan_not_champion_or_new_judgment
+    self.node("const r=run(),v=P.project(r);assert.equal(v.cards[0].concept,r.coach.planboard.lane.concept.text);assert.equal(v.cards[1].focus,r.coach.planboard.operations.awareness.watch);assert.equal(v.cards[2].focus,r.coach.planboard.fight.awareness.danger);assert.equal(v.hero_title,'먼저 밀어 견제할 공간을 만드세요');assert(v.cards[0].conditions.length<=2);r.coach.planboard.wave.plan_id='TOWER_CS';const changed=P.project(r);assert.equal(changed.cards[0].concept,'포탑 아래에서 성장 지키기');assert.notEqual(changed.hero_title,v.hero_title);r.coach.planboard.wave.plan_id='UNSUPPORTED_NEW';assert.equal(P.project(r).hero_title,r.coach.planboard.headline);assert.equal(P.project(r).cards[0].title,v.cards[0].title);assert.equal(r.coach.selected.metrics.ALLIN.assessment,'INSUFFICIENT');")
+  File "/workspace/worktrees/lol-coach-priorities/tests_pregame/test_loading_presentation.py", line 12, in node
+    r=subprocess.run(['node','-e',PRE+body],cwd=ROOT,capture_output=True,text=True);self.assertEqual(r.returncode,0,r.stderr[-3000:])
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ '라인에서 만든 압박을 중앙 포탑과 목표물로 옮기세요'
+- '먼저 밀어 견제할 공간을 만드세요'
+
+    at [eval]:3:254
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '라인에서 만든 압박을 중앙 포탑과 목표물로 옮기세요',
+  expected: '먼저 밀어 견제할 공간을 만드세요',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 30 tests in 6.061s
+
+FAILED (failures=3)

@@ -1,0 +1,40 @@
+F
+======================================================================
+FAIL: test_team_plan_and_roles_use_actual_functions_not_example_roster (tests_pregame.test_player_planboard.PlayerPlanboardTests.test_team_plan_and_roles_use_actual_functions_not_example_roster)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-priorities/tests_pregame/test_player_planboard.py", line 10, in test_team_plan_and_roles_use_actual_functions_not_example_roster
+    self.node("const r=run(),b=r.coach.planboard;assert.equal(b.team_plan.rows.length,6);assert.equal(b.team_plan.phases.length,3);assert.equal(b.team_plan.observation,false);assert.equal(b.team_plan.ours.prepared,true);assert.equal(b.team_plan.theirs.prepared,false);assert.match(b.team_plan.theirs.field,/옆으로/);assert.match(b.team_plan.theirs.macro,/피오라.*사이드/);assert.match(b.team_plan.ours.damage,/모두.*진입/);assert(b.condition_responses.fight.some(x=>x.id==='FRONT_DEEP'));for(const area of ['lane','operations','fight'])assert.equal(b.action_summaries[area].items.length,5);assert.equal(b.reminders.length,3);function analyze(x){return E.analyze(x,c).coach.planboard;}for(const [own,pos] of [['Ahri','MID'],['Sejuani','JUNGLE']]){const x=E.exampleInput(c,0);x.own_champion=own;x.own_position=pos;const a=analyze(x);assert(a.role_principles);assert.notEqual(a.fight.setup,b.fight.setup);assert.equal(a.action_summaries.lane.items.length,5);assert(a.condition_responses.fight.some(x=>x.id==='ROLE_PLAN_BREAKS'));assert(!a.fight.awareness);assert.equal(a.coverage.status,'UNSUPPORTED');assert(a.role_principles.evidence_ids.every(x=>x.includes(own)));}const x=E.exampleInput(c,0);x.allies.find(x=>x.champion==='Lux').champion='Brand';let a=analyze(x);assert.equal(a.team_plan.ours.prepared,false);assert(!a.team_plan.ours.damage.includes('럭스'));assert.match(a.team_plan.ours.damage,/보호.*자료/);x.enemies.find(x=>x.champion==='Fiora').champion='Malphite';a=analyze(x);assert(!a.team_plan.theirs.macro.includes('피오라'));assert(!a.condition_responses.operations.some(x=>x.id==='SIDE_PRESSURE'));assert(!a.condition_responses.lane.some(x=>x.id==='LUX_BIND_HIT'));assert.equal(a.wave.plan_id,'CHECK_WAVE');")
+  File "/workspace/worktrees/lol-coach-priorities/tests_pregame/test_player_planboard.py", line 23, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4000:])
+AssertionError: 1 != 0 : node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+1 !== true
+
+    at [eval]:3:168
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: true,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.339s
+
+FAILED (failures=1)
