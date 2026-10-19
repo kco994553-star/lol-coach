@@ -1,0 +1,58 @@
+/* Shared report presentation: approved navy/violet reference, no judgment styling. */
+:root{--plan-gap:20px;--plan-radius:16px;--plan-line:color-mix(in srgb,var(--border) 85%,transparent);--plan-heading:clamp(1.8rem,2.6vw,2.8rem)}
+body.plan-ready #loading-app{max-width:1540px;padding-top:26px}
+body.plan-ready #loading-app>.hero,body.plan-ready #loading-app>.coach-details,body.plan-ready .results-heading,body.plan-ready #report-teams{display:none}
+body.plan-ready #loading-inputs{max-width:940px;margin:0 auto 16px}
+body.plan-ready #input-panel:not([open]){display:none}
+body.plan-ready #loading-message{max-width:940px;margin:0 auto;font-size:.8rem}
+body.plan-ready #loading-message:not(.is-error):not(.is-stale){position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%)}
+#loading-coach .plan-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--plan-gap);max-width:940px;margin:0 auto;border:0;padding:0;background:none;box-shadow:none}
+.plan-master,.plan-detail{min-width:0;background:linear-gradient(140deg,#111a2b,#0c1120 70%);border:1px solid var(--plan-line);border-radius:var(--plan-radius);padding:24px}
+.plan-master{position:relative;overflow:hidden}
+.plan-teams{position:relative;z-index:1;display:grid;gap:9px}
+.plan-team-row{display:grid;grid-template-columns:34px repeat(5,minmax(0,1fr));gap:9px;align-items:start;border:1px solid var(--border);border-radius:10px;padding:10px;background:#0b1220d9}
+.plan-team-label{font-size:.8rem;padding-top:9px;color:var(--ally)}.plan-team-row.enemies .plan-team-label{color:var(--enemy)}
+.plan-pick{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;text-align:center;min-width:0;font-size:.8rem;line-height:1.4;overflow-wrap:anywhere}
+.plan-pick .pick-portrait{width:32px;height:32px;flex:0 0 32px}.plan-pick small{color:var(--warning);width:100%;font-size:.72rem}.plan-pick.is-own{color:var(--warning)}
+.plan-layout button.plan-edit{display:block;margin:8px 0 0 auto;padding:6px 10px;min-height:36px;font-size:.8rem;background:transparent}
+.plan-hero{position:relative;isolation:isolate;min-height:250px;display:flex;align-items:center;margin:0 -24px 12px;padding:28px 24px;overflow:hidden}
+.plan-hero-art{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;opacity:.68;mask-image:linear-gradient(to right,transparent 12%,black 75%)}
+.plan-hero::after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#101827 3%,#101827d9 38%,#10182714 100%),linear-gradient(0deg,#0e1524,transparent 30%)}
+.plan-hero-copy{width:74%;max-width:620px}.plan-hero .coach-eyebrow{margin:0 0 14px;color:var(--accent);font-weight:700;font-size:.9rem}
+.plan-hero h2.plan-title{font-size:var(--plan-heading);line-height:1.3;letter-spacing:-.035em;margin:0 0 14px;word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance}
+.plan-subtitle{font-size:.95rem;line-height:1.65;margin:0;color:var(--muted);word-break:keep-all;overflow-wrap:anywhere}
+.plan-area-cards{display:grid;gap:12px}
+.plan-layout button.plan-area-card{display:grid;grid-template-columns:56px minmax(0,1fr);gap:8px 16px;width:100%;min-height:124px;padding:20px;text-align:left;position:relative;isolation:isolate;overflow:hidden;border:1px solid var(--border);border-radius:12px;background:#111b2b;color:var(--ink)}
+.plan-area-card::before{content:'';position:absolute;z-index:-1;inset:0;opacity:.24;background:linear-gradient(90deg,#101827 28%,transparent 100%),url('./home-assets/game-lane.webp') center right/cover}
+.plan-area-card[data-plan-area=operations]::before{background-image:linear-gradient(90deg,#101827 28%,transparent 100%),url('./home-assets/game-operations.webp')}
+.plan-area-card[data-plan-area=fight]::before{background-image:linear-gradient(90deg,#101827 28%,transparent 100%),url('./home-assets/game-fight.webp')}
+.plan-layout button.plan-area-card:hover,.plan-layout button.plan-area-card[aria-expanded=true]{border-color:var(--accent);box-shadow:inset 4px 0 var(--accent);background:#211d37}
+.plan-layout button:active{filter:brightness(1.12)}.plan-layout :focus-visible{outline:3px solid var(--accent);outline-offset:4px}.plan-layout button:disabled{opacity:.5;cursor:not-allowed}
+.plan-card-index{display:flex;flex-direction:column;gap:4px;color:var(--accent);font-weight:700;border-right:1px solid var(--border);font-size:.9rem}.plan-card-index>span:first-child{font-size:1.2rem;color:var(--muted)}
+.plan-card-copy{display:grid;gap:7px;min-width:0}.plan-card-copy strong{font-size:1.1rem;line-height:1.5;word-break:keep-all;overflow-wrap:anywhere}.plan-card-copy>span{font-size:.9rem;line-height:1.6;color:var(--muted);word-break:keep-all;overflow-wrap:anywhere}.plan-card-link{grid-column:2;text-align:right;font-size:.78rem;color:var(--accent)}
+.plan-remember{display:grid;grid-template-columns:90px 1fr;gap:12px;padding:16px;margin-top:16px;border:1px solid var(--border);border-radius:10px;background:#0a1120}.plan-remember h3{font-size:.9rem;color:var(--warning);margin:0}.plan-remember ol,.plan-remember ul{margin:0;padding-left:18px;font-size:.85rem;line-height:1.6}.plan-remember li+li{margin-top:5px}
+.plan-detail-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.plan-detail-bar button{min-height:44px}.plan-detail-bar .coach-eyebrow{font-size:.8rem;margin:0}
+.plan-detail h2.plan-detail-title{font-size:clamp(1.5rem,2vw,2.2rem);line-height:1.4;margin:24px 0 12px;letter-spacing:-.025em;word-break:keep-all;overflow-wrap:anywhere}.plan-detail-intro{color:var(--muted);font-size:.95rem;line-height:1.7}
+.plan-perspectives{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0}.plan-perspectives section{min-width:0;padding:16px;border:1px solid var(--border);border-top:2px solid var(--ally);border-radius:10px;background:#101a2a}.plan-perspectives section+section{border-top-color:var(--enemy)}.plan-perspectives h3{font-size:.85rem;color:var(--ally);margin:12px 0 8px}.plan-perspectives section+section h3{color:var(--enemy)}.plan-perspectives p{font-size:.95rem;line-height:1.65;margin:0;word-break:keep-all;overflow-wrap:anywhere}.plan-side-portraits{display:flex;flex-wrap:wrap;gap:7px}.plan-side-portraits .pick-portrait{width:38px;height:38px}
+.plan-detail .coach-card[data-action-summary]{padding:0;border:0;background:none}.plan-detail .coach-action-list{gap:8px}.plan-detail .coach-action-list button{padding:12px;grid-template-columns:24px 1fr 14px;background:#182131}.plan-detail .coach-action-label{font-size:.82rem}.plan-detail .coach-action-text{font-size:.95rem;line-height:1.7}.plan-detail .coach-summary-state{font-size:.75rem}
+.plan-adjustment{padding:18px;margin:22px 0;border:1px solid #826a3e;border-radius:12px;background:#26221655}.plan-adjustment h3{font-size:1rem;color:var(--warning);margin-top:0}.plan-adjustment p{font-size:.95rem;line-height:1.7}.plan-detail .coach-details{margin:12px 0}.plan-detail .coach-details summary{padding:14px;line-height:1.5}.plan-detail .coach-details>*:not(summary){margin-left:12px;margin-right:12px}.plan-detail .coach-tabs{position:static;margin-top:0}.plan-detail .coach-tabs button{font-size:.9rem;padding:10px;min-height:44px}.plan-detail .coach-panel{min-width:0}.plan-retained>div{min-width:0}
+.plan-layout [hidden]{display:none!important}
+@media(min-width:1440px){#loading-coach .plan-layout[data-detail-open=true]{max-width:none;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}.plan-layout[data-detail-open=true] .plan-master{position:sticky;top:20px}.plan-layout[data-detail-open=true] .plan-title{font-size:2rem}.plan-layout[data-detail-open=true] .plan-hero-copy{width:83%}}
+@media(max-width:1439px){.plan-layout[data-detail-open=true] .plan-master{display:none}.plan-detail{max-width:900px;width:100%;margin:auto}.plan-layout[data-detail-open=true] .plan-detail{padding:28px}}
+@media(max-width:600px){body.plan-ready #loading-app{padding:14px 12px 100px}.plan-master,.plan-detail,.plan-layout[data-detail-open=true] .plan-detail{padding:16px;border-radius:12px}.plan-team-row{grid-template-columns:24px repeat(5,minmax(0,1fr));gap:5px;padding:9px 6px}.plan-pick{font-size:.68rem;gap:3px}.plan-pick .pick-portrait{width:28px;height:28px;flex-basis:28px}.plan-team-label{font-size:.65rem}.plan-pick small{font-size:.62rem}.plan-hero{margin:0 -16px 10px;padding:20px 16px;min-height:230px}.plan-hero-copy{width:88%}.plan-hero h2.plan-title{font-size:1.65rem}.plan-hero-art{opacity:.45;mask-image:linear-gradient(90deg,transparent,black)}.plan-subtitle{font-size:.86rem}.plan-layout button.plan-area-card{padding:16px 12px;grid-template-columns:40px minmax(0,1fr);gap:8px 10px}.plan-card-copy strong{font-size:1rem}.plan-card-copy>span{font-size:.87rem}.plan-card-index{font-size:.76rem}.plan-remember{display:block;padding:13px}.plan-remember h3{margin-bottom:10px}.plan-perspectives{gap:8px}.plan-perspectives section{padding:12px}.plan-perspectives p{font-size:.9rem}.plan-side-portraits .pick-portrait{width:30px;height:30px}.plan-detail h2.plan-detail-title{font-size:1.65rem}.plan-detail .coach-action-text{font-size:.95rem}.plan-detail .coach-details>*:not(summary){margin-left:0;margin-right:0}}
+@media(max-width:360px){.plan-perspectives{grid-template-columns:1fr}.plan-team-row{grid-template-columns:20px repeat(5,minmax(0,1fr))}.plan-pick .pick-portrait{width:24px;height:24px;flex-basis:24px}}
+@media(prefers-reduced-motion:reduce){.plan-layout *{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+/* Both desktop and mobile action rows reserve a real text column. */
+.plan-detail .coach-action-label,.plan-detail .coach-action-text{grid-column:2}
+.plan-detail .coach-action-arrow{grid-column:3;grid-row:1/3}
+.plan-detail.coach-execution{margin-top:0}
+/* A separate lower row for step controls avoids colliding with bottom portraits. */
+.plan-detail .coach-line{height:300px;min-width:0}
+.plan-detail .coach-line-number{width:44px;height:44px;min-height:44px;padding:0;bottom:4px}
+.plan-detail .coach-line-home,.plan-detail .coach-line-away{bottom:53px}
+/* Qualitative six-column grid fits the panel, rather than the viewport breakpoint. */
+.plan-detail .coach-matrix{min-width:0;width:100%;table-layout:fixed}
+.plan-detail .coach-matrix :is(thead,tbody) th:first-child{min-width:0;width:20%}
+.plan-detail .coach-matrix thead th{width:16%;padding:6px 2px;overflow-wrap:anywhere}
+.plan-detail .coach-matrix :is(th,td){font-size:.875rem;padding:7px 2px;overflow-wrap:anywhere}
+.plan-detail .coach-matrix th button{font-size:.875rem;padding:6px 0}

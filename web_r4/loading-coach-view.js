@@ -13,11 +13,11 @@
     if (typeof value !== 'object') return String(value);
     return [value.label || value.text || value.name || value.goal || value.description || value.role || value.summary, value.reason].filter(Boolean).join(' · ');
   }
-  function mount({ host, report, catalog, onChange }) {
+  function mount({ host, report, catalog, onChange, presentation = null }) {
     if (!host || typeof host.replaceChildren !== 'function') throw new TypeError('LoadingCoachView host is required');
-    const prefix = 'coach-' + (++instance), state = { tab: 'lane', step: 1, zoom: false, scale: 100, busy: false, error: '' };
+    const prefix = 'coach-' + (++instance), state = { detail: presentation?.initialDetail || null, baseY: presentation?.initialBaseY || 0, tab: presentation?.initialDetail || 'lane', step: 1, zoom: false, scale: 100, busy: false, error: '' };
     let current = report, destroyed = false, request = 0, zoomOpener = null;
-    let focusHint = null;
+    let focusHint = null, formationCache = null;
     function coach() { return current && current.coach || {}; }
     function board() { return coach().planboard || {}; }
     function planning() { return board().context?.planning || {basis:'loading-plan-example-v1',overrides:{}}; }
@@ -270,7 +270,7 @@
       const kinds=[...new Set(arr(f?.threats).map(t=>({BLOCK_LINE:'투사체와 맞은 뒤의 접근',EXPOSURE_AND_FOLLOWUP:'피격 뒤 이어지는 상대의 공격',MARK_AND_ACCESS:'표식이 생긴 뒤의 접근',DISTANCE_AND_ESCAPE:'거리를 좁히는 수단',RESERVE_DEFENSE:'대응 기술을 남겨야 하는 공격'})[t.response_kind]||'상대의 접근과 추가 공격'))];
       lead.append(block('내 역할',f?.role),block('행동을 바꾸는 위협',kinds.length?kinds:'확인한 위협 자료가 부족합니다.'),block('공격을 시작할 때',f?.start),block('이탈·위치를 바꿀 때',f?.stop),contextualDetails('fight'));const overview=details('fight-overview','역할·위치·공격 조건의 이유');overview.append(lead);n.append(overview);
       const formation=el('section',null,'coach-formation');formation.append(el('h3','어떤 한타 모양을 만들까?'),el('p','초상화로 비교하는 설명용 배치 · 실제 위치나 승패 예측이 아닙니다.','coach-muted'));
-      if(root.LoadingFormation)formation.append(root.LoadingFormation.create(f?.formations,catalog));
+      if(root.LoadingFormation){const key=JSON.stringify(f?.formations);if(!formationCache||formationCache.key!==key)formationCache={key,node:root.LoadingFormation.create(f?.formations,catalog)};formation.append(formationCache.node);}
       const formationWhy=details('formation-why','배치의 근거와 해석 범위');formationWhy.append(el('p',f?.formations?.evidence?.scope||'이 조합의 배치 근거가 연결되지 않았습니다.'));
       arr(f?.formations?.evidence?.official).forEach(v=>formationWhy.append(block(catalog.champions[v.champion].name+'의 '+v.name+'('+v.slot+')',v.text),urlLink('공식 기술 설명 · '+v.patch,v.url)));
       arr(f?.formations?.evidence?.sources).forEach(s=>{formationWhy.append(urlLink(s.author+' · '+s.title,s.url),el('p','공략 표기 패치: '+(s.patch||'미확인')+' · 작성·수정일: '+(s.date||s.research_metadata?.updated_at||'미확인'),'coach-muted'),block('공략의 적용 한계',s.limits));});formation.append(formationWhy);n.append(formation);
@@ -304,7 +304,7 @@
       const stage = el('div', null, 'coach-zoom-stage'), diagram = lineDiagram(true); stage.append(diagram); d.append(stage); diagram.style.width = state.scale + '%'; range.addEventListener('input', () => { state.scale = Number(range.value); value.textContent = state.scale + '%'; diagram.style.width = state.scale + '%'; });
       d.addEventListener('close', () => { state.zoom = false; const opener = zoomOpener?.isConnected ? zoomOpener : host.querySelector('[data-coach-focus="open-zoom"]'); opener?.focus({ preventScroll: true }); }); return d;
     }
-    function render() {
+    function renderLegacy() {
       if (destroyed) return;
       const open = new Set(Array.from(host.querySelectorAll('details[open]'), n => n.id));
       const focused = focusHint || (host.contains(document.activeElement) ? document.activeElement?.dataset?.coachFocus : null); focusHint = null;
@@ -335,8 +335,56 @@
       if (state.zoom) { const d = host.querySelector('.coach-zoom'); if (d && !d.open) d.showModal(); }
       syncSteps(); syncBusy(); if (Number.isFinite(pageY) && typeof root.scrollTo === 'function') root.scrollTo(pageX, pageY);
     }
+
+    function navigateDetail(area, notify=true) {
+      if(area&&!['lane','operations','fight'].includes(area))return;
+      if(area&&!state.detail)state.baseY=root.scrollY;
+      if(notify)presentation?.onNavigate?.(area);
+      state.detail=area;if(area)state.tab=area;
+      render();
+      if(area){const title=host.querySelector('.plan-detail-title');title?.focus({preventScroll:true});if(!root.matchMedia('(min-width: 1440px)').matches)host.scrollIntoView({block:'start',behavior:'auto'});}
+      else {root.scrollTo(0,state.baseY);host.querySelector('[data-plan-area="'+state.tab+'"]')?.focus({preventScroll:true});}
+    }
+    function renderPresentation() {
+      if(destroyed)return;
+      const opened=new Set(Array.from(host.querySelectorAll('details[open]'),n=>n.id));
+      const focused=focusHint||(host.contains(document.activeElement)?document.activeElement?.dataset?.coachFocus:null);focusHint=null;
+      const oldDetail=host.querySelector('.plan-detail'),detailY=oldDetail?.scrollTop||0,pageY=root.scrollY;
+      const v=root.LoadingPresentation.project(current),b=board(),c=coach(),container=el('section',null,'loading-coach plan-layout');container.id=prefix;
+      container.dataset.detailOpen=String(!!state.detail);container.dataset.matchup=c.matchup_id||'UNSUPPORTED';container.dataset.selectedAction=c.selection?.id||'';container.dataset.period=c.selected_period||'';container.dataset.boardChoice=b.choice?.id||'';
+      const master=el('div',null,'plan-master');master.dataset.own=v.own.champion;
+      const picks=el('div',null,'plan-teams');
+      [['아군','allies'],['상대','enemies']].forEach(([label,team])=>{const row=el('div',null,'plan-team-row '+team);row.append(el('span',label,'plan-team-label'));v.teams[team].forEach(p=>{const n=el('span',null,'plan-pick'),self=team==='allies'&&p.champion===v.own.champion;if(self)n.classList.add('is-own');n.append(root.LoadingMap.portrait(catalog.champions[p.champion],self),el('span',catalog.champions[p.champion]?.name||p.champion));if(self)n.append(el('small','나 · '+({TOP:'탑',JUNGLE:'정글',MID:'미드',BOTTOM:'바텀',SUPPORT:'서포터'})[v.own.position]));row.append(n);});picks.append(row);});
+      const edit=button('조합 수정','edit-picks',()=>presentation?.onEdit?.());edit.dataset.planEdit='';edit.className='plan-edit';master.append(picks,edit);
+      const hero=el('header',null,'plan-hero'),art=presentation?.art?.assets?.find(a=>(a.id===v.own.champion||a.source_url?.endsWith('/'+v.own.champion+'_0.jpg'))&&a.kind==='OFFICIAL_STATIC_SPLASH');
+      if(art&&/^\.\/home-assets\/[A-Za-z0-9_.-]+$/.test(art.src)){const img=el('img',null,'plan-hero-art');img.src=art.src;img.alt='';img.decoding='async';img.setAttribute('fetchpriority','high');img.style.objectPosition=(art.crop?.desktop||[65,30]).join('% ')+'%';img.addEventListener('error',()=>{img.hidden=true;hero.classList.add('art-unavailable');});hero.append(img);}
+      else hero.append(root.LoadingMap.portrait(catalog.champions[v.own.champion],true));
+      const copy=el('div',null,'plan-hero-copy');copy.append(el('p','이번 판의 작전','coach-eyebrow'),el('h2',v.title,'plan-title'),el('p',v.support,'plan-subtitle'));hero.append(copy);master.append(hero);
+      const cards=el('div',null,'plan-area-cards');v.cards.forEach((a,i)=>{const tile=button(null,'board-'+a.id,()=>navigateDetail(a.id));tile.className='plan-area-card coach-board-tile';tile.dataset.planArea=a.id;tile.dataset.loadingDecision=a.id;tile.setAttribute('aria-expanded',String(state.detail===a.id));tile.setAttribute('aria-controls',prefix+'-detail');
+        const index=el('span',null,'plan-card-index');index.append(el('span',String(i+1).padStart(2,'0')),el('span',a.label));const content=el('span',null,'plan-card-copy');content.append(el('strong',a.title),el('span',a.text));tile.append(index,content,el('span','방법 보기 →','plan-card-link'));cards.append(tile);});master.append(cards);
+      const remember=el('aside',null,'plan-remember');remember.append(el('h3','기억할 것'),list(v.remember));master.append(remember);
+      const assumptions=details('plan-assumptions','분석 기준 · 비교용 가정');assumptions.append(el('p',c.context?.patch?.label),block(c.context?.assumptions?.label,c.context?.assumptions?.details),block('사용 가능한 지식',b.coverage?.plan_scope));master.append(assumptions);
+      container.append(master);
+      const deep=el('section',null,'plan-detail coach-execution');deep.id=prefix+'-detail';deep.hidden=!state.detail;deep.dataset.detailArea=state.detail||'';deep.setAttribute('aria-label','선택한 전략 상세');
+      if(state.detail){const a=v.cards.find(x=>x.id===state.detail),bar=el('div',null,'plan-detail-bar');bar.append(button('← 작전으로','close-detail',()=>navigateDetail(null)),el('span',a.label+' / 구도의 핵심','coach-eyebrow'));deep.append(bar);
+        const tabs=el('div',null,'coach-tabs');tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','실행 영역');v.cards.forEach(x=>{const t=button(x.label,'tab-'+x.id,()=>navigateDetail(x.id));t.setAttribute('role','tab');t.setAttribute('aria-selected',String(x.id===state.tab));t.id=prefix+'-tab-'+x.id;t.setAttribute('aria-controls',prefix+'-panel');t.tabIndex=x.id===state.tab?0:-1;t.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const ids=v.cards.map(x=>x.id),i=ids.indexOf(x.id),at=e.key==='Home'?0:e.key==='End'?2:(i+(e.key==='ArrowRight'?1:-1)+3)%3;navigateDetail(ids[at]);host.querySelector('[data-coach-focus="tab-'+ids[at]+'"]')?.focus({preventScroll:true});});tabs.append(t);});deep.append(tabs);
+        const panel=el('div',null,'coach-panel');panel.id=prefix+'-panel';panel.setAttribute('role','tabpanel');panel.setAttribute('aria-labelledby',prefix+'-tab-'+a.id);
+        const title=el('h2',a.title,'plan-detail-title');title.tabIndex=-1;panel.append(title,el('p',a.text,'plan-detail-intro'));
+        const pair=el('div',null,'plan-perspectives');[['우리가 원하는 구도','ours','allies'],['상대가 원하는 구도','theirs','enemies']].forEach(([title,key,team])=>{const side=el('section'),portraits=el('div',null,'plan-side-portraits');const lane=arr(b.overall?.lanes).find(l=>l.position===current.input.own_position);const ids=a.id==='lane'?arr(lane?.[team]):v.teams[team].map(p=>p.champion);ids.forEach(id=>portraits.append(root.LoadingMap.portrait(catalog.champions[id],id===v.own.champion&&team==='allies')));side.append(portraits,el('h3',title),el('p',a.perspectives[key]||'이 구도의 자료가 부족합니다.'));pair.append(side);});panel.append(pair);
+        const actions=actionSummary(a.id);actions.querySelector('h3').textContent='실행은 이렇게';panel.append(actions);
+        const adjustment=el('section',null,'plan-adjustment');adjustment.append(el('h3','중요한 조건이 바뀌면'),block('바꿀 때',a.id==='lane'?b.wave?.change_if:a.id==='operations'?b.operations?.fallback:b.fight?.stop));
+        adjustment.append(block('계속 지킬 기준',a.id==='lane'?b.choice?.reserve:a.id==='operations'?b.operations?.connection:b.fight?.setup));panel.append(adjustment);
+        const retained=details('retained-'+a.id,'강한 시점 · 방법 · 스킬 · 예외 · 근거');retained.classList.add('plan-retained');const applied=c.knowledge_application;if(applied?.supported)retained.append(el('p',applied.active?(applied.display_label||(c.matchup_id==='C'?'기전·공략 종합 추론 · 근접 접촉 유지 조건':'공략 판단 기반 · 확보 전 처리 / 확보 후 쌓기')):'조건 변경으로 기본 근거 적용 범위 제한','coach-evidence-kind'));const old=a.id==='lane'?lane():a.id==='operations'?operations():fight();old.querySelector('[data-action-summary]')?.remove();retained.append(old);panel.append(retained);
+        const optional=conditions(),quick=el('div',null,'coach-quick');arr(b.quick_scenarios).forEach(q=>{const n=button(q.label,'quick-'+q.id,()=>change({scenario:{...scenario(),overrides:{...scenario().overrides,...q.scenario}},planning:{...planning(),overrides:{...planning().overrides,...q.planning}}}));n.dataset.coachChange='';quick.append(n);});optional.append(quick);panel.append(optional);
+        const extra=details('retained-common','전체 조합 · 공식 기술 · 학습 · 이전 상세');const overall=details('overall-plan','우리·상대 계획 · 전체 구도');overall.append(block('우리 계획',b.composition?.ours_full),block('상대의 가능한 계획',b.composition?.theirs_full),block('이번 판의 내 역할',b.composition?.role));arr(b.overall?.lanes).forEach(l=>overall.append(block(l.label,l.reason)));overall.append(el('p',b.overall?.risk));arr(b.overall?.jungle_links).forEach(l=>overall.append(block(l.position+' 연계 후보',l.means?l.means+' · '+l.condition:l.condition)));extra.append(overall,contextExplanation(a.id),officialFacts(),lesson());const legacy=button('전체 표·기존 상세 비교 열기','legacy-open',()=>presentation?.onLegacy?.());extra.append(legacy);const pre=details('trace','자료 범위 · 개발 Trace');pre.append(block('자료 한계',c.evidence?.limits),el('pre',JSON.stringify({schema:c.schema_version,source_paths:a.source_paths,matchup:c.matchup_id,period:c.selected_period},null,2)));extra.append(pre);panel.append(extra);deep.append(panel);
+      }
+      container.append(deep);const live=el('p',state.error,'coach-live');live.setAttribute('role','status');live.setAttribute('aria-live','polite');container.append(live,zoomDialog());host.replaceChildren(container);
+      opened.forEach(id=>{const n=document.getElementById(id);if(n&&host.contains(n))n.open=true;});if(state.detail)deep.scrollTop=detailY;
+      if(focused)Array.from(host.querySelectorAll('[data-coach-focus]')).find(n=>n.dataset.coachFocus===focused)?.focus({preventScroll:true});if(state.zoom)host.querySelector('.coach-zoom')?.showModal();syncSteps();syncBusy();root.scrollTo(0,pageY);
+    }
+    function render(){if(presentation&&root.LoadingPresentation)renderPresentation();else renderLegacy();}
     render();
-    return { update(next) { if (!destroyed) { current = next; render(); } }, setPanel(panel) { if (['lane','operations','fight'].includes(panel)) { state.tab=panel; render(); } }, destroy() { destroyed = true; request++; host.replaceChildren(); host.removeAttribute('aria-busy'); } };
+    return { update(next) { if (!destroyed) { current = next; render(); } }, setPanel(panel) { if (['lane','operations','fight'].includes(panel)) { if(presentation)navigateDetail(panel,false);else{state.tab=panel; render();} }else if(panel===null&&presentation)navigateDetail(null,false); }, destroy() { destroyed = true; request++; host.replaceChildren(); host.removeAttribute('aria-busy'); } };
   }
   root.LoadingCoachView = Object.freeze({ mount });
 })(typeof window !== 'undefined' ? window : globalThis);

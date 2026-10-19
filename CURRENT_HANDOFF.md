@@ -1,3 +1,13 @@
+# Gameplan reference layout — source ready, publication pending
+- Inherit main78d6f04/publicfc36a77 and completed PR111/112, without tactical rewrite or new calls.
+- Ten picks → own official hero/operation → three whole-area cards → max3 reminders. Detail: both perspectives → same five actions → changes/retained criteria → preserved methods/metrics/conditions/formation/maps/Why/legacy.
+- WidePC master/right panel; narrow/mobile full-width detail; normalized input/period/detail URL, direct-link/refresh/back/focus and latest conditions retained. Caitlyn/BOTTOM and Ahri/MID actual engine; unsupported Ahri lane not populated from mockup.
+-318 affected tests, PC/mobile/320/200%/keyboard/input/conditions/back/direct-link/image+data failure and protected loading/directions/game-info PASS. Review fixes and RED history in evidence/actual-evidence/gameplan-layout/. Required remoteCI/Pages/HTTPS follows.
+- User ratio clarification: lane assessment vs match/all-in probability, separate general expectation and both-execute-core responses; no adopted numerical ratio yet, no fabricated6:4/5.5:4.5/5:5. Source-scoped judgment research remains next.
+- Existing AUTO30HOLD20USER0/advice7/Frozen350/quotes/holds/failures/budgets/Master+/Windows/pro/riot retained. N0,30secUNMEASURED,WindowsBLOCKED_EXTERNAL.
+
+---
+
 # Threat rings and clear wave action — actual public completion
 - PR111 productd6583085ba6a71a7d1d32b2cc229a73ce90231a0; required PR/exact-product-main3PASS. Publicfc36a774fdf77ad8d850993e4b473e4d61ad7a0a; nativePages39126638509 actualSUCCESS; HTTPS changed hashes/root/buildinfo/nojekyll verified, pro/riot retained.
 - Concrete minion/poke/stop wording projected from wave.combat; prior risk execution/special branches retained. All10small portraits and direct rings,7conditional approach rings in default roster.10curated profiles, other champs BASIC_ONLY/unknown spells; no fabricated approach or full threat/risk/win prediction.
