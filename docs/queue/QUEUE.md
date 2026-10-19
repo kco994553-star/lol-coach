@@ -1,3 +1,12 @@
+# Gameplan reference layout — actual public completion
+- PR113 producteaa22b87de0a256ce7ea5a17c8dc5d60696669b5; required PR/exact-product-main3PASS. Publice657f4056a8d3276c7c1973ace3c62cbe071347e; nativePages39196736169 actualSUCCESS; changed HTTPS hashes/root/buildinfo/nojekyll exact, pro/riot retained.
+- Ten picks/official own hero/operation/three cards/max3 reminders; actual report perspectives/five actions/change criteria/retained tools.1440+master/right detail, narrow/mobile full width; URL input/period/detail, fresh links/refresh/back/focus/latest conditions, formation state and previous feature routes preserved.
+- Actual Caitlyn/BOTTOM and Ahri/MID; Ahri knowledge limit retained, no mockup strategy adoption.318affected +protected loading/directions/game-info +publicPC/mobile/320/200%/keyboard/failure PASS. Review REDs and fixes preserved. evidence/actual-evidence/gameplan-layout/publication/result.md.
+- New user ratio request: lane assessment (not match/all-in probability), distinct general expectation/both-core-execution assumptions and duo/period/build evidence. No reviewed numeric ratio exists; no fabricated6:4/5.5:4.5/5:5. Next knowledge queue: source-scoped ratios and unsupported matchup knowledge.
+- N0/30secUNMEASURED/WindowsBLOCKED_EXTERNAL. Original evidence/AUTO30HOLD20USER0/advice7/Frozen350/holds/failures/quotas/Master+ unchanged, no provider/game/video/paid calls. Results-only finalCI/common writer release follows without identical product republish.
+
+---
+
 # Threat rings and clear wave action — actual public completion
 - PR111 productd6583085ba6a71a7d1d32b2cc229a73ce90231a0; required PR/exact-product-main3PASS. Publicfc36a774fdf77ad8d850993e4b473e4d61ad7a0a; nativePages39126638509 actualSUCCESS; HTTPS changed hashes/root/buildinfo/nojekyll verified, pro/riot retained.
 - Concrete minion/poke/stop wording projected from wave.combat; prior risk execution/special branches retained. All10small portraits and direct rings,7conditional approach rings in default roster.10curated profiles, other champs BASIC_ONLY/unknown spells; no fabricated approach or full threat/risk/win prediction.
