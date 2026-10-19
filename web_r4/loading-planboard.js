@@ -130,17 +130,22 @@
     const pace = { id: planId === 'ACQUIRE_PUSH' ? 'ACQUIRE_THEN_MODULATE' : planId === 'FAST_PUSH' ? 'FAST' : planId === 'SLOW_PUSH' ? 'LAST_HIT_PLUS' : planId === 'CHECK_WAVE' ? 'OBSERVE_FROM_ACCESS' : 'SELECTIVE_CLEAR', label: labels[planId] };
     const pressure = { id: jungleNear || low || unknown || p.goal === 'FARM' || p.goal === 'RECALL' ? 'LIMITED' : absent ? 'CS_SPACE' : 'CS_EDGE', label: jungleNear ? '줄이기 · CS 자리 밖 추격 금지' : absent ? '남은 원딜의 막타 접근 제한' : '닿는 막타 자리만 압박' };
     const exposure = { id: jungleNear ? 'HOME_CONNECTED' : 'ALLY_CONNECTED', label: jungleNear ? '아군 쪽 퇴로에 붙기' : '동료·미니언과 연결된 자리' };
-    let combat = coach.selection.id === 'SHORT_POKE' ? coach.selected.action : id === 'A' ? '상대가 막타에 접근하면 사거리 끝 짧은 공격으로 공간을 지키고, 물러나면 CS·처리 시간을 얻는다.' : coach.selected.action;
-    if(planId==='ACQUIRE_PUSH')combat='미니언을 먼저 잡는 흐름을 유지하면서, 상대가 막타를 치러 나오면 사거리 끝에서 짧게 견제한다. 견제 때문에 미니언 잡기가 늦어지면 견제를 멈추고, 남긴 기술로 진입에 대응한다. '+coach.selected.action;
-    if(reverse)combat = period==='LEVEL1' ? skill('Kaisa','Q')+'로 받을 수 있는 CS를 확보하고 동료와 연결한다. 아직 배우지 않은 알리스타의 연속 진입을 전제하지 않는다.' : '배운 '+skill('Alistar','W')+'·'+skill('Alistar','Q')+'에 '+skill('Kaisa','P')+' 후속이 닿을 때만 교환을 비교한다. 룰루의 보호·변이가 남으면 연장을 강제하지 않는다.';
-    if (valid && id === 'A' && s.enemy_key === 'SPENT') combat = skill('Nautilus', 'Q') + ' 소모 뒤 막타 자리로 접근하거나 짧게 공격한다. ' + skill('Nautilus', 'P') + '와 카이사의 후속은 남아 있으므로 붙어서 추격하지 않는다.';
-    if (absent) combat = name(slot('enemies', 'BOTTOM')) + '의 막타 접근과 웨이브만 제한적으로 압박한다. 서포터 부재를 추격·다이브 허가로 쓰지 않는다.';
-    if (jungleNear) combat = '앞으로 나가는 교환 폭은 줄이고 막타·처리 선택권을 지킨다. 상대의 전진이 지원군과 연결됐을 가능성도 다시 본다.';
-    if (low || p.goal === 'FARM') combat = '남는 자원으로 수급 공간을 지킨다. 상대가 물러나 주는 CS·처리 시간까지 포기하지 않는다.';
-    if (recallOpen) combat = '추가 교환보다 귀환용 처리·이탈 자원을 남긴다. 상대가 처리를 막으면 밀어 넣기를 중단한다.';
-    if(id==='A'&&s.engage!=='NONE'&&!low&&!unknown)combat='이미 교전을 시작한 가정에서는 선처리 경쟁보다 남은 동료 후속·제어·퇴로를 먼저 비교한다. 반격과 연결이 남으면 대응하고, 끊기면 교환을 끝낸 뒤 처리 계획을 다시 고른다.';
-    if (unknown) combat = '막타·경험치 접근부터 확보한다. 모르는 상대 위치를 확인하러 깊게 나가지 않는다.';
-    if (id === 'C' && !low && !unknown && !jungleNear && !recallOpen) combat = coach.selected.action;
+    // Preview and applied scenario use the same precedence (resources, intervention, goal, unknowns).
+    const combatFor = enemyKey => {
+      let combat = coach.selection.id === 'SHORT_POKE' ? coach.selected.action : id === 'A' ? '상대가 막타에 접근하면 사거리 끝 짧은 공격으로 공간을 지키고, 물러나면 CS·처리 시간을 얻는다.' : coach.selected.action;
+      if(planId==='ACQUIRE_PUSH')combat='미니언을 먼저 잡는 흐름을 유지하면서, 상대가 막타를 치러 나오면 사거리 끝에서 짧게 견제한다. 견제 때문에 미니언 잡기가 늦어지면 견제를 멈추고, 남긴 기술로 진입에 대응한다. '+coach.selected.action;
+      if(reverse)combat = period==='LEVEL1' ? skill('Kaisa','Q')+'로 받을 수 있는 CS를 확보하고 동료와 연결한다. 아직 배우지 않은 알리스타의 연속 진입을 전제하지 않는다.' : '배운 '+skill('Alistar','W')+'·'+skill('Alistar','Q')+'에 '+skill('Kaisa','P')+' 후속이 닿을 때만 교환을 비교한다. 룰루의 보호·변이가 남으면 연장을 강제하지 않는다.';
+      if (valid && id === 'A' && enemyKey === 'SPENT') combat = skill('Nautilus', 'Q') + ' 소모 뒤 막타 자리로 접근하거나 짧게 공격한다. ' + skill('Nautilus', 'P') + '와 카이사의 추가 공격은 남아 있으므로 붙어서 추격하지 않는다.';
+      if (absent) combat = name(slot('enemies', 'BOTTOM')) + '의 막타 접근과 웨이브만 제한적으로 압박한다. 서포터 부재를 추격·다이브 허가로 쓰지 않는다.';
+      if (jungleNear) combat = '앞으로 나가는 교환 폭은 줄이고 막타·처리 선택권을 지킨다. 상대의 전진이 지원군과 연결됐을 가능성도 다시 본다.';
+      if (low || p.goal === 'FARM') combat = '남는 자원으로 수급 공간을 지킨다. 상대가 물러나 주는 CS·처리 시간까지 포기하지 않는다.';
+      if (recallOpen) combat = '추가 교환보다 귀환용 처리·이탈 자원을 남긴다. 상대가 처리를 막으면 밀어 넣기를 중단한다.';
+      if(id==='A'&&s.engage!=='NONE'&&!low&&!unknown)combat='이미 교전을 시작한 가정에서는 선처리 경쟁보다 남은 동료 후속·제어·퇴로를 먼저 비교한다. 반격과 연결이 남으면 대응하고, 끊기면 교환을 끝낸 뒤 처리 계획을 다시 고른다.';
+      if (unknown) combat = '막타·경험치 접근부터 확보한다. 모르는 상대 위치를 확인하러 깊게 나가지 않는다.';
+      if (id === 'C' && !low && !unknown && !jungleNear && !recallOpen) combat = coach.selected.action;
+      return combat;
+    };
+    const combat = combatFor(s.enemy_key);
     const position = reference&&!jungleNear&&!unknown?'앞 급소에 닿고 걸어서 돌아올 자리에서 CS를 받는다. '+skill('Malphite','Q')+' 뒤 이동 속도 차이로 퇴로가 길어지면 전진 폭을 줄인다.':jungleNear ? '아군 쪽 퇴로와 후속이 닿는 자리에 서고, 웨이브를 따라 깊게 전진하지 않는다.' : '아군 후속과 걸어서 돌아올 거리가 남는 쪽에 선다. 미니언은 일부 투사체 대응 수단이며 전체 안전선이 아니다.';
     const nextWave = planId==='ACQUIRE_PUSH' ? '처리 우위를 얻었으면 막타 중심으로 낮춰 쌓고 상대의 CS 접근을 압박한다. 맞밀기에 밀리면 더 전진하지 않고 일부 줄이며 받는다. 선레벨·크래시는 별도다. 상대 쪽에 웨이브가 멈추면 다음 수급의 전진 부담도 다시 본다.' : recallOpen ? '웨이브가 실제 상대 포탑에 닿은 뒤 귀환·구매를 비교한다. 도달하지 못하면 다음 웨이브에 더 노출될 부담을 먼저 줄인다.' : planId === 'TOWER_CS' ? '받은 뒤 체력·구매와 다음 웨이브 복귀를 비교한다. 다이브 인원·퇴로가 나쁘면 경험치·생존을 우선한다.' : planId === 'RETURNING' ? '돌아오는 웨이브가 멈추면 다시 처리량을 조절한다. 멀리 나가 상대 쪽에 묶이지 않는다.' : '상대 쪽에 웨이브가 멈추면 다음 수급에 더 나가야 한다. 자원·지원이 끊기면 추가 쌓기를 접고 일부 정리·귀환을 비교한다.';
     const changeIf = absent ? '상대 서포터 복귀·정글 개입·동료 후속 단절이면 압박을 접는다.' : jungleNear ? '상대 쪽에서 웨이브가 멈추거나 퇴로가 끊기면 추가 전진을 끝낸다.' : p.goal === 'RECALL' ? '처리를 방해받거나 포탑 도달 여유가 사라지면 귀환 계획을 바꾼다.' : coach.trade.ours.end[0];
@@ -354,7 +359,41 @@
       quick_scenarios: quick,
       evidence: { claims: allClaims, sources: allKnowledge.sources.filter(s => sourceIds.has(s.id)), official_facts: threats.map(t => ({ ...fact(t.champion, t.slot), champion: t.champion })) }
     };
-    result.action_summaries=actionSummaries(result,coach,report);return result;
+    result.action_summaries=actionSummaries(result,coach,report);
+    const condition = (area,key,trigger,action,keep,stop,paths,actors=[],extra={}) => ({
+      id:key,trigger,action,keep,stop,actors:actors.filter(Boolean),
+      basis:'DESIGN_HYPOTHESIS',observation:false,provenance_scope:'LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF',
+      phase:area==='lane'?period:'POST_LANE_LEARNED_KIT',
+      knowledge_state:area==='lane'&&!usable?'GENERAL_PRINCIPLE':'SOURCE_SCOPE_LIMITED',
+      source_paths:paths,rule_ids:['player-planboard-v1','condition-response:'+key],
+      claim_ids:[...claims],...extra
+    });
+    const laneChange = valid&&id==='A' ? condition('lane','ENEMY_KEY_SPENT',
+      skill('Nautilus','Q')+'이 빗나갔다면',combatFor('SPENT'),
+      skill('Nautilus','P')+'와 카이사의 추가 공격은 남아 있다. 럭스가 함께 공격할 거리와 빠져나올 기술을 남긴다.',
+      '노틸러스가 다시 다가오거나 럭스가 함께 공격할 수 없으면 교환을 끝낸다. 상대 기술을 다시 쓸 수 있으면 이 기회도 끝난다.',
+      ['wave.combat','wave.conditions','wave.change_if','fight.threats'],['Nautilus'],
+      {scenario_patch:{enemy_key:'SPENT'},applied:s.enemy_key==='SPENT',
+       conditions:['해당 기술을 배웠고 빗맞혀 소모했다는 가정이다.','체력·마나, 웨이브, 정글 개입, 귀환 목적 등 나머지 선택 조건은 그대로 적용한다.'],
+       evidence_ids:['official:Nautilus:Q','official:Nautilus:P']}) : condition('lane','LANE_PLAN_CHANGE',
+      '이 조건이면 현재 계획을 바꾼다',changeIf,position,combat,
+      ['wave.change_if','wave.position','wave.combat'],[slot('enemies',input.own_position)],
+      {conditions:[coach.context.assumptions.label],limits:'특정 기술 소모 후의 대응이 없는 매치업은 기존 계획의 변경 기준만 제공한다.'});
+    result.condition_responses={schema_version:'lol-coach-condition-responses-v1',origin:'HYPOTHETICAL_LOADING_EXAMPLE',
+      lane:[laneChange],
+      operations:[sideRole ? condition('operations','SIDE_RETURN_BLOCKED',
+        '사이드에서 돌아갈 길이 막히거나 아군이 버티기 어렵다면',operations.fallback,
+        operations.priority,operations.connection,
+        ['operations.fallback','operations.priority','operations.connection'],[self]) : condition('operations','LATE_JOIN',
+        '합류가 늦고 미니언도 많이 놓친다면',operations.concede,
+        operations.connection,operations.fallback,
+        ['operations.concede','operations.connection','operations.fallback'],[self,ownSupport!==self?ownSupport:null])],
+      fight:[condition('fight','FOLLOWUP_WINDOW',self==='Caitlyn'&&controllers.length?'아군이 묶은 적에게 함께 공격할 수 있다면':'아군과 같은 대상을 공격할 수 있다면',
+        fight.start,fight.target,fight.stop,['fight.start','fight.target','fight.stop'],[self]),
+        condition('fight','CONNECTION_LOST','아군 보호가 멀어지거나 옆에서 적이 접근한다면',
+        fight.stop,fight.setup,'아군 보호와 퇴로가 다시 이어지기 전에는 낮은 체력의 적을 쫓지 않는다.',['fight.stop','fight.setup','fight.target'],[self])]
+    };
+    return result;
   }
   return Object.freeze({ evaluate, validate, defaults, plainLanguage, actionSummaries });
 });
