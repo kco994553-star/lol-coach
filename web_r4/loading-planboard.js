@@ -56,7 +56,8 @@
     const candidates=[b.fight.threats.filter(t=>t.champion===support),b.fight.threats.filter(t=>t.champion===counterpart),b.fight.threats];
     const group=candidates.find(ts=>ts.length)||[];
     const example=group.find(t=>t.slot==='R')||group[0];
-    const threatText=example?example.label+' · '+plainLanguage(example.action):b.fight.stop;
+    const awareness=b.fight.awareness?.actors?.every(id=>b.fight.threats.some(t=>t.champion===id))?b.fight.awareness:null;
+    const threatText=awareness?.danger||(example?example.label+' · '+plainLanguage(example.action):b.fight.stop);
     return {schema_version:'lol-coach-action-summaries-v1',origin:'ANALYSIS_ASSUMPTIONS_NOT_OBSERVATION',standard:coach.context.assumptions.label,
       lane:{judgment:laneJudgment,items:[
         make('lane','GOAL','이번 라인전 목표',b.lane.milestone.goal,['lane.milestone.goal'],'lane-goal'),
@@ -74,7 +75,7 @@
         make('fight','ROLE_POSITION','내 역할·기본 위치',b.fight.setup,['fight.role','fight.setup'],'fight-methods',{role:b.fight.role}),
         make('fight','START','공격 시작 조건',b.fight.start,['fight.start'],'fight-plan'),
         make('fight','TARGET','우선 공격 대상',b.fight.target,['fight.target'],'fight-methods'),
-        make('fight','THREAT','대응할 위협',threatText,example?['fight.threats']:['fight.stop'],example?'fight-threats':'fight-plan',{threat_ids:example?[example.id]:[],conditions:example?[phaseLabel('fight'),example.condition]:[phaseLabel('fight')],selection_scope:example?'조합에서 실제 연결된 위협 수단 예시 · 전체 중요도 순위 아님':'연결된 위협 자료 없음 · 기존 이탈 원칙만 제공'}),
+        make('fight','THREAT','대응할 위협',threatText,awareness?['fight.awareness.danger']:example?['fight.threats']:['fight.stop'],example?'fight-threats':'fight-plan',{threat_ids:awareness?awareness.mechanism_ids:example?[example.id]:[],conditions:example?[phaseLabel('fight'),example.condition]:[phaseLabel('fight')],selection_scope:awareness?awareness.scope:example?'조합에서 실제 연결된 위협 수단 예시 · 전체 중요도 순위 아님':'연결된 위협 자료 없음 · 기존 이탈 원칙만 제공'}),
         make('fight','EXIT','이탈·재배치 조건',b.fight.stop,['fight.stop'],'fight-plan')
       ]}
     };
@@ -101,7 +102,7 @@
     const laneGoals = {
       E:reference?.overall_goal,
       BR: '체력을 보존해 CS·경험치를 받고, 알리스타 접근과 카이사 후속을 함께 쓸 여건을 남긴다.',
-      A: early ? '사거리 견제로 막타 접근을 늦추고 웨이브·공간 선택권을 만든다.' : '받을 CS와 퇴로를 지키며 아군 제어 뒤 짧게 공격한다.',
+      A: early ? '럭스와 멀리서 견제해 카이사의 막타를 방해하고, 밀어 넣을 기회를 만든다.' : '받을 CS와 퇴로를 지키며 아군 제어 뒤 짧게 공격한다.',
       B: '유나라의 강화 공격과 룰루 지원이 겹치는 교환을 만들고 성장 자원을 남긴다.',
       C: '가까운 막타 자리를 압박하고, 상대 이탈을 쫓는 대신 CS·공간을 얻는다.',
       D: '장거리 견제로 수급을 잇되, 성장 후 고립된 맞딜을 허용하지 않는다.'
@@ -133,9 +134,9 @@
     // Preview and applied scenario use the same precedence (resources, intervention, goal, unknowns).
     const combatFor = enemyKey => {
       let combat = coach.selection.id === 'SHORT_POKE' ? coach.selected.action : id === 'A' ? '상대가 막타에 접근하면 사거리 끝 짧은 공격으로 공간을 지키고, 물러나면 CS·처리 시간을 얻는다.' : coach.selected.action;
-      if(planId==='ACQUIRE_PUSH')combat='미니언을 먼저 잡는 흐름을 유지하면서, 상대가 막타를 치러 나오면 사거리 끝에서 짧게 견제한다. 견제 때문에 미니언 잡기가 늦어지면 견제를 멈추고, 남긴 기술로 진입에 대응한다. '+coach.selected.action;
+      if(planId==='ACQUIRE_PUSH')combat='카이사가 막타를 치러 나오면 노틸러스의 위치를 보고 평타를 넣은 뒤, 럭스 쪽으로 거리를 벌린다. 견제 때문에 미니언 잡기가 늦어지면 견제를 멈추고, 남긴 기술로 진입에 대응한다. '+coach.selected.action;
       if(reverse)combat = period==='LEVEL1' ? skill('Kaisa','Q')+'로 받을 수 있는 CS를 확보하고 동료와 연결한다. 아직 배우지 않은 알리스타의 연속 진입을 전제하지 않는다.' : '배운 '+skill('Alistar','W')+'·'+skill('Alistar','Q')+'에 '+skill('Kaisa','P')+' 후속이 닿을 때만 교환을 비교한다. 룰루의 보호·변이가 남으면 연장을 강제하지 않는다.';
-      if (valid && id === 'A' && enemyKey === 'SPENT') combat = skill('Nautilus', 'Q') + ' 소모 뒤 막타 자리로 접근하거나 짧게 공격한다. ' + skill('Nautilus', 'P') + '와 카이사의 추가 공격은 남아 있으므로 붙어서 추격하지 않는다.';
+      if (valid && id === 'A' && enemyKey === 'SPENT') combat = early ? '럭스와 함께 앞으로 나와 카이사의 막타를 방해하고, 상대가 물러나면 미니언을 먼저 잡는다. 카이사를 쫓아붙기보다 견제할 공간을 넓힌다.' : '럭스와 함께 공격할 수 있는 자리에서 카이사의 막타를 방해한다. '+skill('Nautilus','R')+'를 배웠고 사용할 수 있다면, 닻을 빗맞혔어도 앞으로 깊게 나가지 않는다.';
       if (absent) combat = name(slot('enemies', 'BOTTOM')) + '의 막타 접근과 웨이브만 제한적으로 압박한다. 서포터 부재를 추격·다이브 허가로 쓰지 않는다.';
       if (jungleNear) combat = '앞으로 나가는 교환 폭은 줄이고 막타·처리 선택권을 지킨다. 상대의 전진이 지원군과 연결됐을 가능성도 다시 본다.';
       if (low || p.goal === 'FARM') combat = '남는 자원으로 수급 공간을 지킨다. 상대가 물러나 주는 CS·처리 시간까지 포기하지 않는다.';
@@ -186,6 +187,7 @@
     addThreat('Nautilus', 'Q', 'BLOCK_LINE', '미니언으로 훅 선을 가리되 측면·지형 접근을 함께 존중한다. 소모 뒤에는 CS·처리 공간부터 얻는다.', '맞힐 선과 남은 평타 제어·후속이 따로 있음');
     addThreat('Nautilus', 'R', 'EXPOSURE_AND_FOLLOWUP', '6레벨 이후 대상 노출과 진입 후 후속 거리를 관리한다. 맞으면 동료 보호·제어로 추가 공격 연결을 끊는 선택을 비교한다.', '대상 추적형 수단이며 미니언 뒤가 전체 안전을 보장하지 않음');
     addThreat('Alistar', 'W', 'EXPOSURE_AND_FOLLOWUP', id === 'B' && valid ? skill('Alistar', 'W') + ' 뒤에도 ' + skill('Alistar', 'Q') + '와 카이사 후속을 따로 본다. 룰루가 자유롭고 카이사에게 닿을 때만 원딜 집중 반격을 비교한다.' : '접근 뒤 남은 제어와 상대 후속을 따로 본다. 아군 보호·퇴로가 연결될 때만 반격을 비교한다.', '알리스타 기술 하나의 소모가 전체 교전 승리 아님');
+    addThreat('LeeSin', 'R', 'EXPOSURE_AND_FOLLOWUP', '리 신이 옆이나 뒤로 붙으면 공격을 더 잇기보다 아군 쪽으로 거리를 벌린다. 밀려난 뒤에도 상대의 추가 공격을 끊을 아군과 연결한다.', '6레벨 이후 배운 궁극기 가정; Q를 피했어도 다른 접근까지 사라진 것은 아님');
     addThreat('Kaisa', 'R', 'MARK_AND_ACCESS', '플라즈마 표식·접근이 겹치면 고립을 피하고 이탈·아군 연결을 남긴다.', '6레벨 이후 가용·접근 조건이 맞는 한타 예시');
     addThreat('Zed', 'R', 'RESERVE_AND_FOLLOWUP', '6레벨 이후 측면 노출을 줄이고 대응 자원을 남긴다. 진입 뒤에도 남은 후속을 끊을 동료와 연결한다.', '실제 로밍·위치·사용 가능은 관측하지 않음');
     addThreat('LeeSin', 'Q', 'BLOCK_LINE', '투사체 적중 선과 적중 뒤 접근을 나눠 대응한다. 미니언 대응만으로 다른 접근까지 끝났다고 보지 않는다.', '정글 위치·다른 접근 수단과 구분');
@@ -214,6 +216,80 @@
       growth: growth ? growth.label + ' · ' + growth.trigger + ' ' + growth.change + ' ' + growth.after : id === 'D' ? '카이사의 실제 진화·접근 또는 무라마나 변신을 따로 본다. 고정 3코어 전체 역전을 가정하지 않는다.' : '레벨·실제 구매 뒤 수단이 달라지면 역할을 재검토한다. 같은 코어 수를 같은 성장으로 세지 않는다.',
       steps: sideRole ? ['돌아올 수 있는 사이드 자원을 고른다.', '본대 대기·퇴로가 남는 만큼만 압박한다.', '연결이 끊기면 합류·수급으로 바꾼다.'] : ['먼저 받을 웨이브와 아군 연결 위치를 정한다.', '제어·보호가 연결되면 포탑·목표물 접근으로 바꾼다.', '연결이 끊기면 가까운 자원·구매로 재정비한다.'], basis: 'DESIGN_HYPOTHESIS', claim_ids: claims
     };
+    // Reviewed official mechanics identify relevant actors; these action plans remain scoped inference.
+    // This is a flank-exposure selection for a backline carry, not a universal danger ranking.
+    const backline = bottom && report.roles.base.id==='FOLLOW_DAMAGE' && coach.context.patch.status!=='MISMATCH';
+    const flankThreats = backline ? threats.filter(t=>(t.champion==='Zed'||t.champion==='LeeSin')&&t.slot==='R') : [];
+    const flankActors = flankThreats.map(t=>t.champion).sort(), flankNames=flankActors.map(name).join('·');
+    const flankSubject=flankNames+((flankNames.charCodeAt(flankNames.length-1)-0xAC00)%28?'이':'가');
+    const frontActors = input.allies.filter(a=>a.champion!==self&&catalog.champions[a.champion]?.official_tags?.includes('Tank')).map(a=>a.champion).sort();
+    const frontNames=frontActors.length?frontActors.map(name).join('·'):'앞을 지켜 주는 아군';
+    const coverNames=protectors.length?protectors.map(name).join('·'):'도와줄 수 있는 아군';
+    if(flankActors.length){
+      const awareness={actors:flankActors,mechanism_ids:flankThreats.flatMap(t=>t.evidence_ids),
+        scope:'후방 딜러의 측면 접근·고립 위험에 관한 후보; 다른 적의 위협이 없다는 뜻이 아니다.',
+        basis:'DESIGN_HYPOTHESIS',observation:false,actual_positions:null,phase:'POST_LANE_ASSUMPTION',
+        watch:flankNames+'의 마지막으로 보인 위치와 접근할 길을 기준으로 포탑을 더 때릴지, 어느 길로 이동할지 정한다.',
+        missing:flankSubject+' 보이지 않으면 혼자 포탑을 계속 때리거나 어두운 강·정글을 가로지르지 않는다. 시야가 있는 아군 쪽에서 미니언을 챙기고 함께 이동한다.',
+        visible:'다른 쪽에 보인 위치가 아직 유효하고 주변 인원·퇴로도 확보됐다면, 미니언을 밀고 아군과 포탑·목표물 압박을 늘린다.',
+        keep:'적 위치를 찾으러 혼자 들어가지 않는다. 상대가 안 보여도 아군 가까이에서 얻을 미니언과 공간까지 포기하지 않는다.',
+        stop:'마지막으로 본 정보가 오래됐거나 아군이 흩어지면, 더 깊은 포탑 공격·추격을 멈추고 함께 움직일 위치로 바꾼다.'};
+      operations.awareness=awareness;
+      operations.late_join=operations.concede;
+      operations.concept='포탑 압박과 이동 전에, 측면 위협부터';
+      operations.placement='중앙에서 '+coverNames+'와 함께 미니언을 잡고, 혼자 긴 사이드 라인 깊숙이 가지 않는다.';
+      operations.connection=coverNames+'와 함께 움직이고, 앞을 지키는 아군이 시야를 확보한 길로 이동한다.';
+      operations.priority='미드 미니언을 먼저 잡아 움직일 시간을 만들고, 아군과 드래곤·바론 주변에 먼저 자리 잡는다.';
+      operations.concede=awareness.missing;
+      operations.fallback='앞으로 나가기 어렵거나 뒤처졌다면 아군 포탑 가까이에서 미니언을 챙기고, 함께 움직일 인원과 구매를 갖춘 뒤 다시 압박한다.';
+      operations.steps=[operations.priority,awareness.watch,awareness.missing];
+      fight.role='앞라인 뒤에서 공격하며 측면 진입에 대응하는 원거리 딜러';
+      fight.combo=fight.start; // CC/trap execution remains accessible as a secondary tip.
+      const reserve=self==='Caitlyn'?skill('Caitlyn','E')+'은 단순 견제에 쓰지 말고, 접근하는 적과 거리를 벌릴 때 남긴다.':self==='Ezreal'?skill('Ezreal','E')+'은 더 때리러 들어가기보다 빠져나올 때 쓸 수 있게 남긴다.':'앞으로 나가 공격하는 데 방어·이탈 수단을 모두 쓰지 않는다.';
+      fight.awareness={...awareness,phase:'POST_LANE_LEARNED_KIT',reserve,
+        entered:flankSubject+' 옆으로 들어오면 앞의 적 추격을 멈추고 '+coverNames+' 쪽으로 이동해, 나에게 들어온 적부터 함께 공격한다.',
+        danger:flankNames+'의 측면 진입에 대비해 '+(['Caitlyn','Ezreal'].includes(self)?skill(self,'E'):'빠져나올 수단')+'을 남기고, 들어오면 '+coverNames+' 쪽으로 이동해 함께 반격한다.',
+        opening:'측면의 적이 다른 아군에게 진입했고 나에게 닿을 다른 수단이 없다면, 아군 앞라인을 넘지 않는 범위에서 닿는 적을 계속 공격한다.'};
+      fight.concept='앞의 적을 때리되, 옆으로 들어오는 적에 대응';
+      fight.setup=frontNames+' 뒤에서 '+coverNames+'의 도움을 받을 수 있는 거리를 유지한다.';
+      fight.start='아군 앞라인 뒤에서 닿는 적부터 공격한다. '+flankSubject+' 안 보여도 보호받는 자리의 공격은 이어가되, 적을 따라 앞으로 걸어나가지는 않는다.';
+      const enemyCarry=slot('enemies','BOTTOM');
+      fight.target=(enemyCarry?name(enemyCarry)+'를 잡으러 적진으로 걸어가기보다, ':'')+'현재 닿는 적이나 나에게 들어온 적을 먼저 공격한다.';
+      fight.stop='옆에서 적이 접근하거나 앞라인이 멀어지면 평타를 더 치려 하지 말고 '+coverNames+' 쪽으로 위치를 바꾼다.';
+      fight.awareness.stop=fight.stop;
+    }
+    // Role-specific plans use verified own kit; they do not assert lane superiority.
+    const roleKit=coach.context.patch.status!=='MISMATCH'&&
+      ((self==='Ahri'&&input.own_position==='MID'&&fact(self,'Q')&&fact(self,'E')&&fact(self,'R'))||
+       (self==='Sejuani'&&input.own_position==='JUNGLE'&&fact(self,'Q')&&fact(self,'E')&&fact(self,'R')));
+    if(roleKit&&self==='Ahri'){
+      operations.concept='미니언을 먼저 잡고, 정글과 함께 움직일 시간 만들기';
+      operations.placement='라인 미니언을 먼저 잡은 뒤, 돌아올 길이 보이는 쪽에서 아군 정글러와 움직인다.';
+      operations.connection=name(slot('allies','JUNGLE'))+'와 같은 적에게 닿을 거리에서 움직이고, 혼자 어두운 강을 건너 상대를 따라가지 않는다.';
+      operations.priority='미니언을 밀어 넣어 만든 시간을 시야·바텀 지원·목표물 주변 자리로 바꾼다.';
+      operations.concede='상대가 먼저 사라졌다면 보이지 않는 길로 따라가지 말고, 위험을 알린 뒤 남은 미니언과 안전한 합류 길을 비교한다.';
+      operations.fallback='미니언을 밀거나 먼저 합류할 수 없다면 라인에서 골드·경험치를 챙기고, 가까운 아군에게 오는 적을 끊는다.';
+      fight.concept='잡을 적을 찾되, 돌아올 길을 남기기';
+      fight.role='매혹으로 공격 기회를 만들고 가까운 아군의 진입을 끊는 역할';
+      fight.setup='아군에게 돌아올 길이 보이는 옆쪽에서 각을 잡고, 혼자 적 뒤로 깊게 돌지 않는다.';
+      fight.start=skill('Ahri','E')+'이 닿고 아군도 함께 공격할 수 있을 때 연결한다. '+skill('Ahri','R')+'을 배웠다면 남은 이동을 복귀에 쓸 수 있는지 먼저 본다.';
+      fight.target='아군과 함께 닿는 적을 노리고, 적 딜러에게 닿으려고 보호받는 적진을 혼자 가로지르지 않는다.';
+      fight.stop='매혹이 빗나가거나 아군이 멀어지면 더 깊게 들어가지 않고, 남은 이동으로 아군 쪽에 돌아온다.';
+    }else if(roleKit&&self==='Sejuani'){
+      operations.concept='밀어 넣는 라인을 돕고, 함께 들어갈 시야 만들기';
+      operations.placement='아군이 먼저 움직일 수 있는 라인 쪽에서 캠프·지원·목표물 준비를 연결한다.';
+      operations.connection='라인 아군이 미니언을 놓치지 않고 따라올 수 있을 때 강과 정글에 함께 들어간다.';
+      operations.priority='아군의 밀어 넣기를 도와 귀환·이동 시간을 만들고, 인원과 체력이 갖춰지면 목표물 주변 시야를 잡는다.';
+      operations.concede='라인 아군이 포탑에 묶여 있으면 혼자 강 싸움이나 상대 정글 침입을 시작하지 않는다.';
+      operations.fallback='라인 지원이 늦거나 체력이 부족하면 가까운 캠프를 챙기고, 상대가 아군 쪽으로 들어오는 길을 지키며 다음 합류를 준비한다.';
+      fight.concept='진입할지, 뒤의 딜러를 지킬지 먼저 나누기';
+      fight.role='아군 공격이 닿는 진입과 후방 보호 사이를 선택하는 역할';
+      fight.setup='아군 딜러와 너무 멀어지지 않는 앞쪽에서 시작하고, 다른 앞라인이 진입하면 후방 보호가 남는지 본다.';
+      fight.start=skill('Sejuani','R')+'을 배웠고 아군 공격이 닿는다면 적을 묶어 시작한다. 아군 딜러에게 적이 접근하면 진입보다 '+skill('Sejuani','Q')+'·배운 '+skill('Sejuani','E')+'의 방해를 보호에 남긴다.';
+      fight.target='혼자 적 딜러를 쫓기보다 아군이 함께 때릴 적이나 아군 딜러에게 붙은 적을 먼저 묶는다.';
+      fight.stop='아군이 따라오지 못하거나 뒤의 딜러가 물리면 더 깊게 진입하지 않고 아군 쪽으로 돌아와 접근한 적을 끊는다.';
+    }
+    if(roleKit)operations.steps=[operations.priority,operations.connection,operations.fallback];
     // Paired plans describe possibilities under the same explicit period/wave assumptions.
     // Guide-backed mechanics do not certify this complete tactical interpretation.
     const ours = { purpose, means: combat, look_for: '상대 막타 접근과 처리 기술 소모를 CS·공간 이득으로 바꾼다.', avoid: position + ' ' + reserve, switch_when: changeIf };
@@ -329,6 +405,7 @@
     summary[2].conclusion=sideRole?'사이드 라인에서 미니언을 잡고 포탑을 압박하되, 아군에게 합류할 길을 남긴다.':bottom?'아군 가까이에서 미니언을 잡고, 함께 포탑·드래곤·바론을 노린다.':'가까운 라인에서 성장하고 아군이 싸울 때 함께 공격할 거리를 유지한다.';
     if(self==='Fiora')summary[3].conclusion='피오라의 응수(W)로 막을 기술과 빠져나올 길을 정한 뒤 접근한다.';
     if(self==='Caitlyn')summary[3].conclusion='아군의 속박·기절이 맞으면 보호받을 거리에서 닿는 적을 공격한다.';
+    if(operations.awareness){summary[2].conclusion=operations.priority;summary[2].support=operations.awareness.watch;summary[3].conclusion=fight.start.split('. ')[0]+'.';summary[3].support=fight.awareness.danger;areaContext.operations.action=operations.priority;areaContext.fight.action=fight.start;}
     const sentence=value=>{const text=plainLanguage(value).trim().split(/(?<=[.!?])\s+/)[0]||'이 조건의 자료가 부족합니다.';return /[.!?]$/.test(text)?text:text+'.';};
     const briefing={schema_version:'lol-coach-loading-brief-v2',origin:'ANALYSIS_ASSUMPTIONS_NOT_OBSERVATION',basis:'DESIGN_HYPOTHESIS',items:[
       {id:'our_plan',title:'우리 팀의 승리 방식',text:sentence(!sideRole&&has(oursSignals,'PICK')&&has(oursSignals,'COVER')?'아군이 적을 묶으면 보호받는 거리에서 함께 공격하고, 포탑·목표물을 노린다.':ourStyle),target:'operations'},
@@ -350,7 +427,7 @@
       loading_summary:loadingSummary, briefing_v2:briefing, evidence_bridge:evidenceBridge, area_context:areaContext,
       composition: {ours:report.summary?.our_plan?.split('. ')[0],theirs:report.summary?.enemy_plan?.split('. ')[0],ours_full:report.summary?.our_plan,theirs_full:report.summary?.enemy_plan,role:report.summary?.my_role,basis:'DESIGN_HYPOTHESIS'},
       headline: usable ? overallGoal : '확인된 수단으로 수급·연결부터 준비한다.',
-      lane: { overall_goal: overallGoal, milestone: { id: period, label: coach.selected.label, goal: milestoneGoal }, can_push: coach.wave.can_push, should_push: coach.wave.should_push,
+      lane: { concept:valid&&id==='A'&&planId==='ACQUIRE_PUSH'?{plan_id:planId,text:'럭스와 함께 압박해, 미니언을 먼저 잡을 공간 만들기'}:null, overall_goal: overallGoal, milestone: { id: period, label: coach.selected.label, goal: milestoneGoal }, can_push: coach.wave.can_push, should_push: coach.wave.should_push,
         strong_fight: id==='C'&&coach.selected.metrics.EXTENDED.assessment==='ALLY' ? '근접 지속 교전 우세 추론 · 접촉 유지 조건' : reverse ? '상대 강화·보호가 겹치지 않는 조건부 후속 창 · 전체 우열 미확인' : valid ? coach.trade.ours.label : '개별 매치업 자료 부족', avoid: id === 'A' ? '사거리 안쪽에 붙은 장기전·올인 승리는 별도 판단' : '처치·추격을 교환 선호와 동일시하지 않기',
         induce: absent ? '남은 상대가 막타에 접근할 때 제한적 압박' : '상대의 막타 접근·처리 기술 사용을 짧은 공간 이득으로 연결', gain: 'CS 접근·처리 시간·귀환 선택권', basis: usable ? id === 'A' && early ? 'GUIDE_BASED' : 'CONDITIONAL' : 'INSUFFICIENT', claim_ids: claims },
       overall: { lanes, jungle_links: jungleLinks, risk: [slot('enemies', 'JUNGLE'), slot('enemies', 'MID')].filter(Boolean).map(name).join('·') + '의 개입 가능성을 전진 비용에 포함한다. 실제 로밍·정글 동선은 미관측이다.', route_prediction: false },
@@ -359,7 +436,78 @@
       quick_scenarios: quick,
       evidence: { claims: allClaims, sources: allKnowledge.sources.filter(s => sourceIds.has(s.id)), official_facts: threats.map(t => ({ ...fact(t.champion, t.slot), champion: t.champion })) }
     };
+    if(fight.awareness){result.brief.fight=summary[3].conclusion;result.composition.role=name(self)+': '+fight.role+'.';}
+    const roleFacts=roleKit?['Q','E','R'].map(k=>'official:'+self+':'+k):[];
+    if(roleKit){
+      summary[2].conclusion=operations.priority;summary[2].support=operations.concede;
+      summary[3].conclusion=fight.start.split('. ')[0]+'.';summary[3].support=fight.stop;
+      areaContext.operations.action=operations.priority;areaContext.fight.action=fight.start;
+      result.composition.role=name(self)+': '+fight.role+'.';result.brief.fight=summary[3].conclusion;
+      if(self==='Ahri'){
+        areaContext.lane.ours='아리는 미니언을 잡을 체력·마나를 남기고, 먼저 밀어 넣을 수 있을 때 정글과 움직일 시간을 만든다.';
+        areaContext.lane.action='상대가 미니언에 기술을 썼다면 견제와 미니언 잡기 중 이득을 고른다. 매혹을 놓쳤다면 재진입보다 거리부터 회복한다.';
+        areaContext.lane.basis='ROLE_PRINCIPLE_NOT_MATCHUP_ADVANTAGE';
+      }
+    }
+    // Six independent dimensions, never one composition score. Only source-linked signals participate.
+    const teamSide=(rows,team)=>{
+      const people=k=>[...new Set(rows.filter(r=>r.kind===k).map(r=>r.champion))];
+      const names=k=>people(k).map(name).join('·');
+      const pressure=people('PRESSURE'),pick=people('PICK'),access=people('ACCESS'),cover=people('COVER');
+      const front=input[team].filter(x=>catalog.champions[x.champion]?.official_tags?.includes('Tank')).map(x=>x.champion);
+      const side=input[team].some(x=>x.champion==='Fiora')&&fact('Fiora','Q')&&fact('Fiora','W')?'Fiora':null;
+      const prepared=pressure.length>=2&&pick.length&&cover.length;
+      return {actors:{pressure,pick,access,cover,front,side:side?[side]:[]},
+        win:prepared?'먼저 자리 잡고 견제해 접근을 어렵게 만든 뒤, 닿는 적을 함께 공격해 포탑·목표물로 바꾼다.':access.length?'아군이 같은 대상에 닿는 방향에서 접근해 떨어진 적을 노리고, 교전 뒤 포탑·목표물을 얻는다.':'확인된 공격 수단을 함께 쓸 거리를 만들고, 밀 수 있는 라인에서 이동 시간을 얻는다.',
+        field:prepared?'아군과 시야를 먼저 확보한 포탑·목표물 주변에서 정면 거리를 유지한다.':access.length?'옆으로 접근할 길이 있는 전장에서 고립된 적을 노린다. 어두운 길이 접근하는 쪽에도 안전하다는 뜻은 아니다.':'퇴로와 아군의 공격이 이어지는 전장을 고른다.',
+        opening:pick.length?names('PICK')+'의 방해 기술로 공격 기회를 만들되, 아군이 닿지 못하면 진입을 이어가지 않는다.':pressure.length?names('PRESSURE')+'의 견제로 체력을 깎으며 접근할 기회를 만든다.':'교전을 열 수단의 지식이 부족하므로 선진입 성공을 전제하지 않는다.',
+        damage:cover.length?names('COVER')+'의 보호가 실제로 닿는 동안 공격을 이어간다. '+(front.length?'앞라인이 모두 멀리 진입하면 뒤의 딜러 보호는 사라질 수 있다.':'보호 기술 하나가 모든 접근을 막지는 않는다.'):'서로 같은 적을 공격할 거리를 유지한다. 현재 연결된 보호 기술 자료가 없어 아군 수만으로 보호를 보장하지 않는다.',
+        macro:side?name(side)+'의 사이드 압박과 중앙 움직임을 맞춘다. 사이드로 인원이 빠지면 중앙의 부족한 인원으로 교전을 강제하지 않는다.':prepared?'중앙 미니언을 먼저 잡고 함께 이동해 포탑·목표물 주변을 선점한다. 사이드 미니언을 받을 아군도 따로 정한다.':'밀어 넣을 라인과 함께 움직일 아군을 정하고, 상대가 갈라졌을 때 가까운 포탑·목표물을 노린다.',
+        avoid:prepared?'진형이 갈라진 채 어두운 지역을 추격하거나, 앞라인과 뒤의 딜러가 서로 도울 수 없게 벌어지지 않는다.':access.length?'먼 거리 견제를 계속 맞으며 좁은 입구로 따로 진입하지 않는다.':'도와줄 아군보다 먼저 깊게 들어가지 않는다.',
+        evidence_ids:[...new Set(rows.flatMap(r=>r.evidence_ids).concat(side?['official:Fiora:Q','official:Fiora:W']:[]))],
+        basis:'MECHANISM_LINKED_INFERENCE',prepared};
+    };
+    const teamOurs=teamSide(oursSignals,'allies'),teamTheirs=teamSide(theirSignals,'enemies');
+    result.team_plan={schema_version:'lol-coach-team-plan-v1',observation:false,basis:'MECHANISM_LINKED_INFERENCE',
+      assumptions:'비슷한 성장과 배운 기술을 사용할 수 있는 기본 구도. 실제 위치·스킬 가용성은 관측하지 않았습니다.',
+      scope:'확인된 기술 기능을 조합한 참고 계획이며 전체 조합 우열·교전 승리를 검증한 판정이 아닙니다.',
+      rows:[['win','승리 방식'],['field','원하는 전장·접근 방향'],['opening','싸움을 여는 방식'],['damage','공격·보호 구조'],['macro','운영 방향'],['avoid','피해야 할 상황']].map(([id,label])=>({id,label,ours:teamOurs[id],theirs:teamTheirs[id]})),
+      ours:teamOurs,theirs:teamTheirs,rule_ids:['source-linked-team-dimensions-v1'],
+      phases:[{id:'early',label:'초반',text:usable?areaContext.lane.ours:'먼저 움직일 수 있는 라인을 확인해 정글과 지원을 연결한다. 개별 라인 우열은 지원 근거가 있는 범위에서만 판단한다.'},
+        {id:'mid',label:'중반',text:teamOurs.macro},
+        {id:'objective',label:'목표물 교전',text:teamOurs.prepared?'아군과 먼저 자리를 잡고 상대가 접근하게 만든다. 진입하는 아군과 뒤의 딜러를 지킬 아군을 나누되, 사이드 방어로 인원이 줄면 시작을 늦춘다.':teamOurs.field+' '+teamOurs.damage}]};
+    if(coach.context.patch.status==='MISMATCH')result.team_plan=null;
+    if(result.team_plan){
+      result.composition.ours=teamOurs.win;result.composition.theirs=teamTheirs.win;
+      result.composition.ours_full=teamOurs.win+' '+teamOurs.macro;result.composition.theirs_full=teamTheirs.win+' '+teamTheirs.macro;
+      areaContext.operations.ours=teamOurs.macro;areaContext.operations.theirs=teamTheirs.macro;
+      areaContext.fight.ours=teamOurs.damage;areaContext.fight.theirs=teamTheirs.opening;
+      result.operation_headline=backline&&teamOurs.prepared?'라인에서 만든 압박을 중앙 포탑과 목표물로 옮기세요':roleKit&&self==='Ahri'?'라인에서 만든 시간을 정글·다른 라인 지원에 쓰세요':roleKit?'아군이 함께 싸울 자리부터 만들고, 진입과 보호를 나누세요':null;
+      if(backline)result.reminders=[slot('enemies','SUPPORT')?name(slot('enemies','SUPPORT'))+'가 나에게 접근할 길이 열려 있나?':'상대가 나에게 접근할 길이 열려 있나?',flankActors.length?flankNames+'의 마지막 위치와 지금 접근할 길은 어디인가?':'보이지 않는 상대가 옆으로 접근할 수 있나?','내가 공격받으면 바로 도와줄 아군이 옆에 있나?'];
+      if(roleKit)result.reminders=self==='Ahri'?['지금 움직이면 라인 미니언을 얼마나 놓치나?','매혹이 맞아도 아군이 함께 공격할 수 있나?','남은 이동으로 아군에게 돌아올 수 있나?']:['라인 아군이 먼저 움직일 수 있나?','내가 들어가면 아군 공격이 닿나?','다른 앞라인이 진입했을 때 뒤의 딜러는 누가 지키나?'];
+    }
     result.action_summaries=actionSummaries(result,coach,report);
+    if(roleKit&&self==='Ahri'){
+      const a=result.action_summaries.lane.items;
+      const values=[areaContext.lane.ours,'체력·마나를 남긴 채 미니언을 먼저 잡을 여유를 만들고, 밀어 넣기 전에는 무조건 합류하러 떠나지 않는다.',areaContext.lane.action,'매혹이 없는 동안 상대에게 다가갈 때는 남은 방어·이탈 수단과 돌아올 거리를 남긴다.','상대가 먼저 사라지거나 미니언을 밀 수 없으면 따라가기보다 위험을 알리고 라인 손실을 줄인다.'];
+      a.forEach((x,i)=>{x.text=values[i];x.basis='ROLE_PRINCIPLE';x.knowledge_state='GENERAL_PRINCIPLE';x.rule_ids.push('Ahri-mid-methods-v1');x.evidence_ids=roleFacts;x.source_paths=['area_context.lane','role_principles'];});
+      result.role_principles={lane:values,basis:'ROLE_PRINCIPLE_NOT_MATCHUP_ADVANTAGE',evidence_ids:roleFacts};
+      summary[0].conclusion=values[0];summary[0].support='밀어 넣고 움직일 시간과 매혹 적중·복귀 경로를 비교한다. 매치업 우열은 별도 자료가 필요하다.';
+    }
+    if(roleKit&&self==='Sejuani'){
+      const values=['아군이 미니언을 잃지 않고 함께 싸울 수 있는 라인을 지원한다.','아군이 밀어 넣기를 요청하고 함께 마무리할 수 있다면 돕되, 유지하려는 미니언을 임의로 밀지 않는다.','아군 공격이 닿을 때 접근하고, 지원이 끊기면 상대를 끝까지 쫓지 않는다.','상대 정글 위치를 모른다면 라인 아군이 먼저 움직일 수 있는지부터 보고 강에 들어간다.','갱킹 각이 없으면 근처 캠프로 돌아가 성장하고 다음 지원 시간을 만든다.'];
+      result.role_principles={lane:values,basis:'JUNGLE_SUPPORT_NOT_LANE_MATCHUP',evidence_ids:roleFacts};
+      summary[0].conclusion=values[0];summary[0].support='정글 사용자는 라인별 지원·합류 조건을 본다. 라인 미니언을 임의로 밀지 않는다.';
+      result.action_summaries.lane.items.forEach((x,i)=>{x.text=values[i];x.basis='ROLE_PRINCIPLE';x.knowledge_state='GENERAL_PRINCIPLE';x.rule_ids.push('Sejuani-jungle-support-v1');x.evidence_ids=roleFacts;x.source_paths=['role_principles.lane'];});
+    }
+
+    if(roleKit){
+      const dangerActors=threats.filter(x=>['Zed','LeeSin'].includes(x.champion)&&x.slot==='R');
+      const actorNames=dangerActors.map(x=>name(x.champion)).join('·');
+      const danger=self==='Ahri'?(actorNames?actorNames+'의 측면 접근이 가능한 동안에는 복귀할 이동을 남기고, 매혹이 없을 때 고립된 옆각을 만들지 않는다.':'매혹이 없거나 돌아올 이동이 부족하면 혼자 옆으로 깊게 돌지 않는다.'):(actorNames?actorNames+'이 아군 딜러에게 접근하면 남긴 방해 기술을 보호에 쓰고, 이미 들어간 적을 쫓지 않는다.':'아군 딜러가 공격받으면 남긴 방해 기술을 보호에 쓰고, 혼자 적 뒤를 쫓지 않는다.');
+      result.fight.role_danger=danger;
+      const item=result.action_summaries.fight.items[3];item.text=danger;item.source_paths=['fight.role_danger'];item.threat_ids=dangerActors.flatMap(x=>x.evidence_ids);item.selection_scope='현재 조합에서 확인한 접근 수단에 대한 역할별 조건부 대응';
+    }
     const condition = (area,key,trigger,action,keep,stop,paths,actors=[],extra={}) => ({
       id:key,trigger,action,keep,stop,actors:actors.filter(Boolean),
       basis:'DESIGN_HYPOTHESIS',observation:false,provenance_scope:'LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF',
@@ -385,14 +533,63 @@
         '사이드에서 돌아갈 길이 막히거나 아군이 버티기 어렵다면',operations.fallback,
         operations.priority,operations.connection,
         ['operations.fallback','operations.priority','operations.connection'],[self]) : condition('operations','LATE_JOIN',
-        '합류가 늦고 미니언도 많이 놓친다면',operations.concede,
+        '합류가 늦고 미니언도 많이 놓친다면',operations.late_join||operations.concede,
         operations.connection,operations.fallback,
-        ['operations.concede','operations.connection','operations.fallback'],[self,ownSupport!==self?ownSupport:null])],
+        [operations.late_join?'operations.late_join':'operations.concede','operations.connection','operations.fallback'],[self,ownSupport!==self?ownSupport:null])],
       fight:[condition('fight','FOLLOWUP_WINDOW',self==='Caitlyn'&&controllers.length?'아군이 묶은 적에게 함께 공격할 수 있다면':'아군과 같은 대상을 공격할 수 있다면',
         fight.start,fight.target,fight.stop,['fight.start','fight.target','fight.stop'],[self]),
         condition('fight','CONNECTION_LOST','아군 보호가 멀어지거나 옆에서 적이 접근한다면',
         fight.stop,fight.setup,'아군 보호와 퇴로가 다시 이어지기 전에는 낮은 체력의 적을 쫓지 않는다.',['fight.stop','fight.setup','fight.target'],[self])]
     };
+    if(operations.awareness){
+      const a=operations.awareness,f=fight.awareness;
+      result.condition_responses.operations.unshift(condition('operations','FLANK_UNSEEN',
+        flankSubject+' 보이지 않는다면',a.missing,a.keep,a.stop,
+        ['operations.awareness.missing','operations.awareness.keep','operations.awareness.stop'],flankActors,
+        {evidence_ids:a.mechanism_ids,conditions:[a.scope,'실제 위치를 읽지 않는 운영 참고 계획이다.']}));
+      result.condition_responses.operations.push(condition('operations','FLANK_SEEN_ELSEWHERE',
+        flankSubject+' 다른 쪽에 보인다면',a.visible,a.keep,a.stop,
+        ['operations.awareness.visible','operations.awareness.keep','operations.awareness.stop'],flankActors));
+      result.condition_responses.fight.unshift(condition('fight','FLANK_ENTRY',
+        flankSubject+' 옆에서 들어온다면',f.entered,f.reserve,f.stop,
+        ['fight.awareness.entered','fight.awareness.reserve','fight.stop'],flankActors,
+        {evidence_ids:[...f.mechanism_ids,...(self==='Caitlyn'?['official:Caitlyn:E']:self==='Ezreal'?['official:Ezreal:E']:[])],conditions:[f.scope,'6레벨 이후 해당 기술을 배운 한타 예시; 실제 위치·가용 여부는 관측하지 않았다.']}));
+      result.condition_responses.fight.push(condition('fight','FLANK_COMMITTED',
+        '측면의 적이 다른 아군에게 진입했다면',f.opening,f.reserve,f.stop,
+        ['fight.awareness.opening','fight.awareness.reserve','fight.stop'],flankActors));
+      // Existing follow-up case remains an execution tip, not the first tactical priority.
+      const combo=result.condition_responses.fight.find(x=>x.id==='FOLLOWUP_WINDOW');
+      combo.action=fight.combo;combo.source_paths[0]='fight.combo';
+    }
+    const scenario=(area,key,trigger,action,reason,exception,actors,evidence)=>condition(area,key,trigger,action,reason,exception,
+      ['condition_responses.'+area+'.'+key],actors,{reason,evidence_ids:evidence,conditions:['조건을 직접 확인했을 때의 참고 안내이며 현재 관측이 아니다.'],priority:'CONTEXTUAL',rule_ids:['situation-rule:'+key]});
+    if(valid&&id==='A'){
+      result.condition_responses.lane.push(
+        scenario('lane','LUX_BIND_HIT',skill('Lux','Q')+'이 적중했다면',
+          '배운 '+skill('Caitlyn','W')+'를 대상 발밑에 연결하고 닿는 거리에서 공격한다.',
+          '속박된 위치에 덫을 놓을 기회다. 덫 설치·발동 시간과 아군 공격 거리가 필요하다.',
+          '노틸러스에게 잡힐 위치까지 걸어가야 하거나 덫을 배우지 않았다면 연결을 강제하지 않는다.',['Lux','Caitlyn'],['official:Lux:Q','official:Caitlyn:W']),
+        scenario('lane','LUX_BIND_MISSED',skill('Lux','Q')+'이 빗나가고 '+skill('Nautilus','Q')+'이 남았다면',
+          '카이사를 더 때리러 전진하지 말고, 럭스와 거리를 맞춘 채 닿는 미니언을 잡는다.',
+          '럭스의 즉시 속박이 없는 동안 노틸러스가 접근할 기회를 줄인다.',
+          '상대가 물러나 주는 미니언과 공간까지 포기하지 않는다. 상대 접근 수단과 아군 지원이 바뀌면 다시 전진을 비교한다.',['Lux','Nautilus'],['official:Lux:Q','official:Nautilus:Q']));
+    }
+    if(backline&&frontActors.length>=2){
+      result.condition_responses.fight.push(scenario('fight','FRONT_DEEP',frontNames+'이 모두 멀리 진입했다면',
+        '자동으로 따라가지 말고 '+coverNames+' 쪽에서 닿는 적을 공격한다. 다른 아군도 도울 수 없다면 퇴로 쪽으로 거리를 벌린다.',
+        '앞라인 인원 수와 지금 나를 보호할 수 있는 거리는 다르다.',
+        '측면 접근이 막혔고 아군 보호가 다시 닿을 때만 전진 폭을 늘린다.',frontActors,oursSignals.filter(x=>frontActors.includes(x.champion)).flatMap(x=>x.evidence_ids)));
+    }
+    if(backline&&teamTheirs.actors.side.length){
+      result.condition_responses.operations.push(scenario('operations','SIDE_PRESSURE','피오라가 사이드 포탑을 압박한다면',
+        '혼자 긴 사이드로 가서 막기보다 방어할 아군을 정하고 중앙에서 얻을 포탑·미니언을 고른다.',
+        '사이드 방어로 인원이 빠졌는데 다섯 명이 모인 것처럼 교전하면 중앙과 사이드를 함께 잃을 수 있다.',
+        '방어할 아군이 없거나 포탑 손실이 더 크면 중앙 공격을 접고 함께 방어한다.',['Fiora'],['official:Fiora:Q','official:Fiora:W']));
+    }
+    if(roleKit){
+      result.condition_responses.fight.unshift(scenario('fight','ROLE_PLAN_BREAKS',self==='Ahri'?'매혹이 빗나가거나 아군 공격이 닿지 않는다면':'다른 앞라인이 진입하고 아군 딜러가 공격받는다면',
+        fight.stop,self==='Ahri'?'적중해도 아군과 떨어진 깊은 위치에서는 공격을 이어가기 어렵다.':'진입 기술을 모두 공격에 쓰면 뒤의 딜러에게 접근한 적을 끊을 수단이 줄어든다.',fight.setup,[self],roleFacts));
+    }
     return result;
   }
   return Object.freeze({ evaluate, validate, defaults, plainLanguage, actionSummaries });

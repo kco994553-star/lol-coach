@@ -154,3 +154,40 @@ Impact: additive output only, same input version and defaults. Regression: appli
 agreement under blocking conditions, role/patch/input-order/preference scope, desktop/mobile
 navigation, compare/reset/refresh and retained features. Rollback: revert this product change;
 old readers ignore the additive result. No new API, quota, paid call or factual adoption.
+
+## 2026-10-19 delta — actionable priorities and composition synthesis
+
+Pure web planboard adds `team_plan` v1 (six ours/theirs dimensions, three phases,
+actual actors, source-linked mechanism IDs, assumption/scope, observation=false),
+`operation_headline`, scoped `operations/fight.awareness`, role principles and
+conditional situations with action/reason/exception/rule/evidence metadata.
+No loading input change, inference provider, probability or new live observation.
+Existing report capability signatures supply pressure/pick/access/cover; no total score.
+Multiple functions may coexist. Frontline tags identify candidate actors only: every
+protection instruction requires actual proximity, and two frontliners entering removes
+assumed cover. Fiora side-pressure inference reuses the existing side rule and official
+Q/W linkage, not a new duel-win or current-location assertion.
+
+Carry flank-exposure rules require current enemy Zed/Lee Sin official R facts and
+BOTTOM/FOLLOW_DAMAGE; names removed from the roster disappear from the plan. This is
+one threat category, not an exhaustive priority ranking. Macro/fight states are
+post-lane examples, independent of lane enemy_jungle/skill overrides. Patch mismatch
+suppresses these additions. Lux-dependent lane cases require the supported A duo.
+All lane key-spent previews still call the applied combat precedence: resources,
+intervention, goal, unknown state and existing engagement cannot be bypassed.
+
+Ahri MID and Sejuani JUNGLE get explicit kit-linked role principles, without promoting
+unsupported lane metrics. Role skills must exist in the catalog. Sejuani's lane panel
+means lane support, not a fabricated jungle 1v1 matchup. Situations preserve own spell
+miss, ally distance, missing enemy, lost frontline cover and side defense. Each area's
+five actions and details project from the same result. No AI at runtime; existing
+synthesis is deterministic. Complete arbitrary-matchup, live skill availability,
+precise all-in outcomes and numerical ratios remain unsupported.
+
+Compatibility: additive output fields; input v1–v4 and Python scope unchanged.
+Alternative rejected: view-only champion-name substitution and a runtime AI call.
+Validation: roster/removal/role/patch/risk tests plus actual PC/mobile navigation,
+situation preview/apply/reset and protected browser. These verify rules/wiring, not
+coaching efficacy or expert adoption. Existing sources/claims retain their grade.
+Rollback: revert product delta and publish previous verified artifact while preserving
+latest verified pro-dashboard; keep evidence, history and all prior contracts.
