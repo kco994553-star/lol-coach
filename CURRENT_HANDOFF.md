@@ -1,3 +1,11 @@
+# Gameplan condition-response cards — source work
+- Base main591953e and completed PR115/116 visual fidelity reused. Single writer main-20261019-gameplan-conditions.
+- Additive same-report conditional responses: lane spell-spent preview shares actual combat precedence; operations delayed join/side fallback; fight follow-up and lost protection. Conditional examples, not observed or automatically applied fight state.
+- Gold portrait/trigger/action cards, keep/stop/evidence disclosure; supported lane compare/UNKNOWN reset uses existing scenario route. Five actions, retained details/maps/formation/risk/back/refresh preserved.
+- Verification/publication pending; no new knowledge grades, ratios, API/provider/game/video/paid calls. N0/30secUNMEASURED/WindowsBLOCKED_EXTERNAL and protected history preserved.
+
+---
+
 # Gameplan reference visual fidelity — actual public completion
 - Fresh base40784cf; PR115 product `596fc066e084a791a818722ae059fe6818c07edc`; required PR/exact-product-main3PASS. Public `90b0814fec7deb0e4c3dfc9b3c70e72178d9cb4b`; Pages392085037103SUCCESS; changed HTTPS/root/buildinfo/nojekyll/pro/riot verified.
 - Approved visual composition: official own artwork masthead, large two-line operation, compact ten-picks/own-role edit, numbered shared-icon cards, round opposing portraits, execution rows, gold condition panel.1280+master/right panel; narrow/mobile full-width detail. Long actual conditions wrap; source tactics not replaced with mockup copy.

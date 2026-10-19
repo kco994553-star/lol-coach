@@ -345,6 +345,19 @@
       if(area){const title=host.querySelector('.plan-detail-title');title?.focus({preventScroll:true});if(!root.matchMedia('(min-width: 1280px)').matches)host.scrollIntoView({block:'start',behavior:'auto'});}
       else {root.scrollTo(0,state.baseY);host.querySelector('[data-plan-area="'+state.tab+'"]')?.focus({preventScroll:true});}
     }
+    function conditionResponse(item,area) {
+      const n=el('article',null,'plan-adjustment plan-condition');n.dataset.conditionResponse=item.id;
+      const heading=el('div',null,'plan-condition-heading'),portraits=el('div',null,'plan-condition-portraits');
+      arr(item.actors).forEach(id=>{if(catalog.champions[id])portraits.append(root.LoadingMap.portrait(catalog.champions[id],id===current.input.own_champion));});
+      const title=el('div');title.append(el('p','조건이 달라지면 · 가정 예시','plan-condition-label'),el('h3',item.trigger));heading.append(portraits,title);n.append(heading,el('p',item.action,'plan-condition-action'));
+      const more=details('condition-'+area+'-'+item.id,'유지할 기준 · 중단 조건 · 근거');
+      more.append(block('계속 지킬 것',item.keep),block('막히면 / 멈출 때',item.stop),block('적용 조건',item.conditions),block('제공 범위',item.limits));
+      more.append(el('p','현재 관측이 아닌 조건부 대응 예시 · 기존 규칙을 연결한 설계 가설','coach-muted'));
+      more.append(why(item.claim_ids,'condition-'+area+'-'+item.id,'연결된 지식과 적용 범위'));
+      const trace=details('condition-trace-'+area+'-'+item.id,'규칙 연결 정보');trace.append(el('pre',JSON.stringify({phase:item.phase,source_paths:item.source_paths,rule_ids:item.rule_ids,evidence_ids:item.evidence_ids||[],observation:item.observation},null,2)));more.append(trace);n.append(more);
+      if(item.scenario_patch){const apply=button(item.applied?'기술 소모 가정 적용 중 · 미확인으로 바꾸기':'이 가정으로 비교하기','condition-apply-'+item.id,()=>change({scenario:{...scenario(),overrides:{...scenario().overrides,...(item.applied?{enemy_key:'UNKNOWN'}:item.scenario_patch)}}}));apply.dataset.coachChange='';apply.dataset.conditionApply=item.id;apply.setAttribute('aria-pressed',String(!!item.applied));n.append(apply);}
+      return n;
+    }
     function renderPresentation() {
       if(destroyed)return;
       const opened=new Set(Array.from(host.querySelectorAll('details[open]'),n=>n.id));
@@ -373,8 +386,7 @@
         const title=el('h2',a.concept||a.title,'plan-detail-title');title.tabIndex=-1;panel.append(title,el('p',a.title,'plan-detail-intro'));
         const pair=el('div',null,'plan-perspectives');[['우리가 원하는 구도','ours','allies'],['상대가 원하는 구도','theirs','enemies']].forEach(([title,key,team])=>{const side=el('section',null,'plan-perspective-'+team),portraits=el('div',null,'plan-side-portraits');const lane=arr(b.overall?.lanes).find(l=>l.position===current.input.own_position);const ids=a.id==='lane'?arr(lane?.[team]):v.teams[team].map(p=>p.champion);ids.forEach(id=>portraits.append(root.LoadingMap.portrait(catalog.champions[id],id===v.own.champion&&team==='allies')));side.append(portraits,el('h3',title),el('p',a.perspectives[key]||'이 구도의 자료가 부족합니다.'));pair.append(side);});panel.append(pair);
         const actions=actionSummary(a.id);actions.querySelector('h3').textContent='실행은 이렇게';const basis=details('action-basis-'+a.id,'적용 조건 · 판단 범위');actions.querySelectorAll('.coach-summary-state').forEach(n=>basis.append(n));panel.append(actions);
-        const adjustment=el('section',null,'plan-adjustment');adjustment.append(el('h3','중요한 조건이 바뀌면'),block('바꿀 때',a.id==='lane'?b.wave?.change_if:a.id==='operations'?b.operations?.fallback:b.fight?.stop));
-        adjustment.append(block('계속 지킬 기준',a.id==='lane'?b.choice?.reserve:a.id==='operations'?b.operations?.connection:b.fight?.setup));panel.append(adjustment);
+        const responses=arr(a.condition_responses);if(responses.length){panel.append(conditionResponse(responses[0],a.id));if(responses.length>1){const others=details('other-conditions-'+a.id,'다른 조건의 대응 보기');responses.slice(1).forEach(item=>others.append(conditionResponse(item,a.id)));panel.append(others);}}
         const retained=details('retained-'+a.id,'강한 시점 · 방법 · 스킬 · 예외 · 근거');retained.classList.add('plan-retained');const applied=c.knowledge_application;if(applied?.supported)retained.append(el('p',applied.active?(applied.display_label||(c.matchup_id==='C'?'기전·공략 종합 추론 · 근접 접촉 유지 조건':'공략 판단 기반 · 확보 전 처리 / 확보 후 쌓기')):'조건 변경으로 기본 근거 적용 범위 제한','coach-evidence-kind'));const old=a.id==='lane'?lane():a.id==='operations'?operations():fight();old.querySelector('[data-action-summary]')?.remove();retained.append(old);panel.append(retained);
         const optional=conditions(),quick=el('div',null,'coach-quick');arr(b.quick_scenarios).forEach(q=>{const n=button(q.label,'quick-'+q.id,()=>change({scenario:{...scenario(),overrides:{...scenario().overrides,...q.scenario}},planning:{...planning(),overrides:{...planning().overrides,...q.planning}}}));n.dataset.coachChange='';quick.append(n);});optional.append(quick);panel.append(optional);
         const extra=details('retained-common','전체 조합 · 공식 기술 · 학습 · 이전 상세');const overall=details('overall-plan','우리·상대 계획 · 전체 구도');overall.append(block('우리 계획',b.composition?.ours_full),block('상대의 가능한 계획',b.composition?.theirs_full),block('이번 판의 내 역할',b.composition?.role));arr(b.overall?.lanes).forEach(l=>overall.append(block(l.label,l.reason)));overall.append(el('p',b.overall?.risk));arr(b.overall?.jungle_links).forEach(l=>overall.append(block(l.position+' 연계 후보',l.means?l.means+' · '+l.condition:l.condition)));extra.append(overall,contextExplanation(a.id),officialFacts(),lesson());const legacy=button('전체 표·기존 상세 비교 열기','legacy-open',()=>presentation?.onLegacy?.());extra.append(legacy);const pre=details('trace','자료 범위 · 개발 Trace');pre.append(block('자료 한계',c.evidence?.limits),el('pre',JSON.stringify({schema:c.schema_version,source_paths:a.source_paths,matchup:c.matchup_id,period:c.selected_period},null,2)));extra.append(pre);panel.append(extra,basis);deep.append(panel,tabs);

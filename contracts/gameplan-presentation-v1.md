@@ -51,3 +51,26 @@ views replace master; 200% text and mobile wrap, never clamp tactical conditions
 Impact: rendering/projection names/breakpoint only. Alternative of shrinking all text
 rejected for readability. Revert these view/CSS changes to restore prior presentation;
 no engine or knowledge migration. Browser checks bind actual render and old routes.
+
+
+## Additive condition responses — 2026-10-19
+`planboard.condition_responses` v1 projects trigger/action/keep/stop, actors, phase,
+knowledge_state, source_paths/rule_ids/claim_ids and observation:false into each detail.
+Lane A key-spent preview and applied result use the SAME combatFor rule and precedence;
+low/unknown resources, unknown wave, nearby jungle, existing fight and recall gates remain.
+Only supported lane A has a scenario_patch, merged through the existing shared input route.
+Applying does not overwrite other assumptions; clicking again changes enemy_key to UNKNOWN.
+Operations and fight are post-lane hypothetical examples, not new observed or applied states.
+SIDE_RETURN uses its own fallback; unsupported lane uses existing change/position rules and
+GENERAL_PRINCIPLE scope, never another duo's key-spent advice. All evidence is context-linked,
+not proof of new conditional tactics; strength/kill/chase/evidence grades are unchanged.
+
+KEEP current five actions, source knowledge, all retained details/maps/formation/zoom/routes.
+ADAPT generic gold 'change' paragraph to concrete conditional response with official portraits.
+MISSING addressed: source-bound trigger/response, actual lane compare action, per-area examples.
+REPLACE only the generic presentation block. Other fight case is an optional disclosure.
+Alternative rejected: view-only example strategy or treating lane enemy_key as all fight ults.
+Impact: additive output only, same input version and defaults. Regression: applied/preview
+agreement under blocking conditions, role/patch/input-order/preference scope, desktop/mobile
+navigation, compare/reset/refresh and retained features. Rollback: revert this product change;
+old readers ignore the additive result. No new API, quota, paid call or factual adoption.

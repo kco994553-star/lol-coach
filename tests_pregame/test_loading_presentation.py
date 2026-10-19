@@ -6,6 +6,8 @@ PRE="""const assert=require('node:assert/strict'),E=require('./web_r4/loading-en
 function run(own='Caitlyn'){let i=E.exampleInput(c,0);i.own_champion=own;i.own_position=own==='Ahri'?'MID':'BOTTOM';return E.analyze(i,c);}
 """
 class PresentationTests(unittest.TestCase):
+ def test_condition_responses_are_projected_from_same_report(self):
+  self.node("const r=run(),v=P.project(r);for(const a of v.cards)assert.equal(a.condition_responses,r.coach.planboard.condition_responses[a.id]);r.coach.planboard.condition_responses.operations[0].action='새 조건의 실제 행동';assert.equal(P.project(r).cards[1].condition_responses[0].action,'새 조건의 실제 행동');")
  def node(self,body):
   r=subprocess.run(['node','-e',PRE+body],cwd=ROOT,capture_output=True,text=True);self.assertEqual(r.returncode,0,r.stderr[-3000:])
  def test_projection_same_report_two_real_roles_and_unknown_scope(self):
