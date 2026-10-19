@@ -1,3 +1,12 @@
+# Gameplan coaching priorities — source ready, verification/publication pending
+- Fresh base8d7f3d1/publiccf59074; existing PR117/118 routes/condition engine reused. Canonical claim main-20261019-gameplan-priorities.
+- Actual functions → six team dimensions / three phases → user role → exactly five actions and situations. Carry macro tracks actual Zed/Lee Sin; protection-distance loss and Fiora side defense separate. Lane skill-spent preview/applied same gates; Lux hit/miss optional examples.
+- Ahri MID and Sejuani JUNGLE use official-kit role principles; unsupported matchup strength remains insufficient. No copied carry role. Team hypothesis distinct from mechanism facts; no winner/ratio promotion.
+- Browser/UI projections share one report, responsive team comparison and retained detail paths. Added contract/rollback; tests and publication results follow.
+- N0/30secUNMEASURED/WindowsBLOCKED_EXTERNAL and all protected history/limits retained. Runtime AI0; new provider/game/video/paid calls0. Remaining: unreviewed matchups/quantitative ratios and actual live/Windows evidence.
+
+---
+
 # Gameplan condition-response cards — actual public completion
 - PR117 product `cf5907466483f887bd8b89aaf869352056c12fa3`; required PR/exact-product-main3PASS. Artifact `dee4d0862c57c65620a9b763ebae2811f19b748f`; nativePages392149521523SUCCESS; HTTPS/root/build-info/pro/riot verified.
 - Gold portrait/trigger/action with keep/stop/evidence. Lane A key-spent preview/applied result share combat precedence; compare/UNKNOWN reset retains other assumptions. Operations delayed join/side fallback; fight follow-up/protection loss, actual role-specific trigger.

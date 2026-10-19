@@ -74,3 +74,12 @@ Impact: additive output only, same input version and defaults. Regression: appli
 agreement under blocking conditions, role/patch/input-order/preference scope, desktop/mobile
 navigation, compare/reset/refresh and retained features. Rollback: revert this product change;
 old readers ignore the additive result. No new API, quota, paid call or factual adoption.
+
+## 2026-10-19 actionable priorities
+Same report supplies operation headline, optional six-dimension team comparison,
+three-phase team plan, exactly five execution actions per detail, situation cards and
+three role-specific questions. Team comparison becomes stacked cards on mobile;
+existing detail/risk/metrics/formation/maps/legacy routes remain available. Conditional
+situations show action first, with reason/keep/stop/evidence on disclosure. No view rule
+selects threats, judges matchups or infers a live state. Role principles are explicitly
+separate from unsupported matchup advantage. All text remains selectable real text.
