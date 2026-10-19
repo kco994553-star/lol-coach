@@ -456,8 +456,9 @@
       const pressure=people('PRESSURE'),pick=people('PICK'),access=people('ACCESS'),cover=people('COVER');
       const front=input[team].filter(x=>catalog.champions[x.champion]?.official_tags?.includes('Tank')).map(x=>x.champion);
       const side=input[team].some(x=>x.champion==='Fiora')&&fact('Fiora','Q')&&fact('Fiora','W')?'Fiora':null;
-      const prepared=pressure.length>=2&&pick.length&&cover.length;
-      return {actors:{pressure,pick,access,cover,front,side:side?[side]:[]},
+      const rearCover=cover.filter(champion=>input[team].some(p=>p.champion===champion&&['SUPPORT','MID'].includes(p.position)));
+      const prepared=!!(pressure.length>=2&&pick.length&&rearCover.length);
+      return {actors:{pressure,pick,access,cover,rearCover,front,side:side?[side]:[]},
         win:prepared?'먼저 자리 잡고 견제해 접근을 어렵게 만든 뒤, 닿는 적을 함께 공격해 포탑·목표물로 바꾼다.':access.length?'아군이 같은 대상에 닿는 방향에서 접근해 떨어진 적을 노리고, 교전 뒤 포탑·목표물을 얻는다.':'확인된 공격 수단을 함께 쓸 거리를 만들고, 밀 수 있는 라인에서 이동 시간을 얻는다.',
         field:prepared?'아군과 시야를 먼저 확보한 포탑·목표물 주변에서 정면 거리를 유지한다.':access.length?'옆으로 접근할 길이 있는 전장에서 고립된 적을 노린다. 어두운 길이 접근하는 쪽에도 안전하다는 뜻은 아니다.':'퇴로와 아군의 공격이 이어지는 전장을 고른다.',
         opening:pick.length?names('PICK')+'의 방해 기술로 공격 기회를 만들되, 아군이 닿지 못하면 진입을 이어가지 않는다.':pressure.length?names('PRESSURE')+'의 견제로 체력을 깎으며 접근할 기회를 만든다.':'교전을 열 수단의 지식이 부족하므로 선진입 성공을 전제하지 않는다.',
