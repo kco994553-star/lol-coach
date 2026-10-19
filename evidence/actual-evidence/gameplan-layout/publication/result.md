@@ -36,3 +36,5 @@ Caitlyn: “사거리 견제로 막타 접근을 늦추고 웨이브·공간 선
 기능 검증 PASS; 전략 지식 등급 변경 없음; 실전 코칭N=0·30초 이해 미측정·Windows BLOCKED_EXTERNAL.
 AUTO30/HOLD20/USER0·조언7·Frozen350·원문/보류/실패/영상·호출 한도·Master+·프로 자료·riot.txt 보존, 새 provider/game/video/paid 요청0.
 다음은 근거가 있는 구도별 라인전 비율 평가와 아리–제드 등 빈 지식 보완이다. 기존 출처/조건/반례와 연결하고 숫자·문구만으로 지원을 늘리지 않는다.
+
+결과 전용 PR114 첫 검사는 Handoff/QUEUE 변경 후 현재 문서 해시를 갱신하지 않아 current_sources=false로 실패했다. 제품 소스는 변경되지 않았다. 원본 CI 실패 로그를 보존하고 기존 --prepare 경로로 실제 현재 바이트 해시를 갱신했다. 기준 완화 없이 재검사한다.
