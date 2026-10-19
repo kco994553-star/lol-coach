@@ -1,3 +1,13 @@
+# Gameplan condition-response cards — active writer
+- run_token: `main-20261019-gameplan-conditions`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/gameplan-conditions-20261019`
+- base_main: `591953eadbc4bc61f58216a71dfb238643664098`
+- scope: condition/action/keep/stop cards in lane, operations and fight; existing rules and official portraits. Same report, no new observations or advantage claims. Verify, publish and update Handoff. No provider or paid calls.
+
+---
+
 # Gameplan reference visual fidelity — completed writer
 - run_token: `main-20261019-gameplan-visual`
 - status: `COMPLETED`
