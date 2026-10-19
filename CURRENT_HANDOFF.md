@@ -1,3 +1,13 @@
+# Gameplan reference layout — active writer
+- run_token: `main-20261019-gameplan-layout`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/gameplan-layout-20261019`
+- base_main: `78d6f04265c280d04545c3d1ec1e64bcdd1ac219`
+- scope: USER reference-layout presentation; same report, ten-pick/hero/three cards, responsive detail/history/refresh, Caitlyn/Ahri actual input flow. Preserve tactical knowledge/history/quotas; affected tests and required CI, Pages, Handoff.
+
+---
+
 # Threat rings and clear wave action — completed
 - run_token: `main-20261018-threat-rings`
 - status: `COMPLETED`
