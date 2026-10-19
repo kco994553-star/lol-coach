@@ -1,0 +1,40 @@
+F
+======================================================================
+FAIL: test_carry_priorities_connect_specific_threats_to_macro_and_fight (tests_pregame.test_player_planboard.PlayerPlanboardTests.test_carry_priorities_connect_specific_threats_to_macro_and_fight)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/worktrees/lol-coach-priorities/tests_pregame/test_player_planboard.py", line 10, in test_carry_priorities_connect_specific_threats_to_macro_and_fight
+    self.node("const b=run().coach.planboard,a=b.operations.awareness;assert(a);assert.deepEqual(a.actors,['LeeSin','Zed']);assert.equal(a.observation,false);assert.equal(a.actual_positions,null);assert.match(a.watch,/리 신.*제드.*포탑|제드.*리 신.*포탑/);assert.match(a.missing,/미니언/);assert.match(a.missing,/혼자|아군/);assert.equal(b.condition_responses.operations[0].action,a.missing);assert.equal(b.condition_responses.fight[0].action,b.fight.awareness.entered);assert.match(b.fight.start,/앞.*적|닿는 적/);assert(!b.fight.start.startsWith('아군 제어가 적중'));assert.match(b.fight.awareness.reserve,/90구경 투망\\(E\\)/);assert.match(b.fight.target,/카이사/);assert.match(b.fight.combo,/요들잡이 덫\\(W\\)/);assert.equal(b.action_summaries.fight.items[3].text,b.fight.awareness.danger);assert.equal(b.loading_summary.items[3].conclusion,b.fight.start.split('. ')[0]+'.');assert.equal(b.condition_responses.lane[0].action,run(0,{enemy_key:'SPENT'}).coach.planboard.wave.combat);assert.match(b.condition_responses.lane[0].action,/럭스.*공간|럭스.*막타/);assert.match(b.condition_responses.lane[0].action,/미니언/);")
+  File "/workspace/worktrees/lol-coach-priorities/tests_pregame/test_player_planboard.py", line 19, in node
+    self.assertEqual(r.returncode,0,r.stderr[-4000:])
+AssertionError: 1 != 0 : node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(a)
+
+    at [eval]:3:56
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.305s
+
+FAILED (failures=1)

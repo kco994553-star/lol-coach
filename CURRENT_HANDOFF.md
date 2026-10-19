@@ -1,3 +1,12 @@
+# Gameplan coaching priorities — actual public completion
+- PR119/120 product `1b3171f9ec10bad32f71975ca3d30c1917240bdd`; required PR/exact-product-main3PASS. Artifact `5b024a3387990500086220df65a710193b587138`; nativePages392222096023SUCCESS; HTTPS/root/build-info/pro/riot verified.
+- Six functional team dimensions/three phases → role → five actions/situations. Carry macro/fight uses actual flank actors, protection-distance loss and side defense. Ahri MID/Sejuani JUNGLE scoped kit principles, no promoted matchup advantage.
+- Existing risk/metrics/maps/formation/legacy/URL routes preserved; mobile comparison stacks.78affected checks + actual public PC/mobile team/role/scenario screenshots. Failed old text-location/priority assertions preserved and corrected with behavior checks.
+- Evidence evidence/actual-evidence/gameplan-priorities/publication/result.md; runtimeAI0, provider/game/video/paid0. N0/30secUNMEASURED/WindowsBLOCKED_EXTERNAL and protected histories unchanged.
+- Source facts vs tactical inference distinguished. Remaining unsupported matchups/ratios/live evidence stay limited. Results-only finalCI/claim release follows without duplicate deployment.
+
+---
+
 # Gameplan coaching priorities — source ready, verification/publication pending
 - Fresh base8d7f3d1/publiccf59074; existing PR117/118 routes/condition engine reused. Canonical claim main-20261019-gameplan-priorities.
 - Actual functions → six team dimensions / three phases → user role → exactly five actions and situations. Carry macro tracks actual Zed/Lee Sin; protection-distance loss and Fiora side defense separate. Lane skill-spent preview/applied same gates; Lux hit/miss optional examples.

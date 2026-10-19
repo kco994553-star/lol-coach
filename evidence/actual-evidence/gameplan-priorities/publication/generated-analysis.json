@@ -1,0 +1,3872 @@
+[
+  {
+    "input": {
+      "allies": [
+        {
+          "champion": "Ornn",
+          "position": "TOP"
+        },
+        {
+          "champion": "Sejuani",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Ahri",
+          "position": "MID"
+        },
+        {
+          "champion": "Caitlyn",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Lux",
+          "position": "SUPPORT"
+        }
+      ],
+      "enemies": [
+        {
+          "champion": "Fiora",
+          "position": "TOP"
+        },
+        {
+          "champion": "LeeSin",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Zed",
+          "position": "MID"
+        },
+        {
+          "champion": "Kaisa",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Nautilus",
+          "position": "SUPPORT"
+        }
+      ],
+      "own_champion": "Caitlyn",
+      "own_position": "BOTTOM",
+      "side": "BLUE",
+      "patch": "16.20",
+      "opponent_mode": "ASSIGNED",
+      "lane_opponent": null,
+      "schema_version": "lol-coach-loading-input-v2",
+      "preferences": {
+        "risk": "BALANCED"
+      }
+    },
+    "headline": "라인에서 만든 압박을 중앙 포탑과 목표물로 옮기세요",
+    "team_plan": {
+      "schema_version": "lol-coach-team-plan-v1",
+      "observation": false,
+      "basis": "MECHANISM_LINKED_INFERENCE",
+      "assumptions": "비슷한 성장과 배운 기술을 사용할 수 있는 기본 구도. 실제 위치·스킬 가용성은 관측하지 않았습니다.",
+      "scope": "확인된 기술 기능을 조합한 참고 계획이며 전체 조합 우열·교전 승리를 검증한 판정이 아닙니다.",
+      "rows": [
+        {
+          "id": "win",
+          "label": "승리 방식",
+          "ours": "먼저 자리 잡고 견제해 접근을 어렵게 만든 뒤, 닿는 적을 함께 공격해 포탑·목표물로 바꾼다.",
+          "theirs": "아군이 같은 대상에 닿는 방향에서 접근해 떨어진 적을 노리고, 교전 뒤 포탑·목표물을 얻는다."
+        },
+        {
+          "id": "field",
+          "label": "원하는 전장·접근 방향",
+          "ours": "아군과 시야를 먼저 확보한 포탑·목표물 주변에서 정면 거리를 유지한다.",
+          "theirs": "옆으로 접근할 길이 있는 전장에서 고립된 적을 노린다. 어두운 길이 접근하는 쪽에도 안전하다는 뜻은 아니다."
+        },
+        {
+          "id": "opening",
+          "label": "싸움을 여는 방식",
+          "ours": "아리·케이틀린·럭스·세주아니의 방해 기술로 공격 기회를 만들되, 아군이 닿지 못하면 진입을 이어가지 않는다.",
+          "theirs": "노틸러스의 방해 기술로 공격 기회를 만들되, 아군이 닿지 못하면 진입을 이어가지 않는다."
+        },
+        {
+          "id": "damage",
+          "label": "공격·보호 구조",
+          "ours": "럭스의 보호가 실제로 닿는 동안 공격을 이어간다. 앞라인이 모두 멀리 진입하면 뒤의 딜러 보호는 사라질 수 있다.",
+          "theirs": "피오라·카이사·리 신·노틸러스·제드의 접근을 같은 대상에 맞춰 공격을 집중한다. 리 신의 보호가 닿는지와 남은 수단은 별도로 확인한다."
+        },
+        {
+          "id": "macro",
+          "label": "운영 방향",
+          "ours": "중앙 미니언을 먼저 잡고 함께 이동해 포탑·목표물 주변을 선점한다. 사이드 미니언을 받을 아군도 따로 정한다.",
+          "theirs": "피오라의 사이드 압박과 중앙 움직임을 맞춘다. 사이드로 인원이 빠지면 중앙의 부족한 인원으로 교전을 강제하지 않는다."
+        },
+        {
+          "id": "avoid",
+          "label": "피해야 할 상황",
+          "ours": "진형이 갈라진 채 어두운 지역을 추격하거나, 앞라인과 뒤의 딜러가 서로 도울 수 없게 벌어지지 않는다.",
+          "theirs": "먼 거리 견제를 계속 맞으며 좁은 입구로 따로 진입하지 않는다."
+        }
+      ],
+      "ours": {
+        "actors": {
+          "pressure": [
+            "Caitlyn",
+            "Lux"
+          ],
+          "pick": [
+            "Ahri",
+            "Caitlyn",
+            "Lux",
+            "Sejuani"
+          ],
+          "access": [
+            "Ornn",
+            "Sejuani"
+          ],
+          "cover": [
+            "Lux"
+          ],
+          "rearCover": [
+            "Lux"
+          ],
+          "front": [
+            "Ornn",
+            "Sejuani"
+          ],
+          "side": []
+        },
+        "win": "먼저 자리 잡고 견제해 접근을 어렵게 만든 뒤, 닿는 적을 함께 공격해 포탑·목표물로 바꾼다.",
+        "field": "아군과 시야를 먼저 확보한 포탑·목표물 주변에서 정면 거리를 유지한다.",
+        "opening": "아리·케이틀린·럭스·세주아니의 방해 기술로 공격 기회를 만들되, 아군이 닿지 못하면 진입을 이어가지 않는다.",
+        "damage": "럭스의 보호가 실제로 닿는 동안 공격을 이어간다. 앞라인이 모두 멀리 진입하면 뒤의 딜러 보호는 사라질 수 있다.",
+        "macro": "중앙 미니언을 먼저 잡고 함께 이동해 포탑·목표물 주변을 선점한다. 사이드 미니언을 받을 아군도 따로 정한다.",
+        "avoid": "진형이 갈라진 채 어두운 지역을 추격하거나, 앞라인과 뒤의 딜러가 서로 도울 수 없게 벌어지지 않는다.",
+        "evidence_ids": [
+          "official:Ahri:R",
+          "official:Ahri:E",
+          "official:Caitlyn:W",
+          "official:Caitlyn:Q",
+          "official:Lux:W",
+          "official:Lux:Q",
+          "official:Lux:E",
+          "official:Ornn:E",
+          "official:Sejuani:Q",
+          "official:Sejuani:R"
+        ],
+        "basis": "MECHANISM_LINKED_INFERENCE",
+        "prepared": true
+      },
+      "theirs": {
+        "actors": {
+          "pressure": [
+            "Kaisa",
+            "Zed"
+          ],
+          "pick": [
+            "Nautilus"
+          ],
+          "access": [
+            "Fiora",
+            "Kaisa",
+            "LeeSin",
+            "Nautilus",
+            "Zed"
+          ],
+          "cover": [
+            "LeeSin"
+          ],
+          "rearCover": [],
+          "front": [
+            "Nautilus"
+          ],
+          "side": [
+            "Fiora"
+          ]
+        },
+        "win": "아군이 같은 대상에 닿는 방향에서 접근해 떨어진 적을 노리고, 교전 뒤 포탑·목표물을 얻는다.",
+        "field": "옆으로 접근할 길이 있는 전장에서 고립된 적을 노린다. 어두운 길이 접근하는 쪽에도 안전하다는 뜻은 아니다.",
+        "opening": "노틸러스의 방해 기술로 공격 기회를 만들되, 아군이 닿지 못하면 진입을 이어가지 않는다.",
+        "damage": "피오라·카이사·리 신·노틸러스·제드의 접근을 같은 대상에 맞춰 공격을 집중한다. 리 신의 보호가 닿는지와 남은 수단은 별도로 확인한다.",
+        "macro": "피오라의 사이드 압박과 중앙 움직임을 맞춘다. 사이드로 인원이 빠지면 중앙의 부족한 인원으로 교전을 강제하지 않는다.",
+        "avoid": "먼 거리 견제를 계속 맞으며 좁은 입구로 따로 진입하지 않는다.",
+        "evidence_ids": [
+          "official:Fiora:Q",
+          "official:Kaisa:R",
+          "official:Kaisa:W",
+          "official:LeeSin:Q",
+          "official:LeeSin:W",
+          "official:Nautilus:Q",
+          "official:Zed:R",
+          "official:Zed:Q",
+          "official:Fiora:W"
+        ],
+        "basis": "MECHANISM_LINKED_INFERENCE",
+        "prepared": false
+      },
+      "rule_ids": [
+        "source-linked-team-dimensions-v1"
+      ],
+      "phases": [
+        {
+          "id": "early",
+          "label": "초반",
+          "text": "케이틀린·럭스는 멀리서 공격해 상대가 미니언에 다가오기 어렵게 만드는 조합이다."
+        },
+        {
+          "id": "mid",
+          "label": "중반",
+          "text": "중앙 미니언을 먼저 잡고 함께 이동해 포탑·목표물 주변을 선점한다. 사이드 미니언을 받을 아군도 따로 정한다."
+        },
+        {
+          "id": "objective",
+          "label": "목표물 교전",
+          "text": "아군과 먼저 자리를 잡고 상대가 접근하게 만든다. 진입하는 아군과 뒤의 딜러를 지킬 아군을 나누되, 사이드 방어로 인원이 줄면 시작을 늦춘다."
+        }
+      ]
+    },
+    "actions": {
+      "schema_version": "lol-coach-action-summaries-v1",
+      "origin": "ANALYSIS_ASSUMPTIONS_NOT_OBSERVATION",
+      "standard": "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+      "lane": {
+        "judgment": {
+          "kind": "CLEAR_IN_SCOPE",
+          "label": "일부 구간·교전 방식의 우열 근거 있음",
+          "axis_assessments": {
+            "PUSH": "ALLY",
+            "SHORT": "ALLY",
+            "EXTENDED": "INSUFFICIENT",
+            "ALLIN": "INSUFFICIENT",
+            "ATTRITION": "INSUFFICIENT"
+          },
+          "outcome": "UNDETERMINED",
+          "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+          "missing_axes": [
+            "EXTENDED",
+            "ALLIN",
+            "ATTRITION"
+          ]
+        },
+        "items": [
+          {
+            "kind": "GOAL",
+            "label": "이번 라인전 목표",
+            "text": "럭스와 멀리서 견제해 카이사의 막타를 방해하고, 밀어 넣을 기회를 만든다.",
+            "source_paths": [
+              "lane.milestone.goal"
+            ],
+            "detail_target": "lane-goal",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "지원 거리와 막타 접근을 유지한다."
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CLEAR_IN_SCOPE",
+              "label": "일부 구간·교전 방식의 우열 근거 있음",
+              "axis_assessments": {
+                "PUSH": "ALLY",
+                "SHORT": "ALLY",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:lane.milestone.goal"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "WAVE",
+            "label": "기본 웨이브 방향",
+            "text": "막타만 기다리지 않고 미니언에 평타를 보태 상대보다 미니언을 먼저 잡을 여유를 만든다.",
+            "source_paths": [
+              "wave.handling"
+            ],
+            "detail_target": "lane-methods",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "지원 거리와 막타 접근을 유지한다."
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CLEAR_IN_SCOPE",
+              "label": "일부 구간·교전 방식의 우열 근거 있음",
+              "axis_assessments": {
+                "PUSH": "ALLY",
+                "SHORT": "ALLY",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:wave.handling"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "TRADE",
+            "label": "교환·응징 방법",
+            "text": "카이사가 막타를 치러 나오면 노틸러스의 위치를 보고 평타를 넣은 뒤, 럭스 쪽으로 거리를 벌린다.",
+            "source_paths": [
+              "wave.combat"
+            ],
+            "detail_target": "lane-methods",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "지원 거리와 막타 접근을 유지한다."
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CLEAR_IN_SCOPE",
+              "label": "일부 구간·교전 방식의 우열 근거 있음",
+              "axis_assessments": {
+                "PUSH": "ALLY",
+                "SHORT": "ALLY",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:wave.combat"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "CAUTION",
+            "label": "조심할 상황",
+            "text": "견제에 다음 미니언 잡기·빠져나올 기술을 모두 쓰거나 미니언 뒤를 절대 안전선으로 여기지 않는다.",
+            "source_paths": [
+              "matchup_playbook.ours.avoid"
+            ],
+            "detail_target": "lane-counterplay",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "지원 거리와 막타 접근을 유지한다."
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CLEAR_IN_SCOPE",
+              "label": "일부 구간·교전 방식의 우열 근거 있음",
+              "axis_assessments": {
+                "PUSH": "ALLY",
+                "SHORT": "ALLY",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:matchup_playbook.ours.avoid"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "SWITCH",
+            "label": "계획을 바꿀 조건",
+            "text": "노틸러스가 옆 진입선이나 평타 거리로 들어오거나 럭스 추가 공격이 이어지지 않으면 교환을 끝낸다.",
+            "source_paths": [
+              "wave.change_if"
+            ],
+            "detail_target": "lane-methods",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "지원 거리와 막타 접근을 유지한다."
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CLEAR_IN_SCOPE",
+              "label": "일부 구간·교전 방식의 우열 근거 있음",
+              "axis_assessments": {
+                "PUSH": "ALLY",
+                "SHORT": "ALLY",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:wave.change_if"
+            ],
+            "observation": false
+          }
+        ]
+      },
+      "operations": {
+        "assumption": "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+        "items": [
+          {
+            "kind": "POSITION",
+            "label": "기본 활동 위치",
+            "text": "중앙에서 럭스와 함께 미니언을 잡고, 혼자 긴 사이드 라인 깊숙이 가지 않는다.",
+            "source_paths": [
+              "operations.placement"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+              "상대의 접근·제어가 남아 있으면 공격 폭을 줄이고 접근 가능한 대상을 선택",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.placement"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "PARTNER",
+            "label": "연결할 아군",
+            "text": "럭스와 함께 움직이고, 앞을 지키는 아군이 시야를 확보한 길로 이동한다.",
+            "source_paths": [
+              "operations.connection"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+              "상대의 접근·제어가 남아 있으면 공격 폭을 줄이고 접근 가능한 대상을 선택",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.connection"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "GAIN",
+            "label": "우선할 이득",
+            "text": "미드 미니언을 먼저 잡아 움직일 시간을 만들고, 아군과 드래곤·바론 주변에 먼저 자리 잡는다.",
+            "source_paths": [
+              "operations.priority"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+              "상대의 접근·제어가 남아 있으면 공격 폭을 줄이고 접근 가능한 대상을 선택",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.priority"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "AVOID",
+            "label": "피할 행동",
+            "text": "리 신·제드가 보이지 않으면 혼자 포탑을 계속 때리거나 어두운 강·정글을 가로지르지 않는다.",
+            "source_paths": [
+              "operations.concede"
+            ],
+            "detail_target": "operations-methods",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+              "상대의 접근·제어가 남아 있으면 공격 폭을 줄이고 접근 가능한 대상을 선택",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.concede"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "FALLBACK",
+            "label": "막히거나 불리할 때",
+            "text": "앞으로 나가기 어렵거나 뒤처졌다면 아군 포탑 가까이에서 미니언을 챙기고, 함께 움직일 인원과 구매를 갖춘 뒤 다시 압박한다.",
+            "source_paths": [
+              "operations.fallback"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+              "상대의 접근·제어가 남아 있으면 공격 폭을 줄이고 접근 가능한 대상을 선택",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.fallback"
+            ],
+            "observation": false
+          }
+        ]
+      },
+      "fight": {
+        "assumption": "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+        "items": [
+          {
+            "kind": "ROLE_POSITION",
+            "label": "내 역할·기본 위치",
+            "text": "오른·세주아니 뒤에서 럭스의 도움을 받을 수 있는 거리를 유지한다.",
+            "source_paths": [
+              "fight.role",
+              "fight.setup"
+            ],
+            "detail_target": "fight-methods",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+              "상대의 접근·제어가 남아 있으면 공격 폭을 줄이고 접근 가능한 대상을 선택",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.role",
+              "projection:fight.setup"
+            ],
+            "observation": false,
+            "role": "앞라인 뒤에서 공격하며 측면 진입에 대응하는 원거리 딜러"
+          },
+          {
+            "kind": "START",
+            "label": "공격 시작 조건",
+            "text": "아군 앞라인 뒤에서 닿는 적부터 공격한다.",
+            "source_paths": [
+              "fight.start"
+            ],
+            "detail_target": "fight-plan",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+              "상대의 접근·제어가 남아 있으면 공격 폭을 줄이고 접근 가능한 대상을 선택",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.start"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "TARGET",
+            "label": "우선 공격 대상",
+            "text": "카이사를 잡으러 적진으로 걸어가기보다, 현재 닿는 적이나 나에게 들어온 적을 먼저 공격한다.",
+            "source_paths": [
+              "fight.target"
+            ],
+            "detail_target": "fight-methods",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+              "상대의 접근·제어가 남아 있으면 공격 폭을 줄이고 접근 가능한 대상을 선택",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.target"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "THREAT",
+            "label": "대응할 위협",
+            "text": "리 신·제드의 측면 진입에 대비해 케이틀린의 90구경 투망(E)을 남기고, 들어오면 럭스 쪽으로 이동해 함께 반격한다.",
+            "source_paths": [
+              "fight.awareness.danger"
+            ],
+            "detail_target": "fight-threats",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "대상 추적형 수단이며 미니언 뒤가 전체 안전을 보장하지 않음"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.awareness.danger"
+            ],
+            "observation": false,
+            "threat_ids": [
+              "official:LeeSin:R",
+              "official:Zed:R"
+            ],
+            "selection_scope": "후방 딜러의 측면 접근·고립 위험에 관한 후보; 다른 적의 위협이 없다는 뜻이 아니다."
+          },
+          {
+            "kind": "EXIT",
+            "label": "이탈·재배치 조건",
+            "text": "옆에서 적이 접근하거나 앞라인이 멀어지면 평타를 더 치려 하지 말고 럭스 쪽으로 위치를 바꾼다.",
+            "source_paths": [
+              "fight.stop"
+            ],
+            "detail_target": "fight-plan",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "보호가 실제로 닿는 위치와 제어 적중이 함께 확인된 경우",
+              "상대의 접근·제어가 남아 있으면 공격 폭을 줄이고 접근 가능한 대상을 선택",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Caitlyn",
+              "position": "BOTTOM",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "SOURCE_SCOPE_LIMITED",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [
+              "A-WAVE",
+              "A-SHORT",
+              "A-RECALL",
+              "A-WAVE-SPACE",
+              "A-INITIAL-ORDER-v1"
+            ],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.stop"
+            ],
+            "observation": false
+          }
+        ]
+      }
+    },
+    "conditions": {
+      "schema_version": "lol-coach-condition-responses-v1",
+      "origin": "HYPOTHETICAL_LOADING_EXAMPLE",
+      "lane": [
+        {
+          "id": "ENEMY_KEY_SPENT",
+          "trigger": "노틸러스의 닻줄 견인(Q)이 빗나갔다면",
+          "action": "럭스와 함께 앞으로 나와 카이사의 막타를 방해하고, 상대가 물러나면 미니언을 먼저 잡는다. 카이사를 쫓아붙기보다 견제할 공간을 넓힌다.",
+          "keep": "노틸러스의 강력한 일격(P)와 카이사의 추가 공격은 남아 있다. 럭스가 함께 공격할 거리와 빠져나올 기술을 남긴다.",
+          "stop": "노틸러스가 다시 다가오거나 럭스가 함께 공격할 수 없으면 교환을 끝낸다. 상대 기술을 다시 쓸 수 있으면 이 기회도 끝난다.",
+          "actors": [
+            "Nautilus"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "LEVEL1",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "wave.combat",
+            "wave.conditions",
+            "wave.change_if",
+            "fight.threats"
+          ],
+          "rule_ids": [
+            "player-planboard-v1",
+            "condition-response:ENEMY_KEY_SPENT"
+          ],
+          "claim_ids": [
+            "A-WAVE",
+            "A-SHORT",
+            "A-RECALL",
+            "A-WAVE-SPACE",
+            "A-INITIAL-ORDER-v1"
+          ],
+          "scenario_patch": {
+            "enemy_key": "SPENT"
+          },
+          "applied": false,
+          "conditions": [
+            "해당 기술을 배웠고 빗맞혀 소모했다는 가정이다.",
+            "체력·마나, 웨이브, 정글 개입, 귀환 목적 등 나머지 선택 조건은 그대로 적용한다."
+          ],
+          "evidence_ids": [
+            "official:Nautilus:Q",
+            "official:Nautilus:P"
+          ]
+        },
+        {
+          "id": "LUX_BIND_HIT",
+          "trigger": "럭스의 빛의 속박(Q)이 적중했다면",
+          "action": "배운 케이틀린의 요들잡이 덫(W)를 대상 발밑에 연결하고 닿는 거리에서 공격한다.",
+          "keep": "속박된 위치에 덫을 놓을 기회다. 덫 설치·발동 시간과 아군 공격 거리가 필요하다.",
+          "stop": "노틸러스에게 잡힐 위치까지 걸어가야 하거나 덫을 배우지 않았다면 연결을 강제하지 않는다.",
+          "actors": [
+            "Lux",
+            "Caitlyn"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "LEVEL1",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "condition_responses.lane.LUX_BIND_HIT"
+          ],
+          "rule_ids": [
+            "situation-rule:LUX_BIND_HIT"
+          ],
+          "claim_ids": [
+            "A-WAVE",
+            "A-SHORT",
+            "A-RECALL",
+            "A-WAVE-SPACE",
+            "A-INITIAL-ORDER-v1"
+          ],
+          "reason": "속박된 위치에 덫을 놓을 기회다. 덫 설치·발동 시간과 아군 공격 거리가 필요하다.",
+          "evidence_ids": [
+            "official:Lux:Q",
+            "official:Caitlyn:W"
+          ],
+          "conditions": [
+            "조건을 직접 확인했을 때의 참고 안내이며 현재 관측이 아니다."
+          ],
+          "priority": "CONTEXTUAL"
+        },
+        {
+          "id": "LUX_BIND_MISSED",
+          "trigger": "럭스의 빛의 속박(Q)이 빗나가고 노틸러스의 닻줄 견인(Q)이 남았다면",
+          "action": "카이사를 더 때리러 전진하지 말고, 럭스와 거리를 맞춘 채 닿는 미니언을 잡는다.",
+          "keep": "럭스의 즉시 속박이 없는 동안 노틸러스가 접근할 기회를 줄인다.",
+          "stop": "상대가 물러나 주는 미니언과 공간까지 포기하지 않는다. 상대 접근 수단과 아군 지원이 바뀌면 다시 전진을 비교한다.",
+          "actors": [
+            "Lux",
+            "Nautilus"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "LEVEL1",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "condition_responses.lane.LUX_BIND_MISSED"
+          ],
+          "rule_ids": [
+            "situation-rule:LUX_BIND_MISSED"
+          ],
+          "claim_ids": [
+            "A-WAVE",
+            "A-SHORT",
+            "A-RECALL",
+            "A-WAVE-SPACE",
+            "A-INITIAL-ORDER-v1"
+          ],
+          "reason": "럭스의 즉시 속박이 없는 동안 노틸러스가 접근할 기회를 줄인다.",
+          "evidence_ids": [
+            "official:Lux:Q",
+            "official:Nautilus:Q"
+          ],
+          "conditions": [
+            "조건을 직접 확인했을 때의 참고 안내이며 현재 관측이 아니다."
+          ],
+          "priority": "CONTEXTUAL"
+        }
+      ],
+      "operations": [
+        {
+          "id": "FLANK_UNSEEN",
+          "trigger": "리 신·제드가 보이지 않는다면",
+          "action": "리 신·제드가 보이지 않으면 혼자 포탑을 계속 때리거나 어두운 강·정글을 가로지르지 않는다. 시야가 있는 아군 쪽에서 미니언을 챙기고 함께 이동한다.",
+          "keep": "적 위치를 찾으러 혼자 들어가지 않는다. 상대가 안 보여도 아군 가까이에서 얻을 미니언과 공간까지 포기하지 않는다.",
+          "stop": "마지막으로 본 정보가 오래됐거나 아군이 흩어지면, 더 깊은 포탑 공격·추격을 멈추고 함께 움직일 위치로 바꾼다.",
+          "actors": [
+            "LeeSin",
+            "Zed"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "POST_LANE_LEARNED_KIT",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "operations.awareness.missing",
+            "operations.awareness.keep",
+            "operations.awareness.stop"
+          ],
+          "rule_ids": [
+            "player-planboard-v1",
+            "condition-response:FLANK_UNSEEN"
+          ],
+          "claim_ids": [
+            "A-WAVE",
+            "A-SHORT",
+            "A-RECALL",
+            "A-WAVE-SPACE",
+            "A-INITIAL-ORDER-v1"
+          ],
+          "evidence_ids": [
+            "official:LeeSin:R",
+            "official:Zed:R"
+          ],
+          "conditions": [
+            "후방 딜러의 측면 접근·고립 위험에 관한 후보; 다른 적의 위협이 없다는 뜻이 아니다.",
+            "실제 위치를 읽지 않는 운영 참고 계획이다."
+          ]
+        },
+        {
+          "id": "LATE_JOIN",
+          "trigger": "합류가 늦고 미니언도 많이 놓친다면",
+          "action": "합류까지 멀고 수급 손실이 큰 싸움은 억지로 따라가지 않는다. 대신 닿는 웨이브·구매 시간을 확보한다.",
+          "keep": "럭스와 함께 움직이고, 앞을 지키는 아군이 시야를 확보한 길로 이동한다.",
+          "stop": "앞으로 나가기 어렵거나 뒤처졌다면 아군 포탑 가까이에서 미니언을 챙기고, 함께 움직일 인원과 구매를 갖춘 뒤 다시 압박한다.",
+          "actors": [
+            "Caitlyn",
+            "Lux"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "POST_LANE_LEARNED_KIT",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "operations.late_join",
+            "operations.connection",
+            "operations.fallback"
+          ],
+          "rule_ids": [
+            "player-planboard-v1",
+            "condition-response:LATE_JOIN"
+          ],
+          "claim_ids": [
+            "A-WAVE",
+            "A-SHORT",
+            "A-RECALL",
+            "A-WAVE-SPACE",
+            "A-INITIAL-ORDER-v1"
+          ]
+        },
+        {
+          "id": "FLANK_SEEN_ELSEWHERE",
+          "trigger": "리 신·제드가 다른 쪽에 보인다면",
+          "action": "다른 쪽에 보인 위치가 아직 유효하고 주변 인원·퇴로도 확보됐다면, 미니언을 밀고 아군과 포탑·목표물 압박을 늘린다.",
+          "keep": "적 위치를 찾으러 혼자 들어가지 않는다. 상대가 안 보여도 아군 가까이에서 얻을 미니언과 공간까지 포기하지 않는다.",
+          "stop": "마지막으로 본 정보가 오래됐거나 아군이 흩어지면, 더 깊은 포탑 공격·추격을 멈추고 함께 움직일 위치로 바꾼다.",
+          "actors": [
+            "LeeSin",
+            "Zed"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "POST_LANE_LEARNED_KIT",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "operations.awareness.visible",
+            "operations.awareness.keep",
+            "operations.awareness.stop"
+          ],
+          "rule_ids": [
+            "player-planboard-v1",
+            "condition-response:FLANK_SEEN_ELSEWHERE"
+          ],
+          "claim_ids": [
+            "A-WAVE",
+            "A-SHORT",
+            "A-RECALL",
+            "A-WAVE-SPACE",
+            "A-INITIAL-ORDER-v1"
+          ]
+        },
+        {
+          "id": "SIDE_PRESSURE",
+          "trigger": "피오라가 사이드 포탑을 압박한다면",
+          "action": "혼자 긴 사이드로 가서 막기보다 방어할 아군을 정하고 중앙에서 얻을 포탑·미니언을 고른다.",
+          "keep": "사이드 방어로 인원이 빠졌는데 다섯 명이 모인 것처럼 교전하면 중앙과 사이드를 함께 잃을 수 있다.",
+          "stop": "방어할 아군이 없거나 포탑 손실이 더 크면 중앙 공격을 접고 함께 방어한다.",
+          "actors": [
+            "Fiora"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "POST_LANE_LEARNED_KIT",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "condition_responses.operations.SIDE_PRESSURE"
+          ],
+          "rule_ids": [
+            "situation-rule:SIDE_PRESSURE"
+          ],
+          "claim_ids": [
+            "A-WAVE",
+            "A-SHORT",
+            "A-RECALL",
+            "A-WAVE-SPACE",
+            "A-INITIAL-ORDER-v1"
+          ],
+          "reason": "사이드 방어로 인원이 빠졌는데 다섯 명이 모인 것처럼 교전하면 중앙과 사이드를 함께 잃을 수 있다.",
+          "evidence_ids": [
+            "official:Fiora:Q",
+            "official:Fiora:W"
+          ],
+          "conditions": [
+            "조건을 직접 확인했을 때의 참고 안내이며 현재 관측이 아니다."
+          ],
+          "priority": "CONTEXTUAL"
+        }
+      ],
+      "fight": [
+        {
+          "id": "FLANK_ENTRY",
+          "trigger": "리 신·제드가 옆에서 들어온다면",
+          "action": "리 신·제드가 옆으로 들어오면 앞의 적 추격을 멈추고 럭스 쪽으로 이동해, 나에게 들어온 적부터 함께 공격한다.",
+          "keep": "케이틀린의 90구경 투망(E)은 단순 견제에 쓰지 말고, 접근하는 적과 거리를 벌릴 때 남긴다.",
+          "stop": "옆에서 적이 접근하거나 앞라인이 멀어지면 평타를 더 치려 하지 말고 럭스 쪽으로 위치를 바꾼다.",
+          "actors": [
+            "LeeSin",
+            "Zed"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "POST_LANE_LEARNED_KIT",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "fight.awareness.entered",
+            "fight.awareness.reserve",
+            "fight.stop"
+          ],
+          "rule_ids": [
+            "player-planboard-v1",
+            "condition-response:FLANK_ENTRY"
+          ],
+          "claim_ids": [
+            "A-WAVE",
+            "A-SHORT",
+            "A-RECALL",
+            "A-WAVE-SPACE",
+            "A-INITIAL-ORDER-v1"
+          ],
+          "evidence_ids": [
+            "official:LeeSin:R",
+            "official:Zed:R",
+            "official:Caitlyn:E"
+          ],
+          "conditions": [
+            "후방 딜러의 측면 접근·고립 위험에 관한 후보; 다른 적의 위협이 없다는 뜻이 아니다.",
+            "6레벨 이후 해당 기술을 배운 한타 예시; 실제 위치·가용 여부는 관측하지 않았다."
+          ]
+        },
+        {
+          "id": "FOLLOWUP_WINDOW",
+          "trigger": "아군이 묶은 적에게 함께 공격할 수 있다면",
+          "action": "아군 제어가 적중하고 후속 거리가 맞으면 사거리 끝에서 공격한다. 케이틀린의 요들잡이 덫(W) 연계는 설치·발동 여유가 있을 때만 잇는다.",
+          "keep": "카이사를 잡으러 적진으로 걸어가기보다, 현재 닿는 적이나 나에게 들어온 적을 먼저 공격한다.",
+          "stop": "옆에서 적이 접근하거나 앞라인이 멀어지면 평타를 더 치려 하지 말고 럭스 쪽으로 위치를 바꾼다.",
+          "actors": [
+            "Caitlyn"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "POST_LANE_LEARNED_KIT",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "fight.combo",
+            "fight.target",
+            "fight.stop"
+          ],
+          "rule_ids": [
+            "player-planboard-v1",
+            "condition-response:FOLLOWUP_WINDOW"
+          ],
+          "claim_ids": [
+            "A-WAVE",
+            "A-SHORT",
+            "A-RECALL",
+            "A-WAVE-SPACE",
+            "A-INITIAL-ORDER-v1"
+          ]
+        },
+        {
+          "id": "CONNECTION_LOST",
+          "trigger": "아군 보호가 멀어지거나 옆에서 적이 접근한다면",
+          "action": "옆에서 적이 접근하거나 앞라인이 멀어지면 평타를 더 치려 하지 말고 럭스 쪽으로 위치를 바꾼다.",
+          "keep": "오른·세주아니 뒤에서 럭스의 도움을 받을 수 있는 거리를 유지한다.",
+          "stop": "아군 보호와 퇴로가 다시 이어지기 전에는 낮은 체력의 적을 쫓지 않는다.",
+          "actors": [
+            "Caitlyn"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "POST_LANE_LEARNED_KIT",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "fight.stop",
+            "fight.setup",
+            "fight.target"
+          ],
+          "rule_ids": [
+            "player-planboard-v1",
+            "condition-response:CONNECTION_LOST"
+          ],
+          "claim_ids": [
+            "A-WAVE",
+            "A-SHORT",
+            "A-RECALL",
+            "A-WAVE-SPACE",
+            "A-INITIAL-ORDER-v1"
+          ]
+        },
+        {
+          "id": "FLANK_COMMITTED",
+          "trigger": "측면의 적이 다른 아군에게 진입했다면",
+          "action": "측면의 적이 다른 아군에게 진입했고 나에게 닿을 다른 수단이 없다면, 아군 앞라인을 넘지 않는 범위에서 닿는 적을 계속 공격한다.",
+          "keep": "케이틀린의 90구경 투망(E)은 단순 견제에 쓰지 말고, 접근하는 적과 거리를 벌릴 때 남긴다.",
+          "stop": "옆에서 적이 접근하거나 앞라인이 멀어지면 평타를 더 치려 하지 말고 럭스 쪽으로 위치를 바꾼다.",
+          "actors": [
+            "LeeSin",
+            "Zed"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "POST_LANE_LEARNED_KIT",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "fight.awareness.opening",
+            "fight.awareness.reserve",
+            "fight.stop"
+          ],
+          "rule_ids": [
+            "player-planboard-v1",
+            "condition-response:FLANK_COMMITTED"
+          ],
+          "claim_ids": [
+            "A-WAVE",
+            "A-SHORT",
+            "A-RECALL",
+            "A-WAVE-SPACE",
+            "A-INITIAL-ORDER-v1"
+          ]
+        },
+        {
+          "id": "FRONT_DEEP",
+          "trigger": "오른·세주아니이 모두 멀리 진입했다면",
+          "action": "자동으로 따라가지 말고 럭스 쪽에서 닿는 적을 공격한다. 다른 아군도 도울 수 없다면 퇴로 쪽으로 거리를 벌린다.",
+          "keep": "앞라인 인원 수와 지금 나를 보호할 수 있는 거리는 다르다.",
+          "stop": "측면 접근이 막혔고 아군 보호가 다시 닿을 때만 전진 폭을 늘린다.",
+          "actors": [
+            "Ornn",
+            "Sejuani"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "POST_LANE_LEARNED_KIT",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "condition_responses.fight.FRONT_DEEP"
+          ],
+          "rule_ids": [
+            "situation-rule:FRONT_DEEP"
+          ],
+          "claim_ids": [
+            "A-WAVE",
+            "A-SHORT",
+            "A-RECALL",
+            "A-WAVE-SPACE",
+            "A-INITIAL-ORDER-v1"
+          ],
+          "reason": "앞라인 인원 수와 지금 나를 보호할 수 있는 거리는 다르다.",
+          "evidence_ids": [
+            "official:Ornn:E",
+            "official:Sejuani:Q",
+            "official:Sejuani:R"
+          ],
+          "conditions": [
+            "조건을 직접 확인했을 때의 참고 안내이며 현재 관측이 아니다."
+          ],
+          "priority": "CONTEXTUAL"
+        }
+      ]
+    },
+    "questions": [
+      "노틸러스가 나에게 접근할 길이 열려 있나?",
+      "리 신·제드의 마지막 위치와 지금 접근할 길은 어디인가?",
+      "내가 공격받으면 바로 도와줄 아군이 옆에 있나?"
+    ],
+    "coverage": {
+      "status": "BASIC_PLAN_CONDITIONAL",
+      "matchup": "A",
+      "plan_scope": "조건부 기본 목적·웨이브·양쪽 상대법 연결",
+      "gaps": "초반 사거리·푸시 공략 범위. 지속 교전·올인·후반 전체 우열 자료 부족.",
+      "effect_sample": 0
+    }
+  },
+  {
+    "input": {
+      "allies": [
+        {
+          "champion": "Ornn",
+          "position": "TOP"
+        },
+        {
+          "champion": "Sejuani",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Ahri",
+          "position": "MID"
+        },
+        {
+          "champion": "Caitlyn",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Lux",
+          "position": "SUPPORT"
+        }
+      ],
+      "enemies": [
+        {
+          "champion": "Fiora",
+          "position": "TOP"
+        },
+        {
+          "champion": "LeeSin",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Zed",
+          "position": "MID"
+        },
+        {
+          "champion": "Kaisa",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Nautilus",
+          "position": "SUPPORT"
+        }
+      ],
+      "own_champion": "Ahri",
+      "own_position": "MID",
+      "side": "BLUE",
+      "patch": "16.20",
+      "opponent_mode": "ASSIGNED",
+      "lane_opponent": null,
+      "schema_version": "lol-coach-loading-input-v2",
+      "preferences": {
+        "risk": "BALANCED"
+      }
+    },
+    "headline": "라인에서 만든 시간을 정글·다른 라인 지원에 쓰세요",
+    "team_plan": {
+      "schema_version": "lol-coach-team-plan-v1",
+      "observation": false,
+      "basis": "MECHANISM_LINKED_INFERENCE",
+      "assumptions": "비슷한 성장과 배운 기술을 사용할 수 있는 기본 구도. 실제 위치·스킬 가용성은 관측하지 않았습니다.",
+      "scope": "확인된 기술 기능을 조합한 참고 계획이며 전체 조합 우열·교전 승리를 검증한 판정이 아닙니다.",
+      "rows": [
+        {
+          "id": "win",
+          "label": "승리 방식",
+          "ours": "먼저 자리 잡고 견제해 접근을 어렵게 만든 뒤, 닿는 적을 함께 공격해 포탑·목표물로 바꾼다.",
+          "theirs": "아군이 같은 대상에 닿는 방향에서 접근해 떨어진 적을 노리고, 교전 뒤 포탑·목표물을 얻는다."
+        },
+        {
+          "id": "field",
+          "label": "원하는 전장·접근 방향",
+          "ours": "아군과 시야를 먼저 확보한 포탑·목표물 주변에서 정면 거리를 유지한다.",
+          "theirs": "옆으로 접근할 길이 있는 전장에서 고립된 적을 노린다. 어두운 길이 접근하는 쪽에도 안전하다는 뜻은 아니다."
+        },
+        {
+          "id": "opening",
+          "label": "싸움을 여는 방식",
+          "ours": "아리·케이틀린·럭스·세주아니의 방해 기술로 공격 기회를 만들되, 아군이 닿지 못하면 진입을 이어가지 않는다.",
+          "theirs": "노틸러스의 방해 기술로 공격 기회를 만들되, 아군이 닿지 못하면 진입을 이어가지 않는다."
+        },
+        {
+          "id": "damage",
+          "label": "공격·보호 구조",
+          "ours": "럭스의 보호가 실제로 닿는 동안 공격을 이어간다. 앞라인이 모두 멀리 진입하면 뒤의 딜러 보호는 사라질 수 있다.",
+          "theirs": "피오라·카이사·리 신·노틸러스·제드의 접근을 같은 대상에 맞춰 공격을 집중한다. 리 신의 보호가 닿는지와 남은 수단은 별도로 확인한다."
+        },
+        {
+          "id": "macro",
+          "label": "운영 방향",
+          "ours": "중앙 미니언을 먼저 잡고 함께 이동해 포탑·목표물 주변을 선점한다. 사이드 미니언을 받을 아군도 따로 정한다.",
+          "theirs": "피오라의 사이드 압박과 중앙 움직임을 맞춘다. 사이드로 인원이 빠지면 중앙의 부족한 인원으로 교전을 강제하지 않는다."
+        },
+        {
+          "id": "avoid",
+          "label": "피해야 할 상황",
+          "ours": "진형이 갈라진 채 어두운 지역을 추격하거나, 앞라인과 뒤의 딜러가 서로 도울 수 없게 벌어지지 않는다.",
+          "theirs": "먼 거리 견제를 계속 맞으며 좁은 입구로 따로 진입하지 않는다."
+        }
+      ],
+      "ours": {
+        "actors": {
+          "pressure": [
+            "Caitlyn",
+            "Lux"
+          ],
+          "pick": [
+            "Ahri",
+            "Caitlyn",
+            "Lux",
+            "Sejuani"
+          ],
+          "access": [
+            "Ornn",
+            "Sejuani"
+          ],
+          "cover": [
+            "Lux"
+          ],
+          "rearCover": [
+            "Lux"
+          ],
+          "front": [
+            "Ornn",
+            "Sejuani"
+          ],
+          "side": []
+        },
+        "win": "먼저 자리 잡고 견제해 접근을 어렵게 만든 뒤, 닿는 적을 함께 공격해 포탑·목표물로 바꾼다.",
+        "field": "아군과 시야를 먼저 확보한 포탑·목표물 주변에서 정면 거리를 유지한다.",
+        "opening": "아리·케이틀린·럭스·세주아니의 방해 기술로 공격 기회를 만들되, 아군이 닿지 못하면 진입을 이어가지 않는다.",
+        "damage": "럭스의 보호가 실제로 닿는 동안 공격을 이어간다. 앞라인이 모두 멀리 진입하면 뒤의 딜러 보호는 사라질 수 있다.",
+        "macro": "중앙 미니언을 먼저 잡고 함께 이동해 포탑·목표물 주변을 선점한다. 사이드 미니언을 받을 아군도 따로 정한다.",
+        "avoid": "진형이 갈라진 채 어두운 지역을 추격하거나, 앞라인과 뒤의 딜러가 서로 도울 수 없게 벌어지지 않는다.",
+        "evidence_ids": [
+          "official:Ahri:R",
+          "official:Ahri:E",
+          "official:Caitlyn:W",
+          "official:Caitlyn:Q",
+          "official:Lux:W",
+          "official:Lux:Q",
+          "official:Lux:E",
+          "official:Ornn:E",
+          "official:Sejuani:Q",
+          "official:Sejuani:R"
+        ],
+        "basis": "MECHANISM_LINKED_INFERENCE",
+        "prepared": true
+      },
+      "theirs": {
+        "actors": {
+          "pressure": [
+            "Kaisa",
+            "Zed"
+          ],
+          "pick": [
+            "Nautilus"
+          ],
+          "access": [
+            "Fiora",
+            "Kaisa",
+            "LeeSin",
+            "Nautilus",
+            "Zed"
+          ],
+          "cover": [
+            "LeeSin"
+          ],
+          "rearCover": [],
+          "front": [
+            "Nautilus"
+          ],
+          "side": [
+            "Fiora"
+          ]
+        },
+        "win": "아군이 같은 대상에 닿는 방향에서 접근해 떨어진 적을 노리고, 교전 뒤 포탑·목표물을 얻는다.",
+        "field": "옆으로 접근할 길이 있는 전장에서 고립된 적을 노린다. 어두운 길이 접근하는 쪽에도 안전하다는 뜻은 아니다.",
+        "opening": "노틸러스의 방해 기술로 공격 기회를 만들되, 아군이 닿지 못하면 진입을 이어가지 않는다.",
+        "damage": "피오라·카이사·리 신·노틸러스·제드의 접근을 같은 대상에 맞춰 공격을 집중한다. 리 신의 보호가 닿는지와 남은 수단은 별도로 확인한다.",
+        "macro": "피오라의 사이드 압박과 중앙 움직임을 맞춘다. 사이드로 인원이 빠지면 중앙의 부족한 인원으로 교전을 강제하지 않는다.",
+        "avoid": "먼 거리 견제를 계속 맞으며 좁은 입구로 따로 진입하지 않는다.",
+        "evidence_ids": [
+          "official:Fiora:Q",
+          "official:Kaisa:R",
+          "official:Kaisa:W",
+          "official:LeeSin:Q",
+          "official:LeeSin:W",
+          "official:Nautilus:Q",
+          "official:Zed:R",
+          "official:Zed:Q",
+          "official:Fiora:W"
+        ],
+        "basis": "MECHANISM_LINKED_INFERENCE",
+        "prepared": false
+      },
+      "rule_ids": [
+        "source-linked-team-dimensions-v1"
+      ],
+      "phases": [
+        {
+          "id": "early",
+          "label": "초반",
+          "text": "먼저 움직일 수 있는 라인을 확인해 정글과 지원을 연결한다. 개별 라인 우열은 지원 근거가 있는 범위에서만 판단한다."
+        },
+        {
+          "id": "mid",
+          "label": "중반",
+          "text": "중앙 미니언을 먼저 잡고 함께 이동해 포탑·목표물 주변을 선점한다. 사이드 미니언을 받을 아군도 따로 정한다."
+        },
+        {
+          "id": "objective",
+          "label": "목표물 교전",
+          "text": "아군과 먼저 자리를 잡고 상대가 접근하게 만든다. 진입하는 아군과 뒤의 딜러를 지킬 아군을 나누되, 사이드 방어로 인원이 줄면 시작을 늦춘다."
+        }
+      ]
+    },
+    "actions": {
+      "schema_version": "lol-coach-action-summaries-v1",
+      "origin": "ANALYSIS_ASSUMPTIONS_NOT_OBSERVATION",
+      "standard": "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+      "lane": {
+        "judgment": {
+          "kind": "KNOWLEDGE_GAP",
+          "label": "매치업 판단 부족 · 적용 가능한 일반 원칙",
+          "axis_assessments": {
+            "PUSH": "INSUFFICIENT",
+            "SHORT": "INSUFFICIENT",
+            "EXTENDED": "INSUFFICIENT",
+            "ALLIN": "INSUFFICIENT",
+            "ATTRITION": "INSUFFICIENT"
+          },
+          "outcome": "UNDETERMINED",
+          "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+          "missing_axes": [
+            "PUSH",
+            "SHORT",
+            "EXTENDED",
+            "ALLIN",
+            "ATTRITION"
+          ]
+        },
+        "items": [
+          {
+            "kind": "GOAL",
+            "label": "이번 라인전 목표",
+            "text": "아리는 미니언을 잡을 체력·마나를 남기고, 먼저 밀어 넣을 수 있을 때 정글과 움직일 시간을 만든다.",
+            "source_paths": [
+              "area_context.lane",
+              "role_principles"
+            ],
+            "detail_target": "lane-goal",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "정보 확인을 위해 미확인 지역으로 들어가지 않는다."
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "KNOWLEDGE_GAP",
+              "label": "매치업 판단 부족 · 적용 가능한 일반 원칙",
+              "axis_assessments": {
+                "PUSH": "INSUFFICIENT",
+                "SHORT": "INSUFFICIENT",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "PUSH",
+                "SHORT",
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "ROLE_PRINCIPLE",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:lane.milestone.goal",
+              "Ahri-mid-methods-v1"
+            ],
+            "observation": false,
+            "evidence_ids": [
+              "official:Ahri:Q",
+              "official:Ahri:E",
+              "official:Ahri:R"
+            ]
+          },
+          {
+            "kind": "WAVE",
+            "label": "기본 웨이브 방향",
+            "text": "체력·마나를 남긴 채 미니언을 먼저 잡을 여유를 만들고, 밀어 넣기 전에는 무조건 합류하러 떠나지 않는다.",
+            "source_paths": [
+              "area_context.lane",
+              "role_principles"
+            ],
+            "detail_target": "lane-methods",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "정보 확인을 위해 미확인 지역으로 들어가지 않는다."
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "KNOWLEDGE_GAP",
+              "label": "매치업 판단 부족 · 적용 가능한 일반 원칙",
+              "axis_assessments": {
+                "PUSH": "INSUFFICIENT",
+                "SHORT": "INSUFFICIENT",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "PUSH",
+                "SHORT",
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "ROLE_PRINCIPLE",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:wave.handling",
+              "Ahri-mid-methods-v1"
+            ],
+            "observation": false,
+            "evidence_ids": [
+              "official:Ahri:Q",
+              "official:Ahri:E",
+              "official:Ahri:R"
+            ]
+          },
+          {
+            "kind": "TRADE",
+            "label": "교환·응징 방법",
+            "text": "상대가 미니언에 기술을 썼다면 견제와 미니언 잡기 중 이득을 고른다. 매혹을 놓쳤다면 재진입보다 거리부터 회복한다.",
+            "source_paths": [
+              "area_context.lane",
+              "role_principles"
+            ],
+            "detail_target": "lane-methods",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "정보 확인을 위해 미확인 지역으로 들어가지 않는다."
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "KNOWLEDGE_GAP",
+              "label": "매치업 판단 부족 · 적용 가능한 일반 원칙",
+              "axis_assessments": {
+                "PUSH": "INSUFFICIENT",
+                "SHORT": "INSUFFICIENT",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "PUSH",
+                "SHORT",
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "ROLE_PRINCIPLE",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:wave.combat",
+              "Ahri-mid-methods-v1"
+            ],
+            "observation": false,
+            "evidence_ids": [
+              "official:Ahri:Q",
+              "official:Ahri:E",
+              "official:Ahri:R"
+            ]
+          },
+          {
+            "kind": "CAUTION",
+            "label": "조심할 상황",
+            "text": "매혹이 없는 동안 상대에게 다가갈 때는 남은 방어·이탈 수단과 돌아올 거리를 남긴다.",
+            "source_paths": [
+              "area_context.lane",
+              "role_principles"
+            ],
+            "detail_target": "lane-counterplay",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "정보 확인을 위해 미확인 지역으로 들어가지 않는다."
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "KNOWLEDGE_GAP",
+              "label": "매치업 판단 부족 · 적용 가능한 일반 원칙",
+              "axis_assessments": {
+                "PUSH": "INSUFFICIENT",
+                "SHORT": "INSUFFICIENT",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "PUSH",
+                "SHORT",
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "ROLE_PRINCIPLE",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:matchup_playbook.ours.avoid",
+              "Ahri-mid-methods-v1"
+            ],
+            "observation": false,
+            "evidence_ids": [
+              "official:Ahri:Q",
+              "official:Ahri:E",
+              "official:Ahri:R"
+            ]
+          },
+          {
+            "kind": "SWITCH",
+            "label": "계획을 바꿀 조건",
+            "text": "상대가 먼저 사라지거나 미니언을 밀 수 없으면 따라가기보다 위험을 알리고 라인 손실을 줄인다.",
+            "source_paths": [
+              "area_context.lane",
+              "role_principles"
+            ],
+            "detail_target": "lane-methods",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "정보 확인을 위해 미확인 지역으로 들어가지 않는다."
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "KNOWLEDGE_GAP",
+              "label": "매치업 판단 부족 · 적용 가능한 일반 원칙",
+              "axis_assessments": {
+                "PUSH": "INSUFFICIENT",
+                "SHORT": "INSUFFICIENT",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "PUSH",
+                "SHORT",
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "ROLE_PRINCIPLE",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:wave.change_if",
+              "Ahri-mid-methods-v1"
+            ],
+            "observation": false,
+            "evidence_ids": [
+              "official:Ahri:Q",
+              "official:Ahri:E",
+              "official:Ahri:R"
+            ]
+          }
+        ]
+      },
+      "operations": {
+        "assumption": "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+        "items": [
+          {
+            "kind": "POSITION",
+            "label": "기본 활동 위치",
+            "text": "라인 미니언을 먼저 잡은 뒤, 돌아올 길이 보이는 쪽에서 아군 정글러와 움직인다.",
+            "source_paths": [
+              "operations.placement"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.placement"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "PARTNER",
+            "label": "연결할 아군",
+            "text": "세주아니와 같은 적에게 닿을 거리에서 움직이고, 혼자 어두운 강을 건너 상대를 따라가지 않는다.",
+            "source_paths": [
+              "operations.connection"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.connection"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "GAIN",
+            "label": "우선할 이득",
+            "text": "미니언을 밀어 넣어 만든 시간을 시야·바텀 지원·목표물 주변 자리로 바꾼다.",
+            "source_paths": [
+              "operations.priority"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.priority"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "AVOID",
+            "label": "피할 행동",
+            "text": "상대가 먼저 사라졌다면 보이지 않는 길로 따라가지 말고, 위험을 알린 뒤 남은 미니언과 안전한 합류 길을 비교한다.",
+            "source_paths": [
+              "operations.concede"
+            ],
+            "detail_target": "operations-methods",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.concede"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "FALLBACK",
+            "label": "막히거나 불리할 때",
+            "text": "미니언을 밀거나 먼저 합류할 수 없다면 라인에서 골드·경험치를 챙기고, 가까운 아군에게 오는 적을 끊는다.",
+            "source_paths": [
+              "operations.fallback"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.fallback"
+            ],
+            "observation": false
+          }
+        ]
+      },
+      "fight": {
+        "assumption": "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+        "items": [
+          {
+            "kind": "ROLE_POSITION",
+            "label": "내 역할·기본 위치",
+            "text": "아군에게 돌아올 길이 보이는 옆쪽에서 각을 잡고, 혼자 적 뒤로 깊게 돌지 않는다.",
+            "source_paths": [
+              "fight.role",
+              "fight.setup"
+            ],
+            "detail_target": "fight-methods",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.role",
+              "projection:fight.setup"
+            ],
+            "observation": false,
+            "role": "매혹으로 공격 기회를 만들고 가까운 아군의 진입을 끊는 역할"
+          },
+          {
+            "kind": "START",
+            "label": "공격 시작 조건",
+            "text": "아리의 매혹(E)이 닿고 아군도 함께 공격할 수 있을 때 연결한다.",
+            "source_paths": [
+              "fight.start"
+            ],
+            "detail_target": "fight-plan",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.start"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "TARGET",
+            "label": "우선 공격 대상",
+            "text": "아군과 함께 닿는 적을 노리고, 적 딜러에게 닿으려고 보호받는 적진을 혼자 가로지르지 않는다.",
+            "source_paths": [
+              "fight.target"
+            ],
+            "detail_target": "fight-methods",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.target"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "THREAT",
+            "label": "대응할 위협",
+            "text": "리 신·제드의 측면 접근이 가능한 동안에는 복귀할 이동을 남기고, 매혹이 없을 때 고립된 옆각을 만들지 않는다.",
+            "source_paths": [
+              "fight.role_danger"
+            ],
+            "detail_target": "fight-threats",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "대상 추적형 수단이며 미니언 뒤가 전체 안전을 보장하지 않음"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.threats"
+            ],
+            "observation": false,
+            "threat_ids": [
+              "official:LeeSin:R",
+              "official:Zed:R"
+            ],
+            "selection_scope": "현재 조합에서 확인한 접근 수단에 대한 역할별 조건부 대응"
+          },
+          {
+            "kind": "EXIT",
+            "label": "이탈·재배치 조건",
+            "text": "매혹이 빗나가거나 아군이 멀어지면 더 깊게 들어가지 않고, 남은 이동으로 아군 쪽에 돌아온다.",
+            "source_paths": [
+              "fight.stop"
+            ],
+            "detail_target": "fight-plan",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Ahri",
+              "position": "MID",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.stop"
+            ],
+            "observation": false
+          }
+        ]
+      }
+    },
+    "conditions": {
+      "schema_version": "lol-coach-condition-responses-v1",
+      "origin": "HYPOTHETICAL_LOADING_EXAMPLE",
+      "lane": [
+        {
+          "id": "LANE_PLAN_CHANGE",
+          "trigger": "이 조건이면 현재 계획을 바꾼다",
+          "action": "동료 후속·수급 거리와 퇴로가 끊기면 교환을 끝내고 알려진 아군 위치와 연결한다.",
+          "keep": "아군 후속과 걸어서 돌아올 거리가 남는 쪽에 선다. 미니언은 일부 투사체 대응 수단이며 전체 안전선이 아니다.",
+          "stop": "막타·경험치 접근부터 확보한다. 모르는 상대 위치를 확인하러 깊게 나가지 않는다.",
+          "actors": [
+            "Zed"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "LEVEL1",
+          "knowledge_state": "GENERAL_PRINCIPLE",
+          "source_paths": [
+            "wave.change_if",
+            "wave.position",
+            "wave.combat"
+          ],
+          "rule_ids": [
+            "player-planboard-v1",
+            "condition-response:LANE_PLAN_CHANGE"
+          ],
+          "claim_ids": [],
+          "conditions": [
+            "같은 레벨·충분한 자원·외부 개입 없는 비교 가정"
+          ],
+          "limits": "특정 기술 소모 후의 대응이 없는 매치업은 기존 계획의 변경 기준만 제공한다."
+        }
+      ],
+      "operations": [
+        {
+          "id": "LATE_JOIN",
+          "trigger": "합류가 늦고 미니언도 많이 놓친다면",
+          "action": "상대가 먼저 사라졌다면 보이지 않는 길로 따라가지 말고, 위험을 알린 뒤 남은 미니언과 안전한 합류 길을 비교한다.",
+          "keep": "세주아니와 같은 적에게 닿을 거리에서 움직이고, 혼자 어두운 강을 건너 상대를 따라가지 않는다.",
+          "stop": "미니언을 밀거나 먼저 합류할 수 없다면 라인에서 골드·경험치를 챙기고, 가까운 아군에게 오는 적을 끊는다.",
+          "actors": [
+            "Ahri",
+            "Lux"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "POST_LANE_LEARNED_KIT",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "operations.concede",
+            "operations.connection",
+            "operations.fallback"
+          ],
+          "rule_ids": [
+            "player-planboard-v1",
+            "condition-response:LATE_JOIN"
+          ],
+          "claim_ids": []
+        }
+      ],
+      "fight": [
+        {
+          "id": "ROLE_PLAN_BREAKS",
+          "trigger": "매혹이 빗나가거나 아군 공격이 닿지 않는다면",
+          "action": "매혹이 빗나가거나 아군이 멀어지면 더 깊게 들어가지 않고, 남은 이동으로 아군 쪽에 돌아온다.",
+          "keep": "적중해도 아군과 떨어진 깊은 위치에서는 공격을 이어가기 어렵다.",
+          "stop": "아군에게 돌아올 길이 보이는 옆쪽에서 각을 잡고, 혼자 적 뒤로 깊게 돌지 않는다.",
+          "actors": [
+            "Ahri"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "POST_LANE_LEARNED_KIT",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "condition_responses.fight.ROLE_PLAN_BREAKS"
+          ],
+          "rule_ids": [
+            "situation-rule:ROLE_PLAN_BREAKS"
+          ],
+          "claim_ids": [],
+          "reason": "적중해도 아군과 떨어진 깊은 위치에서는 공격을 이어가기 어렵다.",
+          "evidence_ids": [
+            "official:Ahri:Q",
+            "official:Ahri:E",
+            "official:Ahri:R"
+          ],
+          "conditions": [
+            "조건을 직접 확인했을 때의 참고 안내이며 현재 관측이 아니다."
+          ],
+          "priority": "CONTEXTUAL"
+        },
+        {
+          "id": "FOLLOWUP_WINDOW",
+          "trigger": "아군과 같은 대상을 공격할 수 있다면",
+          "action": "아리의 매혹(E)이 닿고 아군도 함께 공격할 수 있을 때 연결한다. 아리의 혼령 질주(R)을 배웠다면 남은 이동을 복귀에 쓸 수 있는지 먼저 본다.",
+          "keep": "아군과 함께 닿는 적을 노리고, 적 딜러에게 닿으려고 보호받는 적진을 혼자 가로지르지 않는다.",
+          "stop": "매혹이 빗나가거나 아군이 멀어지면 더 깊게 들어가지 않고, 남은 이동으로 아군 쪽에 돌아온다.",
+          "actors": [
+            "Ahri"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "POST_LANE_LEARNED_KIT",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "fight.start",
+            "fight.target",
+            "fight.stop"
+          ],
+          "rule_ids": [
+            "player-planboard-v1",
+            "condition-response:FOLLOWUP_WINDOW"
+          ],
+          "claim_ids": []
+        },
+        {
+          "id": "CONNECTION_LOST",
+          "trigger": "아군 보호가 멀어지거나 옆에서 적이 접근한다면",
+          "action": "매혹이 빗나가거나 아군이 멀어지면 더 깊게 들어가지 않고, 남은 이동으로 아군 쪽에 돌아온다.",
+          "keep": "아군에게 돌아올 길이 보이는 옆쪽에서 각을 잡고, 혼자 적 뒤로 깊게 돌지 않는다.",
+          "stop": "아군 보호와 퇴로가 다시 이어지기 전에는 낮은 체력의 적을 쫓지 않는다.",
+          "actors": [
+            "Ahri"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "POST_LANE_LEARNED_KIT",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "fight.stop",
+            "fight.setup",
+            "fight.target"
+          ],
+          "rule_ids": [
+            "player-planboard-v1",
+            "condition-response:CONNECTION_LOST"
+          ],
+          "claim_ids": []
+        }
+      ]
+    },
+    "questions": [
+      "지금 움직이면 라인 미니언을 얼마나 놓치나?",
+      "매혹이 맞아도 아군이 함께 공격할 수 있나?",
+      "남은 이동으로 아군에게 돌아올 수 있나?"
+    ],
+    "coverage": {
+      "status": "UNSUPPORTED",
+      "matchup": null,
+      "plan_scope": "일반 역할만 제공 · 개별 상대법 미지원",
+      "gaps": "이 조합의 구간별 공략 근거가 연결되지 않았다.",
+      "effect_sample": 0
+    }
+  },
+  {
+    "input": {
+      "allies": [
+        {
+          "champion": "Ornn",
+          "position": "TOP"
+        },
+        {
+          "champion": "Sejuani",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Ahri",
+          "position": "MID"
+        },
+        {
+          "champion": "Caitlyn",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Lux",
+          "position": "SUPPORT"
+        }
+      ],
+      "enemies": [
+        {
+          "champion": "Fiora",
+          "position": "TOP"
+        },
+        {
+          "champion": "LeeSin",
+          "position": "JUNGLE"
+        },
+        {
+          "champion": "Zed",
+          "position": "MID"
+        },
+        {
+          "champion": "Kaisa",
+          "position": "BOTTOM"
+        },
+        {
+          "champion": "Nautilus",
+          "position": "SUPPORT"
+        }
+      ],
+      "own_champion": "Sejuani",
+      "own_position": "JUNGLE",
+      "side": "BLUE",
+      "patch": "16.20",
+      "opponent_mode": "ASSIGNED",
+      "lane_opponent": null,
+      "schema_version": "lol-coach-loading-input-v2",
+      "preferences": {
+        "risk": "BALANCED"
+      }
+    },
+    "headline": "아군이 함께 싸울 자리부터 만들고, 진입과 보호를 나누세요",
+    "team_plan": {
+      "schema_version": "lol-coach-team-plan-v1",
+      "observation": false,
+      "basis": "MECHANISM_LINKED_INFERENCE",
+      "assumptions": "비슷한 성장과 배운 기술을 사용할 수 있는 기본 구도. 실제 위치·스킬 가용성은 관측하지 않았습니다.",
+      "scope": "확인된 기술 기능을 조합한 참고 계획이며 전체 조합 우열·교전 승리를 검증한 판정이 아닙니다.",
+      "rows": [
+        {
+          "id": "win",
+          "label": "승리 방식",
+          "ours": "먼저 자리 잡고 견제해 접근을 어렵게 만든 뒤, 닿는 적을 함께 공격해 포탑·목표물로 바꾼다.",
+          "theirs": "아군이 같은 대상에 닿는 방향에서 접근해 떨어진 적을 노리고, 교전 뒤 포탑·목표물을 얻는다."
+        },
+        {
+          "id": "field",
+          "label": "원하는 전장·접근 방향",
+          "ours": "아군과 시야를 먼저 확보한 포탑·목표물 주변에서 정면 거리를 유지한다.",
+          "theirs": "옆으로 접근할 길이 있는 전장에서 고립된 적을 노린다. 어두운 길이 접근하는 쪽에도 안전하다는 뜻은 아니다."
+        },
+        {
+          "id": "opening",
+          "label": "싸움을 여는 방식",
+          "ours": "아리·케이틀린·럭스·세주아니의 방해 기술로 공격 기회를 만들되, 아군이 닿지 못하면 진입을 이어가지 않는다.",
+          "theirs": "노틸러스의 방해 기술로 공격 기회를 만들되, 아군이 닿지 못하면 진입을 이어가지 않는다."
+        },
+        {
+          "id": "damage",
+          "label": "공격·보호 구조",
+          "ours": "럭스의 보호가 실제로 닿는 동안 공격을 이어간다. 앞라인이 모두 멀리 진입하면 뒤의 딜러 보호는 사라질 수 있다.",
+          "theirs": "피오라·카이사·리 신·노틸러스·제드의 접근을 같은 대상에 맞춰 공격을 집중한다. 리 신의 보호가 닿는지와 남은 수단은 별도로 확인한다."
+        },
+        {
+          "id": "macro",
+          "label": "운영 방향",
+          "ours": "중앙 미니언을 먼저 잡고 함께 이동해 포탑·목표물 주변을 선점한다. 사이드 미니언을 받을 아군도 따로 정한다.",
+          "theirs": "피오라의 사이드 압박과 중앙 움직임을 맞춘다. 사이드로 인원이 빠지면 중앙의 부족한 인원으로 교전을 강제하지 않는다."
+        },
+        {
+          "id": "avoid",
+          "label": "피해야 할 상황",
+          "ours": "진형이 갈라진 채 어두운 지역을 추격하거나, 앞라인과 뒤의 딜러가 서로 도울 수 없게 벌어지지 않는다.",
+          "theirs": "먼 거리 견제를 계속 맞으며 좁은 입구로 따로 진입하지 않는다."
+        }
+      ],
+      "ours": {
+        "actors": {
+          "pressure": [
+            "Caitlyn",
+            "Lux"
+          ],
+          "pick": [
+            "Ahri",
+            "Caitlyn",
+            "Lux",
+            "Sejuani"
+          ],
+          "access": [
+            "Ornn",
+            "Sejuani"
+          ],
+          "cover": [
+            "Lux"
+          ],
+          "rearCover": [
+            "Lux"
+          ],
+          "front": [
+            "Ornn",
+            "Sejuani"
+          ],
+          "side": []
+        },
+        "win": "먼저 자리 잡고 견제해 접근을 어렵게 만든 뒤, 닿는 적을 함께 공격해 포탑·목표물로 바꾼다.",
+        "field": "아군과 시야를 먼저 확보한 포탑·목표물 주변에서 정면 거리를 유지한다.",
+        "opening": "아리·케이틀린·럭스·세주아니의 방해 기술로 공격 기회를 만들되, 아군이 닿지 못하면 진입을 이어가지 않는다.",
+        "damage": "럭스의 보호가 실제로 닿는 동안 공격을 이어간다. 앞라인이 모두 멀리 진입하면 뒤의 딜러 보호는 사라질 수 있다.",
+        "macro": "중앙 미니언을 먼저 잡고 함께 이동해 포탑·목표물 주변을 선점한다. 사이드 미니언을 받을 아군도 따로 정한다.",
+        "avoid": "진형이 갈라진 채 어두운 지역을 추격하거나, 앞라인과 뒤의 딜러가 서로 도울 수 없게 벌어지지 않는다.",
+        "evidence_ids": [
+          "official:Ahri:R",
+          "official:Ahri:E",
+          "official:Caitlyn:W",
+          "official:Caitlyn:Q",
+          "official:Lux:W",
+          "official:Lux:Q",
+          "official:Lux:E",
+          "official:Ornn:E",
+          "official:Sejuani:Q",
+          "official:Sejuani:R"
+        ],
+        "basis": "MECHANISM_LINKED_INFERENCE",
+        "prepared": true
+      },
+      "theirs": {
+        "actors": {
+          "pressure": [
+            "Kaisa",
+            "Zed"
+          ],
+          "pick": [
+            "Nautilus"
+          ],
+          "access": [
+            "Fiora",
+            "Kaisa",
+            "LeeSin",
+            "Nautilus",
+            "Zed"
+          ],
+          "cover": [
+            "LeeSin"
+          ],
+          "rearCover": [],
+          "front": [
+            "Nautilus"
+          ],
+          "side": [
+            "Fiora"
+          ]
+        },
+        "win": "아군이 같은 대상에 닿는 방향에서 접근해 떨어진 적을 노리고, 교전 뒤 포탑·목표물을 얻는다.",
+        "field": "옆으로 접근할 길이 있는 전장에서 고립된 적을 노린다. 어두운 길이 접근하는 쪽에도 안전하다는 뜻은 아니다.",
+        "opening": "노틸러스의 방해 기술로 공격 기회를 만들되, 아군이 닿지 못하면 진입을 이어가지 않는다.",
+        "damage": "피오라·카이사·리 신·노틸러스·제드의 접근을 같은 대상에 맞춰 공격을 집중한다. 리 신의 보호가 닿는지와 남은 수단은 별도로 확인한다.",
+        "macro": "피오라의 사이드 압박과 중앙 움직임을 맞춘다. 사이드로 인원이 빠지면 중앙의 부족한 인원으로 교전을 강제하지 않는다.",
+        "avoid": "먼 거리 견제를 계속 맞으며 좁은 입구로 따로 진입하지 않는다.",
+        "evidence_ids": [
+          "official:Fiora:Q",
+          "official:Kaisa:R",
+          "official:Kaisa:W",
+          "official:LeeSin:Q",
+          "official:LeeSin:W",
+          "official:Nautilus:Q",
+          "official:Zed:R",
+          "official:Zed:Q",
+          "official:Fiora:W"
+        ],
+        "basis": "MECHANISM_LINKED_INFERENCE",
+        "prepared": false
+      },
+      "rule_ids": [
+        "source-linked-team-dimensions-v1"
+      ],
+      "phases": [
+        {
+          "id": "early",
+          "label": "초반",
+          "text": "먼저 움직일 수 있는 라인을 확인해 정글과 지원을 연결한다. 개별 라인 우열은 지원 근거가 있는 범위에서만 판단한다."
+        },
+        {
+          "id": "mid",
+          "label": "중반",
+          "text": "중앙 미니언을 먼저 잡고 함께 이동해 포탑·목표물 주변을 선점한다. 사이드 미니언을 받을 아군도 따로 정한다."
+        },
+        {
+          "id": "objective",
+          "label": "목표물 교전",
+          "text": "아군과 먼저 자리를 잡고 상대가 접근하게 만든다. 진입하는 아군과 뒤의 딜러를 지킬 아군을 나누되, 사이드 방어로 인원이 줄면 시작을 늦춘다."
+        }
+      ]
+    },
+    "actions": {
+      "schema_version": "lol-coach-action-summaries-v1",
+      "origin": "ANALYSIS_ASSUMPTIONS_NOT_OBSERVATION",
+      "standard": "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+      "lane": {
+        "judgment": {
+          "kind": "KNOWLEDGE_GAP",
+          "label": "매치업 판단 부족 · 적용 가능한 일반 원칙",
+          "axis_assessments": {
+            "PUSH": "INSUFFICIENT",
+            "SHORT": "INSUFFICIENT",
+            "EXTENDED": "INSUFFICIENT",
+            "ALLIN": "INSUFFICIENT",
+            "ATTRITION": "INSUFFICIENT"
+          },
+          "outcome": "UNDETERMINED",
+          "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+          "missing_axes": [
+            "PUSH",
+            "SHORT",
+            "EXTENDED",
+            "ALLIN",
+            "ATTRITION"
+          ]
+        },
+        "items": [
+          {
+            "kind": "GOAL",
+            "label": "이번 라인전 목표",
+            "text": "아군이 미니언을 잃지 않고 함께 싸울 수 있는 라인을 지원한다.",
+            "source_paths": [
+              "role_principles.lane"
+            ],
+            "detail_target": "lane-goal",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "정보 확인을 위해 미확인 지역으로 들어가지 않는다."
+            ],
+            "applicability": {
+              "champion": "Sejuani",
+              "position": "JUNGLE",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "KNOWLEDGE_GAP",
+              "label": "매치업 판단 부족 · 적용 가능한 일반 원칙",
+              "axis_assessments": {
+                "PUSH": "INSUFFICIENT",
+                "SHORT": "INSUFFICIENT",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "PUSH",
+                "SHORT",
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "ROLE_PRINCIPLE",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:lane.milestone.goal",
+              "Sejuani-jungle-support-v1"
+            ],
+            "observation": false,
+            "evidence_ids": [
+              "official:Sejuani:Q",
+              "official:Sejuani:E",
+              "official:Sejuani:R"
+            ]
+          },
+          {
+            "kind": "WAVE",
+            "label": "기본 웨이브 방향",
+            "text": "아군이 밀어 넣기를 요청하고 함께 마무리할 수 있다면 돕되, 유지하려는 미니언을 임의로 밀지 않는다.",
+            "source_paths": [
+              "role_principles.lane"
+            ],
+            "detail_target": "lane-methods",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "정보 확인을 위해 미확인 지역으로 들어가지 않는다."
+            ],
+            "applicability": {
+              "champion": "Sejuani",
+              "position": "JUNGLE",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "KNOWLEDGE_GAP",
+              "label": "매치업 판단 부족 · 적용 가능한 일반 원칙",
+              "axis_assessments": {
+                "PUSH": "INSUFFICIENT",
+                "SHORT": "INSUFFICIENT",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "PUSH",
+                "SHORT",
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "ROLE_PRINCIPLE",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:wave.handling",
+              "Sejuani-jungle-support-v1"
+            ],
+            "observation": false,
+            "evidence_ids": [
+              "official:Sejuani:Q",
+              "official:Sejuani:E",
+              "official:Sejuani:R"
+            ]
+          },
+          {
+            "kind": "TRADE",
+            "label": "교환·응징 방법",
+            "text": "아군 공격이 닿을 때 접근하고, 지원이 끊기면 상대를 끝까지 쫓지 않는다.",
+            "source_paths": [
+              "role_principles.lane"
+            ],
+            "detail_target": "lane-methods",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "정보 확인을 위해 미확인 지역으로 들어가지 않는다."
+            ],
+            "applicability": {
+              "champion": "Sejuani",
+              "position": "JUNGLE",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "KNOWLEDGE_GAP",
+              "label": "매치업 판단 부족 · 적용 가능한 일반 원칙",
+              "axis_assessments": {
+                "PUSH": "INSUFFICIENT",
+                "SHORT": "INSUFFICIENT",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "PUSH",
+                "SHORT",
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "ROLE_PRINCIPLE",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:wave.combat",
+              "Sejuani-jungle-support-v1"
+            ],
+            "observation": false,
+            "evidence_ids": [
+              "official:Sejuani:Q",
+              "official:Sejuani:E",
+              "official:Sejuani:R"
+            ]
+          },
+          {
+            "kind": "CAUTION",
+            "label": "조심할 상황",
+            "text": "상대 정글 위치를 모른다면 라인 아군이 먼저 움직일 수 있는지부터 보고 강에 들어간다.",
+            "source_paths": [
+              "role_principles.lane"
+            ],
+            "detail_target": "lane-counterplay",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "정보 확인을 위해 미확인 지역으로 들어가지 않는다."
+            ],
+            "applicability": {
+              "champion": "Sejuani",
+              "position": "JUNGLE",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "KNOWLEDGE_GAP",
+              "label": "매치업 판단 부족 · 적용 가능한 일반 원칙",
+              "axis_assessments": {
+                "PUSH": "INSUFFICIENT",
+                "SHORT": "INSUFFICIENT",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "PUSH",
+                "SHORT",
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "ROLE_PRINCIPLE",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:matchup_playbook.ours.avoid",
+              "Sejuani-jungle-support-v1"
+            ],
+            "observation": false,
+            "evidence_ids": [
+              "official:Sejuani:Q",
+              "official:Sejuani:E",
+              "official:Sejuani:R"
+            ]
+          },
+          {
+            "kind": "SWITCH",
+            "label": "계획을 바꿀 조건",
+            "text": "갱킹 각이 없으면 근처 캠프로 돌아가 성장하고 다음 지원 시간을 만든다.",
+            "source_paths": [
+              "role_principles.lane"
+            ],
+            "detail_target": "lane-methods",
+            "conditions": [
+              "같은 레벨·충분한 자원·외부 개입 없는 비교 가정",
+              "Lv1의 비교 가정이며 실제 상태를 관측하지 않았습니다.",
+              "정보 확인을 위해 미확인 지역으로 들어가지 않는다."
+            ],
+            "applicability": {
+              "champion": "Sejuani",
+              "position": "JUNGLE",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "KNOWLEDGE_GAP",
+              "label": "매치업 판단 부족 · 적용 가능한 일반 원칙",
+              "axis_assessments": {
+                "PUSH": "INSUFFICIENT",
+                "SHORT": "INSUFFICIENT",
+                "EXTENDED": "INSUFFICIENT",
+                "ALLIN": "INSUFFICIENT",
+                "ATTRITION": "INSUFFICIENT"
+              },
+              "outcome": "UNDETERMINED",
+              "scope": "행동 계획과 개별 축의 판단이며 전체 승패·반반 판정이 아닙니다.",
+              "missing_axes": [
+                "PUSH",
+                "SHORT",
+                "EXTENDED",
+                "ALLIN",
+                "ATTRITION"
+              ]
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "ROLE_PRINCIPLE",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:wave.change_if",
+              "Sejuani-jungle-support-v1"
+            ],
+            "observation": false,
+            "evidence_ids": [
+              "official:Sejuani:Q",
+              "official:Sejuani:E",
+              "official:Sejuani:R"
+            ]
+          }
+        ]
+      },
+      "operations": {
+        "assumption": "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+        "items": [
+          {
+            "kind": "POSITION",
+            "label": "기본 활동 위치",
+            "text": "아군이 먼저 움직일 수 있는 라인 쪽에서 캠프·지원·목표물 준비를 연결한다.",
+            "source_paths": [
+              "operations.placement"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Sejuani",
+              "position": "JUNGLE",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.placement"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "PARTNER",
+            "label": "연결할 아군",
+            "text": "라인 아군이 미니언을 놓치지 않고 따라올 수 있을 때 강과 정글에 함께 들어간다.",
+            "source_paths": [
+              "operations.connection"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Sejuani",
+              "position": "JUNGLE",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.connection"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "GAIN",
+            "label": "우선할 이득",
+            "text": "아군의 밀어 넣기를 도와 귀환·이동 시간을 만들고, 인원과 체력이 갖춰지면 목표물 주변 시야를 잡는다.",
+            "source_paths": [
+              "operations.priority"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Sejuani",
+              "position": "JUNGLE",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.priority"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "AVOID",
+            "label": "피할 행동",
+            "text": "라인 아군이 포탑에 묶여 있으면 혼자 강 싸움이나 상대 정글 침입을 시작하지 않는다.",
+            "source_paths": [
+              "operations.concede"
+            ],
+            "detail_target": "operations-methods",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Sejuani",
+              "position": "JUNGLE",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.concede"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "FALLBACK",
+            "label": "막히거나 불리할 때",
+            "text": "라인 지원이 늦거나 체력이 부족하면 가까운 캠프를 챙기고, 상대가 아군 쪽으로 들어오는 길을 지키며 다음 합류를 준비한다.",
+            "source_paths": [
+              "operations.fallback"
+            ],
+            "detail_target": "operations-plan",
+            "conditions": [
+              "라인전 이후의 배치·합류 가정이며 실제 위치를 관측하지 않았습니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Sejuani",
+              "position": "JUNGLE",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_ASSUMPTION",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:operations.fallback"
+            ],
+            "observation": false
+          }
+        ]
+      },
+      "fight": {
+        "assumption": "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+        "items": [
+          {
+            "kind": "ROLE_POSITION",
+            "label": "내 역할·기본 위치",
+            "text": "아군 딜러와 너무 멀어지지 않는 앞쪽에서 시작하고, 다른 앞라인이 진입하면 후방 보호가 남는지 본다.",
+            "source_paths": [
+              "fight.role",
+              "fight.setup"
+            ],
+            "detail_target": "fight-methods",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Sejuani",
+              "position": "JUNGLE",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.role",
+              "projection:fight.setup"
+            ],
+            "observation": false,
+            "role": "아군 공격이 닿는 진입과 후방 보호 사이를 선택하는 역할"
+          },
+          {
+            "kind": "START",
+            "label": "공격 시작 조건",
+            "text": "세주아니의 빙하 감옥(R)을 배웠고 아군 공격이 닿는다면 적을 묶어 시작한다.",
+            "source_paths": [
+              "fight.start"
+            ],
+            "detail_target": "fight-plan",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Sejuani",
+              "position": "JUNGLE",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.start"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "TARGET",
+            "label": "우선 공격 대상",
+            "text": "혼자 적 딜러를 쫓기보다 아군이 함께 때릴 적이나 아군 딜러에게 붙은 적을 먼저 묶는다.",
+            "source_paths": [
+              "fight.target"
+            ],
+            "detail_target": "fight-methods",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Sejuani",
+              "position": "JUNGLE",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.target"
+            ],
+            "observation": false
+          },
+          {
+            "kind": "THREAT",
+            "label": "대응할 위협",
+            "text": "리 신·제드이 아군 딜러에게 접근하면 남긴 방해 기술을 보호에 쓰고, 이미 들어간 적을 쫓지 않는다.",
+            "source_paths": [
+              "fight.role_danger"
+            ],
+            "detail_target": "fight-threats",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "대상 추적형 수단이며 미니언 뒤가 전체 안전을 보장하지 않음"
+            ],
+            "applicability": {
+              "champion": "Sejuani",
+              "position": "JUNGLE",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.threats"
+            ],
+            "observation": false,
+            "threat_ids": [
+              "official:LeeSin:R",
+              "official:Zed:R"
+            ],
+            "selection_scope": "현재 조합에서 확인한 접근 수단에 대한 역할별 조건부 대응"
+          },
+          {
+            "kind": "EXIT",
+            "label": "이탈·재배치 조건",
+            "text": "아군이 따라오지 못하거나 뒤의 딜러가 물리면 더 깊게 진입하지 않고 아군 쪽으로 돌아와 접근한 적을 끊는다.",
+            "source_paths": [
+              "fight.stop"
+            ],
+            "detail_target": "fight-plan",
+            "conditions": [
+              "라인전 이후, 6레벨 이상으로 관련 기술을 배워 사용할 수 있다는 한타 가정입니다.",
+              "실제 기술·체력·거리와 상대 대응을 확인한 만큼만 실행",
+              "상대 피오라·카이사·리 신·노틸러스·제드의 확인된 접근 수단이 남으면 공격을 짧게 나누고 보호/내 이탈을 먼저 남김"
+            ],
+            "applicability": {
+              "champion": "Sejuani",
+              "position": "JUNGLE",
+              "patch": "SOURCE_MAJOR_MATCH",
+              "phase": "POST_LANE_LEARNED_KIT",
+              "lane_reference_period": "LEVEL1",
+              "scenario": {
+                "standard": "lane-standard-v1",
+                "overrides": {}
+              },
+              "planning": {
+                "basis": "loading-plan-example-v1",
+                "overrides": {}
+              }
+            },
+            "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+            "judgment": {
+              "kind": "CONDITION_DEPENDENT",
+              "label": "입력한 조합의 수단을 적용한 조건부 계획",
+              "outcome": "UNDETERMINED"
+            },
+            "knowledge_state": "GENERAL_PRINCIPLE",
+            "basis": "DESIGN_HYPOTHESIS",
+            "claim_ids": [],
+            "rule_ids": [
+              "player-planboard-v1",
+              "projection:fight.stop"
+            ],
+            "observation": false
+          }
+        ]
+      }
+    },
+    "conditions": {
+      "schema_version": "lol-coach-condition-responses-v1",
+      "origin": "HYPOTHETICAL_LOADING_EXAMPLE",
+      "lane": [
+        {
+          "id": "LANE_PLAN_CHANGE",
+          "trigger": "이 조건이면 현재 계획을 바꾼다",
+          "action": "동료 후속·수급 거리와 퇴로가 끊기면 교환을 끝내고 알려진 아군 위치와 연결한다.",
+          "keep": "아군 후속과 걸어서 돌아올 거리가 남는 쪽에 선다. 미니언은 일부 투사체 대응 수단이며 전체 안전선이 아니다.",
+          "stop": "막타·경험치 접근부터 확보한다. 모르는 상대 위치를 확인하러 깊게 나가지 않는다.",
+          "actors": [
+            "LeeSin"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "LEVEL1",
+          "knowledge_state": "GENERAL_PRINCIPLE",
+          "source_paths": [
+            "wave.change_if",
+            "wave.position",
+            "wave.combat"
+          ],
+          "rule_ids": [
+            "player-planboard-v1",
+            "condition-response:LANE_PLAN_CHANGE"
+          ],
+          "claim_ids": [],
+          "conditions": [
+            "같은 레벨·충분한 자원·외부 개입 없는 비교 가정"
+          ],
+          "limits": "특정 기술 소모 후의 대응이 없는 매치업은 기존 계획의 변경 기준만 제공한다."
+        }
+      ],
+      "operations": [
+        {
+          "id": "LATE_JOIN",
+          "trigger": "합류가 늦고 미니언도 많이 놓친다면",
+          "action": "라인 아군이 포탑에 묶여 있으면 혼자 강 싸움이나 상대 정글 침입을 시작하지 않는다.",
+          "keep": "라인 아군이 미니언을 놓치지 않고 따라올 수 있을 때 강과 정글에 함께 들어간다.",
+          "stop": "라인 지원이 늦거나 체력이 부족하면 가까운 캠프를 챙기고, 상대가 아군 쪽으로 들어오는 길을 지키며 다음 합류를 준비한다.",
+          "actors": [
+            "Sejuani",
+            "Lux"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "POST_LANE_LEARNED_KIT",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "operations.concede",
+            "operations.connection",
+            "operations.fallback"
+          ],
+          "rule_ids": [
+            "player-planboard-v1",
+            "condition-response:LATE_JOIN"
+          ],
+          "claim_ids": []
+        }
+      ],
+      "fight": [
+        {
+          "id": "ROLE_PLAN_BREAKS",
+          "trigger": "다른 앞라인이 진입하고 아군 딜러가 공격받는다면",
+          "action": "아군이 따라오지 못하거나 뒤의 딜러가 물리면 더 깊게 진입하지 않고 아군 쪽으로 돌아와 접근한 적을 끊는다.",
+          "keep": "진입 기술을 모두 공격에 쓰면 뒤의 딜러에게 접근한 적을 끊을 수단이 줄어든다.",
+          "stop": "아군 딜러와 너무 멀어지지 않는 앞쪽에서 시작하고, 다른 앞라인이 진입하면 후방 보호가 남는지 본다.",
+          "actors": [
+            "Sejuani"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "POST_LANE_LEARNED_KIT",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "condition_responses.fight.ROLE_PLAN_BREAKS"
+          ],
+          "rule_ids": [
+            "situation-rule:ROLE_PLAN_BREAKS"
+          ],
+          "claim_ids": [],
+          "reason": "진입 기술을 모두 공격에 쓰면 뒤의 딜러에게 접근한 적을 끊을 수단이 줄어든다.",
+          "evidence_ids": [
+            "official:Sejuani:Q",
+            "official:Sejuani:E",
+            "official:Sejuani:R"
+          ],
+          "conditions": [
+            "조건을 직접 확인했을 때의 참고 안내이며 현재 관측이 아니다."
+          ],
+          "priority": "CONTEXTUAL"
+        },
+        {
+          "id": "FOLLOWUP_WINDOW",
+          "trigger": "아군과 같은 대상을 공격할 수 있다면",
+          "action": "세주아니의 빙하 감옥(R)을 배웠고 아군 공격이 닿는다면 적을 묶어 시작한다. 아군 딜러에게 적이 접근하면 진입보다 세주아니의 혹한의 맹습(Q)를 보호에 남기고, 서리가 최대로 중첩된 적에게 배운 세주아니의 만년 서리(E)를 쓴다.",
+          "keep": "혼자 적 딜러를 쫓기보다 아군이 함께 때릴 적이나 아군 딜러에게 붙은 적을 먼저 묶는다.",
+          "stop": "아군이 따라오지 못하거나 뒤의 딜러가 물리면 더 깊게 진입하지 않고 아군 쪽으로 돌아와 접근한 적을 끊는다.",
+          "actors": [
+            "Sejuani"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "POST_LANE_LEARNED_KIT",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "fight.start",
+            "fight.target",
+            "fight.stop"
+          ],
+          "rule_ids": [
+            "player-planboard-v1",
+            "condition-response:FOLLOWUP_WINDOW"
+          ],
+          "claim_ids": []
+        },
+        {
+          "id": "CONNECTION_LOST",
+          "trigger": "아군 보호가 멀어지거나 옆에서 적이 접근한다면",
+          "action": "아군이 따라오지 못하거나 뒤의 딜러가 물리면 더 깊게 진입하지 않고 아군 쪽으로 돌아와 접근한 적을 끊는다.",
+          "keep": "아군 딜러와 너무 멀어지지 않는 앞쪽에서 시작하고, 다른 앞라인이 진입하면 후방 보호가 남는지 본다.",
+          "stop": "아군 보호와 퇴로가 다시 이어지기 전에는 낮은 체력의 적을 쫓지 않는다.",
+          "actors": [
+            "Sejuani"
+          ],
+          "basis": "DESIGN_HYPOTHESIS",
+          "observation": false,
+          "provenance_scope": "LINKED_CONTEXT_AND_RULE_NOT_TACTICAL_PROOF",
+          "phase": "POST_LANE_LEARNED_KIT",
+          "knowledge_state": "SOURCE_SCOPE_LIMITED",
+          "source_paths": [
+            "fight.stop",
+            "fight.setup",
+            "fight.target"
+          ],
+          "rule_ids": [
+            "player-planboard-v1",
+            "condition-response:CONNECTION_LOST"
+          ],
+          "claim_ids": []
+        }
+      ]
+    },
+    "questions": [
+      "라인 아군이 먼저 움직일 수 있나?",
+      "내가 들어가면 아군 공격이 닿나?",
+      "다른 앞라인이 진입했을 때 뒤의 딜러는 누가 지키나?"
+    ],
+    "coverage": {
+      "status": "UNSUPPORTED",
+      "matchup": null,
+      "plan_scope": "일반 역할만 제공 · 개별 상대법 미지원",
+      "gaps": "이 조합의 구간별 공략 근거가 연결되지 않았다.",
+      "effect_sample": 0
+    }
+  }
+]
