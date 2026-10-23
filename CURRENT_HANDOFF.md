@@ -1,7 +1,7 @@
 # LoL Coach v1.1 intake — active writer
 - run_token: `codex-20261023-v11-intake`
-- status: `CI_PENDING`
-- writer_active: false
+- status: `RUNNING`
+- writer_active: true
 - owner_branch: `work/handoff-v11-20261023`
 - base_main: `e37f9b7cbb6a499b631e6e6e4ba841aa9baa1aa5`
 - integrated_pr: #122 normal merge `1f99329fb8615de096f7e54a36fe3d7d13241c79`, exact-main required3 SUCCESS
@@ -14,6 +14,8 @@
 - resume: exact PR123 required3 SUCCESS; local exact-source102 and full Chromium PASS. Same token reacquired for normal merge/exact-main verification/existing Pages publication.
 
 - integrated_pr123: `d9f515c4a48ee17d024923059669a94daaf4386a`; feature102/fullbrowser/required3 PASS. Exact-main required3 pending. Public artifact `4cc14ab3f4442252a564b7f7bf5ba1c0cbe357f0` PREPARED LOCALLY ONLY (not pushed); pro/riot hashes preserved. Resume mainCI, push existing Pages target, HTTPS/browser proof, results-only PR/Handoff.
+
+- product-main required3: pregame120715535081/regression120715535076/browser120715535117 SUCCESS. Same token resumed for prepared artifact publication and final proof.
 
 ---
 
