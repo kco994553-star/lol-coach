@@ -1,3 +1,15 @@
+# LoL Coach v1.1 intake — active writer
+- run_token: `codex-20261023-v11-intake`
+- status: `RUNNING`
+- writer_active: true
+- owner_branch: `work/gameplan-coaching-content-20261019` (PR #122 verification); follow-up `work/handoff-v11-20261023`
+- base_main: `e37f9b7cbb6a499b631e6e6e4ba841aa9baa1aa5`
+- intake_pr_head: `503198065be7a9f4115516e9fd3479c41f0fc05c`
+- scope: verify/integrate existing #122 without rewriting; v1.1 traceability and default 1+3/basic coaching; lane waiting-cost conditional alternatives. No protected issue mutations, live permission promotion, paid calls or new schedules. Existing required source/preservation/CI gates remain.
+- Prior top claim is COMPLETED/writer_active:false; CURRENT_EXECUTION older RUNNING entries are superseded by this canonical file.
+
+---
+
 # Gameplan coaching priorities — completed
 - run_token: `main-20261019-gameplan-priorities`
 - status: `COMPLETED`
