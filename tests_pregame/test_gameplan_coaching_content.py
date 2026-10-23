@@ -76,3 +76,70 @@ assert.match(low.action_summaries.lane.items[2].text,/교환.*줄|공격.*강제
 const lowJ=C.evaluate(r,catalog,{standard:'lane-standard-v1',overrides:{resources:'LOW'}},'LEVEL6').planboard;
 assert.match(lowJ.action_summaries.lane.items[2].text,/회복|구매/);
 """)
+
+    def test_five_users_share_whole_team_plan_with_fixed_opponent_perspective(self):
+        self.node(r"""
+for(const n of [0,1]){
+ const x=E.exampleInput(catalog,n),plans=x.allies.map(p=>E.analyze({...x,own_champion:p.champion,own_position:p.position},catalog).coach.planboard);
+ for(const b of plans){assert.deepEqual(b.team_plan,plans[0].team_plan);for(const row of b.team_plan.rows)assert(!row.theirs.includes('아군'),row.theirs);}
+ assert(new Set(plans.map(b=>b.composition.role)).size>1);
+ const swap={...x,allies:x.enemies,enemies:x.allies,own_champion:x.enemies[0].champion,own_position:x.enemies[0].position,side:'RED'};
+ assert.notDeepEqual(E.analyze(swap,catalog).coach.planboard.team_plan.rows,plans[0].team_plan.rows);
+}
+""")
+
+    def test_team_comparison_four_basics_keep_actual_team_result(self):
+        self.node(r"""
+const x=input(),r=E.analyze(x,catalog),v=P.project(r);
+assert.deepEqual(v.comparison.map(row=>row.label),['원하는 승리 방식','좋은 싸움','운영의 핵심','주요 위험']);
+assert.equal(v.comparison[0].ours,r.coach.planboard.team_plan.ours.win);
+assert.equal(v.comparison[2].theirs,r.coach.planboard.team_plan.theirs.macro);
+assert.equal(v.comparison[3].ours,r.coach.planboard.team_plan.ours.avoid);
+assert(v.comparison[1].theirs.includes(r.coach.planboard.team_plan.theirs.opening));
+x.patch='1.1';assert.deepEqual(P.project(E.analyze(x,catalog)).comparison,[]);
+""")
+
+    def test_waiting_costs_do_not_force_kaisa_mage_engage_and_follow_support_changes(self):
+        self.node(r"""
+const x=E.exampleInput(catalog,0);x.allies[3].champion='Kaisa';x.allies[4].champion='Alistar';x.enemies[3].champion='Ziggs';x.own_champion='Kaisa';
+const r=E.analyze(x,catalog),w=r.coach.planboard.waiting;
+assert(w,'waiting costs must be part of the generated report');
+assert.match(w.loss,/CS.*경험치|경험치.*CS/);assert.match(w.loss,/체력/);assert.match(w.loss,/웨이브|미니언/);assert.match(w.loss,/주도권/);
+assert.equal(w.observation,false);assert.equal(w.outcome,'UNDETERMINED');assert.match(w.window,/레벨|배운/);assert.match(w.window,/알리스타/);assert.match(w.window,/노틸러스/);assert.match(w.window,/직스/);
+assert.match(w.fallback,/귀환|지원/);assert.match(w.switch,/웨이브|미니언/);
+x.allies[4].champion='Lux';const other=E.analyze(x,catalog).coach.planboard.waiting;
+assert.notEqual(other.window,w.window);assert.match(other.window,/빛의 속박\(Q\)/);assert(!other.window.includes('알리스타'));
+x.enemies[4].champion='Lulu';const protectedEnemy=E.analyze(x,catalog).coach.planboard.waiting;assert.match(protectedEnemy.window,/변덕쟁이\(W\)/);assert.match(protectedEnemy.window,/반격|기본 공격|스킬/);assert(!protectedEnemy.window.includes('닻줄 견인'));
+x.enemies[4].champion='Nautilus';
+const low=C.evaluate(r,catalog,{standard:'lane-standard-v1',overrides:{resources:'LOW'}},'LEVEL6').planboard.waiting;
+assert.equal(low.mode,'LIMIT_LOSS');assert.match(low.window,/강제하지/);
+const noHelp=JSON.parse(JSON.stringify(x));noHelp.schema_version='lol-coach-loading-input-v4';noHelp.preferences={risk:'BALANCED'};noHelp.scenario={standard:'lane-standard-v1',overrides:{}};noHelp.planning={basis:'loading-plan-example-v1',overrides:{ally_followup:'UNAVAILABLE'}};const unsupported=E.analyze(noHelp,catalog).coach.planboard.waiting;
+assert.equal(unsupported.mode,'LIMIT_LOSS');
+const missing=C.evaluate(r,catalog,{standard:'lane-standard-v1',overrides:{resources:'UNKNOWN',wave:'UNKNOWN'}},'LEVEL1').planboard.waiting;
+assert.equal(missing.mode,'CHECK_CONDITIONS');assert.match(missing.fallback,/확인|지원/);
+x.patch='1.1';assert.equal(E.analyze(x,catalog).coach.planboard.waiting.mode,'SOURCE_REVIEW_REQUIRED');
+""")
+
+    def test_waiting_alternatives_match_roles_and_existing_branch_stays_specific(self):
+        self.node(r"""
+for(const role of ['TOP','JUNGLE','MID','BOTTOM','SUPPORT']){
+ const b=run(input(role)),w=b.waiting;assert(w&&w.loss&&w.window&&w.fallback&&w.switch);
+ if(role==='SUPPORT'){assert(!/캠프|개인.*수급/.test(w.fallback));assert.match(w.fallback,/보호|시야|아군/);}
+ if(role==='JUNGLE')assert.match(w.loss,/캠프/);
+}
+const b=run(),late=b.condition_responses.operations.find(c=>c.id==='LATE_JOIN');
+if(late)assert.match(late.action,/늦|합류|따라/);
+""")
+
+    def test_missing_followup_and_unknown_jungle_conditions_gate_primary_and_detail_together(self):
+        self.node(r"""
+const x=E.exampleInput(catalog,0);x.schema_version='lol-coach-loading-input-v4';x.preferences={risk:'OPPORTUNITY'};x.scenario={standard:'lane-standard-v1',overrides:{enemy_key:'SPENT'}};x.planning={basis:'loading-plan-example-v1',overrides:{ally_followup:'UNAVAILABLE'}};
+const r=E.analyze(x,catalog),b=r.coach.planboard;
+assert.equal(r.coach.wave.selected.id,'CHECK_WAVE');assert.equal(b.wave.plan_id,'CHECK_WAVE');
+assert.match(b.wave.combat,/호응/);assert.match(b.action_summaries.lane.items[2].text,/호응/);
+assert.match(b.condition_responses.lane.find(c=>c.id==='ENEMY_KEY_SPENT').action,/호응/);
+assert(!r.coach.actions.some(a=>['SHORT_POKE','COUNTER_FOCUS_ADC'].includes(a.id)&&a.feasible==='POSSIBLE'));
+const g=E.analyze(input(),catalog),u=C.evaluate(g,catalog,{standard:'lane-standard-v1',overrides:{resources:'UNKNOWN',wave:'UNKNOWN'}},'LEVEL6').planboard;
+const j=E.exampleInput(catalog,0);j.own_champion='Sejuani';j.own_position='JUNGLE';const lowJ=C.evaluate(E.analyze(j,catalog),catalog,{standard:'lane-standard-v1',overrides:{resources:'LOW'}},'LEVEL6').planboard;assert.match(lowJ.action_summaries.lane.items[2].text,/회복|구매/);
+assert.match(u.action_summaries.lane.items[2].text,/미확인|확인/);assert.match(u.coaching_explanation.lane.join(' '),/미확인/);
+""")

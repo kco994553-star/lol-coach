@@ -1,3 +1,18 @@
+# Current — v1.1 intake / same-result default gameplan
+
+- Branch `work/handoff-v11-20261023`; base after #122 integration `1f99329fb8615de096f7e54a36fe3d7d13241c79`. Canonical owner token `codex-20261023-v11-intake` on `work/main-execution-claim`; that ref records final branch/SHA and release state. Prior top paragraphs below are history.
+- #122 HEAD5031980: related55 checks, exact source/preservation and fresh Chromium PC/public-subpath/mobile/presentation/items PASS; independent review no blocker. Original remote pregame85 executed and required3 SUCCESS; normally merged, exact-main required workflows SUCCESS. PR body corrected to actual evidence; no full-product claim.
+- Current changes: four-criterion team comparison + three basic phases with five actions/prose before detail, PC3/mobile1. Same generated report backs basic/details. Team early plan no longer depends on selected user; opponent column perspective fixed. Role-based waiting cost, conditional opportunities/fallbacks, Kaisa–Ziggs with actual supports, LOW/UNKNOWN/follow-up absent gates. No matchup approval/ratio/current game inference.
+- Feature ownership: 2.2.1/2.2.1.1/2.2.4 (default and shared team), partial 2.2.3/2.3.1/2.3.1.1/2.3.3–6/2.3.7 and 6.1 trace. Full v1.1 125 feature/subfeature rows retained in contracts/information-architecture-v1.md; code presence, tests, deployment and coaching efficacy are separate.
+- Source requirements: user-provided v1.1/Argon/wait-cost bodies. Separate MD/ZIP/referenceHTML missing; no claims of reading them or past chats. Existing visual style reused, obsolete short-only default is superseded by latest user direction.
+- Verification details and RED→GREEN logs: evidence/actual-evidence/handoff-v11 and docs/gameplan-content/2026-10-19.md. Full regression/browser, final code review, PR/CI and public version are recorded there as they actually finish; do not infer deployment from this heading.
+- Next priority: account→current game contract/UI+identity match+status/response races; partial pick preservation and recommendation; content skill selection/team contradictions; immutable past-game plan version linkage; remaining records/helper/review/learning. These are open, not erased by core UI completion.
+- External input: Riot credential in secure server configuration / actual supported local LCU connection and field/policy proof; original ZIP/HTML if available. Do not put keys in public frontend or ask user to manually source/approve all tactics. Public static backend/current game is unconnected; no other game's cached/example picks substitute.
+- Operations: existing pro daily18:30 Asia/Seoul, expert18:00, Riot12:17 workflow cron. Actual latest scheduled successes recorded in scheduler-runs.json; success is job result, not provider/content approval. Dedicated daily official-change, weekly content20–30, monthly scope pipeline not confirmed/registered. No duplicate scheduler created.
+- Real coaching N=0; tactical accuracy/effects unverified, all-champion detailed content unsupported, Windows/live external. Protected user-only issues/history/Frozen350/quotas/source grades unchanged; no authenticated Riot/Gemini/video/paid calls; official public CDN lookup is recorded separately.
+
+---
+
 # Gameplan coaching priorities — actual public completion
 - PR119/120 product `1b3171f9ec10bad32f71975ca3d30c1917240bdd`; required PR/exact-product-main3PASS. Artifact `5b024a3387990500086220df65a710193b587138`; nativePages392222096023SUCCESS; HTTPS/root/build-info/pro/riot verified.
 - Six functional team dimensions/three phases → role → five actions/situations. Carry macro/fight uses actual flank actors, protection-distance loss and side defense. Ahri MID/Sejuani JUNGLE scoped kit principles, no promoted matchup advantage.
