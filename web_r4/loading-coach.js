@@ -23,7 +23,7 @@
     const id=matchup?.id||null,claims=clone(matchup?.claims||[]),claimIds=claims.map(c=>c.id);
     const candidate=k.knowledge_applications?.[id];
     const applicationReady=!!candidate&&claimIds.includes(candidate.id)&&candidate.direct_sources.every(ref=>k.sources.some(source=>source.id===ref.source_id))&&candidate.official_fact_refs.every(ref=>{const [,champion,slot]=ref.split(':');return catalog.champions[champion]?.facts.some(f=>f.slot===slot&&f.id===ref);});
-    const planningGoal=input.planning?.overrides?.goal||'AUTO';
+    const planningGoal=input.planning?.overrides?.goal||'AUTO',noFollowup=input.planning?.overrides?.ally_followup==='UNAVAILABLE';
     const name=c=>catalog.champions[c]?.name||c;
     const skill=(c,key)=>{const f=catalog.champions[c]?.facts.find(f=>f.slot===key);return f?`${name(c)}의 ${f.name}(${key})`:`${name(c)}의 기술(슬롯 미확인)`;};
     const skillNames={cq:skill('Caitlyn','Q'),ce:skill('Caitlyn','E'),cw:skill('Caitlyn','W'),lq:skill('Lux','Q'),le:skill('Lux','E'),lw:skill('Lux','W'),nq:skill('Nautilus','Q'),np:skill('Nautilus','P'),nr:skill('Nautilus','R'),kaq:skill('Kaisa','Q'),kar:skill('Kaisa','R'),kap:skill('Kaisa','P'),kw:skill('Kaisa','W'),yq:skill('Yunara','Q'),yr:skill('Yunara','R'),luw:skill('Lulu','W'),lue:skill('Lulu','E'),lur:skill('Lulu','R'),aq:skill('Alistar','Q'),aw:skill('Alistar','W'),ar:skill('Alistar','R'),dq:skill('Darius','Q'),dw:skill('Darius','W'),de:skill('Darius','E'),eq:skill('Ezreal','Q'),ee:skill('Ezreal','E')};
@@ -56,6 +56,7 @@
       return out;
     }
     function stageAction(pid){
+      if(noFollowup)return '아군 호응이 불가능하므로 함께 전진하는 교환을 강제하지 않는다. 받을 자원·퇴로와 지원·귀환을 비교한다.';
       if(low)return '처리량을 줄여 아군 쪽에서 수급하고, 귀환 전 버틸 체력·마나와 놓칠 경험치를 비교한다.';
       if(unknown)return '막타 접근과 상대 처리 방향을 먼저 보고, 미확인인 채로 전진·추격하거나 프리징 성공을 가정하지 않는다.';
       if(referencePeriod(pid)){if(s.enemy_key==='SPENT'&&pid!=='LEVEL1'&&pid!=='LEVEL2')return skill('Malphite','E')+'를 소모했다면 공격 속도 감소 창이 줄어든다. '+skill('Malphite','Q')+'·배운 강화 공격, 6레벨 이후 궁극기는 따로 남아 있으므로 닿는 급소·CS 공간만 얻고 긴 추격은 강제하지 않는다.';return referencePeriod(pid).action;}
@@ -69,7 +70,7 @@
     let selected=periods.find(p=>p.id===period);
     if(!selected){const g=growth.find(g=>g.id===period);selected=g?{id:g.id,label:g.label,kind:'EVENT',metrics:metrics(g.id),reason:g.change,action:g.after,exception:g.exceptions[0]}:periods[0];}
     selected=clone(selected);
-    const planId=!id||unknown?'CHECK_WAVE':low?'TRIM_RECEIVE':applicationReady&&id==='A'&&s.engage==='NONE'&&['LEVEL1','LEVEL2','LEVEL3_5'].includes(selected.id)&&s.wave==='EVEN'&&!['FARM','RECALL'].includes(planningGoal)?'ACQUIRE_PUSH':({EVEN:'SLOW_PUSH',BUILDING:'SLOW_PUSH',INCOMING:'TRIM_RECEIVE',UNDER_TOWER:'TOWER_CS',RETURNING:'RETURNING'})[s.wave]||'CHECK_WAVE';
+    const planId=noFollowup||!id||unknown?'CHECK_WAVE':low?'TRIM_RECEIVE':applicationReady&&id==='A'&&s.engage==='NONE'&&['LEVEL1','LEVEL2','LEVEL3_5'].includes(selected.id)&&s.wave==='EVEN'&&!['FARM','RECALL'].includes(planningGoal)?'ACQUIRE_PUSH':({EVEN:'SLOW_PUSH',BUILDING:'SLOW_PUSH',INCOMING:'TRIM_RECEIVE',UNDER_TOWER:'TOWER_CS',RETURNING:'RETURNING'})[s.wave]||'CHECK_WAVE';
     const planDefs={
       ACQUIRE_PUSH:['선푸시부터 확보','상대보다 먼저 웨이브에 접근할 처리 여유를 만든다.',`막타만 기다리지 않고 미니언에 평타를 보탠다. 필요하면 ${z.cq}·${z.le}를 처리에 배분하고, 적만 견제하느라 선처리를 놓치지 않는다.`,'맞밀기·접근 비용이 커지면 체력을 더 써 강제하지 않는다. 우위가 생기면 속도를 낮춘다.','처리 우위를 얻었다면 막타 중심 쌓기로 바꾸고, 얻지 못하면 일부 줄이며 받기를 비교한다.'],
       SLOW_PUSH:['천천히 쌓아 밀기','상대가 막타를 위해 앞으로 나올 때 자원과 공간을 남기며 처리 우위를 쌓는다.','막타를 우선하고 양쪽 처리량을 보며 상대보다 조금 더 처리한다.','상대가 줄이는 속도보다 쌓이는지 확인한다. 맞밀기·진입 때문에 유지 못 하면 더 쌓겠다고 전진하지 않는다.','충분히 쌓인 뒤 빠른 처리로 바꿀 수 있는지와 퇴로를 비교한다.'],
@@ -95,11 +96,12 @@
     if(id==='B')actions.push({id:'COUNTER_FOCUS_ADC',label:'제어 후 원딜 함께 압박',goal:'접근한 탱커만 때리는 대신 닿는 카이사의 후속 공격을 제한한다.',costs:['룰루의 적 제어를 쓰면 아군 가속에 같은 기술을 동시에 쓸 수 없다.'],requirements:[counter,'룰루의 W 습득·사용 가능과 행동 가능한 상태가 별도 필수다.','카이사에게 실제로 닿고 룰루가 제어되지 않았다는 조건이 필요하다.'],abort:['체력 부족·카이사 접근 불가·룰루 후속 단절이면 중단한다.'],alternative:'보호와 아군 쪽 수급으로 손실을 제한한다.',feasible:low||!luluControlReady?'IMPOSSIBLE':s.engage==='THEIRS'&&!unknown?'POSSIBLE':'UNKNOWN',claim_ids:['B3','B4','B5']});
     actions.push({id:'RECEIVE',label:'처리량을 줄여 수급',goal:'체력·마나를 남기며 CS·경험치를 받는다.',costs:['상대의 선처리·이동 여유와 일부 CS 손실을 허용할 수 있다.'],requirements:['현재 받을 수 있는 막타·경험치 거리와 퇴로를 고른다.'],abort:['다이브나 과도한 웨이브 누적으로 받을 수 없으면 더 물러나 귀환을 비교한다.'],alternative:'모든 CS 대신 경험치·생존·복귀 동선을 지킨다.',feasible:unknown?'UNKNOWN':'POSSIBLE',claim_ids:claimIds});
     actions.push({id:'CHECK_WAVE',label:'수급하며 필요한 정보 파악',goal:'막타 거리에서 처리 방향·자원·동료 후속을 확인한다.',costs:['즉시 압박·선처리 기회를 놓칠 수 있다.'],requirements:['정보 확인을 위해 미확인 지역으로 들어가지 않는다.'],abort:['안전한 수급 거리마저 없으면 더 물러나 경험치·귀환을 비교한다.'],alternative:'불명확한 공격 대신 알려진 아군 위치와 연결한다.',feasible:'POSSIBLE',claim_ids:[]});
+    if(noFollowup)for(const action of actions)if(['SHORT_POKE','COUNTER_FOCUS_ADC'].includes(action.id))action.feasible='IMPOSSIBLE';
     const risk=input.preferences?.risk||'BALANCED';
-    const choose=r=>unknown||!id?'CHECK_WAVE':low?'RECEIVE':reference?'CONTROL_WAVE':id==='B'&&s.engage==='THEIRS'&&luluControlReady?'COUNTER_FOCUS_ADC':r==='OPPORTUNITY'&&actions.find(v=>v.id==='SHORT_POKE')?.feasible==='POSSIBLE'?'SHORT_POKE':'CONTROL_WAVE';
+    const choose=r=>noFollowup||unknown||!id?'CHECK_WAVE':low?'RECEIVE':reference?'CONTROL_WAVE':id==='B'&&s.engage==='THEIRS'&&luluControlReady?'COUNTER_FOCUS_ADC':r==='OPPORTUNITY'&&actions.find(v=>v.id==='SHORT_POKE')?.feasible==='POSSIBLE'?'SHORT_POKE':'CONTROL_WAVE';
     const chosen=choose(risk),same=choose('LOSS_LIMIT')===choose('OPPORTUNITY');
     const chosenAction=actions.find(v=>v.id===chosen);
-    selected.action=chosen==='CONTROL_WAVE'?stageAction(selected.id):chosen==='SHORT_POKE'?first:chosen==='COUNTER_FOCUS_ADC'?counter:chosen==='RECEIVE'?stageAction(selected.id):actions.find(v=>v.id==='CHECK_WAVE').goal;
+    selected.action=noFollowup?stageAction(selected.id):chosen==='CONTROL_WAVE'?stageAction(selected.id):chosen==='SHORT_POKE'?first:chosen==='COUNTER_FOCUS_ADC'?counter:chosen==='RECEIVE'?stageAction(selected.id):actions.find(v=>v.id==='CHECK_WAVE').goal;
     wavePlan.steps[1].text=selected.action;
 
     const actors=(matchup?[...matchup.allies,...matchup.enemies]:[input.own_champion]).map(c=>({champion:c,name:name(c),in_fight_heal:c==='Darius'?`${z.dq}를 배웠고 바깥날이 챔피언에 적중한 경우의 회복이다. ${z.dw} 시작 Lv1에는 이 회복이 없다.`:'기술 회복과 보호를 같은 것으로 세지 않는다. 아이템·룬에 따른 실제 회복량은 비교하지 않았다.',between_trade:c==='Alistar'?'승리의 포효(P)의 발동 조건을 충족했을 때 아군 회복이 가능하다. 한 번의 견제 피해가 그대로 누적된다고 보지 않는다.':'자연 재생·소모품·아이템·룬과 대기 중 수급 비용을 별도로 봐야 한다. 현재 누적 회복량은 미측정이다.',shield:c==='Lux'?`${z.lw}는 피해를 막으며 이미 잃은 체력의 회복이 아니다.`:c==='Lulu'?`${z.lue}는 피해 방지이며 회복이 아니다. ${z.lur}의 일시적 체력 증가는 교환 사이의 상시 회복으로 세지 않는다.`:c==='Nautilus'?'타이탄의 분노(W)의 보호막은 피해 방지이며 잃은 체력 회복이 아니다.':c==='Ambessa'?`${skill('Ambessa','W')}의 보호막·대응 피해가 교환 비용을 바꾼다. 회복으로 세지 않는다.`:'확인한 개별 기술·아이템의 보호 수단만 고려한다.',resources:c==='Ambessa'?'기력과 강화 공격을 통한 회복 조건을 확인한다. 마나와 동일하게 계산하지 않는다.':`${name(c)} 자신의 마나·체력을 동료의 자원과 따로 본다.`,downtime:'기술·회복을 기다리는 동안 받을 CS·경험치·자리와 상대 재교전 위험을 함께 비교한다.',risks:'회복 전에 재진입을 받거나 귀환 전 처리 자원이 부족하면 반복 교환 계획을 중단한다.'}));
@@ -117,7 +119,7 @@
     }
     const entry=applicable&&applicationReady?candidate:null;
     const stats=applicable?k.statistical_context?.matchups[id]:null;
-    result.knowledge_application={schema_version:'lol-coach-knowledge-application-v1',...(entry?clone(entry):{}),supported:!!entry,active:!!entry&&!low&&!unknown&&(id!=='A'||(s.engage==='NONE'&&!['FARM','RECALL'].includes(planningGoal)&&['LEVEL1','LEVEL2','LEVEL3_5'].includes(selected.id)&&['EVEN','BUILDING'].includes(s.wave)))&&(!id||id!=='C'||(selected.id==='LEVEL1'&&s.start_skill==='W'&&s.enemy_key!=='UNKNOWN'&&['EVEN','BUILDING'].includes(s.wave))),statistics:stats?{...clone(stats),datasets:clone(k.statistical_context.datasets)}:null};
+    result.knowledge_application={schema_version:'lol-coach-knowledge-application-v1',...(entry?clone(entry):{}),supported:!!entry,active:!!entry&&!noFollowup&&!low&&!unknown&&(id!=='A'||(s.engage==='NONE'&&!['FARM','RECALL'].includes(planningGoal)&&['LEVEL1','LEVEL2','LEVEL3_5'].includes(selected.id)&&['EVEN','BUILDING'].includes(s.wave)))&&(!id||id!=='C'||(selected.id==='LEVEL1'&&s.start_skill==='W'&&s.enemy_key!=='UNKNOWN'&&['EVEN','BUILDING'].includes(s.wave))),statistics:stats?{...clone(stats),datasets:clone(k.statistical_context.datasets)}:null};
     if(id==='A'&&entry){result.sustain.summary=entry.repeat_plan;result.wave.selected.reason='공략 판단 기반 초기 순서와 기전 추론을 구분한다. 처리 우위·크래시·교전 승리는 별개다.';}
     if(id==='C'&&(!entry||!result.knowledge_application.active))result.summary.strong_phase='해당 시작 기술·구간·자원에는 Lv1 W 근접 유지 우세를 적용하지 않는다.';
     result.planboard=Planboard.evaluate(report,catalog,result,input.planning,k);

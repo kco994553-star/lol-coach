@@ -1,0 +1,62 @@
+.F....F
+======================================================================
+FAIL: test_five_users_share_whole_team_plan_with_fixed_opponent_perspective (tests_pregame.test_gameplan_coaching_content.GameplanCoachingContentTests.test_five_users_share_whole_team_plan_with_fixed_opponent_perspective)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_gameplan_coaching_content.py", line 81, in test_five_users_share_whole_team_plan_with_fixed_opponent_perspective
+    self.node(r"""
+  File "/workspace/lol-coach/tests_pregame/test_gameplan_coaching_content.py", line 19, in node
+    self.assertEqual(p.returncode, 0, p.stderr[-5000:])
+AssertionError: 1 != 0 : node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: 아군이 같은 대상에 닿는 방향에서 접근해 떨어진 적을 노리고, 교전 뒤 포탑·목표물을 얻는다.
+    at [eval]:11:107
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_team_comparison_four_basics_keep_actual_team_result (tests_pregame.test_gameplan_coaching_content.GameplanCoachingContentTests.test_team_comparison_four_basics_keep_actual_team_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_gameplan_coaching_content.py", line 92, in test_team_comparison_four_basics_keep_actual_team_result
+    self.node(r"""
+  File "/workspace/lol-coach/tests_pregame/test_gameplan_coaching_content.py", line 19, in node
+    self.assertEqual(p.returncode, 0, p.stderr[-5000:])
+AssertionError: 1 != 0 : [eval]:10
+assert.deepEqual(v.comparison.map(row=>row.label),['원하는 승리 방식','좋은 싸움','운영의 핵심','주요 위험']);
+                              ^
+
+TypeError: Cannot read properties of undefined (reading 'map')
+    at [eval]:10:31
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.653s
+
+FAILED (failures=2)

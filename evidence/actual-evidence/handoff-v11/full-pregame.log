@@ -1,0 +1,34 @@
+............................................................................................................................................................................................................................................................................................................................FF............................................................................................................/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py:1625: UserWarning: Duplicate name: 'pro-private.bundle'
+  return self._open_to_write(zinfo, force_zip64=force_zip64)
+..................................................................................................................................................................................................................................................................................................................................................F.............
+======================================================================
+FAIL: test_source_backed_held_advice_is_explicit_hypothesis (test_pc_coach.PcCoachTests.test_source_backed_held_advice_is_explicit_hypothesis)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_pc_coach.py", line 71, in test_source_backed_held_advice_is_explicit_hypothesis
+    self.assertTrue(all(c['evidence_label']=='미검토 가설(AI 작성, 근거 링크)' and '검토 보류:' in c['details'] and c['sources'] for c in hypotheses))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_source_integrity_failure_is_not_even_shown_as_hypothesis (test_pc_coach.PcCoachTests.test_source_integrity_failure_is_not_even_shown_as_hypothesis)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_pc_coach.py", line 76, in test_source_integrity_failure_is_not_even_shown_as_hypothesis
+    self.assertFalse(any(c.get('candidate_id') for c in result['cards']))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_exact_delta_reuses_prior_ci_without_running_predecessor (test_v23_binding.QueueV23BindingTests.test_exact_delta_reuses_prior_ci_without_running_predecessor)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_v23_binding.py", line 60, in test_exact_delta_reuses_prior_ci_without_running_predecessor
+    self.assertEqual(result['status'], 'PASS', result)
+AssertionError: 'FAIL' != 'PASS'
+- FAIL
++ PASS
+ : {'status': 'FAIL', 'checks': {'explicit_user_authority': True, 'immutable_parent_receipt': True, 'exact_parent_commit': True, 'parent_tree_bound': True, 'parent_git_ancestry_and_tree': True, 'parent_contract_unchanged': True, 'exact_current_paths': True, 'current_bytes': True, 'exact_preserved_paths': True, 'preserved_bytes': False, 'exact_parent_archives': True, 'archived_parent_bytes': True, 'original_ci_receipts': True, 'trusted_completed_ci': True, 'exact_data_paths': True, 'data_files_only': False, 'data_bytes': True, 'bounded_changes': False, 'contract_bound': True, 'no_prior_verification_rerun': True, 'no_user_or_engine_promotion': True, 'no_accuracy_claim': True}, 'scope': 'v2.3 exact sources + immutable base hashes/ancestry + reused completed CI', 'prior_completed_verification_rerun': False, 'reused_ci_run_ids': [38722880438, 38722880374], 'real_match_coaching_accuracy': None}
+
+----------------------------------------------------------------------
+Ran 778 tests in 97.635s
+
+FAILED (failures=3)

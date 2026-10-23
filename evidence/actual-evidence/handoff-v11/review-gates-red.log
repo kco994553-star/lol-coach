@@ -1,0 +1,42 @@
+...F......
+======================================================================
+FAIL: test_missing_followup_and_unknown_jungle_conditions_gate_primary_and_detail_together (tests_pregame.test_gameplan_coaching_content.GameplanCoachingContentTests.test_missing_followup_and_unknown_jungle_conditions_gate_primary_and_detail_together)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_gameplan_coaching_content.py", line 135, in test_missing_followup_and_unknown_jungle_conditions_gate_primary_and_detail_together
+    self.node(r"""
+  File "/workspace/lol-coach/tests_pregame/test_gameplan_coaching_content.py", line 19, in node
+    self.assertEqual(p.returncode, 0, p.stderr[-5000:])
+AssertionError: 1 != 0 : node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'ACQUIRE_PUSH'
+- 'CHECK_WAVE'
+
+    at [eval]:11:8
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'ACQUIRE_PUSH',
+  expected: 'CHECK_WAVE',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 10 tests in 1.176s
+
+FAILED (failures=1)
