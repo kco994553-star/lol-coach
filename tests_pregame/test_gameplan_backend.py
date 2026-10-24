@@ -85,3 +85,52 @@ vm.runInContext(fs.readFileSync('web_r4/loading-planboard.js','utf8'),ctx);
 assert.equal(ctx.LoadingPlanboard.resolveDirectionProfiles(ctx.LoadingDirectionProfiles,'Ezreal','BOTTOM',catalog).version,'1');
 for(const file of ['loading.html','directions.html']){const html=fs.readFileSync('web_r4/'+file,'utf8');assert(html.indexOf('loading-direction-profiles.js')>=0);assert(html.indexOf('loading-direction-profiles.js')<html.indexOf('loading-planboard.js'));}
 """)
+
+    def test_scoped_conditions_and_rule_audit(self):
+        self.node(r"""
+const B=require('./web_r4/loading-planboard.js');
+assert.equal(typeof B.evaluateScopedCondition,'function');
+const scope={subject:'allies:Caitlyn',phase:'lane',snapshot:'pregame:1'};
+const c={id:'followup',value:true,...scope,source:{kind:'ASSUMPTION',ref:'planning.followup'}};
+const before=JSON.stringify(c);
+assert.equal(B.evaluateScopedCondition(c,scope).state,'MET');
+for(const key of ['subject','phase','snapshot'])assert.equal(B.evaluateScopedCondition({...c,[key]:'different'},scope).state,'UNKNOWN');
+assert.equal(B.evaluateScopedCondition({...c,source:null},scope).state,'UNKNOWN');
+assert.equal(B.evaluateScopedCondition({...c,value:null},scope).state,'UNKNOWN');
+assert.equal(B.evaluateScopedCondition({...c,value:false},scope).state,'UNMET');
+assert.throws(()=>B.evaluateScopedCondition({...c,value:'true'},scope),/INVALID_SCOPED_CONDITION/);
+assert.equal(JSON.stringify(c),before);
+const rule={id:'followup-rule',version:'1',requires:[c],excludes:[]};
+assert.equal(B.evaluateRule(rule,scope).status,'APPLIED');
+assert.equal(B.evaluateRule({...rule,requires:[{...c,value:false}]},scope).status,'EXCLUDED');
+assert.equal(B.evaluateRule({...rule,excludes:[{...c,id:'risk',value:null}]},scope).status,'CONDITIONAL');
+assert.equal(B.evaluateRule({...rule,excludes:[{...c,id:'risk'}]},scope).status,'EXCLUDED');
+for(const requires of [[],Array(1),[c,c]])assert.throws(()=>B.evaluateRule({...rule,requires},scope),/INVALID_RULE/);
+assert.deepEqual(B.evaluateRule(rule,scope),B.evaluateRule(rule,scope));
+""")
+
+    def test_direction_rule_audit_integrates_without_new_output(self):
+        self.node(r"""
+const B=require('./web_r4/loading-planboard.js'),x=E.exampleInput(catalog,0),b=run(x);
+assert.ok(b.internal_rule_trace);
+assert.equal(b.internal_rule_trace.coverage,'DIRECTION_ELIGIBILITY_ONLY');
+assert.equal(b.internal_rule_trace.rules.length,3);
+assert(b.internal_rule_trace.rules.every(r=>r.status==='APPLIED'));
+assert(!JSON.stringify(b.delivery).includes('DIRECTION_ELIGIBILITY_ONLY'));
+assert.deepEqual(b.delivery,B.buildDelivery(b));
+const other=run(input('TOP'));assert(other.internal_rule_trace.rules.every(r=>r.status==='EXCLUDED'));
+assert.deepEqual(run(E.exampleInput(catalog,0)).internal_rule_trace,b.internal_rule_trace);
+""")
+
+    def test_trace_rejects_report_patch_mismatch_and_preserves_original_scope(self):
+        self.node(r"""
+const B=require('./web_r4/loading-planboard.js'),x=E.exampleInput(catalog,0);
+x.patch='1.1';const b=run(x);
+assert(!b.direction_hierarchy);
+assert(b.internal_rule_trace.rules.every(r=>r.status==='EXCLUDED'));
+const scope={subject:'allies:Caitlyn',phase:'lane',snapshot:'pregame:1'};
+const c={id:'state',value:true,subject:'enemies:Caitlyn',phase:'fight',snapshot:'old',source:{kind:'ASSUMPTION',ref:'scenario'}};
+const trace=B.evaluateScopedCondition(c,scope);
+assert.equal(trace.value,true);assert.deepEqual(trace.actual_scope,{subject:c.subject,phase:c.phase,snapshot:c.snapshot});
+assert.deepEqual(trace.expected_scope,scope);
+""")

@@ -165,3 +165,12 @@ PR130은 인수 시 OPEN/DRAFT, HEAD f514ab1. 이 변경은 별도 work/gameplan
 검증: 신규 자료 검증·브라우저 모듈 검사 2개를 구현 전 실패 확인 후 통과. 관련 32개 검사 통과. 두 챔피언의 변경 전후 delivery 전체 동일성 확인. PC HTTP·정적 내보내기·해시·증거 목록 포함 5개 검사 통과. 실제 브라우저 화면·배포·실전 효과는 별도다.
 
 노션 문서 형식과 관리 기준은 `docs/gameplan-content/notion-format-v1.md`를 따른다.
+
+
+## 2026-10-24 조건 범위·적용 기록 후속
+
+- `evaluateScopedCondition(condition, scope)`: 조건 ID, boolean/null 값, 대상(subject), 단계(phase), 입력 스냅샷(snapshot), 출처(kind/ref)를 받는다. INPUT/ASSUMPTION/KNOWLEDGE 출처만 수용한다. 출처 누락·범위 불일치는 UNKNOWN이며 실제/기대 범위와 원래 값을 함께 기록한다. snapshot은 호출자 식별자이며 자동 최신성 판정이 아니다.
+- `evaluateRule(rule, scope)`: ID·version·requires·excludes. 필수 불충족 또는 제외 충족은 EXCLUDED, 남은 미확인은 CONDITIONAL, 나머지는 APPLIED. 빈 필수 목록·희소 배열·중복 조건 ID는 거부한다. 임의 점수나 충돌 우선순위는 없다.
+- `internal_rule_trace`: DIRECTION_ELIGIBILITY_ONLY. 현재 기본 방향 자료의 존재·역할·자료 해석·보고서 지원 문맥을 세 단계별로 기록한다. 보고서 패치 검토 대기는 적용 제외다. 전술 채택이나 전체 규칙 추적을 의미하지 않는다. `pregame-input` 시점은 해당 보고서 내부에서만 유효하고 보고서 간 최신성 비교용이 아니다.
+- 기존 delivery에는 진단을 추가하지 않는다. 규칙의 실제 관측/사용자 승인 승격 없음. 후보 비교와 전체 규칙 충돌 처리는 후속.
+- 독립 리뷰: 입력 패치 불일치와 원본 조건 범위 유실을 실패 재현 후 수정.

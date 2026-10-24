@@ -22,6 +22,45 @@
     if(operator==='all')return states.includes('UNMET')?'UNMET':states.every(s=>s==='MET')?'MET':'UNKNOWN';
     return states.includes('MET')?'MET':states.every(s=>s==='UNMET')?'UNMET':'UNKNOWN';
   }
+  // Scope identity is caller supplied; snapshot IDs are not wall-clock freshness.
+  function evaluateScopedCondition(condition, scope) {
+    const text=v=>typeof v==='string'&&v.trim().length>0;
+    if(!condition||!text(condition.id)||![true,false,null].includes(condition.value)||
+      !scope||!['subject','phase','snapshot'].every(k=>text(scope[k])))throw Error('INVALID_SCOPED_CONDITION');
+    const reasons=[];
+    for(const key of ['subject','phase','snapshot'])if(condition[key]!==scope[key])reasons.push('SCOPE_MISMATCH:'+key);
+    const source=condition.source;
+    if(!source||!['INPUT','ASSUMPTION','KNOWLEDGE'].includes(source.kind)||!text(source.ref))reasons.push('SOURCE_UNAVAILABLE');
+    return {id:condition.id,state:reasons.length?'UNKNOWN':evaluateCondition(condition.value),
+      reasons,value:condition.value,expected_scope:clone(scope),
+      actual_scope:Object.fromEntries(['subject','phase','snapshot'].map(k=>[k,typeof condition[k]==='string'?condition[k]:null])),source:source&&text(source.ref)?{kind:source.kind,ref:source.ref}:null};
+  }
+  function evaluateRule(rule, scope) {
+    const text=v=>typeof v==='string'&&v.trim().length>0;
+    if(!rule||!text(rule.id)||!text(rule.version)||!Array.isArray(rule.requires)||!rule.requires.length||!Array.isArray(rule.excludes))throw Error('INVALID_RULE');
+    const conditions=[...rule.requires,...rule.excludes];
+    if(conditions.some(c=>!c||!text(c.id))||new Set(conditions.map(c=>c.id)).size!==conditions.length)throw Error('INVALID_RULE');
+    const requires=rule.requires.map(c=>evaluateScopedCondition(c,scope)),excludes=rule.excludes.map(c=>evaluateScopedCondition(c,scope));
+    const blocked=requires.some(c=>c.state==='UNMET')||excludes.some(c=>c.state==='MET');
+    const unknown=[...requires,...excludes].some(c=>c.state==='UNKNOWN');
+    return {rule_id:rule.id,version:rule.version,status:blocked?'EXCLUDED':unknown?'CONDITIONAL':'APPLIED',requires,excludes};
+  }
+  function directionRuleTrace(report,catalog,board) {
+    const input=report.input,entry=directionData.champions[input.own_champion];
+    // Resolve uses the existing validated data contract; no new tactical inference.
+    const resolved=resolveDirectionProfiles(directionData,input.own_champion,input.own_position,catalog);
+    const rules=PHASES.map(phase=>{
+      const scope={subject:'allies:'+input.own_champion,phase,snapshot:'pregame-input'};
+      const condition=(id,value,kind,ref)=>({id,value,...scope,source:{kind,ref}});
+      return evaluateRule({id:'direction-eligibility:'+phase,version:'1',requires:[
+        condition('profile-supported',!!entry,'KNOWLEDGE','web_r4/loading-direction-profiles.js'),
+        condition('role-supported',!!entry&&entry.role===input.own_position,'INPUT','input.own_position'),
+        condition('profile-resolved',!!resolved,'KNOWLEDGE','resolveDirectionProfiles'),
+        condition('report-context-supported',board.waiting?.mode!=='SOURCE_REVIEW_REQUIRED'&&!!board.coaching_explanation?.[phase]?.length,'INPUT','report.coach.planboard.waiting/coaching_explanation')
+      ],excludes:[]},scope);
+    });
+    return {schema_version:'gameplan-rule-trace-v1',coverage:'DIRECTION_ELIGIBILITY_ONLY',observation:false,rules};
+  }
   // Whitelist the established phase output. Never serialize arbitrary diagnostics.
   function buildDelivery(board) {
     const phases={};
@@ -673,6 +712,7 @@
     const scenarioPlan=result.narrative_decisions?JSON.parse(JSON.stringify(result.narrative_decisions)):null;
     reconcileSituation(result,report,catalog,coach);
     attachDirectionHierarchy(result,report,catalog,scenarioPlan);
+    result.internal_rule_trace=directionRuleTrace(report,catalog,result);
     result.delivery=buildDelivery(result);
     result.internal_dependencies=dependencyTree(result);
     return result;
@@ -1210,5 +1250,5 @@
       limitation:'조합과 기술에서 도출한 조건부 계획입니다. 실제 경기 관측이나 승리 보장이 아니며, 개별 매치업 우열은 기존 자료 범위를 따릅니다.'};
   }
   return Object.freeze({ evaluate, validate, defaults, plainLanguage, actionSummaries,
-    evaluateCondition, buildDelivery, dependencyTree, affectedOutputs, resolveDirectionProfiles });
+    evaluateScopedCondition, evaluateRule, evaluateCondition, buildDelivery, dependencyTree, affectedOutputs, resolveDirectionProfiles });
 });
