@@ -1,3 +1,23 @@
+# Independent gameplan coaching — completed / writer released
+- run_token: `codex-20261024-coaching-narrative`
+- status: COMPLETED
+- writer_active: false
+- current_branch: `work/coaching-narrative-results-20261024`
+- current_sha / remote_main: `742b3bbb0b8f6401f9ed3776907eff77df13180d`
+- uncommitted_changes: none; active_editing: none. Source/public/coordination worktrees preserved.
+- Product PR125 source `4cddd1934f7e56c79dfcececc54c313399e6002b` → main `a8f3bc1ffa080823ee707cf6492a5444f9d7916f`. ResultsPR126 HEAD92a4d3c → final main742b3bb. Both normal merges; final result-only delta contains no product changes.
+- Changes: independent phase prose from linked decisions, five summaries/default1+3 retained, support/enemy-sensitive alternatives, manual/learned-kit/LOW/UNKNOWN/FARM/RECALL/NEAR gates, readable headings/16px prose/spacing, after-prose keyboard/touch disclosure and320px portraits wrapping.
+- Completed display2.2.4; partial content2.3.1/2.3.1.1/2.4.1/2.5.1/2.5.1.1. Official16.20.1 data unchanged; no runtimeAI/provider/paid calls or new scheduler. Preserved protected user issues/Frozen350/raw sources/grades/limits.
+- Verification: exact source103 and preservation PASS; full local Chromium including old paths+new narrative+game-info PASS. PR/product-main/result-PR/final-main required3 SUCCESS. Final-main jobs120735218048/120735218070/120735218311; metadata-only appropriately reuses unchanged tests, no new full-suite claim.
+- Public artifact `6334985c76677d003a8c44effac1be5e7a057c2d`, Pages40048002506 build/deploy/report SUCCESS. HTTPS90hashes/root/build-info/pro/riot preserved; actual public1440/390/320 default15actions/prose/details/keyboard/reload/no-overflow PASS, errors0. Product remainsa8f3bc1; no duplicate result-only redeployment.
+- Evidence and actual generated paragraphs/comparisons/screenshots: main evidence/actual-evidence/handoff-v11/result.md; docs/gameplan-content/2026-10-19.md. This coordination ref holds narrative-final-ci.json and narrative-results-binding.json for final source proof.
+- Failures preserved: manual/learned-kit/constraint regressions RED→GREEN; source-changing export mismatch;320px portraits overflow fixed; local cjs inventory failure fixed without relaxing gates; one coordination push503 retried after verifying unchanged token. Initial supersededCI cancellations are not PASS.
+- Unverified: tactical accuracy/expert validation/effectsN0; all matchups/additional positions. Whole historicalsuite not rerun; priorPC2/v23binding1 failures not claimed fixed. Live/account backend/Windows/LCU remain external or unfinished as prior backlog.
+- Next: expand unsupported relation/position counterexamples and actual understanding review; continue account→currentgame/partialpicks/recommendations; immutable past-plan/remaining product backlog. No required user input for completed narrative scope. Secure Riot/local field-policy proof remains necessary only for live work; missing separate example text/original screenshot10picks not guessed.
+- Prior claim paragraphs below are historical, superseded by this completed status.
+
+---
+
 # Independent coaching narrative — active writer
 - run_token: `codex-20261024-coaching-narrative`
 - status: CI_PENDING
