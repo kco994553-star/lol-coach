@@ -1,3 +1,15 @@
+# Independent coaching narrative — active writer
+- run_token: `codex-20261024-coaching-narrative`
+- status: RUNNING
+- writer_active: true
+- owner_branch: `work/coaching-narrative-20261024`
+- intake_main: `b441fc01a08df2e753c81c091b7e4166a6f1acce`
+- scope: user-requested independent three-phase prose, shared decision/summary/detail consistency and readable basic display; exact KaiSa/Nautilus–Ziggs/Karma roster and counterexamples; tests, PR and authorized existing publication.
+- Fresh intake: no open PR, prior owner COMPLETED/released. Protected issues, evidence, approvals and collection remain intact. No paid calls/runtime AI/new scheduler.
+- Prior claims below are history.
+
+---
+
 # LoL Coach v1.1 bounded delivery — completed / writer released
 - run_token: `codex-20261023-v11-intake`
 - status: `COMPLETED`
