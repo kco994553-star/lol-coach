@@ -1,7 +1,7 @@
 # LoL Coach v1.1 intake — active writer
 - run_token: `codex-20261023-v11-intake`
-- status: `RUNNING`
-- writer_active: true
+- status: `CI_PENDING`
+- writer_active: false
 - owner_branch: `work/handoff-v11-20261023`
 - base_main: `e37f9b7cbb6a499b631e6e6e4ba841aa9baa1aa5`
 - integrated_pr: #122 normal merge `1f99329fb8615de096f7e54a36fe3d7d13241c79`, exact-main required3 SUCCESS
@@ -20,6 +20,8 @@
 - Public COMPLETE: artifact4cc14ab / Pages40042463683 build-report-deploy SUCCESS; HTTPS90hashes/pro/riot and real public1440/390/320 PASS. Results-only branch `work/handoff-v11-results-20261023`, HEAD `65a21a8` holds final evidence/Handoff; requiredCI pending. No product republish. Resume exact result PR/head3 checks, normal merge/postmain and release.
 
 - Results PR124 exact HEAD65a21a86e9620a5172c63266f41b8a6dbdeeac90 required3 SUCCESS; code/data/browser reuse correctly reported, independent metadata review no blocker. Resume normal merge and final-main source-bound gates; product stays d9f515c/4cc14ab with no republish.
+
+- Results PR124 normal merge: final main `b441fc01a08df2e753c81c091b7e4166a6f1acce`; product files byte-identical to published d9f515c. Final-main required3 pending; no product/browser re-execution or redeploy needed for metadata-only delta. Workspace clean, local branch `work/handoff-v11-results-20261023` HEAD b441fc0.
 
 ---
 
