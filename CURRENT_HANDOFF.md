@@ -1,3 +1,14 @@
+# Gameplan v1.3 — results PR CI pending
+- run_token: `codex-20261024-gameplan-v13`
+- status: CI_PENDING
+- writer_active: false
+- owner_branch: `work/gameplan-v13-results-20261024`
+- source_sha: `310aae80ad4ba4c94f286e6cbf774c836d4c83cb`
+- Product3013f30 publicee839fc/Pages40059478711 SUCCESS, HTTPS90 and realpublic1440/390/320 PASS. Results-only PR records final matrix/full reference/variants/screenshots/CI, no product change.
+- Exact results preservation PASS; unchanged product checks reused. Reacquire after required results3 to normally merge and verify finalmain metadata CI; no duplicate deployment.
+
+---
+
 # Gameplan v1.3 — publication and evidence writer
 - run_token: `codex-20261024-gameplan-v13`
 - status: RUNNING
