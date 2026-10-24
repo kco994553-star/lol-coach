@@ -1,10 +1,263 @@
 /* Pure decision projection. No observations, IO, strength scores or source promotions. */
 (function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory(require('./loading-formation.js'));
-  else root.LoadingPlanboard = factory(root.LoadingFormation);
-})(typeof globalThis !== 'undefined' ? globalThis : this, function (formation) {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./loading-formation.js'), require('./loading-direction-profiles.js'));
+  else root.LoadingPlanboard = factory(root.LoadingFormation, root.LoadingDirectionProfiles);
+})(typeof globalThis !== 'undefined' ? globalThis : this, function (formation, directionData) {
   'use strict';
   const clone = x => JSON.parse(JSON.stringify(x));
+  const PHASES = Object.freeze(['lane','operations','fight']);
+  // Typed condition algebra. Missing information is null, never truthy coercion.
+  function evaluateCondition(expression) {
+    if(expression===true)return 'MET';
+    if(expression===false)return 'UNMET';
+    if(expression===null)return 'UNKNOWN';
+    if(!expression||typeof expression!=='object'||Array.isArray(expression)||Object.keys(expression).length!==1)throw Error('INVALID_CONDITION');
+    const [operator]=Object.keys(expression),value=expression[operator];
+    if(operator==='not'){
+      const state=evaluateCondition(value);
+      return state==='UNKNOWN'?state:state==='MET'?'UNMET':'MET';
+    }
+    if(!['all','any'].includes(operator)||!Array.isArray(value)||!value.length)throw Error('INVALID_CONDITION');
+    const states=Array.from(value,evaluateCondition);
+    if(operator==='all')return states.includes('UNMET')?'UNMET':states.every(s=>s==='MET')?'MET':'UNKNOWN';
+    return states.includes('MET')?'MET':states.every(s=>s==='UNMET')?'UNMET':'UNKNOWN';
+  }
+  // Scope identity is caller supplied; snapshot IDs are not wall-clock freshness.
+  function evaluateScopedCondition(condition, scope) {
+    const text=v=>typeof v==='string'&&v.trim().length>0;
+    if(!condition||!text(condition.id)||![true,false,null].includes(condition.value)||
+      !scope||!['subject','phase','snapshot'].every(k=>text(scope[k])))throw Error('INVALID_SCOPED_CONDITION');
+    const reasons=[];
+    for(const key of ['subject','phase','snapshot'])if(condition[key]!==scope[key])reasons.push('SCOPE_MISMATCH:'+key);
+    const source=condition.source;
+    if(!source||!['INPUT','ASSUMPTION','KNOWLEDGE'].includes(source.kind)||!text(source.ref))reasons.push('SOURCE_UNAVAILABLE');
+    return {id:condition.id,state:reasons.length?'UNKNOWN':evaluateCondition(condition.value),
+      reasons,value:condition.value,expected_scope:clone(scope),
+      actual_scope:Object.fromEntries(['subject','phase','snapshot'].map(k=>[k,typeof condition[k]==='string'?condition[k]:null])),source:source&&text(source.ref)?{kind:source.kind,ref:source.ref}:null};
+  }
+  function evaluateRule(rule, scope) {
+    const text=v=>typeof v==='string'&&v.trim().length>0;
+    if(!rule||!text(rule.id)||!text(rule.version)||!Array.isArray(rule.requires)||!rule.requires.length||!Array.isArray(rule.excludes))throw Error('INVALID_RULE');
+    const conditions=[...rule.requires,...rule.excludes];
+    if(conditions.some(c=>!c||!text(c.id))||new Set(conditions.map(c=>c.id)).size!==conditions.length)throw Error('INVALID_RULE');
+    const requires=rule.requires.map(c=>evaluateScopedCondition(c,scope)),excludes=rule.excludes.map(c=>evaluateScopedCondition(c,scope));
+    const blocked=requires.some(c=>c.state==='UNMET')||excludes.some(c=>c.state==='MET');
+    const unknown=[...requires,...excludes].some(c=>c.state==='UNKNOWN');
+    return {rule_id:rule.id,version:rule.version,status:blocked?'EXCLUDED':unknown?'CONDITIONAL':'APPLIED',requires,excludes};
+  }
+  // Qualitative directions only: no magnitudes, probability estimates or weighted sums.
+  // A dominance result is limited to declared effects and never selects a tactic.
+  function compareEffects(left,right,scope) {
+    const text=v=>typeof v==='string'&&v.trim().length>0;
+    const coordinate=e=>JSON.stringify([e.dimension,e.measure,e.horizon,e.subject,e.phase,e.snapshot]);
+    const prepare=effects=>{
+      if(!Array.isArray(effects))throw Error('INVALID_EFFECTS');
+      const ids=new Set(),keys=new Set();
+      return Array.from(effects,e=>{
+        const plain=value=>value&&typeof value==='object'&&!Array.isArray(value)&&[Object.prototype,null].includes(Object.getPrototypeOf(value))&&
+          !Object.getOwnPropertySymbols(value).length&&Object.values(Object.getOwnPropertyDescriptors(value)).every(d=>Object.hasOwn(d,'value')&&d.enumerable);
+        if(!plain(e)||e.source!==undefined&&e.source!==null&&(!plain(e.source)||Object.keys(e.source).some(k=>!['kind','ref','version'].includes(k))||Object.values(e.source).some(v=>typeof v!=='string')))throw Error('INVALID_EFFECTS');
+        if(!e||Object.keys(e).some(k=>!['id','dimension','measure','horizon','subject','phase','snapshot','category','impact','source'].includes(k))||!['id','dimension','measure','horizon','subject','phase','snapshot'].every(k=>text(e[k]))||
+          !['GOAL_GAIN','ACTION_COST','WAITING_LOSS'].includes(e.category)||!['BENEFIT','UNCHANGED','LOSS','UNKNOWN'].includes(e.impact)||
+          ids.has(e.id)||keys.has(coordinate(e)))throw Error('INVALID_EFFECTS');
+        ids.add(e.id);keys.add(coordinate(e));
+        const trace=evaluateScopedCondition({...e,value:e.impact==='UNKNOWN'?null:true},scope);
+        if(!e.source||!text(e.source.version))trace.reasons.push('SOURCE_VERSION_UNAVAILABLE');
+        return {effect:clone(e),key:coordinate(e),reasons:trace.reasons};
+      }).sort((a,b)=>a.key<b.key?-1:a.key>b.key?1:0);
+    };
+    const a=prepare(left),b=prepare(right),rightByKey=new Map(b.map(e=>[e.key,e])),reasons=[],dimensions=[];
+    if(!a.length||!b.length)reasons.push('EFFECTS_UNAVAILABLE');
+    for(const entry of [...a,...b])for(const reason of entry.reasons)reasons.push(entry.effect.id+':'+reason);
+    if(a.length!==b.length||a.some(e=>!rightByKey.has(e.key)))reasons.push('COMPARISON_SCOPE_MISMATCH');
+    let better=false,worse=false;
+    for(const entry of a){
+      const other=rightByKey.get(entry.key);if(!other)continue;
+      const x=entry.effect,y=other.effect;
+      if(x.impact==='UNKNOWN'||y.impact==='UNKNOWN'){reasons.push(x.id+':UNKNOWN_IMPACT');continue;}
+      if(!x.source||!y.source||x.source.kind!==y.source.kind){reasons.push(x.id+':EVIDENCE_KIND_MISMATCH');continue;}
+      if(x.source.version!==y.source.version){reasons.push(x.id+':SOURCE_VERSION_MISMATCH');continue;}
+      // This is an order of signs, not a conversion of unlike losses into numbers.
+      const ahead=(u,v)=>u==='BENEFIT'&&v!=='BENEFIT'||u==='UNCHANGED'&&v==='LOSS';
+      const relation=x.impact===y.impact?'EQUAL':ahead(x.impact,y.impact)?'LEFT_BETTER':'RIGHT_BETTER';
+      better ||= relation==='LEFT_BETTER';worse ||= relation==='RIGHT_BETTER';
+      dimensions.push({dimension:x.dimension,measure:x.measure,horizon:x.horizon,left_id:x.id,right_id:y.id,relation});
+    }
+    return {schema_version:'gameplan-effects-comparison-v1',coverage:'DECLARED_QUALITATIVE_EFFECTS_ONLY',
+      status:reasons.length?'INCOMPARABLE':better&&worse?'TRADEOFF':better?'LEFT_DOMINATES_DECLARED_EFFECTS':worse?'RIGHT_DOMINATES_DECLARED_EFFECTS':'EQUAL_DECLARED_EFFECTS',
+      reasons:[...new Set(reasons)].sort(),dimensions,left:a.map(e=>e.effect),right:b.map(e=>e.effect),selection:null};
+  }
+  // Candidate IDs order diagnostics only; they never establish tactical priority.
+  function resolveCandidates(candidates,scope) {
+    const text=v=>typeof v==='string'&&v.trim().length>0;
+    const invalid=()=>{throw Error('INVALID_CANDIDATES');};
+    if(!Array.isArray(candidates)||!candidates.length)invalid();
+    const items=Array.from(candidates);
+    if(items.some(c=>!c||!text(c.id)||!Array.isArray(c.conflicts_with)))invalid();
+    const ids=new Set(items.map(c=>c.id));
+    if(ids.size!==items.length)invalid();
+    for(const c of items)if(Array.from(c.conflicts_with).some(id=>!text(id)||!ids.has(id)||id===c.id)||new Set(c.conflicts_with).size!==c.conflicts_with.length)invalid();
+    const evaluated=items.map(c=>{const evaluation=evaluateRule(c.rule,scope);return {id:c.id,evaluation,
+      exclusion_reasons:[...evaluation.requires.filter(x=>x.state==='UNMET').map(x=>'REQUIRED_UNMET:'+x.id),...evaluation.excludes.filter(x=>x.state==='MET').map(x=>'EXCLUSION_MET:'+x.id)],
+      unresolved_conditions:[...evaluation.requires,...evaluation.excludes].filter(x=>x.state==='UNKNOWN').map(x=>x.id)};}).sort((a,b)=>a.id<b.id?-1:a.id>b.id?1:0);
+    const byId=new Map(evaluated.map(c=>[c.id,c.evaluation.status])),pairs=new Map();
+    for(const c of items)for(const other of c.conflicts_with){
+      if(byId.get(c.id)==='EXCLUDED'||byId.get(other)==='EXCLUDED')continue;
+      const pair=[c.id,other].sort(),key=JSON.stringify(pair);
+      pairs.set(key,{candidates:pair,status:pair.every(id=>byId.get(id)==='APPLIED')?'CONFIRMED':'POSSIBLE'});
+    }
+    const conflicts=[...pairs.entries()].sort(([a],[b])=>a<b?-1:a>b?1:0).map(([,v])=>v);
+    const eligible=evaluated.filter(c=>c.evaluation.status==='APPLIED').map(c=>c.id),conditional=evaluated.filter(c=>c.evaluation.status==='CONDITIONAL').map(c=>c.id);
+    const selected=!conflicts.length&&eligible.length===1&&!conditional.length?eligible[0]:null;
+    const effect_comparisons=[],ordered=[...items].sort((a,b)=>a.id<b.id?-1:a.id>b.id?1:0);
+    // Validate even excluded evidence; it must not silently re-enter through a later rule change.
+    for(const item of ordered)if(item.effects!==undefined)compareEffects(item.effects,[],scope);
+    for(let i=0;i<ordered.length;i++)for(let j=i+1;j<ordered.length;j++){
+      const a=ordered[i],b=ordered[j];
+      if(byId.get(a.id)==='EXCLUDED'||byId.get(b.id)==='EXCLUDED'||a.effects===undefined&&b.effects===undefined)continue;
+      effect_comparisons.push({candidates:[a.id,b.id],comparison:compareEffects(a.effects||[],b.effects||[],scope)});
+    }
+
+    return {schema_version:'gameplan-candidate-comparison-v1',status:conflicts.length?'CONFLICT':selected?'SELECTED':eligible.length||conditional.length?'UNRESOLVED':'NO_ELIGIBLE_CANDIDATE',selected,selection_basis:selected?'POLICY_ELIGIBILITY_ONLY':null,eligible,conditional,conflicts,effect_comparisons,candidates:evaluated};
+  }
+  // Preserve the established waiting policy as explicit mutually exclusive rules.
+  function waitingCandidates(sourceOK,necessity,feasibility,subject,position) {
+    const scope={subject,phase:'lane',snapshot:'pregame-input'};
+    const open=sourceOK&&!['MISSED','BLOCKED'].includes(feasibility);
+    const values={
+      SOURCE_REVIEW_REQUIRED:!sourceOK,
+      OPPORTUNITY_MISSED:sourceOK&&feasibility==='MISSED',
+      PREPARE_CONDITIONS:sourceOK&&feasibility==='BLOCKED',
+      WAIT_AND_PREPARE:open&&necessity==='LOW_COST_WAIT',
+      CREATE_WINDOW:open&&necessity==='CHANGE_NEEDED'&&feasibility==='CONDITIONAL',
+      CHECK_CONDITIONS:open&&necessity!=='LOW_COST_WAIT'&&!(necessity==='CHANGE_NEEDED'&&feasibility==='CONDITIONAL')
+    };
+    const result=resolveCandidates(Object.entries(values).map(([id,value])=>({id,conflicts_with:[],rule:{id:'waiting-candidate:'+id,version:'1',requires:[{id:'policy-eligibility',value,...scope,source:{kind:'KNOWLEDGE',ref:'waiting-necessity-feasibility-v1'}}],excludes:[]}})),scope);
+    // The input bundles income access; do not pretend to know separate CS, XP or health magnitudes.
+    const dimension=position==='JUNGLE'?'camp-growth-and-support-time':position==='SUPPORT'?'ally-income-access':'income-access';
+    const effect=(id,category,impact,dimension,ref)=>({id,category,impact,dimension,measure:'qualitative-direction',horizon:'current-planning-window',...scope,
+      source:{kind:'ASSUMPTION',ref,version:'loading-plan-example-v1'}});
+    const loss=effect('waiting-income', 'WAITING_LOSS',!sourceOK?'UNKNOWN':necessity==='CHANGE_NEEDED'?'LOSS':necessity==='LOW_COST_WAIT'?'UNCHANGED':'UNKNOWN',dimension,'context.planning.overrides.income');
+    const gain=effect('action-income','GOAL_GAIN','UNKNOWN',dimension,'context.planning.overrides.opportunity');
+    const cost=effect('action-resources','ACTION_COST','UNKNOWN','execution-resources','context.assumptions.scenario.overrides.resources');
+    return {...result,coverage:'WAITING_POLICY_ONLY',observation:false,inputs:{sourceOK,necessity,feasibility},
+      rule_id:'waiting-necessity-feasibility-v1',rule_version:'1',source_path:'web_r4/loading-planboard.js',
+      effects:{waiting_loss:[loss],goal_gain:[gain],action_cost:[cost]},effect_comparison:compareEffects([loss],[gain,cost],scope),
+      limitation:'Eligibility follows the waiting policy. Action gains and costs are unmeasured; no optimal tactic is selected.'};
+  }
+  function directionRuleTrace(report,catalog,board) {
+    const input=report.input,entry=directionData.champions[input.own_champion];
+    // Resolve uses the existing validated data contract; no new tactical inference.
+    const resolved=resolveDirectionProfiles(directionData,input.own_champion,input.own_position,catalog);
+    const rules=PHASES.map(phase=>{
+      const scope={subject:'allies:'+input.own_champion,phase,snapshot:'pregame-input'};
+      const condition=(id,value,kind,ref)=>({id,value,...scope,source:{kind,ref}});
+      return evaluateRule({id:'direction-eligibility:'+phase,version:'1',requires:[
+        condition('profile-supported',!!entry,'KNOWLEDGE','web_r4/loading-direction-profiles.js'),
+        condition('role-supported',!!entry&&entry.role===input.own_position,'INPUT','input.own_position'),
+        condition('profile-resolved',!!resolved,'KNOWLEDGE','resolveDirectionProfiles'),
+        condition('report-context-supported',board.waiting?.mode!=='SOURCE_REVIEW_REQUIRED'&&!!board.coaching_explanation?.[phase]?.length,'INPUT','report.coach.planboard.waiting/coaching_explanation')
+      ],excludes:[]},scope);
+    });
+    return {schema_version:'gameplan-rule-trace-v1',coverage:'DIRECTION_ELIGIBILITY_ONLY',observation:false,rules};
+  }
+  // Whitelist the established phase output. Never serialize arbitrary diagnostics.
+  function buildDelivery(board) {
+    const phases={};
+    for(const phase of PHASES){
+      const actions=board.action_summaries?.[phase]?.items;
+      if(!Array.isArray(actions)||actions.length!==5)throw Error('ACTION_COUNT:'+phase);
+      const paragraphs=board.coaching_explanation?.[phase]??[],details=board.condition_responses?.[phase]??[];
+      const text=value=>typeof value==='string'&&value.trim().length>0;
+      if(!Array.from(actions).every(a=>a&&text(a.text))||!Array.isArray(paragraphs)||
+        !Array.from(paragraphs).every(text)||!Array.isArray(details)||
+        !Array.from(details).every(d=>d&&text(d.trigger)&&text(d.action)))throw Error('INVALID_DELIVERY:'+phase);
+      const summary=board.loading_summary?.items?.find(item=>item.id===phase);
+      phases[phase]={headline:summary?.conclusion||board.brief?.[phase]||'이 영역의 자료가 부족합니다.',
+        actions:clone(actions),paragraphs:clone(paragraphs),details:clone(details)};
+    }
+    return {schema_version:'gameplan-delivery-v1',phases};
+  }
+  function validatePlanSnapshot(snapshot) {
+    const invalid=()=>{throw Error('INVALID_PLAN_SNAPSHOT');};
+    const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
+    const text=x=>typeof x==='string'&&x.trim().length>0;
+    const active=new Set();
+    const json=value=>{
+      if(value===null||typeof value==='string'||typeof value==='boolean'||typeof value==='number'&&Number.isFinite(value))return;
+      if(!value||typeof value!=='object'||active.has(value))invalid();
+      if(!Array.isArray(value)&&![Object.prototype,null].includes(Object.getPrototypeOf(value)))invalid();
+      if(Object.getOwnPropertySymbols(value).length)invalid();
+      if(Array.isArray(value)&&Object.keys(value).length!==value.length)invalid();
+      active.add(value);
+      for(const descriptor of Object.values(Object.getOwnPropertyDescriptors(value))){
+        if(!Object.hasOwn(descriptor,'value'))invalid();
+        json(descriptor.value);
+      }
+      active.delete(value);
+    };
+    json(snapshot);
+    if(!object(snapshot)||snapshot.schema_version!=='gameplan-snapshot-v1'||!object(snapshot.input)||!object(snapshot.versions)||
+      !object(snapshot.delivery)||snapshot.delivery.schema_version!=='gameplan-delivery-v1'||!object(snapshot.delivery.phases)||
+      Object.keys(snapshot.delivery.phases).sort().join('|')!==[...PHASES].sort().join('|'))invalid();
+    for(const key of ['spec','rules','content','data','direction_data','delivery'])if(!Object.hasOwn(snapshot.versions,key)||snapshot.versions[key]!==null&&!text(snapshot.versions[key]))invalid();
+    for(const phase of PHASES){
+      const p=snapshot.delivery.phases[phase];
+      if(!object(p)||!text(p.headline)||!Array.isArray(p.actions)||p.actions.length!==5||!p.actions.every(a=>object(a)&&text(a.text))||
+        !Array.isArray(p.paragraphs)||!p.paragraphs.every(text)||!Array.isArray(p.details)||!p.details.every(d=>object(d)&&text(d.trigger)&&text(d.action)))invalid();
+    }
+  }
+  // Detached replay evidence, not a historical catalog/rules loader.
+  function createPlanSnapshot(board,input) {
+    if(!board?.delivery)throw Error('INVALID_PLAN_SNAPSHOT');
+    const freeze=value=>{if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;};
+    const profileVersions=[...new Set(Object.values(board.direction_hierarchy||{}).map(p=>p.baseline?.data_version).filter(Boolean))].sort();
+    const snapshot={schema_version:'gameplan-snapshot-v1',coverage:'DETACHED_REPORT_ONLY',input,delivery:board.delivery,
+      versions:{spec:null,rules:null,content:null,data:null,...board.versions,direction_data:profileVersions.length?profileVersions.join('|'):null,delivery:board.delivery.schema_version},
+      candidate_comparison:board.internal_candidate_comparison||null,dependencies:dependencyTree(board)};
+    validatePlanSnapshot(snapshot);
+    return freeze(clone(snapshot));
+  }
+  function comparePlanSnapshots(before,after) {
+    validatePlanSnapshot(before);validatePlanSnapshot(after);
+    const changes=(a,b,path)=>{
+      if(JSON.stringify(a)===JSON.stringify(b))return [];
+      if(!a||!b||typeof a!=='object'||typeof b!=='object'||Array.isArray(a)!==Array.isArray(b))return [path];
+      return [...new Set([...Object.keys(a),...Object.keys(b)])].sort().flatMap(k=>changes(a[k],b[k],path+'.'+k));
+    };
+    const outputs=changes(before.delivery,after.delivery,'delivery');
+    return {schema_version:'gameplan-snapshot-diff-v1',causality:'NOT_INFERRED',
+      changed_inputs:changes(before.input,after.input,'input'),changed_versions:changes(before.versions,after.versions,'versions'),
+      changed_output_paths:outputs,changed_phases:PHASES.filter(p=>outputs.some(path=>path==='delivery'||path==='delivery.phases'||path.startsWith('delivery.phases.'+p+'.')||path==='delivery.phases.'+p))};
+  }
+  // Partial report-local lineage, not a complete patch dependency registry.
+  function dependencyTree(board) {
+    return {schema_version:'gameplan-dependencies-v1',coverage:'PARTIAL_REPORT_TRACE',
+      phases:PHASES.map(phase=>{
+        const baseline=board.direction_hierarchy?.[phase]?.baseline;
+        const decision=board.narrative_decisions?.[phase];
+        const nodes=[];
+        if(baseline)nodes.push({kind:'baseline',id:baseline.profile_id,version:baseline.version,
+          source_patch:baseline.source_patch,source_path:baseline.source_path,data_version:baseline.data_version,evidence_refs:[...new Set(baseline.evidence_refs||[])].sort()});
+        if(decision)nodes.push({kind:'decision',id:decision.rule_id,
+          evidence_refs:[...new Set(decision.evidence_ids||[])].sort()});
+        if(phase==='lane'&&board.internal_candidate_comparison){
+          const comparison=board.internal_candidate_comparison;
+          nodes.push({kind:'candidate-policy',id:comparison.rule_id,version:comparison.rule_version,
+            source_path:comparison.source_path,evidence_refs:['context.planning.overrides.income','context.planning.overrides.opportunity','context.assumptions.scenario.overrides.resources'],
+            selected:comparison.selected,comparison_path:'internal_candidate_comparison'});
+        }
+        return {phase,output_path:'delivery.phases.'+phase,nodes};
+      })};
+  }
+  function affectedOutputs(tree,changedIds) {
+    const affected=new Set(),found=new Set();
+    for(const entry of tree.phases)for(const node of entry.nodes)for(const id of changedIds){
+      if(node.id===id||node.evidence_refs.includes(id)){affected.add(entry.output_path);found.add(id);}
+    }
+    return {coverage:'PARTIAL_REPORT_TRACE',affected:[...affected].sort(),
+      untracked:[...new Set(changedIds.filter(id=>!found.has(id)))].sort()};
+  }
   const ENUMS = {
     enemy_support: ['PRESENT', 'ABSENT', 'UNKNOWN'], enemy_jungle: ['UNKNOWN', 'AWAY', 'NEAR'],
     ally_jungle: ['UNCONFIRMED', 'AVAILABLE'], goal: ['AUTO', 'PRESSURE', 'FARM', 'RECALL'],
@@ -613,14 +866,86 @@
       result.composition.theirs=other.win;result.composition.theirs_full=other.win+' '+other.macro;
       result.area_context.operations.theirs=other.macro;result.area_context.fight.theirs=other.opening;
     }
+    // Preserve the scenario plan before the additional waiting-state override.
+    const scenarioPlan=result.narrative_decisions?JSON.parse(JSON.stringify(result.narrative_decisions)):null;
     reconcileSituation(result,report,catalog,coach);
+    attachDirectionHierarchy(result,report,catalog,scenarioPlan);
+    result.internal_rule_trace=directionRuleTrace(report,catalog,result);
+    result.delivery=buildDelivery(result);
+    result.internal_dependencies=dependencyTree(result);
     return result;
+  }
+
+  // A closed data contract keeps patch edits separate from decision code.
+  function resolveDirectionProfiles(data,champion,role,catalog){
+    const invalid=()=>{throw Error('INVALID_DIRECTION_DATA');};
+    const text=v=>typeof v==='string'&&v.trim().length>0;
+    const object=v=>v&&typeof v==='object'&&!Array.isArray(v);
+    if(!object(data)||data.schema_version!=='gameplan-direction-profiles-v1'||!text(data.version)||
+      !text(data.source_patch)||data.review_state!=='TACTICAL_UNREVIEWED'||!object(data.champions))invalid();
+    // Validate the whole bundle so malformed unsupported entries cannot hide.
+    for(const entry of Object.values(data.champions)){
+      if(!object(entry)||!['TOP','JUNGLE','MID','BOTTOM','SUPPORT'].includes(entry.role)||
+        !Array.isArray(entry.required_slots)||!entry.required_slots.length||
+        !Array.from(entry.required_slots).every(k=>['P','Q','W','E','R'].includes(k))||
+        new Set(entry.required_slots).size!==entry.required_slots.length||!object(entry.phases)||
+        Object.keys(entry.phases).sort().join('|')!==[...PHASES].sort().join('|'))invalid();
+      for(const p of Object.values(entry.phases)){
+        if(!object(p)||!text(p.gain)||!text(p.method)||!text(p.explanation)||!Array.isArray(p.keys)||!p.keys.length||
+          !Array.from(p.keys).every(k=>entry.required_slots.includes(k))||new Set(p.keys).size!==p.keys.length)invalid();
+        // Every substituted skill must have evidence in this phase.
+        const tokens=p.explanation.match(/\{[^{}]*\}/g)||[];
+        if(tokens.some(token=>!p.keys.includes(token.slice(1,-1)))||/[{}]/.test(p.explanation.replace(/\{[PQWER]\}/g,'')))invalid();
+      }
+    }
+    const entry=Object.hasOwn(data.champions,champion)?data.champions[champion]:null;
+    if(!entry||entry.role!==role||data.source_patch!==catalog.source_patch)return null;
+    const facts=catalog.champions[champion]?.facts||[];
+    if(evaluateCondition({all:entry.required_slots.map(k=>facts.some(f=>f.slot===k&&text(f.name)&&text(f.id)))})!=='MET')return null;
+    const phases=clone(entry.phases);
+    for(const p of Object.values(phases))p.explanation=p.explanation.replace(/\{([PQWER])\}/g,(_,key)=>facts.find(f=>f.slot===key).name+'('+key+')');
+    return {version:data.version,phases};
+  }
+
+  // GP-0.6 first slice: baseline goals are authored interpretations of retained
+  // mechanics, not matchup strength or permission to execute them immediately.
+  // Existing decisions remain the only source of contextual actions. In particular,
+  // we cannot infer MAINTAIN/STRENGTHEN/SWITCH merely from champion identity.
+  function attachDirectionHierarchy(b,report,catalog,scenarioPlan){
+    const x=report.input,self=x.own_champion;
+    if(!b.coaching_explanation||!b.team_plan||b.waiting?.mode==='SOURCE_REVIEW_REQUIRED')return;
+    const resolved=resolveDirectionProfiles(directionData,self,x.own_position,catalog);
+    if(!resolved)return;
+    const profiles=resolved.phases,facts=catalog.champions[self].facts;
+    b.direction_hierarchy={};
+    for(const [phase,p]of Object.entries(profiles)){
+      if(!b.coaching_explanation[phase]?.length)continue;
+      const d=b.narrative_decisions?.[phase],context=scenarioPlan?.[phase];
+      const limitation=d?'아래 조합 설명은 실행 방법을 판단할 근거이며, 기본 방향이 강화되는지 또는 다른 방향으로 전환해야 하는지까지 확정한 상성 판정은 아니다.':'이 조합의 구체적인 연계는 아직 연결되지 않아 기본 방향의 유지·강화·전환을 확정하지 않는다.';
+      const baseline={profile_id:x.own_position.toLowerCase()+'-direction:'+self+':'+phase,version:resolved.version,champion:self,role:x.own_position,phase,
+        data_version:resolved.version,source_path:'web_r4/loading-direction-profiles.js',
+        desired_gains:[p.gain],primary_methods:[p.method],explanation:p.explanation,
+        evidence_refs:p.keys.map(key=>facts.find(f=>f.slot===key).id),source_patch:catalog.source_patch,
+        applicability:'RETAINED_MECHANICS_CONDITIONAL_INTERPRETATION'};
+      b.direction_hierarchy[phase]={rule_id:'baseline-context-link-v1',baseline,
+        composition:context?{pressure:context.pressure,response:context.response,evidence_ids:[...context.evidence_ids],basis:'SCENARIO_PLAN_BEFORE_WAITING_RECONCILIATION'}:null,
+        execution:d?{response:d.response,fallback:d.fallback,source_path:'narrative_decisions.'+phase}:null,
+        state_adjustment:phase==='lane'?{...b.engagement_decision}:null,
+        change:{kind:'LIMITED',reason:limitation},coverage:d?'BASELINE_AND_CONDITIONAL_PLAN':'BASELINE_ONLY',
+        observation:false,review_state:'TACTICAL_UNREVIEWED'};
+      // Keep the baseline readable as its own paragraph; the existing contextual
+      // story and reconciled state decision follow without being overwritten.
+      b.coaching_explanation[phase].unshift(p.explanation+(d?' 아래는 이 기본 방향을 이번 조합에서 실행할 조건이다.':' '+limitation));
+    }
   }
 
   // Necessity is a cost judgment; feasibility is a separate execution gate.
   // Both are optional user assumptions, never inferred observations from picks.
   function reconcileSituation(b,report,catalog,coach){
-    if(!b.team_plan||!b.waiting)return;
+    if(!b.team_plan||!b.waiting){
+      if(b.waiting?.mode==='SOURCE_REVIEW_REQUIRED')b.internal_candidate_comparison=waitingCandidates(false,'UNKNOWN','UNKNOWN','allies:'+report.input.own_champion,report.input.own_position);
+      return;
+    }
     const p=b.context.planning.overrides,s=coach.context.assumptions.scenario.overrides,pos=report.input.own_position;
     const income=p.income||'UNKNOWN',opportunity=p.opportunity||'UNCONFIRMED';
     const sourceOK=b.waiting.mode!=='SOURCE_REVIEW_REQUIRED';
@@ -628,7 +953,9 @@
     const unknown=s.resources==='UNKNOWN'||s.wave==='UNKNOWN';
     const necessity=income==='LOSING'?'CHANGE_NEEDED':income==='NORMAL'?'LOW_COST_WAIT':'UNKNOWN';
     const feasibility=opportunity==='MISSED'?'MISSED':blocked?'BLOCKED':!unknown&&opportunity==='AVAILABLE'&&p.ally_followup==='AVAILABLE'?'CONDITIONAL':'UNKNOWN';
-    const state=!sourceOK?'SOURCE_REVIEW_REQUIRED':feasibility==='MISSED'?'OPPORTUNITY_MISSED':feasibility==='BLOCKED'?'PREPARE_CONDITIONS':necessity==='LOW_COST_WAIT'?'WAIT_AND_PREPARE':necessity==='CHANGE_NEEDED'&&feasibility==='CONDITIONAL'?'CREATE_WINDOW':'CHECK_CONDITIONS';
+    const comparison=waitingCandidates(sourceOK,necessity,feasibility,'allies:'+report.input.own_champion,pos);
+    const state=comparison.selected||'CHECK_CONDITIONS';
+    b.internal_candidate_comparison=comparison;
     const current=b.narrative_decisions?.lane,oldAction=b.action_summaries.lane.items[2].text;
     const target=pos==='JUNGLE'?'캠프 성장과 라인 지원 시간':pos==='SUPPORT'?'아군의 CS·경험치 접근과 체력':'CS·경험치 접근과 다음 웨이브를 받을 체력';
     const reason=necessity==='CHANGE_NEEDED'?'계속 기다릴 때 '+target+'을 잃는다는 가정이다. 같은 자리에서 버티는 비용이 크지만, 그 사실만으로 지금 교전할 수 있다는 뜻은 아니다.':necessity==='LOW_COST_WAIT'?'현재 '+target+'을 지킬 수 있다는 가정이다. 당장 교환을 강제하기보다 구매·레벨·아군 합류 중 실제로 가까워진 전환점까지 준비할 여유가 있다.':'기다리는 동안 '+target+'을 유지하는지 아직 정하지 않았다. 견제를 받는다는 이유만으로 손실이 누적된다거나 지금 싸워야 한다고 확정하지 않는다.';
@@ -1085,5 +1412,6 @@
     b.coaching_scope={basis:'MECHANISM_LINKED_INFERENCE',observation:false,rule_id:'gameplan-coaching-content-v1',evidence_ids:roleEvidence,
       limitation:'조합과 기술에서 도출한 조건부 계획입니다. 실제 경기 관측이나 승리 보장이 아니며, 개별 매치업 우열은 기존 자료 범위를 따릅니다.'};
   }
-  return Object.freeze({ evaluate, validate, defaults, plainLanguage, actionSummaries });
+  return Object.freeze({ evaluate, validate, defaults, plainLanguage, actionSummaries,
+    createPlanSnapshot, comparePlanSnapshots, compareEffects, resolveCandidates, evaluateScopedCondition, evaluateRule, evaluateCondition, buildDelivery, dependencyTree, affectedOutputs, resolveDirectionProfiles });
 });
