@@ -198,3 +198,58 @@ for(const overrides of [{enemy_jungle:'NEAR'},{goal:'FARM'},{goal:'RECALL'}]){
  assert.equal(b.action_summaries.lane.items[2].text,b.wave.combat);
 }
 """)
+
+    def test_v13_waiting_need_and_feasibility_are_independent(self):
+        self.node(r"""
+const x=input('BOTTOM'),roles=['TOP','JUNGLE','MID','BOTTOM','SUPPORT'];
+x.allies=['Ornn','Vi','Ahri','Kaisa','Nautilus'].map((champion,i)=>({champion,position:roles[i]}));
+x.enemies=['Renekton','Graves','Orianna','Ziggs','Karma'].map((champion,i)=>({champion,position:roles[i]}));x.own_champion='Kaisa';
+x.schema_version='lol-coach-loading-input-v4';x.preferences={risk:'BALANCED'};
+function variant(overrides,scenario={}){return run({...x,planning:{basis:'loading-plan-example-v1',overrides},scenario:{standard:'lane-standard-v1',overrides:scenario}});}
+const normal=variant({income:'NORMAL',opportunity:'AVAILABLE',ally_followup:'AVAILABLE'}),loss=variant({income:'LOSING',opportunity:'AVAILABLE',ally_followup:'AVAILABLE'}),low=variant({income:'LOSING',opportunity:'AVAILABLE',ally_followup:'AVAILABLE',enemy_wave:'LARGE'},{resources:'LOW',wave:'INCOMING'}),alone=variant({income:'LOSING',opportunity:'AVAILABLE',ally_followup:'UNAVAILABLE'}),missed=variant({income:'LOSING',opportunity:'MISSED'});
+assert.equal(normal.engagement_decision.state,'WAIT_AND_PREPARE');
+assert.equal(loss.engagement_decision.state,'CREATE_WINDOW');
+for(const b of [low,alone]){assert.equal(b.engagement_decision.necessity,'CHANGE_NEEDED');assert.equal(b.engagement_decision.feasibility,'BLOCKED');assert.equal(b.engagement_decision.state,'PREPARE_CONDITIONS');}
+assert.equal(missed.engagement_decision.state,'OPPORTUNITY_MISSED');
+for(const b of [normal,loss,low,alone,missed]){
+ const d=b.engagement_decision;assert.equal(d.observed,false);assert.equal(d.spec_version,'1.3');
+ assert.equal(b.action_summaries.lane.items[2].text,d.action);assert.equal(b.wave.combat,d.action);
+ assert(b.coaching_explanation.lane.join(' ').includes(d.reason));
+ assert.equal(b.condition_responses.lane[0].action,d.action);
+ assert.deepEqual(b.team_plan,normal.team_plan);
+ assert.deepEqual(b.coaching_explanation.fight,normal.coaching_explanation.fight);
+ assert(b.overall_commentary.length);assert.equal(b.versions.spec,'1.3');
+}
+assert.notEqual(normal.coaching_explanation.lane.join(' '),loss.coaching_explanation.lane.join(' '));
+assert.match(low.engagement_decision.alternative,/경험치|귀환/);
+for(const role of ['JUNGLE','SUPPORT']){const a={...x,scenario:{standard:'lane-standard-v1',overrides:{}},own_position:role,own_champion:x.allies.find(p=>p.position===role).champion,planning:{basis:'loading-plan-example-v1',overrides:{income:'LOSING',ally_followup:'UNAVAILABLE'}}};const b=run(a);assert(!b.engagement_decision.action.includes('막타'));if(role==='SUPPORT')assert(!b.engagement_decision.alternative.includes('캠프'));}
+""")
+
+    def test_v13_missing_mechanism_limits_specific_coaching_and_preserves_input(self):
+        self.node(r"""
+const x=input('BOTTOM'),roles=['TOP','JUNGLE','MID','BOTTOM','SUPPORT'];
+x.allies=['Ornn','Vi','Ahri','Kaisa','Nautilus'].map((champion,i)=>({champion,position:roles[i]}));
+x.enemies=['Renekton','Graves','Orianna','Ziggs','Karma'].map((champion,i)=>({champion,position:roles[i]}));x.own_champion='Kaisa';
+const before=JSON.stringify(x),r=E.analyze(x,catalog),v=P.project(r);assert.equal(JSON.stringify(x),before);
+assert.deepEqual(v.overall_commentary,r.coach.planboard.overall_commentary);assert(v.overall_commentary[1].includes('오른·바이·아리·노틸러스'));assert(v.overall_commentary[1].includes('공격'));
+const modified=structuredClone(catalog);modified.champions.Nautilus.facts=modified.champions.Nautilus.facts.filter(f=>f.slot!=='Q');
+const limited=E.analyze(x,modified).coach.planboard;
+assert(!limited.coaching_explanation.lane.join(' ').includes('닻줄 견인(Q)'));
+assert.match(limited.coaching_scope.limitation,/미지원/);
+const again=E.analyze(x,catalog);assert.deepEqual(again.coach.planboard,r.coach.planboard);
+x.patch='1.1';const patch=E.analyze(x,catalog).coach.planboard;assert(!patch.narrative_decisions);assert(!patch.overall_commentary?.length);
+""")
+
+    def test_v13_limits_reach_legacy_actions_and_perspectives(self):
+        self.node(r"""
+for(const overrides of [{income:'LOSING',opportunity:'MISSED'},{income:'NORMAL',enemy_wave:'LARGE'}]){
+ const x=E.exampleInput(catalog,0);x.schema_version='lol-coach-loading-input-v4';x.preferences={risk:'OPPORTUNITY'};x.scenario={standard:'lane-standard-v1',overrides:{}};x.planning={basis:'loading-plan-example-v1',overrides};
+ const r=E.analyze(x,catalog),b=r.coach.planboard,d=b.engagement_decision;
+ assert(!r.coach.actions.some(a=>['SHORT_POKE','COUNTER_FOCUS_ADC'].includes(a.id)&&a.feasible==='POSSIBLE'));
+ assert.equal(b.area_context.lane.ours,b.matchup_playbook.ours.means);
+ assert.equal(b.area_context.lane.matchup,d.reason);
+ assert.equal(b.condition_responses.lane[0].action,d.action);
+ assert(!b.condition_responses.lane.some(c=>['ENEMY_KEY_SPENT','LUX_BIND_HIT','PLAN_WINDOW'].includes(c.id)));
+ if(overrides.enemy_wave)assert.equal(d.state,'PREPARE_CONDITIONS');
+}
+""")

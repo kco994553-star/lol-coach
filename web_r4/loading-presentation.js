@@ -18,7 +18,7 @@
         ['macro','운영의 핵심',t=>t.macro],
         ['risk','주요 위험',t=>t.avoid]
       ].map(([id,label,text])=>({id,label,ours:text(b.team_plan.ours),theirs:text(b.team_plan.theirs)})):[],
-      team_plan:b.team_plan||null,remember:(b.team_plan?b.reminders:(b.loading_summary?.changes||b.reminders||[])).slice(0,3),origin:b.context?.origin||'ANALYSIS_ASSUMPTIONS_NOT_OBSERVATION'};
+      overall_commentary:Array.isArray(b.overall_commentary)?b.overall_commentary:[],engagement_decision:b.engagement_decision||null,team_plan:b.team_plan||null,remember:(b.team_plan?b.reminders:(b.loading_summary?.changes||b.reminders||[])).slice(0,3),origin:b.context?.origin||'ANALYSIS_ASSUMPTIONS_NOT_OBSERVATION'};
   }
   function validate(value){
     if(!value||value.version!==1||!value.input||typeof value.input!=='object'||Array.isArray(value.input))throw Error('공유한 게임플랜 형식을 읽을 수 없습니다.');

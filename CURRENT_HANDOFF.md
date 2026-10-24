@@ -1,3 +1,14 @@
+# Current — gameplan v1.3 implementation under verification
+
+- Branch `work/gameplan-v13-20261024`; intake main `742b3bbb0b8f6401f9ed3776907eff77df13180d`; canonical token `codex-20261024-gameplan-v13` on `work/main-execution-claim`.
+- Actual attached ZIP is internal v1.1, not supplied-description v1.2: 9 structural tests PASS, quality-policy/results/register/test_quality files absent. No 17-check or historical-zero claim. Latest actual v1.3 spec is the requirement.
+- 2.2.1–4 default overall commentary and detail/body separation; partial 2.3.1/2.3.3–6/2.4.1 and 2.6 explicit income/opportunity/enemy-wave assumptions separate need from feasibility. Same decision drives summaries/prose/detail, preserved team strategy and unrelated phases.
+- Existing PR125/126 output/role/source gates preserved; role-only support prose corrected; relative push and safe movement distinguished. No new generator/runtime AI, no protected decisions/raw data/quotas/schedules changed.
+- Initial relevant tests pass; final SHA-bound automated/browser/PR/main/Pages evidence still pending. Tactical validity/effects remain unverified, N0; all-matchup details not supported.
+- Requirement matrix/reference9 mapping and full generated outputs: docs/gameplan-content/2026-10-19.md and evidence/actual-evidence/handoff-v11; prior records below are historical. Missing v1.2 package is an input discrepancy, not a blocker to v1.3 implementation.
+
+---
+
 # Current — independent coaching narrative shipped, final handoff
 
 - Source branch `work/coaching-narrative-20261024` HEAD `4cddd1934f7e56c79dfcececc54c313399e6002b`; PR125 normally merged to product main `a8f3bc1ffa080823ee707cf6492a5444f9d7916f`. Results branch `work/coaching-narrative-results-20261024`. Canonical token `codex-20261024-coaching-narrative`; exact final SHA/owner release on `work/main-execution-claim`.
