@@ -1049,6 +1049,29 @@
       if(graves)add('fight','SMOKE_FOLLOWUP','적 후속 딜러가 안전하게 연막 사거리 안에 있다면',skill(self,'W')+'로 시야를 방해하고, 아군과 함께 접근한 적을 공격한다.',
         '진입자와 후속 딜러의 공격을 한 번에 받는 상황을 줄이기 위한 선택이다.','연막을 던지려다 혼자 적진으로 들어가야 한다면 가까운 적과 퇴로를 우선한다.',[self],sources(self,['W','E']));
     }
+    if(!graves&&['JUNGLE','SUPPORT'].includes(pos)){
+      const supportRole=pos==='SUPPORT',carry=at('allies','BOTTOM'),partner=at('allies',supportRole?'JUNGLE':'SUPPORT');
+      const together=partner?name(partner):'가까운 아군',carryName=carry?name(carry):'아군 딜러';
+      Object.assign(b.operations,supportRole?{
+        concept:'아군의 수급과 시야 확보 시간을 연결하기',placement:carryName+'가 미니언을 받을 때 보호할 거리에서 시작하고, 아군이 움직일 수 있을 때 강 입구로 함께 이동한다.',
+        connection:together+'와 시야를 확인하되 '+carryName+'를 상대 진입에 혼자 남기지 않는다.',
+        priority:'아군의 미니언 정리·귀환을 도운 뒤 함께 시야를 확보해 목표물에 접근할 시간을 만든다.',
+        concede:'아군이 포탑 아래에서 위협받는데 로밍을 강행하거나, 혼자 어두운 입구로 시야를 확인하지 않는다.',
+        fallback:'아군이 움직일 수 없으면 곁에서 견제를 막고 미니언 정리·귀환을 돕는다. 다시 모일 시간에 맞춰 안전한 입구부터 시야를 확보한다.'
+      }:{
+        concept:'캠프 성장과 라인 지원을 같은 이동 안에 연결하기',placement:'다음 목표물과 지원할 라인 쪽 캠프를 연결하고, 아군이 먼저 움직일 수 있는지 확인한다.',
+        connection:together+'와 진입할 길을 확인하되 라이너가 미니언을 버려야 하는 지원을 당연하게 계산하지 않는다.',
+        priority:'캠프 성장과 아군 지원 시간을 맞추고, 라인 지원이 가능할 때 시야·목표물 이득으로 바꾼다.',
+        concede:'아군이 미니언을 받느라 움직이지 못하면 혼자 강 싸움이나 침입을 시작하지 않는다.',
+        fallback:'지원이 늦거나 교전이 끝났으면 뒤늦게 따라가지 않고 가까운 캠프·귀환을 비교한다. 다이브 위험이 큰 라인은 도착할 시간을 확인해 방어와 반대편 이득을 고른다.'
+      });
+      explain.operations=[b.operations.placement+' '+b.operations.connection,b.operations.priority+' '+b.operations.concede,b.operations.fallback];
+      b.operations.steps=[b.operations.placement,b.operations.priority,b.operations.fallback];
+      b.area_context.operations.ours=b.operations.placement;b.area_context.operations.action=b.operations.priority;
+      [b.operations.placement,b.operations.connection,b.operations.priority,b.operations.concede,b.operations.fallback].forEach((text,i)=>Object.assign(b.action_summaries.operations.items[i],{text,basis:'ROLE_PRINCIPLE',source_paths:['operations'],rule_ids:['role-macro-fallback-v1.3']}));
+      const summary=b.loading_summary.items.find(x=>x.id==='operations');summary.conclusion=b.operations.concept;summary.support=b.operations.fallback;b.brief.operations=b.operations.priority;
+      for(const c of b.condition_responses.operations)if(c.id==='LATE_JOIN'){c.trigger=supportRole?'아군이 미니언을 받거나 귀환해야 해서 함께 이동할 수 없다면':'라인 아군의 지원이 늦거나 이미 교전이 끝났다면';c.action=b.operations.concede;c.keep=b.operations.connection;c.stop=b.operations.fallback;}
+    }
     // Other roles retain their actual selected plan; explanation is projected,
     // never copied from Fiora/Graves or used to invent a supported matchup.
     for(const area of ['lane','operations','fight'])if(!explain[area].length){

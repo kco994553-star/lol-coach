@@ -253,3 +253,20 @@ for(const overrides of [{income:'LOSING',opportunity:'MISSED'},{income:'NORMAL',
  if(overrides.enemy_wave)assert.equal(d.state,'PREPARE_CONDITIONS');
 }
 """)
+
+    def test_v13_role_fallback_does_not_assign_lane_income_to_support_or_jungle(self):
+        self.node(r"""
+const base=require('./evidence/actual-evidence/handoff-v11/v13-outputs.json').variants.base.input;
+const boards=base.allies.map(p=>run({...base,own_champion:p.champion,own_position:p.position}));
+for(const b of boards)assert.equal(b.overall_commentary[0],boards[0].overall_commentary[0]);
+assert.equal(new Set(boards.map(b=>b.overall_commentary[1])).size,5);
+const j=boards[1],s=boards[4];
+assert.match(j.operations.priority,/캠프/);assert.match(s.operations.priority,/아군.*시야|시야.*아군/);
+for(const b of [j,s]){
+ assert(!b.coaching_explanation.operations.join(' ').includes('미니언을 먼저 잡아야'));
+ assert(!b.condition_responses.operations.some(c=>c.trigger.includes('미니언도 많이 놓친다면')));
+ assert.equal(b.action_summaries.operations.items[2].text,b.operations.priority);
+ assert.equal(b.loading_summary.items.find(i=>i.id==='operations').support,b.operations.fallback);
+}
+assert(!s.operations.fallback.includes('캠프'));assert.match(s.coaching_explanation.operations.join(' '),/아군.*귀환|귀환.*아군/);
+""")
