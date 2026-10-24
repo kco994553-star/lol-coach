@@ -1,3 +1,11 @@
+# Current — v1.3 role fallback follow-up before publication
+
+- Branch `work/gameplan-v13-role-followup-20261024`, base/main `f20bf438e20a67316e75c267d146a53d74c2ac41`; same canonical token `codex-20261024-gameplan-v13`. PR127 merged but not yet published.
+- Final five-user content review found inherited generic JUNGLE/SUPPORT macro lane-income text. Correct operations summary/prose/details/LATE_JOIN and personal overall commentary together; preserve Graves authored knowledge and all shared team strategy.
+- Partial 2.3.1.1/2.4.1/2.2.3 follow-up; related49 PASS, final SHA/CI/browser pending. Current public remains prior product. No tactical-effect approval; exact original v1.2/17 attachment remains unavailable.
+
+---
+
 # Current — gameplan v1.3 implementation under verification
 
 - Branch `work/gameplan-v13-20261024`; intake main `742b3bbb0b8f6401f9ed3776907eff77df13180d`; canonical token `codex-20261024-gameplan-v13` on `work/main-execution-claim`.
