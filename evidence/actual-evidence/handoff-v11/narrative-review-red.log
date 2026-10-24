@@ -1,0 +1,37 @@
+F
+======================================================================
+FAIL: test_narrative_respects_manual_opponent_existing_kit_and_limited_window (tests_pregame.test_gameplan_coaching_content.GameplanCoachingContentTests.test_narrative_respects_manual_opponent_existing_kit_and_limited_window)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach/tests_pregame/test_gameplan_coaching_content.py", line 178, in test_narrative_respects_manual_opponent_existing_kit_and_limited_window
+    self.node(r"""
+  File "/workspace/lol-coach/tests_pregame/test_gameplan_coaching_content.py", line 19, in node
+    self.assertEqual(p.returncode, 0, p.stderr[-5000:])
+AssertionError: 1 != 0 : node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: unlearned Lux W must not replace reviewed level-one plan
+    at [eval]:10:1
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.098s
+
+FAILED (failures=1)
