@@ -1,3 +1,24 @@
+# LoL Coach v1.1 bounded delivery — completed / writer released
+- run_token: `codex-20261023-v11-intake`
+- status: `COMPLETED`
+- writer_active: false
+- scope: existing PR122 integration; v1.1 default comparison/1+3 coaching, shared team perspective, conditional waiting costs, traceability and public verification. This is NOT whole-product completion.
+- current_branch: `work/handoff-v11-results-20261023`
+- current_sha / remote_main: `b441fc01a08df2e753c81c091b7e4166a6f1acce`
+- uncommitted_changes: none; active_editing: none. Source, publication and coordination worktrees preserved.
+- PR122 merged1f99329; implementation PR123 HEAD1b6fbd9 → product main `d9f515c4a48ee17d024923059669a94daaf4386a`; results-only PR124 HEAD65a21a8 → final main b441fc0. Normal merges, no approval/protection bypass.
+- Exact feature/product-main/final-main required3 SUCCESS. Final main metadata-only gates correctly reuse unchanged behavior/browser checks; no new full-suite claim. Source102 and original/hash integrity PASS; final local full Chromium and actual public1440/390/320 basic/details/keyboard/assumption-reset PASS.
+- Public product: gh-pages `4cc14ab3f4442252a564b7f7bf5ba1c0cbe357f0`; Pages40042463683 build/report/deploy SUCCESS; HTTPS90hashes/root/build-info/.nojekyll and preserved pro/riot verified. Results-only final main has identical product files and is not separately republished.
+- Completed scope: 2.2.1.1 fixed team perspective and 2.2.4 default1+3; basic comparison2.2.1. Partial2.2.3/2.3.1/2.3.1.1/2.3.3~7 waiting/role refinement and6.1 tracking125rows. No tactical-effect approval.
+- Limits: pre-final dirty-tree778 had3failures; all3 reproduced clean1f99329 (PC held/source-integrity2, historicalv23 binding1). Exact final full suite NOT claimed; final affected102 pass. Actual coachingN0/accuracynull; all matchups/positions/current-game/Windows unverified.
+- Next: implement account→current game server/input/UI/user mapping/status freshness and response races, then partial picks/recommendations; review existing PC/v23 failures against current contracts, source/skill/team/wait-cost gaps, official16.21.1 item impact; immutable past-game plan linkage and remaining records/helper/review/learning. Current-game CODE is still needed, not only credentials.
+- External input: secure server Riot credential or actual supported local LCU/field-policy proof; missing original ZIP/referenceHTML if available. No keys in frontend/public logs. Runtime Riot/Gemini/video/paid calls0; official public CDN discovery recorded separately.
+- Operations: existing schedules only; actual recent runs in scheduler-runs.json. Dedicated daily official/weekly content/monthly coverage pipeline remains unconfirmed; no duplicate automation registered. 16.21.1 item discovery flagged review-required, product16.20.1/source grades unchanged.
+- Main evidence: `evidence/actual-evidence/handoff-v11/result.md`; current125-row trace: contracts/information-architecture-v1.md. Final-main CI/reuse receipt is in this coordination branch at evidence/actual-evidence/handoff-v11/final-main-ci.json.
+- Historical claim/release paragraphs below are execution history, superseded by this top status.
+
+---
+
 # LoL Coach v1.1 intake — active writer
 - run_token: `codex-20261023-v11-intake`
 - status: `CI_PENDING`
