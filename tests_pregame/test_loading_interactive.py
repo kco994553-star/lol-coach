@@ -9,7 +9,8 @@ class LoadingInteractiveTests(unittest.TestCase):
 const html=fs.readFileSync('./web_r4/loading.html','utf8');
 assert(html.includes('src="./loading-exploration.js"'),'pure exploration must be loaded');
 assert(html.indexOf('src="./loading-exploration.js"')<html.indexOf('src="./loading-engine.js"'));
-assert(html.includes('src="./loading-interactive.js"'));assert(html.includes('id="interactive-flow"'));assert(html.includes('id="zoom-selected-action"'),'modal needs its selected action text');
+assert(html.includes('src="./loading-interactive.js"'));assert(!html.includes('id="interactive-flow"'));assert(!html.includes('id="zoom-selected-action"'));
+const historical=fs.readFileSync('./tests_pregame/fixtures/loading-legacy.html','utf8');assert(historical.includes('id="interactive-flow"'));assert(historical.includes('id="zoom-selected-action"'));
 """)
 
     def test_equal_supported_actions_explain_each_preference_change(self):
