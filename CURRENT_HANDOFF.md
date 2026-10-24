@@ -1,3 +1,13 @@
+# Gameplan direction hierarchy — implementation
+- run_token: `codex-20261024-gp04-direction`
+- status: RUNNING
+- writer_active: true
+- owner_branch: `work/gameplan-direction-20261024`
+- intake_main: `d00c255334cc5cb9cceca86840914b1331a33fa1`
+- Scope: GP-0.6 baseline→composition adaptation in existing planboard; targeted tests, content/spec mapping, PR. Preserve authored role/matchup gates and protected knowledge. No runtime AI, new source approval, paid service or scheduler change.
+
+---
+
 # Gameplan v1.3 — completed / writer released
 - run_token: `codex-20261024-gameplan-v13`
 - status: COMPLETED
