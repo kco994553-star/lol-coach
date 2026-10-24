@@ -1,3 +1,13 @@
+# Gameplan v1.3 — role fallback follow-up
+- run_token: `codex-20261024-gameplan-v13`
+- status: RUNNING
+- writer_active: true
+- owner_branch: `work/gameplan-v13-role-followup-20261024`
+- intake_main: `f20bf438e20a67316e75c267d146a53d74c2ac41`
+- Pre-publication full five-user content review found inherited unsupported jungle/support macro fallback uses lane income. Correct shared result and individual overall commentary before publication; previous PR127 checks remain valid for their scope. No public update yet.
+
+---
+
 # Gameplan v1.3 — product main checks pending
 - run_token: `codex-20261024-gameplan-v13`
 - status: CI_PENDING
