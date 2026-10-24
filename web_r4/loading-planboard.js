@@ -5,6 +5,62 @@
 })(typeof globalThis !== 'undefined' ? globalThis : this, function (formation) {
   'use strict';
   const clone = x => JSON.parse(JSON.stringify(x));
+  const PHASES = Object.freeze(['lane','operations','fight']);
+  // Typed condition algebra. Missing information is null, never truthy coercion.
+  function evaluateCondition(expression) {
+    if(expression===true)return 'MET';
+    if(expression===false)return 'UNMET';
+    if(expression===null)return 'UNKNOWN';
+    if(!expression||typeof expression!=='object'||Array.isArray(expression)||Object.keys(expression).length!==1)throw Error('INVALID_CONDITION');
+    const [operator]=Object.keys(expression),value=expression[operator];
+    if(operator==='not'){
+      const state=evaluateCondition(value);
+      return state==='UNKNOWN'?state:state==='MET'?'UNMET':'MET';
+    }
+    if(!['all','any'].includes(operator)||!Array.isArray(value)||!value.length)throw Error('INVALID_CONDITION');
+    const states=Array.from(value,evaluateCondition);
+    if(operator==='all')return states.includes('UNMET')?'UNMET':states.every(s=>s==='MET')?'MET':'UNKNOWN';
+    return states.includes('MET')?'MET':states.every(s=>s==='UNMET')?'UNMET':'UNKNOWN';
+  }
+  // Whitelist the established phase output. Never serialize arbitrary diagnostics.
+  function buildDelivery(board) {
+    const phases={};
+    for(const phase of PHASES){
+      const actions=board.action_summaries?.[phase]?.items;
+      if(!Array.isArray(actions)||actions.length!==5)throw Error('ACTION_COUNT:'+phase);
+      const paragraphs=board.coaching_explanation?.[phase]??[],details=board.condition_responses?.[phase]??[];
+      const text=value=>typeof value==='string'&&value.trim().length>0;
+      if(!Array.from(actions).every(a=>a&&text(a.text))||!Array.isArray(paragraphs)||
+        !Array.from(paragraphs).every(text)||!Array.isArray(details)||
+        !Array.from(details).every(d=>d&&text(d.trigger)&&text(d.action)))throw Error('INVALID_DELIVERY:'+phase);
+      const summary=board.loading_summary?.items?.find(item=>item.id===phase);
+      phases[phase]={headline:summary?.conclusion||board.brief?.[phase]||'이 영역의 자료가 부족합니다.',
+        actions:clone(actions),paragraphs:clone(paragraphs),details:clone(details)};
+    }
+    return {schema_version:'gameplan-delivery-v1',phases};
+  }
+  // Partial report-local lineage, not a complete patch dependency registry.
+  function dependencyTree(board) {
+    return {schema_version:'gameplan-dependencies-v1',coverage:'PARTIAL_REPORT_TRACE',
+      phases:PHASES.map(phase=>{
+        const baseline=board.direction_hierarchy?.[phase]?.baseline;
+        const decision=board.narrative_decisions?.[phase];
+        const nodes=[];
+        if(baseline)nodes.push({kind:'baseline',id:baseline.profile_id,version:baseline.version,
+          source_patch:baseline.source_patch,evidence_refs:[...new Set(baseline.evidence_refs||[])].sort()});
+        if(decision)nodes.push({kind:'decision',id:decision.rule_id,
+          evidence_refs:[...new Set(decision.evidence_ids||[])].sort()});
+        return {phase,output_path:'delivery.phases.'+phase,nodes};
+      })};
+  }
+  function affectedOutputs(tree,changedIds) {
+    const affected=new Set(),found=new Set();
+    for(const entry of tree.phases)for(const node of entry.nodes)for(const id of changedIds){
+      if(node.id===id||node.evidence_refs.includes(id)){affected.add(entry.output_path);found.add(id);}
+    }
+    return {coverage:'PARTIAL_REPORT_TRACE',affected:[...affected].sort(),
+      untracked:[...new Set(changedIds.filter(id=>!found.has(id)))].sort()};
+  }
   const ENUMS = {
     enemy_support: ['PRESENT', 'ABSENT', 'UNKNOWN'], enemy_jungle: ['UNKNOWN', 'AWAY', 'NEAR'],
     ally_jungle: ['UNCONFIRMED', 'AVAILABLE'], goal: ['AUTO', 'PRESSURE', 'FARM', 'RECALL'],
@@ -617,6 +673,8 @@
     const scenarioPlan=result.narrative_decisions?JSON.parse(JSON.stringify(result.narrative_decisions)):null;
     reconcileSituation(result,report,catalog,coach);
     attachDirectionHierarchy(result,report,catalog,scenarioPlan);
+    result.delivery=buildDelivery(result);
+    result.internal_dependencies=dependencyTree(result);
     return result;
   }
 
@@ -629,7 +687,7 @@
     if(x.own_position!=='BOTTOM'||!b.coaching_explanation||!b.team_plan||b.waiting?.mode==='SOURCE_REVIEW_REQUIRED')return;
     const keys={Caitlyn:['P','Q','W','E'],Ezreal:['P','Q','W','E']}[self];
     const facts=catalog.champions[self]?.facts||[];
-    if(!keys||!keys.every(key=>facts.some(f=>f.slot===key)))return;
+    if(!keys||evaluateCondition({all:keys.map(key=>facts.some(f=>f.slot===key))})!=='MET')return;
     const skill=key=>facts.find(f=>f.slot===key).name+'('+key+')';
     const profiles=self==='Caitlyn'?{
       lane:{keys:['Q','W','P'],gain:'막타 접근을 방해할 공간과 웨이브 압박',
@@ -1141,5 +1199,6 @@
     b.coaching_scope={basis:'MECHANISM_LINKED_INFERENCE',observation:false,rule_id:'gameplan-coaching-content-v1',evidence_ids:roleEvidence,
       limitation:'조합과 기술에서 도출한 조건부 계획입니다. 실제 경기 관측이나 승리 보장이 아니며, 개별 매치업 우열은 기존 자료 범위를 따릅니다.'};
   }
-  return Object.freeze({ evaluate, validate, defaults, plainLanguage, actionSummaries });
+  return Object.freeze({ evaluate, validate, defaults, plainLanguage, actionSummaries,
+    evaluateCondition, buildDelivery, dependencyTree, affectedOutputs });
 });
