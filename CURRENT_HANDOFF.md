@@ -1,7 +1,7 @@
 # Independent coaching narrative — active writer
 - run_token: `codex-20261024-coaching-narrative`
-- status: RUNNING
-- writer_active: true
+- status: CI_PENDING
+- writer_active: false
 - owner_branch: `work/coaching-narrative-20261024`
 - intake_main: `b441fc01a08df2e753c81c091b7e4166a6f1acce`
 - scope: user-requested independent three-phase prose, shared decision/summary/detail consistency and readable basic display; exact KaiSa/Nautilus–Ziggs/Karma roster and counterexamples; tests, PR and authorized existing publication.
@@ -14,6 +14,7 @@
 - Exact product main required3 now SUCCESS (pregame120732827312/regression120732827150/browser120732827429). Resume prepared artifact publication and real public verification.
 - Public complete: Pages40048002506 artifact6334985 SUCCESS; HTTPS90 and actual public1440/390/320 PASS. Results PR126 HEAD92a4d3cd47ff616a1c4704bc8e01c18916b4ba53, local metadata binding PASS; requiredCI pending. Root clean. Resume exact result checks/normal merge/finalmain receipt and release; no product republish.
 - Results126 HEAD92a4d3c required3 SUCCESS and independent metadata review no blocker. Previous release push returned503 (not applied); same remote token verified, resume final normal merge.
+- Results126 normal merge final main `742b3bbb0b8f6401f9ed3776907eff77df13180d`; root branch work/coaching-narrative-results-20261024 clean, product code identical to deployeda8f3bc1. Final-main metadataCI pending; no product republish.
 - Prior claims below are history.
 
 ---
