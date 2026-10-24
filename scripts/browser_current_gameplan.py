@@ -12,6 +12,7 @@ for(const [device,url,width,height] of [['desktop',process.env.LOADING_PC+'/load
  assert.equal(await p.locator('#loading-legacy-details,#loading-summary,#lane-table,#scenario-content').count(),0);
  assert.equal(await p.locator('.plan-overview-comparison tbody tr').count(),4);
  for(const phase of ['lane','operations','fight']){
+  assert(await p.locator('[data-basic-phase='+phase+'] .plan-card-conditions > span').count()>0);
   assert.equal(await p.locator('[data-basic-phase='+phase+'] .plan-basic-actions li').count(),5);
   assert(await p.locator('[data-basic-coaching='+phase+'] p').count()>0);
   await p.locator('[data-plan-more='+phase+']').click();
