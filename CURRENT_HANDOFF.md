@@ -1,3 +1,14 @@
+# Gameplan direction hierarchy — GP-0.6 first slice (2026-10-24)
+
+- Owner branch: `work/gameplan-direction-20261024`; intake main `d00c255334cc5cb9cceca86840914b1331a33fa1`.
+- Implemented: BOTTOM Caitlyn/Ezreal phase-specific baseline profiles and visible lead-in; snapshot of existing conditional plan before waiting-state reconciliation; final execution and state metadata. Summary/actions remain the existing decisions.
+- Limited: change classification stays LIMITED; this does not implement full GP-0.6/0.7 or all-matchup comparison. composition retains pre-existing scenario assumptions, not a state-free matchup assessment. Unsupported ally links stay BASELINE_ONLY.
+- Evidence: `docs/gameplan-content/2026-10-24-direction.md`, `evidence/actual-evidence/gameplan-direction-20261024/generated.json`.
+- Local validation: 52 targeted tests passed after independent read-only review corrections. New tests registered in source-bound CI. Mobile screenshot pending: local Chromium unavailable and download returned an invalid archive.
+- No runtime AI, protected knowledge, user approvals, sources/collection, scheduler or paid-service changes. Tactical efficacy remains unverified/N=0. Public site is not claimed updated.
+
+---
+
 # Current — gameplan v1.3 publicly verified
 
 - Source PR127 HEAD439f554 → mainf20bf43; role follow-up PR128 HEADcf2c590 → product main3013f3023efc01deedf401627fab5952949786e5. Result branch `work/gameplan-v13-results-20261024`; exact final SHA/owner release on canonical `work/main-execution-claim`, token `codex-20261024-gameplan-v13`.
