@@ -1,3 +1,13 @@
+# Gameplan v1.3 — final results integration
+- run_token: `codex-20261024-gameplan-v13`
+- status: RUNNING
+- writer_active: true
+- owner_branch: `work/gameplan-v13-results-20261024`
+- intake_main: `3013f3023efc01deedf401627fab5952949786e5`
+- ResultsPR129 HEAD310aae8 required3 SUCCESS. Scope normal merge and finalmain metadata check/clean owner release only. Product publicly verified and unchanged.
+
+---
+
 # Gameplan v1.3 — results PR CI pending
 - run_token: `codex-20261024-gameplan-v13`
 - status: CI_PENDING
