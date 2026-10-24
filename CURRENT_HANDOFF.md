@@ -1,3 +1,13 @@
+# Gameplan v1.3 — final product integration
+- run_token: `codex-20261024-gameplan-v13`
+- status: RUNNING
+- writer_active: true
+- owner_branch: `work/gameplan-v13-role-followup-20261024`
+- intake_main: `f20bf438e20a67316e75c267d146a53d74c2ac41`
+- PR128 HEADcf2c590: exact90/preservation/full local browser/required3 and independent rereview PASS. Scope normal merge, exact-main/publication verification and final existing handoff.
+
+---
+
 # Gameplan v1.3 — role follow-up CI pending
 - run_token: `codex-20261024-gameplan-v13`
 - status: CI_PENDING
