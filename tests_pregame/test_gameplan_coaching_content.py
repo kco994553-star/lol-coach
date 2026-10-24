@@ -18,6 +18,46 @@ class GameplanCoachingContentTests(unittest.TestCase):
         p = subprocess.run(['node', '-e', PRELUDE + body], cwd=ROOT, capture_output=True, text=True)
         self.assertEqual(p.returncode, 0, p.stderr[-5000:])
 
+    def test_malphite_gwen_plan_changes_with_partners_and_gates(self):
+        self.node(r"""
+const roles=['TOP','JUNGLE','MID','BOTTOM','SUPPORT'];
+const x={...E.exampleInput(catalog,0),own_champion:'Malphite',own_position:'TOP',
+ allies:['Malphite','Nocturne','Taliyah','Sivir','Lulu'].map((champion,i)=>({champion,position:roles[i]})),
+ enemies:['Gwen','Graves','Ahri','Varus','Alistar'].map((champion,i)=>({champion,position:roles[i]}))};
+const b=run(x);
+assert.equal(b.delivery.phases.lane.coverage.status,'CONDITIONAL_PLAN');
+assert.match(b.delivery.phases.lane.headline,/짧게.*교환/);
+assert.match(b.delivery.phases.lane.paragraphs.join(' '),/그웬.*고정 피해/);
+assert.match(b.delivery.phases.fight.paragraphs.join(' '),/녹턴/);
+assert.match(b.delivery.phases.fight.paragraphs.join(' '),/탈리야/);
+assert.match(b.delivery.phases.fight.paragraphs.join(' '),/알리스타/);
+assert(b.delivery.phases.fight.tags.some(t=>t.label==='호응 후 진입'));
+for(const area of ['lane','operations','fight']){
+ const d=b.narrative_decisions[area];assert.equal(d.observation,false);
+ assert.equal(d.review_state,'TACTICAL_UNREVIEWED');assert(d.evidence_ids.length);
+ assert.equal(b.delivery.phases[area].actions.length,5);
+ assert.deepEqual(P.project(E.analyze(x,catalog)).cards[['lane','operations','fight'].indexOf(area)].explanation,b.delivery.phases[area].paragraphs);
+}
+let changed=structuredClone(x);changed.allies[1].champion='Vi';changed.allies[2].champion='Orianna';changed.enemies[4].champion='Leona';
+const other=run(changed);const prose=JSON.stringify(other.delivery);
+for(const absent of ['녹턴','탈리야','알리스타'])assert(!prose.includes(absent),absent);
+assert.notDeepEqual(other.delivery.phases.fight,b.delivery.phases.fight);
+changed=structuredClone(x);changed.enemies[0].champion='Garen';assert(!run(changed).narrative_decisions?.lane);
+changed=structuredClone(x);changed.patch='1.1';assert(!run(changed).narrative_decisions?.lane);
+changed=structuredClone(x);changed.opponent_mode='MANUAL';changed.lane_opponent='Ahri';assert(!run(changed).narrative_decisions?.lane);
+const missing=structuredClone(catalog);missing.champions.Gwen.facts=missing.champions.Gwen.facts.filter(f=>f.slot!=='W');
+assert(!E.analyze(x,missing).coach.planboard.narrative_decisions?.lane);
+for(const resources of ['LOW','UNKNOWN']){
+ const r=E.analyze(x,catalog),low=C.evaluate(r,catalog,{standard:'lane-standard-v1',overrides:{resources}},'LEVEL2').planboard;
+ assert.match(low.delivery.phases.lane.actions[2].text,/강제하지|확인/);
+ assert(!low.delivery.phases.lane.tags.some(t=>t.label==='짧게 교환'));
+ assert(!low.delivery.phases.lane.paragraphs.join(' ').includes('멈출 수 없는 힘'));
+}
+changed={...x,schema_version:'lol-coach-loading-input-v4',preferences:{risk:'BALANCED'},scenario:{standard:'lane-standard-v1',overrides:{}},planning:{basis:'loading-plan-example-v1',overrides:{income:'LOSING',opportunity:'MISSED'}}};
+const missed=run(changed);assert(missed.delivery.phases.lane.tags.some(t=>t.label==='추격 중단'));
+assert.match(missed.delivery.phases.lane.actions[2].text,/뒤늦게 따라 들어가지/);
+""")
+
     def test_graves_jungle_plan_connects_growth_side_and_central_defense(self):
         self.node(r"""
 const b=run();assert.match(b.operation_headline,/사이드.*중앙/);

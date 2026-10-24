@@ -39,6 +39,19 @@ for(const [device,url,width,height] of [['desktop',process.env.LOADING_PC+'/load
  await p.locator('[data-plan-edit]').click();await p.locator('#own-champion').selectOption('Sejuani');await p.locator('#own-position').selectOption('JUNGLE');await p.locator('#analyze').click();
  assert.match(await p.locator('[data-basic-phase=lane] h3').innerText(),/초반 정글/);
  assert.match(await p.locator('[data-basic-phase=operations] h3').innerText(),/중반 운영/);
+ const contextual=await p.evaluate(()=>{
+  const roles=['TOP','JUNGLE','MID','BOTTOM','SUPPORT'];
+  const original=JSON.parse(decodeURIComponent(location.hash.slice('#plan='.length))).input;
+  const input={...original,schema_version:'lol-coach-loading-input-v4',lane_opponent:null,own_champion:'Malphite',own_position:'TOP',opponent_mode:'ASSIGNED',scenario:{standard:'lane-standard-v1',overrides:{}},planning:{basis:'loading-plan-example-v1',overrides:{}},
+   allies:['Malphite','Nocturne','Taliyah','Sivir','Lulu'].map((champion,i)=>({champion,position:roles[i]})),enemies:['Gwen','Graves','Ahri','Varus','Alistar'].map((champion,i)=>({champion,position:roles[i]}))};
+  return location.pathname+window.LoadingPresentation.encode(input,'LEVEL2',null);
+ });
+ await p.goto(new URL(contextual,url).href);await p.locator('.plan-title').waitFor().catch(async e=>{throw Error(JSON.stringify({device,errors,body:await p.locator('body').innerText()})+' '+e.message)});
+ assert.equal(await p.locator('.plan-coverage[data-coverage=CONDITIONAL_PLAN]').count(),3);
+ assert.match(await p.locator('[data-basic-coaching=fight]').innerText(),/녹턴/);
+ assert.match(await p.locator('[data-basic-coaching=lane]').innerText(),/그웬/);
+ assert(await p.locator('[data-basic-phase=fight] .plan-card-conditions').innerText().then(t=>t.includes('호응 후 진입')));
+ assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
  await p.locator('[data-plan-edit]').click();await p.locator('#pick-ALLY-0').fill('');assert(await p.locator('#loading-results').isHidden());
  assert.deepEqual(errors,[]);results.push({device,currentDOM:true,fiveActions:true,conditionsReset:true,periodRestore:true,jungleLabels:true,staleHidden:true,errors});await p.close();
 }
