@@ -51,7 +51,7 @@ class PCRuntimeTests(unittest.TestCase):
         class Adapter:
             def poll(self):polled.set();return snapshot()
         def connect(service):service.adapter=Adapter()
-        with patch('coach_v1.official_catalog.refresh_if_due',side_effect=refresh),patch.object(PCServices,'_connect',connect):
+        with patch('coach_v1.official_catalog.refresh_if_due',side_effect=refresh),patch('coach_v1.official_items.refresh_if_due'),patch.object(PCServices,'_connect',connect):
             service=start_pc_services(self.server)
             try:
                 self.assertTrue(entered.wait(1))

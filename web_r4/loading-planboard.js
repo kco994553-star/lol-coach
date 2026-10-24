@@ -45,6 +45,48 @@
     const unknown=[...requires,...excludes].some(c=>c.state==='UNKNOWN');
     return {rule_id:rule.id,version:rule.version,status:blocked?'EXCLUDED':unknown?'CONDITIONAL':'APPLIED',requires,excludes};
   }
+  // Qualitative directions only: no magnitudes, probability estimates or weighted sums.
+  // A dominance result is limited to declared effects and never selects a tactic.
+  function compareEffects(left,right,scope) {
+    const text=v=>typeof v==='string'&&v.trim().length>0;
+    const coordinate=e=>JSON.stringify([e.dimension,e.measure,e.horizon,e.subject,e.phase,e.snapshot]);
+    const prepare=effects=>{
+      if(!Array.isArray(effects))throw Error('INVALID_EFFECTS');
+      const ids=new Set(),keys=new Set();
+      return Array.from(effects,e=>{
+        const plain=value=>value&&typeof value==='object'&&!Array.isArray(value)&&[Object.prototype,null].includes(Object.getPrototypeOf(value))&&
+          !Object.getOwnPropertySymbols(value).length&&Object.values(Object.getOwnPropertyDescriptors(value)).every(d=>Object.hasOwn(d,'value')&&d.enumerable);
+        if(!plain(e)||e.source!==undefined&&e.source!==null&&(!plain(e.source)||Object.keys(e.source).some(k=>!['kind','ref','version'].includes(k))||Object.values(e.source).some(v=>typeof v!=='string')))throw Error('INVALID_EFFECTS');
+        if(!e||Object.keys(e).some(k=>!['id','dimension','measure','horizon','subject','phase','snapshot','category','impact','source'].includes(k))||!['id','dimension','measure','horizon','subject','phase','snapshot'].every(k=>text(e[k]))||
+          !['GOAL_GAIN','ACTION_COST','WAITING_LOSS'].includes(e.category)||!['BENEFIT','UNCHANGED','LOSS','UNKNOWN'].includes(e.impact)||
+          ids.has(e.id)||keys.has(coordinate(e)))throw Error('INVALID_EFFECTS');
+        ids.add(e.id);keys.add(coordinate(e));
+        const trace=evaluateScopedCondition({...e,value:e.impact==='UNKNOWN'?null:true},scope);
+        if(!e.source||!text(e.source.version))trace.reasons.push('SOURCE_VERSION_UNAVAILABLE');
+        return {effect:clone(e),key:coordinate(e),reasons:trace.reasons};
+      }).sort((a,b)=>a.key<b.key?-1:a.key>b.key?1:0);
+    };
+    const a=prepare(left),b=prepare(right),rightByKey=new Map(b.map(e=>[e.key,e])),reasons=[],dimensions=[];
+    if(!a.length||!b.length)reasons.push('EFFECTS_UNAVAILABLE');
+    for(const entry of [...a,...b])for(const reason of entry.reasons)reasons.push(entry.effect.id+':'+reason);
+    if(a.length!==b.length||a.some(e=>!rightByKey.has(e.key)))reasons.push('COMPARISON_SCOPE_MISMATCH');
+    let better=false,worse=false;
+    for(const entry of a){
+      const other=rightByKey.get(entry.key);if(!other)continue;
+      const x=entry.effect,y=other.effect;
+      if(x.impact==='UNKNOWN'||y.impact==='UNKNOWN'){reasons.push(x.id+':UNKNOWN_IMPACT');continue;}
+      if(!x.source||!y.source||x.source.kind!==y.source.kind){reasons.push(x.id+':EVIDENCE_KIND_MISMATCH');continue;}
+      if(x.source.version!==y.source.version){reasons.push(x.id+':SOURCE_VERSION_MISMATCH');continue;}
+      // This is an order of signs, not a conversion of unlike losses into numbers.
+      const ahead=(u,v)=>u==='BENEFIT'&&v!=='BENEFIT'||u==='UNCHANGED'&&v==='LOSS';
+      const relation=x.impact===y.impact?'EQUAL':ahead(x.impact,y.impact)?'LEFT_BETTER':'RIGHT_BETTER';
+      better ||= relation==='LEFT_BETTER';worse ||= relation==='RIGHT_BETTER';
+      dimensions.push({dimension:x.dimension,measure:x.measure,horizon:x.horizon,left_id:x.id,right_id:y.id,relation});
+    }
+    return {schema_version:'gameplan-effects-comparison-v1',coverage:'DECLARED_QUALITATIVE_EFFECTS_ONLY',
+      status:reasons.length?'INCOMPARABLE':better&&worse?'TRADEOFF':better?'LEFT_DOMINATES_DECLARED_EFFECTS':worse?'RIGHT_DOMINATES_DECLARED_EFFECTS':'EQUAL_DECLARED_EFFECTS',
+      reasons:[...new Set(reasons)].sort(),dimensions,left:a.map(e=>e.effect),right:b.map(e=>e.effect),selection:null};
+  }
   // Candidate IDs order diagnostics only; they never establish tactical priority.
   function resolveCandidates(candidates,scope) {
     const text=v=>typeof v==='string'&&v.trim().length>0;
@@ -55,7 +97,9 @@
     const ids=new Set(items.map(c=>c.id));
     if(ids.size!==items.length)invalid();
     for(const c of items)if(Array.from(c.conflicts_with).some(id=>!text(id)||!ids.has(id)||id===c.id)||new Set(c.conflicts_with).size!==c.conflicts_with.length)invalid();
-    const evaluated=items.map(c=>({id:c.id,evaluation:evaluateRule(c.rule,scope)})).sort((a,b)=>a.id<b.id?-1:a.id>b.id?1:0);
+    const evaluated=items.map(c=>{const evaluation=evaluateRule(c.rule,scope);return {id:c.id,evaluation,
+      exclusion_reasons:[...evaluation.requires.filter(x=>x.state==='UNMET').map(x=>'REQUIRED_UNMET:'+x.id),...evaluation.excludes.filter(x=>x.state==='MET').map(x=>'EXCLUSION_MET:'+x.id)],
+      unresolved_conditions:[...evaluation.requires,...evaluation.excludes].filter(x=>x.state==='UNKNOWN').map(x=>x.id)};}).sort((a,b)=>a.id<b.id?-1:a.id>b.id?1:0);
     const byId=new Map(evaluated.map(c=>[c.id,c.evaluation.status])),pairs=new Map();
     for(const c of items)for(const other of c.conflicts_with){
       if(byId.get(c.id)==='EXCLUDED'||byId.get(other)==='EXCLUDED')continue;
@@ -65,10 +109,19 @@
     const conflicts=[...pairs.entries()].sort(([a],[b])=>a<b?-1:a>b?1:0).map(([,v])=>v);
     const eligible=evaluated.filter(c=>c.evaluation.status==='APPLIED').map(c=>c.id),conditional=evaluated.filter(c=>c.evaluation.status==='CONDITIONAL').map(c=>c.id);
     const selected=!conflicts.length&&eligible.length===1&&!conditional.length?eligible[0]:null;
-    return {schema_version:'gameplan-candidate-comparison-v1',status:conflicts.length?'CONFLICT':selected?'SELECTED':eligible.length||conditional.length?'UNRESOLVED':'NO_ELIGIBLE_CANDIDATE',selected,eligible,conditional,conflicts,candidates:evaluated};
+    const effect_comparisons=[],ordered=[...items].sort((a,b)=>a.id<b.id?-1:a.id>b.id?1:0);
+    // Validate even excluded evidence; it must not silently re-enter through a later rule change.
+    for(const item of ordered)if(item.effects!==undefined)compareEffects(item.effects,[],scope);
+    for(let i=0;i<ordered.length;i++)for(let j=i+1;j<ordered.length;j++){
+      const a=ordered[i],b=ordered[j];
+      if(byId.get(a.id)==='EXCLUDED'||byId.get(b.id)==='EXCLUDED'||a.effects===undefined&&b.effects===undefined)continue;
+      effect_comparisons.push({candidates:[a.id,b.id],comparison:compareEffects(a.effects||[],b.effects||[],scope)});
+    }
+
+    return {schema_version:'gameplan-candidate-comparison-v1',status:conflicts.length?'CONFLICT':selected?'SELECTED':eligible.length||conditional.length?'UNRESOLVED':'NO_ELIGIBLE_CANDIDATE',selected,selection_basis:selected?'POLICY_ELIGIBILITY_ONLY':null,eligible,conditional,conflicts,effect_comparisons,candidates:evaluated};
   }
   // Preserve the established waiting policy as explicit mutually exclusive rules.
-  function waitingCandidates(sourceOK,necessity,feasibility,subject) {
+  function waitingCandidates(sourceOK,necessity,feasibility,subject,position) {
     const scope={subject,phase:'lane',snapshot:'pregame-input'};
     const open=sourceOK&&!['MISSED','BLOCKED'].includes(feasibility);
     const values={
@@ -80,7 +133,17 @@
       CHECK_CONDITIONS:open&&necessity!=='LOW_COST_WAIT'&&!(necessity==='CHANGE_NEEDED'&&feasibility==='CONDITIONAL')
     };
     const result=resolveCandidates(Object.entries(values).map(([id,value])=>({id,conflicts_with:[],rule:{id:'waiting-candidate:'+id,version:'1',requires:[{id:'policy-eligibility',value,...scope,source:{kind:'KNOWLEDGE',ref:'waiting-necessity-feasibility-v1'}}],excludes:[]}})),scope);
-    return {...result,coverage:'WAITING_POLICY_ONLY',observation:false,inputs:{sourceOK,necessity,feasibility}};
+    // The input bundles income access; do not pretend to know separate CS, XP or health magnitudes.
+    const dimension=position==='JUNGLE'?'camp-growth-and-support-time':position==='SUPPORT'?'ally-income-access':'income-access';
+    const effect=(id,category,impact,dimension,ref)=>({id,category,impact,dimension,measure:'qualitative-direction',horizon:'current-planning-window',...scope,
+      source:{kind:'ASSUMPTION',ref,version:'loading-plan-example-v1'}});
+    const loss=effect('waiting-income', 'WAITING_LOSS',!sourceOK?'UNKNOWN':necessity==='CHANGE_NEEDED'?'LOSS':necessity==='LOW_COST_WAIT'?'UNCHANGED':'UNKNOWN',dimension,'context.planning.overrides.income');
+    const gain=effect('action-income','GOAL_GAIN','UNKNOWN',dimension,'context.planning.overrides.opportunity');
+    const cost=effect('action-resources','ACTION_COST','UNKNOWN','execution-resources','context.assumptions.scenario.overrides.resources');
+    return {...result,coverage:'WAITING_POLICY_ONLY',observation:false,inputs:{sourceOK,necessity,feasibility},
+      rule_id:'waiting-necessity-feasibility-v1',rule_version:'1',source_path:'web_r4/loading-planboard.js',
+      effects:{waiting_loss:[loss],goal_gain:[gain],action_cost:[cost]},effect_comparison:compareEffects([loss],[gain,cost],scope),
+      limitation:'Eligibility follows the waiting policy. Action gains and costs are unmeasured; no optimal tactic is selected.'};
   }
   function directionRuleTrace(report,catalog,board) {
     const input=report.input,entry=directionData.champions[input.own_champion];
@@ -115,6 +178,58 @@
     }
     return {schema_version:'gameplan-delivery-v1',phases};
   }
+  function validatePlanSnapshot(snapshot) {
+    const invalid=()=>{throw Error('INVALID_PLAN_SNAPSHOT');};
+    const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
+    const text=x=>typeof x==='string'&&x.trim().length>0;
+    const active=new Set();
+    const json=value=>{
+      if(value===null||typeof value==='string'||typeof value==='boolean'||typeof value==='number'&&Number.isFinite(value))return;
+      if(!value||typeof value!=='object'||active.has(value))invalid();
+      if(!Array.isArray(value)&&![Object.prototype,null].includes(Object.getPrototypeOf(value)))invalid();
+      if(Object.getOwnPropertySymbols(value).length)invalid();
+      if(Array.isArray(value)&&Object.keys(value).length!==value.length)invalid();
+      active.add(value);
+      for(const descriptor of Object.values(Object.getOwnPropertyDescriptors(value))){
+        if(!Object.hasOwn(descriptor,'value'))invalid();
+        json(descriptor.value);
+      }
+      active.delete(value);
+    };
+    json(snapshot);
+    if(!object(snapshot)||snapshot.schema_version!=='gameplan-snapshot-v1'||!object(snapshot.input)||!object(snapshot.versions)||
+      !object(snapshot.delivery)||snapshot.delivery.schema_version!=='gameplan-delivery-v1'||!object(snapshot.delivery.phases)||
+      Object.keys(snapshot.delivery.phases).sort().join('|')!==[...PHASES].sort().join('|'))invalid();
+    for(const key of ['spec','rules','content','data','direction_data','delivery'])if(!Object.hasOwn(snapshot.versions,key)||snapshot.versions[key]!==null&&!text(snapshot.versions[key]))invalid();
+    for(const phase of PHASES){
+      const p=snapshot.delivery.phases[phase];
+      if(!object(p)||!text(p.headline)||!Array.isArray(p.actions)||p.actions.length!==5||!p.actions.every(a=>object(a)&&text(a.text))||
+        !Array.isArray(p.paragraphs)||!p.paragraphs.every(text)||!Array.isArray(p.details)||!p.details.every(d=>object(d)&&text(d.trigger)&&text(d.action)))invalid();
+    }
+  }
+  // Detached replay evidence, not a historical catalog/rules loader.
+  function createPlanSnapshot(board,input) {
+    if(!board?.delivery)throw Error('INVALID_PLAN_SNAPSHOT');
+    const freeze=value=>{if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;};
+    const profileVersions=[...new Set(Object.values(board.direction_hierarchy||{}).map(p=>p.baseline?.data_version).filter(Boolean))].sort();
+    const snapshot={schema_version:'gameplan-snapshot-v1',coverage:'DETACHED_REPORT_ONLY',input,delivery:board.delivery,
+      versions:{spec:null,rules:null,content:null,data:null,...board.versions,direction_data:profileVersions.length?profileVersions.join('|'):null,delivery:board.delivery.schema_version},
+      candidate_comparison:board.internal_candidate_comparison||null,dependencies:dependencyTree(board)};
+    validatePlanSnapshot(snapshot);
+    return freeze(clone(snapshot));
+  }
+  function comparePlanSnapshots(before,after) {
+    validatePlanSnapshot(before);validatePlanSnapshot(after);
+    const changes=(a,b,path)=>{
+      if(JSON.stringify(a)===JSON.stringify(b))return [];
+      if(!a||!b||typeof a!=='object'||typeof b!=='object'||Array.isArray(a)!==Array.isArray(b))return [path];
+      return [...new Set([...Object.keys(a),...Object.keys(b)])].sort().flatMap(k=>changes(a[k],b[k],path+'.'+k));
+    };
+    const outputs=changes(before.delivery,after.delivery,'delivery');
+    return {schema_version:'gameplan-snapshot-diff-v1',causality:'NOT_INFERRED',
+      changed_inputs:changes(before.input,after.input,'input'),changed_versions:changes(before.versions,after.versions,'versions'),
+      changed_output_paths:outputs,changed_phases:PHASES.filter(p=>outputs.some(path=>path==='delivery'||path==='delivery.phases'||path.startsWith('delivery.phases.'+p+'.')||path==='delivery.phases.'+p))};
+  }
   // Partial report-local lineage, not a complete patch dependency registry.
   function dependencyTree(board) {
     return {schema_version:'gameplan-dependencies-v1',coverage:'PARTIAL_REPORT_TRACE',
@@ -126,6 +241,12 @@
           source_patch:baseline.source_patch,source_path:baseline.source_path,data_version:baseline.data_version,evidence_refs:[...new Set(baseline.evidence_refs||[])].sort()});
         if(decision)nodes.push({kind:'decision',id:decision.rule_id,
           evidence_refs:[...new Set(decision.evidence_ids||[])].sort()});
+        if(phase==='lane'&&board.internal_candidate_comparison){
+          const comparison=board.internal_candidate_comparison;
+          nodes.push({kind:'candidate-policy',id:comparison.rule_id,version:comparison.rule_version,
+            source_path:comparison.source_path,evidence_refs:['context.planning.overrides.income','context.planning.overrides.opportunity','context.assumptions.scenario.overrides.resources'],
+            selected:comparison.selected,comparison_path:'internal_candidate_comparison'});
+        }
         return {phase,output_path:'delivery.phases.'+phase,nodes};
       })};
   }
@@ -792,7 +913,7 @@
   // we cannot infer MAINTAIN/STRENGTHEN/SWITCH merely from champion identity.
   function attachDirectionHierarchy(b,report,catalog,scenarioPlan){
     const x=report.input,self=x.own_champion;
-    if(x.own_position!=='BOTTOM'||!b.coaching_explanation||!b.team_plan||b.waiting?.mode==='SOURCE_REVIEW_REQUIRED')return;
+    if(!b.coaching_explanation||!b.team_plan||b.waiting?.mode==='SOURCE_REVIEW_REQUIRED')return;
     const resolved=resolveDirectionProfiles(directionData,self,x.own_position,catalog);
     if(!resolved)return;
     const profiles=resolved.phases,facts=catalog.champions[self].facts;
@@ -801,7 +922,7 @@
       if(!b.coaching_explanation[phase]?.length)continue;
       const d=b.narrative_decisions?.[phase],context=scenarioPlan?.[phase];
       const limitation=d?'아래 조합 설명은 실행 방법을 판단할 근거이며, 기본 방향이 강화되는지 또는 다른 방향으로 전환해야 하는지까지 확정한 상성 판정은 아니다.':'이 조합의 구체적인 연계는 아직 연결되지 않아 기본 방향의 유지·강화·전환을 확정하지 않는다.';
-      const baseline={profile_id:'bottom-direction:'+self+':'+phase,version:resolved.version,champion:self,role:x.own_position,phase,
+      const baseline={profile_id:x.own_position.toLowerCase()+'-direction:'+self+':'+phase,version:resolved.version,champion:self,role:x.own_position,phase,
         data_version:resolved.version,source_path:'web_r4/loading-direction-profiles.js',
         desired_gains:[p.gain],primary_methods:[p.method],explanation:p.explanation,
         evidence_refs:p.keys.map(key=>facts.find(f=>f.slot===key).id),source_patch:catalog.source_patch,
@@ -822,7 +943,7 @@
   // Both are optional user assumptions, never inferred observations from picks.
   function reconcileSituation(b,report,catalog,coach){
     if(!b.team_plan||!b.waiting){
-      if(b.waiting?.mode==='SOURCE_REVIEW_REQUIRED')b.internal_candidate_comparison=waitingCandidates(false,'UNKNOWN','UNKNOWN','allies:'+report.input.own_champion);
+      if(b.waiting?.mode==='SOURCE_REVIEW_REQUIRED')b.internal_candidate_comparison=waitingCandidates(false,'UNKNOWN','UNKNOWN','allies:'+report.input.own_champion,report.input.own_position);
       return;
     }
     const p=b.context.planning.overrides,s=coach.context.assumptions.scenario.overrides,pos=report.input.own_position;
@@ -832,7 +953,7 @@
     const unknown=s.resources==='UNKNOWN'||s.wave==='UNKNOWN';
     const necessity=income==='LOSING'?'CHANGE_NEEDED':income==='NORMAL'?'LOW_COST_WAIT':'UNKNOWN';
     const feasibility=opportunity==='MISSED'?'MISSED':blocked?'BLOCKED':!unknown&&opportunity==='AVAILABLE'&&p.ally_followup==='AVAILABLE'?'CONDITIONAL':'UNKNOWN';
-    const comparison=waitingCandidates(sourceOK,necessity,feasibility,'allies:'+report.input.own_champion);
+    const comparison=waitingCandidates(sourceOK,necessity,feasibility,'allies:'+report.input.own_champion,pos);
     const state=comparison.selected||'CHECK_CONDITIONS';
     b.internal_candidate_comparison=comparison;
     const current=b.narrative_decisions?.lane,oldAction=b.action_summaries.lane.items[2].text;
@@ -1292,5 +1413,5 @@
       limitation:'조합과 기술에서 도출한 조건부 계획입니다. 실제 경기 관측이나 승리 보장이 아니며, 개별 매치업 우열은 기존 자료 범위를 따릅니다.'};
   }
   return Object.freeze({ evaluate, validate, defaults, plainLanguage, actionSummaries,
-    resolveCandidates, evaluateScopedCondition, evaluateRule, evaluateCondition, buildDelivery, dependencyTree, affectedOutputs, resolveDirectionProfiles });
+    createPlanSnapshot, comparePlanSnapshots, compareEffects, resolveCandidates, evaluateScopedCondition, evaluateRule, evaluateCondition, buildDelivery, dependencyTree, affectedOutputs, resolveDirectionProfiles });
 });

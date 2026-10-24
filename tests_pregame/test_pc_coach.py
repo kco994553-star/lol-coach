@@ -68,10 +68,24 @@ class PcCoachTests(unittest.TestCase):
         with patch('coach_v1.pc_coach.assess',return_value=held):result=preview(self.server,dict(input=draft()))
         hypotheses=[c for c in result['cards'] if c['evidence_level']=='HYPOTHESIS']
         self.assertTrue(hypotheses)
-        self.assertTrue(all(c['evidence_label']=='미검토 가설(AI 작성, 근거 링크)' and '검토 보류:' in c['details'] and c['sources'] for c in hypotheses))
+        self.assertTrue(all(c['evidence_label']=='미검토 가설(AI 작성, 근거 링크)' and c['sources'] for c in hypotheses))
+        original=[c for c in hypotheses if not c.get('revision_of')]
+        revised=[c for c in hypotheses if c.get('revision_of')]
+        self.assertTrue(original)
+        self.assertTrue(revised)
+        self.assertTrue(all('검토 보류:' in c['details'] for c in original))
+        self.assertTrue(all('보류 이유·필요한 자료:' in c['details'] for c in revised))
 
     def test_source_integrity_failure_is_not_even_shown_as_hypothesis(self):
         from coach_v1.pc_coach import preview
         with patch('coach_v1.pc_coach.machine_check',return_value=['SOURCE_INVALID']):result=preview(self.server,dict(input=draft()))
+        self.assertFalse(any(c.get('candidate_id') for c in result['cards']))
+
+    def test_unreadable_original_sources_also_hide_revised_hypotheses(self):
+        from coach_v1.pc_coach import preview
+        baseline=preview(self.server,dict(input=draft()))
+        self.assertTrue(any(c.get('revision_of') for c in baseline['cards']))
+        with patch('coach_v1.auto_review._source_material',side_effect=OSError('source unavailable')):
+            result=preview(self.server,dict(input=draft()))
         self.assertFalse(any(c.get('candidate_id') for c in result['cards']))
 

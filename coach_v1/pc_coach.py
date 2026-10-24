@@ -53,15 +53,18 @@ def preview(server,body):
         from .pregame_contract import binding_matches
         knowledge=current_knowledge(server.research)
         rejected={item['spec']['rule_id'] for item in knowledge if item.get('spec') and item['proposal']['review_state']=='REJECTED'}
+        # Revisions retain the original sources, so their receipts cannot bypass
+        # current source integrity checks on that lineage.
+        invalid={row['id'] for row in packet['rows'] if machine_check(row)}
         from .pilot_advice import cards_for_draft as pilot_cards
-        revised,replaced=pilot_cards(draft,withdrawn=withdrawn,rejected=rejected)
+        revised,replaced=pilot_cards(draft,withdrawn=withdrawn,rejected=rejected|invalid)
         for row in packet['rows']:
             spec=row['spec'];rid=row['id']
             if rid in replaced:continue
             if rid in withdrawn or rid in rejected or draft['patch'] not in spec['patches'] or spec['scope']=='POSITION' and position not in spec['positions']:continue
             if any(facts.predicate(p)!='TRUE' for p in spec['conditions']):continue
             if any(facts.predicate(p)!='FALSE' for p in spec['counterconditions']+spec['stop_conditions']):continue
-            if machine_check(row):continue
+            if rid in invalid:continue
             state=states[rid];level='AUTO_VERIFIED' if state['state']=='AUTO_VERIFIED' else 'HYPOTHESIS'
             # USER overrides belong to the exact original source/spec binding;
             # revised AI lineage never borrows its approval.

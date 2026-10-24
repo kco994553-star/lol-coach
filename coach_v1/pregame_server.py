@@ -17,6 +17,53 @@ from .knowledge import validate_knowledge_content, _records, _head
 from .state import digest
 
 
+def pc_gameplan_input(connection):
+    """Add an identity-free normalization preview to the existing PC status.
+
+    The existing capture has neither session/observation metadata nor pick-lock
+    finality. Never promote it to a fresh gameplan, even if all ten picks exist.
+    This reads only the already-captured projection; no additional local poll.
+    """
+    unavailable = dict(format='lol-coach-composition-capture-v1', input=None,
+                       ready=False, reasons=['CAPTURE_UNAVAILABLE'], source=None,
+                       live_coaching_enabled=False)
+    if connection.get('status') != 'CONNECTED' or connection.get('phase') != 'ChampSelect':
+        return unavailable
+    capture = connection.get('input')
+    if not isinstance(capture, dict):
+        return unavailable
+    try:
+        from .gameplan_input import normalize
+        from .official_catalog import _current
+        _, _, roster, _, _ = _current()
+        raw = dict(allies=[], enemies=[], own_champion=capture.get('my_champion'),
+                   own_position=capture.get('my_position'), side=None,
+                   patch=capture.get('patch'), opponent_mode='ASSIGNED', lane_opponent=None)
+        slots = capture.get('slots')
+        if not isinstance(slots, list) or len(slots) != 10:
+            raise ValueError('CAPTURE_SCHEMA')
+        seen = set()
+        for row in slots:
+            side, slot = row.get('side'), row.get('slot')
+            if side not in ('ALLY', 'ENEMY') or type(slot) is not int or not 1 <= slot <= 5 or (side, slot) in seen:
+                raise ValueError('CAPTURE_SCHEMA')
+            seen.add((side, slot))
+            raw['allies' if side == 'ALLY' else 'enemies'].append(
+                dict(champion=row.get('champion'), position=row.get('position')))
+        # Sentinel is internal validation context only. Remove it before return:
+        # this capture does not supply an actual session or observation clock.
+        result = normalize(raw, roster, source='LCU_CHAMP_SELECT', session_id='unbound',
+                           observed_at=0, now=0, current=False)
+        result['source'] = dict(kind='LCU_CHAMP_SELECT', session_id=None,
+                                revision=connection.get('revision'), observed_at=None,
+                                age=None, current=False)
+        result['reasons'] += ['SOURCE_METADATA_MISSING', 'PICK_FINALITY_UNVERIFIED']
+        result['ready'] = False
+        return result
+    except (ValueError, TypeError, KeyError, AttributeError, OSError):
+        return dict(unavailable, reasons=['CAPTURE_INVALID'])
+
+
 def read_aggregate_file(path,*,max_bytes=64_000_000):
     path=Path(path)
     if path.is_symlink() or not path.is_file() or path.stat().st_size>max_bytes:raise ValueError('Invalid aggregate file')
@@ -476,7 +523,9 @@ class PregameHandler(Handler):
             return self.bounded_reply(200,items_response(body['patch']))
         if route==prefix+'/pc-status' and self.command=='GET':
             from .pc_runtime import pc_status
-            return self.bounded_reply(200,pc_status(self.server))
+            result=pc_status(self.server)
+            result['gameplan_input']=pc_gameplan_input(result['connection'])
+            return self.bounded_reply(200,result)
         if route==prefix+'/pc-objection' and self.command=='POST':
             # Same-account human/code distinction is an operating rule, as for
             # USER_WEB. Only the trusted user button calls this protected route.

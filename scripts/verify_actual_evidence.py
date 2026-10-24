@@ -22,7 +22,15 @@ MODIFIED={'coach_v1/riot_collection_policy.py','scripts/collect_power_stats.py',
     'CURRENT_HANDOFF.md','docs/queue/QUEUE.md','coach_v1/pregame_server.py','web_r4/pc.html',
     'web_r4/pc.js','web_r4/pregame.js','web_r4/pregame.html','web_r4/official_reference.js',
     'web_r4/review_queue.js','web_r4/review_queue.html'}
+MODIFIED.update({'tests_pregame/test_pc_runtime.py', 'tests_pregame/test_v23_binding.py', 'tests_pregame/test_pc_coach.py'})
 CURRENT=MODIFIED|{
+    'docs/gameplan-content/queue-44-status.md',
+    'coach_v1/gameplan_input.py',
+    'tests_pregame/test_gameplan_input.py',
+    'docs/gameplan-content/input-integration-v1.md',
+    'scripts/gameplan_registry.py',
+    'tests_pregame/test_gameplan_registry.py',
+    'docs/gameplan-content/knowledge-maintenance-v1.md',
     "docs/gameplan-content/notion-format-v1.md",
     "web_r4/loading-direction-profiles.js",
     "tests_pregame/test_gameplan_backend.py","docs/gameplan-content/backend-design-v1.md","docs/superpowers/plans/2026-10-24-gameplan-backend.md",
@@ -75,7 +83,7 @@ CURRENT=MODIFIED|{
     'tests_pregame/test_resource_view.py','tests_pregame/test_fixed_resource_checkpoint.py','tests_pregame/test_actual_evidence_binding.py',
     'docs/superpowers/plans/2026-10-16-actual-evidence.md','docs/superpowers/plans/2026-10-17-gemini-diagnostic.md','contracts/gemini-response-diagnostic-v3.md',
 }
-TESTS=['tests_pregame.test_gameplan_backend','tests_pregame.test_gameplan_direction','tests_pregame.test_gameplan_coaching_content','tests_pregame.test_loading_presentation','tests_pregame.test_threat_rings','tests_pregame.test_formation_ranges','tests_pregame.test_action_briefs','tests_pregame.test_riot_collection_policy','tests_pregame.test_teamfight_formation','tests_pregame.test_master_statistics_policy','tests_pregame.test_riot_collector','tests_pregame.test_evidence_adoption','tests_pregame.test_riot_game_info','tests_pregame.test_wave_evidence_delta','tests_pregame.test_player_planboard','tests_pregame.test_loading_coach','tests_pregame.test_exchange_preference','tests_pregame.test_lane_engagement','tests_pregame.test_account_dashboard','tests_pregame.test_loading_wave','tests_pregame.test_loading_interactive','tests_expert.test_video_diagnostic_payload','tests_expert.test_video_diagnostic_policy','tests_expert.test_video_diagnostic_cli','tests_expert.test_gemini_response_diagnostics','tests_expert.test_text_response_v2','tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
+TESTS=['tests_pregame.test_pc_coach', 'tests_pregame.test_pc_runtime', 'tests_pregame.test_v23_binding', 'tests_pregame.test_gameplan_input', 'tests_pregame.test_gameplan_registry','tests_pregame.test_gameplan_backend','tests_pregame.test_gameplan_direction','tests_pregame.test_gameplan_coaching_content','tests_pregame.test_loading_presentation','tests_pregame.test_threat_rings','tests_pregame.test_formation_ranges','tests_pregame.test_action_briefs','tests_pregame.test_riot_collection_policy','tests_pregame.test_teamfight_formation','tests_pregame.test_master_statistics_policy','tests_pregame.test_riot_collector','tests_pregame.test_evidence_adoption','tests_pregame.test_riot_game_info','tests_pregame.test_wave_evidence_delta','tests_pregame.test_player_planboard','tests_pregame.test_loading_coach','tests_pregame.test_exchange_preference','tests_pregame.test_lane_engagement','tests_pregame.test_account_dashboard','tests_pregame.test_loading_wave','tests_pregame.test_loading_interactive','tests_expert.test_video_diagnostic_payload','tests_expert.test_video_diagnostic_policy','tests_expert.test_video_diagnostic_cli','tests_expert.test_gemini_response_diagnostics','tests_expert.test_text_response_v2','tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
        'tests_pregame.test_resource_recovery','tests_pregame.test_resource_view','tests_pregame.test_fixed_resource_checkpoint',
        'tests_pregame.test_actual_evidence_binding','tests_pregame.test_directions','tests_pregame.test_directions_http',
        'tests_pregame.test_loading_catalog','tests_pregame.test_loading_strategy','tests_pregame.test_loading_http','tests_pregame.test_loading_context',
@@ -185,6 +193,11 @@ def selected_tests():
     if not before or set(before)=={'0'}:return TESTS
     changed=set(git('diff','--name-only',before,'HEAD').decode().splitlines())
     groups={
+        'tests_pregame.test_pc_coach':{'coach_v1/pc_coach.py'},
+        'tests_pregame.test_pc_runtime':{'coach_v1/pc_runtime.py'},
+        'tests_pregame.test_v23_binding':{'scripts/verify_mvp_v23.py'},
+        'tests_pregame.test_gameplan_input':{'coach_v1/gameplan_input.py', 'coach_v1/pregame_server.py'},
+        'tests_pregame.test_gameplan_registry':{'scripts/gameplan_registry.py', 'web_r4/loading-planboard.js', 'web_r4/loading-direction-profiles.js'},
         "tests_pregame.test_gameplan_backend":{"web_r4/loading-planboard.js","web_r4/loading-direction-profiles.js","web_r4/loading-presentation.js"},
         "tests_pregame.test_gameplan_direction":{"tests_pregame/test_gameplan_direction.py","web_r4/loading-planboard.js","web_r4/loading-direction-profiles.js","web_r4/loading-coach.js","web_r4/loading-presentation.js","web_r4/loading-data.json"},
         "tests_pregame.test_gameplan_coaching_content":{"web_r4/loading-planboard.js","web_r4/loading-direction-profiles.js","web_r4/loading-presentation.js","web_r4/loading-coach-view.js","scripts/build_gameplan_preview.js","scripts/gameplan-preview.html","tests_pregame/test_gameplan_coaching_content.py"},
