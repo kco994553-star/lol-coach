@@ -1,7 +1,7 @@
 # Independent coaching narrative — active writer
 - run_token: `codex-20261024-coaching-narrative`
-- status: RUNNING
-- writer_active: true
+- status: CI_PENDING
+- writer_active: false
 - owner_branch: `work/coaching-narrative-20261024`
 - intake_main: `b441fc01a08df2e753c81c091b7e4166a6f1acce`
 - scope: user-requested independent three-phase prose, shared decision/summary/detail consistency and readable basic display; exact KaiSa/Nautilus–Ziggs/Karma roster and counterexamples; tests, PR and authorized existing publication.
@@ -12,6 +12,7 @@
 - Exact PR125 HEAD4cddd19 required3 SUCCESS: pregame120731413357, regression120731457189, browser120731456945; local103 and exact-source full Chromium PASS. Resume normal expected-head merge and existing Pages publication.
 - PR125 normally merged: product main `a8f3bc1ffa080823ee707cf6492a5444f9d7916f`; exact-main runs40047616870/40047616841 pending. Artifact6334985 prepared LOCALLY ONLY; pro/riot preserved. Results branch work/coaching-narrative-results-20261024 holds uncommitted evidence additions; no code editing. Resume main checks, publish prepared artifact, HTTPS/browser, results PR.
 - Exact product main required3 now SUCCESS (pregame120732827312/regression120732827150/browser120732827429). Resume prepared artifact publication and real public verification.
+- Public complete: Pages40048002506 artifact6334985 SUCCESS; HTTPS90 and actual public1440/390/320 PASS. Results PR126 HEAD92a4d3cd47ff616a1c4704bc8e01c18916b4ba53, local metadata binding PASS; requiredCI pending. Root clean. Resume exact result checks/normal merge/finalmain receipt and release; no product republish.
 - Prior claims below are history.
 
 ---
