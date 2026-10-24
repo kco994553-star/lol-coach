@@ -1,3 +1,14 @@
+# Gameplan v1.3 — active writer
+- run_token: `codex-20261024-gameplan-v13`
+- status: RUNNING
+- writer_active: true
+- owner_branch: `work/gameplan-v13-20261024`
+- intake_main: `742b3bbb0b8f6401f9ed3776907eff77df13180d`
+- scope: v1.3 comparison, explicit waiting/feasibility decisions, overall commentary and detail presentation, verification and existing publication.
+- Prior completed claims below are historical.
+
+---
+
 # Independent gameplan coaching — completed / writer released
 - run_token: `codex-20261024-coaching-narrative`
 - status: COMPLETED
