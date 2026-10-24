@@ -1,3 +1,14 @@
+# Current — independent coaching narrative, implementation under verification
+
+- Branch `work/coaching-narrative-20261024`, intake main `b441fc0`; canonical token `codex-20261024-coaching-narrative`. Exact current SHA and owner release live on `work/main-execution-claim`.
+- Latest user direction supersedes the old “action reasons/transition” body. Five actions remain default summaries; independent causal prose and after-prose disclosure use the same report. No new menu or runtime AI.
+- 2.2.4 display changes; partial 2.3.1/2.3.1.1/2.4.1/2.5.1/2.5.1.1 content. Official retained16.20.1 facts unchanged; mechanism-linked tactics remain unreviewed, effectN0. No all-champion completion claim.
+- Actual reference paragraphs and support/enemy swaps: docs/gameplan-content/2026-10-19.md and evidence/actual-evidence/handoff-v11/narrative-outputs.json. Screenshots' original10picks and separate full example file unavailable; no inferred roster.
+- RED→GREEN manual opponent, learned-kit, constrained-wave gates; independent content/code review fixes included. Final source CI/browser/publication status follows actual receipts; this paragraph alone is not deployment proof.
+- Existing backend/current-game/partial-pick/knowledge/past-plan backlog and protected decisions remain. Current user narrative request took priority; no new credentials or user approval needed for this bounded implementation.
+
+---
+
 # Current — v1.1 gameplan displayed and publicly verified
 
 - Result branch `work/handoff-v11-results-20261023`; product main `d9f515c4a48ee17d024923059669a94daaf4386a`. Canonical owner token `codex-20261023-v11-intake` on `work/main-execution-claim`; that ref records final branch/SHA and release state. Prior top paragraphs below are history.

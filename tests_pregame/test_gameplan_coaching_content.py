@@ -143,3 +143,58 @@ const g=E.analyze(input(),catalog),u=C.evaluate(g,catalog,{standard:'lane-standa
 const j=E.exampleInput(catalog,0);j.own_champion='Sejuani';j.own_position='JUNGLE';const lowJ=C.evaluate(E.analyze(j,catalog),catalog,{standard:'lane-standard-v1',overrides:{resources:'LOW'}},'LEVEL6').planboard;assert.match(lowJ.action_summaries.lane.items[2].text,/회복|구매/);
 assert.match(u.action_summaries.lane.items[2].text,/미확인|확인/);assert.match(u.coaching_explanation.lane.join(' '),/미확인/);
 """)
+
+    def test_independent_narrative_shares_decisions_across_three_phases(self):
+        self.node(r"""
+const x=input('BOTTOM'),roles=['TOP','JUNGLE','MID','BOTTOM','SUPPORT'];
+x.allies=['Ornn','Vi','Ahri','Kaisa','Nautilus'].map((champion,i)=>({champion,position:roles[i]}));
+x.enemies=['Renekton','Graves','Orianna','Ziggs','Karma'].map((champion,i)=>({champion,position:roles[i]}));x.own_champion='Kaisa';
+const r=E.analyze(x,catalog),b=r.coach.planboard,v=P.project(r);
+assert(b.narrative_decisions,'causal decisions must exist before prose');
+for(const area of ['lane','operations','fight']){
+ const d=b.narrative_decisions[area];assert(d.pressure&&d.cost&&d.response&&d.payoff&&d.fallback);
+ assert.equal(d.observation,false);assert.equal(d.outcome,'UNDETERMINED');
+ assert.deepEqual(v.cards.find(c=>c.id===area).explanation,b.coaching_explanation[area]);
+ assert.equal(b.action_summaries[area].items.length,5);
+ assert(!b.coaching_explanation[area].some(p=>b.action_summaries[area].items.some(a=>a.text===p)));
+ assert(d.actors.every(id=>[...x.allies,...x.enemies].some(p=>p.champion===id)));
+}
+assert.match(b.coaching_explanation.operations.join(' '),/직스/);assert.match(b.coaching_explanation.operations.join(' '),/바이/);assert.match(b.coaching_explanation.operations.join(' '),/아리/);
+assert(b.narrative_decisions.fight.evidence_ids.includes('official:Ahri:E'));assert(!b.narrative_decisions.fight.evidence_ids.includes('official:Ahri:R'));
+assert.match(b.coaching_explanation.fight.join(' '),/레넥톤/);assert.match(b.coaching_explanation.fight.join(' '),/오리아나/);
+assert.match(b.coaching_explanation.lane.join(' '),/노틸러스/);assert.match(b.coaching_explanation.lane.join(' '),/카르마/);
+const swap=structuredClone(x);swap.allies[4].champion='Lulu';const other=run(swap);
+assert.notEqual(other.narrative_decisions.lane.response,b.narrative_decisions.lane.response);
+assert.equal(other.narrative_decisions.fight.pressure,b.narrative_decisions.fight.pressure);
+assert(!JSON.stringify(other.coaching_explanation).includes('노틸러스'));assert.match(other.operations.connection,/룰루의 보호·방해/);
+const enemy=structuredClone(x);enemy.enemies[3].champion='Ezreal';const changed=run(enemy);
+assert.notEqual(changed.narrative_decisions.operations.pressure,b.narrative_decisions.operations.pressure);
+assert.equal(changed.narrative_decisions.fight.pressure,b.narrative_decisions.fight.pressure);
+assert(!JSON.stringify(changed.coaching_explanation).includes('직스'));
+for(const p of x.allies)assert.deepEqual(run({...x,own_champion:p.champion,own_position:p.position}).team_plan,b.team_plan);
+x.patch='1.1';assert(!run(x).narrative_decisions);
+""")
+
+    def test_narrative_respects_manual_opponent_existing_kit_and_limited_window(self):
+        self.node(r"""
+const x=E.exampleInput(catalog,0);const old=run(x);
+assert(!old.coaching_explanation.lane.join(' ').includes('프리즘 보호막(W)'),'unlearned Lux W must not replace reviewed level-one plan');
+x.allies[3].champion='Kaisa';x.own_champion='Kaisa';x.enemies[3].champion='Ziggs';x.opponent_mode='MANUAL';x.lane_opponent=x.enemies[2].champion;
+const manual=run(x);assert(!manual.coaching_explanation.lane.join(' ').includes('직스'),'manual lane opponent remains authoritative');
+x.opponent_mode='ASSIGNED';x.lane_opponent=null;
+const r=E.analyze(x,catalog),low=C.evaluate(r,catalog,{standard:'lane-standard-v1',overrides:{resources:'LOW'}},'LEVEL1').planboard;
+assert(!low.condition_responses.lane.some(c=>c.id==='PLAN_WINDOW'));assert(low.condition_responses.lane.some(c=>c.id==='PREPARE_WINDOW'));
+assert.match(low.action_summaries.lane.items[2].text,/부족|여건/);
+""")
+
+    def test_narrative_preserves_planning_and_wave_constraints(self):
+        self.node(r"""
+const x=E.exampleInput(catalog,0);x.allies[3].champion='Kaisa';x.own_champion='Kaisa';x.allies[4].champion='Nautilus';x.enemies[4].champion='Karma';x.enemies[3].champion='Ziggs';
+x.schema_version='lol-coach-loading-input-v4';x.preferences={risk:'BALANCED'};x.scenario={standard:'lane-standard-v1',overrides:{}};
+for(const overrides of [{enemy_jungle:'NEAR'},{goal:'FARM'},{goal:'RECALL'}]){
+ x.planning={basis:'loading-plan-example-v1',overrides};const b=run(x);
+ assert(b.condition_responses.lane.some(c=>c.id==='PREPARE_WINDOW'));
+ assert(!b.coaching_explanation.lane[1].includes('적 미니언을 지나며'));
+ assert.equal(b.action_summaries.lane.items[2].text,b.wave.combat);
+}
+""")
