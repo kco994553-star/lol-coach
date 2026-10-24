@@ -7,7 +7,7 @@ const fs=require('fs'),assert=require('node:assert/strict'),{chromium}=require('
 const b=await chromium.launch({executablePath:process.env.CHROMIUM_EXECUTABLE,args:['--no-sandbox']}),results=[];
 for(const [device,url,width,height] of [['desktop',process.env.LOADING_PC+'/loading',1440,1000],['mobile',process.env.LOADING_WEB+'/lol-coach/loading.html',390,844]]){
  const p=await b.newPage({viewport:{width,height},reducedMotion:'reduce'}),errors=[];p.on('pageerror',e=>errors.push(e.message));
- await p.goto(url);await p.locator('#analyze:enabled').waitFor();assert.equal(await p.locator('body').getAttribute('data-gameplan-view'),'current');
+ await p.goto(url);await p.locator('#analyze:enabled').waitFor().catch(async e=>{throw Error(JSON.stringify({device,errors,body:await p.locator('body').innerText()})+' '+e.message)});assert.equal(await p.locator('body').getAttribute('data-gameplan-view'),'current');
  await p.locator('#example-0').click();await p.locator('#analyze').click();await p.locator('.plan-title').waitFor();
  assert.equal(await p.locator('#loading-legacy-details,#loading-summary,#lane-table,#scenario-content').count(),0);
  assert.equal(await p.locator('.plan-overview-comparison tbody tr').count(),4);

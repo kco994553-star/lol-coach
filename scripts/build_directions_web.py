@@ -48,6 +48,13 @@ def build(output):
         if p.is_symlink() or not p.is_file():raise ValueError('PUBLIC_SOURCE_NOT_REGULAR')
         target=output/destination;target.parent.mkdir(parents=True,exist_ok=True)
         shutil.copyfile(p,target)
+        if source=='loading.html':
+            # The PC server rejects queries; cache versioning belongs only to public export.
+            html=target.read_text()
+            for asset in ('loading.js','loading-coach-view.js','loading-presentation.js'):
+                version=hashlib.sha256((ROOT/'web_r4'/asset).read_bytes()).hexdigest()[:16]
+                html=html.replace('src="./'+asset+'"','src="./'+asset+'?v='+version+'"')
+            target.write_text(html)
         if source=='dashboard.html':
             target.write_text(target.read_text().replace('data-account-backend="PC_LOOPBACK"','data-account-backend="PUBLIC_STATIC"'))
         if source=='game-info.html':

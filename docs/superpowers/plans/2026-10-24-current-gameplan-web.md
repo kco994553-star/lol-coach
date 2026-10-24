@@ -54,3 +54,5 @@ Produces: independent current-page and historical-widget receipts.
 Task 1: RED→GREEN, 8 presentation tests pass. New page removes duplicate old full report; current headline overrides old concept. Historical widget tests use a test-only preserved HTML fixture, while a separate check loads the actual shipped page without interception.
 
 Independent review: preserve risk controls in current conditions, populate the empty scope disclosure, and test output change/reset plus fresh-context sharing. All addressed in this change. Initial full suite: 823/824; the single failing assertion required the intentionally removed legacy DOM. Updated that assertion to require absence in production and presence only in the historical fixture.
+
+Remote browser RED caught PC query rejection for cache-versioned scripts. A real HTTP test reproduced 400. Fixed by applying exact-byte script hashes only in public export, preserving the PC query boundary. Added public hash/excluded-fixture checks and browser load diagnostics.

@@ -27,6 +27,21 @@ class LoadingHTTPTests(unittest.TestCase):
         c.request('GET',path);r=c.getresponse();body=r.read();headers=dict(r.getheaders());c.close()
         return r.status,body,headers
 
+    def test_pc_html_script_urls_are_accepted_by_server(self):
+        import re
+        html=self.get('/loading')[1].decode()
+        for src in re.findall(r'<script src="\./([^" ]+)"',html):
+            self.assertEqual(self.get('/'+src)[0],200,src)
+
+    def test_public_html_versions_changed_scripts_by_exact_bytes(self):
+        import hashlib
+        with tempfile.TemporaryDirectory() as tmp:
+            out=Path(tmp)/'site';build(out);html=(out/'loading.html').read_text()
+            for asset in ('loading.js','loading-coach-view.js','loading-presentation.js'):
+                version=hashlib.sha256((out/asset).read_bytes()).hexdigest()[:16]
+                self.assertIn('src="./'+asset+'?v='+version+'"',html)
+            self.assertFalse((out/'tests_pregame').exists())
+
     def test_loading_assets_and_original_pc_access_boundary(self):
         for path in ['/home-assets/AsheBase.jpg', '/home-assets/AsheSkin17.jpg', '/home-assets/KaisaBase.jpg', '/home-assets/KaisaSkin14.jpg', '/home-assets/JinxBase.jpg', '/home-assets/JinxSkin4.jpg', '/home-assets/EzrealBase.jpg', '/home-assets/EzrealSkin21.jpg', '/home-assets/LuxBase.jpg', '/home-assets/LuxSkin17.jpg', '/home-assets/YasuoBase.jpg', '/home-assets/YasuoSkin9.jpg', '/home-assets/YoneBase.jpg', '/home-assets/YoneSkin1.jpg', '/home-assets/IreliaBase.jpg', '/home-assets/IreliaSkin37.jpg', '/home-assets/VayneBase.jpg', '/home-assets/VayneSkin25.jpg', '/home-assets/LeonaBase.jpg', '/home-assets/LeonaSkin10.jpg', '/home-assets/game-lane.webp', '/home-assets/game-operations.webp', '/home-assets/game-fight.webp']+['/loading-presentation.js','/loading-presentation.css','/loading-coach.js', '/loading-coach-view.js', '/loading-coach.css', '/loading-knowledge.json', '/loading-study.js','/home-assets/AhriSkin27.jpg','/home-assets/LuxSkin7.jpg','/home-assets/Moonlit.webp','/home-assets/strategy-objectives.webp','/coach-theme.css','/coach-shell.js','/hero-art.json','/home-assets/strategy-panels.webp','/home-assets/Ahri.jpg','/home-assets/Caitlyn.jpg','/home-assets/lane.jpg','/home-assets/fight.jpg','/loading','/loading.html','/loading-engine.js','/loading-exploration.js','/loading-interactive.js','/dashboard.html','/dashboard.js','/dashboard.css','/pro-dashboard.json','/loading-exchange.js','/loading-exchange-view.js','/loading-engagement.js','/loading-engagement-view.js','/loading-wave.js','/loading-wave-view.js','/loading-map.js','/loading-data.json','/loading-assets/champion0.png','/skill-data.js','/skill-display.js']:
             status,body,headers=self.get(path);self.assertEqual(status,200,path)
