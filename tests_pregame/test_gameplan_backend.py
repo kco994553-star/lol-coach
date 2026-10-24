@@ -134,3 +134,32 @@ const trace=B.evaluateScopedCondition(c,scope);
 assert.equal(trace.value,true);assert.deepEqual(trace.actual_scope,{subject:c.subject,phase:c.phase,snapshot:c.snapshot});
 assert.deepEqual(trace.expected_scope,scope);
 """)
+
+    def test_candidate_comparison_abstains_on_conflict_or_missing_information(self):
+        self.node(r"""
+const B=require('./web_r4/loading-planboard.js');assert.equal(typeof B.resolveCandidates,'function');
+const scope={subject:'allies:Caitlyn',phase:'lane',snapshot:'one'};
+const make=(id,value,conflicts=[])=>({id,conflicts_with:conflicts,rule:{id:'rule:'+id,version:'1',requires:[{id:'eligible',value,...scope,source:{kind:'ASSUMPTION',ref:'test'}}],excludes:[]}});
+const resolve=xs=>B.resolveCandidates(xs,scope);
+assert.equal(resolve([make('fight',true),make('wait',false)]).selected,'fight');
+for(const value of [true,null]){const r=resolve([make('fight',true),make('wait',value)]);assert.equal(r.selected,null);assert.equal(r.status,'UNRESOLVED');}
+assert.equal(resolve([make('fight',false)]).status,'NO_ELIGIBLE_CANDIDATE');
+const xs=[make('fight',true,['wait']),make('wait',true)],before=JSON.stringify(xs),r=resolve(xs);
+assert.equal(r.status,'CONFLICT');assert.equal(r.selected,null);assert.deepEqual(r.conflicts,[{candidates:['fight','wait'],status:'CONFIRMED'}]);
+assert.deepEqual(resolve([...xs].reverse()),r);assert.equal(JSON.stringify(xs),before);
+assert.equal(resolve([make('fight',true,['wait']),make('wait',null)]).conflicts[0].status,'POSSIBLE');
+assert.equal(resolve([make('fight',true,['wait']),make('wait',false)]).selected,'fight');
+for(const bad of [[],Array(1),[make('a',true),make('a',false)],[make('a',true,['missing'])],[make('a',true,['a'])],[make('a',true,Array(1))]])assert.throws(()=>resolve(bad),/INVALID_CANDIDATES/);
+""")
+
+    def test_waiting_candidates_are_integrated_and_keep_unknown_explicit(self):
+        self.node(r"""
+const x=E.exampleInput(catalog,0);
+x.schema_version='lol-coach-loading-input-v4';x.preferences={risk:'BALANCED'};x.scenario={standard:'lane-standard-v1',overrides:{}};
+x.planning={basis:'loading-plan-example-v1',overrides:{income:'LOSING',opportunity:'AVAILABLE',ally_followup:'AVAILABLE'}};
+let b=run(x);assert.ok(b.internal_candidate_comparison);assert.equal(b.internal_candidate_comparison.selected,'CREATE_WINDOW');assert.equal(b.engagement_decision.state,'CREATE_WINDOW');
+x.planning.overrides.ally_followup='UNAVAILABLE';b=run(x);assert.equal(b.internal_candidate_comparison.selected,'PREPARE_CONDITIONS');
+x.planning.overrides.opportunity='MISSED';b=run(x);assert.equal(b.internal_candidate_comparison.selected,'OPPORTUNITY_MISSED');
+x.patch='1.1';b=run(x);assert.equal(b.internal_candidate_comparison.selected,'SOURCE_REVIEW_REQUIRED');
+assert(!JSON.stringify(b.delivery).includes('internal_candidate_comparison'));
+""")

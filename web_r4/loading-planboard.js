@@ -45,6 +45,43 @@
     const unknown=[...requires,...excludes].some(c=>c.state==='UNKNOWN');
     return {rule_id:rule.id,version:rule.version,status:blocked?'EXCLUDED':unknown?'CONDITIONAL':'APPLIED',requires,excludes};
   }
+  // Candidate IDs order diagnostics only; they never establish tactical priority.
+  function resolveCandidates(candidates,scope) {
+    const text=v=>typeof v==='string'&&v.trim().length>0;
+    const invalid=()=>{throw Error('INVALID_CANDIDATES');};
+    if(!Array.isArray(candidates)||!candidates.length)invalid();
+    const items=Array.from(candidates);
+    if(items.some(c=>!c||!text(c.id)||!Array.isArray(c.conflicts_with)))invalid();
+    const ids=new Set(items.map(c=>c.id));
+    if(ids.size!==items.length)invalid();
+    for(const c of items)if(Array.from(c.conflicts_with).some(id=>!text(id)||!ids.has(id)||id===c.id)||new Set(c.conflicts_with).size!==c.conflicts_with.length)invalid();
+    const evaluated=items.map(c=>({id:c.id,evaluation:evaluateRule(c.rule,scope)})).sort((a,b)=>a.id<b.id?-1:a.id>b.id?1:0);
+    const byId=new Map(evaluated.map(c=>[c.id,c.evaluation.status])),pairs=new Map();
+    for(const c of items)for(const other of c.conflicts_with){
+      if(byId.get(c.id)==='EXCLUDED'||byId.get(other)==='EXCLUDED')continue;
+      const pair=[c.id,other].sort(),key=JSON.stringify(pair);
+      pairs.set(key,{candidates:pair,status:pair.every(id=>byId.get(id)==='APPLIED')?'CONFIRMED':'POSSIBLE'});
+    }
+    const conflicts=[...pairs.entries()].sort(([a],[b])=>a<b?-1:a>b?1:0).map(([,v])=>v);
+    const eligible=evaluated.filter(c=>c.evaluation.status==='APPLIED').map(c=>c.id),conditional=evaluated.filter(c=>c.evaluation.status==='CONDITIONAL').map(c=>c.id);
+    const selected=!conflicts.length&&eligible.length===1&&!conditional.length?eligible[0]:null;
+    return {schema_version:'gameplan-candidate-comparison-v1',status:conflicts.length?'CONFLICT':selected?'SELECTED':eligible.length||conditional.length?'UNRESOLVED':'NO_ELIGIBLE_CANDIDATE',selected,eligible,conditional,conflicts,candidates:evaluated};
+  }
+  // Preserve the established waiting policy as explicit mutually exclusive rules.
+  function waitingCandidates(sourceOK,necessity,feasibility,subject) {
+    const scope={subject,phase:'lane',snapshot:'pregame-input'};
+    const open=sourceOK&&!['MISSED','BLOCKED'].includes(feasibility);
+    const values={
+      SOURCE_REVIEW_REQUIRED:!sourceOK,
+      OPPORTUNITY_MISSED:sourceOK&&feasibility==='MISSED',
+      PREPARE_CONDITIONS:sourceOK&&feasibility==='BLOCKED',
+      WAIT_AND_PREPARE:open&&necessity==='LOW_COST_WAIT',
+      CREATE_WINDOW:open&&necessity==='CHANGE_NEEDED'&&feasibility==='CONDITIONAL',
+      CHECK_CONDITIONS:open&&necessity!=='LOW_COST_WAIT'&&!(necessity==='CHANGE_NEEDED'&&feasibility==='CONDITIONAL')
+    };
+    const result=resolveCandidates(Object.entries(values).map(([id,value])=>({id,conflicts_with:[],rule:{id:'waiting-candidate:'+id,version:'1',requires:[{id:'policy-eligibility',value,...scope,source:{kind:'KNOWLEDGE',ref:'waiting-necessity-feasibility-v1'}}],excludes:[]}})),scope);
+    return {...result,coverage:'WAITING_POLICY_ONLY',observation:false,inputs:{sourceOK,necessity,feasibility}};
+  }
   function directionRuleTrace(report,catalog,board) {
     const input=report.input,entry=directionData.champions[input.own_champion];
     // Resolve uses the existing validated data contract; no new tactical inference.
@@ -784,7 +821,10 @@
   // Necessity is a cost judgment; feasibility is a separate execution gate.
   // Both are optional user assumptions, never inferred observations from picks.
   function reconcileSituation(b,report,catalog,coach){
-    if(!b.team_plan||!b.waiting)return;
+    if(!b.team_plan||!b.waiting){
+      if(b.waiting?.mode==='SOURCE_REVIEW_REQUIRED')b.internal_candidate_comparison=waitingCandidates(false,'UNKNOWN','UNKNOWN','allies:'+report.input.own_champion);
+      return;
+    }
     const p=b.context.planning.overrides,s=coach.context.assumptions.scenario.overrides,pos=report.input.own_position;
     const income=p.income||'UNKNOWN',opportunity=p.opportunity||'UNCONFIRMED';
     const sourceOK=b.waiting.mode!=='SOURCE_REVIEW_REQUIRED';
@@ -792,7 +832,9 @@
     const unknown=s.resources==='UNKNOWN'||s.wave==='UNKNOWN';
     const necessity=income==='LOSING'?'CHANGE_NEEDED':income==='NORMAL'?'LOW_COST_WAIT':'UNKNOWN';
     const feasibility=opportunity==='MISSED'?'MISSED':blocked?'BLOCKED':!unknown&&opportunity==='AVAILABLE'&&p.ally_followup==='AVAILABLE'?'CONDITIONAL':'UNKNOWN';
-    const state=!sourceOK?'SOURCE_REVIEW_REQUIRED':feasibility==='MISSED'?'OPPORTUNITY_MISSED':feasibility==='BLOCKED'?'PREPARE_CONDITIONS':necessity==='LOW_COST_WAIT'?'WAIT_AND_PREPARE':necessity==='CHANGE_NEEDED'&&feasibility==='CONDITIONAL'?'CREATE_WINDOW':'CHECK_CONDITIONS';
+    const comparison=waitingCandidates(sourceOK,necessity,feasibility,'allies:'+report.input.own_champion);
+    const state=comparison.selected||'CHECK_CONDITIONS';
+    b.internal_candidate_comparison=comparison;
     const current=b.narrative_decisions?.lane,oldAction=b.action_summaries.lane.items[2].text;
     const target=pos==='JUNGLE'?'캠프 성장과 라인 지원 시간':pos==='SUPPORT'?'아군의 CS·경험치 접근과 체력':'CS·경험치 접근과 다음 웨이브를 받을 체력';
     const reason=necessity==='CHANGE_NEEDED'?'계속 기다릴 때 '+target+'을 잃는다는 가정이다. 같은 자리에서 버티는 비용이 크지만, 그 사실만으로 지금 교전할 수 있다는 뜻은 아니다.':necessity==='LOW_COST_WAIT'?'현재 '+target+'을 지킬 수 있다는 가정이다. 당장 교환을 강제하기보다 구매·레벨·아군 합류 중 실제로 가까워진 전환점까지 준비할 여유가 있다.':'기다리는 동안 '+target+'을 유지하는지 아직 정하지 않았다. 견제를 받는다는 이유만으로 손실이 누적된다거나 지금 싸워야 한다고 확정하지 않는다.';
@@ -1250,5 +1292,5 @@
       limitation:'조합과 기술에서 도출한 조건부 계획입니다. 실제 경기 관측이나 승리 보장이 아니며, 개별 매치업 우열은 기존 자료 범위를 따릅니다.'};
   }
   return Object.freeze({ evaluate, validate, defaults, plainLanguage, actionSummaries,
-    evaluateScopedCondition, evaluateRule, evaluateCondition, buildDelivery, dependencyTree, affectedOutputs, resolveDirectionProfiles });
+    resolveCandidates, evaluateScopedCondition, evaluateRule, evaluateCondition, buildDelivery, dependencyTree, affectedOutputs, resolveDirectionProfiles });
 });
