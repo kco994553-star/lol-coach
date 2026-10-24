@@ -15,6 +15,8 @@ class PresentationTests(unittest.TestCase):
    self.assertNotIn(old,html)
  def test_current_projection_uses_delivery_headline_and_rejects_missing_contract(self):
   self.node("const r=run();r.coach.planboard.delivery.phases.lane.headline='현재 계약의 제목';r.coach.planboard.lane.concept.text='이전 제목';assert.equal(P.project(r,{currentOnly:true}).cards[0].concept,'현재 계약의 제목');delete r.coach.planboard.delivery;assert.throws(()=>P.project(r,{currentOnly:true}),/CURRENT_GAMEPLAN_REQUIRED/);")
+ def test_phase_tags_cover_five_positions_without_claiming_observations(self):
+  self.node("const base=E.exampleInput(c,0);for(const a of base.allies){const r=E.analyze({...base,own_champion:a.champion,own_position:a.position},c),v=P.project(r,{currentOnly:true});assert(v.cards.every(x=>x.conditions.length>0&&x.conditions.length<=2));if(a.position==='JUNGLE')assert.deepEqual(v.cards[0].conditions,['성장·라인 지원 연결','아군 합류 확인']);if(a.position==='SUPPORT')assert.equal(v.cards[1].conditions[0],'아군 수급·시야 연결');}const r=run();r.roles.proposed.id='UNKNOWN';assert.equal(P.project(r).cards[2].conditions[0],'내 역할·위치 확인');")
  def node(self,body):
   r=subprocess.run(['node','-e',PRE+body],cwd=ROOT,capture_output=True,text=True);self.assertEqual(r.returncode,0,r.stderr[-3000:])
  def test_projection_same_report_two_real_roles_and_unknown_scope(self):
