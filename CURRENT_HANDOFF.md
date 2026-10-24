@@ -1,3 +1,14 @@
+# Gameplan v1.3 — CI pending, writer released
+- run_token: `codex-20261024-gameplan-v13`
+- status: CI_PENDING
+- writer_active: false
+- owner_branch: `work/gameplan-v13-20261024`
+- source_sha: `439f554b0f67290b996b15075b5a8e5b08544203`
+- PR127; exact-source106 and preservation PASS; new1440/390/320 browser PASS. Full browser and required remote CI running.
+- No source edits while checking; original ZIP internalv1.1/9, exact17 unavailable. Tactical effects N0. Next verify fullbrowser/requiredCI then reacquire for normal merge/publication.
+
+---
+
 # Gameplan v1.3 — active writer
 - run_token: `codex-20261024-gameplan-v13`
 - status: RUNNING
