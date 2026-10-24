@@ -14,6 +14,7 @@ FILES = {
     'loading-formation.js':'loading-formation.js',
     **{p:p for p in ('game-info.html','game-info.js','game-info-engine.js','game-info.css','game-info-items.json')},
     'riot.txt':'riot.txt',  # Public Riot app ownership proof; not an API credential.
+    'loading-direction-profiles.js':'loading-direction-profiles.js',
     'loading-planboard.js':'loading-planboard.js','loading-coach.js':'loading-coach.js','loading-coach-view.js':'loading-coach-view.js','loading-coach.css':'loading-coach.css','loading-knowledge.json':'loading-knowledge.json','loading-study.js':'loading-study.js',
     'coach-theme.css':'coach-theme.css','coach-shell.js':'coach-shell.js','hero-art.json':'hero-art.json','home-assets/strategy-panels.webp':'home-assets/strategy-panels.webp',
     **{'home-assets/'+p:'home-assets/'+p for p in ('Ahri.jpg','Caitlyn.jpg','AhriSkin27.jpg','LuxSkin7.jpg','Moonlit.webp','strategy-objectives.webp','lane.jpg','fight.jpg')},

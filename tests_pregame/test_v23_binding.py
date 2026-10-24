@@ -1,9 +1,11 @@
 """Delta checks preserve completed v2.1 evidence without executing its tests."""
 import importlib.util
+import io
 import json
 from pathlib import Path
 import shutil
 import subprocess
+import tarfile
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -28,8 +30,20 @@ class QueueV23BindingTests(unittest.TestCase):
                 target.write_text('# isolated unfinished v2.3 source fixture\n')
             else:
                 raise AssertionError('Missing preserved source: ' + path)
-        gitdir = subprocess.check_output(['git', 'rev-parse', '--absolute-git-dir'], cwd=cls.v.ROOT, text=True).strip()
-        (cls.root / '.git').write_text('gitdir: ' + gitdir + '\n')
+        # Later successors legitimately changed preserved working-tree files.
+        # This fixture represents the v2.3 boundary, using actual base bytes.
+        archive = subprocess.check_output(['git', 'archive', cls.v.BASE], cwd=cls.v.ROOT)
+        with tarfile.open(fileobj=io.BytesIO(archive)) as stream:
+            for member in stream:
+                if member.isfile() and member.name not in cls.v.MODIFIED_PATHS:
+                    target = cls.root / member.name
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_bytes(stream.extractfile(member).read())
+        # Keep Git object proof real, but never borrow the successor's index.
+        objects = subprocess.check_output(['git', 'rev-parse', '--path-format=absolute', '--git-path', 'objects'], cwd=cls.v.ROOT, text=True).strip()
+        subprocess.run(['git', 'init', '-q', str(cls.root)], check=True)
+        (cls.root / '.git/objects/info/alternates').write_text(objects + '\n')
+        subprocess.run(['git', 'update-ref', 'HEAD', cls.v.BASE], cwd=cls.root, check=True)
 
     @classmethod
     def tearDownClass(cls):

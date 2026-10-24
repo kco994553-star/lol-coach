@@ -22,7 +22,18 @@ MODIFIED={'coach_v1/riot_collection_policy.py','scripts/collect_power_stats.py',
     'CURRENT_HANDOFF.md','docs/queue/QUEUE.md','coach_v1/pregame_server.py','web_r4/pc.html',
     'web_r4/pc.js','web_r4/pregame.js','web_r4/pregame.html','web_r4/official_reference.js',
     'web_r4/review_queue.js','web_r4/review_queue.html'}
+MODIFIED.update({'tests_pregame/test_pc_runtime.py', 'tests_pregame/test_v23_binding.py', 'tests_pregame/test_pc_coach.py'})
 CURRENT=MODIFIED|{
+    'docs/gameplan-content/queue-44-status.md',
+    'coach_v1/gameplan_input.py',
+    'tests_pregame/test_gameplan_input.py',
+    'docs/gameplan-content/input-integration-v1.md',
+    'scripts/gameplan_registry.py',
+    'tests_pregame/test_gameplan_registry.py',
+    'docs/gameplan-content/knowledge-maintenance-v1.md',
+    "docs/gameplan-content/notion-format-v1.md",
+    "web_r4/loading-direction-profiles.js",
+    "tests_pregame/test_gameplan_backend.py","docs/gameplan-content/backend-design-v1.md","docs/superpowers/plans/2026-10-24-gameplan-backend.md",
     "tests_pregame/test_gameplan_direction.py","docs/superpowers/plans/2026-10-24-gameplan-direction.md","docs/gameplan-content/2026-10-24-direction.md",
     "scripts/build_gameplan_preview.js","scripts/gameplan-preview.html","tests_pregame/test_gameplan_coaching_content.py","docs/gameplan-content/2026-10-19.md",
     "scripts/browser_loading_presentation.py","web_r4/loading-presentation.js","web_r4/loading-presentation.css","contracts/gameplan-presentation-v1.md","tests_pregame/test_loading_presentation.py","docs/superpowers/plans/2026-10-19-gameplan-layout.md",
@@ -72,7 +83,7 @@ CURRENT=MODIFIED|{
     'tests_pregame/test_resource_view.py','tests_pregame/test_fixed_resource_checkpoint.py','tests_pregame/test_actual_evidence_binding.py',
     'docs/superpowers/plans/2026-10-16-actual-evidence.md','docs/superpowers/plans/2026-10-17-gemini-diagnostic.md','contracts/gemini-response-diagnostic-v3.md',
 }
-TESTS=['tests_pregame.test_gameplan_direction','tests_pregame.test_gameplan_coaching_content','tests_pregame.test_loading_presentation','tests_pregame.test_threat_rings','tests_pregame.test_formation_ranges','tests_pregame.test_action_briefs','tests_pregame.test_riot_collection_policy','tests_pregame.test_teamfight_formation','tests_pregame.test_master_statistics_policy','tests_pregame.test_riot_collector','tests_pregame.test_evidence_adoption','tests_pregame.test_riot_game_info','tests_pregame.test_wave_evidence_delta','tests_pregame.test_player_planboard','tests_pregame.test_loading_coach','tests_pregame.test_exchange_preference','tests_pregame.test_lane_engagement','tests_pregame.test_account_dashboard','tests_pregame.test_loading_wave','tests_pregame.test_loading_interactive','tests_expert.test_video_diagnostic_payload','tests_expert.test_video_diagnostic_policy','tests_expert.test_video_diagnostic_cli','tests_expert.test_gemini_response_diagnostics','tests_expert.test_text_response_v2','tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
+TESTS=['tests_pregame.test_pc_coach', 'tests_pregame.test_pc_runtime', 'tests_pregame.test_v23_binding', 'tests_pregame.test_gameplan_input', 'tests_pregame.test_gameplan_registry','tests_pregame.test_gameplan_backend','tests_pregame.test_gameplan_direction','tests_pregame.test_gameplan_coaching_content','tests_pregame.test_loading_presentation','tests_pregame.test_threat_rings','tests_pregame.test_formation_ranges','tests_pregame.test_action_briefs','tests_pregame.test_riot_collection_policy','tests_pregame.test_teamfight_formation','tests_pregame.test_master_statistics_policy','tests_pregame.test_riot_collector','tests_pregame.test_evidence_adoption','tests_pregame.test_riot_game_info','tests_pregame.test_wave_evidence_delta','tests_pregame.test_player_planboard','tests_pregame.test_loading_coach','tests_pregame.test_exchange_preference','tests_pregame.test_lane_engagement','tests_pregame.test_account_dashboard','tests_pregame.test_loading_wave','tests_pregame.test_loading_interactive','tests_expert.test_video_diagnostic_payload','tests_expert.test_video_diagnostic_policy','tests_expert.test_video_diagnostic_cli','tests_expert.test_gemini_response_diagnostics','tests_expert.test_text_response_v2','tests_expert.test_daily_migration','tests_expert.test_daily_review_fixes','tests_expert.test_gemini_daily','tests_expert.test_pov_metadata',
        'tests_pregame.test_resource_recovery','tests_pregame.test_resource_view','tests_pregame.test_fixed_resource_checkpoint',
        'tests_pregame.test_actual_evidence_binding','tests_pregame.test_directions','tests_pregame.test_directions_http',
        'tests_pregame.test_loading_catalog','tests_pregame.test_loading_strategy','tests_pregame.test_loading_http','tests_pregame.test_loading_context',
@@ -182,8 +193,14 @@ def selected_tests():
     if not before or set(before)=={'0'}:return TESTS
     changed=set(git('diff','--name-only',before,'HEAD').decode().splitlines())
     groups={
-        "tests_pregame.test_gameplan_direction":{"tests_pregame/test_gameplan_direction.py","web_r4/loading-planboard.js","web_r4/loading-coach.js","web_r4/loading-presentation.js","web_r4/loading-data.json"},
-        "tests_pregame.test_gameplan_coaching_content":{"web_r4/loading-planboard.js","web_r4/loading-presentation.js","web_r4/loading-coach-view.js","scripts/build_gameplan_preview.js","scripts/gameplan-preview.html","tests_pregame/test_gameplan_coaching_content.py"},
+        'tests_pregame.test_pc_coach':{'coach_v1/pc_coach.py'},
+        'tests_pregame.test_pc_runtime':{'coach_v1/pc_runtime.py'},
+        'tests_pregame.test_v23_binding':{'scripts/verify_mvp_v23.py'},
+        'tests_pregame.test_gameplan_input':{'coach_v1/gameplan_input.py', 'coach_v1/pregame_server.py'},
+        'tests_pregame.test_gameplan_registry':{'scripts/gameplan_registry.py', 'web_r4/loading-planboard.js', 'web_r4/loading-direction-profiles.js'},
+        "tests_pregame.test_gameplan_backend":{"web_r4/loading-planboard.js","web_r4/loading-direction-profiles.js","web_r4/loading-presentation.js"},
+        "tests_pregame.test_gameplan_direction":{"tests_pregame/test_gameplan_direction.py","web_r4/loading-planboard.js","web_r4/loading-direction-profiles.js","web_r4/loading-coach.js","web_r4/loading-presentation.js","web_r4/loading-data.json"},
+        "tests_pregame.test_gameplan_coaching_content":{"web_r4/loading-planboard.js","web_r4/loading-direction-profiles.js","web_r4/loading-presentation.js","web_r4/loading-coach-view.js","scripts/build_gameplan_preview.js","scripts/gameplan-preview.html","tests_pregame/test_gameplan_coaching_content.py"},
         "tests_pregame.test_loading_presentation":{"web_r4/loading-presentation.js","web_r4/loading-presentation.css","web_r4/loading.js","web_r4/loading-coach-view.js","web_r4/loading.html"},
         'tests_pregame.test_threat_rings':{'config/formation_threat_profiles.json','scripts/build_formation_ranges.py','web_r4/formation-ranges.js','web_r4/loading-formation.js','web_r4/loading-planboard.js'},
         'tests_pregame.test_formation_ranges':{'config/formation_threat_profiles.json','scripts/build_formation_ranges.py','web_r4/formation-ranges.js','web_r4/loading-formation.js'},
@@ -207,7 +224,7 @@ def selected_tests():
         'tests_pregame.test_loading_context':{'web_r4/loading-engine.js','web_r4/loading-data.json','scripts/build_loading_catalog.py','contracts/loading-context-v2.md'},
         'tests_pregame.test_loading_catalog':{'scripts/build_loading_catalog.py','web_r4/loading-data.json','web_r4/directions-data.json'},
         'tests_pregame.test_loading_strategy':{'web_r4/loading-engine.js','web_r4/loading-data.json','web_r4/directions-engine.js','web_r4/directions-data.json'},
-        'tests_pregame.test_loading_http':{'coach_v1/pregame_server.py','web_r4/pc.html','scripts/build_directions_web.py','web_r4/loading.html','web_r4/loading.js','web_r4/loading-map.js','web_r4/loading.css'},
+        'tests_pregame.test_loading_http':{'web_r4/loading-direction-profiles.js','scripts/browser_loading.py','coach_v1/pregame_server.py','web_r4/pc.html','scripts/build_directions_web.py','web_r4/loading.html','web_r4/loading.js','web_r4/loading-map.js','web_r4/loading.css'},
         'tests_pregame.test_directions':{'web_r4/directions-engine.js','web_r4/directions-data.json','config/direction_asset_sources.json'},
         'tests_pregame.test_directions_http':{'coach_v1/pregame_server.py','web_r4/pc.html','scripts/build_directions_web.py','web_r4/directions.html','web_r4/directions.js','web_r4/directions.css','web_r4/status.html','web_r4/directions-status.js','web_r4/directions-status.json'},
         'tests_expert.test_video_diagnostic_payload':{'coach_v1/video_diagnostic_payload.py','coach_v1/gemini_daily.py','scripts/run_video_diagnostic.py'},
