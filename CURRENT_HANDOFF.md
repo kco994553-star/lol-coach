@@ -1,3 +1,15 @@
+# Current — independent coaching narrative shipped, final handoff
+
+- Source branch `work/coaching-narrative-20261024` HEAD `4cddd1934f7e56c79dfcececc54c313399e6002b`; PR125 normally merged to product main `a8f3bc1ffa080823ee707cf6492a5444f9d7916f`. Results branch `work/coaching-narrative-results-20261024`. Canonical token `codex-20261024-coaching-narrative`; exact final SHA/owner release on `work/main-execution-claim`.
+- User change: five summaries plus independently readable lane/operations/fight prose, phase headings, readable default paragraphs, after-body keyboard/touch disclosure. Same report backs summary/prose/details; no runtime AI/new menu.
+- 2.2.4 display verified; partial 2.3.1/2.3.1.1/2.4.1/2.5.1/2.5.1.1 content. Kaisa/Nautilus–Ziggs/Karma reference and Lux/Lulu/enemy swaps; manual/unknown opponent, existing learned-kit and LOW/UNKNOWN/FARM/RECALL/NEAR gates preserved. Other unsupported interactions stay limited. Official retained16.20.1 data/source grades unchanged; tactical accuracy/effectN0 unverified.
+- Exact-source103/preservation and full local Chromium PASS; exact PR and product-main required3 PASS. Pages artifact `6334985c76677d003a8c44effac1be5e7a057c2d`, run40048002506 build/deploy/report SUCCESS. HTTPS90 hashes/root/build-info/pro/riot PASS. Actual public browser receipt is recorded in evidence/actual-evidence/handoff-v11/result.md; do not infer coaching efficacy from these checks.
+- Actual full generated paragraphs/change comparisons in docs/gameplan-content/2026-10-19.md and narrative-outputs.json; original screenshot10picks and separate example text remain unavailable. No guessed roster. Known intermediate failures/fixes retained in result.md. Historical full-suite3 failures not claimed fixed; relevant tests passed.
+- Remaining: unsupported matchup/position knowledge and actual content usability; account→current game/partial picks/recommendations/past-game version linkage remain in prior queue. No new external input is required for this completed narrative scope; live backend still needs secure Riot/local field/policy evidence.
+- User-only decisions/Frozen350/raw sources/limits/schedules retained. No paid/API AI calls, no new automation or public scope changes. Results-only evidence changes do not require republishing identical product.
+
+---
+
 # Current — independent coaching narrative, implementation under verification
 
 - Branch `work/coaching-narrative-20261024`, intake main `b441fc0`; canonical token `codex-20261024-coaching-narrative`. Exact current SHA and owner release live on `work/main-execution-claim`.

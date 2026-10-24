@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "/workspace/lol-coach/scripts/browser_loading.py", line 442, in <module>
+    code=main()
+         ^^^^^^
+  File "/workspace/lol-coach/scripts/browser_loading.py", line 431, in main
+    receipt['presentation']=presentation_checks(env['LOADING_WEB'],out,env)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach/scripts/browser_loading_presentation.py", line 119, in run
+    if r.returncode:raise RuntimeError(name+' browser check failed: '+r.stderr[-2500:])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: narrative browser check failed: AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1))
+
+    at /workspace/lol-coach/evidence/actual-evidence/loading/browser-20261024T004855028021Z/presentation/narrative.cjs:19:4 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
