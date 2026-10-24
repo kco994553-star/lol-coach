@@ -268,5 +268,6 @@ for(const b of [j,s]){
  assert.equal(b.action_summaries.operations.items[2].text,b.operations.priority);
  assert.equal(b.loading_summary.items.find(i=>i.id==='operations').support,b.operations.fallback);
 }
+const sej=E.exampleInput(catalog,0);sej.own_champion='Sejuani';sej.own_position='JUNGLE';const preserved=run(sej);assert.equal(preserved.operations.concept,'밀어 넣는 라인을 돕고, 함께 들어갈 시야 만들기');assert.match(preserved.operations.priority,/아군의 밀어 넣기를 도와 귀환/);
 assert(!s.operations.fallback.includes('캠프'));assert.match(s.coaching_explanation.operations.join(' '),/아군.*귀환|귀환.*아군/);
 """)

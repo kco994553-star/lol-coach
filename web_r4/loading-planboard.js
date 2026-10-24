@@ -1052,7 +1052,7 @@
     if(!graves&&['JUNGLE','SUPPORT'].includes(pos)){
       const supportRole=pos==='SUPPORT',carry=at('allies','BOTTOM'),partner=at('allies',supportRole?'JUNGLE':'SUPPORT');
       const together=partner?name(partner):'가까운 아군',carryName=carry?name(carry):'아군 딜러';
-      Object.assign(b.operations,supportRole?{
+      if(!b.operations.concept)Object.assign(b.operations,supportRole?{
         concept:'아군의 수급과 시야 확보 시간을 연결하기',placement:carryName+'가 미니언을 받을 때 보호할 거리에서 시작하고, 아군이 움직일 수 있을 때 강 입구로 함께 이동한다.',
         connection:together+'와 시야를 확인하되 '+carryName+'를 상대 진입에 혼자 남기지 않는다.',
         priority:'아군의 미니언 정리·귀환을 도운 뒤 함께 시야를 확보해 목표물에 접근할 시간을 만든다.',
