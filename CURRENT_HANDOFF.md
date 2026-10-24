@@ -1,12 +1,13 @@
 # Independent coaching narrative — active writer
 - run_token: `codex-20261024-coaching-narrative`
-- status: CI_PENDING
-- writer_active: false
+- status: RUNNING
+- writer_active: true
 - owner_branch: `work/coaching-narrative-20261024`
 - intake_main: `b441fc01a08df2e753c81c091b7e4166a6f1acce`
 - scope: user-requested independent three-phase prose, shared decision/summary/detail consistency and readable basic display; exact KaiSa/Nautilus–Ziggs/Karma roster and counterexamples; tests, PR and authorized existing publication.
 - Fresh intake: no open PR, prior owner COMPLETED/released. Protected issues, evidence, approvals and collection remain intact. No paid calls/runtime AI/new scheduler.
 - PR125 source `d572c61b29ac1e84b1f58b4aa230ab6e434097c5`; required CI and immutable-source Chromium running. Independent review fixes complete. Browser scratch files temporarily fail local bounded inventory; preserve outside checkout before final binding, do not relax gate.
+- Resume own token: mobile screenshot exposed duplicate title/subtitle, narrow view cleanup before final source verification.
 - Prior claims below are history.
 
 ---
