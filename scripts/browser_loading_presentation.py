@@ -2,6 +2,12 @@
 import os,subprocess,json
 from pathlib import Path
 
+LEGACY_HELPER=r"""
+async function legacyPage(browser,options){
+ const p=await browser.newPage(options);
+ await p.route(/\/(?:loading|loading\.html)(?:\?.*)?$/,async route=>route.fulfill({status:200,contentType:'text/html',body:require('fs').readFileSync(process.env.LOADING_LEGACY_HTML,'utf8')}));return p;
+}
+"""
 BASIC = r'''const fs=require('fs'),assert=require('node:assert/strict'),{chromium}=require('playwright');
 (async()=>{const b=await chromium.launch({executablePath:process.env.CHROMIUM_EXECUTABLE||'/usr/bin/chromium',args:['--no-sandbox']}),errors=[],results=[];
 for(const [device,width,height]of [['desktop',1600,1000],['mobile',390,844]]){
@@ -120,7 +126,7 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
 def run(base,out,env):
     out=Path(out)/'presentation';out.mkdir(exist_ok=True)
     for name,source in [('basic',BASIC),('edge',EDGES),('conditions',CONDITIONS),('v11',V11),('narrative',NARRATIVE)]:
-        probe=out/(name+'.cjs');probe.write_text(source)
+        probe=out/(name+'.cjs');probe.write_text(LEGACY_HELPER+__import__('re').sub(r'\b(b|browser)\.newPage\(',r'legacyPage(\1,',source))
         r=subprocess.run(['node',str(probe)],env={**env,'ROOT':base,'OUT':str(out)},text=True,capture_output=True,timeout=180)
         (out/(name+'.log')).write_text(r.stdout+r.stderr)
         if r.returncode:raise RuntimeError(name+' browser check failed: '+r.stderr[-2500:])

@@ -8,6 +8,13 @@ function run(own='Caitlyn'){let i=E.exampleInput(c,0);i.own_champion=own;i.own_p
 class PresentationTests(unittest.TestCase):
  def test_condition_responses_are_projected_from_same_report(self):
   self.node("const r=run(),v=P.project(r);for(const a of v.cards)assert.equal(a.condition_responses,r.coach.planboard.delivery.phases[a.id].details);r.coach.planboard.delivery.phases.operations.details[0].action='새 조건의 실제 행동';assert.equal(P.project(r).cards[1].condition_responses[0].action,'새 조건의 실제 행동');")
+ def test_current_web_contains_only_current_result_host(self):
+  html=(ROOT/'web_r4/loading.html').read_text()
+  self.assertIn('data-gameplan-view="current"',html)
+  for old in ('id="loading-legacy-details"','id="loading-summary"','id="loading-lane"','id="scenario-content"'):
+   self.assertNotIn(old,html)
+ def test_current_projection_uses_delivery_headline_and_rejects_missing_contract(self):
+  self.node("const r=run();r.coach.planboard.delivery.phases.lane.headline='현재 계약의 제목';r.coach.planboard.lane.concept.text='이전 제목';assert.equal(P.project(r,{currentOnly:true}).cards[0].concept,'현재 계약의 제목');delete r.coach.planboard.delivery;assert.throws(()=>P.project(r,{currentOnly:true}),/CURRENT_GAMEPLAN_REQUIRED/);")
  def node(self,body):
   r=subprocess.run(['node','-e',PRE+body],cwd=ROOT,capture_output=True,text=True);self.assertEqual(r.returncode,0,r.stderr[-3000:])
  def test_projection_same_report_two_real_roles_and_unknown_scope(self):
