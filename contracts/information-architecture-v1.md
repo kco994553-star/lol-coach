@@ -237,3 +237,8 @@ and deployment success != tactical knowledge approval/coaching accuracy/30sec un
 | 6.4.1 버전·배포·검사 | USER-v1.1 | 부분 지원 | status.html / private review / 저장소 인수 기록 | 실제 CI·수집·검토 결과 | directions-status.json / 기존 evidence·review / 본 대응표 | 실행/문서/전술효과 분리 | 미확인 | 상태 UI와 실제 운영 결과 연결 |
 | 6.4.2 사용량·호출 기록 | USER-v1.1 | 부분 지원 | status.html / private review / 저장소 인수 기록 | 실제 CI·수집·검토 결과 | directions-status.json / 기존 evidence·review / 본 대응표 | 실행/문서/전술효과 분리 | 미확인 | 상태 UI와 실제 운영 결과 연결 |
 | 6.4.3 검증 종류 구분 | USER-v1.1 | 부분 지원 | status.html / private review / 저장소 인수 기록 | 실제 CI·수집·검토 결과 | directions-status.json / 기존 evidence·review / 본 대응표 | 실행/문서/전술효과 분리 | 미확인 | 상태 UI와 실제 운영 결과 연결 |
+
+
+## 2026-10-24 v1.3 delta (implementation, verification pending)
+
+Current requirement source is the attached v1.3; original v1.1 IDs above remain unchanged. Requirement-by-requirement comparison and actual ZIP discrepancy are in docs/gameplan-content/2026-10-19.md. 2.2.1–4: default overall commentary and no duplicate full prose in details. Partial 2.3.1/2.3.3–6/2.4.1, 2.6.1–4: optional income/opportunity/enemy-wave assumptions, separate necessity/feasibility, shared action/prose/detail, relative wave/move costs. Source: planboard.reconcileSituation / composeNarrative; same loading.html and PC /loading paths. Retained official16.20.1 data and unreviewed tactical scope. Automated final SHA/browser/publication evidence pending; prior deployment cells remain historical, not proof of these changes. Remaining all-matchup content, actual coaching effects and external live scope are not marked complete.

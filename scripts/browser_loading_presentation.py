@@ -63,7 +63,7 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
    await basic.locator('[data-plan-area]').focus();await p.keyboard.press('Enter');await p.locator('.plan-detail-title').waitFor();
    const titleBox=await p.locator('.plan-detail-title').boundingBox();assert(titleBox.y>=0&&titleBox.y+titleBox.height<=950,'focused detail heading is in viewport');
    assert.deepEqual(await p.locator('.plan-detail .coach-action-text').evaluateAll(ns=>ns.map(n=>Array.from(n.childNodes).filter(c=>c.nodeType===3).map(c=>c.textContent).join(''))),text);
-   assert.deepEqual(await p.locator('.plan-detail .plan-coaching-explanation p').allTextContents(),await basic.locator('.plan-coaching-explanation p').allTextContents());
+   assert.equal(await p.locator('.plan-detail .plan-coaching-explanation').count(),0,'details must not duplicate the basic body');assert(await p.locator('[data-plan-body-reference='+area+']').isVisible());
    await p.locator('[data-coach-focus=close-detail]').click();assert.equal(await p.evaluate(()=>document.activeElement.dataset.planArea),area);
   }
   const boxes=await p.locator('.plan-basic-phase').evaluateAll(ns=>ns.map(n=>{const r=n.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width};}));
@@ -89,10 +89,11 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
 (async()=>{
  const E=require(process.cwd()+'/web_r4/loading-engine.js'),P=require(process.cwd()+'/web_r4/loading-presentation.js'),c=require(process.cwd()+'/web_r4/loading-data.json');c.coaching_knowledge=require(process.cwd()+'/web_r4/loading-knowledge.json');
  const x=E.exampleInput(c,0),roles=['TOP','JUNGLE','MID','BOTTOM','SUPPORT'];x.allies=['Ornn','Vi','Ahri','Kaisa','Nautilus'].map((champion,i)=>({champion,position:roles[i]}));x.enemies=['Renekton','Graves','Orianna','Ziggs','Karma'].map((champion,i)=>({champion,position:roles[i]}));x.own_champion='Kaisa';x.own_position='BOTTOM';
- const expected=P.project(E.analyze(x,c)),errors=[],results=[];
+ const expected=P.project(E.analyze(x,c)),errors=[],results=[];assert(expected.overall_commentary.length>0,'team commentary must be projected');
  const b=await chromium.launch({headless:true,executablePath:process.env.CHROMIUM_EXECUTABLE||'/usr/bin/chromium',args:['--no-sandbox'],...(process.env.PUBLIC_PROXY?{proxy:{server:process.env.PUBLIC_PROXY}}:{})});
  for(const width of [1440,390,320]){
   const p=await b.newPage({viewport:{width,height:950},reducedMotion:'reduce'});p.on('pageerror',e=>errors.push(e.message));await p.goto(process.env.ROOT+'/lol-coach/loading.html'+P.encode(x));await p.locator('.plan-title').waitFor();
+  assert.deepEqual(await p.locator('[data-overall-commentary] p').allTextContents(),expected.overall_commentary);
   for(const area of ['lane','operations','fight']){
    const base=p.locator('[data-basic-phase='+area+']'),prose=base.locator('[data-basic-coaching]');
    assert.equal(await base.locator('[data-basic-action-kind]').count(),5);assert.deepEqual(await prose.locator('p').allTextContents(),expected.cards.find(a=>a.id===area).explanation);
@@ -100,11 +101,17 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
    const style=await prose.locator('p').first().evaluate(n=>{const s=getComputedStyle(n);return {size:parseFloat(s.fontSize),line:parseFloat(s.lineHeight),color:s.color}});assert(style.size>=16&&style.line>=28);assert.equal(style.color,'rgb(237, 242, 250)');
    await base.screenshot({path:process.env.OUT+'/narrative-'+width+'-'+area+'.png'});
    const more=base.locator('[data-plan-more]');assert(await more.isVisible());await more.focus();await p.keyboard.press('Enter');await p.locator('.plan-detail-title').waitFor();
-   assert.deepEqual(await p.locator('.plan-detail [data-coaching-explanation] p').allTextContents(),expected.cards.find(a=>a.id===area).explanation);
+   assert.equal(await p.locator('.plan-detail [data-coaching-explanation]').count(),0);assert(await p.locator('[data-plan-body-reference='+area+']').isVisible());
    await p.locator('details[id$="-other-conditions-'+area+'"]>summary').click();assert(await p.locator('[data-condition-response=WINDOW_MISSED]').isVisible());
-   assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await p.reload();await p.locator('.plan-detail-title').waitFor();await p.locator('[data-coach-focus=close-detail]').click();
+   assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await p.reload();await p.locator('.plan-detail-title').waitFor();await p.locator('[data-plan-body-reference='+area+']').focus();await p.keyboard.press('Enter');assert(await p.locator('.plan-detail').isHidden());assert.equal(await p.evaluate(()=>document.activeElement?.dataset.basicCoaching),area);
   }
-  results.push({width,defaultActions:15,paragraphsMatch:true,keyboardDisclosure:true,reload:true,readable:true,overflow:false});await p.close();
+  await p.locator('[data-plan-more=lane]').click();await p.locator('.plan-detail details.coach-details[id$=\"-conditions\"]').evaluate(e=>e.open=true);
+  const select=async(key,value)=>{await p.locator('[data-coach-focus=planning-'+key+']').selectOption(value);await p.waitForFunction(()=>document.querySelector('#loading-coach').getAttribute('aria-busy')==='false');};
+  assert.equal(await p.locator('[data-coach-focus=planning-income]').inputValue(),'UNKNOWN');assert.equal(await p.locator('[data-coach-focus=planning-opportunity]').inputValue(),'UNCONFIRMED');
+  assert.equal(await p.locator('[data-coach-focus=planning-enemy_wave]').inputValue(),'UNKNOWN');await select('enemy_wave','LARGE');await select('income','LOSING');await select('opportunity','AVAILABLE');assert(await p.locator('[data-engagement-decision]').isVisible());
+  const decision=await p.locator('[data-engagement-decision]').innerText();assert(decision.includes('교전 필요성')&&decision.includes('실행 가능성'));await p.reload();await p.locator('.plan-detail-title').waitFor();assert.equal(await p.locator('[data-coach-focus=planning-enemy_wave]').inputValue(),'LARGE');assert.equal(await p.locator('[data-coach-focus=planning-income]').inputValue(),'LOSING');assert.equal(await p.locator('[data-coach-focus=planning-opportunity]').inputValue(),'AVAILABLE');assert.equal(await p.locator('[data-engagement-decision]').innerText(),decision);
+  await p.locator('.plan-detail details.coach-details[id$=\"-conditions\"]').evaluate(e=>e.open=true);await select('opportunity','MISSED');assert.notEqual(await p.locator('[data-engagement-decision]').innerText(),decision);await p.locator('[data-coach-focus=reset-scenario]').click();await p.waitForFunction(()=>document.querySelector('#loading-coach').getAttribute('aria-busy')==='false');assert.equal(await p.locator('[data-coach-focus=planning-income]').inputValue(),'UNKNOWN');assert.equal(await p.locator('[data-coach-focus=planning-opportunity]').inputValue(),'UNCONFIRMED');assert.equal(await p.locator('[data-coach-focus=planning-enemy_wave]').inputValue(),'UNKNOWN');assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+  results.push({width,defaultActions:15,paragraphsMatch:true,detailBodyReference:true,overallCommentary:true,engagementAssumptions:true,keyboardDisclosure:true,reload:true,readable:true,overflow:false});await p.close();
  }
  assert.deepEqual(errors,[]);fs.writeFileSync(process.env.OUT+'/narrative-result.json',JSON.stringify({results,errors,input:x},null,2));await b.close();
 })().catch(e=>{console.error(e);process.exit(1)});

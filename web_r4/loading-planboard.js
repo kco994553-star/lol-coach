@@ -8,7 +8,8 @@
   const ENUMS = {
     enemy_support: ['PRESENT', 'ABSENT', 'UNKNOWN'], enemy_jungle: ['UNKNOWN', 'AWAY', 'NEAR'],
     ally_jungle: ['UNCONFIRMED', 'AVAILABLE'], goal: ['AUTO', 'PRESSURE', 'FARM', 'RECALL'],
-    clear_window: ['UNCONFIRMED', 'OPEN'], ally_followup: ['UNCONFIRMED','AVAILABLE','UNAVAILABLE']
+    clear_window: ['UNCONFIRMED', 'OPEN'], ally_followup: ['UNCONFIRMED','AVAILABLE','UNAVAILABLE'],
+    enemy_wave: ['UNKNOWN','NORMAL','LARGE'], income: ['UNKNOWN','NORMAL','LOSING'], opportunity: ['UNCONFIRMED','AVAILABLE','MISSED']
   };
   const defaults = () => ({ basis: 'loading-plan-example-v1', overrides: {} });
   function validate(value) {
@@ -612,7 +613,66 @@
       result.composition.theirs=other.win;result.composition.theirs_full=other.win+' '+other.macro;
       result.area_context.operations.theirs=other.macro;result.area_context.fight.theirs=other.opening;
     }
+    reconcileSituation(result,report,catalog,coach);
     return result;
+  }
+
+  // Necessity is a cost judgment; feasibility is a separate execution gate.
+  // Both are optional user assumptions, never inferred observations from picks.
+  function reconcileSituation(b,report,catalog,coach){
+    if(!b.team_plan||!b.waiting)return;
+    const p=b.context.planning.overrides,s=coach.context.assumptions.scenario.overrides,pos=report.input.own_position;
+    const income=p.income||'UNKNOWN',opportunity=p.opportunity||'UNCONFIRMED';
+    const sourceOK=b.waiting.mode!=='SOURCE_REVIEW_REQUIRED';
+    const blocked=p.enemy_wave==='LARGE'||s.resources==='LOW'||p.ally_followup==='UNAVAILABLE'||p.enemy_jungle==='NEAR'||['INCOMING','UNDER_TOWER'].includes(s.wave)||['FARM','RECALL'].includes(p.goal)||s.engage&&s.engage!=='NONE';
+    const unknown=s.resources==='UNKNOWN'||s.wave==='UNKNOWN';
+    const necessity=income==='LOSING'?'CHANGE_NEEDED':income==='NORMAL'?'LOW_COST_WAIT':'UNKNOWN';
+    const feasibility=opportunity==='MISSED'?'MISSED':blocked?'BLOCKED':!unknown&&opportunity==='AVAILABLE'&&p.ally_followup==='AVAILABLE'?'CONDITIONAL':'UNKNOWN';
+    const state=!sourceOK?'SOURCE_REVIEW_REQUIRED':feasibility==='MISSED'?'OPPORTUNITY_MISSED':feasibility==='BLOCKED'?'PREPARE_CONDITIONS':necessity==='LOW_COST_WAIT'?'WAIT_AND_PREPARE':necessity==='CHANGE_NEEDED'&&feasibility==='CONDITIONAL'?'CREATE_WINDOW':'CHECK_CONDITIONS';
+    const current=b.narrative_decisions?.lane,oldAction=b.action_summaries.lane.items[2].text;
+    const target=pos==='JUNGLE'?'캠프 성장과 라인 지원 시간':pos==='SUPPORT'?'아군의 CS·경험치 접근과 체력':'CS·경험치 접근과 다음 웨이브를 받을 체력';
+    const reason=necessity==='CHANGE_NEEDED'?'계속 기다릴 때 '+target+'을 잃는다는 가정이다. 같은 자리에서 버티는 비용이 크지만, 그 사실만으로 지금 교전할 수 있다는 뜻은 아니다.':necessity==='LOW_COST_WAIT'?'현재 '+target+'을 지킬 수 있다는 가정이다. 당장 교환을 강제하기보다 구매·레벨·아군 합류 중 실제로 가까워진 전환점까지 준비할 여유가 있다.':'기다리는 동안 '+target+'을 유지하는지 아직 정하지 않았다. 견제를 받는다는 이유만으로 손실이 누적된다거나 지금 싸워야 한다고 확정하지 않는다.';
+    const alternative=b.waiting.fallback;
+    const actions={
+      SOURCE_REVIEW_REQUIRED:'자료 패치를 확인하기 전에는 상세 교환 판단을 적용하지 않고 포지션 기본 계획으로 제한한다.',
+      OPPORTUNITY_MISSED:'이미 아군의 공격이 끝났거나 거리가 벌어진 가정에서는 뒤늦게 따라 들어가지 않고, 퇴로 쪽으로 다시 모여 다음 기회를 준비한다.',
+      PREPARE_CONDITIONS:pos==='JUNGLE'?'자원·호응이 부족하거나 라인 지원이 어려운 가정에서는 갱킹을 강제하지 않고 회복·구매와 다음 캠프를 비교한다.':pos==='SUPPORT'?'자원·호응이 부족하거나 적 미니언이 많은 가정에서는 진입을 강제하지 않고 아군 곁에서 견제를 막으며 정리·귀환을 돕는다.':'자원·호응이 부족하거나 적 미니언이 많은 가정에서는 교환을 강제하지 않고 경험치를 받을 자리를 지키며 미니언 정리 지원과 귀환을 준비한다.',
+      WAIT_AND_PREPARE:pos==='JUNGLE'?'갱킹 자리에 멈춰 기다리기보다 캠프와 귀환 시간을 맞추고, 아군이 움직일 수 있을 때 다시 개입을 비교한다.':pos==='SUPPORT'?'아군의 경험치·막타 접근을 보호하며 구매·레벨·합류를 준비하고, 상대가 거리를 내줄 때만 짧게 견제한다.':'닿는 막타와 경험치를 챙기며 체력을 남기고, 구매·레벨·아군 합류가 준비되기 전에 추격을 늘리지 않는다.',
+      CREATE_WINDOW:oldAction,
+      CHECK_CONDITIONS:'공격을 시작하기 전에 손실의 크기와 아군 호응·자원·남은 반격을 먼저 확인한다. 확인되지 않은 기회를 이미 열린 기회로 취급하지 않는다.'
+    };
+    const transition='상대의 남은 반격, 아군과 같은 적을 공격할 거리, 웨이브 크기와 자원을 다시 확인한다. 손실이 커지면 지원·귀환으로 여건을 바꾸고, 기회가 끝나면 추격을 멈춘다.';
+    const d={spec_version:'1.3',rule_id:'waiting-necessity-feasibility-v1',necessity,feasibility,state,action:actions[state],reason,alternative,transition,observed:false,basis:'USER_ASSUMPTIONS_NOT_OBSERVATION',review_state:'TACTICAL_UNREVIEWED',assumptions:{income,opportunity,resources:s.resources||'SUFFICIENT',wave:s.wave||'EVEN',enemy_wave:p.enemy_wave||'UNKNOWN',ally_followup:p.ally_followup||'UNCONFIRMED'},source_paths:['context.planning','context.assumptions']};
+    b.engagement_decision=d;b.versions={spec:'1.3',rules:'waiting-necessity-feasibility-v1',content:'causal-coaching-v1.3',data:catalog.source_patch};
+    // Only explicit new assumptions revise a previously generated lane decision.
+    // Default/legacy URLs keep existing learned-kit and matchup gates intact.
+    if(sourceOK&&(p.income||p.opportunity||p.enemy_wave)){
+      if(current){
+        current.cost=reason;current.response=state==='CREATE_WINDOW'?current.response:d.action;
+        current.fallback=alternative+' '+transition;
+        current.rule_id=d.rule_id;current.situation=d.state;
+        b.coaching_explanation.lane=[current.pressure+' '+reason,current.response,current.counter+' '+current.payoff,current.fallback];
+      }else if(b.coaching_explanation?.lane){
+        b.coaching_explanation.lane=[...b.coaching_explanation.lane.slice(0,-1),reason+' '+d.action,alternative+' '+transition];
+      }
+      b.wave.combat=d.action;b.wave.change_if=alternative+' '+transition;
+      b.action_summaries.lane.items[2].text=d.action;
+      b.action_summaries.lane.items[4].text=alternative;
+      b.action_summaries.lane.items[4].label='막히면 바꿀 행동';
+      for(const i of [2,4]){b.action_summaries.lane.items[i].source_paths=['engagement_decision'];b.action_summaries.lane.items[i].rule_ids.push(d.rule_id);}
+      b.wave.steps=b.wave.steps.map((step,i)=>({...step,text:i===1?d.action:i===2?b.wave.change_if:step.text}));
+      if(b.wave.diagram?.steps)b.wave.diagram.steps=b.wave.steps.map(step=>({...step}));
+      b.area_context.lane.action=d.action;b.area_context.lane.ours=current?.response||d.action;b.area_context.lane.matchup=reason;b.matchup_playbook.ours.means=b.area_context.lane.ours;
+      b.condition_responses.lane=b.condition_responses.lane.filter(c=>!['PLAN_WINDOW','PREPARE_WINDOW'].includes(c.id));
+      if(['BLOCKED','MISSED'].includes(feasibility))b.condition_responses.lane=[];
+      b.condition_responses.lane.unshift({id:'EXPLICIT_SITUATION',trigger:'선택한 수급·교전 기회 가정에서',action:d.action,reason,keep:alternative,stop:transition,actors:b.waiting.actors,evidence_ids:[],observation:false,basis:d.basis,rule_ids:[d.rule_id]});
+      const summary=b.loading_summary.items.find(x=>x.id==='lane');if(summary){summary.support=d.action;if(!['CREATE_WINDOW','CHECK_CONDITIONS'].includes(state)){summary.conclusion=d.action;b.lane.concept={plan_id:b.wave.plan_id,text:d.action};}}
+    }
+    const ours=b.team_plan.ours,theirs=b.team_plan.theirs;
+    b.overall_commentary=[
+      '우리 팀은 '+ours.win+' 상대는 '+theirs.win+' 이 두 계획이 부딪힐 때는 '+ours.avoid,
+      (b.narrative_decisions?.fight?.response||b.fight.setup)+' '+(b.narrative_decisions?.operations?.fallback||b.operations.fallback)
+    ];
   }
 
   // Waiting has an opportunity cost even when a fight is unavailable. This is
@@ -706,6 +766,9 @@
     // Keep authored Fiora/Graves and other role plans; waiting is a decision in
     // details, not four independent paragraphs appended to their explanation.
     if(pos!=='BOTTOM'){
+      if(pos==='SUPPORT'&&b.coverage.status==='UNSUPPORTED'&&b.coaching_explanation?.lane){
+        b.coaching_explanation.lane=[w.loss,w.window+' '+w.fallback];
+      }
       if(b.coaching_explanation?.lane){
         b.coaching_explanation.lane.push(pos==='JUNGLE'?
           '개입을 기다리는 동안 놓칠 캠프와, 떠났을 때 아군이 잃을 미니언·포탑을 함께 본다. '+(w.mode==='CONDITIONAL_WINDOW'?'아군과 공격할 수 없는 길이라면 다음 캠프로 움직이되, 다이브 위험이 큰 라인은 도착할 시간을 비교해 방어한다.':w.window):
@@ -772,7 +835,7 @@
     const op={title:enemy==='Ziggs'?'직스 앞의 긴 대치를 끊고, 아군과 함께 접근하기':'웨이브를 정리한 시간을 아군과의 공격 기회로 바꾸기',
       pressure:enemy==='Ziggs'?'직스 앞에서 같은 자리에 오래 대치하면 견제를 피하며 미니언을 잡는 데 체력과 시간이 소모된다. 체력이 깎인 뒤에야 진입하면 접근 도중 반격까지 버티기 어려워진다.':en+'와 정면에서 대치하는 동안 사이드 미니언과 먼저 이동할 시간을 놓칠 수 있다. 대치 자체가 이득인지는 아군이 다른 곳에서 얻는 것까지 함께 본다.',
       cost:'이동만 서두르다 웨이브를 버리면 성장도 잃고, 아군보다 먼저 어두운 길에 들어가면 함께 싸울 수도 없다.',
-      response:partners+'와 중앙 미니언을 정리한 뒤, 아군이 확인한 시야 안에서 같은 적에게 닿을 경로를 잡는다. '+(has('allies','Vi',['R'])?skill('Vi','R')+'이 적을 띄워도 내 공격이 닿지 않으면 바이만 적진에 남으므로, 진입 전에 따라갈 거리부터 맞춘다.':'제어가 맞아도 내 공격이 닿지 않으면 묶은 시간을 이득으로 쓰기 어렵다.')+' '+join,
+      response:partners+'와 중앙 미니언을 먼저 잡을 여유가 있는지 상대의 견제·진입 거리와 함께 확인한다. 먼저 밀 수 있고 아군과 돌아올 길이 확보될 때만 미니언을 포탑까지 보내 상대가 받게 한 뒤 이동한다. 먼저 밀기 어렵다면 받을 웨이브를 정리하고 합류할 시간을 다시 맞춘다. 미니언을 정리했다는 사실만으로 강을 먼저 건널 수 있는 것은 아니다. '+(has('allies','Vi',['R'])?skill('Vi','R')+'이 적을 띄워도 내 공격이 닿지 않으면 바이만 적진에 남으므로, 진입 전에 따라갈 거리부터 맞춘다.':'제어가 맞아도 내 공격이 닿지 않으면 묶은 시간을 이득으로 쓰기 어렵다.')+' '+join,
       payoff:'상대가 물러난 시간에는 가까운 포탑을 치거나 목표물 주변 시야를 확보한다. 다른 곳의 미니언을 받을 아군과 합류 시간을 정해, 한쪽이 귀환하는데 나머지만 교전을 시작하지 않게 한다.',
       fallback:'함께 들어갈 경로가 없으면 같은 입구에서 견제를 계속 맞지 말고 가까운 웨이브를 받은 뒤 구매·회복을 맞춘다. '+sn+'와 다른 입구의 시야를 확보하되 혼자 어두운 강을 건너지 않는다. 이미 아군 진입이 끝나 상대가 물러났다면 뒤늦게 쫓지 말고 다음 웨이브와 목표물 준비로 돌아간다.'};
     phase='fight';
@@ -801,14 +864,14 @@
     // summary/detail gap using this very same causal decision, not another plan.
     if(sourceLimited){
       b.lane.concept={plan_id:b.wave.plan_id,text:lane.title};
-      const laneActions=['상대에게 막타 자리를 모두 내주지 않되, 교환 뒤에도 다음 웨이브를 받을 체력을 남긴다.','큰 적 웨이브에는 깊게 들어가지 말고, 동료와 함께 줄인 뒤 막타에 접근한다.',limited?lane.response.split('. ')[0]+'.':shortResponse,'상대 두 명의 남은 반격과 퇴로를 보고, 한 기술이 빠졌다고 끝까지 추격하지 않는다.',reset];
+      const laneActions=['상대에게 막타 자리를 모두 내주지 않되, 교환 뒤에도 다음 웨이브를 받을 체력을 남긴다.','상대 견제 속에서도 먼저 밀 여유가 있으면 귀환할 시간을 만들고, 없으면 동료와 받을 미니언을 줄이며 경험치 접근을 지킨다.',limited?lane.response.split('. ')[0]+'.':shortResponse,'상대 두 명의 남은 반격과 퇴로를 보고, 한 기술이 빠졌다고 끝까지 추격하지 않는다.',reset];
       if(constrained){laneActions[1]=b.wave.handling;laneActions[2]=b.wave.combat;laneActions[4]=b.wave.change_if;}
       laneActions.forEach((text,i)=>b.action_summaries.lane.items[i].text=text);
       b.wave.combat=laneActions[2];b.wave.change_if=laneActions[4];b.wave.handling=laneActions[1];b.wave.steps=b.wave.steps.map((step,i)=>({...step,text:laneActions[[1,2,4][i]??4]}));
       if(b.wave.diagram?.steps)b.wave.diagram.steps=b.wave.steps.map(step=>({...step}));
       b.matchup_playbook.ours.means=lane.response;b.matchup_playbook.ours.avoid=lane.counter;
       b.area_context.lane={...b.area_context.lane,ours:lane.response,theirs:lane.pressure,action:laneActions[2],matchup:lane.cost};
-      Object.assign(b.operations,{concept:op.title,placement:'중앙에서 '+partners+'와 움직이며 같은 적에게 닿을 거리를 맞춘다.',connection:(has('allies','Vi',['R'])?'바이의 진입에 닿을 경로를 잡고, ':'')+sn+'의 '+(['Nautilus','Alistar'].includes(support)?'제어':'보호·방해')+'가 닿는 거리를 유지한다.',priority:'웨이브를 정리한 시간을 가까운 포탑·목표물 주변 시야로 바꾼다.',concede:op.cost,fallback:op.fallback});
+      Object.assign(b.operations,{concept:op.title,placement:'중앙에서 '+partners+'와 움직이며 같은 적에게 닿을 거리를 맞춘다.',connection:(has('allies','Vi',['R'])?'바이의 진입에 닿을 경로를 잡고, ':'')+sn+'의 '+(['Nautilus','Alistar'].includes(support)?'제어':'보호·방해')+'가 닿는 거리를 유지한다.',priority:'상대보다 먼저 움직일 여유와 아군 지원이 있으면 가까운 포탑·목표물 주변 시야를 얻고, 없으면 받을 웨이브와 합류 시간을 맞춘다.',concede:op.cost,fallback:op.fallback});
       Object.assign(b.fight,{concept:fight.title,setup:starters+'의 뒤나 옆에서 시작해 같은 적을 공격할 거리를 유지한다.',start:'아군 제어와 내 공격이 함께 닿을 때 공격하고, 멀어진 진입자를 혼자 따라가지 않는다.',target:'함께 닿는 가까운 적부터 공격하며 아군을 지킬 거리를 남긴다.',stop:fight.fallback});
       b.operations.steps=[b.operations.placement,b.operations.priority,b.operations.fallback];
       for(const [area,values]of Object.entries({operations:[b.operations.placement,b.operations.connection,b.operations.priority,b.operations.concede,b.operations.fallback],fight:[b.fight.setup,b.fight.start,b.fight.target,fight.pressure,b.fight.stop]})){

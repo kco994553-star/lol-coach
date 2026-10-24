@@ -1,3 +1,7 @@
+## Current delta — gameplan v1.3 (2026-10-24)
+
+Active claim `codex-20261024-gameplan-v13`, branch `work/gameplan-v13-20261024`, base742b3bb. Complete explicit waiting-cost/feasibility assumptions and same-result presentation → SHA-bound checks/browser → gated PR/main → existing Pages/public verification. Actual attached corpus is v1.1/9 tests; absent v1.2/17 is recorded, not assumed. Matrix in existing content document; no duplicate generator or new top-level area. Preserve remaining prior queue and protected user decisions.
+
 # Current — independent coaching narrative shipped, final handoff
 
 - Source branch `work/coaching-narrative-20261024` HEAD `4cddd1934f7e56c79dfcececc54c313399e6002b`; PR125 normally merged to product main `a8f3bc1ffa080823ee707cf6492a5444f9d7916f`. Results branch `work/coaching-narrative-results-20261024`. Canonical token `codex-20261024-coaching-narrative`; exact final SHA/owner release on `work/main-execution-claim`.
