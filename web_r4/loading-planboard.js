@@ -181,9 +181,9 @@
       if(selected)return [tag('ACTION',selected,'delivery.phases.lane.actions.2.text')];
     }
     const rules={
-      lane:{index:0,actions:[[/멀리서 견제|사거리.*견제/,'견제 후 압박'],[/캠프 성장/,'성장·지원 연결'],[/경험치.*막타|CS.*경험치|수급/,'수급 지키기']],condition:2},
+      lane:{index:0,actions:[[/짧게 교환한 뒤 빠져/,'짧게 교환'],[/멀리서 견제|사거리.*견제/,'견제 후 압박'],[/캠프 성장/,'성장·지원 연결'],[/경험치.*막타|CS.*경험치|수급/,'수급 지키기']],condition:2},
       operations:{index:2,actions:[[/사이드에 묶/,'사이드 압박'],[/미드 미니언.*먼저/,'미드 압박'],[/시야.*확보|시야.*자리/,'시야 선점'],[/중앙 포탑.*목표물/,'본대 이득 연결']],condition:1},
-      fight:{index:1,actions:[[/앞라인 뒤.*닿는 적/,'앞라인 공격'],[/주요 진입이 빠졌/,'진입 후 받아치기'],[/안전한 공격 틈/,'공격 틈에 전진'],[/매혹.*아군/,'제어 후 후속 공격']],condition:0}
+      fight:{index:1,actions:[[/아군 호응을 확인한 뒤/,'호응 후 진입'],[/앞라인 뒤.*닿는 적/,'앞라인 공격'],[/주요 진입이 빠졌/,'진입 후 받아치기'],[/안전한 공격 틈/,'공격 틈에 전진'],[/매혹.*아군/,'제어 후 후속 공격']],condition:0}
     }[phase];
     const tags=[],base='delivery.phases.'+phase+'.actions.';
     const positive=text=>!/(않|말고|금지|보류|어렵|없)/.test(text);
@@ -894,6 +894,7 @@
     enrichCoaching(result,report,catalog,coach);
     attachWaitingDecision(result,report,catalog,coach);
     composeNarrative(result,report,catalog,coach);
+    composeMalphiteGwen(result,report,catalog,coach);
     // Team descriptions always use the user's fixed team perspective. These are
     // authored tactics, never source quotations or observed facts.
     if(result.team_plan){
@@ -1007,7 +1008,7 @@
     };
     const transition='상대의 남은 반격, 아군과 같은 적을 공격할 거리, 웨이브 크기와 자원을 다시 확인한다. 손실이 커지면 지원·귀환으로 여건을 바꾸고, 기회가 끝나면 추격을 멈춘다.';
     const d={spec_version:'1.3',rule_id:'waiting-necessity-feasibility-v1',necessity,feasibility,state,action:actions[state],reason,alternative,transition,observed:false,basis:'USER_ASSUMPTIONS_NOT_OBSERVATION',review_state:'TACTICAL_UNREVIEWED',assumptions:{income,opportunity,resources:s.resources||'SUFFICIENT',wave:s.wave||'EVEN',enemy_wave:p.enemy_wave||'UNKNOWN',ally_followup:p.ally_followup||'UNCONFIRMED'},source_paths:['context.planning','context.assumptions']};
-    b.engagement_decision=d;b.versions={spec:'1.3',rules:'waiting-necessity-feasibility-v1',content:'causal-coaching-v1.3',data:catalog.source_patch};
+    b.engagement_decision=d;b.versions={spec:'1.3',rules:'waiting-necessity-feasibility-v1',content:b.coaching_scope?.rule_id==='malphite-gwen-context-v1'?'malphite-gwen-context-v1':'causal-coaching-v1.3',data:catalog.source_patch};
     // Only explicit new assumptions revise a previously generated lane decision.
     // Default/legacy URLs keep existing learned-kit and matchup gates intact.
     if(sourceOK&&(p.income||p.opportunity||p.enemy_wave)){
@@ -1114,6 +1115,81 @@
       const values=['캠프 성장과 라인 손실을 비교해 개입할 시간을 정한다.','먼저 움직일 아군과 연결되는 캠프를 택하고, 상대 동선을 단정하지 않는다.',mode==='CONDITIONAL_WINDOW'?'배운 기술과 아군 호응·자원이 맞을 때 개입하고, 각이 없으면 오래 기다리지 않는다.':'자원·호응이 부족하거나 미확인이면 무리한 갱킹을 강제하지 않는다.','라인 지원 없이 침입하거나 적을 끝까지 추격하지 않는다.','목격·웨이브·목표물 준비가 바뀌면 방어·역갱·반대편 교환을 비교한다.'];
       b.action_summaries.lane.items.forEach((item,i)=>Object.assign(item,{text:values[i],basis:'ROLE_PRINCIPLE',source_paths:['waiting','action_summaries.lane']}));
     }
+  }
+
+  // First random-review case. The scope is deliberately an authored matchup,
+  // not a role-wide assertion of lane strength or observed spell availability.
+  function composeMalphiteGwen(b,report,catalog,coach){
+    const x=report.input,w=b.waiting;
+    const at=(side,role)=>x[side].find(p=>p.position===role)?.champion;
+    if(x.own_champion!=='Malphite'||x.own_position!=='TOP'||at('allies','TOP')!=='Malphite'||
+      at('enemies','TOP')!=='Gwen'||!b.team_plan||!w||w.mode==='SOURCE_REVIEW_REQUIRED'||
+      catalog.source_patch!=='16.20.1'||b.coverage.status!=='UNSUPPORTED'||
+      !(x.opponent_mode==='ASSIGNED'||x.opponent_mode==='MANUAL'&&x.lane_opponent==='Gwen'))return;
+    const fact=(id,key)=>catalog.champions[id]?.facts?.find(f=>f.slot===key);
+    const valid=(id,key,re)=>{const f=fact(id,key);return f?.id&&f.name&&f.patch===catalog.source_patch&&re.test(f.text);};
+    if(!valid('Malphite','P',/보호막/)||!valid('Malphite','Q',/이동 속도/)||!valid('Malphite','R',/공중/)||
+      !valid('Gwen','Q',/고정 피해/)||!valid('Gwen','W',/안개 밖/)||!valid('Gwen','E',/돌진/))return;
+    const refs={lane:new Set(),operations:new Set(),fight:new Set()};let phase='lane';
+    const skill=(id,key)=>{const f=fact(id,key);refs[phase].add(f.id);return catalog.champions[id].name+'의 '+f.name+'('+key+')';};
+    const has=(side,id,key,re)=>x[side].some(p=>p.champion===id)&&valid(id,key,re);
+    const s=coach.context.assumptions.scenario.overrides,p=b.context.planning.overrides;
+    const constrained=p.enemy_jungle==='NEAR'||p.enemy_wave==='LARGE'||['FARM','RECALL'].includes(p.goal)||
+      s.engage&&s.engage!=='NONE'||['INCOMING','UNDER_TOWER','RETURNING','UNKNOWN'].includes(s.wave);
+    const limited=w.mode!=='CONDITIONAL_WINDOW'||constrained;
+    const shield=skill('Malphite','P'),q=skill('Malphite','Q'),gq=skill('Gwen','Q'),gw=skill('Gwen','W'),ge=skill('Gwen','E');
+    const lane={title:limited?'교환보다 경험치와 회복할 자리를 먼저 확보하기':'짧게 교환하고, 그웬의 반격 거리에서 빠져나오기',
+      pressure:gq+'의 중앙 고정 피해와 '+ge+'의 접근을 함께 본다. 말파이트라는 이유로 붙어서 오래 싸워도 된다고 판단하지 않는다.',
+      cost:'견제에 마나와 체력을 모두 쓰면 다음 미니언에 접근할 수 없고, 계속 물러서기만 해도 경험치를 잃을 수 있다.',
+      response:limited?'설정한 자원·웨이브·호응 조건에서는 교환을 강제하지 않고, 받을 경험치와 귀환할 시간을 먼저 확인한다. '+w.fallback:
+        '배워 사용할 수 있는 '+q+'로 짧게 교환한 뒤 이동 속도 차이를 이용해 반격 거리에서 빠져나올 수 있는지 본다. '+shield+'가 돌아올 틈과 다음 미니언에 쓸 마나를 남긴다.',
+      counter:gw+'가 켜져 있으면 밖에서 대상을 지정할 수 없으므로, Q를 쓰려고 안개 안으로 따라 들어가지 않는다. 그웬의 기술 소모 하나만으로 교환 승리를 단정하지 않는다.',
+      payoff:'상대가 물러난 동안 막타와 경험치에 접근한다. 웨이브를 정리할 여유가 생기면 귀환 시간을 만들고, 킬을 위해 추격을 늘리지 않는다.',
+      fallback:'그웬이 거리를 좁히거나 내 보호막·마나가 부족하면 교환을 끊고 경험치를 받을 자리로 돌아온다. 경험치에도 접근하기 어렵다면 정글 지원과 귀환을 비교한다.'};
+    phase='operations';const r=skill('Malphite','R');
+    const op={title:'사이드 웨이브를 받은 뒤, 아군과 합류할 시간을 맞추기',
+      pressure:'그웬과 사이드에 계속 남으면 본대 교전에 늦을 수 있고, 무작정 떠나면 미니언과 포탑을 내줄 수 있다.',
+      cost:'궁극기가 있다는 사실만으로 사이드 손실이나 아군의 합류 거리가 해결되지는 않는다.',
+      response:'받을 사이드 웨이브와 목표물 준비 시간을 비교한다. '+r+'을 배워 사용할 수 있고 동료가 같은 적을 공격할 거리라면, 먼저 합류해 진입할 길을 함께 확인한다.',
+      payoff:'상대가 물러난 동안 아군과 시야를 확보하고 가까운 포탑·목표물을 비교한다. 목표물 시작 전 상대 인원과 남은 체력을 확인한다.',
+      fallback:'궁극기나 동료 호응이 준비되지 않으면 어두운 길에서 먼저 교전을 열지 않고, 받을 웨이브·구매·다음 합류 시간을 맞춘다.'};
+    phase='fight';const ult=skill('Malphite','R');
+    const follow=[];
+    if(has('allies','Nocturne','R',/날아가/))follow.push(skill('Nocturne','R')+'을 배워 사용할 수 있어도 같은 대상에 실제로 도착할 수 있는지 확인한다');
+    if(has('allies','Taliyah','Q',/바위/))follow.push(skill('Taliyah','Q')+'의 후속 공격이 닿을 경로를 남긴다');
+    const counter=has('enemies','Alistar','W',/밀어/)?skill('Alistar','W')+'의 밀쳐내기로 후속 공격 거리가 끊길 수 있으므로, 내 적중만 보지 말고 뒤따르는 아군의 위치도 확인한다.':'상대의 남은 밀쳐내기·제어와 아군에게 접근하는 적을 확인한다.';
+    const fight={title:'함께 공격할 적을 정하고, 진입과 아군 보호를 비교하기',
+      pressure:counter,cost:'여러 명을 띄워도 아군 공격이 닿지 않으면 혼자 고립되고, 뒤의 딜러를 노리는 동안 아군이 먼저 쓰러질 수 있다.',
+      response:'아군 호응을 확인한 뒤 '+ult+'을 배워 사용할 수 있을 때 같은 적을 함께 공격하는 진입을 비교한다. '+(follow.length?follow.join('. ')+'.':'동료가 웨이브나 다른 적에게 묶여 있다면 그 공격까지 더해 진입하지 않는다.'),
+      payoff:'첫 진입 뒤에는 함께 닿는 적을 공격하고, 아군에게 들어온 적을 띄워 공격할 시간을 만들어 주는 선택도 비교한다.',
+      fallback:'궁극기가 없거나 아군 호응 거리가 끊기면 진입을 보류하고 아군 곁으로 돌아온다. 이미 끝난 공격을 뒤늦게 이어가려고 적진으로 들어가지 않는다.'};
+    const decisions={lane,operations:op,fight};
+    const actions={lane:[limited?'막타·경험치에 접근할 자리를 지키고 회복할 시간을 확보한다.':'짧게 교환한 뒤 빠져나와 다음 미니언을 받을 체력을 남긴다.',
+      constrained?b.wave.handling:'그웬의 가위 중앙을 피할 자리에서 막타를 받고, 견제에 마나를 모두 쓰지 않는다.',lane.response,lane.counter,lane.fallback],
+      operations:['그웬이 있는 사이드의 웨이브와 본대의 합류 시간을 함께 확인한다.',op.response,op.payoff,op.cost,op.fallback],
+      fight:['동료의 공격이 닿는 거리에서 진입할 대상과 돌아올 길을 정한다.','아군 호응을 확인한 뒤, 배워 사용할 수 있는 궁극기로 같은 적을 함께 공격할 진입을 비교한다.',fight.payoff,fight.pressure,fight.fallback]};
+    b.narrative_decisions={};
+    b.coaching_scope={...b.coaching_scope,rule_id:'malphite-gwen-context-v1',evidence_ids:[...new Set(Object.values(refs).flatMap(v=>[...v]))],
+      limitation:'말파이트 탑 대 그웬의 조건부 해석입니다. 기술 기전은 저장된 16.20.1 자료에 근거하며 상성 우열·현재 기술 가용성·전술 정확도는 검증하지 않았습니다.'};
+    for(const [area,d]of Object.entries(decisions)){
+      const actors=[...x.allies,...x.enemies].filter(a=>Object.values(d).some(t=>typeof t==='string'&&t.includes(catalog.champions[a.champion].name))).map(a=>a.champion);
+      Object.assign(d,{rule_id:'malphite-gwen-context-v1:'+area,actors:[...new Set(actors)],evidence_ids:[...refs[area]],observation:false,basis:'MECHANISM_LINKED_INFERENCE',outcome:'UNDETERMINED',review_state:'TACTICAL_UNREVIEWED'});
+      b.narrative_decisions[area]=d;
+      b.coaching_explanation[area]=[d.pressure+' '+d.cost,d.response,(d.counter?d.counter+' ':'')+d.payoff,d.fallback];
+      actions[area].forEach((text,i)=>Object.assign(b.action_summaries[area].items[i],{text,evidence_ids:[...d.evidence_ids],rule_ids:[d.rule_id],source_paths:['narrative_decisions.'+area],basis:d.basis}));
+      const summary=b.loading_summary.items.find(a=>a.id===area);summary.conclusion=d.title;summary.support=d.payoff;b.brief[area]=d.title;
+      b.area_context[area]={...b.area_context[area],ours:d.response,theirs:d.pressure,action:actions[area][2],matchup:d.cost};
+      b.condition_responses[area]=[{id:'PLAN_WINDOW',trigger:area==='lane'?'체력·웨이브·배운 기술이 갖춰지고 반격 뒤에도 돌아올 수 있다면':'궁극기와 아군 호응·공격 경로가 실제로 준비되어 있다면',action:d.response,reason:d.cost,keep:d.payoff,stop:d.fallback,
+        actors:d.actors,evidence_ids:d.evidence_ids,observation:false,basis:d.basis,rule_ids:[d.rule_id],source_paths:['narrative_decisions.'+area],conditions:['게임 전 가정이며 실제 상태를 관측하지 않았습니다.'],limits:b.coaching_scope.limitation}];
+    }
+    b.lane.concept={plan_id:b.wave.plan_id,text:lane.title};
+    b.wave.handling=actions.lane[1];b.wave.combat=actions.lane[2];b.wave.change_if=actions.lane[4];
+    b.wave.steps=b.wave.steps.map((step,i)=>({...step,text:actions.lane[[1,2,4][i]??4]}));
+    if(b.wave.diagram?.steps)b.wave.diagram.steps=b.wave.steps.map(step=>({...step}));
+    b.matchup_playbook.ours.means=lane.response;b.matchup_playbook.ours.avoid=lane.counter;
+    Object.assign(b.operations,{concept:op.title,placement:actions.operations[0],connection:op.response,priority:op.payoff,concede:op.cost,fallback:op.fallback,steps:[actions.operations[0],op.payoff,op.fallback]});
+    Object.assign(b.fight,{concept:fight.title,setup:actions.fight[0],start:fight.response,target:fight.payoff,stop:fight.fallback});
+    b.operation_headline=op.title;
   }
 
   // A small causal plan over retained facts. Decisions are made here; views only
