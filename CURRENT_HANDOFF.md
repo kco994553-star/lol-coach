@@ -1,6 +1,6 @@
-# Current — v1.1 intake / same-result default gameplan
+# Current — v1.1 gameplan displayed and publicly verified
 
-- Branch `work/handoff-v11-20261023`; base after #122 integration `1f99329fb8615de096f7e54a36fe3d7d13241c79`. Canonical owner token `codex-20261023-v11-intake` on `work/main-execution-claim`; that ref records final branch/SHA and release state. Prior top paragraphs below are history.
+- Result branch `work/handoff-v11-results-20261023`; product main `d9f515c4a48ee17d024923059669a94daaf4386a`. Canonical owner token `codex-20261023-v11-intake` on `work/main-execution-claim`; that ref records final branch/SHA and release state. Prior top paragraphs below are history.
 - #122 HEAD5031980: related55 checks, exact source/preservation and fresh Chromium PC/public-subpath/mobile/presentation/items PASS; independent review no blocker. Original remote pregame85 executed and required3 SUCCESS; normally merged, exact-main required workflows SUCCESS. PR body corrected to actual evidence; no full-product claim.
 - Current changes: four-criterion team comparison + three basic phases with five actions/prose before detail, PC3/mobile1. Same generated report backs basic/details. Team early plan no longer depends on selected user; opponent column perspective fixed. Role-based waiting cost, conditional opportunities/fallbacks, Kaisa–Ziggs with actual supports, LOW/UNKNOWN/follow-up absent gates. No matchup approval/ratio/current game inference.
 - Feature ownership: 2.2.1/2.2.1.1/2.2.4 (default and shared team), partial 2.2.3/2.3.1/2.3.1.1/2.3.3–6/2.3.7 and 6.1 trace. Full v1.1 125 feature/subfeature rows retained in contracts/information-architecture-v1.md; code presence, tests, deployment and coaching efficacy are separate.
@@ -10,6 +10,10 @@
 - External input: Riot credential in secure server configuration / actual supported local LCU connection and field/policy proof; original ZIP/HTML if available. Do not put keys in public frontend or ask user to manually source/approve all tactics. Public static backend/current game is unconnected; no other game's cached/example picks substitute.
 - Operations: existing pro daily18:30 Asia/Seoul, expert18:00, Riot12:17 workflow cron. Actual latest scheduled successes recorded in scheduler-runs.json; success is job result, not provider/content approval. Dedicated daily official-change, weekly content20–30, monthly scope pipeline not confirmed/registered. No duplicate scheduler created.
 - Real coaching N=0; tactical accuracy/effects unverified, all-champion detailed content unsupported, Windows/live external. Protected user-only issues/history/Frozen350/quotas/source grades unchanged; no authenticated Riot/Gemini/video/paid calls; official public CDN lookup is recorded separately.
+
+- Shipped proof: #123 implementation1b6fbd9 / normal main d9f515c; feature and exact-main required3 PASS. Local final102/source integrity and full Chromium PASS. gh-pages4cc14ab / Pages40042463683 build-report-deploy SUCCESS; HTTPS90hashes/root/build-info/pro/riot and actual public1440/390/320 basic/details/keyboard/assumption-reset PASS. Results-only commit does not redeploy product.
+- Whole-suite limit: pre-final778 had3 failures, all reproduced on clean1f99329. Final full-suite success is NOT claimed; final changed-scope102 passed. Details and next steps: evidence/actual-evidence/handoff-v11/result.md.
+- Working state: source changes committed in #123; this results-only branch updates evidence/current summary/trace. Final current branch/SHA, clean status and owner release are on canonical coordination ref; no overlapping writer or secret/paid request.
 
 ---
 
