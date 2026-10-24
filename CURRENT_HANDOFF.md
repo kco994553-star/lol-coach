@@ -1,3 +1,14 @@
+# Gameplan v1.3 — role follow-up CI pending
+- run_token: `codex-20261024-gameplan-v13`
+- status: CI_PENDING
+- writer_active: false
+- owner_branch: `work/gameplan-v13-role-followup-20261024`
+- source_sha: `cf2c59047c4e6c8983d1cf6b37db9346453a5cf8`
+- PR128 restores role-appropriate generic macro and preserves authored Sejuani/Graves. Content17 PASS; exact affected/full browser/required CI running. Earlier browser85a806 run terminated for review fix, not PASS.
+- Product public remains unchanged; after required checks reacquire, normal merge, exact-main CI, publish once, verify public and record final handoff.
+
+---
+
 # Gameplan v1.3 — role fallback follow-up
 - run_token: `codex-20261024-gameplan-v13`
 - status: RUNNING
