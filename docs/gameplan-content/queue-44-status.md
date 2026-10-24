@@ -44,11 +44,11 @@
 | 37 | 실연결 | 외부 검증 대기 | Linux에 Windows 롤 클라이언트/신뢰 CA 없음; 실제 경기 진입 미검증 |
 | 38 | 사례·반례 묶음 | 구현·검사 | 결측·범위·충돌·효과 상충·입력 수정·자료 변조 회귀 |
 | 39 | 내용 검증 | 부분 구현 | 기존 자료에 연결한 내용·기전 반례; 인간 전문가/전 조합 검증 아님 |
-| 40 | 실제 화면 | 검증 대기 | 로컬 Chromium 설치 실패; 정확한 커밋 원격 browser CI로 확인 |
-| 41 | 통합·배포 | 대기 | PR130→131 의존성, exact-source CI 후 기존 공개 경로 반영 |
+| 40 | 실제 화면 | 검사 통과 | 동일 소스 원격 Chromium PC·모바일 검사, 배포 후 공개 예시 조합 확인 |
+| 41 | 통합·배포 | 배포 완료 | PR130·131 main 병합, Pages 배포 성공·공개 화면 확인 |
 | 42 | 실경기 평가 | 외부 자료 대기 | 과거 경기 집계는 효과 검증이 아님; 코칭 효과 N=0 유지 |
 | 43 | 패치·품질 절차 | 구현·문서 | 읽기 전용 영향/스냅샷 비교·회귀·복원 절차; 예약 자동화 없음 |
-| 44 | 문서·노션 | 마무리 대기 | 실행 근거·미완·외부 의존을 반영해 마지막 갱신 |
+| 44 | 문서·노션 | 정리 완료 | 게임플랜 허브·STATUS·ROADMAP 최신화와 재조회 확인 |
 
 ## 실행 원칙
 
@@ -63,3 +63,17 @@
 ## 통합 검증
 
 2026-10-24: `python -m unittest discover -s tests_pregame -q` — 822개 통과(110.257초). 원본 보존·현재 소스 결속 검사 통과. 브라우저·배포·실전 검증과 별개의 결과다.
+
+## 원격 검증·배포 근거
+
+- 코드 소스: `372e309d5a4187a8086633d67d977ac5fc7a73ac` (main, PR130·131 병합). 로컬·원격 검사 트리 모두 `f20ebe307cbefe6f48ed26f32c19d34d3eeeedfa`.
+- [Pregame 검사](https://github.com/kco994553-star/lol-coach/actions/runs/40075713589): PASS, 변경 영향 204개 테스트 및 실제 Chromium loading/directions/game-info 검사.
+- [MVP 회귀·브라우저 검사](https://github.com/kco994553-star/lol-coach/actions/runs/40075713585): PASS.
+- [Pages 배포](https://github.com/kco994553-star/lol-coach/actions/runs/40076020707): PASS. 공개 파일 커밋 `1421c01663514def06ec8bd357045f78e99bcbca`. 별도 갱신된 pro-dashboard.json과 그 해시는 보존.
+- [공개 화면](https://kco994553-star.github.io/lol-coach/loading.html): 예시 1 입력→분석, 양 팀 비교표와 세 단계별 5개 행동 확인. 실제 경기 연결/효과 검증을 뜻하지 않는다.
+
+## 최종 집계
+
+구현·검사/배포/정리 완료 21개, 부분 구현 21개, 외부 검증 대기 2개. 항목 수 집계이며 제품 완성도·전술 정확도 백분율이 아니다.
+
+[노션 게임플랜 허브](https://app.notion.com/p/403f975df2e881d8a39fdf0187216c7c), [STATUS](https://app.notion.com/p/403f975df2e881168d88df51cce5cd98), [ROADMAP](https://app.notion.com/p/403f975df2e881209c5cd259b85a1125)에 마지막으로 실행 결과와 44개 표·미완 범위를 반영하고 재조회했다.
