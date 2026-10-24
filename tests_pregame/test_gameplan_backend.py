@@ -6,6 +6,38 @@ from tests_pregame import test_gameplan_coaching_content as runner
 class GameplanBackendTests(unittest.TestCase):
     node = runner.GameplanCoachingContentTests.node
 
+    def test_general_plan_is_not_disguised_as_individual_tactics(self):
+        self.node(r"""
+let draft=E.exampleInput(catalog,0);draft.own_champion='Ornn';draft.own_position='TOP';
+let r=E.analyze(draft,catalog),v=P.project(r,{currentOnly:true});
+assert(v.cards.every(a=>a.coverage?.status==='GENERAL_ONLY'));
+assert(v.cards.every(a=>a.tags.length===1&&a.tags[0].kind==='STATUS'));
+assert(v.cards.every(a=>!a.tags.some(t=>t.kind==='ACTION')));
+draft=E.exampleInput(catalog,0);draft.allies.find(x=>x.position==='BOTTOM').champion='Ezreal';draft.allies.find(x=>x.position==='SUPPORT').champion='Braum';draft.own_champion='Ezreal';
+r=E.analyze(draft,catalog);v=P.project(r,{currentOnly:true});
+assert(v.cards.every(a=>a.coverage?.status==='BASELINE_ONLY'));
+assert(v.cards.every(a=>a.tags.every(t=>t.kind==='STATUS')));
+""")
+
+    def test_tags_follow_final_actions_and_suppress_stale_role_labels(self):
+        self.node(r"""
+const B=require('./web_r4/loading-planboard.js');let r=E.analyze(E.exampleInput(catalog,0),catalog),b=r.coach.planboard;
+assert(b.delivery.phases.lane.tags?.some(t=>t.kind==='ACTION'));
+assert(b.delivery.phases.fight.tags?.some(t=>t.label==='앞라인 공격'));
+const before=JSON.stringify(P.project(r).cards.map(a=>a.tags));r.roles.proposed.id='PROTECT';b.wave.plan_id='TOWER_CS';
+assert.equal(JSON.stringify(P.project(r).cards.map(a=>a.tags)),before);
+const negated=structuredClone(b);negated.action_summaries.operations.items[2].text='상대를 사이드에 묶으려 하지 않는다.';
+assert(!B.buildDelivery(negated).phases.operations.tags.some(t=>t.kind==='ACTION'));
+const draft=E.exampleInput(catalog,0);draft.schema_version='lol-coach-loading-input-v4';draft.preferences={risk:'BALANCED'};draft.scenario={standard:'lane-standard-v1',overrides:{}};draft.planning={basis:'loading-plan-example-v1',overrides:{income:'LOSING',opportunity:'MISSED'}};
+r=E.analyze(draft,catalog);const lane=r.coach.planboard.delivery.phases.lane;
+assert(lane.tags.some(t=>t.label==='추격 중단'));
+assert(!lane.tags.some(t=>/견제|밀기|교환/.test(t.label)));
+for(const a of Object.values(r.coach.planboard.delivery.phases)){
+ assert(a.tags.length<=3);assert(a.tags.filter(t=>t.kind==='ACTION').length<=1);
+ assert(a.tags.every(t=>t.source_paths.length&&t.label.length<=18));
+}
+""")
+
     def test_three_value_conditions(self):
         self.node(r"""
 const B=require('./web_r4/loading-planboard.js');

@@ -13,6 +13,7 @@ for(const [device,url,width,height] of [['desktop',process.env.LOADING_PC+'/load
  assert.equal(await p.locator('.plan-overview-comparison tbody tr').count(),4);
  for(const phase of ['lane','operations','fight']){
   assert(await p.locator('[data-basic-phase='+phase+'] .plan-card-conditions > span').count()>0);
+  assert.equal(await p.locator('[data-basic-phase='+phase+'] .plan-coverage').count(),1);
   assert.equal(await p.locator('[data-basic-phase='+phase+'] .plan-basic-actions li').count(),5);
   assert(await p.locator('[data-basic-coaching='+phase+'] p').count()>0);
   await p.locator('[data-plan-more='+phase+']').click();
@@ -33,6 +34,8 @@ for(const [device,url,width,height] of [['desktop',process.env.LOADING_PC+'/load
  await p.locator('[data-coach-focus=close-detail]').click();await p.locator('.plan-detail').waitFor({state:'hidden'});
  await p.screenshot({path:process.env.LOADING_OUT+'/'+device+'-current-gameplan.png'});
  assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+ await p.locator('[data-plan-edit]').click();await p.locator('#own-champion').selectOption('Ornn');await p.locator('#own-position').selectOption('TOP');await p.locator('#analyze').click();
+ assert.equal(await p.locator('.plan-coverage[data-coverage=GENERAL_ONLY]').count(),3);assert.equal(await p.locator('.plan-card-conditions [data-tag-kind=ACTION]').count(),0);
  await p.locator('[data-plan-edit]').click();await p.locator('#own-champion').selectOption('Sejuani');await p.locator('#own-position').selectOption('JUNGLE');await p.locator('#analyze').click();
  assert.match(await p.locator('[data-basic-phase=lane] h3').innerText(),/초반 정글/);
  assert.match(await p.locator('[data-basic-phase=operations] h3').innerText(),/중반 운영/);
