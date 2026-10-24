@@ -1,3 +1,14 @@
+# Gameplan v1.3 — integration writer
+- run_token: `codex-20261024-gameplan-v13`
+- status: RUNNING
+- writer_active: true
+- owner_branch: `work/gameplan-v13-20261024`
+- intake_main: `742b3bbb0b8f6401f9ed3776907eff77df13180d`
+- source_sha: `439f554b0f67290b996b15075b5a8e5b08544203`; PR127 mergeable.
+- Exact106/preservation/full local browser PASS. Required PR3 SUCCESS, independent rereview no blocker. Scope normal merge, exact-main checks, existing publication and results handoff.
+
+---
+
 # Gameplan v1.3 — CI pending, writer released
 - run_token: `codex-20261024-gameplan-v13`
 - status: CI_PENDING
