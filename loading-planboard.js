@@ -161,6 +161,42 @@
     });
     return {schema_version:'gameplan-rule-trace-v1',coverage:'DIRECTION_ELIGIBILITY_ONLY',observation:false,rules};
   }
+  // Coverage describes connected content, never tactical accuracy or live observation.
+  function phaseCoverage(board,phase){
+    if(board.waiting?.mode==='SOURCE_REVIEW_REQUIRED')return {status:'SOURCE_REVIEW_REQUIRED',label:'자료 재확인 필요',detail:'현재 입력에 적용할 출처 범위를 다시 확인해야 합니다.'};
+    const contextual=!!board.narrative_decisions?.[phase]||
+      (board.coaching_scope?.rule_id==='gameplan-coaching-content-v1'&&board.coaching_scope.evidence_ids?.length>0);
+    if(contextual)return {status:'CONDITIONAL_PLAN',label:'조건부 계획',detail:'연결된 자료 범위의 계획입니다. 실제 경기 관측이나 상성 우세 검증을 뜻하지 않습니다.'};
+    if(board.direction_hierarchy?.[phase]?.baseline)return {status:'BASELINE_ONLY',label:'기본 방향만 제공',detail:'챔피언 기본 방향은 있으나 이번 조합의 구체적인 연계가 연결되지 않았습니다.'};
+    return {status:'GENERAL_ONLY',label:'개별 계획 자료 부족',detail:'아래 행동과 본문은 공통 원칙입니다. 이 조합에 맞춘 개별 계획으로 검증되지 않았습니다.'};
+  }
+  // Bounded abbreviations of the final delivered action text, not a new tactic selector.
+  // No matching phrase -> no invented action tag. Conditions retain their own text paths.
+  function deliveryTags(board,phase,actions,coverage){
+    const tag=(kind,label,source)=>({id:phase+':'+kind+':'+label,kind,label,source_paths:[source]});
+    if(coverage.status!=='CONDITIONAL_PLAN')return [tag('STATUS',coverage.label,'delivery.phases.'+phase+'.coverage')];
+    const state=board.engagement_decision?.state;
+    if(phase==='lane'&&actions[2].source_paths?.includes('engagement_decision')){
+      const selected={OPPORTUNITY_MISSED:'추격 중단',PREPARE_CONDITIONS:'교환 여건 정비',WAIT_AND_PREPARE:'수급·합류 준비'}[state];
+      if(selected)return [tag('ACTION',selected,'delivery.phases.lane.actions.2.text')];
+    }
+    const rules={
+      lane:{index:0,actions:[[/멀리서 견제|사거리.*견제/,'견제 후 압박'],[/캠프 성장/,'성장·지원 연결'],[/경험치.*막타|CS.*경험치|수급/,'수급 지키기']],condition:2},
+      operations:{index:2,actions:[[/사이드에 묶/,'사이드 압박'],[/미드 미니언.*먼저/,'미드 압박'],[/시야.*확보|시야.*자리/,'시야 선점'],[/중앙 포탑.*목표물/,'본대 이득 연결']],condition:1},
+      fight:{index:1,actions:[[/앞라인 뒤.*닿는 적/,'앞라인 공격'],[/주요 진입이 빠졌/,'진입 후 받아치기'],[/안전한 공격 틈/,'공격 틈에 전진'],[/매혹.*아군/,'제어 후 후속 공격']],condition:0}
+    }[phase];
+    const tags=[],base='delivery.phases.'+phase+'.actions.';
+    const positive=text=>!/(않|말고|금지|보류|어렵|없)/.test(text);
+    const selected=positive(actions[rules.index].text)&&rules.actions.find(([pattern])=>pattern.test(actions[rules.index].text));
+    if(selected)tags.push(tag('ACTION',selected[1],base+rules.index+'.text'));
+    const conditions=[[/도움.*거리|보호.*거리/,'보호 거리 유지'],[/함께 움직|함께 공격|아군.*닿/,'아군과 함께 행동'],[/위치를 보고/,'상대 위치 확인']];
+    const condition=positive(actions[rules.condition].text)&&conditions.find(([pattern])=>pattern.test(actions[rules.condition].text));
+    if(condition)tags.push(tag('CONDITION',condition[1],base+rules.condition+'.text'));
+    const warnings=[[/측면 진입|옆에서 적/,'측면 진입 대비'],[/보이지 않으면/,'적 위치 미확인 주의'],[/기술을 모두 쓰/,'대응 기술 남기기']];
+    const warning=warnings.find(([pattern])=>pattern.test(actions[3].text));
+    if(warning)tags.push(tag('WARNING',warning[1],base+'3.text'));
+    return tags.length?tags:[tag('STATUS','세부 행동 확인','delivery.phases.'+phase+'.actions')];
+  }
   // Whitelist the established phase output. Never serialize arbitrary diagnostics.
   function buildDelivery(board) {
     const phases={};
@@ -173,8 +209,9 @@
         !Array.from(paragraphs).every(text)||!Array.isArray(details)||
         !Array.from(details).every(d=>d&&text(d.trigger)&&text(d.action)))throw Error('INVALID_DELIVERY:'+phase);
       const summary=board.loading_summary?.items?.find(item=>item.id===phase);
+      const coverage=phaseCoverage(board,phase);
       phases[phase]={headline:summary?.conclusion||board.brief?.[phase]||'이 영역의 자료가 부족합니다.',
-        actions:clone(actions),paragraphs:clone(paragraphs),details:clone(details)};
+        actions:clone(actions),paragraphs:clone(paragraphs),details:clone(details),coverage,tags:deliveryTags(board,phase,actions,coverage)};
     }
     return {schema_version:'gameplan-delivery-v1',phases};
   }
