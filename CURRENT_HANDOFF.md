@@ -1,10 +1,13 @@
-# Gameplan direction hierarchy — implementation
+# Gameplan direction hierarchy — CI pending
 - run_token: `codex-20261024-gp04-direction`
-- status: RUNNING
-- writer_active: true
+- status: CI_PENDING
+- writer_active: false
 - owner_branch: `work/gameplan-direction-20261024`
-- intake_main: `d00c255334cc5cb9cceca86840914b1331a33fa1`
-- Scope: GP-0.6 baseline→composition adaptation in existing planboard; targeted tests, content/spec mapping, PR. Preserve authored role/matchup gates and protected knowledge. No runtime AI, new source approval, paid service or scheduler change.
+- head: `f514ab1282e31bc6b195ff312de67d0ca9ba8df5`
+- PR: https://github.com/kco994553-star/lol-coach/pull/130 (draft)
+- Result: bounded Caitlyn/Ezreal baseline-to-conditional-plan slice; 54 local tests and source binding PASS; independent review resolved. No full GP-0.6 classification or all-matchup coverage claim.
+- Remaining: CI runs 40064982813 / 40064982819 and responsive browser verification. Local browser download returned invalid archive. Public deploy not claimed. No active source writer while waiting.
+- Docs/evidence: docs/gameplan-content/2026-10-24-direction.md; evidence/actual-evidence/gameplan-direction-20261024/generated.json.
 
 ---
 
