@@ -613,8 +613,64 @@
       result.composition.theirs=other.win;result.composition.theirs_full=other.win+' '+other.macro;
       result.area_context.operations.theirs=other.macro;result.area_context.fight.theirs=other.opening;
     }
+    // Preserve the scenario plan before the additional waiting-state override.
+    const scenarioPlan=result.narrative_decisions?JSON.parse(JSON.stringify(result.narrative_decisions)):null;
     reconcileSituation(result,report,catalog,coach);
+    attachDirectionHierarchy(result,report,catalog,scenarioPlan);
     return result;
+  }
+
+  // GP-0.6 first slice: baseline goals are authored interpretations of retained
+  // mechanics, not matchup strength or permission to execute them immediately.
+  // Existing decisions remain the only source of contextual actions. In particular,
+  // we cannot infer MAINTAIN/STRENGTHEN/SWITCH merely from champion identity.
+  function attachDirectionHierarchy(b,report,catalog,scenarioPlan){
+    const x=report.input,self=x.own_champion;
+    if(x.own_position!=='BOTTOM'||!b.coaching_explanation||!b.team_plan||b.waiting?.mode==='SOURCE_REVIEW_REQUIRED')return;
+    const keys={Caitlyn:['P','Q','W','E'],Ezreal:['P','Q','W','E']}[self];
+    const facts=catalog.champions[self]?.facts||[];
+    if(!keys||!keys.every(key=>facts.some(f=>f.slot===key)))return;
+    const skill=key=>facts.find(f=>f.slot===key).name+'('+key+')';
+    const profiles=self==='Caitlyn'?{
+      lane:{keys:['Q','W','P'],gain:'막타 접근을 방해할 공간과 웨이브 압박',
+        method:'기본 공격과 관통 사격으로 압박하고, 이동이 제한된 적에게 배운 덫을 연결',
+        explanation:'케이틀린은 기본 공격과 '+skill('Q')+'로 상대의 막타 접근을 방해하고, 그 공간을 웨이브 압박으로 잇는 방향을 먼저 검토한다. 배운 '+skill('W')+'를 이동이 제한된 적에게 연결할 수도 있지만, 상대 두 명의 반격을 받으며 밀어야 한다면 이 압박부터 강제하지 않는다.'},
+      operations:{keys:['Q','W'],gain:'포탑에 접근할 시간과 상대의 중앙 수비 유도',
+        method:'밀어 넣은 웨이브와 배운 덫으로 접근 공간을 만들고 포탑 압박과 이동을 비교',
+        explanation:'케이틀린은 밀어 넣은 웨이브를 포탑 압박으로 이어 상대가 수비하러 오게 만드는 방향을 검토한다. 배운 '+skill('W')+'로 접근 경로를 제한할 수 있어도 안전한 철거가 보장되지는 않는다. 실제로 미드를 지키는 적의 정리 속도와 측면 위협을 확인해, 압박을 유지할지 상대가 받는 동안 이동할지 나눈다.'},
+      fight:{keys:['W','E','P'],gain:'아군과 거리를 유지하면서 반복해서 공격할 시간',
+        method:'기본 공격을 이어가며 배운 덫·투망과 강화 공격을 활용',
+        explanation:'케이틀린은 아군이 도울 수 있는 거리에서 기본 공격을 이어가고, 배운 '+skill('W')+'나 '+skill('E')+'가 맞으면 강화된 '+skill('P')+'를 활용하는 방향을 잡는다. 덫 연계를 위해 앞으로 걸어가는 동안 상대가 나에게 접근할 수 있다면, 추가 공격보다 퇴로와 다음 공격 위치를 먼저 남긴다.'}
+    }:{
+      lane:{keys:['Q','P'],gain:'체력과 막타 접근을 유지하며 다음 공격 기회 확보',
+        method:'화살 적중과 가능한 거리의 기본 공격을 함께 사용',
+        explanation:'이즈리얼은 '+skill('Q')+'로 닿는 적을 견제하면서 막타 접근을 유지하고, 함께 공격할 수 있는 거리에서는 기본 공격도 보태는 방향을 잡는다. 스킬 적중으로 '+skill('P')+'의 공격 속도를 얻을 수 있지만, 화살이 미니언에 막히는 자리와 상대 두 명이 함께 공격하는 자리를 같은 교환 기회로 보지 않는다.'},
+      operations:{keys:['Q','W','E'],gain:'안전한 합류와 견제로 얻는 포탑·목표물 접근 시간',
+        method:'동료와 공격 경로를 확보해 견제하고, 접근 가능한 목표에 배운 스킬을 활용',
+        explanation:'이즈리얼은 아군과 '+skill('Q')+'가 닿을 경로를 만들고, 상대가 물러난 시간에 포탑이나 목표물에 접근하는 방향을 검토한다. 배운 '+skill('W')+'를 목표물에 활용할 수 있어도 웨이브를 먼저 밀 수 있다는 뜻은 아니다. 실제 중앙 수비 인원과 합류 거리를 확인하고, '+skill('E')+'를 배웠다는 이유만으로 혼자 어두운 길을 통과하지 않는다.'},
+      fight:{keys:['Q','P','E'],gain:'공격 거리를 다시 잡으며 지속해서 피해를 줄 시간',
+        method:'화살과 기본 공격을 함께 쓰고 배운 이동기로 공격 위치를 조정',
+        explanation:'이즈리얼은 '+skill('Q')+'와 기본 공격을 이어가며, 배운 '+skill('E')+'로 공격 위치를 조정하는 방향을 잡는다. 이동기를 앞으로 쓰면 다음 접근을 피할 수단이 줄어드므로, 아군이 적을 묶어도 도착할 자리에서 공격을 이어가고 빠져나올 수 있는지부터 확인한다.'}
+    };
+    b.direction_hierarchy={};
+    for(const [phase,p]of Object.entries(profiles)){
+      if(!b.coaching_explanation[phase]?.length)continue;
+      const d=b.narrative_decisions?.[phase],context=scenarioPlan?.[phase];
+      const limitation=d?'아래 조합 설명은 실행 방법을 판단할 근거이며, 기본 방향이 강화되는지 또는 다른 방향으로 전환해야 하는지까지 확정한 상성 판정은 아니다.':'이 조합의 구체적인 연계는 아직 연결되지 않아 기본 방향의 유지·강화·전환을 확정하지 않는다.';
+      const baseline={profile_id:'bottom-direction:'+self+':'+phase,version:'1',champion:self,role:'BOTTOM',phase,
+        desired_gains:[p.gain],primary_methods:[p.method],explanation:p.explanation,
+        evidence_refs:p.keys.map(key=>facts.find(f=>f.slot===key).id),source_patch:catalog.source_patch,
+        applicability:'RETAINED_MECHANICS_CONDITIONAL_INTERPRETATION'};
+      b.direction_hierarchy[phase]={rule_id:'baseline-context-link-v1',baseline,
+        composition:context?{pressure:context.pressure,response:context.response,evidence_ids:[...context.evidence_ids],basis:'SCENARIO_PLAN_BEFORE_WAITING_RECONCILIATION'}:null,
+        execution:d?{response:d.response,fallback:d.fallback,source_path:'narrative_decisions.'+phase}:null,
+        state_adjustment:phase==='lane'?{...b.engagement_decision}:null,
+        change:{kind:'LIMITED',reason:limitation},coverage:d?'BASELINE_AND_CONDITIONAL_PLAN':'BASELINE_ONLY',
+        observation:false,review_state:'TACTICAL_UNREVIEWED'};
+      // Keep the baseline readable as its own paragraph; the existing contextual
+      // story and reconciled state decision follow without being overwritten.
+      b.coaching_explanation[phase].unshift(p.explanation+(d?' 아래는 이 기본 방향을 이번 조합에서 실행할 조건이다.':' '+limitation));
+    }
   }
 
   // Necessity is a cost judgment; feasibility is a separate execution gate.
