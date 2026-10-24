@@ -1,3 +1,23 @@
+# Gameplan v1.3 — completed / writer released
+- run_token: `codex-20261024-gameplan-v13`
+- status: COMPLETED
+- writer_active: false
+- current_branch: `work/gameplan-v13-results-20261024`
+- current_sha / remote_main: `d00c255334cc5cb9cceca86840914b1331a33fa1`
+- uncommitted_changes: none; active_editing: none. Source/public/coordination worktrees retained.
+- PR127 source439f554 → mainf20bf43; PR128 sourcecf2c590 → productmain3013f30; resultsPR129 source310aae8 → finalmaind00c255. All normal merges and exact requiredPR/main3 SUCCESS. Final metadata jobs120770569507/120770569288/120770569166; unchanged product checks reused.
+- Changes: default whole-team commentary, same-result waiting necessity/feasibility and explicit income/opportunity/enemy-wave assumptions; stale detail/legacy execution candidates gated; readable default1+3/15actions/prose, no repeated detail body, keyboard return focus stable. Role fallback corrected for support/jungle; authored Sejuani/Graves retained.
+- Verified display2.2.1–4 /2.6 contract; content2.3.1/2.3.1.1/2.3.3–6/2.4.1/2.5.1 bounded/partial. Final matrix/full reference prose in existing docs/gameplan-content/2026-10-19.md;13variant outputs and exact evidence in evidence/actual-evidence/handoff-v11/result.md.
+- Source439f554106/sourcecf2c59090 affected tests and source/Frozen/raw/quotas preservation PASS. Both full local Chromium PASS, independent rereview no blocker. Historical full-suitePC2/v23binding1 failures not claimed fixed; unchanged game-info dedicated browser reused. Canceled85a806 browser is not PASS. AI review is not tactical approval/effect evidence(N0).
+- Public artifactee839fc6f4cec822cfa6e6ae7fa6d422c169125f, Pages40059478711 build/deploy/report SUCCESS. HTTPS90hashes/root/.nojekyll and actual public1440/390/320 basic/fullbody/overall/disclosure/assumption/reload/reset/keyboard/no-overflow PASS; pageerrors0, inspected screenshots. Independent pro-dashboard and riot proof preserved. Product remains3013f30; no result-only redeployment.
+- Actual attached ZIP internalv1.1/9 structural tests. QUALITY_POLICY/QUALITY_RESULTS/RULE_REGISTER/test_quality absent, requested exactv1.2/17 unavailable. Latest actualv1.3 requirement applied. Current web17 content regression tests are separate. No invented original17/zero-error claims.
+- No new runtimeAI/provider/game/paid calls, no scheduler or protected USER decision changes. Official retained16.20.1 not claimed latest-patch tactical approval.
+- Remaining priority: unsupported duo/champion/position knowledge and relative push counterexamples, real understanding/expert/tactical effect review, dedicated rule-change/review execution trace; continue current-game/partial-pick/past-plan and full existing product queue. All-matchup tactical completion, quantitative wave simulation and live/Windows support remain limited/unverified.
+- External input: exactv1.2 archive only if original17-check comparison is required; optional for shipped scope. Secure Riot/local connection and field-policy evidence remain for external live tasks. No user input blocks this delivered scope.
+- Prior current/claim paragraphs below are historical and superseded.
+
+---
+
 # Gameplan v1.3 — final metadata main check
 - run_token: `codex-20261024-gameplan-v13`
 - status: CI_PENDING
