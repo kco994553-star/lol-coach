@@ -1,7 +1,7 @@
 # Independent coaching narrative — active writer
 - run_token: `codex-20261024-coaching-narrative`
-- status: RUNNING
-- writer_active: true
+- status: CI_PENDING
+- writer_active: false
 - owner_branch: `work/coaching-narrative-20261024`
 - intake_main: `b441fc01a08df2e753c81c091b7e4166a6f1acce`
 - scope: user-requested independent three-phase prose, shared decision/summary/detail consistency and readable basic display; exact KaiSa/Nautilus–Ziggs/Karma roster and counterexamples; tests, PR and authorized existing publication.
@@ -10,6 +10,7 @@
 - Resume own token: mobile screenshot exposed duplicate title/subtitle, narrow view cleanup before final source verification.
 - Final implementation HEAD `4cddd1934f7e56c79dfcececc54c313399e6002b`, local exact-source103 and preservation PASS. Mobile320 multi-actor overflow reproduced and wrapped; final full Chromium and required CI runs40047087141/40047087127 pending. No code edits in progress. Resume exact-head tests before normal merge/publication.
 - Exact PR125 HEAD4cddd19 required3 SUCCESS: pregame120731413357, regression120731457189, browser120731456945; local103 and exact-source full Chromium PASS. Resume normal expected-head merge and existing Pages publication.
+- PR125 normally merged: product main `a8f3bc1ffa080823ee707cf6492a5444f9d7916f`; exact-main runs40047616870/40047616841 pending. Artifact6334985 prepared LOCALLY ONLY; pro/riot preserved. Results branch work/coaching-narrative-results-20261024 holds uncommitted evidence additions; no code editing. Resume main checks, publish prepared artifact, HTTPS/browser, results PR.
 - Prior claims below are history.
 
 ---
