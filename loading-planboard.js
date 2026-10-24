@@ -453,6 +453,13 @@
     }
     // Six independent dimensions, never one composition score. Only source-linked signals participate.
     const teamSide=(rows,team)=>{
+      // Explicit effect-linked additions for the current content scope. Unknown
+      // profile classifications are not evidence that a champion lacks a means.
+      rows=rows.slice();
+      for(const [id,key,kind,effect] of [['Vi','R','PICK',/공중/],['Vi','Q','ACCESS',/돌진/],['Renekton','E','ACCESS',/돌격/],['Karma','Q','PRESSURE',/폭발/],['Karma','W','PICK',/묶/],['Karma','E','COVER',/보호막/]]){
+        const f=fact(id,key);
+        if(input[team].some(p=>p.champion===id)&&f&&effect.test(f.text)&&!rows.some(r=>r.champion===id&&r.kind===kind))rows.push({champion:id,kind,evidence_ids:[f.id]});
+      }
       const people=k=>[...new Set(rows.filter(r=>r.kind===k).map(r=>r.champion))];
       const names=k=>people(k).map(name).join('·');
       const pressure=people('PRESSURE'),pick=people('PICK'),access=people('ACCESS'),cover=people('COVER');
@@ -595,6 +602,7 @@
     }
     enrichCoaching(result,report,catalog,coach);
     attachWaitingDecision(result,report,catalog,coach);
+    composeNarrative(result,report,catalog,coach);
     // Team descriptions always use the user's fixed team perspective. These are
     // authored tactics, never source quotations or observed facts.
     if(result.team_plan){
@@ -672,7 +680,7 @@
     }
     b.waiting=w;
     b.action_summaries.lane.items.forEach(item=>item.rule_ids.push(w.rule_id));
-    if(b.coaching_explanation)b.coaching_explanation.lane.push(w.loss,w.window,w.fallback,w.switch);
+
     // Keep exactly five actions and role-appropriate alternatives even outside
     // the individually authored matchup corpus.
     if(pos==='SUPPORT'){
@@ -681,6 +689,142 @@
     }else if(pos==='JUNGLE'&&!b.role_principles?.lane){
       const values=['캠프 성장과 라인 손실을 비교해 개입할 시간을 정한다.','먼저 움직일 아군과 연결되는 캠프를 택하고, 상대 동선을 단정하지 않는다.',mode==='CONDITIONAL_WINDOW'?'배운 기술과 아군 호응·자원이 맞을 때 개입하고, 각이 없으면 오래 기다리지 않는다.':'자원·호응이 부족하거나 미확인이면 무리한 갱킹을 강제하지 않는다.','라인 지원 없이 침입하거나 적을 끝까지 추격하지 않는다.','목격·웨이브·목표물 준비가 바뀌면 방어·역갱·반대편 교환을 비교한다.'];
       b.action_summaries.lane.items.forEach((item,i)=>Object.assign(item,{text:values[i],basis:'ROLE_PRINCIPLE',source_paths:['waiting','action_summaries.lane']}));
+    }
+  }
+
+  // A small causal plan over retained facts. Decisions are made here; views only
+  // project their paragraphs. This is authored interpretation, never observation.
+  function composeNarrative(b,report,catalog,coach){
+    const x=report.input,pos=x.own_position,w=b.waiting;
+    if(!b.team_plan||!w||w.mode==='SOURCE_REVIEW_REQUIRED')return;
+    const at=(side,role)=>x[side].find(p=>p.position===role)?.champion;
+    const name=id=>catalog.champions[id]?.name||'확인할 아군';
+    const fact=(id,key)=>catalog.champions[id]?.facts?.find(f=>f.slot===key);
+    const refs=new Set(),used=new Set(),phaseRefs={lane:new Set(),operations:new Set(),fight:new Set()};let phase='lane';
+    const skill=(id,key)=>{const f=fact(id,key);if(!f)return null;refs.add(f.id);phaseRefs[phase].add(f.id);used.add(id);return name(id)+'의 '+f.name+'('+key+')';};
+    const has=(side,id,keys)=>x[side].some(p=>p.champion===id)&&keys.every(k=>fact(id,k));
+    // Keep authored Fiora/Graves and other role plans; waiting is a decision in
+    // details, not four independent paragraphs appended to their explanation.
+    if(pos!=='BOTTOM'){
+      if(b.coaching_explanation?.lane){
+        b.coaching_explanation.lane.push(pos==='JUNGLE'?
+          '개입을 기다리는 동안 놓칠 캠프와, 떠났을 때 아군이 잃을 미니언·포탑을 함께 본다. '+(w.mode==='CONDITIONAL_WINDOW'?'아군과 공격할 수 없는 길이라면 다음 캠프로 움직이되, 다이브 위험이 큰 라인은 도착할 시간을 비교해 방어한다.':w.window):
+          pos==='SUPPORT'?'상대에게 자리를 모두 내주면 원딜이 막타뿐 아니라 경험치에도 접근하기 어려워진다. 함께 공격할 여건이 없다면 아군 곁에서 견제를 막고 미니언 정리와 귀환을 도와 다음 교환에 쓸 체력을 남긴다.':
+          '막타를 기다리는 동안에도 상대 견제로 체력을 잃거나 경험치 범위에서 밀려날 수 있다. 반격에 필요한 자원이 없다면 받을 미니언과 포기할 막타를 정하고 귀환이나 정글 지원으로 다음 웨이브의 접근 여건을 바꾼다.');
+      }return;
+    }
+    const support=at('allies','SUPPORT'),enemy=at('enemies','BOTTOM'),es=at('enemies','SUPPORT'),self=x.own_champion;
+    if(x.opponent_mode!=='ASSIGNED'&&!(x.opponent_mode==='MANUAL'&&x.lane_opponent===enemy)){
+      b.coaching_explanation.lane=[b.matchup_playbook.ours.means,w.loss+' '+w.fallback];
+      b.coaching_scope.limitation='수동 맞상대 또는 미지정 상태에는 바텀 2대2 상세 코칭을 적용하지 않습니다. 기존 지정 상대의 기본 계획만 제공합니다.';return;
+    }
+    const previousLane=b.coaching_explanation.lane.slice();
+    // Scope is explicit: a supported interaction, not every champion matchup.
+    const supportKinds={Nautilus:['Q','P'],Lux:['Q','W'],Lulu:['E','W'],Alistar:['Q','W']};
+    if(!supportKinds[support]?.every(k=>fact(support,k))){
+      b.coaching_explanation={lane:['이 바텀 두 명의 구체적인 교환 순서는 아직 연결되지 않았다. '+w.loss+' '+w.fallback],operations:[b.operations.placement+' '+b.operations.fallback],fight:[b.fight.setup+' '+b.fight.stop]};
+      b.coaching_scope.limitation='포지션 기본 계획만 제공하며 이 조합의 개별 코칭은 미지원입니다.';return;
+    }
+    [self,support,enemy,es].filter(Boolean).forEach(id=>used.add(id));
+    const sn=name(support),en=name(enemy),esn=name(es),s=coach.context.assumptions.scenario.overrides,p=b.context.planning.overrides;
+    const constrained=p.enemy_jungle==='NEAR'||['FARM','RECALL'].includes(p.goal)||(s.engage&&s.engage!=='NONE')||['INCOMING','UNDER_TOWER','RETURNING','UNKNOWN'].includes(s.wave);
+    const limited=w.mode!=='CONDITIONAL_WINDOW'||constrained,sourceLimited=b.coverage.status==='UNSUPPORTED';
+    let response,shortResponse,reset;
+    if(support==='Nautilus'){
+      response=sn+'가 앞으로 움직일 때 그 뒤에서 같은 적에게 기본 공격이 닿을 거리를 맞춘다. '+skill(support,'Q')+'으로 당겨도 혼자만 접근하면 교환을 이어갈 수 없으므로, 적 미니언을 지나며 받을 공격까지 보고 함께 전진한다.';
+      shortResponse='노틸러스와 같은 적을 공격할 거리에서 호응하고, 혼자 들어간 노틸러스를 뒤늦게 따라가지 않는다.';
+      reset='닻이 빗나가거나 노틸러스와 공격 거리가 벌어지면 추격 대신 미니언 쪽으로 돌아온다.';
+    }else if(support==='Lux'){
+      response=skill(support,'Q')+'의 속박이 맞은 적에게 럭스와 함께 공격할 거리를 잡는다. 먼저 적진으로 들어가 속박을 기다리기보다, 럭스의 견제에 상대가 피하는 방향을 보고 닿는 적에게 짧게 공격한다.';
+      shortResponse='럭스의 속박 적중과 후속 공격 거리를 확인하고 짧게 공격한다.';reset='속박이 빗나가면 앞으로 더 쫓지 않고 '+skill(support,'W')+'의 보호를 받을 쪽으로 돌아온다.';
+    }else if(support==='Lulu'){
+      response=skill(support,'E')+'의 보호막과 함께 공격할 시간을 맞추고 룰루 곁에서 짧게 교환한다. 상대가 들어오면 '+skill(support,'W')+'를 적에게 쓸 수 있는지도 확인해야 하므로, 룰루가 먼저 적진을 뚫어 줄 것처럼 앞서가지 않는다.';
+      shortResponse='룰루의 보호막과 함께 짧게 교환하고 변이로 막을 수 없는 깊이까지 쫓지 않는다.';reset='보호막이 끝나거나 룰루의 방해 수단이 없으면 함께 뒤로 물러나 다음 교환을 준비한다.';
+    }else{
+      response=skill(support,'W')+'와 '+skill(support,'Q')+'를 배워 함께 쓸 수 있는 구간에 알리스타의 접근과 내 공격 거리를 맞춘다. 아직 필요한 기술을 배우지 않았거나 거리가 멀다면 진입 연계를 기대하며 먼저 체력을 쓰지 않는다.';
+      shortResponse='알리스타가 배운 진입 기술과 내 공격이 함께 닿을 때 호응한다.';reset='알리스타의 진입이 끝나도 공격 거리가 이어지지 않으면 더 깊이 따라가지 않는다.';
+    }
+    const pressure=has('enemies','Ziggs',['Q','W'])&&enemy==='Ziggs'?
+      skill('Ziggs','Q')+'으로 미니언을 잡으려는 자리를 견제하면서 웨이브를 밀어 넣을 수 있다.'+
+      (es==='Karma'&&has('enemies','Karma',['Q','E','W'])?' 여기에 '+skill('Karma','Q')+'의 폭발까지 겹치면, 막타를 치러 갈 때 두 사람의 공격을 한꺼번에 받을 수 있다.':' '+esn+'가 함께 공격할 수 있는 자리에서는 직스만 보고 앞으로 걷지 않는다.'):
+      en+'에게 막타를 치는 순간 공격받지 않도록 '+esn+'의 호응 거리까지 함께 본다. 이 두 챔피언의 밀기·교환 우열을 확정할 자료는 없으므로, 먼저 미니언을 잡을 수 있는지는 실제 웨이브로 확인한다.';
+    const counter=[];
+    if(enemy==='Ziggs'&&has('enemies','Ziggs',['W','E']))counter.push(skill('Ziggs','W')+'의 밀쳐내기와 '+skill('Ziggs','E')+'의 둔화는 접근과 퇴로를 끊을 수 있다');
+    if(es==='Karma'&&has('enemies','Karma',['E','W']))counter.push(skill('Karma','E')+'의 보호막·이동 속도 때문에 상대가 거리를 벌릴 수 있고, '+skill('Karma','W')+'의 연결을 끊지 못하면 속박될 수 있다');
+    else if(es==='Lulu'&&has('enemies','Lulu',['W']))counter.push(skill('Lulu','W')+'가 남아 있으면 공격과 기술이 막힐 수 있다');
+    else if(es==='Nautilus'&&has('enemies','Nautilus',['Q']))counter.push(skill('Nautilus','Q')+'의 역진입이 남아 있으면 퇴로를 막힐 수 있다');
+    else counter.push(esn+'의 남은 보호·반격 수단은 실제 사용 여부를 확인해야 한다');
+    response='관련 기술을 배워 사용할 수 있는 구간에는 '+response;
+    const lane={title:'함께 공격할 거리를 만들어, 막타를 칠 자리를 되찾기',pressure,
+      cost:'계속 뒤로만 물러서면 CS와 경험치에 접근할 공간을 잃고, 포탑 아래에서도 견제를 받아 다음 웨이브를 버틸 체력이 줄 수 있다. 그렇다고 큰 적 웨이브 속으로 들어가면 미니언 공격과 상대 반격 때문에 다음 막타까지 더 많이 놓친다.',
+      response:constrained?b.wave.combat+' '+(p.goal==='RECALL'?'귀환을 선택했다면 교환을 늘려 구매 시간을 늦추지 않는다.':p.goal==='FARM'?'성장을 우선한 만큼 미니언과 경험치를 놓칠 추격은 줄인다.':'상대 개입·웨이브·선진입 가정을 먼저 처리해야 다음 교환을 준비할 수 있다.'):limited?'지금 설정한 가정에서는 '+(w.mode==='CHECK_CONDITIONS'?'체력·웨이브가 미확인이므로 호응 가능 여부부터 확인한다.':'자원이나 아군 호응이 부족하므로 먼저 교전 여건을 바꾼다.')+' '+w.fallback:response,
+      payoff:'상대를 물러나게 하거나 방어 기술을 쓰게 했다면 킬을 끝까지 쫓기보다 CS에 접근할 자리와 웨이브를 정리할 시간을 얻는다. 밀어 넣을 수 있으면 귀환 시간을 만들고, 체력이 부족하면 다음 웨이브까지 버티려 하지 말고 귀환과 지원을 비교한다.',
+      fallback:reset+' 레벨·체력·마나가 부족하거나 아군 호응이 없으면 경험치를 받을 자리를 지키며 정리 지원과 귀환을 요청한다. 아군이 합류하거나 상대 견제 수단이 빠져 같은 적을 함께 공격할 수 있게 되면 다시 전진할 폭을 넓힌다.',
+      counter:counter.join('. ')+'. 하나가 소모됐다는 이유만으로 남은 수단과 미니언을 무시하지 않는다.'};
+    if(self==='Kaisa'&&fact(self,'P'))lane.response+=(limited?' 다음 기회에는 ':' ')+skill(self,'P')+'는 아군의 이동 불가로도 플라즈마가 쌓이므로, 동료가 묶은 적에게 내 공격까지 이어지는 것이 중요하다.';
+    phase='operations';
+    const openingSkills={Ornn:['R',/공중/],Vi:['R',/공중/],Nautilus:['Q',/당겨/],Sejuani:['R',/기절/],Ahri:['E',/홀립|홀린/],Lux:['Q',/속박/],Alistar:['Q',/공중/]};
+    const initiators=x.allies.map(p=>p.champion).filter(id=>openingSkills[id]&&fact(id,openingSkills[id][0])&&openingSkills[id][1].test(fact(id,openingSkills[id][0]).text));
+    const starters=initiators.length?initiators.map(name).join('·'):sn;
+    const nearby=['Vi',support].filter((id,i,a)=>a.indexOf(id)===i&&x.allies.some(p=>p.champion===id));
+    const partners=nearby.map(name).join('·');
+    const join=has('allies','Ahri',['E'])?'아리가 미니언을 정리해 합류할 수 있다면 '+skill('Ahri','E')+'에 맞춰 같은 적을 공격할 길도 생긴다. 아리가 사이드에 묶여 있으면 아리의 공격까지 합쳐 교전을 시작하지 않는다.':'다른 라인 아군이 웨이브를 놓치지 않고 합류할 수 있는지 먼저 확인한다.';
+    const op={title:enemy==='Ziggs'?'직스 앞의 긴 대치를 끊고, 아군과 함께 접근하기':'웨이브를 정리한 시간을 아군과의 공격 기회로 바꾸기',
+      pressure:enemy==='Ziggs'?'직스 앞에서 같은 자리에 오래 대치하면 견제를 피하며 미니언을 잡는 데 체력과 시간이 소모된다. 체력이 깎인 뒤에야 진입하면 접근 도중 반격까지 버티기 어려워진다.':en+'와 정면에서 대치하는 동안 사이드 미니언과 먼저 이동할 시간을 놓칠 수 있다. 대치 자체가 이득인지는 아군이 다른 곳에서 얻는 것까지 함께 본다.',
+      cost:'이동만 서두르다 웨이브를 버리면 성장도 잃고, 아군보다 먼저 어두운 길에 들어가면 함께 싸울 수도 없다.',
+      response:partners+'와 중앙 미니언을 정리한 뒤, 아군이 확인한 시야 안에서 같은 적에게 닿을 경로를 잡는다. '+(has('allies','Vi',['R'])?skill('Vi','R')+'이 적을 띄워도 내 공격이 닿지 않으면 바이만 적진에 남으므로, 진입 전에 따라갈 거리부터 맞춘다.':'제어가 맞아도 내 공격이 닿지 않으면 묶은 시간을 이득으로 쓰기 어렵다.')+' '+join,
+      payoff:'상대가 물러난 시간에는 가까운 포탑을 치거나 목표물 주변 시야를 확보한다. 다른 곳의 미니언을 받을 아군과 합류 시간을 정해, 한쪽이 귀환하는데 나머지만 교전을 시작하지 않게 한다.',
+      fallback:'함께 들어갈 경로가 없으면 같은 입구에서 견제를 계속 맞지 말고 가까운 웨이브를 받은 뒤 구매·회복을 맞춘다. '+sn+'와 다른 입구의 시야를 확보하되 혼자 어두운 강을 건너지 않는다. 이미 아군 진입이 끝나 상대가 물러났다면 뒤늦게 쫓지 말고 다음 웨이브와 목표물 준비로 돌아간다.'};
+    phase='fight';
+    initiators.forEach(id=>skill(id,openingSkills[id][0]));
+    let danger=[];
+    if(has('enemies','Renekton',['E','W']))danger.push(skill('Renekton','E')+'를 이용한 접근 뒤 '+skill('Renekton','W')+'로 묶일 수 있으므로, 레넥톤이 들어올 측면과 뒤로 물러날 길을 함께 본다.');
+    if(has('enemies','Orianna',['Q','E','R']))danger.push('오리아나의 공은 '+skill('Orianna','Q')+'에 따라 이동하거나 '+skill('Orianna','E')+'로 상대 팀원을 따라간다. '+skill('Orianna','R')+'에 함께 끌려가지 않도록 공 주변으로 아군과 겹쳐 들어가지 않는다.');
+    if(!danger.length)danger=[b.fight.awareness?.danger||b.fight.stop];
+    const fight={title:'진입한 아군과 같은 적을 공격하되, 고립되는 진입은 보류하기',pressure:danger.join(' '),
+      cost:'먼 딜러에게 다가가는 동안 가까운 적에게 공격받거나 아군의 도움이 끊기면, 진입에 성공해도 지속해서 피해를 줄 시간이 사라진다.',
+      response:starters+'가 적을 묶을 때 바로 공격을 이어갈 수 있도록 아군 뒤나 옆에서 출발한다. 탱커가 멀리 들어갔다는 사실만으로 안전해지는 것은 아니므로, 함께 닿는 가까운 적부터 공격하며 아군과 거리를 유지한다.',
+      payoff:'첫 제어에 공격을 맞추고 상대가 물러나면 무리하게 따라붙기보다 다시 공격할 위치를 확보한다. 들어온 적을 함께 밀어내는 것도 뒤의 딜러를 쫓는 것만큼 유효한 선택이다.',
+      fallback:self==='Kaisa'&&fact(self,'R')?skill(self,'R')+'을 이용한 후속 진입을 검토할 때는 도착할 자리에서 아군이 계속 도울 수 있는지 먼저 본다. 진입자만 멀리 있고 상대 반격이 남았다면 궁극기를 써 따라가지 않는다. 공격 기회를 이미 놓쳤으면 가까운 적과 퇴로 쪽으로 대상을 바꿔 다음 공격을 준비한다.':sn+'의 도움이 닿지 않는 깊이까지 따라가지 않는다. 아군 제어가 끝났거나 상대가 거리를 벌렸다면 가까운 적을 공격하며 다시 모인다.'};
+    b.narrative_decisions={};
+    for(const [area,d]of Object.entries({lane,operations:op,fight})){
+      Object.assign(d,{rule_id:'causal-coaching-v1:'+area,actors:[...new Set([...x.allies,...x.enemies].filter(p=>Object.values(d).some(t=>typeof t==='string'&&t.includes(name(p.champion)))).map(p=>p.champion))],evidence_ids:[...phaseRefs[area]],observation:false,basis:'MECHANISM_LINKED_INFERENCE',outcome:'UNDETERMINED',review_state:'TACTICAL_UNREVIEWED'});b.narrative_decisions[area]=d;
+    }
+    if(!sourceLimited){
+      lane.pressure=b.area_context.lane.theirs;lane.response=previousLane[0];lane.fallback=b.wave.change_if;
+      lane.evidence_ids=[...new Set(b.action_summaries.lane.items.flatMap(i=>i.evidence_ids||[]))];
+      lane.counter='지금 선택한 구간의 기술 습득과 웨이브 가정을 우선한다. 이후의 보호·진입 수단이 이미 준비됐다고 보고 교환을 늘리지 않는다.';
+    }
+    b.coaching_explanation={lane:[lane.pressure+' '+lane.cost,lane.response,lane.counter+' '+lane.payoff,lane.fallback],operations:[op.pressure+' '+op.cost,op.response,op.payoff+' '+op.fallback],fight:[fight.response+' '+fight.cost,fight.pressure,fight.fallback+' '+fight.payoff]};
+    b.coaching_scope={...b.coaching_scope,rule_id:'causal-coaching-v1',evidence_ids:[...refs],limitation:'저장된 기술 기전에서 도출한 조건부 코칭입니다. 현재 상태·상성 우열·전술 정확도는 검증하지 않았습니다. 구간별 미지원은 그대로입니다.'};
+    // Preserve reviewed matchup decisions. For role-only inputs, close the old
+    // summary/detail gap using this very same causal decision, not another plan.
+    if(sourceLimited){
+      b.lane.concept={plan_id:b.wave.plan_id,text:lane.title};
+      const laneActions=['상대에게 막타 자리를 모두 내주지 않되, 교환 뒤에도 다음 웨이브를 받을 체력을 남긴다.','큰 적 웨이브에는 깊게 들어가지 말고, 동료와 함께 줄인 뒤 막타에 접근한다.',limited?lane.response.split('. ')[0]+'.':shortResponse,'상대 두 명의 남은 반격과 퇴로를 보고, 한 기술이 빠졌다고 끝까지 추격하지 않는다.',reset];
+      if(constrained){laneActions[1]=b.wave.handling;laneActions[2]=b.wave.combat;laneActions[4]=b.wave.change_if;}
+      laneActions.forEach((text,i)=>b.action_summaries.lane.items[i].text=text);
+      b.wave.combat=laneActions[2];b.wave.change_if=laneActions[4];b.wave.handling=laneActions[1];b.wave.steps=b.wave.steps.map((step,i)=>({...step,text:laneActions[[1,2,4][i]??4]}));
+      if(b.wave.diagram?.steps)b.wave.diagram.steps=b.wave.steps.map(step=>({...step}));
+      b.matchup_playbook.ours.means=lane.response;b.matchup_playbook.ours.avoid=lane.counter;
+      b.area_context.lane={...b.area_context.lane,ours:lane.response,theirs:lane.pressure,action:laneActions[2],matchup:lane.cost};
+      Object.assign(b.operations,{concept:op.title,placement:'중앙에서 '+partners+'와 움직이며 같은 적에게 닿을 거리를 맞춘다.',connection:(has('allies','Vi',['R'])?'바이의 진입에 닿을 경로를 잡고, ':'')+sn+'의 '+(['Nautilus','Alistar'].includes(support)?'제어':'보호·방해')+'가 닿는 거리를 유지한다.',priority:'웨이브를 정리한 시간을 가까운 포탑·목표물 주변 시야로 바꾼다.',concede:op.cost,fallback:op.fallback});
+      Object.assign(b.fight,{concept:fight.title,setup:starters+'의 뒤나 옆에서 시작해 같은 적을 공격할 거리를 유지한다.',start:'아군 제어와 내 공격이 함께 닿을 때 공격하고, 멀어진 진입자를 혼자 따라가지 않는다.',target:'함께 닿는 가까운 적부터 공격하며 아군을 지킬 거리를 남긴다.',stop:fight.fallback});
+      b.operations.steps=[b.operations.placement,b.operations.priority,b.operations.fallback];
+      for(const [area,values]of Object.entries({operations:[b.operations.placement,b.operations.connection,b.operations.priority,b.operations.concede,b.operations.fallback],fight:[b.fight.setup,b.fight.start,b.fight.target,fight.pressure,b.fight.stop]})){
+        values.forEach((text,i)=>b.action_summaries[area].items[i].text=text.split('. ')[0]+(text.includes('. ')?'.':''));
+        b.area_context[area].action=area==='operations'?b.operations.priority:b.fight.start;
+      }
+      for(const area of ['lane','operations','fight']){
+        const d=b.narrative_decisions[area],summary=b.loading_summary.items.find(i=>i.id===area);summary.conclusion=d.title;summary.support=d.payoff;
+        b.condition_responses[area]=[{id:area==='lane'&&limited?'PREPARE_WINDOW':'PLAN_WINDOW',trigger:area==='lane'&&limited?'싸울 필요가 있어도 자원·호응 여건이 부족하거나 미확인이라면':'아군과 공격할 거리·자원·경로가 모두 맞는다면',action:area==='lane'?(limited?lane.response:shortResponse):d.response,keep:d.payoff,reason:d.cost,stop:d.fallback,actors:d.actors,evidence_ids:d.evidence_ids,observation:false,basis:d.basis,rule_ids:[d.rule_id]},
+          {id:'WINDOW_MISSED',trigger:'아군 공격이 끝났거나 후속 거리가 끊겼다면',action:d.fallback,keep:'뒤늦은 진입으로 다음 웨이브와 체력까지 잃지 않는다.',stop:'아군과 다시 모여 자원·거리·남은 수단을 확인할 때 다시 기회를 찾는다.',actors:d.actors,evidence_ids:d.evidence_ids,observation:false,basis:d.basis,rule_ids:[d.rule_id]},
+          {id:'WAIT_FOR_HELP',trigger:'웨이브를 받을 수 있고 합류·구매가 곧 준비된다면',action:area==='lane'?'동료 곁에서 경험치와 닿는 막타를 받고 체력·기술을 남긴다.':'아군의 합류와 구매를 맞추며 다음 공격 위치를 준비한다.',keep:'기다리는 손실이 작고 실제로 좋아질 조건이 있을 때 시간을 쓴다.',stop:'견제나 포탑 손실이 커지면 같은 자리에서 기다리지 않고 지원·귀환·다른 경로를 선택한다.',actors:d.actors,evidence_ids:d.evidence_ids,observation:false,basis:d.basis,rule_ids:[d.rule_id]}];
+      }
+      for(const area of ['lane','operations','fight'])for(const c of b.condition_responses[area]){
+        c.conditions=['게임 전 가정이며 실제 체력·기술 가용성·위치를 관측하지 않았습니다.'];
+        c.limits=b.coaching_scope.limitation;c.source_paths=['narrative_decisions.'+area];
+      }
     }
   }
 
