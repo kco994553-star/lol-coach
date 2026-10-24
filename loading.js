@@ -2,6 +2,7 @@
 (function () {
   'use strict';
   const roles = { TOP: '탑', JUNGLE: '정글', MID: '미드', BOTTOM: '바텀', SUPPORT: '서포터' };
+  const currentOnly = document.body.dataset.gameplanView === 'current';
   const $ = id => document.getElementById(id);
   const node = (tag, cls, value, options) => { const el = document.createElement(tag); if (cls) el.className = cls; if (value != null) el.textContent = tag === 'code' || tag === 'blockquote' ? String(value) : display(value, options); return el; };
   const entries = value => Array.isArray(value) ? value : value == null ? [] : [value];
@@ -74,7 +75,7 @@
   window.addEventListener('hashchange',()=>{
     if(location.hash.startsWith('#plan=')){restoreRoute();return;}
     const target=document.getElementById(location.hash.slice(1));
-    if(target&&$('loading-legacy-details').contains(target)){$('loading-legacy-details').open=true;target.scrollIntoView({block:'start',behavior:'auto'});}
+    if(target&&$('loading-legacy-details')?.contains(target)){$('loading-legacy-details').open=true;target.scrollIntoView({block:'start',behavior:'auto'});}
   });
 
   function display(value, options) {
@@ -430,6 +431,7 @@
   }
   function renderReport() {
     document.body.classList.add('plan-ready');
+    if(!currentOnly){
     const summary = report.summary || {};
     const representative = report.lane && report.lane.matchup_id === 'Caitlyn_Lux__Kaisa_Nautilus_v2';
     const representativeAliases = representative ? { aliases: [{ text: '덫', champion: 'Caitlyn', slot: 'W' }] } : {};
@@ -443,12 +445,13 @@
     renderComposition(); renderGameplan(); renderLane(); renderFight(); renderScenarios(); renderEvidence();
     if (exploration) exploration.destroy();
     exploration = window.LoadingInteractive.mount({ report, catalog, host:$('interactive-flow'), onPreference:applyLegacyPreference});
+    }
     if(coachView)coachView.destroy();
-    coachView=window.LoadingCoachView.mount({host:$('loading-coach'),report,catalog,presentation:{art:artwork,initialDetail:detailArea,initialBaseY:history.state?.baseY||0,onNavigate:navigateDetail,onEdit:()=>{$('input-panel').open=true;$('input-panel').scrollIntoView({block:'start',behavior:'auto'});$('own-champion').focus({preventScroll:true});},onLegacy:()=>{$('loading-legacy-details').open=true;$('loading-legacy-details').scrollIntoView({block:'start',behavior:'auto'});}},onChange:({scenario,planning,period,preference:risk})=>{
+    coachView=window.LoadingCoachView.mount({host:$('loading-coach'),report,catalog,presentation:{currentOnly,art:artwork,initialDetail:detailArea,initialBaseY:history.state?.baseY||0,onNavigate:navigateDetail,onEdit:()=>{$('input-panel').open=true;$('input-panel').scrollIntoView({block:'start',behavior:'auto'});$('own-champion').focus({preventScroll:true});},onLegacy:()=>{$('loading-legacy-details').open=true;$('loading-legacy-details').scrollIntoView({block:'start',behavior:'auto'});}},onChange:({scenario,planning,period,preference:risk})=>{
       const next=window.LoadingStrategy.analyze({...report.input,schema_version:'lol-coach-loading-input-v4',scenario,planning,preferences:{risk}},catalog);
       next.coach=window.LoadingCoach.evaluate(next,catalog,scenario,period); preference=risk; report=next;saveRoute();
       if(exploration)exploration.destroy();
-      exploration=window.LoadingInteractive.mount({report,catalog,host:$('interactive-flow'),onPreference:applyLegacyPreference});
+      if(!currentOnly)exploration=window.LoadingInteractive.mount({report,catalog,host:$('interactive-flow'),onPreference:applyLegacyPreference});
       return next;
     }});
     if(entry&&!restoring){detailArea=entryKey;coachView.setPanel(entryKey);}
@@ -493,7 +496,7 @@
     finally { importing = false; $('pc-import').disabled = false; }
   }
   async function init() {
-    buildPicks(); window.LoadingMap.init();
+    buildPicks(); if(!currentOnly)window.LoadingMap.init();
     $('loading-form').addEventListener('submit', event => { event.preventDefault(); analyze(); });
     $('loading-form').addEventListener('input', stale);
     $('loading-form').addEventListener('change', stale);
@@ -515,7 +518,7 @@
       $('analyze').disabled = false; updateRosterOptions(); message((entry?entry.name+' 분석을 선택했습니다. 아직 분석 전입니다. ':'')+'10개 픽과 내 챔피언·포지션을 선택하세요. 분석 후 선택한 영역으로 이어집니다.');
       if(location.hash.startsWith('#plan='))restoreRoute();
       else if(/^#(?:loading-|teamfight)/.test(location.hash)){
-        const anchor=location.hash;try{const saved=sessionStorage.getItem(savedPlanKey);if(saved){history.replaceState(null,'',saved);restoreRoute();history.replaceState(null,'',anchor);$('loading-legacy-details').open=true;document.getElementById(anchor.slice(1))?.scrollIntoView({block:'start'});}}catch(_){}
+        const anchor=location.hash;try{const saved=sessionStorage.getItem(savedPlanKey);if(saved){history.replaceState(null,'',saved);restoreRoute();history.replaceState(null,'',anchor);if($('loading-legacy-details'))$('loading-legacy-details').open=true;document.getElementById(anchor.slice(1))?.scrollIntoView({block:'start'});}}catch(_){}
       }
     } catch (error) { message('자료를 불러오지 못했습니다. 페이지를 새로고침해 주세요. ' + (error && error.message || ''), 'error'); }
   }
