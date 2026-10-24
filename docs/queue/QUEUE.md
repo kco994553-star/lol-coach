@@ -1,3 +1,7 @@
+## Current — v1.3 delivered; remaining scope (2026-10-24)
+
+PR127/128 product main3013f30 shipped as Pagesee839fc and public90hashes/1440-390-320 verified. Existing result.md and content matrix contain exact evidence. No active source editing; results-only branch work/gameplan-v13-results-20261024, final owner state on canonical claim. Next priorities: unsupported role/duo knowledge and relative wave counterexamples → actual understanding/tactical review → dedicated review execution trace → existing current-game/partial-pick/past-plan and other product queue. Do not treat all-champion tactics or live support as complete. Earlier task records below are historical.
+
 ## Current delta — gameplan v1.3 (2026-10-24)
 
 Active claim `codex-20261024-gameplan-v13`, branch `work/gameplan-v13-20261024`, base742b3bb. Complete explicit waiting-cost/feasibility assumptions and same-result presentation → SHA-bound checks/browser → gated PR/main → existing Pages/public verification. Actual attached corpus is v1.1/9 tests; absent v1.2/17 is recorded, not assumed. Matrix in existing content document; no duplicate generator or new top-level area. Preserve remaining prior queue and protected user decisions.

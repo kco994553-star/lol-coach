@@ -1,3 +1,15 @@
+# Current — gameplan v1.3 publicly verified
+
+- Source PR127 HEAD439f554 → mainf20bf43; role follow-up PR128 HEADcf2c590 → product main3013f3023efc01deedf401627fab5952949786e5. Result branch `work/gameplan-v13-results-20261024`; exact final SHA/owner release on canonical `work/main-execution-claim`, token `codex-20261024-gameplan-v13`.
+- Default overall comment, independent phase prose, no duplicate detail body, stable keyboard return; optional waiting-loss/opportunity/enemy-wave assumptions drive same summary/body/detail/legacy actions. Support/jungle macro corrected; Sejuani/Graves authored plans preserved. No new menu/generator/runtime AI.
+- Display2.2.1–4 and2.6 contract verified; content2.3.1/2.3.1.1/2.3.3–6/2.4.1/2.5.1 remains bounded/partial. Final requirement matrix/full reference prose in docs/gameplan-content/2026-10-19.md,13variants in v13-outputs.json.
+- Source439f554106 and sourcecf2c59090 affected tests/source preservation PASS; both full local Chromium and exact PR/main required3 PASS. Public artifactee839fc, Pages40059478711 SUCCESS; HTTPS90 hashes + realpublic1440/390/320 body/disclosure/assumptions/reload/reset PASS. Screenshots/evidence in evidence/actual-evidence/handoff-v11/result.md. Coaching effectsN0, tactical accuracy unverified.
+- Actual attachment ZIP internalv1.1/9 structural tests; claimed v1.2/17 quality files absent. Latest actualv1.3 is authoritative. Original errors are not imported as product truth. Historical PC2/v23binding1 full-suite failures not claimed fixed; unchanged game-info browser reused.
+- All code changes committed/merged/published. Results-only branch records evidence; final results CI and clean state follow canonical claim. Remaining unsupported matchups/positions, quantitative wave comparison, expert/practical validation, dedicated review schedules, live/account/past-plan product queue remain open.
+- No protected decisions/raw sources/quotas/schedules altered; pro refresh and Riot public proof preserved. Missing exactv1.2 is optional original-test comparison input. No user input required for shipped scope; secure Riot/local field-policy evidence remains necessary for external live work.
+
+---
+
 # Current — v1.3 role fallback follow-up before publication
 
 - Branch `work/gameplan-v13-role-followup-20261024`, base/main `f20bf438e20a67316e75c267d146a53d74c2ac41`; same canonical token `codex-20261024-gameplan-v13`. PR127 merged but not yet published.
