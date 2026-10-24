@@ -1,3 +1,13 @@
+# Gameplan v1.3 — publication and evidence writer
+- run_token: `codex-20261024-gameplan-v13`
+- status: RUNNING
+- writer_active: true
+- owner_branch: `work/gameplan-v13-role-followup-20261024`
+- intake_main: `3013f3023efc01deedf401627fab5952949786e5`
+- Exact-main required3 SUCCESS. Publish existing gh-pages allowlist with pro/riot preservation, verify HTTPS and real public browser, then final existing handoff/results PR.
+
+---
+
 # Gameplan v1.3 — final product main CI pending
 - run_token: `codex-20261024-gameplan-v13`
 - status: CI_PENDING
