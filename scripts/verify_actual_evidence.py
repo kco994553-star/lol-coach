@@ -23,6 +23,8 @@ MODIFIED={'coach_v1/riot_collection_policy.py','scripts/collect_power_stats.py',
     'web_r4/pc.js','web_r4/pregame.js','web_r4/pregame.html','web_r4/official_reference.js',
     'web_r4/review_queue.js','web_r4/review_queue.html'}
 CURRENT=MODIFIED|{
+    "docs/gameplan-content/notion-format-v1.md",
+    "web_r4/loading-direction-profiles.js",
     "tests_pregame/test_gameplan_backend.py","docs/gameplan-content/backend-design-v1.md","docs/superpowers/plans/2026-10-24-gameplan-backend.md",
     "tests_pregame/test_gameplan_direction.py","docs/superpowers/plans/2026-10-24-gameplan-direction.md","docs/gameplan-content/2026-10-24-direction.md",
     "scripts/build_gameplan_preview.js","scripts/gameplan-preview.html","tests_pregame/test_gameplan_coaching_content.py","docs/gameplan-content/2026-10-19.md",
@@ -183,9 +185,9 @@ def selected_tests():
     if not before or set(before)=={'0'}:return TESTS
     changed=set(git('diff','--name-only',before,'HEAD').decode().splitlines())
     groups={
-        "tests_pregame.test_gameplan_backend":{"web_r4/loading-planboard.js","web_r4/loading-presentation.js"},
-        "tests_pregame.test_gameplan_direction":{"tests_pregame/test_gameplan_direction.py","web_r4/loading-planboard.js","web_r4/loading-coach.js","web_r4/loading-presentation.js","web_r4/loading-data.json"},
-        "tests_pregame.test_gameplan_coaching_content":{"web_r4/loading-planboard.js","web_r4/loading-presentation.js","web_r4/loading-coach-view.js","scripts/build_gameplan_preview.js","scripts/gameplan-preview.html","tests_pregame/test_gameplan_coaching_content.py"},
+        "tests_pregame.test_gameplan_backend":{"web_r4/loading-planboard.js","web_r4/loading-direction-profiles.js","web_r4/loading-presentation.js"},
+        "tests_pregame.test_gameplan_direction":{"tests_pregame/test_gameplan_direction.py","web_r4/loading-planboard.js","web_r4/loading-direction-profiles.js","web_r4/loading-coach.js","web_r4/loading-presentation.js","web_r4/loading-data.json"},
+        "tests_pregame.test_gameplan_coaching_content":{"web_r4/loading-planboard.js","web_r4/loading-direction-profiles.js","web_r4/loading-presentation.js","web_r4/loading-coach-view.js","scripts/build_gameplan_preview.js","scripts/gameplan-preview.html","tests_pregame/test_gameplan_coaching_content.py"},
         "tests_pregame.test_loading_presentation":{"web_r4/loading-presentation.js","web_r4/loading-presentation.css","web_r4/loading.js","web_r4/loading-coach-view.js","web_r4/loading.html"},
         'tests_pregame.test_threat_rings':{'config/formation_threat_profiles.json','scripts/build_formation_ranges.py','web_r4/formation-ranges.js','web_r4/loading-formation.js','web_r4/loading-planboard.js'},
         'tests_pregame.test_formation_ranges':{'config/formation_threat_profiles.json','scripts/build_formation_ranges.py','web_r4/formation-ranges.js','web_r4/loading-formation.js'},
@@ -209,7 +211,7 @@ def selected_tests():
         'tests_pregame.test_loading_context':{'web_r4/loading-engine.js','web_r4/loading-data.json','scripts/build_loading_catalog.py','contracts/loading-context-v2.md'},
         'tests_pregame.test_loading_catalog':{'scripts/build_loading_catalog.py','web_r4/loading-data.json','web_r4/directions-data.json'},
         'tests_pregame.test_loading_strategy':{'web_r4/loading-engine.js','web_r4/loading-data.json','web_r4/directions-engine.js','web_r4/directions-data.json'},
-        'tests_pregame.test_loading_http':{'coach_v1/pregame_server.py','web_r4/pc.html','scripts/build_directions_web.py','web_r4/loading.html','web_r4/loading.js','web_r4/loading-map.js','web_r4/loading.css'},
+        'tests_pregame.test_loading_http':{'web_r4/loading-direction-profiles.js','scripts/browser_loading.py','coach_v1/pregame_server.py','web_r4/pc.html','scripts/build_directions_web.py','web_r4/loading.html','web_r4/loading.js','web_r4/loading-map.js','web_r4/loading.css'},
         'tests_pregame.test_directions':{'web_r4/directions-engine.js','web_r4/directions-data.json','config/direction_asset_sources.json'},
         'tests_pregame.test_directions_http':{'coach_v1/pregame_server.py','web_r4/pc.html','scripts/build_directions_web.py','web_r4/directions.html','web_r4/directions.js','web_r4/directions.css','web_r4/status.html','web_r4/directions-status.js','web_r4/directions-status.json'},
         'tests_expert.test_video_diagnostic_payload':{'coach_v1/video_diagnostic_payload.py','coach_v1/gemini_daily.py','scripts/run_video_diagnostic.py'},

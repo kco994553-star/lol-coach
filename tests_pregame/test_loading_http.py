@@ -89,3 +89,22 @@ class LoadingHTTPTests(unittest.TestCase):
             r=c.getresponse();body=json.loads(r.read());status=r.status;c.close();return status,body
         self.assertEqual(post()[0],401)
         status,body=post(self.server.token);self.assertEqual(status,200);self.assertEqual(body['status'],'API_UNAVAILABLE');self.assertEqual(body['provider_requests'],0)
+
+    def test_direction_profiles_are_served_exported_and_browser_bound(self):
+        import hashlib
+        import ast
+        asset='loading-direction-profiles.js'
+        expected=Path('web_r4',asset).read_bytes()
+        status,body,headers=self.get('/'+asset)
+        self.assertEqual(status,200)
+        self.assertEqual(body,expected)
+        self.assertIn('javascript',headers['Content-Type'])
+        with tempfile.TemporaryDirectory() as tmp:
+            out=Path(tmp)/'site';manifest=build(out)
+            self.assertEqual((out/asset).read_bytes(),expected)
+            self.assertEqual(manifest['sha256'][asset],hashlib.sha256(expected).hexdigest())
+        # Read only the source inventory without importing Playwright or launching a browser.
+        tree=ast.parse(Path('scripts/browser_loading.py').read_text())
+        assignment=next(n for n in tree.body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='SOURCES' for t in n.targets))
+        scope={};exec(compile(ast.Module(body=[assignment],type_ignores=[]),'inventory','exec'),scope)
+        self.assertIn('web_r4/'+asset,scope['SOURCES'])
