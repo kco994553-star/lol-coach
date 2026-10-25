@@ -24,6 +24,15 @@ MODIFIED={'coach_v1/riot_collection_policy.py','scripts/collect_power_stats.py',
     'web_r4/review_queue.js','web_r4/review_queue.html'}
 MODIFIED.update({'tests_pregame/test_pc_runtime.py', 'tests_pregame/test_v23_binding.py', 'tests_pregame/test_pc_coach.py'})
 CURRENT=MODIFIED|{
+    'docs/gameplan-content/gameplan-2-plus-3-v1.md',
+    'docs/gameplan-content/codex-gameplan-2-plus-3-queue-v1.md',
+    'ARCHITECTURE.md',
+    'SOURCE_REGISTRY.md',
+    'DECISION_LOG.md',
+    'CHANGELOG.md',
+    'DEPENDENCY_MAP.md',
+    'RELEASE_CHECKLIST.md',
+
     'docs/gameplan-content/champion-search-baseline-v0.1.md',
     'docs/superpowers/plans/2026-10-25-frontend-v2.md',
     'docs/gameplan-content/champion-statistics-v1.md',
