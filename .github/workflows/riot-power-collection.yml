@@ -7,7 +7,7 @@ on:
         description: Current League-V4 seed tier (not historical match rank)
         type: choice
         default: CHALLENGER
-        options: [CHALLENGER, GRANDMASTER, MASTER]
+        options: [IRON, BRONZE, SILVER, GOLD, PLATINUM, EMERALD, DIAMOND, MASTER, GRANDMASTER, CHALLENGER]
       key_renewed:
         description: Manual key renewal confirmation; otherwise use recorded24h user window
         type: boolean
@@ -80,15 +80,18 @@ jobs:
           PY
       - name: Restore and refresh existing aggregates without any provider request
         run: |
-          python scripts/collect_power_stats.py --publish-only --accumulator "$RUNNER_TEMP/power-state/power-accumulator.json.gz" --seed-data data/riot/2026-10-11/power-data.json.gz --aggregate-directory "$RUNNER_TEMP/power-output" --output "$RUNNER_TEMP/power-output/power-data.json"
-      - name: Resolve current official patch and Challenger or auxiliary-only collection policy
+          python scripts/collect_power_stats.py --publish-only --accumulator "$RUNNER_TEMP/power-state/power-accumulator.json.gz" --matchup-results-state "$RUNNER_TEMP/power-state/matchup-results.json.gz" --result-completeness-ledger "$RUNNER_TEMP/power-state/result-completeness.json" --seed-data data/riot/2026-10-11/power-data.json.gz --aggregate-directory "$RUNNER_TEMP/power-output" --output "$RUNNER_TEMP/power-output/power-data.json"
+      - name: Resolve current official patch and one bounded all-tier coverage target
         id: policy
         env:
           EXPLICIT_PATCH: ${{ inputs.patch }}
-          REQUESTED_TIER: ${{ inputs.tier || 'CHALLENGER' }}
+          REQUESTED_TIER: ${{ inputs.tier }}
+          REQUESTED_DIVISION: ${{ inputs.division }}
           MANUAL_RENEWED: ${{ inputs.key_renewed }}
         run: |
-          policy_args=(--patch "$EXPLICIT_PATCH" --tier "$REQUESTED_TIER" --aggregate-directory "$RUNNER_TEMP/power-output")
+          policy_args=(--patch "$EXPLICIT_PATCH" --aggregate-directory "$RUNNER_TEMP/power-output")
+          if [[ -n "$REQUESTED_TIER" ]]; then policy_args+=(--tier "$REQUESTED_TIER"); fi
+          if [[ -n "$REQUESTED_DIVISION" ]]; then policy_args+=(--division "$REQUESTED_DIVISION"); fi
           if [[ "$MANUAL_RENEWED" == true ]]; then policy_args+=(--manual-renewed); fi
           python scripts/resolve_riot_collection.py "${policy_args[@]}"
       - name: Clear prior job rolling Riot rate window before fresh client
@@ -104,12 +107,12 @@ jobs:
         if: steps.policy.outputs.enabled == 'true'
         env:
           RIOT_API_KEY: ${{ secrets.RIOT_API_KEY }}
-          COLLECTION_TIER: ${{ inputs.tier || 'CHALLENGER' }}
-          COLLECTION_DIVISION: ${{ inputs.division || 'I' }}
+          COLLECTION_TIER: ${{ steps.policy.outputs.tier }}
+          COLLECTION_DIVISION: ${{ steps.policy.outputs.division }}
           COLLECTION_PATCH: ${{ steps.policy.outputs.patch }}
         shell: bash
         run: |
-          args=(--diagnostics-output "$RUNNER_TEMP/power-output/riot-diagnostics.json" --output "$RUNNER_TEMP/power-output/power-data.json" --movement-output "$RUNNER_TEMP/power-output/movement-data.json" --outcome-output "$RUNNER_TEMP/power-output/outcome-data.json" --accumulator "$RUNNER_TEMP/power-state/power-accumulator.json.gz" --aggregate-directory "$RUNNER_TEMP/power-output" --division "$COLLECTION_DIVISION" --max-matches 300 --max-requests 650 --max-players 40 --max-pages 1 --max-retries 2 --deadline-seconds 900)
+          args=(--diagnostics-output "$RUNNER_TEMP/power-output/riot-diagnostics.json" --output "$RUNNER_TEMP/power-output/power-data.json" --movement-output "$RUNNER_TEMP/power-output/movement-data.json" --outcome-output "$RUNNER_TEMP/power-output/outcome-data.json" --accumulator "$RUNNER_TEMP/power-state/power-accumulator.json.gz" --matchup-results-state "$RUNNER_TEMP/power-state/matchup-results.json.gz" --result-completeness-ledger "$RUNNER_TEMP/power-state/result-completeness.json" --aggregate-directory "$RUNNER_TEMP/power-output" --division "$COLLECTION_DIVISION" --max-matches 300 --max-requests 650 --max-players 40 --max-pages 1 --max-retries 2 --deadline-seconds 900)
           args+=(--tier "$COLLECTION_TIER")
           if [[ -n "$COLLECTION_PATCH" ]]; then args+=(--patch "$COLLECTION_PATCH"); fi
           python scripts/collect_power_stats.py "${args[@]}"
@@ -149,8 +152,8 @@ jobs:
               outcome = validate_outcome_dataset(json.loads(outcome_path.read_text()))
               print('OUTCOME_AGGREGATE_RECEIPT_JSON=' + json.dumps({'status': outcome['status'], 'real_matches': outcome['samples']['real_matches'], 'coaching_accuracy': None}))
           with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a') as output:
-              output.write('Public-safe aggregate only; raw payloads and player identifiers are never uploaded.\n\n```json\n' + json.dumps(result, indent=2) + '\n```\n')
-              output.write('\nState is restored/refreshed daily for90days. CHALLENGER primary; GRANDMASTER only insufficient same-patch auxiliary. No ownID/tier required. Recorded24h renewal window gates schedule; first401/403 stops that execution. Current seed tier is not historical participant rank.\n')
+              output.write('Public-safe aggregate only in this artifact; raw payloads and player identifiers are never uploaded. Anonymous per-match result rosters and the separate completeness ledger remain in the private sufficient-state artifact.\n\n```json\n' + json.dumps(result, indent=2) + '\n```\n')
+              output.write('\nState is restored/refreshed daily for90days. All ten seed tiers are admitted; one tier/division target rotates per existing run within unchanged budgets. No all-tier acquisition or complete population coverage is implied. Browser default MASTER_PLUS is separate from collection admission; legacy Challenger reference policy remains separate. No ownID/tier required. Recorded24h renewal window gates schedule; first401/403 stops that execution. Current seed tier is not historical participant rank.\n')
           PY
       - name: Retain public-safe aggregate for seven days
         if: always()
@@ -165,6 +168,9 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: riot-power-accumulator
-          path: ${{ runner.temp }}/power-state/power-accumulator.json.gz
+          path: |
+            ${{ runner.temp }}/power-state/power-accumulator.json.gz
+            ${{ runner.temp }}/power-state/matchup-results.json.gz
+            ${{ runner.temp }}/power-state/result-completeness.json
           retention-days: 90
           if-no-files-found: error

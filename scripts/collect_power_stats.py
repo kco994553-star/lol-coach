@@ -4,16 +4,18 @@ import argparse
 from datetime import datetime, timezone
 import json
 import gzip
+import hashlib
 import os
 from pathlib import Path
 import sys
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from coach_v1.power_stats import TIERS, validate_power_dataset
-from coach_v1.riot_collector import RiotCollector, collection_tier
+from coach_v1.riot_collector import RiotCollector
 from coach_v1.power_accumulator import PowerAccumulator
 from coach_v1.collection_progress import validate_progress
-from coach_v1.riot_collection_policy import validate_new_statistics_tier
+from coach_v1.riot_collection_policy import validate_new_statistics_tier, collection_target
+from coach_v1.matchup_results import empty_matchup_results, validate_matchup_results, merge_matchup_results
 
 
 def write_json(path,data):
@@ -21,6 +23,42 @@ def write_json(path,data):
     temporary=path.with_name(path.name+'.tmp')
     temporary.write_text(json.dumps(data,ensure_ascii=False,allow_nan=False,sort_keys=True,indent=2)+'\n')
     os.replace(temporary,path)
+
+
+MAX_RESULT_STATE_BYTES=64*1024*1024
+
+
+def result_ledger(dataset):
+    data=validate_matchup_results(dataset)
+    if len(data['records'])>10000:raise ValueError('bounded anonymous results required')
+    encoded=json.dumps(data,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
+    if len(encoded)>MAX_RESULT_STATE_BYTES:raise ValueError('bounded anonymous results required')
+    return dict(schema_version='champion.result-completeness.v1',
+        results_sha256=hashlib.sha256(encoded).hexdigest(),
+        complete_match_hashes=sorted(r['hash'] for r in data['records']))
+
+
+def load_result_state(state_path,ledger_path):
+    state_path=Path(state_path);ledger_path=Path(ledger_path)
+    if not state_path.exists() and not ledger_path.exists():return empty_matchup_results()
+    if not state_path.exists() or not ledger_path.exists():raise ValueError('incomplete private result state')
+    with (gzip.open(state_path,'rt') if state_path.suffix=='.gz' else state_path.open()) as handle:
+        content=handle.read(MAX_RESULT_STATE_BYTES+1)
+    if len(content)>MAX_RESULT_STATE_BYTES:raise ValueError('bounded anonymous results required')
+    dataset=validate_matchup_results(json.loads(content))
+    if ledger_path.stat().st_size>MAX_RESULT_STATE_BYTES:raise ValueError('bounded result ledger required')
+    if json.loads(ledger_path.read_text())!=result_ledger(dataset):raise ValueError('result completeness binding mismatch')
+    return dataset
+
+
+def save_result_state(state_path,ledger_path,dataset):
+    dataset=validate_matchup_results(dataset);ledger=result_ledger(dataset)
+    path=Path(state_path);path.parent.mkdir(parents=True,exist_ok=True)
+    temporary=path.with_name(path.name+'.tmp')
+    with (gzip.open(temporary,'wt') if path.suffix=='.gz' else temporary.open('w')) as handle:
+        json.dump(dataset,handle,sort_keys=True,allow_nan=False)
+    os.replace(temporary,path)
+    write_json(ledger_path,ledger)
 
 
 def publish_accumulator(accumulator,directory):
@@ -42,14 +80,16 @@ def main(argv=None):
     parser.add_argument('--outcome-output',help='optional anonymous ending-duration outcome companion; absent on blocked collection')
     parser.add_argument('--diagnostics-output',help='safe key-shape and selected HTTP error metadata only')
     parser.add_argument('--tier',choices=TIERS)
-    parser.add_argument('--rotation',type=int,default=0,help='default CHALLENGER/GRANDMASTER/MASTER seed rotation')
+    parser.add_argument('--rotation',type=int,default=0,help='one all-tier/division target in the 40-slot rotation')
     parser.add_argument('--user-tier',choices=TIERS,help='explicit U2-confirmed user-tier cohort')
     parser.add_argument('--accumulator',help='anonymous sufficient-state JSON or JSON.gz; atomically preserved across runs')
+    parser.add_argument('--matchup-results-state',help='PRIVATE anonymous result companion JSON/JSON.gz; never a public roster asset')
+    parser.add_argument('--result-completeness-ledger',help='PRIVATE digest-bound known-result hashes, separate from power known hashes')
     parser.add_argument('--aggregate-directory',help='write patch/tier power and digest-bound progress companions')
     parser.add_argument('--seed-data',help='retained legacy summary reusable as evidence, never blindly merged')
     parser.add_argument('--publish-only',action='store_true',help='restore/publish existing state; makes no provider call')
     parser.add_argument('--user-reported-key-expired',action='store_true',help='separate user attribution, not HTTP-inferred expiry')
-    parser.add_argument('--division',choices=('I','II','III','IV'),default='I')
+    parser.add_argument('--division',choices=('I','II','III','IV'))
     parser.add_argument('--patch',help='exact gameplay patch; omitted pins first eligible match patch')
     parser.add_argument('--start-time',type=int)
     parser.add_argument('--end-time',type=int)
@@ -61,12 +101,20 @@ def main(argv=None):
     parser.add_argument('--max-xp-ci-width',type=float)
     parser.add_argument('--max-cs-ci-width',type=float)
     args=parser.parse_args(argv)
-    paths=[Path(p).resolve() for p in (args.output,args.movement_output,args.outcome_output,args.diagnostics_output,args.accumulator) if p]
+    if args.result_completeness_ledger and not args.matchup_results_state:parser.error('result ledger requires private result state')
+    if args.matchup_results_state and not args.result_completeness_ledger:
+        args.result_completeness_ledger=args.matchup_results_state+'.completeness.json'
+    paths=[Path(p).resolve() for p in (args.output,args.movement_output,args.outcome_output,args.diagnostics_output,args.accumulator,args.matchup_results_state,args.result_completeness_ledger) if p]
     if len(paths)!=len(set(paths)):
         parser.error('aggregate and diagnostics outputs must be different paths')
+    if args.aggregate_directory and any(Path(p).resolve().is_relative_to(Path(args.aggregate_directory).resolve()) for p in (args.matchup_results_state,args.result_completeness_ledger) if p):
+        parser.error('private result state must be outside the public aggregate directory')
     if args.lookback_days<1:parser.error('lookback-days must be positive')
     try:
-        tier=args.tier or collection_tier(args.rotation,args.user_tier)
+        target=collection_target(args.rotation)
+        tier=args.tier or args.user_tier or target['tier']
+        division=args.division or target['division']
+        result_state=load_result_state(args.matchup_results_state,args.result_completeness_ledger) if args.matchup_results_state else empty_matchup_results()
         if not args.publish_only:validate_new_statistics_tier(tier)
         accumulator=PowerAccumulator.load(args.accumulator) if args.accumulator and Path(args.accumulator).exists() else PowerAccumulator()
         if args.seed_data:
@@ -80,13 +128,14 @@ def main(argv=None):
             if available:
                 representative=max(available,key=lambda d:d['source'].get('retrieved_at') or '')['source']
                 write_json(args.output,accumulator.dataset(representative['patch'],representative['tier']))
+            if args.matchup_results_state:save_result_state(args.matchup_results_state,args.result_completeness_ledger,result_state)
             print(json.dumps(dict(status='RESTORED_DERIVED_STATE',request_count=0,coaching_accuracy=None)))
             return 0
     except ValueError as error:
-        if str(error)=='MASTER_PLUS_REQUIRED':parser.error('MASTER_PLUS_REQUIRED: new statistics require MASTER/GRANDMASTER/CHALLENGER seed accounts')
-        parser.error('invalid retained accumulator or seed; no provider call made')
+        if str(error)=='AUTHORIZED_LEAF_TIER_REQUIRED':parser.error('AUTHORIZED_LEAF_TIER_REQUIRED: collection requires one of ten leaf seed tiers')
+        parser.error('invalid retained accumulator, result state or seed; no provider call made')
     except (OSError,EOFError,json.JSONDecodeError):
-        parser.error('invalid retained accumulator or seed; no provider call made')
+        parser.error('invalid retained accumulator, result state or seed; no provider call made')
     end=args.end_time if args.end_time is not None else int(datetime.now(timezone.utc).timestamp())
     start=args.start_time if args.start_time is not None else max(0,end-args.lookback_days*86400)
     limits={name:getattr(args,name) for name in ('max_matches','max_requests','max_pages','max_players','max_retries','deadline_seconds')}
@@ -105,11 +154,14 @@ def main(argv=None):
     try:
         collector=RiotCollector(**limits,on_first_http_response=first_http_receipt,
             on_key_shape=key_shape_receipt,on_http_error=http_error_receipt,on_front_error=front_error_receipt)
-        result=collector.collect(tier=tier,division=args.division,patch=args.patch,
+        result=collector.collect(tier=tier,division=division,patch=args.patch,
             start_time=start,end_time=end,collect_items=not args.no_item_markers,ci_width_limits=overrides or None,
             collect_movement=bool(args.movement_output),collect_outcome=bool(args.outcome_output),
-            known_match_hashes=accumulator.known_hashes(args.patch,tier) if args.accumulator else ())
+            known_match_hashes=accumulator.known_hashes(args.patch,tier) if args.accumulator else (),
+            collect_results=bool(args.matchup_results_state),known_result_records=result_state['records'])
         result=validate_power_dataset(result)
+        if args.matchup_results_state:
+            result_state=merge_matchup_results(result_state,collector.matchup_results)
     except ValueError:
         parser.error('invalid collection arguments or unsafe aggregate; no output written')
     if not first_receipt_emitted:first_http_receipt(None)
@@ -118,11 +170,14 @@ def main(argv=None):
             first_http_status=collector.first_http_status,http_errors=collector.http_errors,front_errors=collector.front_errors,
             collection_status=result['status'],collection_reason=result['source']['collection']['reason'],
             user_key_expiry_attribution='USER_REPORTED_EXPIRED' if args.user_reported_key_expired else 'UNKNOWN',
-            request_count=collector.requests,retry_count=collector.retries,coaching_accuracy=None)
+            request_count=collector.requests,retry_count=collector.retries,coaching_accuracy=None,
+            result_backfill_count=collector.result_backfill_count,result_state_matches=len(result_state['records']))
         path=Path(args.diagnostics_output);path.parent.mkdir(parents=True,exist_ok=True)
         temporary=path.with_name(path.name+'.tmp')
         temporary.write_text(json.dumps(diagnostics,ensure_ascii=False,allow_nan=False,sort_keys=True,indent=2)+'\n')
         os.replace(temporary,path)
+    if args.matchup_results_state:
+        save_result_state(args.matchup_results_state,args.result_completeness_ledger,result_state)
     if args.accumulator:
         if result['source']['patch'] is not None:
             cumulative=accumulator.add_records(collector.sufficient_records,source=result['source'])

@@ -9,6 +9,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = {
+    **{p:p for p in ('champion-insights.js', 'champion-insights.json', 'champion-matchup-knowledge.json')},
     **{p:p for p in ('learning.html', 'learning.css', 'learning-engine.js', 'learning.js', 'learning-room.json', 'loading-situation.js')},
     **{p:p for p in ('champions.html', 'champion.html', 'champion.css', 'champion-state.js', 'champion-picker.js', 'champion-page.js', 'champion-stats.json', 'loading-draft.js')},
     **{p:p for p in ("loading-presentation.js","loading-presentation.css")},
@@ -51,10 +52,10 @@ def build(output):
         if p.is_symlink() or not p.is_file():raise ValueError('PUBLIC_SOURCE_NOT_REGULAR')
         target=output/destination;target.parent.mkdir(parents=True,exist_ok=True)
         shutil.copyfile(p,target)
-        if source=='loading.html':
+        if source in ('loading.html', 'champions.html', 'champion.html'):
             # The PC server rejects queries; cache versioning belongs only to public export.
             html=target.read_text()
-            for asset in ('loading.js','loading-coach-view.js','loading-presentation.js','loading-planboard.js','loading-presentation.css'):
+            for asset in (name for name in FILES if name.endswith(('.js', '.css'))):
                 version=hashlib.sha256((ROOT/'web_r4'/asset).read_bytes()).hexdigest()[:16]
                 html=html.replace('src="./'+asset+'"','src="./'+asset+'?v='+version+'"').replace('href="./'+asset+'"','href="./'+asset+'?v='+version+'"')
             target.write_text(html)

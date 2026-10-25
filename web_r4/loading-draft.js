@@ -26,13 +26,14 @@
     if(raw.reference!=null){if(typeof raw.reference!=='string'||raw.reference.length>300)fail('REFERENCE_INVALID');out.reference=raw.reference;}
     if(raw.return_state!=null){
       if(!object(raw.return_state))fail('RETURN_STATE_INVALID');
-      keys(raw.return_state,['detail_scroll','section','target','query','filter','scroll','champion','position','opponent','opponent_position','ally_support','enemy_support']);
+      keys(raw.return_state,['detail_scroll','section','target','query','filter','scroll','champion','position','opponent','opponent_position','ally_support','enemy_support','tier']);
       const state=copy(raw.return_state);
       if(state.detail_scroll!=null&&(!Number.isFinite(state.detail_scroll)||state.detail_scroll<0||state.detail_scroll>100000))fail('RETURN_STATE_INVALID');
       if(state.section!=null&&!['overview','power','baseline','skills','matchup'].includes(state.section))fail('RETURN_STATE_INVALID');
       if(state.query!=null&&(typeof state.query!=='string'||state.query.length>100))fail('RETURN_STATE_INVALID');
       if(state.scroll!=null&&(!Number.isFinite(state.scroll)||state.scroll<0||state.scroll>100000))fail('RETURN_STATE_INVALID');
       if(state.filter!=null&&!['ALL','UNCLASSIFIED',...ROLES].includes(state.filter))fail('RETURN_STATE_INVALID');
+      if(state.tier!=null&&!['MASTER_PLUS','ALL','IRON','BRONZE','SILVER','GOLD','PLATINUM','EMERALD','DIAMOND','MASTER','GRANDMASTER','CHALLENGER'].includes(state.tier))fail('RETURN_STATE_INVALID');
       for(const key of ['champion','opponent','ally_support','enemy_support'])if(state[key]!=null)champion(state[key],true);
       for(const key of ['position','opponent_position'])if(state[key]!=null)role(state[key],true);
       if(state.target!=null&&!['champions.html','champion.html','./champions.html','./champion.html'].includes(state.target))fail('RETURN_TARGET_INVALID');

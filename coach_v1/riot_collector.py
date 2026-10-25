@@ -104,6 +104,7 @@ class RiotCollector:
         self.movement_data=None;self.movement_status='NOT_REQUESTED'
         self.outcome_data=None;self.outcome_status='NOT_REQUESTED'
         self.sufficient_records=[];self._request_times={}
+        self.matchup_results=None;self.result_backfill_count=0
 
     def _local_rate_wait(self,host):
         """Enforce Riot's conservative development-key windows without headers."""
@@ -241,7 +242,8 @@ class RiotCollector:
                     complete_item_ids=ids,classification='PINNED_COMPLETE_NONBOOT_NONCONSUMABLE.v2')
 
     def collect(self,*,tier='GOLD',division='I',patch=None,start_time=None,end_time=None,collect_items=True,ci_width_limits=None,
-                collect_movement=False,collect_outcome=False,known_match_hashes=()):
+                collect_movement=False,collect_outcome=False,known_match_hashes=(),
+                collect_results=False,known_result_records=()):
         if tier not in TIERS or division not in ('I','II','III','IV'):raise ValueError('invalid league tier or division')
         if patch is not None and not re.fullmatch(r'[0-9]+\.[0-9]+',patch):raise ValueError('exact gameplay patch required')
         for value in (start_time,end_time):
@@ -250,9 +252,21 @@ class RiotCollector:
         known=set(known_match_hashes)
         if len(known)>10000 or any(not isinstance(h,str) or not re.fullmatch('[0-9a-f]{64}',h) for h in known):
             raise ValueError('bounded anonymous known match hashes required')
+        from .matchup_results import (empty_matchup_results,validate_record,normalize_match,
+                                      build_matchup_results,merge_matchup_results)
+        if not isinstance(known_result_records,(list,tuple)) or len(known_result_records)>10000:
+            raise ValueError('bounded anonymous known results required')
+        result_records={}
+        for record in known_result_records:
+            record=validate_record(record)
+            if record['sample_kind']!='REAL' or record['hash'] in result_records:
+                raise ValueError('unique real known result records required')
+            result_records[record['hash']]=record
         # A collector instance performs one bounded job, never cumulative reuse.
         self.started=self.clock();self.requests=0;self.retries=0;self.not_before={}
         self._request_times={};self.sufficient_records=[]
+        self.matchup_results=empty_matchup_results() if collect_results else None
+        self.result_backfill_count=0
         self.first_http_status=None;self._first_http_observed=False
         self.http_errors=[]
         self.front_errors=[]
@@ -265,7 +279,13 @@ class RiotCollector:
         source=dict(provider='RIOT_API',platform='KR',regional='ASIA',queue_id=420,map_id=11,tier=tier,
             patch=patch,window_start=start_time,window_end=end_time,retrieved_at=datetime.now(timezone.utc).isoformat(),
             sample_kind='REAL',endpoints=endpoints)
-        pairs=[];seen=set();error=None;catalog=None
+        pairs=[];seen=set();error=None;catalog=None;processed=0
+        provenance=dict(tier=tier,division=None if tier in ('MASTER','GRANDMASTER','CHALLENGER') else division,
+                        window_start=start_time,window_end=end_time,retrieved_at=source['retrieved_at'],
+                        run_digest=hashlib.sha256(json.dumps(source,sort_keys=True,separators=(',',':')).encode()).hexdigest())
+        def admit_record(record):
+            batch=empty_matchup_results();batch['records']=[record]
+            self.matchup_results=merge_matchup_results(self.matchup_results,batch)
         try:
             if self._normalized_api_key is None:
                 raise CollectionBlocked('MISSING_API_KEY' if self.api_key is None or self.api_key=='' else 'INVALID_API_KEY_SHAPE')
@@ -284,11 +304,30 @@ class RiotCollector:
                 ids,_=self._get('https://asia.api.riotgames.com/lol/match/v5/matches/by-puuid/'+quote(puuid,safe='')+'/ids?'+urlencode(query),'MATCH_V5_IDS')
                 if not isinstance(ids,list) or not all(isinstance(i,str) for i in ids):raise CollectionBlocked('MALFORMED_RESPONSE')
                 for mid in ids:
-                    if mid in seen or not re.fullmatch(r'KR_[0-9]+',mid) or hashlib.sha256(mid.encode()).hexdigest() in known:continue
+                    if mid in seen or not re.fullmatch(r'KR_[0-9]+',mid):continue
+                    sha=hashlib.sha256(mid.encode()).hexdigest()
+                    if sha in known and not collect_results:continue
                     seen.add(mid)
+                    previous=result_records.get(sha)
+                    if sha in known and previous is not None and tier in previous['seed_tiers']:
+                        # Fully complete for this admitted cohort: do not let
+                        # old results consume every future match-work slot and
+                        # starve bounded backfill farther down seed lists.
+                        continue
+                    if processed>=self.limits['max_matches']:break
+                    if collect_results and previous is not None:
+                        if source['patch'] is not None and previous['patch']!=source['patch']:continue
+                        if source['patch'] is None:source['patch']=previous['patch']
+                        processed+=1
+                        # Membership is observed from this seed's IDs endpoint;
+                        # anonymous prior evidence supplies roster/result only.
+                        record=deepcopy(previous);record['seed_tiers']=[tier];record['provenance']=[provenance]
+                        admit_record(record)
+                        if sha in known:continue
                     match,_=self._get('https://asia.api.riotgames.com/lol/match/v5/matches/'+mid,'MATCH_V5_MATCH',allow_missing=True)
                     if match is None:continue
-                    if not isinstance(match,dict):raise CollectionBlocked('MALFORMED_RESPONSE')
+                    if not isinstance(match,dict) or not isinstance(match.get('metadata'),dict) or match['metadata'].get('matchId')!=mid:
+                        raise CollectionBlocked('MALFORMED_RESPONSE')
                     info=match.get('info',{})
                     if not isinstance(info,dict) or not isinstance(info.get('gameVersion'),str):
                         raise CollectionBlocked('MALFORMED_RESPONSE')
@@ -298,12 +337,39 @@ class RiotCollector:
                     if info.get('queueId')!=420 or info.get('mapId')!=11 or info.get('gameMode')!='CLASSIC':continue
                     if source['patch'] is None:source['patch']=matchpatch
                     if source['patch']!=matchpatch:continue
+                    # Out-of-scope details consume the shared request budget,
+                    # never the in-scope match ceiling. Companion jobs count
+                    # scoped detail/backfill work; legacy jobs retain their
+                    # original accepted-pair ceiling (used by RecallCollector).
+                    if collect_results and previous is None:processed+=1
+                    if sha in known and collect_results:
+                        # Power completeness does not imply final-result
+                        # completeness. Detail-only bounded backfill avoids a
+                        # redundant timeline request and never infers victory.
+                        record=normalize_match(match,tier,patch=source['patch'],provenance=provenance)
+                        if record is None:
+                            omissions=self.matchup_results['omissions']
+                            omissions['INELIGIBLE_MATCH']=omissions.get('INELIGIBLE_MATCH',0)+1
+                        else:
+                            admit_record(record);self.result_backfill_count+=1
+                        continue
                     timeline,_=self._get('https://asia.api.riotgames.com/lol/match/v5/matches/'+mid+'/timeline','MATCH_V5_TIMELINE',allow_missing=True)
                     if timeline is None:continue
                     if not isinstance(timeline,dict):raise CollectionBlocked('MALFORMED_RESPONSE')
-                    pairs.append(dict(match=match,timeline=timeline))
-                    if len(pairs)>=self.limits['max_matches']:break
-                if len(pairs)>=self.limits['max_matches']:break
+                    current_pair=dict(match=match,timeline=timeline)
+                    pairs.append(current_pair)
+                    if not collect_results:processed+=1
+                    if collect_results:
+                        result_source=dict(source,division=provenance['division'],run_digest=provenance['run_digest'])
+                        batch=build_matchup_results([current_pair],source=result_source)
+                        omissions=self.matchup_results['omissions'].copy()
+                        for reason,count in batch['omissions'].items():omissions[reason]=omissions.get(reason,0)+count
+                        self.matchup_results=merge_matchup_results(self.matchup_results,batch)
+                        # Distinct attempted matches can have identical omitted
+                        # batches; count each in-run attempt, not dataset hashes.
+                        self.matchup_results['omissions']=omissions
+                    if processed>=self.limits['max_matches']:break
+                if processed>=self.limits['max_matches']:break
             if pairs and collect_items:
                 catalog=self._catalog(source['patch']);source['item_catalog']=catalog
         except CollectionBlocked as failure:error=failure

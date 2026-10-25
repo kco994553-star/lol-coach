@@ -1,0 +1,17 @@
+Untouched legacy outcome-v1 numerical edge, 2026-10-25 UTC
+Repro: build_outcome_dataset([pair(i) for i in range(20)], source=source())
+All 20 team100 TOP Champion wins; team200 reverse has 0/20.
+_wilson(20,20) = {'low': 0.8388748419471808, 'high': 1.0}
+_wilson(0,20) = {'low': 1.3877787807814457e-17, 'high': 0.1611251580528193}
+Traceback (most recent call last):
+  File "<stdin>", line 13, in <module>
+  File "/workspace/lol-coach-champion-tiers/coach_v1/outcome_stats.py", line 162, in build_outcome_dataset
+    return validate_outcome_dataset(dataset)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach-champion-tiers/coach_v1/outcome_stats.py", line 230, in validate_outcome_dataset
+    _require(0<=ci['low']<=point['win_rate']<=ci['high']<=1)
+  File "/workspace/lol-coach-champion-tiers/coach_v1/outcome_stats.py", line 37, in _require
+    if not condition:raise ValueError('invalid outcome dataset')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid outcome dataset
+

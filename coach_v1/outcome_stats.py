@@ -61,7 +61,10 @@ def _wilson(wins,n):
     p=wins/n;z=NormalDist().inv_cdf(.975);denominator=1+z*z/n
     center=(p+z*z/(2*n))/denominator
     half=z*math.sqrt(p*(1-p)/n+z*z/(4*n*n))/denominator
-    return {'low':max(0.,center-half),'high':min(1.,center+half)}
+    # Floating subtraction at p=0 can leave a tiny positive lower bound.
+    # Keep the exact binomial proportion inside its Wilson interval; the
+    # strict dataset validator remains unchanged.
+    return {'low':min(p,max(0.,center-half)),'high':max(p,min(1.,center+half))}
 
 
 def _source(source):
