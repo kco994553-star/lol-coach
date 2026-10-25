@@ -40,13 +40,92 @@
   let preference = 'BALANCED';
   let artwork = {assets:[]}, detailArea = null, restoring = false, routeGroup = null;
   const savedPlanKey = 'lol-coach-loading-plan-v1';
+  let inputContext = {}, partialDraft = null, draftRevision = 0, inputEpoch = 0, handoffPreview = null, storageSnapshot = null;
+  const draftAdapter = () => window.LoadingDraft;
+  function storedDraft() { try { return draftAdapter()?.loadDraft(sessionStorage); } catch (_) { return null; } }
+  function snapshotDraft() { const d=storedDraft();return d?draftAdapter().encodeDraft(d):null; }
+  function invalidateHandoff() {
+    handoffPreview=null;$('handoff-preview')?.setAttribute('hidden','');
+  }
+  function persistPlan(hash) {
+    try {sessionStorage.setItem(savedPlanKey,hash);if(draftAdapter())draftAdapter().saveDraft(sessionStorage,draftAdapter().fromInput(report.input,draftRevision));}catch(_){/* The validated URL remains sufficient when storage is unavailable. */}
+  }
+  function hideAnalysis() {
+    if(exploration)exploration.destroy();exploration=null;if(coachView)coachView.destroy();coachView=null;
+    report=null;$('loading-results').hidden=true;document.body.classList.remove('plan-ready');$('input-panel').open=true;
+  }
+  function formDraft() {
+    const input=readInput();
+    for(const team of ['allies','enemies'])input[team]=input[team].map(p=>({champion:resolve(p.champion)||p.champion||null,position:p.position}));
+    return draftAdapter().fromInput(input,draftRevision);
+  }
+  function restoreDraftRoute() {
+    try { const next=draftAdapter().decodeDraft(location.hash);hideAnalysis();partialDraft=next;fillForm(next.input,{revision:next.revision});message('입력 중인 픽을 복원했습니다. 빈 픽을 채우면 분석할 수 있습니다.'); }
+    catch(e){message('입력 중인 픽 링크를 읽을 수 없습니다. '+e.message,'error');}
+  }
+  function showHandoff() {
+    if(!catalog||!draftAdapter())return;
+    try {
+      const intent=draftAdapter().decodeIntent(location.hash);
+      for(const key of ['champion','opponent','ally_support','enemy_support'])if(intent[key]&&resolve(intent[key])!==intent[key])throw Error('선택한 챔피언 자료를 확인해 주세요.');
+      handoffPreview=draftAdapter().previewTransfer(intent,formDraft());storageSnapshot=snapshotDraft();renderHandoff();
+    }catch(e){$('handoff-preview')?.setAttribute('hidden','');message('챔피언 전달 링크를 읽을 수 없습니다. '+e.message,'error');}
+  }
+  function renderHandoff() {
+    const host=$('handoff-changes');host.replaceChildren();
+    const labels={own:'내 챔피언',opponent:'상대 챔피언',ally_support:'아군 서포터',enemy_support:'상대 서포터'};
+    const previous=pick=>pick?.champion?name(pick.champion)+' · '+(roles[pick.position]||'포지션 미확인'):'빈 슬롯';
+    for(const change of handoffPreview.changes){
+      const row=node('div','handoff-change');row.dataset.key=change.key;row.append(node('h3','',labels[change.key]));
+      const oldNew=node('p');const confirmLabel=node('label');const checkbox=node('input');checkbox.type='checkbox';checkbox.dataset.handoffReplace=change.key;
+      confirmLabel.append(checkbox,document.createTextNode(' 이 슬롯의 기존 픽 교체에 동의합니다.'));
+      function showTarget(target){const choice=change.candidates.find(c=>c.target===target),old=choice?.previous;oldNew.textContent=(target?(target.startsWith('allies:')?'아군 ':'적군 ')+(Number(target.split(':')[1])+1):'슬롯 선택 필요')+' · '+previous(old)+' → '+name(change.next.champion)+' · '+roles[change.next.position];checkbox.checked=false;checkbox.value=target||'';confirmLabel.hidden=!(old?.champion&&old.champion!==change.next.champion);}
+      if(!change.target){
+        const label=node('label','','반영할 슬롯 '),select=node('select');select.dataset.handoffTarget=change.key;select.setAttribute('aria-label',labels[change.key]+' 반영할 슬롯');
+        const empty=node('option','','직접 선택하세요');empty.value='';select.append(empty);
+        for(const candidate of change.candidates){const option=node('option','',(change.team==='allies'?'아군 ':'적군 ')+(Number(candidate.target.split(':')[1])+1)+' · '+previous(candidate.previous));option.value=candidate.target;select.append(option);}
+        select.addEventListener('change',()=>showTarget(select.value));label.append(select);row.append(label);
+      }
+      showTarget(change.target);row.append(oldNew,confirmLabel);host.append(row);
+    }
+    $('handoff-message').textContent=handoffPreview.status==='BLOCKED'?'챔피언 중복 또는 포지션 충돌이 있습니다. 기존 픽을 직접 수정한 뒤 다시 확인하세요.':'변경 전후를 확인한 뒤 반영하세요. 취소하면 픽과 주소를 유지합니다.';
+    $('handoff-apply').disabled=handoffPreview.status==='BLOCKED';
+    const link=draftAdapter().returnLink(handoffPreview.intent);$('handoff-return').hidden=!link;if(link)$('handoff-return').href=link;
+    $('handoff-preview').hidden=false;
+  }
+  function applyHandoff() {
+    if(!handoffPreview)return;
+    const intent=handoffPreview.intent;
+    try {
+      if(snapshotDraft()!==storageSnapshot){
+        const latest=storedDraft();if(latest){partialDraft=latest;fillForm(latest.input,{revision:latest.revision});hideAnalysis();}
+        handoffPreview=draftAdapter().previewTransfer(intent,formDraft());storageSnapshot=snapshotDraft();renderHandoff();throw Error('입력이 바뀌어 미리보기를 새로 만들었습니다. 변경을 다시 확인하세요.');
+      }
+      if(handoffPreview.revision!==draftRevision){handoffPreview=draftAdapter().previewTransfer(handoffPreview.intent,formDraft());renderHandoff();throw Error('입력이 바뀌어 미리보기를 새로 만들었습니다. 변경을 다시 확인하세요.');}
+      const targets={},replacements=[];
+      $('handoff-changes').querySelectorAll('[data-handoff-target]').forEach(el=>{if(el.value)targets[el.dataset.handoffTarget]=el.value;});
+      $('handoff-changes').querySelectorAll('[data-handoff-replace]').forEach(el=>{if(el.checked)replacements.push(el.value);});
+      const next=draftAdapter().applyTransfer(handoffPreview,{targets,replacements},draftRevision),input=draftAdapter().toCompleteInput(next);
+      // Complete inputs always pass the unchanged strict engine before any write.
+      const analysis=input?window.LoadingStrategy.analyze(input,catalog):null;
+      const saved=(()=>{try{return draftAdapter().saveDraft(sessionStorage,next);}catch(_){return {ok:false};}})();
+      partialDraft=next;fillForm(next.input,{revision:next.revision});
+      if(analysis){report=analysis;routeGroup=null;detailArea=null;renderReport();$('input-panel').open=false;saveRoute();}
+      else {hideAnalysis();history.replaceState(null,'',draftAdapter().encodeDraft(next));}
+      $('handoff-preview').hidden=true;handoffPreview=null;
+      message((analysis?'확인한 변경으로 이번 판 분석을 갱신했습니다.':'확인한 픽만 반영했습니다. 나머지 빈 픽을 채우면 분석할 수 있습니다.')+(saved.ok?'':' 세션 저장을 사용할 수 없어 현재 주소로만 복원할 수 있습니다.'));
+    }catch(e){const errors={TARGET_REQUIRED:'포지션 미확인 슬롯을 직접 선택하세요.',REPLACEMENT_REQUIRED:'기존 픽 교체에 동의해야 반영할 수 있습니다.',DUPLICATE_CHAMPION:'챔피언이 중복되어 반영할 수 없습니다.'};$('handoff-message').textContent=errors[e.message]||e.message;}
+  }
   function saveRoute(detail=detailArea, push=false) {
     if(!report || !window.LoadingPresentation)return;
+    const nextContext=Object.fromEntries(['schema_version','scenario','planning','preferences'].filter(key=>report.input[key]!=null).map(key=>[key,JSON.parse(JSON.stringify(report.input[key]))]));
+    if(JSON.stringify(inputContext)!==JSON.stringify(nextContext)){draftRevision+=1;inputEpoch+=1;invalidateHandoff();}
+    inputContext=nextContext;
     const hash=window.LoadingPresentation.encode(report.input,report.coach.selected_period||'LEVEL1',detail);
     routeGroup=routeGroup||history.state?.planGroup||String(Date.now())+Math.random().toString(36).slice(2);
     const state={...(history.state||{}),planGroup:routeGroup,planDetail:!!detail,baseY:push?window.scrollY:(history.state?.baseY||0),fromPlan:push?true:history.state?.fromPlan||false};
     if(push)history.pushState(state,'',hash);else history.replaceState(state,'',hash);
-    try{sessionStorage.setItem(savedPlanKey,hash);}catch(_){/* URL remains sufficient. */}
+    persistPlan(hash);
   }
   function navigateDetail(detail) {
     const wasDetail=!!detailArea;detailArea=detail;
@@ -67,13 +146,18 @@
       if(!next.coach.periods.some(p=>p.id===route.period)&&!next.coach.growth.some(p=>p.id===route.period))throw Error('이 조합에서 지원하지 않는 선택 구간입니다.');
       next.coach=window.LoadingCoach.evaluate(next,catalog,next.input.scenario,route.period);
       report=next;preference=next.input.preferences?.risk||'BALANCED';detailArea=route.detail;fillForm(next.input);renderReport();$('input-panel').open=false;
+      routeGroup=routeGroup||String(Date.now())+Math.random().toString(36).slice(2);
+      history.replaceState({...history.state,planGroup:routeGroup,planDetail:!!route.detail,baseY:history.state?.baseY||0,fromPlan:history.state?.fromPlan||false},'',location.href);
+      persistPlan(window.LoadingPresentation.encode(next.input,route.period,route.detail));
       message('공유한 조합과 선택 구간을 복원했습니다.');
     }catch(e){report=null;coachView?.destroy();coachView=null;$('loading-results').hidden=true;$('input-panel').open=true;document.body.classList.remove('plan-ready');message(e.message||'게임플랜 링크를 읽을 수 없습니다.','error');}
     finally{restoring=false;}
   }
-  window.addEventListener('popstate',restoreRoute);
+  window.addEventListener('popstate',event=>{if(location.hash.startsWith('#draft='))restoreDraftRoute();else if(location.hash.startsWith('#handoff='))showHandoff();else restoreRoute(event);});
   window.addEventListener('hashchange',()=>{
-    if(location.hash.startsWith('#plan=')){restoreRoute();return;}
+    if(location.hash.startsWith('#plan=')){$('handoff-preview')?.setAttribute('hidden','');restoreRoute();return;}
+    if(location.hash.startsWith('#draft=')){$('handoff-preview')?.setAttribute('hidden','');restoreDraftRoute();return;}
+    if(location.hash.startsWith('#handoff=')){showHandoff();return;}
     const target=document.getElementById(location.hash.slice(1));
     if(target&&$('loading-legacy-details')?.contains(target)){$('loading-legacy-details').open=true;target.scrollIntoView({block:'start',behavior:'auto'});}
   });
@@ -175,11 +259,17 @@
     const complete = allies.length === 5 && enemies.length === 5;
     $('input-state').textContent = complete ? '10개 픽 입력됨 · 포지션은 선택 입력' : '아군 ' + allies.length + '/5 · 적군 ' + enemies.length + '/5';
   }
-  function fillForm(input) {
+  function fillForm(input,{revision}={}) {
+    inputEpoch+=1;
+    draftRevision=revision===undefined?Math.max(draftRevision,storedDraft()?.revision||0)+1:revision;
+    invalidateHandoff();
     filling = true;
-    ['ALLY', 'ENEMY'].forEach(team => entries(team === 'ALLY' ? input.allies : input.enemies).slice(0, 5).forEach((pick, index) => {
-      $('pick-' + team + '-' + index).value = name(pick.champion);
-      $('position-' + team + '-' + index).value = pick.position || '';
+    inputContext = Object.fromEntries(['schema_version','scenario','planning','preferences'].filter(key=>input[key]!=null).map(key=>[key,JSON.parse(JSON.stringify(input[key]))]));
+    preference=input.preferences?.risk||'BALANCED';
+    ['ALLY', 'ENEMY'].forEach(team => Array.from({length:5},(_,index)=>{
+      const pick=entries(team === 'ALLY' ? input.allies : input.enemies)[index];
+      $('pick-' + team + '-' + index).value = pick?.champion ? name(pick.champion) : '';
+      $('position-' + team + '-' + index).value = pick?.position || '';
       $('pick-' + team + '-' + index).removeAttribute('aria-invalid');
     }));
     updateRosterOptions();
@@ -193,11 +283,13 @@
   }
   function readInput() {
     const picks = team => [...Array(5)].map((_, index) => ({ champion: $('pick-' + team + '-' + index).value.trim(), position: $('position-' + team + '-' + index).value || null }));
-    return { schema_version:'lol-coach-loading-input-v2',preferences:{risk:preference},allies: picks('ALLY'), enemies: picks('ENEMY'), own_champion: $('own-champion').value, own_position: $('own-position').value, side: $('side').value, patch: $('patch').value.trim() || null, opponent_mode: $('opponent-mode').value, lane_opponent: $('opponent-mode').value === 'MANUAL' ? $('lane-opponent').value || null : null };
+    return { ...inputContext,schema_version:inputContext.schema_version||'lol-coach-loading-input-v2',preferences:{risk:preference},allies: picks('ALLY'), enemies: picks('ENEMY'), own_champion: $('own-champion').value, own_position: $('own-position').value, side: $('side').value, patch: $('patch').value.trim() || null, opponent_mode: $('opponent-mode').value, lane_opponent: $('opponent-mode').value === 'MANUAL' ? $('lane-opponent').value || null : null };
   }
   function stale() {
     if (filling) return;
     updateRosterOptions();
+    draftRevision+=1;inputEpoch+=1;
+    try {partialDraft=formDraft();draftAdapter().saveDraft(sessionStorage,partialDraft);if(handoffPreview){handoffPreview=draftAdapter().previewTransfer(handoffPreview.intent,partialDraft);storageSnapshot=snapshotDraft();renderHandoff();}if(!location.hash.startsWith('#handoff='))history.replaceState(null,'',draftAdapter().encodeDraft(partialDraft));}catch(_){/* Invalid manual names remain editable and do not replace saved input. */}
     document.body.classList.remove('plan-ready');
     if(location.hash.startsWith('#plan='))history.replaceState(null,'',location.pathname+location.search);
     if (report) { $('loading-results').hidden = true; if(coachView)coachView.destroy();coachView=null; if (exploration) exploration.destroy(); exploration = null; }
@@ -479,6 +571,7 @@
   async function importDraft() {
     if (!localImportAvailable() || importing) return;
     importing = true; $('pc-import').disabled = true;
+    const expectedEpoch=inputEpoch;
     try {
       let token = '';
       try { token = sessionStorage.getItem('lol-coach-dev-token') || ''; } catch (_) { /* Manual input remains available. */ }
@@ -489,6 +582,7 @@
       const data = await response.json(), connection = data && data.connection;
       if (!connection || connection.status !== 'CONNECTED' || connection.phase !== 'ChampSelect' || !connection.input) throw new Error('챔피언 선택 중인 연결된 PC 픽이 없습니다. 직접 입력해 주세요.');
       const input = window.LoadingStrategy.fromDraft(connection.input, catalog);
+      if(inputEpoch!==expectedEpoch)throw Error('PC 픽을 가져오는 동안 입력이 바뀌었습니다. 현재 입력을 유지했습니다. 필요하면 다시 가져오세요.');
       fillForm(input); $('input-panel').open = true;
       if (!$('loading-form').checkValidity()) { message('PC 픽을 가져왔습니다. 빈 픽과 내 챔피언·포지션을 확인한 뒤 방향을 살펴보세요.'); return; }
       analyze();
@@ -497,6 +591,8 @@
   }
   async function init() {
     buildPicks(); if(!currentOnly)window.LoadingMap.init();
+    $('handoff-apply')?.addEventListener('click',applyHandoff);
+    $('handoff-cancel')?.addEventListener('click',()=>{$('handoff-preview').hidden=true;handoffPreview=null;message('반영을 취소했습니다. 기존 픽과 주소를 유지했습니다.');});
     $('loading-form').addEventListener('submit', event => { event.preventDefault(); analyze(); });
     $('loading-form').addEventListener('input', stale);
     $('loading-form').addEventListener('change', stale);
@@ -517,6 +613,13 @@
       [0, 1, 2, 3, 4, 5].forEach(index => { const button = $('example-' + index); button.disabled = false; button.addEventListener('click', () => { fillForm(window.LoadingStrategy.exampleInput(catalog, index)); $('input-panel').open = true; stale(); if (report) message('예시 픽을 입력했습니다. ‘이번 판 방향 보기’를 누르면 요약이 바뀝니다.', 'stale'); else message('예시 픽을 입력했습니다. 내 챔피언과 포지션을 확인하고 ‘이번 판 방향 보기’를 눌러보세요.'); }); });
       $('analyze').disabled = false; updateRosterOptions(); message((entry?entry.name+' 분석을 선택했습니다. 아직 분석 전입니다. ':'')+'10개 픽과 내 챔피언·포지션을 선택하세요. 분석 후 선택한 영역으로 이어집니다.');
       if(location.hash.startsWith('#plan='))restoreRoute();
+      else if(location.hash.startsWith('#draft='))restoreDraftRoute();
+      else if(location.hash.startsWith('#handoff=')){
+        const saved=storedDraft();
+        if(saved){partialDraft=saved;fillForm(saved.input,{revision:saved.revision});}
+        else {try{const hash=sessionStorage.getItem(savedPlanKey),route=hash&&window.LoadingPresentation.decode(hash);if(route)fillForm(route.input);}catch(_){/* Empty manual input remains available. */}}
+        showHandoff();
+      }
       else if(/^#(?:loading-|teamfight)/.test(location.hash)){
         const anchor=location.hash;try{const saved=sessionStorage.getItem(savedPlanKey);if(saved){history.replaceState(null,'',saved);restoreRoute();history.replaceState(null,'',anchor);if($('loading-legacy-details'))$('loading-legacy-details').open=true;document.getElementById(anchor.slice(1))?.scrollIntoView({block:'start'});}}catch(_){}
       }

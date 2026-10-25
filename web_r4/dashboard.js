@@ -25,7 +25,7 @@
     const recent=$('recent-matches');recent.replaceChildren();if(!p?.recent_matches?.length)recent.append(node('p','불러온 경기가 없습니다.'));
     (p?.recent_matches||[]).forEach(m=>recent.append(reviewRow(m,'USER_RECORD',scope)));
     const champs=$('champion-records');champs.replaceChildren();if(!p?.champions?.length)champs.append(node('p','유효한 챔피언별 표본이 없습니다.'));
-    (p?.champions||[]).forEach(c=>{const row=node('div',null,'champion-row');row.append(node('span',c.champion+' · '+c.sample_n+'경기'),node('span',ratio(c.win_rate)+'% · KDA '+ratio(c.kda)));champs.append(row);});
+    (p?.champions||[]).forEach(c=>{const row=node('div',null,'champion-row');row.append(node('span',c.champion+' · '+c.sample_n+'경기'),node('span',ratio(c.win_rate)+'% · KDA '+ratio(c.kda)));const link=node('a','공통 챔피언 정보','record-champion-link');const canonical=typeof c.champion==='string'&&/^[A-Za-z][A-Za-z0-9]{0,59}$/.test(c.champion);link.href='./'+(canonical?'champion.html':'champions.html')+'#state='+encodeURIComponent(JSON.stringify(canonical?{champion:c.champion}:{query:String(c.champion).slice(0,100)}));link.setAttribute('aria-label',c.champion+' 공통 챔피언 정보 · 포지션은 상세에서 선택');row.append(link);champs.append(row);});
     $('coaching-notes').textContent='기록 조회와 코칭 분석은 별개입니다. 근거가 연결된 개인 분석이 아직 없습니다.';
     document.querySelector('.pro-card').hidden=Boolean(p);$('pro-entry').hidden=Boolean(p);
   }
