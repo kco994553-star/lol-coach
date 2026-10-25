@@ -1,0 +1,35 @@
+name: Gameplan isolated source workspace
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths: ['.github/workflows/gameplan-source-workspace.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  source:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'work/gameplan-champion-baseline-20261025'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Package only committed public source objects, not credentials or runtime files
+        run: |
+          git bundle create "$RUNNER_TEMP/lol-coach-source.bundle" HEAD
+          git bundle verify "$RUNNER_TEMP/lol-coach-source.bundle"
+          sha256sum "$RUNNER_TEMP/lol-coach-source.bundle" > "$RUNNER_TEMP/lol-coach-source.sha256"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: gameplan-source-workspace
+          path: |
+            ${{ runner.temp }}/lol-coach-source.bundle
+            ${{ runner.temp }}/lol-coach-source.sha256
+          retention-days: 1
+          compression-level: 0
+          if-no-files-found: error
