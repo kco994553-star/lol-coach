@@ -1,3 +1,25 @@
+# GP23·학습실·챔피언 티어/상대 — verified release / writer released
+- run_token: `codex-20261025-gp23-learning`
+- status: IDLE
+- writer_active: false
+- owner_branch: `work/champion-tier-results-20261025`
+- product_main: `be0b83faf24db19a5f2ff05410c9c2ed979f33db` (PR145/146/147 normally merged)
+- results_main: `3d60f9481adb1145301e756504ec90357759de91` (PR148 normally merged; docs/evidence only)
+- PR148 head b9bebdb06eddfd434136c5e0f0d5d82f59f25909 required3 SUCCESS40198851130/40198851132; exactresults-main required3 SUCCESS40199073854/40199073843. Product-main/PR checks also preserved; no protection/CI bypass.
+- Public sourcebe0,artifact `9fc318cc6725e4e5ccb3fdf3be1c0e44a9590049`,nativePages40197492425SUCCESS. ActualHTTPS2026-10-25T13:26:14–13:27:04UTC109assetSHA/14private404/71Chromiumchecks/74PNG;8saved200cases/6keyboardtablechecks/3touchEMULATION;errors/external/API/nonGET0. OldrealGalio7/4/6 review andexactdraft/learning return preserved. ProSHA64d4830149af4ba515ac3b5e6c745629f80d00b0b7e416c30a5e27d4afd8c6e3typedpreserved/provider0.
+- Latestfull1018PASS159.188s/CURRENTstart-endidentical0. Finalnew36/legacy55/targeted43, whole109public LOCAL staging twicePASS distinctfromactual71. Actualaf297/body ande1/dialog failures +saved100%counterexample +keyboardmodalityharnessfalsepositive preserved, not relabeledPASS.
+- Requestedflow implemented: defaultMASTER_PLUS/10leaf+ALL/exacttier/frequentN/conditional-sourcehard-easymax5/5enemyrolefinalteamwin top-bottom5/strictN20/advancedmanualcontrols/URL-modal-learning-gameplanreturn. No per-query AI, newpaidservices/securityrelaxation/rawloss/USERtacticalapproval.
+- ActualacquisitionBLOCKED: storedRiotallowedwindowended2026-10-16, no renewedsecurekey/newwindow; no newprobe/403observation. CH50only/newacquired0/Master+ALLPARTIAL/other9EMPTY/crossrole0/N20eligible0/maxpairN6/participantatrankUNKNOWN. Resume securekey+explicitwindow then existing650/300/40/1/900 ceilings; private1万recordcapacity futurefailclosed/rolloverwork.
+- Knowledge5champ-role/5sources39conditional+6reference;source26.x↔Riot16.20.1unverified; broaderchamp/operations/fight/2v2/selected-opponent detail remain partial. Source-bound candidates are not USER/tactical approval.
+- GP23DONE41/PARTIAL3(23threatpriority/26roleuniqueness/39specificity) preserved; learning4/20/80taxonomy/29claimcards+reflection/8link-onlyvideos, actualacceptedtranscript/visualsegments/tacticalgameeffectN0 UNMEASURED. Classification80 is not80content. Physicaltouch/SafariFirefoxNOT_RUN; actualoutage/retryBLOCKED(nooutage).
+- CanonicalIA160+125history preserved. Managementestimate overall74/160=46.25%,FE84/16052.5%;only2.4.1/4/7overall+.5/PARTIAL/fullfalse,allFE/unrelated157unchanged. Notionchamp/admin/details/graph append+readback4/4, oldbodies/childrenpreserved; priorGP23fivepages sync also complete.
+- Evidence/result/per-page9PNG: `evidence/actual-evidence/champion-tiers-20261025/result.md`, `page-images.md`, `live-final/receipt.json`, `notion-sync.json`; GP23/learning earlierrelease hasitsownproof. Localnormalmain/resultsw/productwt are3d60f94clean. Same app not republished for docs.
+- This run has no active source writer; remaining scoped work/data/tactical limitations are backlog/BLOCKED above, not claimed complete. No automatic extra collection or user-decision issue mutation is scheduled. Preserve all other historical claims below.
+
+---
+
+# Prior GP23 active claim — history, superseded by released state above
+
 # GP23 and learning-room implementation — active
 - run_token: `codex-20261025-gp23-learning`
 - status: RUNNING
