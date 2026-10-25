@@ -1,3 +1,17 @@
+# GP23 and learning-room implementation — active
+- run_token: `codex-20261025-gp23-learning`
+- status: RUNNING
+- writer_active: true
+- owner_branch: `work/gameplan-2plus3-20261025`
+- intake_main: `8e67cce63a29decae9f64a21f7c387bf73824507`
+- public_source_at_intake: `ac48506c8f6493778d3fcdf675041d66f89c5390`; artifact `b0ec3cb8e15f0fa4cc6aa0454897317c23e979c9`.
+- Authorized: execute GP23-01..44 and learning-room taxonomy/source-bound cards/search/practice/context integration, ordinary validation/PR/normal merge/verified publication/Notion sync within existing policy.
+- Ownership: core engine, GP23 UI, learning data, learning UI, documentation and actual-output evidence disjoint; root owns draft compatibility/server/export/CI/seals/integration/publication.
+- Preserve IA160, six menus, GP1.3 behaviors, user-only decisions, frozen350/raw source/history/budgets/auth. No video/provider/paid calls; actual tactical/video efficacy remains UNMEASURED until evidence.
+- Status: docs/gameplan-content/gameplan-2-plus-3-status.md and docs/learning-room/implementation-v1.md; blockers affect only their dependency.
+
+---
+
 # Frontend v2 implementation — complete / writer released
 - run_token: `codex-20261025-frontend-v2-implementation`
 - status: IDLE
