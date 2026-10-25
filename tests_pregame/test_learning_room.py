@@ -1,10 +1,12 @@
 """Read-only learning references: loss of uncertainty must fail these tests."""
 import copy
+import hashlib
 import importlib
 import json
 from pathlib import Path
 import subprocess
 import sys
+import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,6 +43,7 @@ class LearningRoomTests(unittest.TestCase):
         self.assertEqual(lesson['required_conditions'], {'claim_id': 'A-WAVE', 'field': 'conditions'})
         self.assertIsNone(lesson['waiting_cost'])
         self.assertIsNone(lesson['goal'])
+        self.assertIsNone(lesson['alternative_or_recovery'])
         self.assertFalse(lesson['coaching_enabled'])
         self.assertNotIn('text', lesson)
         self.assertNotIn('approval', lesson)
@@ -118,6 +121,18 @@ class LearningRoomTests(unittest.TestCase):
         self.assertEqual(segment['game_clock_ms'], 90000)
         self.assertFalse(segment['scene_verified'])
 
+    def test_segment_projection_declares_validated_timestamps(self):
+        self.assertEqual(self.api().validate_segment(self.segment())['timestamp_state'], 'VALIDATED')
+
+    def test_query_resolves_existing_claim_prose_and_normalizes_term_and(self):
+        api = self.api()
+        index = api.build_index(ROOT)
+        knowledge = json.loads((ROOT / 'web_r4/loading-knowledge.json').read_text())
+        result = api.search_index(index, '크래시 ＷＡＶＥ', champion='Caitlyn', knowledge=knowledge)
+        self.assertIn('claim:A-WAVE', [l['lesson_id'] for l in result['lessons']])
+        self.assertEqual(api.search_index(index, '크래시 없는문구', knowledge=knowledge)['total'], 0)
+        self.assertEqual(api.search_index(index, patch_state='UNKNOWN', evidence_state='LINK_ONLY')['total'], 8)
+
     def test_invalid_intervals_and_unlicensed_evidence_rejected(self):
         api = self.api()
         for values in [dict(video_start_ms=-1), dict(video_end_ms=10000), dict(video_start_ms=True),
@@ -177,6 +192,109 @@ class LearningRoomTests(unittest.TestCase):
         result = subprocess.run([sys.executable, 'scripts/build_learning_room.py', '--check'], cwd=ROOT, capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(before, [p.read_bytes() for p in paths])
+
+    def transcript(self, video_id='SA6o_QRPqL8'):
+        return ('YouTube transcript\nVideo ID: ' + video_id + '\nLanguage: ko\nCaptions: manual\n'
+                '[00:01] 웨이브를 확인합니다.\n[00:05] 정글 정보는 미확인입니다.\n[00:09] 끝.\n').encode()
+
+    def append(self, raw=None, **changes):
+        api = self.api()
+        self.assertTrue(hasattr(api, 'append_transcript'), 'permitted offline transcript adapter is missing')
+        raw = raw if raw is not None else self.transcript()
+        args = dict(access_state='PERMITTED', license_or_access_state='PERMITTED',
+                    source_provenance=dict(visibility='PUBLIC', transcript_sha256=hashlib.sha256(raw).hexdigest(), video_duration_ms=12000))
+        args.update(changes)
+        return api.append_transcript(api.build_index(ROOT), raw, 'SA6o_QRPqL8', **args)
+
+    def test_offline_transcript_reuses_speech_candidates_without_text_or_visual_upgrade(self):
+        index = self.append()
+        speech = [l for l in index['lessons'] if l['evidence_state'] == 'SPEECH_REVIEW_CANDIDATE']
+        self.assertEqual(len(speech), 2)
+        self.assertEqual([(s['video_start_ms'], s['video_end_ms']) for s in index['segments']], [(1000, 5000), (5000, 9000)])
+        self.assertTrue(all(not s['scene_verified'] and s['game_clock_ms'] is None for s in index['segments']))
+        self.assertTrue(all(l['primary_topic_id'] is None and l['action'] is None and not l['coaching_enabled'] for l in speech))
+        self.assertNotIn('웨이브를 확인합니다.', json.dumps(index, ensure_ascii=False))
+        self.assertEqual(index['provenance']['new_visual_review_n'], 0)
+        candidate = next(l for l in index['lessons'] if l['lesson_id'] == 'video:SA6o_QRPqL8')
+        self.assertEqual(candidate['evidence_state'], 'LINK_ONLY')
+        video = next(v for v in index['videos'] if v['video_id'] == 'SA6o_QRPqL8')
+        self.assertEqual(video['acquisition']['reason'], 'WEB_TOOL_FETCH_THROTTLED')
+        self.assertEqual(video['scene_state'], 'UNKNOWN')
+
+    def test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed(self):
+        cases = [dict(raw=self.transcript('AAAAAAAAAAA')),
+                 dict(access_state='UNKNOWN'), dict(license_or_access_state='DENIED'),
+                 dict(source_provenance=dict(visibility='PRIVATE', transcript_sha256='0'*64, video_duration_ms=12000)),
+                 dict(source_provenance=dict(visibility='PUBLIC', transcript_sha256='0'*64, video_duration_ms=12000)),
+                 dict(raw=self.transcript().replace(b'[00:05]', b'[00:00]')),
+                 dict(raw=self.transcript().replace(b'[00:05]', b'[00:65]')),
+                 dict(source_provenance=dict(visibility='PUBLIC', transcript_sha256=hashlib.sha256(self.transcript()).hexdigest(), video_duration_ms=5000))]
+        for case in cases:
+            with self.subTest(case=case), self.assertRaises(ValueError):
+                self.append(**case)
+
+    def test_transcript_cue_assignments_keep_distinct_decisions_and_ingestion_idempotent(self):
+        api = self.api()
+        assignments = [dict(decision_id='first', cue_index=1, primary_topic_id='topic:1.1.1'),
+                       dict(decision_id='second', cue_index=1, primary_topic_id='topic:1.3.1')]
+        index = self.append(topic_assignments=assignments)
+        speech = [l for l in index['lessons'] if l['evidence_state'] == 'SPEECH_REVIEW_CANDIDATE']
+        self.assertEqual(len(speech), 2)
+        self.assertNotEqual(speech[0]['lesson_id'], speech[1]['lesson_id'])
+        self.assertEqual(speech[0]['segment_ids'], speech[1]['segment_ids'])
+        again = api.append_transcript(index, self.transcript(), 'SA6o_QRPqL8', access_state='PERMITTED', license_or_access_state='PERMITTED',
+                                     source_provenance=dict(visibility='PUBLIC', transcript_sha256=hashlib.sha256(self.transcript()).hexdigest(), video_duration_ms=12000),
+                                     topic_assignments=assignments)
+        self.assertEqual(index, again)
+        self.assertNotEqual(index, api.build_index(ROOT))
+        for invalid in [[dict(decision_id='bad', cue_index=99, primary_topic_id='topic:1.1.1')],
+                        [dict(decision_id='bad', cue_index=1, primary_topic_id='topic:99')],
+                        assignments + [assignments[0]]]:
+            with self.subTest(invalid=invalid), self.assertRaises(ValueError):
+                self.append(topic_assignments=invalid)
+
+    def test_operator_can_reference_valid_nonkeyword_cue_without_inventing_lexical_match(self):
+        index = self.append(topic_assignments=[dict(decision_id='manual-cue', cue_index=3, primary_topic_id='topic:1.1.1')])
+        speech = [l for l in index['lessons'] if l['evidence_state'] == 'SPEECH_REVIEW_CANDIDATE']
+        self.assertEqual(len(speech), 1)
+        self.assertEqual(index['segments'][0]['video_start_ms'], 9000)
+        self.assertEqual(index['segments'][0]['video_end_ms'], 12000)
+        self.assertEqual(index['transcript_indices'][0]['candidates'][0]['lexical_topic_hints'], [])
+
+    def test_transcript_adapter_rejects_tampered_input_and_does_not_mutate_on_error(self):
+        api = self.api()
+        index = self.append()
+        original = copy.deepcopy(index)
+        index['coaching_enabled'] = True
+        with self.assertRaises(ValueError):
+            api.append_transcript(index, self.transcript(), 'SA6o_QRPqL8', access_state='PERMITTED', license_or_access_state='PERMITTED',
+                source_provenance=dict(visibility='PUBLIC', transcript_sha256=hashlib.sha256(self.transcript()).hexdigest(), video_duration_ms=12000))
+        index['coaching_enabled'] = False
+        self.assertEqual(index, original)
+
+    def test_offline_manifest_build_keeps_paths_notes_and_raw_out_of_public_output(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)
+            raw = self.transcript()
+            (path / 'PRIVATE_ACCOUNT_RAW.txt').write_bytes(raw)
+            (path / 'accepted.json').write_text(json.dumps({'transcripts': [dict(path='PRIVATE_ACCOUNT_RAW.txt', video_id='SA6o_QRPqL8',
+                access_state='PERMITTED', license_or_access_state='PERMITTED', source_provenance=dict(visibility='PUBLIC',
+                    transcript_sha256=hashlib.sha256(raw).hexdigest(), video_duration_ms=12000, private_notes='PRIVATE_NOTE_SENTINEL'))]}))
+            command = [sys.executable, 'scripts/build_learning_room.py', '--accepted-inputs', str(path / 'accepted.json'), '--output', str(path / 'index.json')]
+            result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            public = (path / 'index.json').read_text()
+            self.assertNotIn('PRIVATE_ACCOUNT_RAW', public)
+            self.assertNotIn('PRIVATE_NOTE_SENTINEL', public)
+            self.assertNotIn('웨이브를 확인합니다.', public)
+            self.assertEqual(len(json.loads(public)['segments']), 2)
+            self.assertEqual((path / 'PRIVATE_ACCOUNT_RAW.txt').read_bytes(), raw)
+            alias = path / 'raw-alias.txt'
+            alias.hardlink_to(path / 'PRIVATE_ACCOUNT_RAW.txt')
+            overwrite = command[:-1] + [str(alias)]
+            rejected = subprocess.run(overwrite, cwd=ROOT, capture_output=True, text=True)
+            self.assertNotEqual(rejected.returncode, 0)
+            self.assertEqual((path / 'PRIVATE_ACCOUNT_RAW.txt').read_bytes(), raw)
 
 
 if __name__ == '__main__':

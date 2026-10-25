@@ -118,7 +118,7 @@
   }
   function saveRoute(detail=detailArea, push=false) {
     if(!report || !window.LoadingPresentation)return;
-    const nextContext=Object.fromEntries(['schema_version','scenario','planning','preferences'].filter(key=>report.input[key]!=null).map(key=>[key,JSON.parse(JSON.stringify(report.input[key]))]));
+    const nextContext=Object.fromEntries(['schema_version','scenario','planning','preferences','situation'].filter(key=>report.input[key]!=null).map(key=>[key,JSON.parse(JSON.stringify(report.input[key]))]));
     if(JSON.stringify(inputContext)!==JSON.stringify(nextContext)){draftRevision+=1;inputEpoch+=1;invalidateHandoff();}
     inputContext=nextContext;
     const hash=window.LoadingPresentation.encode(report.input,report.coach.selected_period||'LEVEL1',detail);
@@ -264,7 +264,7 @@
     draftRevision=revision===undefined?Math.max(draftRevision,storedDraft()?.revision||0)+1:revision;
     invalidateHandoff();
     filling = true;
-    inputContext = Object.fromEntries(['schema_version','scenario','planning','preferences'].filter(key=>input[key]!=null).map(key=>[key,JSON.parse(JSON.stringify(input[key]))]));
+    inputContext = Object.fromEntries(['schema_version','scenario','planning','preferences','situation'].filter(key=>input[key]!=null).map(key=>[key,JSON.parse(JSON.stringify(input[key]))]));
     preference=input.preferences?.risk||'BALANCED';
     ['ALLY', 'ENEMY'].forEach(team => Array.from({length:5},(_,index)=>{
       const pick=entries(team === 'ALLY' ? input.allies : input.enemies)[index];
@@ -281,9 +281,10 @@
     $('lane-opponent').value = input.lane_opponent || '';
     updateRosterOptions(); filling = false;
   }
-  function readInput() {
+  function readInput({upgrade=false}={}) {
     const picks = team => [...Array(5)].map((_, index) => ({ champion: $('pick-' + team + '-' + index).value.trim(), position: $('position-' + team + '-' + index).value || null }));
-    return { ...inputContext,schema_version:inputContext.schema_version||'lol-coach-loading-input-v2',preferences:{risk:preference},allies: picks('ALLY'), enemies: picks('ENEMY'), own_champion: $('own-champion').value, own_position: $('own-position').value, side: $('side').value, patch: $('patch').value.trim() || null, opponent_mode: $('opponent-mode').value, lane_opponent: $('opponent-mode').value === 'MANUAL' ? $('lane-opponent').value || null : null };
+    const context=upgrade?{...inputContext,schema_version:'lol-coach-loading-input-v5',scenario:inputContext.scenario||{standard:'lane-standard-v1',overrides:{}},planning:inputContext.planning||{basis:'loading-plan-example-v1',overrides:{}},situation:inputContext.situation||window.LoadingSituation.defaultState()}:inputContext;
+    return { ...context,schema_version:context.schema_version||'lol-coach-loading-input-v2',preferences:{risk:preference},allies: picks('ALLY'), enemies: picks('ENEMY'), own_champion: $('own-champion').value, own_position: $('own-position').value, side: $('side').value, patch: $('patch').value.trim() || null, opponent_mode: $('opponent-mode').value, lane_opponent: $('opponent-mode').value === 'MANUAL' ? $('lane-opponent').value || null : null };
   }
   function stale() {
     if (filling) return;
@@ -539,8 +540,9 @@
     exploration = window.LoadingInteractive.mount({ report, catalog, host:$('interactive-flow'), onPreference:applyLegacyPreference});
     }
     if(coachView)coachView.destroy();
-    coachView=window.LoadingCoachView.mount({host:$('loading-coach'),report,catalog,presentation:{currentOnly,art:artwork,initialDetail:detailArea,initialBaseY:history.state?.baseY||0,onNavigate:navigateDetail,onEdit:()=>{$('input-panel').open=true;$('input-panel').scrollIntoView({block:'start',behavior:'auto'});$('own-champion').focus({preventScroll:true});},onLegacy:()=>{$('loading-legacy-details').open=true;$('loading-legacy-details').scrollIntoView({block:'start',behavior:'auto'});}},onChange:({scenario,planning,period,preference:risk})=>{
-      const next=window.LoadingStrategy.analyze({...report.input,schema_version:'lol-coach-loading-input-v4',scenario,planning,preferences:{risk}},catalog);
+    coachView=window.LoadingCoachView.mount({host:$('loading-coach'),report,catalog,presentation:{currentOnly,art:artwork,initialDetail:detailArea,initialBaseY:history.state?.baseY||0,onNavigate:navigateDetail,onEdit:()=>{$('input-panel').open=true;$('input-panel').scrollIntoView({block:'start',behavior:'auto'});$('own-champion').focus({preventScroll:true});},onLegacy:()=>{$('loading-legacy-details').open=true;$('loading-legacy-details').scrollIntoView({block:'start',behavior:'auto'});}},onChange:({scenario,planning,period,preference:risk,situation})=>{
+      const explicit=report.input.schema_version==='lol-coach-loading-input-v5';
+      const next=window.LoadingStrategy.analyze({...report.input,schema_version:explicit?'lol-coach-loading-input-v5':'lol-coach-loading-input-v4',scenario,planning,preferences:{risk},...(explicit?{situation:situation||report.input.situation||window.LoadingSituation.defaultState()}: {})},catalog);
       next.coach=window.LoadingCoach.evaluate(next,catalog,scenario,period); preference=risk; report=next;saveRoute();
       if(exploration)exploration.destroy();
       if(!currentOnly)exploration=window.LoadingInteractive.mount({report,catalog,host:$('interactive-flow'),onPreference:applyLegacyPreference});
@@ -552,7 +554,7 @@
   function analyze() {
     try {
       document.querySelectorAll('[id^="pick-"]').forEach(input => input.removeAttribute('aria-invalid'));
-      const input = readInput();
+      const input = readInput({upgrade:currentOnly});
       ['ALLY', 'ENEMY'].forEach(team => { for (let i = 0; i < 5; i += 1) { const el = $('pick-' + team + '-' + i); if (!resolve(el.value)) el.setAttribute('aria-invalid', 'true'); } });
       const next = window.LoadingStrategy.analyze(input, catalog);
       report = next;routeGroup=String(Date.now())+Math.random().toString(36).slice(2);detailArea=entry?entryKey:null; fillForm(next.input); renderReport(); $('input-panel').open = false;saveRoute();

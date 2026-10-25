@@ -41,7 +41,8 @@ for(const [device,url,width,height] of [['desktop',process.env.LOADING_PC+'/load
  assert.match(await p.locator('[data-basic-phase=operations] h3').innerText(),/중반 운영/);
  const contextual=await p.evaluate(()=>{
   const roles=['TOP','JUNGLE','MID','BOTTOM','SUPPORT'];
-  const original=JSON.parse(decodeURIComponent(location.hash.slice('#plan='.length))).input;
+  // Copying current v5 input into an explicit legacy v4 fixture must omit v5-only fields.
+  const {situation,...original}=JSON.parse(decodeURIComponent(location.hash.slice('#plan='.length))).input;
   const input={...original,schema_version:'lol-coach-loading-input-v4',lane_opponent:null,own_champion:'Malphite',own_position:'TOP',opponent_mode:'ASSIGNED',scenario:{standard:'lane-standard-v1',overrides:{}},planning:{basis:'loading-plan-example-v1',overrides:{}},
    allies:['Malphite','Nocturne','Taliyah','Sivir','Lulu'].map((champion,i)=>({champion,position:roles[i]})),enemies:['Gwen','Graves','Ahri','Varus','Alistar'].map((champion,i)=>({champion,position:roles[i]}))};
   return location.pathname+window.LoadingPresentation.encode(input,'LEVEL2',null);

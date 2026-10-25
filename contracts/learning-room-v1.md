@@ -15,7 +15,7 @@ publication makes references discoverable; it grants no tactical approval.
 - `config/user_lesson_candidates.json`: eight already recorded YouTube links
   and prior acquisition failures.
 
-It writes `web_r4/learning-room.json`; `--check` compares the exact generated
+Without explicit offline inputs it writes `web_r4/learning-room.json`; `--check` compares the exact generated
 bytes and exits 1 if absent/stale. No current-time field changes the output.
 Provenance includes SHA-256 of sorted, compact, UTF-8 JSON input values
 (`ensure_ascii=False`, separators `,` and `:`), **not raw-file byte hashes**.
@@ -28,7 +28,7 @@ is never duplicated or replaced by the index.
 
 Root `format` is `lol-coach-learning-room-v1`. Root fields:
 `taxonomy`, `registry_url`, `sources`, `videos`, `segments`, `lessons`,
-`practices`, `provenance`, `coaching_enabled:false`.
+`practices`, `transcript_indices`, `provenance`, `coaching_enabled:false`.
 
 Taxonomy is `{groups:[{id,label,topics:[{id,label,leaves:[{id,label}]}]}]}`.
 IDs are `topic:1`…`topic:4`, `topic:1.1`…`topic:4.5`, and
@@ -51,7 +51,8 @@ license_or_access_state,kind,source_hash,patch_compatible:null,registry_ref?}`.
 Only HTTPS links without URL user/password are accepted. `registry_ref`, when
 present, is `{collection:'sources',id:<existing source ID>}`. Existing excerpts,
 transcripts and private notes are not copied into the index. `source_hash` is
-the canonical JSON hash of the original source/candidate object.
+the canonical JSON hash of the original source/candidate object; accepted
+transcript sources instead retain the exact raw transcript SHA-256.
 
 Video:
 `{video_id,canonical_url,title,channel_id,publication_time,source_patch,language,
@@ -67,7 +68,7 @@ Only the two IDs in the recorded metadata attempt list carry
 Segment (currently none):
 `{segment_id,video_id,video_start_ms,video_end_ms,game_clock_ms,
 transcript_cue_ids,scene_verified,viewer_perspective,source_hash,evidence_kind,
-access_state,license_or_access_state}`.
+access_state,license_or_access_state,timestamp_state}`.
 `validate_segment(segment)` rejects negative/noninteger/bool timestamps,
 missing ends, `end <= start`, negative game clock and unpermitted access/rights.
 Video interval and nullable game clock are independent; no global offset or
@@ -75,7 +76,7 @@ past knowledge is inferred. Rights/access must both equal `PERMITTED` for a
 segment reference. `TRANSCRIPT` needs cue IDs; `VISUAL` needs
 `scene_verified:true`; `AI_INTERPRETATION` remains interpretation. Supplied
 verification assertions are not independently authenticated by this validator.
-Nothing in this release creates a real transcript/visual segment or promotes
+The default production build contains no real transcript/visual segment and never promotes
 an expert statement to a visual observation. Player perspective remains unknown
 unless separately established; spectator visibility is not player knowledge.
 
@@ -100,7 +101,7 @@ new transcript evidence. Existing review labels are not USER approval.
 | `required_conditions` | Existing `conditions` reference, or null |
 | `stop_or_switch` | Existing `counterexamples` reference, or null |
 | `waiting_cost` | null until explicitly sourced |
-| `alternative_or_recovery` | Existing `counterexamples` reference, or null |
+| `alternative_or_recovery` | Explicit existing `alternative_or_recovery` reference, or null; a counterexample alone is not recovery |
 | `practice_id` | Existing reflection ID, or null |
 | `source_refs` | Array of `{source_id}` references; empty if unavailable |
 
@@ -124,12 +125,15 @@ condition evaluator, or tactical recommendation engine is added.
 ## Pure search API
 
 ```python
-build_index(root: Path | str, *, knowledge=None, candidates=None) -> dict
+build_index(root: Path | str, *, knowledge=None, candidates=None, accepted_transcripts=()) -> dict
 validate_index(index: dict) -> dict
 validate_segment(segment: dict) -> dict
+append_transcript(index, raw_bytes, video_id, *, access_state,
+                  license_or_access_state, source_provenance,
+                  topic_assignments=None) -> dict
 search_index(index, query='', *, topic_id=None, role=None, champion=None,
              opponent=None, situation=None, evidence_state=None, patch=None,
-             limit=100, offset=0) -> dict
+             patch_state=None, knowledge=None, limit=100, offset=0) -> dict
 ```
 
 `build_index` optional dictionaries support offline boundary tests; normal
@@ -137,10 +141,15 @@ builds always use the three explicit files. Its public projection is an
 allowlist, omitting account/PUUID/match identity, private notes, transcript text,
 source excerpts and arbitrary extra input keys. No private store is an input.
 
-Search AND-combines filters. NFC/casefold literal text terms search title,
+Search AND-combines filters. NFKC/casefold whitespace-separated literal text terms search title,
 lesson/claim IDs, champion/opponent/role/situation identities, and all three
-taxonomy labels. Tactical prose is resolved from the registry for display; it
-is not copied into a second full-text corpus. Topic selection accepts group,
+taxonomy labels, app-authored question, and (when `knowledge` is supplied)
+the existing registry claim `text`, `display_text`, `conditions`,
+`counterexamples`, plus fields referenced by card fields or `patch_limits`.
+Every query term must occur, in any order. The caller passes the already loaded
+public registry as `knowledge`; search itself does no file/network IO. Without
+it, referenced prose is unavailable to search. Tactical prose is resolved from
+the registry, not copied into a second full-text corpus. Topic selection accepts group,
 middle or leaf IDs; `UNCLASSIFIED` selects null primary topics. Unknown filter
 values produce an empty result. Champion, role, opponent, situation and
 evidence-state filters use exact case-insensitive identities. Unknown situation
@@ -162,6 +171,73 @@ otherwise-matching lessons with no known source patch; `patch_mismatch_count`
 counts otherwise-matching lessons with known labels but none matching the
 requested label. Both counts precede pagination; unknown rows are excluded when
 a patch is requested. Existing `patch_limits` remain a registry reference.
+`patch_state` independently filters `UNKNOWN` or `DECLARED_UNVERIFIED`.
+
+## Permitted offline transcript resume
+
+The adapter calls the existing `coach_intake.video.index_transcript` on supplied
+bytes. It does not acquire a video or transcript. Access and rights must both
+be `PERMITTED`; `source_provenance` must explicitly contain
+`visibility:'PUBLIC'`, the exact raw `transcript_sha256`, and integer
+`video_duration_ms` greater than the last cue. The existing parser validates
+video ID metadata, language/captions metadata, cue syntax, timestamp ranges,
+and nondecreasing order before any metadata is projected. Invalid ID, hash,
+private visibility, unknown rights and invalid duration fail closed.
+
+`build_index(..., accepted_transcripts=[...])` accepts dictionaries containing
+`raw_bytes`, `video_id`, `access_state`, `license_or_access_state`,
+`source_provenance`, and optional `topic_assignments`. It produces the same
+pure metadata append as `append_transcript`. Input is never mutated. Default
+production input still contains **zero accepted transcripts and zero segments**.
+
+Each accepted keyword candidate is a `SPEECH_REVIEW_CANDIDATE`, with a distinct
+cue ID and a transcript segment reference. Cue-window end is the next strictly
+later cue offset, or the explicit supplied duration, with
+`interval_kind:'CUE_WINDOW_NOT_EVENT_DURATION'` and `timestamp_state:'VALIDATED'`.
+This window is not an assertion of utterance duration or a detected game event.
+`scene_verified:false`, game clock null, unknown player perspective, no source
+patch inference, no tactical action/body, and coaching disabled remain explicit.
+The segment's permission is for its transcript reference, not acquisition or
+review of the video frame. A supplied duration is an operator metadata assertion,
+not an independent duration verification.
+
+`transcript_indices` retains only the source hash, safe importer metadata,
+candidate cue/time references, fixed-vocabulary `lexical_topic_hints`, importer
+limitations and false authenticity/visual/decision flags. Raw speech, paths,
+notes, private identity and arbitrary provenance fields are not copied. Existing
+video acquisition errors and link-only candidate lessons remain; the video gains
+`transcript_refs` and `transcript_state:'AVAILABLE_UNVERIFIED'`, while its video
+access, patch and scene facts stay unknown. Source permission does not grant
+video permission.
+
+Optional operator assignments are a list of
+`{decision_id,cue_index,primary_topic_id}` records. Each refers to one validated
+transcript cue and an existing leaf or null. An explicit operator assignment
+can reference a nonkeyword cue; its lexical hints stay empty rather than
+inventing an importer keyword match. Distinct decision IDs can refer to
+the same cue/segment. Topic labels are operator classifications, not speech
+verification or tactical adoption. Omitted assignments produce unclassified
+cue candidates; keyword hints are not automatically verified taxonomy labels.
+Identical byte hash, duration and assignment ingestion is idempotent. Conflicting
+metadata for a pre-existing immutable source/segment ID is rejected.
+
+An offline manifest is `{"transcripts":[{"path":"permitted.txt",
+"video_id":"SA6o_QRPqL8","access_state":"PERMITTED",
+"license_or_access_state":"PERMITTED","source_provenance":
+{"visibility":"PUBLIC","transcript_sha256":"<64 hex raw SHA-256>",
+"video_duration_ms":12000},"topic_assignments":null}]}`.
+Paths are resolved relative to the manifest, read only, and excluded from output.
+After supplying authorized raw input and independently recorded metadata:
+
+```sh
+python scripts/build_learning_room.py --accepted-inputs /private/accepted.json --output /tmp/learning-resume.json
+python scripts/build_learning_room.py --accepted-inputs /private/accepted.json --output /tmp/learning-resume.json --check
+```
+
+The script rejects output paths that overwrite any input raw file, manifest or
+existing source registry, including a symlink/hardlink alias. It never writes
+the protected raw input. Resume is a metadata build,
+not a provider retry, source download, visual review, approval or publication.
 
 ## Boundaries and verification
 

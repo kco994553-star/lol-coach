@@ -1,8 +1,8 @@
 /* Partial input storage and explicit champion handoff. Never analyzes or invents picks. */
-(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./loading-coach.js'));else root.LoadingDraft=factory(root.LoadingCoach);})(typeof globalThis!=='undefined'?globalThis:this,function(Coach){
+(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./loading-coach.js'),require('./loading-situation.js'));else root.LoadingDraft=factory(root.LoadingCoach,root.LoadingSituation);})(typeof globalThis!=='undefined'?globalThis:this,function(Coach,Situation){
   'use strict';
   const SESSION_KEY='lol-coach-gameplan-draft-v1', ROLES=['TOP','JUNGLE','MID','BOTTOM','SUPPORT'];
-  const inputKeys=['schema_version','allies','enemies','own_champion','own_position','side','patch','opponent_mode','lane_opponent','preferences','scenario','planning'];
+  const inputKeys=['schema_version','allies','enemies','own_champion','own_position','side','patch','opponent_mode','lane_opponent','preferences','scenario','planning','situation'];
   const fail=code=>{throw Error(code);};
   const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x)&&[Object.prototype,null].includes(Object.getPrototypeOf(x));
   function safe(value,depth=0){
@@ -55,12 +55,13 @@
     input.opponent_mode=input.opponent_mode||'ASSIGNED';if(!['ASSIGNED','UNKNOWN','MANUAL'].includes(input.opponent_mode))fail('OPPONENT_MODE_INVALID');
     input.lane_opponent=champion(input.lane_opponent,true);
     input.preferences=input.preferences||{risk:'BALANCED'};keys(input.preferences,['risk']);if(!['LOSS_LIMIT','BALANCED','OPPORTUNITY'].includes(input.preferences.risk))fail('PREFERENCE_INVALID');
-    input.schema_version=input.schema_version||(input.planning?'lol-coach-loading-input-v4':input.scenario?'lol-coach-loading-input-v3':'lol-coach-loading-input-v2');
-    if(!['lol-coach-loading-input-v2','lol-coach-loading-input-v3','lol-coach-loading-input-v4'].includes(input.schema_version))fail('SCHEMA_INVALID');
-    const v3=input.schema_version==='lol-coach-loading-input-v3',v4=input.schema_version==='lol-coach-loading-input-v4';
-    if((v3||v4)!==Object.hasOwn(input,'scenario')||v4!==Object.hasOwn(input,'planning'))fail('SCHEMA_INVALID');
+    input.schema_version=input.schema_version||(input.situation?'lol-coach-loading-input-v5':input.planning?'lol-coach-loading-input-v4':input.scenario?'lol-coach-loading-input-v3':'lol-coach-loading-input-v2');
+    if(!['lol-coach-loading-input-v2','lol-coach-loading-input-v3','lol-coach-loading-input-v4','lol-coach-loading-input-v5'].includes(input.schema_version))fail('SCHEMA_INVALID');
+    const v5=input.schema_version==='lol-coach-loading-input-v5',v3=input.schema_version==='lol-coach-loading-input-v3',v4=v5||input.schema_version==='lol-coach-loading-input-v4';
+    if((v3||v4)!==Object.hasOwn(input,'scenario')||v4!==Object.hasOwn(input,'planning')||v5!==Object.hasOwn(input,'situation'))fail('SCHEMA_INVALID');
     if(v3||v4){if(!Coach)fail('SCENARIO_VALIDATOR_UNAVAILABLE');input.scenario=Coach.validateScenario(input.scenario);}
     if(v4)input.planning=Coach.validatePlanning(input.planning);
+    if(v5){if(!Situation)fail('SITUATION_VALIDATOR_UNAVAILABLE');input.situation=Situation.validate(input.situation);}
     return freeze({schema_version:'lol-coach-gameplan-draft-v1',revision,input});
   }
   function draft(value){if(value&&value.schema_version==='lol-coach-gameplan-draft-v1'){keys(value,['schema_version','revision','input']);return fromInput(value.input,value.revision);}return fromInput(value||{});}
