@@ -369,6 +369,7 @@ class PregameHandler(Handler):
             '/loading.js':('loading.js','text/javascript; charset=utf-8'),
             **{'/'+p:(p,'application/json; charset=utf-8' if p.endswith('.json') else 'text/css; charset=utf-8' if p.endswith('.css') else 'text/html; charset=utf-8' if p.endswith('.html') else 'text/javascript; charset=utf-8') for p in ('game-info.html','game-info.js','game-info-engine.js','game-info.css','game-info-items.json')},
             '/loading-direction-profiles.js':('loading-direction-profiles.js','text/javascript; charset=utf-8'),
+            '/loading-champion-baseline.js':('loading-champion-baseline.js','text/javascript; charset=utf-8'),
             '/loading-planboard.js':('loading-planboard.js','text/javascript; charset=utf-8'),
             '/loading-formation.js':('loading-formation.js','text/javascript; charset=utf-8'),
             '/formation-ranges.js':('formation-ranges.js','text/javascript; charset=utf-8'),
