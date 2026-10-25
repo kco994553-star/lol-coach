@@ -9,6 +9,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = {
+    **{p:p for p in ('champions.html', 'champion.html', 'champion.css', 'champion-state.js', 'champion-picker.js', 'champion-page.js', 'champion-stats.json', 'loading-draft.js')},
     **{p:p for p in ("loading-presentation.js","loading-presentation.css")},
     'formation-ranges.js':'formation-ranges.js',
     'loading-formation.js':'loading-formation.js',
@@ -64,7 +65,7 @@ def build(output):
     commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     manifest=dict(format='lol-coach-loading-public-export-v1',source_commit=commit,
         built_at=datetime.now(timezone.utc).isoformat(),sha256=hashes,
-        inputs='Manual ten-pick loading analysis and optional hypothetical scenarios; no persistent inputs or public PC service',
+        inputs='Champion reference exploration and manual partial/ten-pick drafts; explicit browser-session storage, no public PC service',
         strategy_level='DESIGN_HYPOTHESIS',live_game_connection=False,coaching_accuracy=None)
     (output/'build-info.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
     (output/'.nojekyll').write_text('')
