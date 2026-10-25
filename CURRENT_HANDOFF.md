@@ -1,3 +1,17 @@
+# Current — GP23·학습실 출고 확인 / 티어 확장 진행 중 (2026-10-25 UTC)
+
+- 제품 PR143 정상 병합 main `d1d00053dfd3710bb94e08549c7ca256ab0c43ee`, head739851e. PR40186976680/699 및 정확main40187456643/649 필수3 SUCCESS. Pages artifact `47e241dbf8ddddc612b22902141ed3a2e2411372` / native40188291641 SUCCESS.
+- 실제HTTPS11:23:28~44UTC106/106assetSHA·29브라우저검사·24PNG,1440/768/390/320·200%·키보드/inputv5→학습→정확복귀/챔피언복귀/기존실제공개프로기록복귀 PASS. pro SHA64d4830149af4ba515ac3b5e6c745629f80d00b0b7e416c30a5e27d4afd8c6e3·typed검증 보존, provider0.
+- 전체965 PASS164.112s source unchanged; 새 GP23/학습33/챔피언55 및 기존브라우저 PASS. 원문5쌍6e2e255결속/10회동일, 점수7/8/7/7/8(각12),30카드GENERAL_ONLY. GP23 DONE41/PARTIAL3(23위협순위,26역할고유,39구체성). 실제영상/수용자막/시각검토/효과N0 UNMEASURED. actualoutage/retry NOT_RUN(장애없음), 로컬fixture상태PASS.
+- 관리추정160동일가중0/.5/1: 전체45.3%/FE52.5%, 학습실50/61.8. 전술 정확도·테스트 통과율·콘텐츠 확보 수와 다르다. Notion기존5페이지 append/readback 완료, 역사/자식보존.
+- 영수증 정본 `evidence/actual-evidence/gameplan-2plus3-20261025/result.md`, `live/receipt.json`, `notion-sync.json`, `progress-assessment.json`. 결과 전용 `work/gp23-learning-results-20261025`는 상위 실행자가 push/정상PR/CI/병합 예정이며 동일 제품 재게시 없음. 결과 PR의 성공을 미리 주장하지 않는다.
+- **현재 활성 목표 유지:** USER티어/상대포지션 확장 IN_PROGRESS, 별도 `/workspace/lol-coach-champion-tiers`. 실제신규확보0·만료키/기존호출창으로 실제수집BLOCKED. 독립 준비는 계속하며 본 GP23출고·진행률에 합치지 않는다. 추가 GP23후속은 named-threat근거/고유전술/지원발견성과 허용자막수용·장면검토. P2 validator범위 유지.
+- 기존160ID/Frozen350/보호결정/원자료·실패/쿼터/스케줄/인증 보존. 유료/런타임AI/provider0·새USER전술승인0. 롤백 artifactb0ec3cb8e15f0fa4cc6aa0454897317c23e979c9.
+
+---
+
+# Historical records — 아래 Current 표기는 당시 시점의 이력
+
 # Frontend v2 core flow — deployed and live verified (2026-10-25 UTC)
 
 - Product main `ac48506c8f6493778d3fcdf675041d66f89c5390`, normal PR140; reusable PR137/138 also normally merged. IA v2.0 (160 rows) and gameplan content v1.3 remain separate.
