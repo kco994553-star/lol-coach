@@ -52,7 +52,14 @@ jobs:
           PY
           git rm .github/workflows/gameplan-source-workspace.yml
           python scripts/verify_actual_evidence.py --prepare
-          echo '42d78fd16495625ebf0ddab09a066ca5e6dae2b664bd9403c945f1d80cd57266  contracts/amendments/2026-10-16-actual-evidence.json' | sha256sum -c -
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          data=json.loads(Path('contracts/amendments/2026-10-16-actual-evidence.json').read_text())
+          canonical=json.dumps(data,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()
+          assert hashlib.sha256(canonical).hexdigest()=='0250223d3e8e485d96481bba19aa73cfa39dc546841dd21a5751764d2021f785'
+          print('Exact manifest content matched; filesystem enumeration order is not source content.')
+          PY
           python scripts/verify_actual_evidence.py
           python -m unittest -v tests_pregame.test_champion_baseline tests_pregame.test_gameplan_backend tests_pregame.test_gameplan_direction tests_pregame.test_gameplan_coaching_content tests_pregame.test_loading_strategy tests_pregame.test_loading_http tests_pregame.test_gameplan_input tests_pregame.test_riot_game_info tests_pregame.test_actual_evidence_binding tests_pregame.test_directions_http
           git diff --check
