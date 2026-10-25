@@ -1,3 +1,18 @@
+# Frontend v2 implementation — active
+- run_token: `codex-20261025-frontend-v2-implementation`
+- status: RUNNING
+- writer_active: true
+- owner_branch: `work/frontend-v2-20261025`
+- intake_main: `b26269247537561e3c172364bb895f5078cacc41`
+- Local isolated worktree: `/workspace/lol-coach-v2`
+- Authorized: approved frontend v2 implementation, ordinary PR/CI/merge/verified public deployment and Notion evidence synchronization.
+- Work: reuse PR137/138; champion selection/detail, exact-scope stats, partial draft handoff, protected gameplan regression, 160row matrix,18page images.
+- File ownership split across UI/data/handoff/QA/docs; shared export/server/seal integration held by root.
+- PR137 exact document binding fix pushed as43af20f, remote CI pending. PR138 reuse independently reviewed; not yet merged.
+- No protected knowledge decisions/raw data/quotas/auth boundary/paid services changed. No publication claim until receipts.
+
+---
+
 # Frontend hierarchy v2.0 — completed / writer released
 - run_token: `codex-20261025-frontend-hierarchy-v2-mvngyku7`
 - status: IDLE
