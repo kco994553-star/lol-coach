@@ -1,0 +1,30 @@
+F.....
+======================================================================
+FAIL: test_advanced_rows_follow_selected_tier_patch_search_and_sort_with_intervals (tests_pregame.test_champion_insights_frontend.ChampionInsightsFrontendTests.test_advanced_rows_follow_selected_tier_patch_search_and_sort_with_intervals)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-champion-tiers/tests_pregame/test_champion_insights_frontend.py", line 37, in test_advanced_rows_follow_selected_tier_patch_search_and_sort_with_intervals
+    self.node("""
+  File "/workspace/lol-coach-champion-tiers/tests_pregame/test_champion_insights_frontend.py", line 12, in node
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 1 != 0 : [eval]:5
+const gold=I.opponentRows(service,index,'Caitlyn','BOTTOM','GOLD');assert.deepEqual(gold.map(r=>[r.id,r.summary.n,r.summary.wins,r.summary.win_rate_pct]),[['Ashe',40,30,75],['Ezreal',30,3,10]]);assert.equal(gold[1].summary.ci_low_pct,5);assert.equal(gold[1].summary.ci_high_pct,95);assert.equal(gold[1].basis,'SAME_ROLE_ENCOUNTERS');assert.equal(gold[1].tier,'GOLD');assert.equal(gold[1].patch,'16.20');
+             ^
+
+TypeError: I.opponentRows is not a function
+    at [eval]:5:14
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.528s
+
+FAILED (failures=1)

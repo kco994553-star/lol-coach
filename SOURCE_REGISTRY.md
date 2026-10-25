@@ -16,3 +16,20 @@
 공식 정책 참고 URL: `https://developer.riotgames.com/docs/lol`, `https://developer.riotgames.com/policies/general`. 기존 입력 문서는 2026-10-24 확인 기록을 보존한다. 이번 문서 변경은 현재 라이선스·제품 감사·LCU 승인·호출 권한을 재확인한 것이 아니다. LCU의 제3자 지원·개발자 포털 공개 의무 등은 해당 원문과 제품 범위로 다시 판단한다.
 
 AGENTS.md의 USER 결정 보호 규칙을 적용한다. 공식 한국어 사실 확인과 전술 검토는 별개다. 기존 350 후보·동결 계약·결정 원문을 보존한다. 관련 상세: `docs/gameplan-content/knowledge-maintenance-v1.md`, `input-integration-v1.md`. 실경기 효과 UNMEASURED / N=0.
+
+## 챔피언 티어·상대 확장 — 출고 전 확인 (2026-10-25)
+
+코드99a4c2f 및 origin/main f366d75 정상 병합 후 소스3144981 기준이다. 이 절은 신규 자료 확보·원격 CI·배포 성공 증거가 아니다.
+
+| 원천/투영 | 실제 보유·출처 의미 | 실패·검토·공개 경계 |
+|---|---|---|
+| 기존 결과 원천 → champion-insights.json | REAL CHALLENGER-seed50경기, patch16.20, source digest1f6f276d153bc11978670b0644ee31b16b28f260deb1be23196aabf0053d64fc. MASTER_PLUS=CH만50/PARTIAL(MASTER·GRANDMASTER없음),ALL=같은50/PARTIAL(다른9tier없음) | seed현재리그≠A/전참가자 경기당시티어; A당시티어UNKNOWN. 타leaf EMPTY;50을각필터에서더하지않음. 성장275참고와도별도. |
+| 미래 익명 결과 동반자료 | coach_v1/matchup_results.py의해시·익명양팀관측역할·승리팀·seed/provenance. 기존power자료에서승패/적역할복원안함 | 실제신규수집0/retainedroster-result0/cross-role0. 같은역할최대N6,N20순위적격0. privatecompanion/ledger는공개금지;공개는aggregate만. |
+|10tiers 수집 정책 | all-tier-collection-v1.md의승인범위·40slot1target·기존cron/650requests/300jobs/40players/1page/2retry/900s공유상한 | 허용창2026-10-16T10:16:49Z종료,새창미확보로실제수집BLOCKED/요청0. 새403·키검증실패관측아님. 갱신키+명시허용창전probe금지. |
+|지식상대5profile | config/champion_matchup_references.json → coach_v1/champion_matchup_knowledge.py → champion-matchup-knowledge.json. MOBAFire5author/5champ-role,39CONDITIONAL_CANDIDATE+6REFERENCE_ONLY | LANING/JUNGLE구간만조건부. 통계에서전술생성안함;USER승인0/TACTICAL_UNREVIEWED/coaching=false. Riot16.20.1↔source26.x대응미검증,페이지갱신≠문단갱신. |
+
+저자·출처는 rowzkit(Caitlyn),Pengwan(Ezreal),Anoying bro5(Fiora),Coach Myga(Graves),inFinem(Yunara)다. 정확URL/finalURL·retrieved_at·HTML/quote/paragraphSHA·locator는공개정적자료의sources/evidence와원본연구산출물에분리보존한다. SOURCE_PARAPHRASE/AI조건부행동/AI제한조건을구별하며원문전체HTML·인용문단은공개하지않는다.39/6은sourcecoverage이지80완료콘텐츠·전챔피언전술·전문성독립검증이아니다.
+
+현재상태누적경로의10,000건한도와rollover미구현은미래장기수집P2capacity위험이다. 한도도달시failclosed하며기존history를삭제하거나성공으로표시하지않는다. 별도privatecompanion100,000record validator상한과혼동하지않고실제장기획득전보존형archival/rollover를설계한다.
+
+최종stable전체검사·현재tier제품원격CI·배포·실환경·Notion은모두PENDING이다. GP23제품PR143/결과PR144와이미공개한47e241d는기존출고범위만증명한다. 신규실제경기효과UNMEASURED/N0. 결과영수증예정위치:evidence/actual-evidence/champion-tiers-20261025/result.md.

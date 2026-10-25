@@ -28,3 +28,17 @@
 | 학습 taxonomy → source/claim/lesson index → 검색/구간 UI | 6.4/6.5/6.6 및 3.7.4/5.5.2/2.4 연결 | 80 ID·미분류·중복·구간 검증·접근 상태·private notes 경계; 후보를 coaching으로 승격 금지 |
 
 학습실 신규 모듈의 최종 파일명과 실제 검사 receipts는 작업자가 구현 후 상태 문서에 기록한다. 현황표·관리 그래프·Notion은 최종 근거를 소유한 상위 인계 작업에서 갱신하며 이 지도만으로 진행률을 바꾸지 않는다.
+
+## 티어·상대 확장 — canonical IA와 실제 경로
+
+| 기능ID | 실제파일경로 | 책임·회귀·잔여조건 |
+|---|---|---|
+|2.2.2,2.2.5 |outcome_stats.py / champion_insights.py → build_champion_insights.py → champion-insights.json |전체summary·tier/patch/source/available/missing/N/CI.2.2.1은기본방향이며tier집계ID로쓰지않음. |
+|2.2.3,2.2.4,2.2.5 |champion-insights.js select/opponentRows → champion-page.js renderInsights/advancedtable |같은역할frequentN순·A팀최종승률·정확선택tier.고급표F1도같은select결과사용;다른tierCHfallback금지. |
+|2.2.3~5,7.2 |matchup_results.py → riot_collector.py → collect_power_stats.py / resolve_riot_collection.py |미래cross-role은반대팀관측role+승리자료필요.동일hash충돌/중복/알수없는role차단;실제roster자료0. |
+|2.4.1,2.4.4,2.4.7 |champion_matchup_references.json → champion_matchup_knowledge.py / build_champion_matchup_knowledge.py → champion-matchup-knowledge.json |LANING/JUNGLE5profile조건부참고,39candidate/6reference;다른phase승격·USER승인·엔진활성없음.2.4.2/3은미충족,2.4.5selecteddetail도자료부족유지. |
+|2.1.3~6,2.6.1~5 |champion-state.js / champion-page.js → loading-draft.js return_state |MASTER_PLUS기본값·tierURL/dialog/back보존;통계tier는navmetadata,현재경기/상대role추정으로전달하지않음. |
+|2.2.2~5,7.4 |pregame_server.py 인증POST selector;build_directions_web.py의3공개자산 |동일selector·allowlist·CSP·privatepaths차단;roster/ledger/notes공개금지. |
+|7.2.1,7.2.1.1,7.2.2 |riot_collection_policy.py / policyJSON / 기존riot-power-collection.yml |10leaf/40slot기존단일cron,예산공유·인증즉시중단·허용창gate.실제수집은BLOCKED,작업별freshreceipt전성공표시안함. |
+
+원자료·역사v1validator/계약·독립CH성장참고·GP23/학습실160ID를보존한다.10,000상태한도의archival/rollover는장기획득전별도capacity후속이며지금한도를늘리거나history를지우지않는다.전체stable검사/새제품CI·배포·실환경·NotionPENDING.관리추정은기존45.3/52.5유지;행별평가나출고증거를이표로대체하지않는다.

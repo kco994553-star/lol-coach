@@ -1,0 +1,9 @@
+# Tier pre-release documentation report
+
+Updated exactly seven authorized tracked files in /workspace/lol-coach-champion-tiers at HEAD31449814089966b4dd2966c7b6314d146cebf119 (code99a4c2f plus normal origin/mainf366 merge): SOURCE_REGISTRY.md,DEPENDENCY_MAP.md,RELEASE_CHECKLIST.md,CURRENT_HANDOFF.md,docs/queue/QUEUE.md,docs/gameplan-content/champion-tier-opponent-implementation.md,docs/superpowers/plans/2026-10-25-champion-tiers-opponents.md.
+
+Canonical stats mapping fixed to2.2.2/2.2.5; frequent/outcome2.2.3/4/5 and knowledge2.4.1/4/7 separated from missing operations/fight/selected-opponent detail. Recorded CH50/Master+ALLpartial/other9empty/crossrole0/N20eligible0/newacquired0,39conditional+6reference/5authors5profiles, no USER/tactical approval, unknown participant rank/patch mapping. Expired stored allowed window is not a newly observed HTTP failure.10k retained-state capacity/no rollover risk separate from100k companion validator.
+
+Preserved firstfull1016/177.882s twoFAIL, corrected source-authority negative fixture and collector Recall accounting, original Recall test unchanged. Scoped48PASS2.663s/collection111/frontend16/newbrowser18/legacy55/learning33/GPthreeviewport and independent bounded final addendumPASS are separate. Final stable full/source final receipt/current productCI/Pages/deploy/live/Notion are PENDING, not inferred from scoped passes. Prior GP23 PR143/resultsPR144 mainf366 required3SUCCESS40190174719/841 and existing live47e241d remain historical source scope. Baseline160-row45.3/52.5 unchanged; no matrix/Notion/seal/Git mutations.
+
+Owned-path git diff --check exit0. Additional structural check verified exactly seven tracked diff files and canonical mapping/pending gates. Root's new untracked evidence folder was not edited. No tests rerun for prose changes. All seven docs now frozen so root can seal and run stable full suite. No further writes unless explicitly reactivated.

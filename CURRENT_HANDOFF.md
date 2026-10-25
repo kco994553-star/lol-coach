@@ -1,3 +1,17 @@
+# Current — 티어·상대 확장 출고 전 동결 (2026-10-25 UTC)
+
+- 활성작업 `work/champion-tier-opponents-20261025`: 코드99a4c2f + origin/main f366d75 정상병합 → 소스 `31449814089966b4dd2966c7b6314d146cebf119`. 기존GP23제품PR143/결과PR144는병합완료,결과main `f366d75dabc30464398c818d15b1350ecc0abd4a` 필수3 SUCCESS40190174719/40190174841. 새tier제품의CI/배포/실환경성공으로이관하지않는다.
+- 현재구현: 기본MASTER_PLUS·10leaf/ALLselector·실제N순frequent·서로분리된조건부지식/최종teamwin상대role표·고급수동비교/복귀·인증API/공개allowlist. canonical통계2.2.2/2.2.5,상대2.2.3/4/5,지식2.4.1/4/7;2.2.1은기본방향이며집계ID가아니다.
+- 실제자료CH50만보유. MASTER_PLUS/ALL은PARTIAL,다른9leafEMPTY,A경기당시tierUNKNOWN,crossrole0/N20순위적격0(maxN6),새획득0.5source/5champ-role39조건부+6전체참고는USER/전술승인·80완료콘텐츠가아니다. source26.x↔Riot16.20.1미검증.
+- 첫full1016/177.882s는2FAIL보존. Root의명시미등록source음성fixture보정/collectorRecall작업집계수정(원래Recalltest불변),F1고급표exacttier수정후targeted48PASS2.663s·collection111PASS·frontend16/newbrowser18/legacy55+learning33+GP23threeviewport. 독립최종addendumPASS(별도bounded20PASS0.691s). **최종stablefullsuitePENDING**;최종source영수증/현재제품PR·mainCI/deploy/live/Notion도PENDING.
+- 공개제품은새게시전까지기존GP23 artifact47e241dbf8ddddc612b22902141ed3a2e2411372. baseline160행관리추정45.3overall/52.5FE유지;이번출고전문서로점수올리지않는다. 실제영상/자막/시각검토/전술효과N0 UNMEASURED.
+- 실제수집BLOCKED: 저장된허용창2026-10-16종료·갱신키/새허용창미확보. 새HTTP403관측이나키probe아님. 기존예산/cron/인증즉시중단유지,10,000statecapacity/rollover부재는장기수집전P2후속.자료블로커외독립인계는계속한다.
+- root가 `evidence/actual-evidence/champion-tiers-20261025/result.md`에실제검사/소스/출고영수증을복사하고최종full→CI→정상PR/main→게시/live후행별평가·Notion을갱신한다. 지식고유전술/지원발견성/허용영상표본등다른활성목표와원자료·보호결정·Frozen350은보존한다.
+
+---
+
+# Prior handoffs — 아래 상태는 당시 시점 이력
+
 # Current — GP23·학습실 출고 확인 / 티어 확장 진행 중 (2026-10-25 UTC)
 
 - 제품 PR143 정상 병합 main `d1d00053dfd3710bb94e08549c7ca256ab0c43ee`, head739851e. PR40186976680/699 및 정확main40187456643/649 필수3 SUCCESS. Pages artifact `47e241dbf8ddddc612b22902141ed3a2e2411372` / native40188291641 SUCCESS.

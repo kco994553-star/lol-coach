@@ -1,5 +1,24 @@
+# 티어·상대 확장 릴리스 준비 — 출고 전 동결
+코드99a4c2f + origin/main f366d75 정상병합 소스3144981. 현행160ID/관리추정45.3/52.5유지. 아래는현재tier제품이며뒤GP23체크는기존출고이력이다.
+
+- [x] canonical집계ID2.2.2/2.2.5,상대2.2.3/4/5,지식2.4.1/4/7 분리.2.2.1기본방향과혼동없음.
+- [x] CH50/Master+·ALLpartial/다른9tierempty/crossrole0/N20eligible0·당시rankunknown 공개. 새획득0,성장275별도.
+- [x]5source/5profile39conditional+6reference,USER/TACTICAL_UNREVIEWED/coaching=false·patchmapping미확인·원문공개경계유지.
+- [x] 첫full1016검사2FAIL과수정이력보존. 미등록path음성fixture/collectorRecall집계수정,원래Recalltest불변. F1고급표selectedscope수정.
+- [x] targeted48PASS2.663s·collection111PASS·frontend16/newbrowser18/legacy55+learning33+GP23threeviewport를로컬scope로기록. 독립최종addendumPASS/별도20PASS0.691s.
+- [x] 만료된허용창으로provider0/BLOCKED. 실제HTTP403신규관측아님;기존650/300/40/1/2retry/900s·cron·인증stop유지.
+- [x]10,000state한도/rollover미구현capacity위험공개·failclosed/history보존.
+- [ ] **최종stable전체검사PENDING**,7개문서동결뒤실행.48/111등집중검사를전체성공으로대체하지않음.
+- [ ] 현재tier제품정확source seal최종영수증·PR/main필수CI **PENDING**.
+- [ ] 새export/privateboundary/protyped보존·nativePages·실제HTTPS·browser·rollback **PENDING**. 기존47e241d공개제품은새제품PASS증거아님.
+- [ ] 현재tier제품Notion/행별평가 **PENDING**. 새진행률점수없음. 실제수집/전술효과N0상태유지.
+
+---
+
+## 기존 GP23 출고 — 별도 이력
+
 # GP23·학습실 릴리스 확인 — 2026-10-25
-제품 main `d1d00053dfd3710bb94e08549c7ca256ab0c43ee` / PR143. 결과 전용 브랜치의 PR/CI/병합은 상위 실행자 후속이며 동일 제품을 재게시하지 않는다. 아래 체크는 명시한 제한 범위에 적용한다.
+제품 main `d1d00053dfd3710bb94e08549c7ca256ab0c43ee` / PR143. GP23결과PR144는main f366d75 정상병합·필수3 SUCCESS40190174719/40190174841이며결과만추가해동일제품재게시없음. 아래 체크는 명시한 제한 범위에 적용한다.
 
 ## 계약·보존
 - [x] 승인2+3방향과 구현선택 구분, 기존160ID·Frozen350·보호결정 보존.
@@ -27,6 +46,6 @@
 - [ ] 실제게임코칭효과: **UNMEASURED N=0**. 평가계획기록완료이며 효과검증아님.
 - [x] 기존Notion5개fetch→append-only→readback;ID/본문/자식보존. `notion-sync.json`.
 - [x] 160행동일가중0/.5/1 관리추정45.3/52.5,학습실50/61.8;실제상태와분리.
-- [ ] 결과전용push/PR/CI/병합: 상위실행자후속. 제품출고성공과별도.
+- [x] GP23결과PR144 정상병합mainf366d75·필수3SUCCESS. 새tier제품검증/배포와별도.
 
 USER티어/상대포지션확장은 별도IN_PROGRESS·신규확보0·실제수집BLOCKED(만료키/호출창),본릴리스/추정제외. 근거 `evidence/actual-evidence/gameplan-2plus3-20261025/result.md` 및 각 JSON/로그.
