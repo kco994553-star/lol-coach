@@ -1,0 +1,30 @@
+.F....
+======================================================================
+FAIL: test_browser_handoff_preserves_coach_edited_scenario (tests_pregame.test_champion_handoff.ChampionHandoffTests.test_browser_handoff_preserves_coach_edited_scenario)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_champion_handoff.py", line 193, in test_browser_handoff_preserves_coach_edited_scenario
+    self.browser(r"""
+  File "/workspace/lol-coach-gp23/tests_pregame/test_champion_handoff.py", line 131, in browser
+    self.assertEqual(result.returncode, 0, result.stderr[-7000:])
+AssertionError: 1 != 0 : AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'lol-coach-loading-input-v5'
+- 'lol-coach-loading-input-v4'
+                            ^
+
+    at [eval]:18:118 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'lol-coach-loading-input-v5',
+  expected: 'lol-coach-loading-input-v4',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+
+----------------------------------------------------------------------
+Ran 6 tests in 5.659s
+
+FAILED (failures=1)

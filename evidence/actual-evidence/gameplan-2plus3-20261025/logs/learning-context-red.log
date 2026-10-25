@@ -1,0 +1,79 @@
+...F......F
+======================================================================
+FAIL: test_invalid_context_never_broadens_after_serialization_and_return_survives (tests_pregame.test_learning_frontend.LearningFrontendTests.test_invalid_context_never_broadens_after_serialization_and_return_survives)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_frontend.py", line 21, in test_invalid_context_never_broadens_after_serialization_and_return_survives
+    self.node("""const memory={},storage={getItem:k=>memory[k]||null,setItem:(k,v)=>memory[k]=v},original='./loading.html#plan=private-return',token=E.storeReturn(original,storage);for(const context of [{role:'FAKE'},{role:'../MID'},{champion:'../../x'},{champion:'<script>'},{claim:'unknown'},{claim:'../../A-WAVE'},{group:'../../lane'},{topic:'<bad>'},{leaf:'../push'}]){const first=E.stateFromURL(E.stateToSearch({...context,return:token}),data,knowledge);assert.equal(first.invalid,'context',JSON.stringify(context));assert.equal(E.filterLessons(data,knowledge,first).length,0,JSON.stringify(context));const second=E.stateFromURL(E.stateToSearch(first),data,knowledge);assert.equal(second.invalid,'context');assert.equal(E.filterLessons(data,knowledge,second).length,0);assert.equal(E.restoreReturn(second.return,storage),original);const url=E.createLearningURL(context,{storage,returnURL:original});assert(!url.includes('private-return'));assert.equal(E.filterLessons(data,knowledge,E.stateFromURL(new URL(url,'https://app.test').hash,data,knowledge)).length,0);}const empty=E.stateFromURL(E.stateToSearch({}),data,knowledge);assert.equal(empty.invalid,'');assert.equal(E.filterLessons(data,knowledge,empty).length,1);""")
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_frontend.py", line 15, in node
+    self.assertEqual(result.returncode,0,result.stdout+result.stderr)
+AssertionError: 1 != 0 : node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: {"role":"FAKE"}
++ actual - expected
+
++ undefined
+- 'context'
+
+    at [eval]:4:450
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: 'context',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_url_state_whitelist_roundtrip_and_bounded_context (tests_pregame.test_learning_frontend.LearningFrontendTests.test_url_state_whitelist_roundtrip_and_bounded_context)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_frontend.py", line 18, in test_url_state_whitelist_roundtrip_and_bounded_context
+    self.node("""const s=E.stateFromURL('?q=웨이브&leaf=push&champion=Caitlyn&role=BOTTOM&opponent=Kaisa&claim=A-WAVE&lesson=lesson-A&private_match=secret&return=abcdefgh12345678',data,knowledge);assert.equal(s.leaf,'push');assert.equal(s.role,'BOTTOM');assert.equal(s.claim,'A-WAVE');assert(!E.stateToSearch(s).includes('secret'));assert.deepEqual(E.stateFromURL(E.stateToSearch(s),data,knowledge),s);const bad=E.stateFromURL('?champion=../../x&role=FAKE&claim=unknown&topic=nope&q='+('a'.repeat(400)),data,knowledge);assert.equal(bad.champion,'');assert.equal(bad.role,'');assert.equal(bad.claim,'');assert.equal(bad.topic,'nope');assert.equal(bad.q.length,100);assert.equal(bad.invalid,'context');assert.equal(E.filterLessons(data,knowledge,bad).length,0);""")
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_frontend.py", line 15, in node
+    self.assertEqual(result.returncode,0,result.stdout+result.stderr)
+AssertionError: 1 != 0 : node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ undefined
+- 'context'
+
+    at [eval]:4:652
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: 'context',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.451s
+
+FAILED (failures=2)

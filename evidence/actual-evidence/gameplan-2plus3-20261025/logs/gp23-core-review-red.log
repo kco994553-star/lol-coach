@@ -1,0 +1,123 @@
+test_combat_contribution_arrival_unknown_skills_and_terrain_gate_entry (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_combat_contribution_arrival_unknown_skills_and_terrain_gate_entry) ... ok
+test_duel_does_not_require_an_unavailable_external_ally (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_duel_does_not_require_an_unavailable_external_ally) ... FAIL
+test_existing_scope_and_retained_consumers_share_v5_decision (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_existing_scope_and_retained_consumers_share_v5_decision) ... FAIL
+test_jungler_actions_are_not_self_lane_manipulation (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_jungler_actions_are_not_self_lane_manipulation) ... ok
+test_provenance_serialization_and_no_live_observation (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_provenance_serialization_and_no_live_observation) ... ok
+test_reset_and_waiting_cost_do_not_invent_crash_or_block_all_actions (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_reset_and_waiting_cost_do_not_invent_crash_or_block_all_actions) ... ok
+test_scope_fallback_never_borrows_champion_tactics (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_scope_fallback_never_borrows_champion_tactics) ... ok
+test_tank_disruption_and_protection_are_real_goal_conflict (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_tank_disruption_and_protection_are_real_goal_conflict) ... ok
+test_threat_samples_do_not_become_named_current_priorities (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_threat_samples_do_not_become_named_current_priorities) ... FAIL
+test_unknown_and_stale_never_unlock_push_or_old_pressure_tags (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_unknown_and_stale_never_unlock_push_or_old_pressure_tags) ... ok
+test_v5_strict_and_legacy_versions_unchanged (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_v5_strict_and_legacy_versions_unchanged) ... ok
+test_wave_feasibility_precedes_cost_and_jungle_location (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_wave_feasibility_precedes_cost_and_jungle_location) ... ok
+
+======================================================================
+FAIL: test_duel_does_not_require_an_unavailable_external_ally (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_duel_does_not_require_an_unavailable_external_ally)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_gameplan_situation.py", line 125, in test_duel_does_not_require_an_unavailable_external_ally
+    self.node(r"""
+  File "/workspace/lol-coach-gp23/tests_pregame/test_gameplan_situation.py", line 28, in node
+    self.assertEqual(p.returncode, 0, p.stderr[-6000:])
+AssertionError: 1 != 0 : node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'CREATE_CONNECTED_WINDOW'
+- 'DUEL_CONTRIBUTION'
+
+    at [eval]:15:42
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'CREATE_CONNECTED_WINDOW',
+  expected: 'DUEL_CONTRIBUTION',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_existing_scope_and_retained_consumers_share_v5_decision (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_existing_scope_and_retained_consumers_share_v5_decision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_gameplan_situation.py", line 141, in test_existing_scope_and_retained_consumers_share_v5_decision
+    self.node(r"""
+  File "/workspace/lol-coach-gp23/tests_pregame/test_gameplan_situation.py", line 28, in node
+    self.assertEqual(p.returncode, 0, p.stderr[-6000:])
+AssertionError: 1 != 0 : node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ '교환 길이와 반격·기술 가용성이 미확인이면 추가 공격을 강제하지 않고 다음 처리와 이탈에 쓸 자원을 남긴다.'
+- '현재 보이는 미니언 방향·체력과 내 처리·반격 자원을 확인하고, 확인된 거리에서 받을 자원만 고른다.'
+
+    at [eval]:16:94
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '교환 길이와 반격·기술 가용성이 미확인이면 추가 공격을 강제하지 않고 다음 처리와 이탈에 쓸 자원을 남긴다.',
+  expected: '현재 보이는 미니언 방향·체력과 내 처리·반격 자원을 확인하고, 확인된 거리에서 받을 자원만 고른다.',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+======================================================================
+FAIL: test_threat_samples_do_not_become_named_current_priorities (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_threat_samples_do_not_become_named_current_priorities)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_gameplan_situation.py", line 132, in test_threat_samples_do_not_become_named_current_priorities
+    self.node(r"""
+  File "/workspace/lol-coach-gp23/tests_pregame/test_gameplan_situation.py", line 28, in node
+    self.assertEqual(p.returncode, 0, p.stderr[-6000:])
+AssertionError: 1 != 0 : node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: Missing explicit unresolved priority
+    at [eval]:14:50
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 12 tests in 1.990s
+
+FAILED (failures=3)

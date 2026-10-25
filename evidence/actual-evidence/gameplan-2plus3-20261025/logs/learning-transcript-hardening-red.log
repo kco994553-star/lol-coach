@@ -1,0 +1,28 @@
+.......E........F...
+======================================================================
+ERROR: test_operator_can_reference_valid_nonkeyword_cue_without_inventing_lexical_match (tests_pregame.test_learning_room.LearningRoomTests.test_operator_can_reference_valid_nonkeyword_cue_without_inventing_lexical_match)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 257, in test_operator_can_reference_valid_nonkeyword_cue_without_inventing_lexical_match
+    index = self.append(topic_assignments=[dict(decision_id='manual-cue', cue_index=3, primary_topic_id='topic:1.1.1')])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 207, in append
+    return api.append_transcript(api.build_index(ROOT), raw, 'SA6o_QRPqL8', **args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach-gp23/coach_v1/learning_room.py", line 298, in append_transcript
+    raise ValueError('UNKNOWN_SPEECH_CANDIDATE_CUE')
+ValueError: UNKNOWN_SPEECH_CANDIDATE_CUE
+
+======================================================================
+FAIL: test_transcript_adapter_rejects_tampered_input_and_does_not_mutate_on_error (tests_pregame.test_learning_room.LearningRoomTests.test_transcript_adapter_rejects_tampered_input_and_does_not_mutate_on_error)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 269, in test_transcript_adapter_rejects_tampered_input_and_does_not_mutate_on_error
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.286s
+
+FAILED (failures=1, errors=1)

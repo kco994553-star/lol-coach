@@ -1,6 +1,6 @@
 # 게임플랜 2+3 실제 v5 원문 사례 평가
 
-상태: **실제 v5 엔진 원문 내부 평가 / 최종 소스 커밋 봉인 대기**. 아래 점수는 2026-10-25 실제 `E.analyze` 및 `P.project` 결과를 읽고 평가했다. 소스가 작업 중이어서 `WORKTREE_SNAPSHOT`, `source_commit:null`이다. 내부 문장 평가를 출시 승인이나 실전 전술 검증으로 표시하지 않는다. 실경기 코칭 효과는 **UNMEASURED, N=0**이다.
+상태: **EXACT_COMMIT 원문 5쌍 내부 평가 완료**. 근거 소스 커밋은 `6e2e255dc774525b0054ae1e711d9a7953d83957`이다. 아래 점수는 2026-10-25 실제 `E.analyze` 및 `P.project` 결과를 읽고 평가했으며 최종 저장 원문을 엔진에서 다시 실행해 일치함을 확인했다. 내부 문장 평가를 출시 승인이나 실전 전술 검증으로 표시하지 않는다. 실경기 코칭 효과는 **UNMEASURED, N=0**이다.
 
 ## 재현과 원문 보존
 
@@ -29,19 +29,19 @@
 
 ## 평가 대상과 소스 상태
 
-원문 폴더는 `/workspace/gp23-artifacts/examples-v5-provisional/`이다. 재현 seed는 20261025이며 TOP Trundle / JUNGLE Darius / MID Ekko / BOTTOM Aurora / SUPPORT Karthus를 그대로 유지했다. TOP은 공식 Tank·제어 사실로 제한했고 나머지는 임의 포지션 배치다. Aurora BOTTOM을 사수 챔피언 고유 지원으로, Karthus SUPPORT를 검증된 보호 전문 전술 지원으로 집계하지 않는다.
+원문 폴더는 [evidence/actual-evidence/gameplan-2plus3-20261025/examples/manifest.json](../../evidence/actual-evidence/gameplan-2plus3-20261025/examples/manifest.json)의 같은 디렉터리다. 재현 seed는 20261025이며 TOP Trundle / JUNGLE Darius / MID Ekko / BOTTOM Aurora / SUPPORT Karthus를 그대로 유지했다. TOP은 공식 Tank·제어 사실로 제한했고 나머지는 임의 포지션 배치다. Aurora BOTTOM을 사수 챔피언 고유 지원으로, Karthus SUPPORT를 검증된 보호 전문 전술 지원으로 집계하지 않는다.
 
-이번 실행의 기준 HEAD는 `a12330d7030c7b74dc748820b68e8b7841940148`이고 변경 파일 해시는 이 폴더 `manifest.json`의 `source.sha256`에 있다. 엔진·UI가 바뀌는 도중이므로 이 HEAD가 실행 소스와 동일하다고 주장하지 않는다. 최종 소스 봉인 후 root가 같은 seed로 다시 실행하며, 내용이 달라진 경우 아래 인용·판정을 재확인한다.
+이번 실행은 `manifest.json`의 `source.status:EXACT_COMMIT`, `source.source_commit:6e2e255dc774525b0054ae1e711d9a7953d83957`에 묶인다. 이 평가에서 `source.sha256`의 모든 코드·데이터 파일과 사례 5개 해시를 직접 재검산했다. 10개 입력의 전체 엔진 보고서와 화면 투영도 재실행해 저장 JSON과 동일함을 확인했다. 소스 파일·사례 원문·manifest는 이 평가에서 수정하지 않았다.
 
 | 사례 JSON | 사용자 | SHA-256 |
 |---|---|---|
-| `01-top.json` | TOP Trundle | `a38ec9a2da3b68ff9e71a1cc6d442aa25dcbbfa30c0dc64f02579158103d69e9` |
-| `02-jungle.json` | JUNGLE Darius | `98da2e072e5b9cda3edf7800a5c254e96df9618338e80e3e83c611b806486efe` |
-| `03-mid.json` | MID Ekko | `35eff1263ea21d0618fbe1b409b3f152b2653d23eab393d451aca7845b67193f` |
-| `04-bottom.json` | BOTTOM Aurora | `a10c2c8d6c77978a27ab7103ee831f90170f7801ceca124f643f2fa8f94d4a2e` |
-| `05-support.json` | SUPPORT Karthus | `2fe8cccaa548647c3cd9801e6a666b2ff6a2bb6e5b531cfd303dc117117ee0e6` |
+| [01-top.json](../../evidence/actual-evidence/gameplan-2plus3-20261025/examples/01-top.json) | TOP Trundle | `b05517f2bd91705a9e26cc0054028bcbd40dd26db0e64f79241926cd25c5ee3f` |
+| [02-jungle.json](../../evidence/actual-evidence/gameplan-2plus3-20261025/examples/02-jungle.json) | JUNGLE Darius | `72b2b2dfca1cef2597531b90a7739ad40cf63c1f305af07aa45cf808fd7d8b02` |
+| [03-mid.json](../../evidence/actual-evidence/gameplan-2plus3-20261025/examples/03-mid.json) | MID Ekko | `e193b5b990ecb471be9684c893a92f00cfa524cc09170b3310f06104bde7ef0f` |
+| [04-bottom.json](../../evidence/actual-evidence/gameplan-2plus3-20261025/examples/04-bottom.json) | BOTTOM Aurora | `41bf418c01f02dfefdd5e1266dd16280736987d1d799cbb6862fba8fcc10b573` |
+| [05-support.json](../../evidence/actual-evidence/gameplan-2plus3-20261025/examples/05-support.json) | SUPPORT Karthus | `6e55c7cf3669c8f48b174abef624557a8c69a21f04a9cdea195a8c2ad058d9d6` |
 
-각 사례의 원문 기준 경로는 `baseline/view/...`, 조건 변경은 `changed/view/...`이다. 이 원문에는 2개 상단 개요, 비교표, 하단 3카드, 각 단계 행동 5개가 함께 보존된다. 모든 사례의 `baseline/report/coach/supported`는 false이며 15개 카드의 coverage는 `GENERAL_ONLY`다. 이 제한은 실패를 숨기기 위한 문구가 아니라 현재 실제 지원 범위다.
+각 사례의 원문 기준 경로는 `baseline/view/...`, 조건 변경은 `changed/view/...`이다. 이 원문에는 2개 상단 개요, 비교표, 하단 3카드, 각 단계 행동 5개가 함께 보존된다. 모든 사례의 `baseline/report/coach/supported`는 false이며 기본/변경을 합친 30개 카드의 coverage는 `GENERAL_ONLY`다. 이 제한은 실패를 숨기기 위한 문구가 아니라 현재 실제 지원 범위다.
 
 ## 여섯 차원 평가 — 두 조건을 함께 검토
 
@@ -73,13 +73,16 @@
 | F1 | 모든 사례 `/baseline/view/cards/2/decision/action` | “배운 공격·제어와 남은 반격·퇴로를 확인해 가까운 대상에 기여할 행동을 고르고, 기여할 수 없다면 자리와 목표를 바꾼다.” |
 | P | 모든 사례 `/baseline/view/cards/2/decision/threat_priority/label` | “현재 위협 우선순위 미확인” |
 | X | 모든 사례 `/baseline/view/cards/2/decision/execution` → `/changed/view/cards/2/decision/execution` | “UNKNOWN → BLOCKED” |
-| R | 모든 사례 `/baseline/view/cards/1/explanation/{0,1}` | “기다리면 성장·포탑·목표물 접근 기회를 잃을 수 있지만, 먼저 움직이는 이득도 복귀 손실과 아군이 버틸 수 있는 시간에 따라 달라진다.” |
+| R1 | 모든 사례 `/baseline/view/cards/1/explanation/0` | “기다리면 성장·포탑·목표물 접근 기회를 잃을 수 있지만, 먼저 움직이는 이득도 복귀 손실과 아군이 버틸 수 있는 시간에 따라 달라진다.” |
+| R2 | 모든 사례 `/baseline/view/cards/1/explanation/1` | “웨이브 처리 완료와 아군 이동·목표물 존재는 따로 확인한다. 합류가 이득이어도 늦은 추격으로 이미 끝난 기회를 되살리려 하지 않는다.” |
 
 O1은 후속이 AVAILABLE이라는 **가정**에서도 처리 완료를 확인하라고 요구한다. O2는 후속이 없어지면 재집결 준비로 바뀐다. 그 외 16개 상황 필드는 계속 unknown이다. X처럼 교전 실행 허용은 UNKNOWN에서 BLOCKED로 바뀌지만, F1은 이미 진입을 확정하지 않는 준비 문장이므로 그대로 남는다. 동일한 문장이라고 무조건 불일치로 보지 않았다. J3과 SUPPORT의 경우도 기본 행동이 조건부여서 태그/선택 ID가 바뀌고 일부 행동 본문이 유지된다.
 
 ## 반례 검토와 심각도 — 총점과 별도
 
-원문 5쌍 외 추가 재현 결과는 `/workspace/gp23-artifacts/examples-v5-counterexamples.json`에 전체 입력·보고서·화면을 보존했다. 이는 아래 안전 경계 확인용이며 선정된 5개 사례를 좋은 결과로 바꾸는 재추첨이 아니다. 소스 수정 중 실행한 추가 probe이므로 별도 미봉인 관찰이다.
+원문 5쌍 외 아래 반례를 같은 봉인 소스 해시를 확인한 뒤 다시 실행했다. 이는 안전 경계 확인용이며 선정된 5개 사례를 좋은 결과로 바꾸는 재추첨이 아니다. 초기 전체 probe 기록은 `/workspace/gp23-artifacts/examples-v5-counterexamples.json`에 있으나, 그 기록의 당시 소스 미봉인 상태와 이번 봉인 소스 재실행을 구분한다.
+
+재현 입력: F-CE-01은 03-mid의 기본 입력에서 REVIEW/stale 정글 래퍼만 아래 값으로 바꾼다. F-CE-02는 01-top 기본 입력에서 resources SUFFICIENT, ally_followup AVAILABLE, combat_context TEAMFIGHT, ally_contribution READY, enemy_contribution READY, arrival_order EVEN, combat_space OPEN, key_skill AVAILABLE, threat_reach REACHABLE, enemy_carry_access DISRUPTABLE, ally_carry_risk COVERED를 같은 user-scenario/assumed 래퍼로 선택한 뒤 carry risk만 THREATENED로 바꾼다. 그 다음 followup만 UNAVAILABLE로 바꾼다. F-CE-03은 기본 exampleInput 0의 MID 사용자에 DUEL, followup UNAVAILABLE와 위 실행 준비 필드를 선택한다. 반례는 다중 조건을 준비하지만 최종 5사례 짝 비교의 한 필드 계약을 변경하지 않는다.
 
 | 문제 ID / 반례 | 관찰·판정 | 심각도 / 상태 | 조치·지원 경계 |
 |---|---|---|---|
@@ -87,20 +90,22 @@ O1은 후속이 AVAILABLE이라는 **가정**에서도 처리 완료를 확인�
 | F-CE-02 목표 충돌: Trundle TOP의 교전 기여·기술·지형·도달/후속 READY 가정, 적 딜러 DISRUPTABLE와 아군 딜러 COVERED → THREATENED만 변경 | goal DISRUPT_ENEMY_CARRY → PROTECT_ALLY. 무조건 깊게 진입하지 않고 아군 보호로 바뀜. 후속까지 UNAVAILABLE로 바꾸면 실행 BLOCKED | P1 회귀 경계 / 이 probe에서 재현 안 됨 | 탱커 공식 태그만으로 방해 진입을 권하지 않음. 조건이 없는 실제5샘플에서는 CONDITIONAL_ROLE·일반 원칙 범위를 유지 |
 | F-CE-03 잘못된 일반화: MID DUEL과 외부 아군 후속 UNAVAILABLE, 자기·상대 기여 등 나머지 실행 조건 READY | DUEL_CONTRIBUTION, execution READY. “배운 수단과 내 대응·이탈 예산이 남는 가정에서 상대에게 닿는 공격을 비교하고, 끊으면 얻을 자원·복귀 이득도 함께 고른다.” 중단도 내 자원/상대 증원 기준 | 기존 CORE-P1-02 회귀 경계 / 이 probe에서 해소 확인 | 외부 아군이 반드시 함께 공격해야 한다는 이전 모순을 제거한 범위만 확인. 솔로 승리·처치 보장 없음 |
 | F-P2-01 낮은 구체성: 5사례 모두 CONDITIONAL_ROLE 및 GENERAL_ONLY | F1 동일, 실제 대상별 현재 위협은 P처럼 UNKNOWN. 01/03/04 구체성 0, 02/05도 역할 원칙 1 | P2 / 지원 축소·보류 | 가짜 정밀도나 모든 챔피언 고유 전술을 더하지 않음. GP23-22는 정성 기여 게이트, GP23-23은 순위 미확인/수단 후보, GP23-26은 제한된 역할 원칙으로 명시 |
-| F-P2-02 분량 중복: 5사례 운영 본문 첫 두 문단이 R 원문으로 완전히 동일 | 실제 원문은 그대로 보존. 중복 문장으로 분량을 채우므로 제거 필요 | P2 / 엔진 담당자가 이후 수정, 최종 봉인 재확인 대기 | 같은 이유와 기다림 비용을 두 번 쓰던 경로를 분리했다는 보고 및 core 회귀 13개 통과를 수신. 이 임시 원문을 손으로 고치지 않음 |
+| F-P2-02 분량 중복 회귀: 초기 미봉인 5사례의 운영 첫 두 문단 중복 | 최종 봉인 10개 출력 모두 R1과 R2가 서로 다름을 직접 확인 | P2 / RESOLVED, 봉인 소스 재검증 완료 | 이유·대기 비용과 처리 완료·합류 전환 설명을 구분한 엔진 수정 결과. 사례 문장을 손으로 교정하지 않음 |
 
-이번 5쌍과 추가 probe에서는 **새 P0/P1을 확인하지 않았다**. 이는 전체 출시의 P0/P1 부재 판정이 아니다. 첫 core 검토가 발견한 현재 위협 우선순위 오인(CORE-P1-01)은 이번 5쌍에서 `threat_priority.status:UNKNOWN`, P 문구, `CAPABILITY_CANDIDATE_NOT_CURRENT_PRIORITY`로 제한되는 것을 확인했다. 이전 DUEL 모순은 F-CE-03에서 직접 재실행했다. UI가 같은 제한을 실제로 노출하는지와 최종 코드의 별도 P0/P1 게이트는 root/브라우저 검증에서 판정한다.
+최종 봉인 5쌍과 같은 소스의 추가 probe에서는 **새 P0/P1을 확인하지 않았다**. 이는 전체 출시의 P0/P1 부재 판정이 아니다. 첫 core 검토가 발견한 현재 위협 우선순위 오인(CORE-P1-01)은 이번 5쌍에서 `threat_priority.status:UNKNOWN`, P 문구, `CAPABILITY_CANDIDATE_NOT_CURRENT_PRIORITY`로 제한되는 것을 확인했다. 이전 DUEL 모순은 F-CE-03에서 직접 재실행했다. UI 노출·전체 코드의 별도 P0/P1 게이트는 root/브라우저 검증에서 판정하며 이 문장 평가만으로 대체하지 않는다.
+
+검토 이력: 이전 v4 예비 실행에서는 정글 목표가 캠프 비교인데 본문에 라이너 막타 지시가 섞인 문제를 전달했다. 현재 v5 J1/J2에는 캠프·지원·귀환 행동이 연결돼 있다. 이후 미봉인 v5 폴더 `/workspace/gp23-artifacts/examples-v5-provisional/`에서 발견한 운영 문단 중복은 F-P2-02로 수정됐으며, 이 평가가 원문을 편집해서 해결한 것이 아니다. 초기 source_commit:null 기록은 이력으로 남기고 최종 표의 근거는 위 EXACT_COMMIT 사례로 교체했다.
 
 ## F39 결정과 다음 작업
 
-더할 것: 최종 root 소스 커밋의 `--require-bound` 결과와 case hashes, 수정된 중복 문단을 같은 seed로 재확인한 기록.
+더할 것: 향후 대상별 도달·참여·기술 근거가 실제로 확보될 때 한정해 개별 전술 지원을 확장한다. 현재 평가에 필요한 소스·사례 해시와 중복 수정 재확인은 위에 기록했다.
 
 뺄 것: 같은 운영 이유를 두 번 출력하는 경로. 출력 품질에 따른 사례 교체, 원문 수작업 보정, 총점에 의한 중대 결함 상쇄도 허용하지 않는다.
 
-고칠 것: F-P2-02의 중복 제거를 최종 실제 엔진 출력에서 확인한다. 나머지 낮은 구체성은 현재 GENERAL_ONLY 지원으로 축소하고, 챔피언별 상황 자료가 없는 범위를 검증 완료로 올리지 않는다.
+고친 것: F-P2-02의 중복 제거를 최종 실제 엔진 출력 10개에서 확인했다. 남은 낮은 구체성은 현재 GENERAL_ONLY 지원으로 축소하고, 챔피언별 상황 자료가 없는 범위를 검증 완료로 올리지 않는다.
 
 지금 하지 않을 것: 대상별 도달·남은 기술·정밀 합류 인원/ETA를 입력 없이 생성하거나, 정성 기여를 숫자 우세로 바꾸거나, 임의 배치 다섯 건을 모든 챔피언 고유 전술 검증으로 일반화하지 않는다. 실경기 N=0을 유지한다.
 
 검증: `python -m unittest tests_pregame.test_gameplan_2plus3_examples -v` **4/4 PASS**. 입력 선정 재현, 각 쌍의 한 필드 변경, 실제 엔진 원문과 JSON 직렬화 결과 동일성, 반복 export 모든 파일 바이트 동일성, 수정/미추적 소스의 허위 커밋 봉인 차단을 검사했다. 이 테스트는 전술 정확도·브라우저 가시성·실경기 효과를 대신하지 않는다.
 
-남은 절차: root의 안정 소스 커밋 → `node scripts/export_gameplan_2plus3.js --seed 20261025 --require-bound` → 최종 원문과 이 인용 비교 및 F-P2-02 재판정 → 정확한 소스·사례 해시 기록 → 증거/평가 문서 커밋. 소스 봉인 대기 때문에 F36 전체 완료를 미리 주장하지 않는다.
+최종 재검증 결과: 사례 해시 5/5 일치, source.sha256 전부 일치, 실제 보고서·투영 재실행 10/10 일치, 한 필드 짝 비교 5/5, GENERAL_ONLY 카드 30/30, 중복 없는 운영 문단 10/10. F36의 원문·소스 봉인과 F37의 한 조건 비교 및 F38~39의 내부 평가/범위 판정은 이 근거에서 확인했다. root가 증거·평가를 최종 커밋하고 전체 통합·출시 상태를 별도로 인계한다.
