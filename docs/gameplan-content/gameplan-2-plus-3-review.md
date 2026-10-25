@@ -43,3 +43,5 @@
 재개: `git diff --check` → 상태44행 고유/필수차원·검토14개 확인 → 구현 파일과 정확 입력 검토 → 해당 scoped tests → 실제 browser → 원문/점수 → CI/배포 receipts. 마지막 두 작업은 상위 실행자 소유이며 이 문서 변경이 통과를 대신하지 않는다.
 
 문서 사후 확인: 상태 고유44행/필수6차원/A~G14반례/기존 matrix160행 구조 검사 통과. 소유8문서 scoped diff-check exit0. 두 공식 archive manifest의 SHA-256이 current pointer와 일치함을 로컬 확인했다. 이는 A/B 기록의 구조·보존자료 무결성만 검사하며 신규 판단/호환/브라우저 반례의 사후 성공이 아니다.
+
+변경 전 비교 기준: 상위 실행자 full baseline906 tests /139.905s OK(`gp23-artifacts/baseline.log`), UI 감사62 tests /9.497s PASS 및 actual current DOM desktop1440/mobile390 두 viewport(`ui-baseline-browser/result.json`). 이 수치는 변경 전 회귀 기준선이며 C~G의 신규 제품 사후 결과를 PASS로 바꾸지 않는다.

@@ -13,6 +13,11 @@
 ## 현재 명령/증거
 `git rev-parse HEAD` → 시작 SHA 위와 같음. `cat`/`sed`/Python JSON/`rg`로 요구,실제 호출 경로,manifest를 확인했다. 명령은 읽기 전용이며 신규 제품 검사는 NOT_RUN. audit 상세 `/workspace/gp23-artifacts/docs-audit.md`는 작업공간 감사 산출물이다. 영구 검증 receipts는 상위 인계에서 저장소 안에 봉인한다.
 
+## 변경 전 실행 기준선 (새 구현 수용과 별도)
+- 상위 실행자의 `/workspace/gp23-artifacts/baseline.log`: `Ran 906 tests in 139.905s` / `OK`. 이는 시작 상태 회귀 기준선이다. 신규 GP23/학습실 변경 후 검사 결과로 전용하지 않는다.
+- UI 감사 `/workspace/gp23-artifacts/ui-audit.md`: `PYTHONDONTWRITEBYTECODE=1 python -m unittest -q tests_pregame.test_loading_presentation tests_pregame.test_gameplan_coaching_content tests_pregame.test_gameplan_backend tests_pregame.test_gameplan_direction tests_pregame.test_gameplan_input tests_pregame.test_gameplan_registry` → 62 tests PASS / 9.497s. 변경 전 실제 current DOM 브라우저2개 viewport(1440×1000,390×844)는 `/workspace/gp23-artifacts/ui-baseline-browser/result.json`에 보존한다.
+- 두 브라우저 viewport 기준선은 새 상단2/하단3 구현, input-v5, 320폭/200%/키보드 또는 학습실 검증이 아니다. 기존 fixture 회귀와 실제 shipped DOM 범위를 구분한다.
+
 ## 문서 변경 검증
 - 상태44행 고유·6개 차원·A~G 반례14개·기존 matrix160행 확인: `DOCUMENT_STRUCTURE_OK`.
 - 소유8문서만 `git diff --check -- <owned paths>`: exit0. 전역 검사는 동시 진행 파일의 공백을 별도 발견했으며 그 파일 소유자에게 전달했다.
