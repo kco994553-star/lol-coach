@@ -31,3 +31,33 @@ class RiotCollectionPolicyTests(unittest.TestCase):
         with gzip.open(path,'rt') as source:data=json.load(source)
         self.assertTrue(auxiliary_needed([data],patch='16.20'))
         self.assertFalse(auxiliary_needed([data],patch='16.19'))
+
+
+class AllTierCoveragePolicyTests(unittest.TestCase):
+    def test_one_leaf_division_target_per_slot_and_complete_rotation(self):
+        from coach_v1.riot_collection_policy import collection_target, FUTURE_STATISTICS_TIERS
+        targets=[collection_target(i) for i in range(40)]
+        self.assertEqual({t['tier'] for t in targets},set(FUTURE_STATISTICS_TIERS))
+        for tier in FUTURE_STATISTICS_TIERS:
+            self.assertEqual({t['division'] for t in targets if t['tier']==tier},{'I','II','III','IV'})
+        self.assertEqual(collection_target(40),collection_target(0))
+        for invalid in (-1,True,'1'):
+            with self.assertRaises(ValueError):collection_target(invalid)
+
+    def test_resolver_all_tier_coverage_does_not_invoke_legacy_auxiliary_gate(self):
+        import importlib.util,json,os,tempfile
+        from pathlib import Path
+        from unittest.mock import patch
+        root=Path(__file__).resolve().parents[1]
+        spec=importlib.util.spec_from_file_location('resolve_collection',root/'scripts/resolve_riot_collection.py')
+        module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+        for tier in ('IRON','MASTER','GRANDMASTER'):
+            with tempfile.TemporaryDirectory() as tmp:
+                output=Path(tmp)/'gh-output'
+                argv=['resolve','--patch','16.20','--tier',tier,'--aggregate-directory',tmp]
+                with patch('sys.argv',argv),patch.dict(os.environ,{'GITHUB_OUTPUT':str(output)}),patch.object(module.urllib.request,'urlopen',side_effect=AssertionError('no provider/static network for explicit patch')),patch.object(module.time,'time',return_value=9999999999):
+                    self.assertEqual(module.main(),0)
+                result=json.loads((Path(tmp)/'collection-policy.json').read_text())
+                self.assertFalse(result['enabled'])
+                self.assertEqual(result['tier'],tier)
+                self.assertEqual(result['collection_scope'],'ALL_TIER_BROWSER_COVERAGE')

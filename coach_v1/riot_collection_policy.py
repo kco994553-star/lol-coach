@@ -1,14 +1,24 @@
-"""User-approved Challenger policy and current official static patch metadata."""
+"""User-approved all-tier collection and separate legacy Challenger reference policy and current official static patch metadata."""
 from datetime import datetime,timezone
 import re
-from .power_stats import validate_power_dataset
+from .power_stats import TIERS, validate_power_dataset
 
-FUTURE_STATISTICS_TIERS=('MASTER','GRANDMASTER','CHALLENGER')
+FUTURE_STATISTICS_TIERS=TIERS
 
 def validate_new_statistics_tier(tier):
     """Current ranked seed eligibility, not every participant's historic rank."""
-    if tier not in FUTURE_STATISTICS_TIERS:raise ValueError('MASTER_PLUS_REQUIRED')
+    if tier not in FUTURE_STATISTICS_TIERS:raise ValueError('AUTHORIZED_LEAF_TIER_REQUIRED')
     return tier
+
+
+def collection_target(rotation):
+    """One leaf job per run; ten tiers × four division slots, no budget reset.
+
+    Apex endpoints ignore division; those repeated slots are explicitly only
+    another bounded sample of the same apex seed list, not division coverage.
+    """
+    if type(rotation) is not int or rotation<0:raise ValueError('nonnegative rotation required')
+    return dict(tier=TIERS[rotation%len(TIERS)],division=('I','II','III','IV')[(rotation//len(TIERS))%4])
 
 
 def resolve_patch(versions,*,explicit=None):

@@ -5,7 +5,10 @@ class EvidenceBindingTests(unittest.TestCase):
     def test_exact_source_authority_rejects_unregistered_source(self):
         manifest={'current_sha256':{p:'a'*64 for p in v.CURRENT}}
         self.assertTrue(v.exact_source_authority(manifest))
-        manifest['current_sha256']['coach_v1/riot_collector.py']='a'*64
+        # The collector is now an explicitly authorized, archived successor.
+        unregistered='coach_v1/unregistered_fixture.py'
+        self.assertNotIn(unregistered,v.CURRENT)
+        manifest['current_sha256'][unregistered]='a'*64
         self.assertFalse(v.exact_source_authority(manifest))
     def test_new_file_inventory_has_no_broad_executable_exception(self):
         self.assertTrue(v.allowed_new('evidence/actual-evidence/notes.json'))

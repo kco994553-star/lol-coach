@@ -350,6 +350,7 @@ class PregameHandler(Handler):
         # Public, manual learning examples only. No account/live-game adapter or
         # private workbench export is reachable from this explicit asset list.
         learning_assets={
+            **{'/'+p:(p,'application/json; charset=utf-8' if p.endswith('.json') else 'text/javascript; charset=utf-8') for p in ('champion-insights.js','champion-insights.json','champion-matchup-knowledge.json')},
             '/learning':('learning.html','text/html; charset=utf-8'),
             **{'/'+p:(p,'application/json; charset=utf-8' if p.endswith('.json') else 'text/css; charset=utf-8' if p.endswith('.css') else 'text/html; charset=utf-8' if p.endswith('.html') else 'text/javascript; charset=utf-8') for p in ('learning.html','learning.css','learning-engine.js','learning.js','learning-room.json','loading-situation.js')},
             **{'/home-assets/'+p:('home-assets/'+p,'image/jpeg') for p in ('Ahri.jpg','Caitlyn.jpg','AhriSkin27.jpg','LuxSkin7.jpg','lane.jpg','fight.jpg')},
@@ -451,6 +452,17 @@ class PregameHandler(Handler):
             filename,ctype=assets[route];file=ROOT/'web_r4'/filename
             if not file.exists():raise ServiceError(404,'PREGAME_UI_NOT_INSTALLED')
             return self.reply(200,file.read_bytes(),ctype)
+        if route=='/dev/v1/champion/insights' and self.command=='POST':
+            self.authorize()
+            from .champion_insights import select_insights
+            value=self.body()
+            if not isinstance(value,dict) or not {'champion','position'}<=set(value) or set(value)-{'champion','position','tier','patch'}:raise ServiceError(422,'INVALID_CHAMPION_INSIGHTS')
+            if not isinstance(value['champion'],str) or not re.fullmatch(r'[A-Za-z][A-Za-z0-9]{0,39}',value['champion']):raise ServiceError(422,'INVALID_CHAMPION_INSIGHTS')
+            if value['position'] not in ('TOP','JUNGLE','MID','BOTTOM','SUPPORT'):raise ServiceError(422,'INVALID_CHAMPION_INSIGHTS')
+            if 'tier' in value and value['tier'] not in ('MASTER_PLUS','ALL','IRON','BRONZE','SILVER','GOLD','PLATINUM','EMERALD','DIAMOND','MASTER','GRANDMASTER','CHALLENGER'):raise ServiceError(422,'INVALID_CHAMPION_INSIGHTS')
+            if 'patch' in value and value['patch'] is not None and (not isinstance(value['patch'],str) or not re.fullmatch(r'\d{1,3}\.\d{1,3}',value['patch'])):raise ServiceError(422,'INVALID_CHAMPION_INSIGHTS')
+            data=json.loads((ROOT/'web_r4/champion-insights.json').read_text())
+            return self.bounded_reply(200,select_insights(data,**value))
         if route=='/dev/v1/learning/search' and self.command=='POST':
             self.authorize()
             from .learning_room import search_index

@@ -252,4 +252,213 @@ class RiotCollectorTests(unittest.TestCase):
             self.assertEqual(json.loads(result.stdout.splitlines()[-1])['movement_status'],'BLOCKED_EXTERNAL')
 
 
+class AllTierResultCollectionTests(unittest.TestCase):
+    setUp=RiotCollectorTests.setUp
+    collector=RiotCollectorTests.collector
+    collect=RiotCollectorTests.collect
+    def result_pair(self,number=100):
+        from tests_pregame.test_outcome_stats import pair
+        p=pair(number)
+        p['match']['metadata']['matchId']='KR_'+str(number)
+        p['timeline']['metadata']['matchId']='KR_'+str(number)
+        return p
+
+    def test_all_ten_leaf_endpoint_routes_and_all_lower_divisions(self):
+        from coach_v1.power_stats import TIERS
+        for tier in TIERS:
+            for division in ('I','II','III','IV'):
+                apex=tier in ('MASTER','GRANDMASTER','CHALLENGER')
+                c=self.collector([okay({'entries':[]} if apex else [])])
+                c.collect(tier=tier,division=division,patch='16.19',collect_items=False)
+                suffix=tier.lower()+'leagues/by-queue/RANKED_SOLO_5x5' if apex else 'entries/RANKED_SOLO_5x5/'+tier+'/'+division+'?page=1'
+                self.assertTrue(self.transport.urls[0].endswith(suffix))
+                self.assertEqual(c.requests,1)
+
+    def test_old_power_match_backfills_result_detail_without_timeline(self):
+        import hashlib
+        p=self.result_pair();sha=hashlib.sha256(b'KR_100').hexdigest()
+        c=self.collector([okay([{'puuid':'PRIVATE_SEED'}]),okay(['KR_100']),okay(p['match'])])
+        result=self.collect(c,collect_items=False,collect_results=True,known_match_hashes=[sha])
+        self.assertEqual(result['samples']['real_matches'],0)
+        self.assertEqual(c.requests,3)
+        self.assertEqual(len(c.matchup_results['records']),1)
+        self.assertEqual(c.matchup_results['records'][0]['hash'],sha)
+        self.assertEqual(c.result_backfill_count,1)
+        self.assertFalse(any('/timeline' in url for url in self.transport.urls))
+        self.assertNotIn('PRIVATE',json.dumps(c.matchup_results))
+        self.assertNotIn('KR_100',json.dumps(c.matchup_results))
+
+    def test_new_matches_emit_results_from_same_pair_and_no_extra_requests(self):
+        p=self.result_pair()
+        c=self.collector([okay([{'puuid':'PRIVATE_SEED'}]),okay(['KR_100']),okay(p['match']),okay(p['timeline'])])
+        self.collect(c,collect_items=False,collect_results=True)
+        self.assertEqual(c.requests,4)
+        self.assertEqual(len(c.matchup_results['records']),1)
+        self.assertEqual(c.result_backfill_count,0)
+        self.assertEqual(c.matchup_results['records'][0]['provenance'][0]['division'],'I')
+
+    def test_known_result_reused_with_new_tier_membership_and_no_detail_call(self):
+        from coach_v1.matchup_results import normalize_match,empty_matchup_results,merge_matchup_results
+        p=self.result_pair();r=normalize_match(p['match'],'CHALLENGER',patch='16.19')
+        c=self.collector([okay([{'puuid':'PRIVATE_SEED'}]),okay(['KR_100'])])
+        self.collect(c,collect_items=False,collect_results=True,known_match_hashes=[r['hash']],known_result_records=[r])
+        self.assertEqual(c.requests,2)
+        new=empty_matchup_results();new['records']=[r]
+        merged=merge_matchup_results(new,c.matchup_results)
+        self.assertEqual(merged['records'][0]['seed_tiers'],['GOLD','CHALLENGER'])
+        self.assertEqual(c.matchup_results['records'][0]['seed_tiers'],['GOLD'])
+
+    def test_result_backfill_uses_same_global_budget_and_match_ceiling(self):
+        import hashlib
+        p=self.result_pair()
+        c=self.collector([okay([{'puuid':'private'}]),okay(['KR_100','KR_101']),okay(p['match'])],max_matches=1)
+        self.collect(c,collect_items=False,collect_results=True,known_match_hashes=[hashlib.sha256(b'KR_100').hexdigest()])
+        self.assertEqual(c.requests,3)
+        c=self.collector([okay([{'puuid':'private'}]),okay(['KR_100'])],max_requests=2)
+        result=self.collect(c,collect_items=False,collect_results=True,known_match_hashes=[hashlib.sha256(b'KR_100').hexdigest()])
+        self.assertEqual(c.requests,2)
+        self.assertEqual(result['source']['collection']['reason'],'REQUEST_BUDGET_EXHAUSTED')
+        self.assertEqual(c.matchup_results['records'],[])
+
+    def test_result_first_auth_failure_stops_without_retry_or_complete_hash(self):
+        import hashlib
+        for status in (401,403):
+            c=self.collector([okay([{'puuid':'private'}]),okay(['KR_100','KR_101']),(status,{},b'PRIVATE')])
+            result=self.collect(c,collect_items=False,collect_results=True,known_match_hashes=[hashlib.sha256(b'KR_100').hexdigest()])
+            self.assertEqual(c.requests,3);self.assertEqual(c.retries,0)
+            self.assertEqual(c.matchup_results['records'],[])
+            self.assertEqual(result['source']['collection']['status_code'],status)
+
+    def test_off_patch_detail_does_not_consume_scoped_match_ceiling(self):
+        import hashlib
+        for companion in (False,True):
+            old=self.result_pair(100);old['match']['info']['gameVersion']='16.18.1'
+            current=self.result_pair(101)
+            responses=[okay([{'puuid':'private'}]),okay(['KR_100','KR_101']),okay(old['match']),okay(current['match'])]
+            if not companion:responses.append(okay(current['timeline']))
+            c=self.collector(responses,max_matches=1)
+            result=self.collect(c,collect_items=False,collect_results=companion,
+                known_match_hashes=[hashlib.sha256(b'KR_101').hexdigest()] if companion else [])
+            self.assertEqual(c.requests,4 if companion else 5)
+            self.assertFalse(any('/KR_100/timeline' in url for url in self.transport.urls))
+            if companion:self.assertEqual(c.result_backfill_count,1)
+            else:self.assertEqual(result['samples']['real_matches'],1)
+        # Skipped old-patch details are still real requests; a tight shared
+        # ceiling must stop before fetching any later match or timeline.
+        c=self.collector([okay([{'puuid':'private'}]),okay(['KR_100','KR_101']),okay(old['match'])],max_matches=1,max_requests=3)
+        result=self.collect(c,collect_items=False,collect_results=True)
+        self.assertEqual(c.requests,3)
+        self.assertEqual(result['source']['collection']['reason'],'REQUEST_BUDGET_EXHAUSTED')
+        self.assertEqual(c.matchup_results['records'],[])
+
+    def test_unspecified_patch_pins_first_reused_result_before_fetching_other_patch(self):
+        from coach_v1.matchup_results import normalize_match
+        p=self.result_pair(100);known=normalize_match(p['match'],'CHALLENGER',patch='16.19')
+        other=self.result_pair(101);other['match']['info']['gameVersion']='16.20.1'
+        c=self.collector([okay([{'puuid':'private'}]),okay(['KR_100','KR_101']),okay(other['match'])])
+        result=c.collect(tier='GOLD',collect_items=False,collect_results=True,
+            known_match_hashes=[known['hash']],known_result_records=[known])
+        self.assertEqual(result['source']['patch'],'16.19')
+        self.assertEqual({r['patch'] for r in c.matchup_results['records']},{'16.19'})
+        self.assertFalse(any('/timeline' in url for url in self.transport.urls))
+
+    def test_already_complete_same_tier_does_not_starve_next_backfill(self):
+        from coach_v1.matchup_results import normalize_match
+        import hashlib
+        p=self.result_pair(100);known=normalize_match(p['match'],'GOLD',patch='16.19')
+        next_pair=self.result_pair(101)
+        c=self.collector([okay([{'puuid':'private'}]),okay(['KR_100','KR_101']),okay(next_pair['match'])],max_matches=1)
+        self.collect(c,collect_items=False,collect_results=True,
+            known_match_hashes=[known['hash'],hashlib.sha256(b'KR_101').hexdigest()],known_result_records=[known])
+        self.assertEqual(c.requests,3)
+        self.assertEqual([r['hash'] for r in c.matchup_results['records']],[hashlib.sha256(b'KR_101').hexdigest()])
+
+    def test_backfill_rejects_detail_with_wrong_requested_match_identity(self):
+        import hashlib
+        p=self.result_pair(101)
+        c=self.collector([okay([{'puuid':'private'}]),okay(['KR_100']),okay(p['match'])])
+        result=self.collect(c,collect_items=False,collect_results=True,known_match_hashes=[hashlib.sha256(b'KR_100').hexdigest()])
+        self.assertEqual(c.matchup_results['records'],[])
+        self.assertEqual(result['source']['collection']['reason'],'MALFORMED_RESPONSE')
+
+    def test_two_distinct_ineligible_pairs_keep_both_omission_counts(self):
+        responses=[okay([{'puuid':'private'}]),okay(['KR_100','KR_101'])]
+        for number in (100,101):
+            p=self.result_pair(number);p['match']['info']['participants'][0].pop('win')
+            responses.extend([okay(p['match']),okay(p['timeline'])])
+        c=self.collector(responses)
+        self.collect(c,collect_items=False,collect_results=True)
+        self.assertEqual(c.matchup_results['records'],[])
+        self.assertEqual(c.matchup_results['omissions']['INELIGIBLE_MATCH'],2)
+
+    def test_failed_result_validation_does_not_mark_power_match_complete(self):
+        import hashlib
+        p=self.result_pair();p['match']['info']['participants'][0].pop('win')
+        c=self.collector([okay([{'puuid':'private'}]),okay(['KR_100']),okay(p['match'])])
+        self.collect(c,collect_items=False,collect_results=True,known_match_hashes=[hashlib.sha256(b'KR_100').hexdigest()])
+        self.assertEqual(c.matchup_results['records'],[])
+        self.assertEqual(c.matchup_results['omissions']['INELIGIBLE_MATCH'],1)
+
+
+class ResultStateCLITests(unittest.TestCase):
+    def script(self):
+        spec=importlib.util.spec_from_file_location('collect_power_script',Path(__file__).resolve().parents[1]/'scripts/collect_power_stats.py')
+        module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
+
+    def test_digest_bound_result_ledger_is_separate_and_conflicts_fail_before_provider(self):
+        from coach_v1.matchup_results import empty_matchup_results,normalize_match
+        from tests_pregame.test_outcome_stats import pair
+        module=self.script();d=empty_matchup_results();d['records']=[normalize_match(pair()['match'],'GOLD',sample_kind='SYNTHETIC')]
+        with tempfile.TemporaryDirectory() as tmp:
+            state=Path(tmp)/'results.json.gz';ledger=Path(tmp)/'result-completeness.json'
+            module.save_result_state(state,ledger,d)
+            self.assertEqual(module.load_result_state(state,ledger),d)
+            saved=json.loads(ledger.read_text())
+            self.assertEqual(saved['complete_match_hashes'],[d['records'][0]['hash']])
+            saved['complete_match_hashes']=[];ledger.write_text(json.dumps(saved))
+            with self.assertRaises(ValueError):module.load_result_state(state,ledger)
+            with patch.object(module,'RiotCollector',side_effect=AssertionError('must reject before credentials/network')):
+                with self.assertRaises(SystemExit):module.main(['--output',str(Path(tmp)/'power.json'),'--tier','GOLD',
+                    '--matchup-results-state',str(state),'--result-completeness-ledger',str(ledger)])
+
+    def test_cli_round_trip_preserves_result_and_skips_completed_details(self):
+        from coach_v1.riot_collector import RiotCollector
+        from tests_pregame.test_outcome_stats import pair
+        module=self.script();p=pair()
+        p['match']['metadata']['matchId']='KR_100';p['timeline']['metadata']['matchId']='KR_100'
+        clock=Clock();first=Responses([okay([{'puuid':'PRIVATE_SEED'}]),okay(['KR_100']),okay(p['match']),okay(p['timeline'])])
+        with tempfile.TemporaryDirectory() as tmp:
+            directory=Path(tmp);state=directory/'private/results.json.gz';ledger=directory/'private/complete.json'
+            arguments=['--output',str(directory/'public/power.json'),'--aggregate-directory',str(directory/'public'),
+                '--tier','GOLD','--start-time','1','--end-time','2000000000','--no-item-markers',
+                '--accumulator',str(directory/'private/power-state.json.gz'),
+                '--matchup-results-state',str(state),'--result-completeness-ledger',str(ledger)]
+            def factory(transport):
+                return lambda **kwargs:RiotCollector(TEST_KEY,transport=transport,clock=clock.now,sleeper=clock.sleep,**kwargs)
+            with patch.object(module,'RiotCollector',side_effect=factory(first)),redirect_stdout(StringIO()):
+                self.assertEqual(module.main(arguments),0)
+            self.assertEqual(len(first.urls),4)
+            initial=module.load_result_state(state,ledger)
+            self.assertEqual(len(initial['records']),1)
+            second=Responses([okay([{'puuid':'PRIVATE_SEED'}]),okay(['KR_100'])])
+            with patch.object(module,'RiotCollector',side_effect=factory(second)),redirect_stdout(StringIO()):
+                self.assertEqual(module.main(arguments),0)
+            self.assertEqual(len(second.urls),2)
+            self.assertEqual(len(module.load_result_state(state,ledger)['records']),1)
+            for path in (directory/'public').glob('*.json'):
+                value=path.read_text()
+                self.assertNotIn('champion.opponent-results.v1',value)
+                self.assertNotIn('PRIVATE_SEED',value)
+
+    def test_publish_only_preserves_result_state_without_claiming_legacy_results(self):
+        module=self.script()
+        with tempfile.TemporaryDirectory() as tmp:
+            state=Path(tmp)/'results.json.gz';ledger=Path(tmp)/'completeness.json'
+            with patch.object(module,'RiotCollector',side_effect=AssertionError('publish only cannot collect')),redirect_stdout(StringIO()):
+                self.assertEqual(module.main(['--output',str(Path(tmp)/'power.json'),'--accumulator',str(Path(tmp)/'power-state.json.gz'),
+                    '--matchup-results-state',str(state),'--result-completeness-ledger',str(ledger),'--publish-only']),0)
+            self.assertEqual(module.load_result_state(state,ledger)['records'],[])
+            self.assertEqual(json.loads(ledger.read_text())['complete_match_hashes'],[])
+
+
 if __name__=='__main__':unittest.main()
