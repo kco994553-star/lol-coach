@@ -1,3 +1,16 @@
+# Frontend hierarchy v2.0 — CI pending / writer released
+- run_token: `codex-20261025-frontend-hierarchy-v2-mvngyku7`
+- status: CI_PENDING
+- writer_active: false
+- owner_branch: `docs/frontend-hierarchy-v2-20261025`
+- head: `6f5a375879246c068c7a8f8d12a2ff15ed62195c`
+- PR: https://github.com/kco994553-star/lol-coach/pull/139
+- Result: latest v2.0 hierarchy and user-corrected time-based champion power graph contract, 160 rows / 125 preserved / 35 added connections; exact old contract preserved in appendix C. One document hash rebound; verifier and product code unchanged.
+- Independent review: feature/mapping uniqueness, exact legacy blob preservation and single seal-value change PASS. Required CI and normal gated merge remain pending. Notion synchronization is being completed separately; no active GitHub source writer while waiting.
+- Next: reacquire a fresh claim after exact-head checks/reviews to merge PR139 normally, verify main and finish document synchronization. PR137/138 remain separate.
+
+---
+
 # Frontend hierarchy v2.0 — GitHub and Notion document synchronization
 - run_token: `codex-20261025-frontend-hierarchy-v2-mvngyku7`
 - status: RUNNING
