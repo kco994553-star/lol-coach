@@ -84,3 +84,17 @@ body.plan-ready #loading-message:not(.is-error):not(.is-stale){position:absolute
 .plan-card-conditions>[data-tag-kind=STATUS]{color:#d7dde5;background:#27313c99;border-color:#7b899a99}
 .plan-coverage{font-size:.82rem;line-height:1.6;color:#b8c5d6;margin:10px 0 14px}
 .plan-coverage[data-coverage=GENERAL_ONLY],.plan-coverage[data-coverage=BASELINE_ONLY]{padding:10px 12px;border-left:3px solid #8996a6;background:#1d293899}
+
+/* 2+3: team direction and personal baseline have separate, visible responsibilities. */
+.plan-overview-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:20px 0}
+.plan-overview-card{min-width:0;padding:16px;border:1px solid var(--plan-line);border-radius:8px;background:#101b2b;overflow-wrap:anywhere}
+.plan-overview-card h3{font-size:1rem;color:var(--plan-gold);margin:0 0 12px}.plan-overview-card h4{font-size:1.12rem;line-height:1.55;margin:0 0 12px}
+.plan-overview-card p{font-size:1rem;line-height:1.8;margin:0 0 14px}.plan-overview-card p:last-child{margin-bottom:0}
+.plan-situation-state{margin:16px 0;padding:14px 16px;border-left:3px solid #bda0ee;background:#19182b;overflow-wrap:anywhere}
+.plan-situation-state h3{margin:0 0 8px;font-size:1rem;color:#e2d5fa}.plan-situation-state p,.plan-situation-state li{font-size:.95rem;line-height:1.7}
+.plan-situation-state ul{padding-left:20px}.plan-situation-state [data-situation-status=stale]{color:#ffe1a8}
+.plan-situation-fields label{min-width:0}.plan-situation-fields select{width:100%;max-width:100%;min-width:0;min-height:44px;white-space:normal;font-size:1rem}
+.plan-phase-decision{margin:16px 0;padding:12px;border:1px solid var(--plan-line);border-radius:6px;background:#101d2d;overflow-wrap:anywhere}
+.plan-phase-decision .coach-block{padding:0;margin:10px 0}.plan-phase-decision h4{margin:0 0 5px;font-size:.9rem;color:var(--plan-gold)}.plan-phase-decision p,.plan-phase-decision li{font-size:1rem;line-height:1.7;margin:0}
+.plan-learning-link{display:block;margin-top:12px;padding:12px;min-height:44px;color:#e0cdfa;overflow-wrap:anywhere;line-height:1.6;text-underline-offset:3px}
+@media(max-width:700px){.plan-overview-cards{grid-template-columns:minmax(0,1fr)}.plan-overview-card{padding:14px}.plan-situation-fields{grid-template-columns:minmax(0,1fr)}}

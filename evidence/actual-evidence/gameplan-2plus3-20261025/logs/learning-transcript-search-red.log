@@ -1,0 +1,143 @@
+..F..FF..E..E..FFFFFFFFF.
+======================================================================
+ERROR: test_query_resolves_existing_claim_prose_and_normalizes_term_and (tests_pregame.test_learning_room.LearningRoomTests.test_query_resolves_existing_claim_prose_and_normalizes_term_and)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 131, in test_query_resolves_existing_claim_prose_and_normalizes_term_and
+    result = api.search_index(index, '크래시 ＷＡＶＥ', champion='Caitlyn', knowledge=knowledge)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: search_index() got an unexpected keyword argument 'knowledge'
+
+======================================================================
+ERROR: test_segment_projection_declares_validated_timestamps (tests_pregame.test_learning_room.LearningRoomTests.test_segment_projection_declares_validated_timestamps)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 125, in test_segment_projection_declares_validated_timestamps
+    self.assertEqual(self.api().validate_segment(self.segment())['timestamp_state'], 'VALIDATED')
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'timestamp_state'
+
+======================================================================
+FAIL: test_existing_claims_are_references_and_never_approve (tests_pregame.test_learning_room.LearningRoomTests.test_existing_claims_are_references_and_never_approve)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 46, in test_existing_claims_are_references_and_never_approve
+    self.assertIsNone(lesson['alternative_or_recovery'])
+AssertionError: {'claim_id': 'A-WAVE', 'field': 'counterexamples'} is not None
+
+======================================================================
+FAIL: test_offline_manifest_build_keeps_paths_notes_and_raw_out_of_public_output (tests_pregame.test_learning_room.LearningRoomTests.test_offline_manifest_build_keeps_paths_notes_and_raw_out_of_public_output)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 266, in test_offline_manifest_build_keeps_paths_notes_and_raw_out_of_public_output
+    self.assertEqual(result.returncode, 0, result.stderr)
+AssertionError: 2 != 0 : usage: build_learning_room.py [-h] [--check]
+build_learning_room.py: error: unrecognized arguments: --accepted-inputs /tmp/tmpun9bmiqu/accepted.json --output /tmp/tmpun9bmiqu/index.json
+
+
+======================================================================
+FAIL: test_offline_transcript_reuses_speech_candidates_without_text_or_visual_upgrade (tests_pregame.test_learning_room.LearningRoomTests.test_offline_transcript_reuses_speech_candidates_without_text_or_visual_upgrade)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 210, in test_offline_transcript_reuses_speech_candidates_without_text_or_visual_upgrade
+    index = self.append()
+            ^^^^^^^^^^^^^
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 202, in append
+    self.assertTrue(hasattr(api, 'append_transcript'), 'permitted offline transcript adapter is missing')
+AssertionError: False is not true : permitted offline transcript adapter is missing
+
+======================================================================
+FAIL: test_transcript_cue_assignments_keep_distinct_decisions_and_ingestion_idempotent (tests_pregame.test_learning_room.LearningRoomTests.test_transcript_cue_assignments_keep_distinct_decisions_and_ingestion_idempotent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 240, in test_transcript_cue_assignments_keep_distinct_decisions_and_ingestion_idempotent
+    index = self.append(topic_assignments=assignments)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 202, in append
+    self.assertTrue(hasattr(api, 'append_transcript'), 'permitted offline transcript adapter is missing')
+AssertionError: False is not true : permitted offline transcript adapter is missing
+
+======================================================================
+FAIL: test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed (tests_pregame.test_learning_room.LearningRoomTests.test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed) (case={'raw': b'YouTube transcript\nVideo ID: AAAAAAAAAAA\nLanguage: ko\nCaptions: manual\n[00:01] \xec\x9b\xa8\xec\x9d\xb4\xeb\xb8\x8c\xeb\xa5\xbc \xed\x99\x95\xec\x9d\xb8\xed\x95\xa9\xeb\x8b\x88\xeb\x8b\xa4.\n[00:05] \xec\xa0\x95\xea\xb8\x80 \xec\xa0\x95\xeb\xb3\xb4\xeb\x8a\x94 \xeb\xaf\xb8\xed\x99\x95\xec\x9d\xb8\xec\x9e\x85\xeb\x8b\x88\xeb\x8b\xa4.\n[00:09] \xeb\x81\x9d.\n'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 234, in test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed
+    self.append(**case)
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 202, in append
+    self.assertTrue(hasattr(api, 'append_transcript'), 'permitted offline transcript adapter is missing')
+AssertionError: False is not true : permitted offline transcript adapter is missing
+
+======================================================================
+FAIL: test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed (tests_pregame.test_learning_room.LearningRoomTests.test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed) (case={'access_state': 'UNKNOWN'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 234, in test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed
+    self.append(**case)
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 202, in append
+    self.assertTrue(hasattr(api, 'append_transcript'), 'permitted offline transcript adapter is missing')
+AssertionError: False is not true : permitted offline transcript adapter is missing
+
+======================================================================
+FAIL: test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed (tests_pregame.test_learning_room.LearningRoomTests.test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed) (case={'license_or_access_state': 'DENIED'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 234, in test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed
+    self.append(**case)
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 202, in append
+    self.assertTrue(hasattr(api, 'append_transcript'), 'permitted offline transcript adapter is missing')
+AssertionError: False is not true : permitted offline transcript adapter is missing
+
+======================================================================
+FAIL: test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed (tests_pregame.test_learning_room.LearningRoomTests.test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed) (case={'source_provenance': {'visibility': 'PRIVATE', 'transcript_sha256': '0000000000000000000000000000000000000000000000000000000000000000', 'video_duration_ms': 12000}})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 234, in test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed
+    self.append(**case)
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 202, in append
+    self.assertTrue(hasattr(api, 'append_transcript'), 'permitted offline transcript adapter is missing')
+AssertionError: False is not true : permitted offline transcript adapter is missing
+
+======================================================================
+FAIL: test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed (tests_pregame.test_learning_room.LearningRoomTests.test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed) (case={'source_provenance': {'visibility': 'PUBLIC', 'transcript_sha256': '0000000000000000000000000000000000000000000000000000000000000000', 'video_duration_ms': 12000}})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 234, in test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed
+    self.append(**case)
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 202, in append
+    self.assertTrue(hasattr(api, 'append_transcript'), 'permitted offline transcript adapter is missing')
+AssertionError: False is not true : permitted offline transcript adapter is missing
+
+======================================================================
+FAIL: test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed (tests_pregame.test_learning_room.LearningRoomTests.test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed) (case={'raw': b'YouTube transcript\nVideo ID: SA6o_QRPqL8\nLanguage: ko\nCaptions: manual\n[00:01] \xec\x9b\xa8\xec\x9d\xb4\xeb\xb8\x8c\xeb\xa5\xbc \xed\x99\x95\xec\x9d\xb8\xed\x95\xa9\xeb\x8b\x88\xeb\x8b\xa4.\n[00:00] \xec\xa0\x95\xea\xb8\x80 \xec\xa0\x95\xeb\xb3\xb4\xeb\x8a\x94 \xeb\xaf\xb8\xed\x99\x95\xec\x9d\xb8\xec\x9e\x85\xeb\x8b\x88\xeb\x8b\xa4.\n[00:09] \xeb\x81\x9d.\n'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 234, in test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed
+    self.append(**case)
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 202, in append
+    self.assertTrue(hasattr(api, 'append_transcript'), 'permitted offline transcript adapter is missing')
+AssertionError: False is not true : permitted offline transcript adapter is missing
+
+======================================================================
+FAIL: test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed (tests_pregame.test_learning_room.LearningRoomTests.test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed) (case={'raw': b'YouTube transcript\nVideo ID: SA6o_QRPqL8\nLanguage: ko\nCaptions: manual\n[00:01] \xec\x9b\xa8\xec\x9d\xb4\xeb\xb8\x8c\xeb\xa5\xbc \xed\x99\x95\xec\x9d\xb8\xed\x95\xa9\xeb\x8b\x88\xeb\x8b\xa4.\n[00:65] \xec\xa0\x95\xea\xb8\x80 \xec\xa0\x95\xeb\xb3\xb4\xeb\x8a\x94 \xeb\xaf\xb8\xed\x99\x95\xec\x9d\xb8\xec\x9e\x85\xeb\x8b\x88\xeb\x8b\xa4.\n[00:09] \xeb\x81\x9d.\n'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 234, in test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed
+    self.append(**case)
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 202, in append
+    self.assertTrue(hasattr(api, 'append_transcript'), 'permitted offline transcript adapter is missing')
+AssertionError: False is not true : permitted offline transcript adapter is missing
+
+======================================================================
+FAIL: test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed (tests_pregame.test_learning_room.LearningRoomTests.test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed) (case={'source_provenance': {'visibility': 'PUBLIC', 'transcript_sha256': '8feb4bda3953de2b9a3e2aadb6387e038aac587662d7b0fdae45dd18a2a455d6', 'video_duration_ms': 5000}})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 234, in test_transcript_id_hash_rights_privacy_and_clock_order_fail_closed
+    self.append(**case)
+  File "/workspace/lol-coach-gp23/tests_pregame/test_learning_room.py", line 202, in append
+    self.assertTrue(hasattr(api, 'append_transcript'), 'permitted offline transcript adapter is missing')
+AssertionError: False is not true : permitted offline transcript adapter is missing
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.149s
+
+FAILED (failures=12, errors=2)

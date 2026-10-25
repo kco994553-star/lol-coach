@@ -1,0 +1,43 @@
+test_expanded_combat_label_preserves_visible_actions_and_prose (tests_pregame.test_gameplan_2plus3_ui.Gameplan23UITests.test_expanded_combat_label_preserves_visible_actions_and_prose) ... ok
+test_overview_is_engine_projection_with_distinct_responsibilities (tests_pregame.test_gameplan_2plus3_ui.Gameplan23UITests.test_overview_is_engine_projection_with_distinct_responsibilities) ... FAIL
+test_v5_situation_roundtrips_without_old_link_migration (tests_pregame.test_gameplan_2plus3_ui.Gameplan23UITests.test_v5_situation_roundtrips_without_old_link_migration) ... ok
+
+======================================================================
+FAIL: test_overview_is_engine_projection_with_distinct_responsibilities (tests_pregame.test_gameplan_2plus3_ui.Gameplan23UITests.test_overview_is_engine_projection_with_distinct_responsibilities)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_gameplan_2plus3_ui.py", line 15, in test_overview_is_engine_projection_with_distinct_responsibilities
+    self.node("const v=P.project(r,{currentOnly:true});assert.equal(v.overview.length,2);assert.deepEqual(v.overview.map(x=>x.id),['composition','baseline']);assert(v.overview.every(x=>x.title&&x.paragraphs.length));assert.equal(new Set(v.overview.flatMap(x=>x.paragraphs)).size,v.overview.flatMap(x=>x.paragraphs).length);")
+  File "/workspace/lol-coach-gp23/tests_pregame/test_gameplan_2plus3_ui.py", line 12, in node
+    self.assertEqual(result.returncode, 0, result.stderr[-3500:])
+AssertionError: 1 != 0 : node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+0 !== 2
+
+    at [eval]:1:322
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 2,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.336s
+
+FAILED (failures=1)

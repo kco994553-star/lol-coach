@@ -86,6 +86,8 @@ jobs:
           python scripts/browser_actual_evidence.py
           python scripts/browser_directions.py
           python scripts/browser_loading.py
+          python scripts/browser_gameplan_2plus3.py --output "$RUNNER_TEMP/gp23-browser"
+          python scripts/browser_learning.py --output "$RUNNER_TEMP/learning-browser"
       - name: Verify revised hypothesis cards and separate topic in Chromium
         if: steps.scope.outputs.mode == 'pilot'
         shell: bash

@@ -1,0 +1,49 @@
+test_combat_contribution_arrival_unknown_skills_and_terrain_gate_entry (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_combat_contribution_arrival_unknown_skills_and_terrain_gate_entry) ... ok
+test_jungler_actions_are_not_self_lane_manipulation (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_jungler_actions_are_not_self_lane_manipulation) ... ok
+test_provenance_serialization_and_no_live_observation (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_provenance_serialization_and_no_live_observation) ... ok
+test_reset_and_waiting_cost_do_not_invent_crash_or_block_all_actions (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_reset_and_waiting_cost_do_not_invent_crash_or_block_all_actions) ... FAIL
+test_scope_fallback_never_borrows_champion_tactics (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_scope_fallback_never_borrows_champion_tactics) ... ok
+test_tank_disruption_and_protection_are_real_goal_conflict (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_tank_disruption_and_protection_are_real_goal_conflict) ... ok
+test_unknown_and_stale_never_unlock_push_or_old_pressure_tags (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_unknown_and_stale_never_unlock_push_or_old_pressure_tags) ... ok
+test_v5_strict_and_legacy_versions_unchanged (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_v5_strict_and_legacy_versions_unchanged) ... ok
+test_wave_feasibility_precedes_cost_and_jungle_location (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_wave_feasibility_precedes_cost_and_jungle_location) ... ok
+
+======================================================================
+FAIL: test_reset_and_waiting_cost_do_not_invent_crash_or_block_all_actions (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_reset_and_waiting_cost_do_not_invent_crash_or_block_all_actions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_gameplan_situation.py", line 78, in test_reset_and_waiting_cost_do_not_invent_crash_or_block_all_actions
+    self.node(r"""
+  File "/workspace/lol-coach-gp23/tests_pregame/test_gameplan_situation.py", line 28, in node
+    self.assertEqual(p.returncode, 0, p.stderr[-6000:])
+AssertionError: 1 != 0 : node:assert:885
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /받|남기|줄|확인/. Input:
+
+'조작할 여건이 부족하면 더 나가서 웨이브를 바꾸려 하지 말고, 닿는 자원과 포기할 CS·지원·귀환을 비교한다.'
+
+    at [eval]:17:128
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '조작할 여건이 부족하면 더 나가서 웨이브를 바꾸려 하지 말고, 닿는 자원과 포기할 CS·지원·귀환을 비교한다.',
+  expected: /받|남기|줄|확인/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 9 tests in 1.209s
+
+FAILED (failures=1)

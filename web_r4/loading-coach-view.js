@@ -39,7 +39,7 @@
     }
     function change(patch) {
       if (state.busy || destroyed || typeof onChange !== 'function') return;
-      const payload = { planning: planning(), scenario: scenario(), period: coach().selected_period || 'LEVEL1', preference: coach().context?.preferences?.risk || 'BALANCED', ...patch };
+      const payload = { planning: planning(), scenario: scenario(), situation: current.input.situation, period: coach().selected_period || 'LEVEL1', preference: coach().context?.preferences?.risk || 'BALANCED', ...patch };
       focusHint = document.activeElement?.dataset?.coachFocus || null;
       const seq = ++request; state.busy = true; state.error = ''; syncBusy();
       try {
@@ -52,7 +52,7 @@
     }
     function syncBusy() {
       host.setAttribute('aria-busy', String(state.busy));
-      host.querySelectorAll('[data-coach-change]').forEach(n => { n.disabled = state.busy || typeof onChange !== 'function'; });
+      host.querySelectorAll('[data-coach-change]').forEach(n => { n.disabled = state.busy || typeof onChange !== 'function' || n.dataset.situationReadonly==='true'; });
       const n = host.querySelector('.coach-live'); if (n) n.textContent = state.busy ? '비교 갱신 중' : state.error;
     }
     function why(ids, key, title) {
@@ -85,22 +85,29 @@
     function conditions() {
       const c = coach(), wrap = details('conditions', '상황 바꾸기');
       wrap.append(el('p', '가상의 조건을 바꿔 비교합니다. 현재 게임에서 관측한 정보가 아닙니다.', 'coach-muted'));
+      const explicit=presentation?.currentOnly&&current.input.schema_version==='lol-coach-loading-input-v5';
+      const hiddenScenario=new Set(explicit?['resources','wave']:[]),hiddenPlanning=new Set(explicit?['enemy_jungle','ally_followup','enemy_wave']:[]);
       const fields = el('div', null, 'coach-controls');
       arr(c.exceptions).forEach(def => {
-        if (!def.id || !def.options || typeof def.options !== 'object') return;
+        if (!def.id || hiddenScenario.has(def.id) || !def.options || typeof def.options !== 'object') return;
         const label = el('label'), select = el('select'); select.id = prefix + '-condition-' + def.id; select.dataset.coachFocus = 'condition-' + def.id; select.dataset.coachChange = '';
         Object.entries(def.options).forEach(([value, text]) => { const option = el('option', text); option.value = value; select.append(option); });
         select.value = def.value; select.addEventListener('change', () => { const next = scenario(); next.overrides[def.id] = select.value; change({ scenario: next }); });
         label.append(el('span', def.label), select); fields.append(label);
       });
-      const reset=button('기본 비교로 되돌리기','reset-scenario',()=>change({scenario:{standard:'lane-standard-v1',overrides:{}},planning:{basis:'loading-plan-example-v1',overrides:{}}}));reset.dataset.coachChange='';wrap.append(reset);
+      const reset=button('기본 비교로 되돌리기','reset-scenario',resetSituation);reset.dataset.coachChange='';wrap.append(reset);
       const extra=[['enemy_jungle','상대 정글',{UNKNOWN:'미확인',AWAY:'반대편 확인 가정',NEAR:'가까운 개입 가정'}],['goal','이번 웨이브 목적',{AUTO:'구간 기본 목적',PRESSURE:'CS·공간 압박',FARM:'수급 보존',RECALL:'귀환 준비'}],['clear_window','포탑 도달 여유',{UNCONFIRMED:'미확인',OPEN:'다음 웨이브까지 처리·도달 여유 가정'}]];
       if(c.supported&&['A','B'].includes(c.matchup_id))extra.push(['enemy_support','상대 서포터',{PRESENT:'함께 있는 예시',ABSENT:'부재 가정',UNKNOWN:'미확인'}]);
       extra.push(['ally_followup','아군의 후속 공격',{UNCONFIRMED:'호응 미확인',AVAILABLE:'함께 공격 가능한 가정',UNAVAILABLE:'호응할 수 없는 가정'}]);
       extra.push(['enemy_wave','적 미니언 수',{UNKNOWN:'미니언 수 미확인',NORMAL:'감당할 수 있는 규모 가정',LARGE:'큰 적 웨이브 가정'}]);
       extra.push(['income','기다리는 동안의 수급',{UNKNOWN:'수급 손실 미확인',NORMAL:'CS·경험치를 받을 수 있는 가정',LOSING:'CS·경험치·체력 손실이 커지는 가정'}]);
       extra.push(['opportunity','교전 기회',{UNCONFIRMED:'실행 여건 미확인',AVAILABLE:'호응·자원·남은 반격을 확인한 가정',MISSED:'아군의 공격 기회를 이미 놓친 가정'}]);
-      extra.forEach(([key,title,options])=>{const label=el('label'),select=el('select');select.dataset.coachFocus='planning-'+key;select.dataset.coachChange='';Object.entries(options).forEach(([value,text])=>{const o=el('option',text);o.value=value;select.append(o);});select.value=planning().overrides[key]||Object.keys(options)[0];select.addEventListener('change',()=>change({planning:{...planning(),overrides:{...planning().overrides,[key]:select.value}}}));label.append(el('span',title),select);fields.append(label);});
+      extra.forEach(([key,title,options])=>{if(hiddenPlanning.has(key))return;const label=el('label'),select=el('select');select.dataset.coachFocus='planning-'+key;select.dataset.coachChange='';Object.entries(options).forEach(([value,text])=>{const o=el('option',text);o.value=value;select.append(o);});select.value=planning().overrides[key]||Object.keys(options)[0];select.addEventListener('change',()=>change({planning:{...planning(),overrides:{...planning().overrides,[key]:select.value}}}));label.append(el('span',title),select);fields.append(label);});
+      if(explicit){
+        const carried=[...arr(c.exceptions).filter(def=>hiddenScenario.has(def.id)&&Object.hasOwn(scenario().overrides,def.id)).map(def=>def.label+': '+def.options[scenario().overrides[def.id]]),...extra.filter(([key])=>hiddenPlanning.has(key)&&Object.hasOwn(planning().overrides,key)).map(([key,title,options])=>title+': '+options[planning().overrides[key]])];
+        if(carried.length){const note=block('이전 비교에서 보관한 가정',carried);note.dataset.legacyAssumptions='';note.append(el('p','이 값은 이전 비교의 기록입니다. 위 상황 가정의 값과 미확인 상태를 우선해 판단하며, 초기화하면 함께 지웁니다.','coach-muted'));wrap.append(note);}
+        const edit=button('상황 가정 비교로 돌아가기','edit-situation',()=>{navigateDetail(null);root.setTimeout(()=>{const controls=host.querySelector('[data-situation-controls]');if(controls){controls.open=true;controls.querySelector('summary')?.focus();controls.scrollIntoView({block:'start',behavior:'auto'});}},0);});wrap.append(edit);
+      }
       wrap.append(fields, block(c.context?.assumptions?.label || '표준 비교 가정', c.context?.assumptions?.details), block('패치 · 자료 범위', [c.context?.patch?.label, ...arr(c.context?.patch?.limits)].filter(Boolean)));
       return wrap;
     }
@@ -242,7 +249,7 @@
     }
     function contextualDetails(area){const d=details(area+'-context','조합 구도와 상성 · 양쪽의 방식');d.classList.add('coach-context-details');d.append(contextExplanation(area));return d;}
     function actionSummary(area){
-      const data=board().action_summaries?.[area],titles={lane:current.input.own_position==='JUNGLE'?'초반 정글 — 이렇게 시작하세요':'라인전 — 이렇게 시작하세요',operations:current.input.own_position==='JUNGLE'?'중반 운영 — 이렇게 이득을 만드세요':'운영 — 이렇게 이득을 만드세요',fight:'한타 — 이렇게 싸우세요'},n=card(titles[area]);n.dataset.areaIntro=area;n.dataset.actionSummary=area;
+      const data=board().action_summaries?.[area],titles={lane:current.input.own_position==='JUNGLE'?'초반 정글 — 이렇게 시작하세요':'라인전 — 이렇게 시작하세요',operations:current.input.own_position==='JUNGLE'?'중반 운영 — 이렇게 이득을 만드세요':'운영 — 이렇게 이득을 만드세요',fight:'교전·한타 — 이렇게 싸우세요'},n=card(titles[area]);n.dataset.areaIntro=area;n.dataset.actionSummary=area;
       if(!data){n.append(el('p','이 결과의 행동 요약이 연결되지 않았습니다. 아래 상세를 사용해 주세요.'));return n;}
       if(data.assumption)n.append(el('p',data.assumption,'coach-summary-state'));
       if(data.judgment)n.append(el('p',data.judgment.label+' · 전체 승패와는 별도입니다.','coach-summary-state'));
@@ -381,6 +388,56 @@
       area.actions.forEach(item=>{const li=el('li');li.dataset.actionKind=item.kind;li.append(el('strong',item.label),el('p',item.text,'coach-action-text'));rows.append(li);});
       n.append(rows);return n;
     }
+    function resetSituation() {
+      change({scenario:{standard:'lane-standard-v1',overrides:{}},planning:{basis:'loading-plan-example-v1',overrides:{}},...(presentation?.currentOnly&&root.LoadingSituation?{situation:root.LoadingSituation.defaultState()}: {})});
+    }
+    function situationControls() {
+      const S=root.LoadingSituation;if(!S||!current.input.situation)return null;
+      const situation=current.input.situation,wrap=details('situation','상황 가정 비교');wrap.dataset.situationControls='';
+      wrap.append(el('p','경기 전에는 확인할 수 없는 위치·자원·기술을 미확인으로 둡니다. 아래 선택은 사용자가 고른 가정이며 실제 관측이 아닙니다.','coach-muted'));
+      const fields=el('div',null,'coach-controls plan-situation-fields');
+      S.fields.forEach(def=>{
+        const info=situation.fields[def.key],label=el('label'),select=el('select');
+        select.dataset.situationField=def.key;select.dataset.coachFocus='situation-'+def.key;select.dataset.coachChange='';
+        const unknown=el('option','미확인');unknown.value='';select.append(unknown);
+        Object.entries(def.options).forEach(([value,text])=>{const option=el('option',text);option.value=value;select.append(option);});
+        select.value=info.status==='assumed'?info.value:'';select.dataset.situationReadonly=String(situation.mode==='REVIEW');
+        select.addEventListener('change',()=>{const next=JSON.parse(JSON.stringify(situation));next.fields[def.key]=select.value?{status:'assumed',value:select.value,source:'user-scenario',observed_at:null}:{status:'unknown',value:null,source:null,observed_at:null};change({situation:next});});
+        label.append(el('span',def.label+' · 가정'),select);fields.append(label);
+      });
+      wrap.append(fields);const reset=button('상황 가정 초기화','reset-situation',resetSituation);reset.dataset.situationReset='';reset.dataset.coachChange='';wrap.append(reset);
+      if(situation.mode==='REVIEW')wrap.append(el('p','과거 기록의 정보입니다. 새 가정 비교를 시작하려면 상황 가정을 초기화하세요.','coach-muted'));
+      return wrap;
+    }
+    function situationState() {
+      const S=root.LoadingSituation,situation=current.input.situation;if(!S||!situation)return null;
+      const note=el('section',null,'plan-situation-state');note.dataset.situationState='';
+      note.append(el('h3',situation.mode==='REVIEW'?'과거 기록의 정보 상태':'선택한 가정과 미확인 정보'));
+      const active=S.fields.filter(def=>situation.fields[def.key].status!=='unknown'),names={assumed:'가정',observed:'과거 관측',stale:'오래된 정보'};
+      if(!active.length)note.append(el('p','상황 정보는 모두 미확인입니다. 조합의 기본 방향과 확인할 조건을 제공합니다.'));
+      else {const list=el('ul');active.forEach(def=>{const info=situation.fields[def.key],row=el('li',def.label+': '+(def.options[info.value]||info.value)+' · '+names[info.status]);row.dataset.situationStatus=info.status;if(info.observed_at)row.append(el('span',' · 출처: '+info.source+' · '+info.observed_at));list.append(row);});note.append(list);}
+      note.append(el('p','미확인 '+(S.fields.length-active.length)+'개 · 가정은 관측을 뜻하지 않습니다.','coach-muted'));return note;
+    }
+    function phaseDecision(phase) {
+      const d=phase.decision;if(!d||phase.id!=='fight')return null;
+      const section=el('section',null,'plan-phase-decision');section.dataset.gp23Decision=phase.id;
+      section.append(el('h4','위협 판단 · 확인할 대상'));
+      const priority=el('p',d.threat_priority?.label||'현재 위협 우선순위 미확인');priority.dataset.gp23ThreatPriority=d.threat_priority?.status||'UNKNOWN';section.append(priority,el('p',d.threat_priority?.reason||'대상별 도달·기여·기술 상태가 확인되지 않았습니다.'));
+      if(d.threat_priority?.scenario_effect)section.append(el('p',d.threat_priority.scenario_effect));
+      const candidates=arr(d.threat_candidates||d.threats);
+      if(candidates.length){const more=details('threat-candidates-'+phase.id,'연결된 기술 후보 · 현재 위협 순위 아님');more.dataset.gp23ThreatCandidates='';more.append(el('p','아래는 조합에서 연결된 일부 기술 후보입니다. 대상별 도달성과 참여 조건이 확인된 현재 위협 순위가 아닙니다.','coach-muted'));candidates.forEach(threat=>more.append(el('p',typeof threat==='string'?threat:[threat.label||threat.name,threat.means,threat.text||threat.reason,'대상별 도달성 미확인'].filter(Boolean).join(' · '))));section.append(more);}
+      return section;
+    }
+    function learningLink(area) {
+      if(!root.LearningRoom)return null;
+      const context={champion:current.input.own_champion,role:current.input.own_position};
+      const known=new Set(arr(coach().evidence?.claims).map(claim=>claim.id));
+      const ids=board().gp23?arr(board().gp23.phases?.[area]?.actions).flatMap(action=>arr(action.claim_ids)):arr(board()[area]?.claim_ids);
+      const claim=ids.find(id=>known.has(id));if(claim)context.claim=claim;
+      let storage;try{storage=root.sessionStorage;}catch(_){}
+      const link=el('a','이 판단과 연결된 내용 학습하기 →','plan-learning-link');
+      link.href=root.LearningRoom.createLearningURL(context,{storage,returnURL:root.location.pathname+root.location.search+root.location.hash});link.dataset.gameplanLearning=area;return link;
+    }
     function renderPresentation() {
       if(destroyed)return;
       const opened=new Set(Array.from(host.querySelectorAll('details[open]'),n=>n.id));
@@ -397,6 +454,7 @@
       if(art&&/^\.\/home-assets\/[A-Za-z0-9_.-]+$/.test(art.src)){const img=el('img',null,'plan-hero-art');img.src=art.src;img.alt='';img.decoding='async';img.setAttribute('fetchpriority','high');img.style.objectPosition=(art.crop?.desktop||[65,30]).join('% ')+'%';img.addEventListener('error',()=>{img.hidden=true;hero.classList.add('art-unavailable');});masthead.prepend(img);}
       else hero.append(root.LoadingMap.portrait(catalog.champions[v.own.champion],true));
       const copy=el('div',null,'plan-hero-copy');copy.append(el('p','이번 판의 작전','coach-eyebrow'),el('h2',v.hero_title,'plan-title'),el('p',v.support,'plan-subtitle'));hero.append(copy);masthead.append(hero);master.append(masthead);
+      if(v.overview.length){const overview=el('div',null,'plan-overview-cards');v.overview.forEach(item=>{const card=el('article',null,'plan-overview-card');card.dataset.planOverview=item.id;card.append(el('h3',item.label),el('h4',item.title));item.paragraphs.forEach(text=>card.append(el('p',text)));overview.append(card);});master.append(overview);const status=situationState(),controls=situationControls();if(status)master.append(status);if(controls)master.append(controls);}
       const comparison=el('section',null,'plan-overview-comparison');comparison.append(el('h3','전체 조합 방향'));
       if(v.comparison.length){
         const table=el('table'),caption=el('caption','우리 팀과 상대 팀의 계획 비교');table.append(caption);
@@ -404,16 +462,16 @@
         const body=el('tbody');v.comparison.forEach(row=>{const tr=el('tr'),th=el('th',row.label);th.scope='row';tr.append(th);[['우리 팀',row.ours],['상대 팀',row.theirs]].forEach(([label,text])=>{const td=el('td',text);td.dataset.label=label;tr.append(td);});body.append(tr);});table.append(body);comparison.append(table,el('p',v.team_plan.scope,'coach-muted'));
       }else comparison.append(el('p',c.context?.patch?.label+' · 조합 비교를 적용할 근거가 부족합니다.','coach-muted'));
       master.append(comparison);
-      if(v.overall_commentary.length){const overall=el('section',null,'plan-overall-commentary plan-coaching-explanation');overall.dataset.overallCommentary='';overall.append(el('h3','이번 판을 풀어가는 방향'));v.overall_commentary.forEach(text=>overall.append(el('p',text)));master.append(overall);}
+      if(v.overall_commentary.length&&!v.overview.length){const overall=el('section',null,'plan-overall-commentary plan-coaching-explanation');overall.dataset.overallCommentary='';overall.append(el('h3','이번 판을 풀어가는 방향'));v.overall_commentary.forEach(text=>overall.append(el('p',text)));master.append(overall);}
       if(v.team_plan&&!presentation?.currentOnly){const team=details('team-direction','전체 조합 방향 · 양 팀이 원하는 싸움');team.classList.add('plan-team-direction');
         v.team_plan.rows.forEach(row=>{const item=el('section',null,'plan-team-dimension');item.append(el('h3',row.label));const pair=el('div',null,'plan-team-comparison');pair.append(block('우리',row.ours),block('상대',row.theirs));item.append(pair);team.append(item);});
         v.team_plan.phases.forEach(phase=>team.append(block(phase.label,phase.text)));team.append(el('p',v.team_plan.assumptions),el('p',v.team_plan.scope));master.append(team);}
       const cards=el('div',null,'plan-area-cards');v.cards.forEach((a,i)=>{const basic=el('article',null,'plan-basic-phase');basic.dataset.basicPhase=a.id;basic.append(el('h3',a.label));const tile=button(null,'board-'+a.id,()=>navigateDetail(a.id));tile.className='plan-area-card coach-board-tile';tile.dataset.planArea=a.id;tile.dataset.loadingDecision=a.id;tile.setAttribute('aria-expanded',String(state.detail===a.id));tile.setAttribute('aria-controls',prefix+'-detail');
         const index=el('span',null,'plan-card-index');index.append(el('span',String(i+1).padStart(2,'0')),el('span',a.label));if(root.CoachIcons)index.append(root.CoachIcons.create(a.id));const content=el('span',null,'plan-card-copy');content.append(el('strong',a.concept||a.title));if(a.title!==a.concept)content.append(el('span',a.title));if(a.conditions.length){const chips=el('span',null,'plan-card-conditions');a.tags.forEach(t=>{const chip=el('span',t.label);chip.dataset.tagKind=t.kind;chip.setAttribute('aria-label',({ACTION:'행동',CONDITION:'조건',WARNING:'주의',STATUS:'자료 상태'})[t.kind]+': '+t.label);chips.append(chip);});content.append(chips);}tile.append(index,content,el('span',({lane:'왜 이렇게 하나요?',operations:'전환 방법',fight:'내 역할 보기'})[a.id]+' →','plan-card-link'));basic.append(tile);if(a.coverage){const notice=el('p',a.coverage.label+' · '+a.coverage.detail,'plan-coverage');notice.dataset.coverage=a.coverage.status;basic.append(notice);}
-        const actions=el('ol',null,'plan-basic-actions');a.actions.forEach(item=>{const row=el('li');row.dataset.basicActionKind=item.kind;row.append(el('strong',item.label),el('p',item.text,'plan-basic-action-text'));actions.append(row);});basic.append(actions);
+        const actions=el('ol',null,'plan-basic-actions');a.actions.forEach((item,index)=>{const row=el('li');row.dataset.basicActionKind=item.kind;row.append(el('strong',item.label),el('p',item.text,'plan-basic-action-text'));if(index===0){const decision=phaseDecision(a);if(decision)row.append(decision);}actions.append(row);});basic.append(actions);
         if(a.judgment)basic.append(el('p',a.judgment.label+' · 전체 승패와는 별도입니다.','coach-muted'));
         const prose=el('section',null,'plan-coaching-explanation');prose.dataset.basicCoaching=a.id;prose.dataset.coachFocus='basic-body-'+a.id;prose.tabIndex=-1;prose.append(el('h4',a.coaching_heading));(a.explanation?.length?a.explanation:['개별 코칭을 적용할 자료가 부족합니다. 위 행동은 포지션 기본 계획 범위에서 확인하세요.']).forEach(text=>prose.append(el('p',text)));basic.append(prose);
-        const more=button('펼치기 — 상황별 판단·예외·대안','more-'+a.id,()=>navigateDetail(a.id));more.className='plan-prose-more';more.dataset.planMore=a.id;more.setAttribute('aria-expanded',String(state.detail===a.id));more.setAttribute('aria-controls',prefix+'-detail');basic.append(more);cards.append(basic);});master.append(cards);
+        const more=button('펼치기 — 상황별 판단·예외·대안','more-'+a.id,()=>navigateDetail(a.id));more.className='plan-prose-more';more.dataset.planMore=a.id;more.setAttribute('aria-expanded',String(state.detail===a.id));more.setAttribute('aria-controls',prefix+'-detail');basic.append(more);if(presentation?.currentOnly){const learn=learningLink(a.id);if(learn)basic.append(learn);}cards.append(basic);});master.append(cards);
       const remember=el('aside',null,'plan-remember');remember.append(el('h3','실전에서 기억할 질문 3개'),list(v.remember));master.append(remember);
       const assumptions=details('plan-assumptions','분석 기준 · 비교용 가정');assumptions.append(el('p',c.context?.patch?.label),block(c.context?.assumptions?.label,c.context?.assumptions?.details),block('사용 가능한 지식',b.coverage?.plan_scope));master.append(assumptions);
       container.append(master);
@@ -423,7 +481,7 @@
         const panel=el('div',null,'coach-panel');panel.id=prefix+'-panel';panel.setAttribute('role','tabpanel');panel.setAttribute('aria-labelledby',prefix+'-tab-'+a.id);
         const title=el('h2',a.concept||a.title,'plan-detail-title');title.tabIndex=-1;panel.append(title,el('p',a.focus||a.title,'plan-detail-intro'));
         const pair=el('div',null,'plan-perspectives');[['우리가 원하는 구도','ours','allies'],['상대가 원하는 구도','theirs','enemies']].forEach(([title,key,team])=>{const side=el('section',null,'plan-perspective-'+team),portraits=el('div',null,'plan-side-portraits');const lane=arr(b.overall?.lanes).find(l=>l.position===current.input.own_position);const ids=a.id==='lane'?arr(lane?.[team]):v.teams[team].map(p=>p.champion);ids.forEach(id=>portraits.append(root.LoadingMap.portrait(catalog.champions[id],id===v.own.champion&&team==='allies')));side.append(portraits,el('h3',title),el('p',a.perspectives[key]||'이 구도의 자료가 부족합니다.'));pair.append(side);});panel.append(pair);
-        const actions=presentation?.currentOnly?currentActions(a):actionSummary(a.id);actions.querySelector('h3').textContent=({lane:current.input.own_position==='JUNGLE'?'초반 정글 — 이렇게 시작하세요':'라인전 — 이렇게 시작하세요',operations:current.input.own_position==='JUNGLE'?'중반 운영 — 이렇게 이득을 만드세요':'운영 — 이렇게 이득을 만드세요',fight:'한타 — 이렇게 싸우세요'})[a.id];const basis=details('action-basis-'+a.id,'적용 조건 · 판단 범위');actions.querySelectorAll('.coach-summary-state').forEach(n=>basis.append(n));panel.append(actions);
+        const actions=presentation?.currentOnly?currentActions(a):actionSummary(a.id);actions.querySelector('h3').textContent=({lane:current.input.own_position==='JUNGLE'?'초반 정글 — 이렇게 시작하세요':'라인전 — 이렇게 시작하세요',operations:current.input.own_position==='JUNGLE'?'중반 운영 — 이렇게 이득을 만드세요':'운영 — 이렇게 이득을 만드세요',fight:'교전·한타 — 이렇게 싸우세요'})[a.id];const basis=details('action-basis-'+a.id,'적용 조건 · 판단 범위');actions.querySelectorAll('.coach-summary-state').forEach(n=>basis.append(n));panel.append(actions);
         const bodyReference=button(a.coaching_heading+' — 기본 본문으로 돌아가기','body-reference-'+a.id,()=>returnToBasicBody(a.id));bodyReference.className='plan-body-reference';bodyReference.dataset.planBodyReference=a.id;panel.append(bodyReference);
         if(a.id==='lane'&&v.engagement_decision)panel.append(engagementDecision(v.engagement_decision));
         const responses=arr(a.condition_responses);if(responses.length){panel.append(conditionResponse(responses[0],a.id));if(responses.length>1){const others=details('other-conditions-'+a.id,'다른 조건의 대응 보기');responses.slice(1).forEach(item=>others.append(conditionResponse(item,a.id)));panel.append(others);}}

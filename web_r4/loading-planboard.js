@@ -1,8 +1,8 @@
 /* Pure decision projection. No observations, IO, strength scores or source promotions. */
 (function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory(require('./loading-formation.js'), require('./loading-direction-profiles.js'));
-  else root.LoadingPlanboard = factory(root.LoadingFormation, root.LoadingDirectionProfiles);
-})(typeof globalThis !== 'undefined' ? globalThis : this, function (formation, directionData) {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./loading-formation.js'), require('./loading-direction-profiles.js'), require('./loading-situation.js'));
+  else root.LoadingPlanboard = factory(root.LoadingFormation, root.LoadingDirectionProfiles, root.LoadingSituation);
+})(typeof globalThis !== 'undefined' ? globalThis : this, function (formation, directionData, Situation) {
   'use strict';
   const clone = x => JSON.parse(JSON.stringify(x));
   const PHASES = Object.freeze(['lane','operations','fight']);
@@ -209,9 +209,9 @@
         !Array.from(paragraphs).every(text)||!Array.isArray(details)||
         !Array.from(details).every(d=>d&&text(d.trigger)&&text(d.action)))throw Error('INVALID_DELIVERY:'+phase);
       const summary=board.loading_summary?.items?.find(item=>item.id===phase);
-      const coverage=phaseCoverage(board,phase);
+      const coverage=board.gp23?.phases?.[phase]?.coverage||phaseCoverage(board,phase);
       phases[phase]={headline:summary?.conclusion||board.brief?.[phase]||'이 영역의 자료가 부족합니다.',
-        actions:clone(actions),paragraphs:clone(paragraphs),details:clone(details),coverage,tags:deliveryTags(board,phase,actions,coverage)};
+        actions:clone(actions),paragraphs:clone(paragraphs),details:clone(details),coverage,tags:board.gp23?.phases?.[phase]?.tags||deliveryTags(board,phase,actions,coverage)};
     }
     return {schema_version:'gameplan-delivery-v1',phases};
   }
@@ -909,9 +909,199 @@
     reconcileSituation(result,report,catalog,coach);
     attachDirectionHierarchy(result,report,catalog,scenarioPlan);
     result.internal_rule_trace=directionRuleTrace(report,catalog,result);
+    if(input.schema_version==='lol-coach-loading-input-v5')reconcileExplicitSituation(result,report,catalog,coach);
     result.delivery=buildDelivery(result);
     result.internal_dependencies=dependencyTree(result);
     return result;
+  }
+
+  // Explicit v5 information joins the existing planboard resolver here. There
+  // is one delivered decision per phase; older input/report semantics are kept.
+  function reconcileExplicitSituation(b,report,catalog,coach){
+    const input=report.input,state=Situation.validate(input.situation),information=Situation.project(state);
+    const values=Object.fromEntries(Object.entries(information.fields).map(([key,info])=>[key,info.effective]));
+    const self=input.own_champion,position=input.own_position,hero=catalog.champions[self];
+    const name=id=>catalog.champions[id]?.name||'대상 미확인';
+    const sourceOK=report.evidence.patch_status==='SOURCE_MAJOR_MATCH';
+    const validFact=(champion,f)=>f&&f.patch===catalog.source_patch&&typeof f.text==='string'&&f.text.trim()&&f.url&&f.sha256&&f.id==='official:'+champion+':'+f.slot;
+    const ownFacts=(hero.facts||[]).filter(f=>validFact(self,f));
+    const controls=ownFacts.filter(f=>/공중|기절|속박|둔화|밀쳐|밀어|띄워|띄웁|띄우/.test(f.text));
+    const evidence=ownFacts.map(f=>f.id);
+    const tank=position==='TOP'&&hero.official_tags.includes('Tank')&&controls.length>0;
+    const marksman=position==='BOTTOM'&&hero.official_tags.includes('Marksman');
+    const ownProfile=!!hero.profile&&Object.values(hero.profile).some(v=>Array.isArray(v)&&v.length);
+    const roleKnown=sourceOK&&(tank||marksman&&ownProfile||!!b.direction_hierarchy||!!b.narrative_decisions||!!b.role_principles?.lane||['Ahri','Sejuani','Graves','Lux'].includes(self)&&ownProfile);
+    const previousCoverage=Object.fromEntries(PHASES.map(phase=>[phase,phaseCoverage(b,phase)]));
+    const coverage=phase=>sourceOK?clone(previousCoverage[phase]):{status:'GENERAL_ONLY',label:'자료 범위 확인 필요',detail:'자료 패치가 미확인 또는 달라 세부 실행 적용을 보류합니다. 포지션 공통 원칙만 제공합니다.'};
+    const uncertain=keys=>keys.filter(k=>values[k]===null).map(k=>information.fields[k].label+' '+(state.fields[k].status==='stale'?'정보 오래됨':state.fields[k].status==='observed'?'과거 관측 · 신선도 미검증':'미확인'));
+    const scope={subject:'allies:'+self,phase:'lane',snapshot:'explicit-situation-v1'};
+    const resourcesReady=values.resources==='SUFFICIENT',low=values.resources==='LOW';
+    const supportBlocked=values.ally_followup==='UNAVAILABLE',access=values.wave_access==='READY';
+    const direction=values.wave_direction,near=values.enemy_jungle==='NEAR',large=values.wave_size==='LARGE';
+    const planning=input.planning.overrides,goal=planning.goal||'AUTO';
+    const waitingCost=planning.income==='LOSING'?'계속 기다릴 때 성장·경험치 접근을 잃는 선택 가정이지만, 손실만으로 교전이나 밀기가 가능해지지는 않는다.':planning.income==='NORMAL'?'현재 성장 자원을 유지할 수 있다는 가정에서 구매·레벨·아군 합류를 준비할 수 있다.':'기다림의 실제 손실 규모는 미확인이다.';
+    const waveUncertain=uncertain(['wave_direction','wave_size','wave_access','resources','ally_jungle','enemy_jungle','ally_followup']);
+    const canManipulate=sourceOK&&resourcesReady&&access&&!supportBlocked;
+    let selectedWave=!sourceOK?'CHECK_WAVE':low||values.wave_access==='DENIED'||supportBlocked?'RECEIVE_LIMITED':!direction||!resourcesReady||!access?'CHECK_WAVE':direction==='UNDER_TOWER'?'TOWER_CS':direction==='INCOMING'?'TRIM_RECEIVE':direction==='RETURNING'?'RETURNING':goal==='RECALL'&&values.wave_crash==='READY'?'CRASH':goal==='RECALL'&&values.wave_crash!=='BLOCKED'?'FAST_PUSH':goal==='RECALL'?'RECEIVE_LIMITED':direction==='BUILDING'?'SLOW_PUSH':'MAINTAIN';
+    // Feasibility is evaluated before the declared purpose ranks executable
+    // options. A resource loss does not create an incoming wave or a freeze.
+    const waveCandidates=[
+      ['CHECK_WAVE',true,'정보 부족에서 실행 범위 확인'],
+      ['RECEIVE_LIMITED',true,'조작 가능한 방향을 만들지 않고 닿는 자원만 비교'],
+      ['MAINTAIN',canManipulate&&direction==='EVEN','현재 경합 위치와 처리 여건 필요'],
+      ['SLOW_PUSH',canManipulate&&direction==='BUILDING','아군 잔여가 유지되며 전진할 조건 필요'],
+      ['FAST_PUSH',canManipulate&&['EVEN','BUILDING'].includes(direction),'처리·반격·퇴로 예산 필요; 포탑 도달은 별개'],
+      ['CRASH',canManipulate&&['EVEN','BUILDING'].includes(direction)&&values.wave_crash==='READY','잔여 도달·상대 처리·추가 웨이브 조건 필요'],
+      ['TRIM_RECEIVE',canManipulate&&direction==='INCOMING','들어오는 웨이브와 줄일 공간 필요'],
+      ['TOWER_CS',canManipulate&&direction==='UNDER_TOWER','포탑 도착과 감당할 수급 공간 필요'],
+      ['RETURNING',canManipulate&&direction==='RETURNING','돌아오는 흐름과 복귀 여건 필요'],
+      ['FREEZE',false,'지속 유지 수량·위치의 근거 미지원']
+    ].map(([id,feasible,reason])=>({id,feasibility:feasible?'POSSIBLE':'IMPOSSIBLE',reason,costs:id==='CHECK_WAVE'?['확인하는 동안 CS·경험치·귀환 기회를 잃을 수 있습니다.']:['처리 시간·체력·마나와 상대 접근 노출이 듭니다.','기다림도 웨이브 누적·귀환·합류 기회 손실을 남길 수 있습니다.']}));
+    const comparison=resolveCandidates(waveCandidates.map(c=>({id:c.id,conflicts_with:[],rule:{id:'situation-wave:'+c.id,version:'1',requires:[{id:'wave-feasible',value:c.feasibility==='POSSIBLE',...scope,source:{kind:'ASSUMPTION',ref:'input.situation.fields'}},{id:'declared-goal-policy',value:c.id===selectedWave,...scope,source:{kind:'KNOWLEDGE',ref:'gameplan-situation-v1'}}],excludes:[]}})),scope);
+    selectedWave=comparison.selected||'CHECK_WAVE';
+    const incomingDive=near&&large&&['INCOMING','UNDER_TOWER'].includes(direction);
+    const waveTexts={
+      CHECK_WAVE:['모르는 흐름을 나누고 접근 가능한 자원·복귀 선택을 남긴다.','현재 보이는 미니언 방향·체력과 내 처리·반격 자원을 확인하고, 확인된 거리에서 받을 자원만 고른다.','처리 여건이 미확인이므로 밀기나 당기기를 실행안으로 확정하지 않는다.'],
+      RECEIVE_LIMITED:['현재 닿는 경험치와 자원을 지키며 회복·지원을 준비한다.','조작할 여건이 부족하면 더 나가서 웨이브를 바꾸려 하지 말고, 닿는 자원과 포기할 CS·지원·귀환을 비교한다.','낮은 자원이나 호응 부재는 웨이브를 당길 수 있다는 증거가 아니다.'],
+      MAINTAIN:['지금 받을 자원과 다음 처리 선택권을 함께 남긴다.','현재 만나는 위치에서 필요한 미니언만 처리하고, 견제 때문에 흐름이 바뀌면 처리량을 다시 고른다.','중앙 경합과 처리·대응 여건을 선택한 가정 안에서만 비교한다.'],
+      SLOW_PUSH:['아군 잔여를 남겨 다음 처리·이동 선택권을 만든다.','아군 미니언이 쌓이며 전진하는 가정에서 막타 중심으로 처리하고, 상대가 잔여를 줄이면 쌓기를 고집하지 않는다.','아군 잔여가 실제 유지되는지 봐야 하며 광역 기술 보유만으로 쌓기를 보장하지 않는다.'],
+      FAST_PUSH:['귀환 목적에 필요한 처리 시간을 줄이되 도달은 따로 확인한다.','처리·반격 예산을 나눠 현재 웨이브를 빠르게 줄이고, 상대 포탑에 도달하기 전에는 귀환 창이 생겼다고 보지 않는다.','빠른 처리는 포탑까지 밀어 넣기의 완료와 다르다.'],
+      CRASH:['밀어 넣기 뒤 회복·구매로 바꿀 기회를 준비한다.','도달·상대 처리·다음 웨이브 조건을 비교한 가정에서 밀어 넣고, 실제 포탑 도착을 확인한 뒤 귀환을 비교한다.','상대 정글이 가깝다는 이유만으로 모든 처리를 멈추지는 않는다. 도달과 퇴로·자원을 함께 비교한 가정이다.'],
+      TRIM_RECEIVE:['들어오는 웨이브의 누적 압박을 줄이며 받을 자원을 지킨다.','상대 웨이브가 들어오고 처리 여건이 남는 가정에서 필요한 미니언만 줄이며 받는다. 프리징이나 안전한 수급을 보장하지 않는다.',incomingDive?'상대 정글이 가까워도 큰 웨이브를 그대로 누적시키면 다이브·수급 손실이 커질 수 있어, 줄이기와 지원·이탈 비용을 함께 비교한다.':'들어오는 방향과 줄일 공간을 확인한 가정이 있어야 이 행동이 가능하다.'],
+      TOWER_CS:['도착한 웨이브에서 감당할 자원과 포기할 자원을 나눈다.','포탑에 도착한 미니언의 체력·공격 대상을 보고 감당할 막타를 고르되, 다이브 대응·퇴로를 잃으면서 수급하지 않는다.','포탑 아래도 안전을 보장하지 않는다. 큰 누적 웨이브와 상대 접근이 겹치면 지원·이탈이 필요할 수 있다.'],
+      RETURNING:['돌아오는 자원과 복귀·회복 손실을 맞춘다.','현재 돌아오는 웨이브 위치와 내 복귀 자원을 확인해 받을 대상을 고르고, 이전 밀어 넣기로 현재 안전을 보장하지 않는다.','지난 포탑 도착과 지금의 웨이브 방향은 별도 정보다.']
+    };
+    let [laneGoal,laneAction,laneReason]=waveTexts[selectedWave];
+    laneReason+=' '+waitingCost;
+    if(goal==='RECALL'&&!['CRASH','FAST_PUSH'].includes(selectedWave))laneReason+=' 귀환 목적이 있어도 현재 가능한 처리를 먼저 고르고, 포기할 웨이브와 회복·지원 비용을 비교한다.';
+    if(planning.opportunity==='MISSED')laneReason+=' 이미 끝난 기회를 추격으로 복원하지 않고 처리·회복 목표로 바꾼다.';
+    let laneDecision=selectedWave,lanePosition=near?'아군 쪽 퇴로와 지원이 닿을 거리를 남기고, 정글 위치를 확인하러 나가지 않는다.':'확인된 자원·퇴로 범위에서 서고, 양 정글 미확인 상태를 전진 허가로 쓰지 않는다.';
+    let laneStop='상대 접근·자원 소모로 막타·경험치 공간이나 퇴로가 사라지면 처리를 멈추고 지원·회복을 비교한다. 포탑 도달이 막히면 귀환 완료를 가정하지 않는다.';
+    const trade=resourcesReady&&access&&!supportBlocked&&values.key_skill==='AVAILABLE'?'교환은 이번 웨이브 목표에 남길 기술·마나를 제외한 범위에서 짧게 비교하고, 추격 때문에 처리가 늦어지면 끝낸다.':'교환 길이와 반격·기술 가용성이 미확인이면 추가 공격을 강제하지 않고 다음 처리와 이탈에 쓸 자원을 남긴다.';
+    if(position==='SUPPORT'){
+      laneGoal='아군의 미니언·경험치 접근과 다음 귀환 선택을 돕는다.';
+      laneAction=canManipulate?'아군이 원하는 웨이브 방향을 확인한 뒤 필요한 정리·견제를 돕고, 유지하려는 미니언을 임의로 밀지 않는다.':'아군이 받을 경험치·막타 자리를 보호하고, 호응·자원이 없으면 진입 대신 함께 정리·귀환할 여건을 준비한다.';
+      laneReason='서포터 자신의 막타보다 아군의 접근·체력과 로밍할 때 남는 위험을 함께 비교한다.';
+    }
+    if(position==='JUNGLE'){
+      laneDecision=low||supportBlocked?'JUNGLE_PREPARE':resourcesReady&&values.ally_followup==='AVAILABLE'?'JUNGLE_CONNECT':'JUNGLE_CHECK';
+      laneGoal='캠프 성장과 아군 라인 손실을 비교해 지원할 기회를 남긴다.';
+      laneAction=laneDecision==='JUNGLE_CONNECT'?'배운 수단과 아군 호응·퇴로가 연결되는 지원만 비교하고, 갱킹 자리에 오래 기다리기보다 가까운 캠프·귀환 시간을 함께 고른다.':'지원 조건이 부족하거나 미확인이면 갱킹을 강제하지 않고, 확인된 캠프 성장·회복·귀환과 아군 방어 요청을 비교한다.';
+      laneReason='대기하면 캠프 경험치와 다음 지원 시간을 잃지만, 무리한 개입도 라인 손실과 역갱 위험을 남긴다. 상대 동선·도착 시간은 계산하지 않는다.';
+      lanePosition='라인 아군이 먼저 움직일 수 있는지 보고 연결된 입구를 고른다. 보이지 않는 정글의 실제 경로를 만들지 않는다.';
+      laneStop='아군 호응이 끊기거나 이미 교전이 끝났다면 뒤늦게 따라가지 않는다. 다이브 위협 라인은 실제 도착 가능성을 확인해 방어·역갱과 다른 이득을 비교한다.';
+    }
+    // Combat contribution is independent of nominal head count. No score,
+    // damage, cooldown, route or arrival duration is manufactured.
+    const combatUnknown=uncertain(['combat_context','resources','ally_followup','ally_contribution','enemy_contribution','arrival_order','threat_reach','combat_space','key_skill']);
+    const solo=values.combat_context==='DUEL';
+    const missed=planning.opportunity==='MISSED';
+    const hardBlocked=!sourceOK||missed||low||supportBlocked&&!solo||values.ally_contribution==='UNAVAILABLE'||values.combat_space==='RESTRICTED'||values.key_skill==='SPENT';
+    const contributionReady=values.ally_contribution==='READY'&&values.enemy_contribution!==null&&values.arrival_order!==null&&values.arrival_order!=='ENEMY_FIRST';
+    const combatReady=!hardBlocked&&resourcesReady&&(solo||values.ally_followup==='AVAILABLE')&&contributionReady&&values.combat_space==='OPEN'&&values.key_skill==='AVAILABLE'&&values.threat_reach!==null&&values.combat_context!==null;
+    const execution=hardBlocked?'BLOCKED':combatReady?'READY':'UNKNOWN';
+    const threatKinds=['ACCESS','ASSASSIN','PICK'];
+    const encounterCandidates=solo?report.contexts.lane.threats.filter(c=>c.champion===report.contexts.lane.opponent?.id):['DUO'].includes(values.combat_context)?report.contexts.lane.threats:['GANK','COUNTERGANK'].includes(values.combat_context)?[...report.contexts.lane.threats,...report.contexts.jungle.threats]:report.contexts.teamfight.threats;
+    const threatCandidates=(encounterCandidates||[]).filter(c=>c.kinds.some(k=>threatKinds.includes(k))).map(c=>({...c,evidence_ids:c.evidence_ids.filter(id=>catalog.champions[c.champion]?.facts.some(f=>f.id===id&&validFact(c.champion,f)))})).filter(c=>c.evidence_ids.length);
+    threatCandidates.sort((a,z)=>Math.min(...a.kinds.map(k=>threatKinds.indexOf(k)<0?9:threatKinds.indexOf(k)))-Math.min(...z.kinds.map(k=>threatKinds.indexOf(k)<0?9:threatKinds.indexOf(k)))||a.champion.localeCompare(z.champion));
+    const threats=threatCandidates.slice(0,2).map(c=>({champion:c.champion,name:c.name,means:c.means,evidence_ids:c.evidence_ids,reach:'UNKNOWN',scenario_reach:values.threat_reach||'UNKNOWN',scope:'CAPABILITY_CANDIDATE_NOT_CURRENT_PRIORITY',reason:'접근·제어가 공격·보호 연결을 끊을 수 있는 후보. 실제 도달·기술 가용성은 선택 가정 범위에서만 다룬다.'}));
+    let goalId='CONDITIONAL_ROLE',fightGoal='내 수단과 아군 목표가 같은 대상·지역에 닿는 조건을 준비한다.';
+    let fightAction='배운 공격·제어와 남은 반격·퇴로를 확인해 가까운 대상에 기여할 행동을 고르고, 기여할 수 없다면 자리와 목표를 바꾼다.';
+    let fightPosition='아군이 공격하거나 도울 수 있는 거리와 내 퇴로를 함께 남긴다. 보이지 않는 지형의 안전 경로를 만들어내지 않는다.';
+    let fightReason='챔피언 이름이나 명목 인원수만으로 공격·보호에 실제 기여할 수 있는 인원과 도착 순서를 대신하지 않는다.';
+    const canDisrupt=tank&&combatReady&&values.ally_followup==='AVAILABLE'&&values.ally_carry_risk==='COVERED'&&values.enemy_carry_access==='DISRUPTABLE';
+    if(tank&&values.ally_carry_risk==='THREATENED'){
+      goalId='PROTECT_ALLY';fightGoal='아군 딜러의 공격·이탈 시간을 보호한다.';
+      fightAction=values.key_skill==='SPENT'?'핵심 기술이 소모된 가정에서는 남은 이동·방해 수단과 지원을 확인하고 아군 딜러에게 돌아올 거리를 줄인다. 소모한 기술로 다시 보호한다고 세지 않는다.':'아군 딜러에게 접근한 적과 후속 공격을 방해할 수단을 확인하고, 뒤의 아군이 위협받으면 적 딜러 추격보다 보호할 거리로 돌아온다.';
+      fightPosition='아군 딜러와 적의 접근 길 사이에서 방해 수단이 닿을 거리를 비교한다. 보호 대상과 멀어지는 깊은 진입은 중단한다.';
+      fightReason='내가 앞으로 들어가는 이득보다 뒤의 딜러가 공격하지 못하는 손실이 커질 수 있어, 같은 제어를 보호와 진입에 두 번 세지 않는다.';
+    }else if(canDisrupt){
+      goalId='DISRUPT_ENEMY_CARRY';fightGoal='상대 딜러의 접근·공격을 방해해 아군이 공격할 시간을 만든다.';
+      fightAction='아군 후속과 보호가 유지되는 가정에서 닿는 상대 딜러의 공격을 제어로 끊거나 접근을 방해한다. 처치를 위해 아군이 공격할 수 없는 깊이까지 들어가지 않는다.';
+      fightPosition='아군 후속이 닿는 전방에서 상대 딜러가 공격할 길을 막고, 보호 대상에게 돌아올 거리를 남긴다.';
+      fightReason='상대 딜러에게 딜로스를 만드는 목표와 아군 보호 비용을 함께 비교한 조건부 선택이다. 적 딜러가 가까워도 진입 성공이나 처치는 미판정이다.';
+    }else if(marksman&&roleKnown){
+      goalId='SURVIVE_AND_DAMAGE';fightGoal='생존과 공격할 공간·시간을 함께 확보해 지속해서 기여한다.';
+      fightAction=execution==='READY'?'아군이 도울 수 있는 거리에서 닿는 적을 공격하고, 나에게 접근하는 위협이 열리면 공격 위치를 바꾸며 남긴 이탈·보호를 쓴다.':'공격을 계속할 공간과 아군 보호 거리를 먼저 맞춘다. 현재 닿는 안전한 공격 기회는 비교하되, 위협을 확인하기 전에 적을 따라 전진하지 않는다.';
+      fightPosition='앞라인과 아군 보호가 닿는 뒤·옆에서 공격할 대상을 고른다. 더 때리려고 보호 범위를 벗어나지 않는다.';
+      fightReason='진입 위협이 있다는 이유로 모든 공격을 멈추지는 않는다. 위협 도달과 공격 공간을 함께 비교하고, 이탈 기술을 공격과 방어에 중복 계산하지 않는다.';
+    }else if(roleKnown&&position==='SUPPORT'){
+      goalId='ENABLE_ALLY';fightGoal='아군이 공격하거나 이탈할 시간을 만들고 진입·보호 비용을 나눈다.';
+      fightAction='아군 후속이 닿는 제어·보호를 비교하되, 같은 기술을 진입에 쓰고 뒤의 딜러 보호에 다시 남았다고 세지 않는다.';
+    }else if(roleKnown&&['MID','JUNGLE'].includes(position)){
+      goalId='CREATE_CONNECTED_WINDOW';fightGoal='아군이 함께 기여할 수 있는 제어·공격 기회를 만든다.';
+      fightAction=execution==='READY'?'배운 수단이 닿고 아군도 함께 공격할 수 있는 대상에 기여한다. 연결되지 않는 깊은 추격보다 지역 확보·보호·철수를 다시 고른다.':'아군의 공격·보호 기여와 도착 순서를 확인해 가까운 연결을 준비하고, 호응이 늦으면 진입 대신 지역·퇴로를 지킨다.';
+    }
+    if(solo){
+      goalId='DUEL_CONTRIBUTION';fightGoal='상대의 반격과 내 자원을 비교해 공격·자원 확보·이탈 중 고른다.';
+      fightPosition='상대에게 닿을 거리와 내 퇴로·미니언·포탑 노출을 함께 비교한다. 다른 아군의 가용성을 1대1의 기여로 합치지 않는다.';
+      fightAction=execution==='READY'?'배운 수단과 내 대응·이탈 예산이 남는 가정에서 상대에게 닿는 공격을 비교하고, 끊으면 얻을 자원·복귀 이득도 함께 고른다.':'내 자원·배운 수단과 상대 반격·지형을 먼저 확인한다. 교환이 불가능하면 받을 자원과 회복·복귀를 비교한다.';
+      fightReason='1대1은 실제 참여하는 나와 상대의 기여를 비교한다. 동료 호응 부재를 자동 패배나 교환 중단으로 바꾸지 않고, 처치·추격 우열은 미판정으로 남긴다.';
+    }
+    const fightStop=solo?'내 핵심 기술·자원·퇴로가 부족해지거나 상대 증원·반격이 닿으면 교환과 추격을 끝내고 받을 자원·회복으로 바꾼다.':'아군 후속·보호가 끊기거나 핵심 기술·퇴로가 사라지면 진입과 추격을 멈추고 대상·위치를 바꾼다. 적 체력이 낮아도 오브젝트·아군 보호를 잃는 추격은 끝낸다.';
+    const operationsGoal=position==='JUNGLE'?'캠프 성장·라인 지원을 목표물 준비와 연결한다.':position==='SUPPORT'?'아군의 성장·귀환과 함께 움직일 시야·목표물 시간을 연결한다.':'웨이브·성장과 합류 손실을 비교해 닿는 포탑·목표물로 전환한다.';
+    const operationsDecision=missed?'RESET_OPPORTUNITY':low||supportBlocked?'PREPARE_CONNECTION':'CONNECT_GAIN';
+    const operationsAction=operationsDecision==='RESET_OPPORTUNITY'?'이미 끝난 기회를 뒤늦게 따라가지 않고, 가까운 자원·방어와 다음 목표를 골라 새로운 기회를 준비한다.':operationsDecision==='PREPARE_CONNECTION'?'아군이 움직일 수 없거나 자원이 부족하면 가까운 회복·구매와 받을 자원을 고르고, 지원·재집결로 다음 행동의 여건을 바꾼다.':position==='JUNGLE'?'라인 아군이 미니언을 잃지 않고 움직일 수 있는지 확인한 뒤 캠프·지원·시야를 잇는다. 조건이 없으면 오래 기다리기보다 다음 캠프·귀환을 비교한다.':'선택한 웨이브 행동을 실제 마쳤는지 확인한 뒤 아군과 이동할 길·목표물을 고른다. 처리만으로 자유로운 합류가 생겼다고 가정하지 않는다.';
+    const operationsPosition='보이는 아군·자원과 복귀할 길을 연결한다. 다른 쪽에 보인 적의 오래된 정보로 현재 빈 지역을 만들지 않는다.';
+    const operationsReason=operationsDecision==='RESET_OPPORTUNITY'?'선택한 가정에서 이전 기회가 끝났으므로, 남은 자원과 아군 호응이 충분해도 그 기회를 다시 실행할 수는 없다. 다음 목표의 조건을 새로 비교한다.':'기다리면 성장·포탑·목표물 접근 기회를 잃을 수 있지만, 먼저 움직이는 이득도 복귀 손실과 아군이 버틸 수 있는 시간에 따라 달라진다.';
+    const operationsStop='아군이 움직이지 못하거나 상대 위치 정보가 오래되고 합류가 늦으면 깊은 압박을 끝낸다. 이미 끝난 싸움은 따라가지 않고 가까운 자원·방어·귀환을 비교한다.';
+    const makePhase=(id,label,decisionId,gid,goalText,positionText,actionText,stopText,reasonText,unknowns,ids)=>{
+      const prohibition=id==='lane'?position==='JUNGLE'?'정글의 실제 동선·도착 시간과 라이너 호응을 픽만으로 만들지 않는다.':'교환·견제에 웨이브 처리와 이탈 자원을 모두 쓰지 않고, 당길 수 없는 흐름을 프리징으로 부르지 않는다.':'명목 인원수나 한 기술 소모만으로 우세·처치·추격을 확정하지 않는다.';
+      const transition=id==='lane'?'웨이브 방향·누적·자원·양 정글 정보와 아군 호응이 바뀌면 가능한 행동부터 다시 비교한다.':'실제 기여·도착 순서·핵심 기술·지형과 팀 목표가 바뀌면 공격·보호·지역 확보·철수를 다시 고른다.';
+      const texts=[goalText,positionText,actionText,prohibition,stopText];
+      const actions=texts.map((text,i)=>({kind:['GOAL','POSITION','ACTION','LIMIT','SWITCH'][i],label:['내 목표','대상·위치','즉시 행동','하지 않을 행동','전환·중단 조건'][i],text,source_paths:['gp23.phases.'+id],rule_ids:['gameplan-situation-v1'],claim_ids:[],evidence_ids:ids,observation:false,basis:'DESIGN_HYPOTHESIS'}));
+      return {id,label,decision_id:decisionId,goal_id:gid,goal:goalText,threats:id==='fight'?threats:[],position:positionText,action:actionText,stop:stopText,reason:reasonText,prohibitions:[prohibition],transition,uncertainties:unknowns,actions,paragraphs:[reasonText,id==='lane'&&position!=='JUNGLE'?trade:id==='operations'?'웨이브 처리 완료와 아군 이동·목표물 존재는 따로 확인한다. 합류가 이득이어도 늦은 추격으로 이미 끝난 기회를 되살리려 하지 않는다.':operationsReason,unknowns.length?'확인할 정보: '+unknowns.join(' · ')+'. 선택한 가정은 실제 경기 관측이 아니다.':information.label+'. 이 조건이 달라지면 같은 행동을 유지하지 않는다.'],details:[{id:'EXPLICIT_SITUATION',trigger:'선택한 상황 정보가 달라지거나 실행 조건이 깨지면',action:stopText,reason:reasonText,keep:goalText,stop:transition,actors:id==='fight'?threats.map(t=>t.champion):[self],evidence_ids:ids,source_paths:['input.situation','gp23.phases.'+id],rule_ids:['gameplan-situation-v1'],observation:false,basis:'DESIGN_HYPOTHESIS'}],tags:[],coverage:coverage(id),evidence_ids:ids,observation:false,review_state:'TACTICAL_UNREVIEWED'};
+    };
+    const phases={
+      lane:makePhase('lane',position==='JUNGLE'?'초반 정글':'라인전',laneDecision,'RESOURCE_AND_WAVE',laneGoal,lanePosition,laneAction,laneStop,laneReason,waveUncertain,evidence),
+      operations:makePhase('operations',position==='JUNGLE'?'중반 운영':'운영',operationsDecision,'CONVERT_WITH_TEAM',operationsGoal,operationsPosition,operationsAction,operationsStop,operationsReason,uncertain(['ally_jungle','enemy_jungle','ally_followup','resources','arrival_order']),evidence),
+      fight:makePhase('fight','교전·한타',execution==='READY'?'CONTRIBUTE':'PREPARE_OR_SWITCH',goalId,fightGoal,fightPosition,fightAction,fightStop,fightReason,combatUnknown,[...new Set([...evidence,...threats.flatMap(t=>t.evidence_ids)])])
+    };
+    phases.lane.candidates=waveCandidates;phases.lane.candidate_comparison=comparison;phases.lane.completed=false;phases.lane.costs=waveCandidates.find(c=>c.id===selectedWave).costs;
+    phases.fight.context=values.combat_context||'UNKNOWN';phases.fight.execution=execution;
+    phases.fight.effective_contribution={allies:values.ally_contribution||'UNKNOWN',enemies:values.enemy_contribution||'UNKNOWN',arrival_order:values.arrival_order||'UNKNOWN',nominal_count_used:false};
+    phases.fight.advantage='UNDETERMINED';phases.fight.probability=null;
+    phases.fight.threat_selection='FUNCTIONAL_CANDIDATES_NO_DANGER_RANK';
+    phases.fight.threat_priority={status:'UNKNOWN',label:'현재 위협 우선순위 미확인',reason:'대상별 도달·참여·남은 기술 정보가 없어 이름으로 현재 우선순위를 정하지 않는다. 문맥별 수단 후보의 생략은 다른 적의 위협 부재가 아니다.',scenario_effect:values.threat_reach==='REACHABLE'?'도달 가능한 위협이 있다는 선택 가정에서 공격·보호와 이탈 공간을 비교한다. 누구에게 어떤 수단이 닿는지는 별도 확인이 필요하다.':values.threat_reach==='UNREACHABLE'?'이번 가정에서 위협 도달이 제한돼도 다른 적의 기술·접근 경로가 안전하다는 뜻은 아니다.':'위협 도달을 확인하기 전에는 새로운 전진·추격을 허가하지 않는다.'};
+    phases.fight.threat_candidates=clone(threats);
+    const tag=(phase,kind,label)=>({id:phase+':'+kind,kind,label,source_paths:['gp23.phases.'+phase]});
+    const waveLabels={CHECK_WAVE:'정보 확인',RECEIVE_LIMITED:'받을 자원 구분',MAINTAIN:'필요한 만큼 유지',SLOW_PUSH:'느린 푸시',FAST_PUSH:'빠른 처리',CRASH:'밀고 리셋 준비',TRIM_RECEIVE:'줄이며 받기',TOWER_CS:'포탑 수급',RETURNING:'돌아오는 웨이브',JUNGLE_PREPARE:'성장·회복 준비',JUNGLE_CONNECT:'성장·지원 연결',JUNGLE_CHECK:'지원 조건 확인'};
+    phases.lane.tags=[tag('lane','ACTION',waveLabels[laneDecision]),tag('lane','CONDITION',!sourceOK?'자료 범위 확인':near?'정글 근처 가정':!values.enemy_jungle||!values.ally_jungle?'정글 미확인':low?'자원 부족 가정':'선택 가정에서 실행')];
+    phases.operations.tags=[tag('operations','ACTION',operationsDecision==='RESET_OPPORTUNITY'?'다음 기회 준비':operationsDecision==='PREPARE_CONNECTION'?'재집결 준비':'이득 전환 준비'),tag('operations','CONDITION',values.ally_followup==='AVAILABLE'?'아군 호응 가정':'합류 확인 필요')];
+    const goalLabels={DISRUPT_ENEMY_CARRY:'딜러 공격 방해',PROTECT_ALLY:'아군 딜러 보호',SURVIVE_AND_DAMAGE:'공격 공간 확보',ENABLE_ALLY:'아군 행동 지원',CREATE_CONNECTED_WINDOW:'연결된 기회',CONDITIONAL_ROLE:'기여 조건 확인',DUEL_CONTRIBUTION:'1대1 조건 비교'};
+    phases.fight.tags=[tag('fight','ACTION',goalLabels[goalId]),tag('fight','CONDITION',execution==='BLOCKED'?'진입 여건 부족':execution==='UNKNOWN'?'기여·위협 미확인':'선택 가정에서 실행')];
+    for(const phase of PHASES){
+      const decision=phases[phase];
+      if(decision.coverage.status!=='CONDITIONAL_PLAN')decision.tags=[{id:phase+':STATUS',kind:'STATUS',label:decision.coverage.label,source_paths:['gp23.phases.'+phase+'.coverage']}];
+    }
+    const baseline=(b.direction_hierarchy?.lane?.baseline?.desired_gains||[]).join('·')||report.roles.base.label;
+    const roleLabel={TOP:'탑',JUNGLE:'정글',MID:'미드',BOTTOM:'원딜',SUPPORT:'서포터'}[position];
+    const team=b.team_plan;
+    const top={teams:{id:'teams',label:'전체 조합 방향',title:'양 팀의 수단과 승리 방식 비교',paragraphs:team?[name(self)+'의 팀은 '+team.ours.win+' 상대 팀은 '+team.theirs.win,team.ours.avoid+' 상대의 제약: '+team.theirs.avoid]:['입력한 조합의 연결 수단을 비교하되, 확인되지 않은 분류를 수단 부재나 열세로 바꾸지 않는다.','공식 자료의 적용 범위가 부족하면 세부 전술 대신 양 팀의 기술·합류 조건을 확인한다.'],comparison:team?clone(team.rows):[],tags:[]},user:{id:'user',label:'사용자 기본 방향',title:roleLabel+' '+name(self)+' · '+baseline,baseline_scope:'COMPOSITION_DEFAULT_NOT_CURRENT_ACTION',paragraphs:['기본 방향은 '+baseline+'이다. 아래 단계별 행동은 웨이브 조작 가능성·호응·위협을 확인한 범위에서 이 목표를 실행하거나 제한한다.',information.label+'. 기본 방향과 현재 실행 허용을 구분하고, 모르는 위치·기술 상태·도착 시각을 채우지 않는다.'],tags:[]}};
+    b.gp23={schema_version:'gameplan-2plus3-v1',mode:state.mode,live_coaching_enabled:false,information,situation:clone(state),legacy_assumptions:{scenario:clone(input.scenario.overrides),planning:clone(planning),ignored_overlap:['scenario.resources','scenario.wave','planning.enemy_jungle','planning.ally_followup','planning.enemy_wave'],scope:'LEGACY_COMPARISON_NOT_OBSERVATION; v5 situation owns overlapping execution fields'},source_states:Situation.fields.map(f=>({field:f.key,...information.fields[f.key]})),top,phases,review_state:'TACTICAL_UNREVIEWED',real_coaching_n:0};
+    // Synchronize retained consumers from this single final judgment. Legacy
+    // inputs never enter this branch. No old title or aggressive tag survives.
+    for(const phase of PHASES){
+      const d=phases[phase],summary=b.loading_summary.items.find(s=>s.id===phase);
+      if(summary){summary.conclusion=d.action;summary.support=d.reason;}
+      b.action_summaries[phase].items=d.actions;b.coaching_explanation[phase]=d.paragraphs;
+      b.condition_responses[phase]=d.details;b.brief[phase]=d.action;
+      b.area_context[phase].action=d.action;
+      b.area_context[phase].ours=d.goal+' '+d.action;
+    }
+    b.wave.plan_id=laneDecision;b.wave.label=waveLabels[laneDecision];b.wave.purpose=laneGoal;b.wave.handling=laneAction;b.wave.position=lanePosition;b.wave.combat=laneAction;b.wave.trade=trade;b.wave.change_if=laneStop;b.wave.completed=false;
+    b.wave.steps=[lanePosition,laneAction,laneStop].map((text,i)=>({number:i+1,text}));
+    b.wave.axes={pace:{id:laneDecision,label:waveLabels[laneDecision]},pressure:{id:canManipulate?'CONDITIONAL':'LIMITED',label:'현재 실행 여건에서만 비교'},exposure:{id:near?'HOME_CONNECTED':'KNOWN_CONNECTION',label:lanePosition},resources:{id:resourcesReady?'DECLARED_BUDGET':'UNCONFIRMED_BUDGET',label:'선택한 처리·반격 예산'}};
+    b.wave.diagram={supported:false,plan_id:laneDecision,steps:clone(b.wave.steps),origin:'EXPLICIT_SCENARIO_NOT_CURRENT_OBSERVATION',reason:'상황별 실제 위치·사거리 도식은 미지원'};
+    b.wave.state={position:direction||'UNKNOWN',minion_size:values.wave_size||'UNKNOWN',origin:'EXPLICIT_SCENARIO_NOT_CURRENT_OBSERVATION'};
+    b.lane.concept={plan_id:laneDecision,text:laneAction};b.lane.overall_goal=laneGoal;b.headline=top.user.title;b.operation_headline=top.user.title;
+    Object.assign(b.fight,{role:fightGoal,target:fightAction,setup:fightPosition,start:fightAction,stop:fightStop,threats});
+    Object.assign(b.operations,{priority:operationsAction,placement:operationsPosition,concede:operationsStop});
+    b.loading_summary.changes=[laneStop,operationsStop,fightStop];b.overall_commentary=[];
+    coach.wave.selected_plan_id=laneDecision;coach.wave.selected={...coach.wave.selected,id:laneDecision,label:waveLabels[laneDecision],goal:laneGoal,handling:laneAction,steps:clone(b.wave.steps),abort:[laneStop]};coach.selected.action=laneAction;coach.diagram={supported:false,plan_id:laneDecision,steps:clone(b.wave.steps)};
+    report.summary.lane_key=laneAction;report.summary.fight_key=fightAction;report.summary.uncertainties=[...new Set([...waveUncertain,...combatUnknown,information.label])];
+    report.teamfight.role=fightGoal;report.teamfight.actions=[fightPosition,fightAction,fightStop];report.teamfight.threats=clone(threats);report.teamfight.switch_when=[fightStop];
+    b.versions={...b.versions,situation:'lol-coach-situation-v1',gp23:'gameplan-2plus3-v1'};
   }
 
   // A closed data contract keeps patch edits separate from decision code.

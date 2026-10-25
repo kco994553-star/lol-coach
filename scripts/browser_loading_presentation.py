@@ -103,7 +103,7 @@ const fs=require('node:fs'),assert=require('node:assert/strict'),{chromium}=requ
   for(const area of ['lane','operations','fight']){
    const base=p.locator('[data-basic-phase='+area+']'),prose=base.locator('[data-basic-coaching]');
    assert.equal(await base.locator('[data-basic-action-kind]').count(),5);assert.deepEqual(await prose.locator('p').allTextContents(),expected.cards.find(a=>a.id===area).explanation);
-   assert.equal(await prose.locator('h4').innerText(),{lane:'라인전을 풀어가는 방법',operations:'운영을 풀어가는 방법',fight:'한타를 풀어가는 방법'}[area]);
+   assert.equal(await prose.locator('h4').innerText(),{lane:'라인전을 풀어가는 방법',operations:'운영을 풀어가는 방법',fight:'교전·한타를 풀어가는 방법'}[area]);
    const style=await prose.locator('p').first().evaluate(n=>{const s=getComputedStyle(n);return {size:parseFloat(s.fontSize),line:parseFloat(s.lineHeight),color:s.color}});assert(style.size>=16&&style.line>=28);assert.equal(style.color,'rgb(237, 242, 250)');
    await base.screenshot({path:process.env.OUT+'/narrative-'+width+'-'+area+'.png'});
    const more=base.locator('[data-plan-more]');assert(await more.isVisible());await more.focus();await p.keyboard.press('Enter');await p.locator('.plan-detail-title').waitFor();

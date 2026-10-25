@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/scripts/browser_loading.py", line 449, in <module>
+    code=main()
+         ^^^^^^
+  File "/workspace/lol-coach-gp23/scripts/browser_loading.py", line 438, in main
+    receipt['presentation']=presentation_checks(env['LOADING_WEB'],out,env)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lol-coach-gp23/scripts/browser_loading_presentation.py", line 132, in run
+    if r.returncode:raise RuntimeError(name+' browser check failed: '+r.stderr[-2500:])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: narrative browser check failed: AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ '교전·한타를 풀어가는 방법'
+- '한타를 풀어가는 방법'
+
+    at /workspace/lol-coach-gp23/evidence/actual-evidence/loading/browser-20261025T104831565158Z/presentation/narrative.cjs:19:11 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '교전·한타를 풀어가는 방법',
+  expected: '한타를 풀어가는 방법',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

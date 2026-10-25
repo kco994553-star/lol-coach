@@ -1,0 +1,41 @@
+test_uncovered_role_tags_do_not_imply_tactical_support (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_uncovered_role_tags_do_not_imply_tactical_support) ... FAIL
+
+======================================================================
+FAIL: test_uncovered_role_tags_do_not_imply_tactical_support (tests_pregame.test_gameplan_situation.GameplanSituationTests.test_uncovered_role_tags_do_not_imply_tactical_support)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/lol-coach-gp23/tests_pregame/test_gameplan_situation.py", line 157, in test_uncovered_role_tags_do_not_imply_tactical_support
+    self.node(r"""
+  File "/workspace/lol-coach-gp23/tests_pregame/test_gameplan_situation.py", line 28, in node
+    self.assertEqual(p.returncode, 0, p.stderr[-6000:])
+AssertionError: 1 != 0 : node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(phase.tags.every(t=>t.kind==='STATUS'))
+
+    at [eval]:16:1
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.121s
+
+FAILED (failures=1)

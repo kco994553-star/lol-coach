@@ -350,6 +350,8 @@ class PregameHandler(Handler):
         # Public, manual learning examples only. No account/live-game adapter or
         # private workbench export is reachable from this explicit asset list.
         learning_assets={
+            '/learning':('learning.html','text/html; charset=utf-8'),
+            **{'/'+p:(p,'application/json; charset=utf-8' if p.endswith('.json') else 'text/css; charset=utf-8' if p.endswith('.css') else 'text/html; charset=utf-8' if p.endswith('.html') else 'text/javascript; charset=utf-8') for p in ('learning.html','learning.css','learning-engine.js','learning.js','learning-room.json','loading-situation.js')},
             **{'/home-assets/'+p:('home-assets/'+p,'image/jpeg') for p in ('Ahri.jpg','Caitlyn.jpg','AhriSkin27.jpg','LuxSkin7.jpg','lane.jpg','fight.jpg')},
             '/coach-theme.css':('coach-theme.css','text/css; charset=utf-8'),
             '/coach-shell.js':('coach-shell.js','text/javascript; charset=utf-8'),
@@ -449,6 +451,24 @@ class PregameHandler(Handler):
             filename,ctype=assets[route];file=ROOT/'web_r4'/filename
             if not file.exists():raise ServiceError(404,'PREGAME_UI_NOT_INSTALLED')
             return self.reply(200,file.read_bytes(),ctype)
+        if route=='/dev/v1/learning/search' and self.command=='POST':
+            self.authorize()
+            from .learning_room import search_index
+            value=self.body()
+            allowed={'query','topic_id','role','champion','opponent','situation','evidence_state','patch','patch_state','limit','offset'}
+            if not isinstance(value,dict) or set(value)-allowed:raise ServiceError(422,'INVALID_LEARNING_SEARCH')
+            for key,item in value.items():
+                if key in ('limit','offset'):
+                    if type(item) is not int or key=='limit' and not 1<=item<=500 or key=='offset' and not 0<=item<=100000:raise ServiceError(422,'INVALID_LEARNING_SEARCH')
+                elif not isinstance(item,str) or len(item)>100 or re.search(r'[\x00-\x1f\x7f]',item):raise ServiceError(422,'INVALID_LEARNING_SEARCH')
+                elif key not in ('query','situation','patch') and not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9:_.-]{0,99}',item):raise ServiceError(422,'INVALID_LEARNING_SEARCH')
+            if 'role' in value:
+                value['role']=value['role'].upper()
+                if value['role'] not in ('TOP','JUNGLE','MID','BOTTOM','SUPPORT'):raise ServiceError(422,'INVALID_LEARNING_SEARCH')
+            index=json.loads((ROOT/'web_r4/learning-room.json').read_text())
+            try:result=search_index(index,knowledge=json.loads((ROOT/'web_r4/loading-knowledge.json').read_text()),**value)
+            except (ValueError,TypeError):raise ServiceError(422,'INVALID_LEARNING_SEARCH')
+            return self.bounded_reply(200,result)
         if route=='/dev/v1/game-info' and self.command=='GET':
             self.authorize()
             from .game_info import GameInfoService
