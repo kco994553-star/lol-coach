@@ -1,5 +1,15 @@
 # 프론트엔드 v2 구현·인수 기록
 
+## Current — 티어·상대 최종 실제 공개 검증 (2026-10-25)
+
+제품main `be0b83faf24db19a5f2ff05410c9c2ed979f33db` / 정상PR145·146·147 / exactmain3SUCCESS40196881621/40196881598. artifact `9fc318cc6725e4e5ccb3fdf3be1c0e44a9590049` /native40197492425SUCCESS.13:26:14~13:27:04UTC actual109assetSHA/14private404/root.nojekyll200/71browser/74PNG,8saved200%/6tablekeyboard/3touchEMULATIONPASS. local1018PASS159.188s/sourceunchanged0는별도이며실물touch/Safari/FirefoxNOT_RUN,실제outage없어retryBLOCKED.
+
+현재관리추정160동일가중0/.5/1:overall74/160=46.25%exact,FE84/160=52.5%;area2overall19/32=59.375%,FE25/32=78.125%.2.4.1/4/7만overall각0.5증가·coveragePARTIAL/full_feature_acceptance=false,다른157행·모든FE점수와GP23역사보존. 실제CH50only·M+/ALLpartial·다른9empty·crossrole0/N20none/new0;5profile39conditional6reference·patchunverified·USERtactic/game/videoN0.
+
+[최종출고·실패이력](../../evidence/actual-evidence/champion-tiers-20261025/result.md) · [화면목록](../../evidence/actual-evidence/champion-tiers-20261025/page-images.md) · [진행률정본](../../evidence/actual-evidence/champion-tiers-20261025/progress-assessment.json) · [Notion4readback](../../evidence/actual-evidence/champion-tiers-20261025/notion-sync.md) · [160행표](frontend-v2-feature-matrix.json). Root활성결과writer는work/champion-tier-results-20261025에서최종봉인·정상PR/CI·병합을진행한다. 결과PR번호/성공을미리기록하지않고같은앱재게시없음.
+
+## 이전 프론트엔드 출고·동기화 기록 — 당시 기준 이력
+
 기준일: 2026-10-25. 기능계층 **v2.0**과 게임플랜 콘텐츠 **v1.3**은 별개다. 제품 main `ac48506c8f6493778d3fcdf675041d66f89c5390`의 구현·검사·정상 병합·공개 배포와 2026-10-25 08:42:22 UTC 실제 HTTPS 검사를 기록한다. 검증 범위는 출고 코드/자료와 명시적 UI 흐름이며 전160개 기능 완료·전술 정확도·실경기 효과를 뜻하지 않는다. 상세 영수증은8절에 둔다.
 
 ## 1. 범위와 상태
