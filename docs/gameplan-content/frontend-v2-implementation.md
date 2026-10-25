@@ -1,12 +1,12 @@
 # 프론트엔드 v2 구현·인수 기록
 
-기준일: 2026-10-25. 기능계층 **v2.0**과 게임플랜 콘텐츠 **v1.3**은 별개다. 이 기록의 현재 범위는 로컬 작업 트리의 코드·데이터·요구 대응이며 새 검사 통과, 원격 병합, 공개 배포 또는 실경기 효과를 증명하지 않는다. 실제 영수증은 아래 8절에 정확한 소스 해시와 함께 추가한다.
+기준일: 2026-10-25. 기능계층 **v2.0**과 게임플랜 콘텐츠 **v1.3**은 별개다. 제품 main `ac48506c8f6493778d3fcdf675041d66f89c5390`의 구현·검사·정상 병합·공개 배포와 2026-10-25 08:42:22 UTC 실제 HTTPS 검사를 기록한다. 검증 범위는 출고 코드/자료와 명시적 UI 흐름이며 전160개 기능 완료·전술 정확도·실경기 효과를 뜻하지 않는다. 상세 영수증은8절에 둔다.
 
 ## 1. 범위와 상태
 
 목표는 계정 없이 **챔피언 선택 → 자료 범위를 확인하는 상세 → 명시적 게임플랜 전달**이다. 기존 vanilla HTML/CSS/UMD JS와 Python 익명 집계를 사용한다. 런타임 AI·유료 호출·인증 완화·사용자 결정 변경은 없다.
 
-작업 시작 기준 main은 `b26269247537561e3c172364bb895f5078cacc41`이다. 재사용 선행 작업 PR #137은 필수 CI3개 후 정상 병합 `d489bcaf`, PR #138은 필수 CI3개·독립 검토·로컬439개 검사 후 정상 병합 `2ccb7352e7e7d31e52f5fc5faf487f030691e466`이다. 이 근거는 선행 설계/검색·기본조회 범위에 한정한다. 새 프론트엔드·통계 projection·성장 표시·전달 UI는 아직 원격 병합 전이며 해당 신규 소스의 검사/CI/배포 영수증을 별도로 붙인다. 현재 파일 존재는 전체 기능 인수 완료와 별개다.
+작업 시작 기준 main은 `b26269247537561e3c172364bb895f5078cacc41`이다. 재사용 선행 작업 PR #137은 필수 CI3개 후 정상 병합 `d489bcaf`, PR #138은 필수 CI3개·독립 검토·로컬439개 검사 후 정상 병합 `2ccb7352e7e7d31e52f5fc5faf487f030691e466`이다. 이 근거는 선행 설계/검색·기본조회 범위에 한정한다. 새 프론트엔드·통계 projection·성장 표시·전달 UI는 [PR140](https://github.com/kco994553-star/lol-coach/pull/140)으로 정상 병합되어 제품 main `ac48506c8f6493778d3fcdf675041d66f89c5390`에 포함되었다. 공개 artifact는 `b0ec3cb8e15f0fa4cc6aa0454897317c23e979c9`이며 Pages 배포와 실제 HTTPS 검사를 통과했다. 현재 파일 존재는 전체 기능 인수 완료와 별개다.
 
 | 상태 축 | 인정하는 근거 |
 |---|---|
@@ -20,7 +20,7 @@
 
 ## 2. 160행과 과거 125행 보존
 
-정본은 [기능계층](../../contracts/information-architecture-v1.md) 최상단 **v2.0 본문**이다. 부록 C는 역사 자료다. [기능 대응표](frontend-v2-feature-matrix.json)는 현재 160개 고유 ID, 기존 125개 `legacy_id`, 추가·연결 35개를 구분한다. 각 행에 목적·기존 구현·부족 기능·입력·출력·예외·완료 조건·검사·의존성·위험·상태·근거를 둔다. `scope`가 부분 구현과 전체 인수를 분리한다. `status`는 `NOT_STARTED / IMPLEMENTED / TESTED / INTEGRATED / DEPLOYED / LIVE_VERIFIED`만 사용한다. `coverage`의 `PARTIAL / NOT_SUPPORTED / NOT_STARTED / SCOPED_IMPLEMENTATION`은 지원 범위이며 개발 단계와 별개다. 부분 구현의 `IMPLEMENTED`는 `scope.evaluated_scope`의 실제 코드만 뜻하고, 전체 기능 완료를 뜻하지 않는다. `missing`과 `full_feature_acceptance=PENDING`을 함께 읽는다.
+정본은 [기능계층](../../contracts/information-architecture-v1.md) 최상단 **v2.0 본문**이다. 부록 C는 역사 자료다. [기능 대응표](frontend-v2-feature-matrix.json)는 현재 160개 고유 ID, 기존 125개 `legacy_id`, 추가·연결 35개를 구분한다. 각 행에 목적·기존 구현·부족 기능·입력·출력·예외·완료 조건·검사·의존성·위험·상태·근거를 둔다. `scope`가 부분 구현과 전체 인수를 분리한다. 입수 당시 main/로컬 상태는 `intake_context`와 행별 `intake_status`에 보존하고 최종 상태는 제품 main의 영수증으로 갱신했다. `status`는 `NOT_STARTED / IMPLEMENTED / TESTED / INTEGRATED / DEPLOYED / LIVE_VERIFIED`만 사용한다. `coverage`의 `PARTIAL / NOT_SUPPORTED / NOT_STARTED / SCOPED_IMPLEMENTATION`은 지원 범위이며 개발 단계와 별개다. 부분 구현의 `IMPLEMENTED`는 `scope.evaluated_scope`의 실제 코드만 뜻하고, 전체 기능 완료를 뜻하지 않는다. `missing`과 `full_feature_acceptance`를 함께 읽는다. `MET_FOR_DECLARED_SCOPE`도 명시한 소프트웨어 흐름/자료 범위의 수용일 뿐 전 챔피언·상대의 전술 완성을 뜻하지 않는다. 미지원 기능은 `status=NOT_STARTED`, 검증된 자료부족 UI는 별도 `ui_status=LIVE_VERIFIED`로 분리한다.
 
 기존 1번은 유지하고, 기존 2~6번은 현재 3~7번으로 연결한다. 예를 들어 **v1.1 2.3.1 → v2.0 3.3.1**이다. 과거 파일·검사·원래 ID를 새 번호로 치환하지 않는다. 대응표의 `HISTORICAL_MAPPING`은 근거의 연결이며 새 기능 검사 결과가 아니다.
 
@@ -122,33 +122,40 @@ LEVEL2/3/6/11/16의 median/IQR/n은 해당 수준 이상을 **처음 관측한 �
 
 ## 8. 검사·인수 영수증
 
-이 절의 명령은 **인수 대상**이며 실행/통과 기록이 아니다. 실행자는 결과·시각·정확 소스 SHA·범위와 실패를 추가한다.
+제품 main `ac48506c8f6493778d3fcdf675041d66f89c5390`에서 전체906개 검사를139.948초에 다시 실행해 PASS했다. [전체 로그](../../evidence/actual-evidence/frontend-v2-20261025/full-pregame-merged-main.log)는 병합된 소스의 실제 결과다. 최종 targeted50개 검사·handoff 수정 후24개 검사·통계46개 및 단위10개 결과는 각 시점의 범위로만 인용하며906개와 더해 고유 검사 수로 세지 않는다.
 
-```sh
-python -m unittest tests_pregame.test_champion_statistics tests_pregame.test_champion_frontend tests_pregame.test_champion_handoff tests_pregame.test_champion_publication -v
-python scripts/build_champion_statistics.py --output /tmp/champion-stats-review.json
-python scripts/browser_champions.py --output /workspace/frontend-v2-artifacts/browser
-python scripts/browser_champions.py --screens-only --output /workspace/frontend-v2-artifacts/images
-```
-
-필수 확인은 정확 cohort·가중 n/CI·경계/60+·n99/n100·gap·원본 보존, 선택/변경창/저장소 오류/늦은 응답, 미리보기·교체/중복/불명 슬롯/revision·취소/부분 새로고침·기존 가정 보존, strict10/기존5행동 본문 회귀다. 실제 Chromium PC와 공개 `/lol-coach/` subpath에서1440/390/320px·200%·키보드/터치·overflow·JS 오류·외부 요청·인증 경계를 확인한다. export 허용 목록/서버 정적 경로·CI source binding·private 제외를 별도 확인한다.
-
-| 새 영수증 | 현재 기록 |
+| 근거 | 정확 범위와 영수증 |
 |---|---|
-| 로컬 자동/브라우저 실행 | 최종 실행자의 정확 로그 대기 |
-| 18 PNG·실제 UI source manifest | 캡처 실행자의 파일 목록/해시 대기 |
-| 독립 검토·필수 CI | 검토/CI 실행 결과 대기 |
-| 원격 main 병합 | 선행 PR137 `d489bcaf`·PR138 `2ccb7352e7e7d31e52f5fc5faf487f030691e466` 정상 병합. 신규 프론트엔드 SHA/PR 영수증 대기 |
-| 공개 export·배포·실환경 | publication SHA·URL·검사 영수증 대기 |
-| Notion 동일 페이지 반영/재조회 | 별도 동기화 실행 영수증 대기 |
+| 병합·필수 CI | [PR140](https://github.com/kco994553-star/lol-coach/pull/140), [main](https://github.com/kco994553-star/lol-coach/commit/ac48506c8f6493778d3fcdf675041d66f89c5390); PR 및 exact main 필수3개 성공. [MVP40177148325](https://github.com/kco994553-star/lol-coach/actions/runs/40177148325), [Pregame40177148293](https://github.com/kco994553-star/lol-coach/actions/runs/40177148293) |
+| 독립 검토·targeted | [최종 검토](../../evidence/actual-evidence/frontend-v2-20261025/final-review.md), [최종 수정 검토](../../evidence/actual-evidence/frontend-v2-20261025/final-fix-review.md), [targeted 로그](../../evidence/actual-evidence/frontend-v2-20261025/champion-final-targeted.log), [handoff 검토](../../evidence/actual-evidence/frontend-v2-20261025/handoff-fix-review.md) |
+| 로컬 실제 Chromium | [screens/runner.json](../../evidence/actual-evidence/frontend-v2-20261025/screens/runner.json):55개 확인·18 PNG·107개 소스 해시. source head `f30da7fbd5658928403b7131456d20e19722ecc8`의 앱 소스는 병합 main과 동일하며 문서 영수증 갱신을 소급해 검사했다고 주장하지 않음 |
+| 공개 export·배포 | [artifact](https://github.com/kco994553-star/lol-coach/commit/b0ec3cb8e15f0fa4cc6aa0454897317c23e979c9), [native Pages40177555880](https://github.com/kco994553-star/lol-coach/actions/runs/40177555880) SUCCESS. 공개 허용100개 파일과 private 제외 확인. [release-info](../../evidence/actual-evidence/frontend-v2-20261025/release-info.json) |
+| 실제 공개 HTTPS | [라이브 사이트](https://kco994553-star.github.io/lol-coach/), [live-verification.json](../../evidence/actual-evidence/frontend-v2-20261025/live-verification.json):08:42:22 UTC까지57개 확인·100개 공개 파일 해시·29개 화면. exact main build-info/실제 응답 바이트와 선택·자료·전달 흐름 확인 |
+| Notion | 기존4페이지 쓰기와 재조회 완료(08:47 UTC). root도4페이지의 main·45%/49%·자료 한계를 독립 재조회했다. 기존ID/자식/이전 원문은 보존했다. [동기화 기록](frontend-v2-notion-sync.md) |
+
+실패는 감추거나 검사를 약화하지 않고 수정 이력으로 보존했다. handoff의4개 race/보존 반례를 수정했고, 기존5메뉴 assertion은 승인된6개와 순서까지 확인하도록 고쳤다. 모바일5열 잔존을6열로 맞춰 hero26px 수평 넘침을 해결했다. CI의 실제 Playwright 런타임 설치 누락을 보완했으며 실패한 검사를 skip하거나 허용치를 약화하지 않았다.
+
+기존 공개 프로 참고 자료는 typed validation을 통해4,228바이트·SHA-256 `64d4830149af4ba515ac3b5e6c745629f80d00b0b7e416c30a5e27d4afd8c6e3`로 보존했다. source placeholder를 배포하지 않았고 이전 갱신 실패 표식도 유지했다. 이 과정은 새로운 Riot/API 수집이나 성공한 최신 갱신을 뜻하지 않는다. [보존 근거](../../evidence/actual-evidence/frontend-v2-20261025/preserved-pro-reference.json).
+
+로컬·HTTPS 검사는 실제 출고 DOM/자료와 공개 흐름을 검증한다. 로컬 PC import는 격리 fixture이며 실제 계정/provider·Windows LCU·실경기 효과 성공을 대신하지 않는다. 실제 결과50경기는 여전히N100 미달이며 없는 승률선을 생성하지 않았다.
 
 ## 9. 진행률과 Notion 반영
 
-[동기화 기록](frontend-v2-notion-sync.md)의 기존 관리자·상세·그래프 페이지를 갱신한다. 상세 근거를 먼저 반영하고 관리자 상태, 그래프를 같은 버전으로 맞춘다. 여기서는 Notion을 쓰지 않았다.
+제품 main `ac48506c8f6493778d3fcdf675041d66f89c5390`, 기준시각 **2026-10-25 08:42:22 UTC**의 [160행 평가](../../evidence/actual-evidence/frontend-v2-20261025/progress-assessment.json)에 따라 전체 **44.7% → 약45%**, 프론트엔드 **49.4% → 약49%**로 추정한다. 행별0/0.5/1의 동일 가중 합계/160이며 테스트 통과율·투입 노력·전술 정확도가 아니다. 프론트엔드는 실제 제공하는 화면/흐름 범위를 별도로 평가하며 없는 전술 데이터가 생긴 것으로 세지 않는다.
 
-진행률은 **원격 main의160행 전체 인수 범위**를 분모로 한다. 로컬/미병합·문서 대응·화면의 미지원 안내는 기능 완료 분자에 넣지 않는다. 행마다 `0=미착수/미지원`, `0.5=main에서 일부 수용되고 부족 기능이 명시됨`, `1=전체 완료조건의 검사/연결이 main에서 확인됨`을 동일 가중으로 합산해 `100×합계/160`으로 추정한다. 이는 기능 수 기반 **추정치**이며 노력·전술 정확도 비율이 아니다. 부가 표는 메뉴별 같은 산식, 기반 SHA, 평가 시각, 각 행 판정 근거를 공개한다.
+| 영역 | 행 수 | 전체 추정 | 프론트엔드 추정 |
+|---|---:|---:|---:|
+| 1 전적 검색 | 19 | 50.0% | 50.0% |
+| 2 챔피언 검색 | 32 | 54.7% | 78.1% |
+| 3 게임플랜 | 48 | 43.8% | 43.8% |
+| 4 경기 중 도우미 | 19 | 21.1% | 21.1% |
+| 5 경기 복기 | 13 | 38.5% | 38.5% |
+| 6 학습실 | 17 | 50.0% | 50.0% |
+| 7 작업 상태·지원 | 12 | 50.0% | 50.0% |
 
-현재 대응표는 로컬 코드 목록이므로 이 상태 문자열을 바로 위 산식에 넣지 않는다. 새 main 행별 평가를 붙이기 전에는 기존 **전체35%·프론트엔드34% 역사적 추정치**는 Notion 영역별 관리 추정을 현행160행의 메뉴별19/32/48/19/13/17/12개 비중으로 가중한 carryover 값으로만 보존한다. 이는 신규 main의 행별 인수 재평가가 아니다. 이를 이번 신규 소스의 완료율로 승격하지 않는다. 최종 보고에서는 실행자가 main의160행0/0.5/1을 실제 계산한 최신 추정치를 표시하며 ‘미산정’으로 남기지 않는다. `160/160=100%`는 요구 매핑 커버리지에만 사용할 수 있다. 과거의 백분율·미산정·다른 분모의 통계가 공존하면 원래 평가시각/분모를 남기고 새 근거표와 조정 사유를 기록한다. 원격 통합/재평가 이후 실행자가 실제 숫자를 추가한다.
+0은 미착수/요구 자료 부족,0.5는 일부 지원과 남은 조건,1은 선언된 범위의 완성 흐름을 뜻한다. 미병합 코드는 포함하지 않는다. 명세160/160 매핑은 문서 커버리지100%일 뿐 제품100%가 아니다. 기존 **전체35%·프론트엔드34%**는 영역별 Notion 관리 추정의 carryover였으며 다른 평가 방법의 당시 역사로 보존한다. 이를 이번 새 평가와 같은 측정값의 상승폭으로 해석하지 않는다.
+
+[Notion 동기화 기록](frontend-v2-notion-sync.md)은 기존 관리자·상세·그래프와 허브를 유지하고45%/49%·같은 main·동일 자료 한계를 반영한다. 실제4페이지 쓰기/재조회와 root 독립 재조회를 완료했다. [영수증](../../evidence/actual-evidence/frontend-v2-20261025/notion-sync-report.json)이 확인 범위를 기록한다.
 
 ## 10. 남은 기능과 제한
 

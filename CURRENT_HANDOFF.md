@@ -1,3 +1,16 @@
+# Frontend v2 core flow — deployed and live verified (2026-10-25 UTC)
+
+- Product main `ac48506c8f6493778d3fcdf675041d66f89c5390`, normal PR140; reusable PR137/138 also normally merged. IA v2.0 (160 rows) and gameplan content v1.3 remain separate.
+- Actual shipped six menus; champion selection/detail/name/observed-role/recent-pair/dialog, exact same-role opponent game wins and honest insufficient graph states, separate growth reference, explicit partial/full gameplan handoff. Preserve unrelated picks/scenario/planning; strict10 remains.
+- Final product main:906 tests PASS139.948s; actual local Chromium55checks/18PNG/107sourcehashes; exact PR/main regression/browser-regression/pregame all SUCCESS. Independent whole-branch and scoped fix reviews approved.
+- Pages artifact `b0ec3cb8e15f0fa4cc6aa0454897317c23e979c9`, native run40177555880 SUCCESS. Real HTTPS08:42:22UTC:100hashes/57checks/29screens,1440/390/320 and200%, full/partial/cancel/back/refresh verified. Existing live pro reference retained byte-identically with typed validation; prior refresh failure remains visible.
+- Management estimate overall45% / frontend49% (44.7/49.4,160equallyweighted0/.5/1 rows), not test pass rate or tactical efficacy. All-champion tactics/N100 outcome curves/runes-build stats/bot2v2/live provider/Windows/effectiveness remain incomplete; outcome50/position50/growth275,4REFERENCE_ONLY profiles, retained16.20/16.20.1 sources.
+- Current result record: `evidence/actual-evidence/frontend-v2-20261025/result.md`;160row matrix and same-scope Notion admin/detail/graph/hub updated/read back;18page PNGs and representative live screenshots linked there.
+- Results branch `work/frontend-v2-results-20261025` records evidence only; no duplicate product publication. Exact final results SHA/CI/owner release follow canonical `work/main-execution-claim` token `codex-20261025-frontend-v2-implementation`.
+- Next: existing-budget outcome accumulation and source-bound matchup/2v2 knowledge, then optional builds/record/review/learning/live connections. No runtime AI/paid calls/auth relaxation/protected decisions/raw source/budget/scheduler changes. Real coaching efficacy N=0.
+
+---
+
 # Gameplan direction hierarchy — GP-0.6 first slice (2026-10-24)
 
 - Owner branch: `work/gameplan-direction-20261024`; intake main `d00c255334cc5cb9cceca86840914b1331a33fa1`.

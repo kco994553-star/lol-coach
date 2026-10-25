@@ -1,3 +1,9 @@
+## Current — frontend v2 core user flow publicly verified (2026-10-25 UTC)
+
+Product PR140/mainac48506, artifactb0ec3cb/Pages40177555880 and actualHTTPS100hashes/57browserchecks PASS. Six-menu champion selection→honest detail→explicit preservation-safe gameplan transfer shipped. Existing3phases/fiveactions/prose and verifiedpro data retained.906merged-main tests and exactPR/main required3PASS. Result/160row matrix/screens/Notion receipts: evidence/actual-evidence/frontend-v2-20261025. Whole-product estimate45%/frontend49%, not all-matchup or tactical validation. Remaining P1 exactoutcome accumulation/currentpatch/scopedmatchups/2v2 and P2builds/account/review/learning/permittedlive; data50/50/275 and4REFERENCE_ONLY supportlimits remain. Results-only documentation does not republish identical app. Protected decisions/raw/frozen350/quotas/schedules/auth unchanged.
+
+---
+
 ## Current — v1.3 delivered; remaining scope (2026-10-24)
 
 PR127/128 product main3013f30 shipped as Pagesee839fc and public90hashes/1440-390-320 verified. Existing result.md and content matrix contain exact evidence. No active source editing; results-only branch work/gameplan-v13-results-20261024, final owner state on canonical claim. Next priorities: unsupported role/duo knowledge and relative wave counterexamples → actual understanding/tactical review → dedicated review execution trace → existing current-game/partial-pick/past-plan and other product queue. Do not treat all-champion tactics or live support as complete. Earlier task records below are historical.
