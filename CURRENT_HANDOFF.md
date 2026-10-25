@@ -1,3 +1,22 @@
+# Frontend v2 implementation — complete / writer released
+- run_token: `codex-20261025-frontend-v2-implementation`
+- status: IDLE
+- writer_active: false
+- owner_branch: `work/frontend-v2-results-20261025`
+- product_main: `ac48506c8f6493778d3fcdf675041d66f89c5390` (PR140 normally merged)
+- results_main: `523c983257197182880a18a055e3a9ba98ccec78` (PR141 normally merged; documentation/evidence only)
+- PR137 document binding fixed/merged, PR138 reused/reviewed/current-main integrated/merged, PR139 IA v2 retained, PR140 product and PR141 results all normal merges.
+- Exact PR140/product-main and PR141/results-main regression/browser-regression/pregame all SUCCESS. Product main full906tests PASS139.948s; independent spec/quality and fix reviews approved.
+- Public artifact `b0ec3cb8e15f0fa4cc6aa0454897317c23e979c9`, native Pages40177555880 SUCCESS. ActualHTTPS08:42:22UTC sourceac48506:100manifesthashes,57browserchecks,29screens1440/390/320+200%, full/partial/cancel/back/refresh/strict10 PASS. Local55checks/18pagePNG/107hashes also PASS. Existing READY pro reference retained byte-identically with typed validation; existing refresh failure state kept.
+- Same application source remains published: results-only main523c983 changes no web/server/scripts/workflow/tests relative to productac48506; no duplicate app deployment.
+- Source result: evidence/actual-evidence/frontend-v2-20261025/result.md; current160row matrix, progress45%overall49%frontend management estimate(44.7/49.4) withscope/limits, local/live receipts and18pageimages on main.
+- Notion existing admin/detail/graph/hub4pages updated/read back; source/45%-49%/160/50-50-275/4REFERENCE_ONLY/N100 limits consistent; existingIDs/15detailchildren/3hubchildren/history preserved. FinalPR141/results links added/read back.
+- Core shipped: sixmenu champion selector/detail/dialog/observedrole/recentpairs/exactopponentteamwins/growthrefs/explicit partial/full handoff. Full tactical coverage, sufficient N100 outcome curves, runes-build/skillorder/bot2v2 stats, real-time provider/Windows connection and coaching efficacy remain open. Gameplan v1.3 and protected histories preserved; real effectivenessN0.
+- Next autonomous: existing-budget exact-outcome cumulative companion/validation and source-bound matchup/2v2 coverage; later optional builds/account/review/learning/permitted live. No new credentials/paid/runtime AI/schedules/auth relaxation/protected decision or raw-source changes were made.
+- Local worktree and main checkout clean; no active source writer. Final user report links public app, product/results PRs, evidence, Notion and18PNG ZIP.
+
+---
+
 # Frontend v2 implementation — active
 - run_token: `codex-20261025-frontend-v2-implementation`
 - status: RUNNING
