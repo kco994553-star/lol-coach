@@ -1,3 +1,17 @@
+# Frontend hierarchy v2.0 — GitHub and Notion document synchronization
+- run_token: `codex-20261025-frontend-hierarchy-v2-mvngyku7`
+- status: RUNNING
+- writer_active: true
+- owner_branch: `docs/frontend-hierarchy-v2-20261025`
+- intake_main: `944c0ef64e59e94b19d3ebe5694efefae41cc8cc`
+- scope: user-requested frontend hierarchy v2.0 documentation publication and Notion synchronization, including the clarified time-based power graph semantics.
+- product write_set: `contracts/information-architecture-v2.md`, additive notice in `contracts/information-architecture-v1.md`, additive README navigation.
+- preserved: all 125 legacy requirement rows, 160 v2.0 rows, protected knowledge/source/evidence histories, product code and deployment state.
+- related open PR137/138 remain separate; no edits or merge of those PRs in this task.
+- previous top claim was CI_PENDING/writer_active=false; its exact PR130/head was verified merged. Existing terminal history below is preserved.
+
+---
+
 # Gameplan direction hierarchy — CI pending
 - run_token: `codex-20261024-gp04-direction`
 - status: CI_PENDING
