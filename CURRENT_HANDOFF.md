@@ -1,3 +1,16 @@
+# Frontend hierarchy v2.0 — gated merge and final verification
+- run_token: `codex-20261025-frontend-hierarchy-v2-mvngyku7`
+- status: RUNNING
+- writer_active: true
+- owner_branch: `docs/frontend-hierarchy-v2-20261025`
+- intake_main: `944c0ef64e59e94b19d3ebe5694efefae41cc8cc`
+- head: `6f5a375879246c068c7a8f8d12a2ff15ed62195c`
+- PR: https://github.com/kco994553-star/lol-coach/pull/139
+- Scope: normal merge of reviewed documentation-only PR139, then verify resulting main SHA and applicable checks. Exact-head pregame/regression/browser-regression SUCCESS, no review objections, mergeable_state=clean. Existing claim was our CI_PENDING handoff; no other writer intervened.
+- Product write_set remains the existing information-architecture contract plus its single SHA256 binding. No code, deployment, protected issue, or PR137/138 mutation.
+
+---
+
 # Frontend hierarchy v2.0 — CI pending / writer released
 - run_token: `codex-20261025-frontend-hierarchy-v2-mvngyku7`
 - status: CI_PENDING
