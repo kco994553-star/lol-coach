@@ -1,8 +1,8 @@
 /* Shared PC/mobile pre-game analysis. Source facts and tactical hypotheses differ. */
 (function(root,factory){
-  if(typeof module==='object'&&module.exports)module.exports=factory(require('./directions-engine.js'),require('./loading-exploration.js'),require('./loading-wave.js'),require('./loading-engagement.js'),require('./loading-exchange.js'),require('./loading-coach.js'));
-  else root.LoadingStrategy=factory(root.DirectionEngine,root.LoadingExploration,root.LoadingWave,root.LoadingEngagement,root.LoadingExchange,root.LoadingCoach);
-})(typeof globalThis!=='undefined'?globalThis:this,function(DirectionEngine,LoadingExploration,LoadingWave,LoadingEngagement,LoadingExchange,LoadingCoach){
+  if(typeof module==='object'&&module.exports)module.exports=factory(require('./directions-engine.js'),require('./loading-exploration.js'),require('./loading-wave.js'),require('./loading-engagement.js'),require('./loading-exchange.js'),require('./loading-coach.js'),require('./loading-situation.js'));
+  else root.LoadingStrategy=factory(root.DirectionEngine,root.LoadingExploration,root.LoadingWave,root.LoadingEngagement,root.LoadingExchange,root.LoadingCoach,root.LoadingSituation);
+})(typeof globalThis!=='undefined'?globalThis:this,function(DirectionEngine,LoadingExploration,LoadingWave,LoadingEngagement,LoadingExchange,LoadingCoach,LoadingSituation){
   'use strict';
   const POSITIONS=['TOP','JUNGLE','MID','BOTTOM','SUPPORT'];
   const POSITION_NAMES={TOP:'탑',JUNGLE:'정글',MID:'미드',BOTTOM:'바텀',SUPPORT:'서포터'};
@@ -25,12 +25,14 @@
   }
   function validate(raw,catalog){
     const legacyKeys=['allies','enemies','own_champion','own_position','side','patch','opponent_mode','lane_opponent'];
-    const v4=raw&&raw.schema_version==='lol-coach-loading-input-v4';
+    const v5=raw&&raw.schema_version==='lol-coach-loading-input-v5';
+    const v4=v5||raw&&raw.schema_version==='lol-coach-loading-input-v4';
     const v3=v4||raw&&raw.schema_version==='lol-coach-loading-input-v3';
     const versioned=v3||raw&&raw.schema_version==='lol-coach-loading-input-v2';
-    exact(raw,v4?[...legacyKeys,'schema_version','preferences','scenario','planning']:v3?[...legacyKeys,'schema_version','preferences','scenario']:versioned?[...legacyKeys,'schema_version','preferences']:legacyKeys);
+    exact(raw,v5?[...legacyKeys,'schema_version','preferences','scenario','planning','situation']:v4?[...legacyKeys,'schema_version','preferences','scenario','planning']:v3?[...legacyKeys,'schema_version','preferences','scenario']:versioned?[...legacyKeys,'schema_version','preferences']:legacyKeys);
     if(v3)LoadingCoach.validateScenario(raw.scenario);
     if(v4)LoadingCoach.validatePlanning(raw.planning);
+    if(v5)LoadingSituation.validate(raw.situation);
     if(versioned){exact(raw.preferences,['risk']);if(!['LOSS_LIMIT','BALANCED','OPPORTUNITY'].includes(raw.preferences.risk))throw Error('리스크 성향을 목록에서 선택해 주세요.');}
     const out={};
     for(const side of ['allies','enemies']){
@@ -64,7 +66,8 @@
     }else if(raw.lane_opponent!==null)throw Error('라인 상대 직접 선택 값과 선택 방법을 맞춰 주세요.');
     if(v3)out.scenario=LoadingCoach.validateScenario(raw.scenario);
     if(v4)out.planning=LoadingCoach.validatePlanning(raw.planning);
-    out.schema_version=v4?'lol-coach-loading-input-v4':v3?'lol-coach-loading-input-v3':'lol-coach-loading-input-v2';out.preferences={risk:versioned?raw.preferences.risk:'BALANCED'};
+    if(v5)out.situation=LoadingSituation.validate(raw.situation);
+    out.schema_version=v5?'lol-coach-loading-input-v5':v4?'lol-coach-loading-input-v4':v3?'lol-coach-loading-input-v3':'lol-coach-loading-input-v2';out.preferences={risk:versioned?raw.preferences.risk:'BALANCED'};
     return out;
   }
   function exampleInput(catalog,index=0){
