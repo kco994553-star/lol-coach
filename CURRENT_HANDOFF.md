@@ -5,7 +5,8 @@
 - owner_branch: `docs/frontend-hierarchy-v2-20261025`
 - intake_main: `944c0ef64e59e94b19d3ebe5694efefae41cc8cc`
 - scope: user-requested frontend hierarchy v2.0 documentation publication and Notion synchronization, including the clarified time-based power graph semantics.
-- product write_set: `contracts/information-architecture-v2.md`, additive notice in `contracts/information-architecture-v1.md`, additive README navigation.
+- product write_set: `contracts/information-architecture-v1.md` (current v2.0 body, exact prior document preserved in appendix C); `contracts/amendments/2026-10-16-actual-evidence.json` (only that document’s SHA256 binding).
+- bounded path decision: retain the existing canonical path; no new contract path, README edits, verifier changes, product-code edits or deployment. Existing source-preservation gates remain unchanged.
 - preserved: all 125 legacy requirement rows, 160 v2.0 rows, protected knowledge/source/evidence histories, product code and deployment state.
 - related open PR137/138 remain separate; no edits or merge of those PRs in this task.
 - previous top claim was CI_PENDING/writer_active=false; its exact PR130/head was verified merged. Existing terminal history below is preserved.
