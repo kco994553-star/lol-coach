@@ -13,3 +13,18 @@
 
 공통 설계: ARCHITECTURE.md. 기존 구현 기록: docs/gameplan-content/frontend-v2-implementation.md.
 판단 변경은 스키마→엔진→태그→화면→검사→예시→문서 순서로 영향을 확인한다. 이 표만으로 진행률을 올리지 않는다.
+
+## 확인한 파일 의존 경로와 회귀 책임
+
+| 경로 | 책임 | 변경 시 확인 |
+|---|---|---|
+| loading.js / loading-draft.js → loading-engine.js | 수동/공유/부분 입력·인계·정규화 | legacy/v2/v3/v4/제안 v5, 부분 입력, 알려지지 않은 픽, 중복·역할 검증 |
+| loading-engine.js → loading-coach.js → loading-planboard.js | 같은 입력·가정으로 조건/후보/비용/전환 판단 | stale/unknown/assumed, 정글 양쪽·웨이브 가능성·실효 인원·목표 충돌 |
+| loading-planboard.js → delivery / snapshot / dependencyTree | 5행동·코칭·태그·범위·추적 | 기존 delivery-v1/snapshot-v1 소비자, 원문/근거 연결, 태그 모순·잔류 |
+| loading-presentation.js → loading-coach-view.js / loading.css | 상단2/하단3 읽기 순서와 공유·상세·복귀 | 320/390/desktop/200%/키보드, visible action/stop, 비교표·legacy·지도 보존 |
+| gameplan_input.py → pregame_server.py pc_gameplan_input | privacy-filtered LCU/수동 capture | 세션/본인/관측 미검증 gate 보존; 전송 liveness를 전술 freshness로 재사용 금지 |
+| official_catalog / manifests → build_loading_catalog.py → direction profiles / registry | 공식 사실·역할/패치 바인딩 | URL·해시·필수 슬롯·source patch, 기존 profile version2 범위; 무결성 ≠ 전술 승인 |
+| scripts/export_gameplan_five.js / build_gameplan_preview.js | 같은 실제 엔진 원문·미리보기 | 입력·출력·화면 문장·SHA·지원 범위·seed 보존, 수동 보정 금지 |
+| 학습 taxonomy → source/claim/lesson index → 검색/구간 UI | 6.4/6.5/6.6 및 3.7.4/5.5.2/2.4 연결 | 80 ID·미분류·중복·구간 검증·접근 상태·private notes 경계; 후보를 coaching으로 승격 금지 |
+
+학습실 신규 모듈의 최종 파일명과 실제 검사 receipts는 작업자가 구현 후 상태 문서에 기록한다. 현황표·관리 그래프·Notion은 최종 근거를 소유한 상위 인계 작업에서 갱신하며 이 지도만으로 진행률을 바꾸지 않는다.
