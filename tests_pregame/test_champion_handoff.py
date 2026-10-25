@@ -121,7 +121,7 @@ assert.equal(D.returnLink(D.createIntent({champion:'Caitlyn',position:'BOTTOM'})
         thread.start()
         script = PRELUDE + """
 const {chromium}=require('playwright');
-(async()=>{const browser=await chromium.launch({headless:true,executablePath:'/usr/bin/chromium',args:['--no-sandbox']});
+(async()=>{const browser=await chromium.launch({headless:true,executablePath:process.env.CHROMIUM_EXECUTABLE||'/usr/bin/chromium',args:['--no-sandbox']});
 try{const page=await browser.newPage();const base='http://127.0.0.1:PORT/loading.html';
 """.replace('PORT', str(server.server_port)) + body + """
 }finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1});
