@@ -1,6 +1,6 @@
 {
   "format": "lol-coach-frontend-v2-feature-matrix-v1",
-  "as_of": "2026-10-25T11:23:44Z",
+  "as_of": "2026-10-25T13:27:04.403035Z",
   "authority": {
     "path": "contracts/information-architecture-v1.md",
     "version": "2.0",
@@ -3327,8 +3327,8 @@
       "group": "2.4 라인전·운영·한타 상성",
       "change": "확정 핵심",
       "purpose": "사거리·교환·웨이브·유지력·성장 전환 등의 조건으로 상대하기 수월하거나 까다로운 이유를 설명한다.",
-      "existing": "실제 UI의 단계별 자료부족/정글 구분 및 서포터 참고 선택 상태는 확인했지만 특정 상대 전술 판정 데이터는 없다.",
-      "missing": "모든 상대의 단계별 태그/이유/행동/전환 조건 해설과 2대2 통계는 없다.",
+      "existing": "Caitlyn/Ezreal/Fiora/Yunara의명시champion-role에출처결속LANING조건부이유/행동/전환·저자범주/AI해석/패치한계를표시하는참고slice.실제전술검증아님.",
+      "missing": "5개전체profile중4개LANING/1개JUNGLE의제한된source후보뿐.전챔피언·전역할/매치업/현재패치전술검증과2v2는없음.USER승인아님.",
       "input": "기준/상대 역할과 선택 서포터 문맥, 실제 존재하는 해설 — 라인전 관점의 상성",
       "output": "자료 있는 문단 또는 해설 준비/부족 상태 — 라인전 관점의 상성",
       "exceptions": "서포터는 참고 문맥만; 정글에 라인전 지표 대입 금지; 원문은 TACTICAL_UNREVIEWED",
@@ -3336,20 +3336,24 @@
       "test": {
         "required": [
           "tests_pregame/test_champion_baseline.py",
-          "tests_pregame/test_champion_frontend.py"
+          "tests_pregame/test_champion_frontend.py",
+          "tests_pregame/test_champion_matchup_knowledge.py",
+          "tests_pregame/test_champion_insights_frontend.py"
         ],
         "acceptance": "라인전 관점의 상성 정상·없음·오류·복귀/유실 반례를 해당 정확 범위로 검사",
-        "result": "CAPABILITY_UNIMPLEMENTED; unavailable UI is a separate scope"
+        "result": "POSTDIALOG_1018_PASS159.188s; exact_PR147/main_required3_SUCCESS; ACTUAL_PUBLIC_71_CHECKS_PASS; conditional_reference_not_tactical_approval"
       },
       "dependency": [
         "web_r4/loading-champion-baseline.js",
         "web_r4/loading-direction-profiles.js",
         "web_r4/champion.html",
         "web_r4/champion-page.js",
-        "web_r4/champion-picker.js"
+        "web_r4/champion-picker.js",
+        "coach_v1/champion_matchup_knowledge.py",
+        "web_r4/champion-matchup-knowledge.json"
       ],
       "risk": "일반 방향 문단을 특정 상대 검증 해설로 오인",
-      "status": "NOT_STARTED",
+      "status": "LIVE_VERIFIED",
       "evidence": [
         {
           "kind": "SOURCE",
@@ -3380,26 +3384,54 @@
           "kind": "MANAGEMENT_ESTIMATE",
           "path": "evidence/actual-evidence/frontend-v2-20261025/progress-assessment.json",
           "locator": "2.4.1 0/0.5/1 overall/frontend scope assessment, not test pass rate"
+        },
+        {
+          "kind": "SOURCE",
+          "path": "coach_v1/champion_matchup_knowledge.py"
+        },
+        {
+          "kind": "SOURCE",
+          "path": "web_r4/champion-matchup-knowledge.json"
+        },
+        {
+          "kind": "TEST",
+          "path": "evidence/actual-evidence/champion-tiers-20261025/dialog-fix/full-stable.json",
+          "locator": "POSTDIALOG1018PASS159.188s/CURRENT unchanged0; strong LOCAL_STAGE twicePASS is NOTLIVE; af297/e1actual failures preserved"
+        },
+        {
+          "kind": "MANAGEMENT_ESTIMATE",
+          "path": "evidence/actual-evidence/champion-tiers-20261025/progress-assessment.json",
+          "locator": "2.4.1 overall0→0.5/frontend0.5unchanged; partialsourcecandidate only"
+        },
+        {
+          "kind": "INTEGRATION",
+          "path": "evidence/actual-evidence/champion-tiers-20261025/product-main-ci.json",
+          "locator": "exact be0 main required3SUCCESS40196881621/40196881598; PR145/146/147 normal merges"
+        },
+        {
+          "kind": "LIVE",
+          "path": "evidence/actual-evidence/champion-tiers-20261025/live-final/final-summary.json",
+          "locator": "ACTUAL_PUBLIC13:26:14–13:27:04UTC109assets/71checks/74PNG; source-bound conditional reference scope only"
         }
       ],
       "scope": {
-        "implementation": "REQUIRED_CAPABILITY_NOT_IMPLEMENTED",
+        "implementation": "MAIN be0b83faf24db19a5f2ff05410c9c2ed979f33db",
         "full_feature_acceptance": "UNMET_PARTIAL_OR_UNSUPPORTED",
-        "new_test_receipt": null,
-        "integration_receipt": null,
-        "deployment_receipt": null,
+        "new_test_receipt": "evidence/actual-evidence/champion-tiers-20261025/dialog-fix/full-stable.json",
+        "integration_receipt": "evidence/actual-evidence/champion-tiers-20261025/product-main-ci.json",
+        "deployment_receipt": "evidence/actual-evidence/champion-tiers-20261025/pages-native-gate-be0.json",
         "live_effect": "UNMEASURED",
-        "evaluated_scope": "Required matchup/tactical capability unavailable; UI absence-state validation is recorded separately in ui_status.",
-        "status_applies_to": "evaluated_scope only; partial/missing data or tactics are not promoted by UI/software verification",
+        "evaluated_scope": "Caitlyn/Ezreal/Fiora/Yunara의명시champion-role에출처결속LANING조건부이유/행동/전환·저자범주/AI해석/패치한계를표시하는참고slice.실제전술검증아님.",
+        "status_applies_to": "source-bound conditional reference slice only; candidate != tactical/USER approval; cross-role acquired0",
         "intake_status": "IMPLEMENTED",
-        "intake_implementation": "LOCAL_WORKTREE_ONLY",
-        "live_receipt": null
+        "intake_implementation": "MAIN be0b83faf24db19a5f2ff05410c9c2ed979f33db",
+        "live_receipt": "evidence/actual-evidence/champion-tiers-20261025/live-final/receipt.json"
       },
-      "coverage": "NOT_SUPPORTED",
+      "coverage": "PARTIAL",
       "progress": {
-        "overall_score": 0,
+        "overall_score": 0.5,
         "frontend_score": 0.5,
-        "reason": "rendered state; required data/content unavailable",
+        "reason": "Partial sourced conditional reference content now implemented; frontend score unchanged, tactical coverage incomplete.",
         "full_feature_acceptance": false
       },
       "ui_status": "LIVE_VERIFIED",
@@ -3594,8 +3626,8 @@
       "group": "2.4 라인전·운영·한타 상성",
       "change": "확정 핵심",
       "purpose": "단계별로 ‘수월한 편·까다로운 편·조건부·자료 부족’을 보여준다. 각 판단에 짧은 이유 태그와 성립 조건을 붙인다.",
-      "existing": "실제 UI의 단계별 자료부족/정글 구분 및 서포터 참고 선택 상태는 확인했지만 특정 상대 전술 판정 데이터는 없다.",
-      "missing": "모든 상대의 단계별 태그/이유/행동/전환 조건 해설과 2대2 통계는 없다.",
+      "existing": "LANING/JUNGLE의출처범주별difficult/easier최대5조건부목록과부족/unknown표시.운영/한타단계와전챔피언범위는미완료.",
+      "missing": "LANING/JUNGLE39conditional+6reference만보유.운영/한타상대목록·전챔피언/적용role·전술검증은없음.없는자리는채우지않음.",
       "input": "기준/상대 역할과 선택 서포터 문맥, 실제 존재하는 해설 — 쉬운 상대·어려운 상대와 조건",
       "output": "자료 있는 문단 또는 해설 준비/부족 상태 — 쉬운 상대·어려운 상대와 조건",
       "exceptions": "서포터는 참고 문맥만; 정글에 라인전 지표 대입 금지; 원문은 TACTICAL_UNREVIEWED",
@@ -3603,20 +3635,24 @@
       "test": {
         "required": [
           "tests_pregame/test_champion_baseline.py",
-          "tests_pregame/test_champion_frontend.py"
+          "tests_pregame/test_champion_frontend.py",
+          "tests_pregame/test_champion_matchup_knowledge.py",
+          "tests_pregame/test_champion_insights_frontend.py"
         ],
         "acceptance": "쉬운 상대·어려운 상대와 조건 정상·없음·오류·복귀/유실 반례를 해당 정확 범위로 검사",
-        "result": "CAPABILITY_UNIMPLEMENTED; unavailable UI is a separate scope"
+        "result": "POSTDIALOG_1018_PASS159.188s; exact_PR147/main_required3_SUCCESS; ACTUAL_PUBLIC_71_CHECKS_PASS; conditional_reference_not_tactical_approval"
       },
       "dependency": [
         "web_r4/loading-champion-baseline.js",
         "web_r4/loading-direction-profiles.js",
         "web_r4/champion.html",
         "web_r4/champion-page.js",
-        "web_r4/champion-picker.js"
+        "web_r4/champion-picker.js",
+        "coach_v1/champion_matchup_knowledge.py",
+        "web_r4/champion-matchup-knowledge.json"
       ],
       "risk": "일반 방향 문단을 특정 상대 검증 해설로 오인",
-      "status": "NOT_STARTED",
+      "status": "LIVE_VERIFIED",
       "evidence": [
         {
           "kind": "SOURCE",
@@ -3647,26 +3683,54 @@
           "kind": "MANAGEMENT_ESTIMATE",
           "path": "evidence/actual-evidence/frontend-v2-20261025/progress-assessment.json",
           "locator": "2.4.4 0/0.5/1 overall/frontend scope assessment, not test pass rate"
+        },
+        {
+          "kind": "SOURCE",
+          "path": "coach_v1/champion_matchup_knowledge.py"
+        },
+        {
+          "kind": "SOURCE",
+          "path": "web_r4/champion-matchup-knowledge.json"
+        },
+        {
+          "kind": "TEST",
+          "path": "evidence/actual-evidence/champion-tiers-20261025/dialog-fix/full-stable.json",
+          "locator": "POSTDIALOG1018PASS159.188s/CURRENT unchanged0; strong LOCAL_STAGE twicePASS is NOTLIVE; af297/e1actual failures preserved"
+        },
+        {
+          "kind": "MANAGEMENT_ESTIMATE",
+          "path": "evidence/actual-evidence/champion-tiers-20261025/progress-assessment.json",
+          "locator": "2.4.4 overall0→0.5/frontend0.5unchanged; partialsourcecandidate only"
+        },
+        {
+          "kind": "INTEGRATION",
+          "path": "evidence/actual-evidence/champion-tiers-20261025/product-main-ci.json",
+          "locator": "exact be0 main required3SUCCESS40196881621/40196881598; PR145/146/147 normal merges"
+        },
+        {
+          "kind": "LIVE",
+          "path": "evidence/actual-evidence/champion-tiers-20261025/live-final/final-summary.json",
+          "locator": "ACTUAL_PUBLIC13:26:14–13:27:04UTC109assets/71checks/74PNG; source-bound conditional reference scope only"
         }
       ],
       "scope": {
-        "implementation": "REQUIRED_CAPABILITY_NOT_IMPLEMENTED",
+        "implementation": "MAIN be0b83faf24db19a5f2ff05410c9c2ed979f33db",
         "full_feature_acceptance": "UNMET_PARTIAL_OR_UNSUPPORTED",
-        "new_test_receipt": null,
-        "integration_receipt": null,
-        "deployment_receipt": null,
+        "new_test_receipt": "evidence/actual-evidence/champion-tiers-20261025/dialog-fix/full-stable.json",
+        "integration_receipt": "evidence/actual-evidence/champion-tiers-20261025/product-main-ci.json",
+        "deployment_receipt": "evidence/actual-evidence/champion-tiers-20261025/pages-native-gate-be0.json",
         "live_effect": "UNMEASURED",
-        "evaluated_scope": "Required matchup/tactical capability unavailable; UI absence-state validation is recorded separately in ui_status.",
-        "status_applies_to": "evaluated_scope only; partial/missing data or tactics are not promoted by UI/software verification",
+        "evaluated_scope": "LANING/JUNGLE의출처범주별difficult/easier최대5조건부목록과부족/unknown표시.운영/한타단계와전챔피언범위는미완료.",
+        "status_applies_to": "source-bound conditional reference slice only; candidate != tactical/USER approval; cross-role acquired0",
         "intake_status": "IMPLEMENTED",
-        "intake_implementation": "LOCAL_WORKTREE_ONLY",
-        "live_receipt": null
+        "intake_implementation": "MAIN be0b83faf24db19a5f2ff05410c9c2ed979f33db",
+        "live_receipt": "evidence/actual-evidence/champion-tiers-20261025/live-final/receipt.json"
       },
-      "coverage": "NOT_SUPPORTED",
+      "coverage": "PARTIAL",
       "progress": {
-        "overall_score": 0,
+        "overall_score": 0.5,
         "frontend_score": 0.5,
-        "reason": "rendered state; required data/content unavailable",
+        "reason": "Partial sourced conditional reference content now implemented; frontend score unchanged, tactical coverage incomplete.",
         "full_feature_acceptance": false
       },
       "ui_status": "LIVE_VERIFIED",
@@ -3861,8 +3925,8 @@
       "group": "2.4 라인전·운영·한타 상성",
       "change": "포지션 구분",
       "purpose": "정글은 초반 정글링·침입·갱킹·주변 라인 합류·목표물 준비 관점으로 보여주며 라인전 지표를 그대로 대입하지 않는다.",
-      "existing": "실제 UI의 단계별 자료부족/정글 구분 및 서포터 참고 선택 상태는 확인했지만 특정 상대 전술 판정 데이터는 없다.",
-      "missing": "정글 전용 침입/동선/갱킹/합류/목표물 대결 데이터는 없다. 원문 Graves 방향 이상의 상대 판단은 자료 부족이다.",
+      "existing": "GravesJUNGLE의추적/침입/캠프/역갱/합류·목표물조건부source참고slice;다른정글champion/실제동선상성검증없음.",
+      "missing": "GravesJUNGLE하나의10조건부후보slice.전정글동선/대결/시점/모집단/실제코칭효과검증은미완료.",
       "input": "기준/상대 역할과 선택 서포터 문맥, 실제 존재하는 해설 — 정글 대결의 별도 기준",
       "output": "자료 있는 문단 또는 해설 준비/부족 상태 — 정글 대결의 별도 기준",
       "exceptions": "서포터는 참고 문맥만; 정글에 라인전 지표 대입 금지; 원문은 TACTICAL_UNREVIEWED",
@@ -3870,20 +3934,24 @@
       "test": {
         "required": [
           "tests_pregame/test_champion_baseline.py",
-          "tests_pregame/test_champion_frontend.py"
+          "tests_pregame/test_champion_frontend.py",
+          "tests_pregame/test_champion_matchup_knowledge.py",
+          "tests_pregame/test_champion_insights_frontend.py"
         ],
         "acceptance": "정글 대결의 별도 기준 정상·없음·오류·복귀/유실 반례를 해당 정확 범위로 검사",
-        "result": "CAPABILITY_UNIMPLEMENTED; unavailable UI is a separate scope"
+        "result": "POSTDIALOG_1018_PASS159.188s; exact_PR147/main_required3_SUCCESS; ACTUAL_PUBLIC_71_CHECKS_PASS; conditional_reference_not_tactical_approval"
       },
       "dependency": [
         "web_r4/loading-champion-baseline.js",
         "web_r4/loading-direction-profiles.js",
         "web_r4/champion.html",
         "web_r4/champion-page.js",
-        "web_r4/champion-picker.js"
+        "web_r4/champion-picker.js",
+        "coach_v1/champion_matchup_knowledge.py",
+        "web_r4/champion-matchup-knowledge.json"
       ],
       "risk": "일반 방향 문단을 특정 상대 검증 해설로 오인",
-      "status": "NOT_STARTED",
+      "status": "LIVE_VERIFIED",
       "evidence": [
         {
           "kind": "SOURCE",
@@ -3914,26 +3982,54 @@
           "kind": "MANAGEMENT_ESTIMATE",
           "path": "evidence/actual-evidence/frontend-v2-20261025/progress-assessment.json",
           "locator": "2.4.7 0/0.5/1 overall/frontend scope assessment, not test pass rate"
+        },
+        {
+          "kind": "SOURCE",
+          "path": "coach_v1/champion_matchup_knowledge.py"
+        },
+        {
+          "kind": "SOURCE",
+          "path": "web_r4/champion-matchup-knowledge.json"
+        },
+        {
+          "kind": "TEST",
+          "path": "evidence/actual-evidence/champion-tiers-20261025/dialog-fix/full-stable.json",
+          "locator": "POSTDIALOG1018PASS159.188s/CURRENT unchanged0; strong LOCAL_STAGE twicePASS is NOTLIVE; af297/e1actual failures preserved"
+        },
+        {
+          "kind": "MANAGEMENT_ESTIMATE",
+          "path": "evidence/actual-evidence/champion-tiers-20261025/progress-assessment.json",
+          "locator": "2.4.7 overall0→0.5/frontend0.5unchanged; partialsourcecandidate only"
+        },
+        {
+          "kind": "INTEGRATION",
+          "path": "evidence/actual-evidence/champion-tiers-20261025/product-main-ci.json",
+          "locator": "exact be0 main required3SUCCESS40196881621/40196881598; PR145/146/147 normal merges"
+        },
+        {
+          "kind": "LIVE",
+          "path": "evidence/actual-evidence/champion-tiers-20261025/live-final/final-summary.json",
+          "locator": "ACTUAL_PUBLIC13:26:14–13:27:04UTC109assets/71checks/74PNG; source-bound conditional reference scope only"
         }
       ],
       "scope": {
-        "implementation": "REQUIRED_CAPABILITY_NOT_IMPLEMENTED",
+        "implementation": "MAIN be0b83faf24db19a5f2ff05410c9c2ed979f33db",
         "full_feature_acceptance": "UNMET_PARTIAL_OR_UNSUPPORTED",
-        "new_test_receipt": null,
-        "integration_receipt": null,
-        "deployment_receipt": null,
+        "new_test_receipt": "evidence/actual-evidence/champion-tiers-20261025/dialog-fix/full-stable.json",
+        "integration_receipt": "evidence/actual-evidence/champion-tiers-20261025/product-main-ci.json",
+        "deployment_receipt": "evidence/actual-evidence/champion-tiers-20261025/pages-native-gate-be0.json",
         "live_effect": "UNMEASURED",
-        "evaluated_scope": "Required matchup/tactical capability unavailable; UI absence-state validation is recorded separately in ui_status.",
-        "status_applies_to": "evaluated_scope only; partial/missing data or tactics are not promoted by UI/software verification",
+        "evaluated_scope": "GravesJUNGLE의추적/침입/캠프/역갱/합류·목표물조건부source참고slice;다른정글champion/실제동선상성검증없음.",
+        "status_applies_to": "source-bound conditional reference slice only; candidate != tactical/USER approval; cross-role acquired0",
         "intake_status": "IMPLEMENTED",
-        "intake_implementation": "LOCAL_WORKTREE_ONLY",
-        "live_receipt": null
+        "intake_implementation": "MAIN be0b83faf24db19a5f2ff05410c9c2ed979f33db",
+        "live_receipt": "evidence/actual-evidence/champion-tiers-20261025/live-final/receipt.json"
       },
-      "coverage": "NOT_SUPPORTED",
+      "coverage": "PARTIAL",
       "progress": {
-        "overall_score": 0,
+        "overall_score": 0.5,
         "frontend_score": 0.5,
-        "reason": "rendered state; required data/content unavailable",
+        "reason": "Partial sourced conditional reference content now implemented; frontend score unchanged, tactical coverage incomplete.",
         "full_feature_acceptance": false
       },
       "ui_status": "LIVE_VERIFIED",
@@ -14552,212 +14648,394 @@
     "pages_url": "https://github.com/kco994553-star/lol-coach/actions/runs/40177555880",
     "product_pr": "https://github.com/kco994553-star/lol-coach/pull/140",
     "main": "https://github.com/kco994553-star/lol-coach/commit/ac48506c8f6493778d3fcdf675041d66f89c5390",
-    "artifact": "https://github.com/kco994553-star/lol-coach/commit/b0ec3cb8e15f0fa4cc6aa0454897317c23e979c9"
+    "artifact": "https://github.com/kco994553-star/lol-coach/commit/b0ec3cb8e15f0fa4cc6aa0454897317c23e979c9",
+    "champion_tiers": {
+      "product_main": "be0b83faf24db19a5f2ff05410c9c2ed979f33db",
+      "pr": 147,
+      "pr_runs": [
+        40196588961,
+        40196588989
+      ],
+      "main_runs": [
+        40196881621,
+        40196881598
+      ],
+      "main_status": "SUCCESS3",
+      "pages_artifact": "9fc318cc6725e4e5ccb3fdf3be1c0e44a9590049",
+      "pages_run": "40197492425",
+      "pages_status": "SUCCESS",
+      "live_receipt": "evidence/actual-evidence/champion-tiers-20261025/live-final/receipt.json",
+      "live_summary": "ACTUAL_PUBLIC_HTTPS PASS:109/109assetSHA·14private404·root/.nojekyll200·71browser(29old+31tier+11responsive)·74uniquePNG;8saved200cases/6tablekeyboard/3touchEMULATION;errors/external/API/nonGET0",
+      "note": "Actual final public verification; previous GP23 receipts and failed earlier tier publications preserved",
+      "history": {
+        "pr145": 145,
+        "main": "b0a2be870184e3893ca4c9d6b8d1bf3414e36fa7",
+        "pr_runs": [
+          40191299959,
+          40191299982
+        ],
+        "main_runs": [
+          40191661761,
+          40191661643
+        ],
+        "main_status": "SUCCESS3",
+        "artifact": "af297cac8c3f5827a40429409e94db9a614176b0",
+        "pages_run": 40192218449,
+        "pages_status": "SUCCESS",
+        "live_overall": "FAILED320_CSS200",
+        "failed_receipt": "evidence/actual-evidence/champion-tiers-20261025/live-initial-responsive-failed/",
+        "second_publication": {
+          "product_main": "b236bd736a2de4413a257604d338d9221d21b7a7",
+          "pr": 146,
+          "artifact": "e1f273fae59c51e9df1441889831f314577a0600",
+          "pages_run": 40194626840,
+          "native_status": "SUCCESS",
+          "live_overall": "FAILED_DIALOG",
+          "body_and_saved100": "PASS",
+          "failed_receipt": "evidence/actual-evidence/champion-tiers-20261025/live-second-dialog-failed/"
+        }
+      },
+      "publication_artifact": "9fc318cc6725e4e5ccb3fdf3be1c0e44a9590049",
+      "native_pages_run": 40197492425
+    }
   },
   "progress_assessment": {
     "kind": "MANAGEMENT_ESTIMATE",
-    "method": "160 equally weighted leaf rows 0/0.5/1; frontend UI acceptance distinct from overall source/tactical content, no taxonomy-count or pass-rate weighting",
+    "method": "160 equal-weight leaf rows0/0.5/1, reference content only partial, frontend unchanged; no weighting by source/test count",
+    "denominator": 160,
+    "overall_score_sum": 74,
+    "frontend_score_sum": 84,
+    "overall_pct": 46.25,
+    "frontend_pct": 52.5,
+    "display_policy": "Preserve exact46.25% to avoid altering one-decimal rounding convention; no rounding up inferred",
+    "product_main": "be0b83faf24db19a5f2ff05410c9c2ed979f33db",
+    "as_of": "2026-10-25T13:27:04.403035Z",
+    "live_receipt": "evidence/actual-evidence/champion-tiers-20261025/live-final/receipt.json",
+    "changes": [
+      {
+        "id": "2.4.1",
+        "old": {
+          "overall_score": 0,
+          "frontend_score": 0.5,
+          "reason": "rendered state; required data/content unavailable",
+          "full_feature_acceptance": false
+        },
+        "new": {
+          "overall_score": 0.5,
+          "frontend_score": 0.5,
+          "reason": "Partial sourced conditional reference content now implemented; frontend score unchanged, tactical coverage incomplete.",
+          "full_feature_acceptance": false
+        }
+      },
+      {
+        "id": "2.4.4",
+        "old": {
+          "overall_score": 0,
+          "frontend_score": 0.5,
+          "reason": "rendered state; required data/content unavailable",
+          "full_feature_acceptance": false
+        },
+        "new": {
+          "overall_score": 0.5,
+          "frontend_score": 0.5,
+          "reason": "Partial sourced conditional reference content now implemented; frontend score unchanged, tactical coverage incomplete.",
+          "full_feature_acceptance": false
+        }
+      },
+      {
+        "id": "2.4.7",
+        "old": {
+          "overall_score": 0,
+          "frontend_score": 0.5,
+          "reason": "rendered state; required data/content unavailable",
+          "full_feature_acceptance": false
+        },
+        "new": {
+          "overall_score": 0.5,
+          "frontend_score": 0.5,
+          "reason": "Partial sourced conditional reference content now implemented; frontend score unchanged, tactical coverage incomplete.",
+          "full_feature_acceptance": false
+        }
+      }
+    ],
+    "previous_progress": {
+      "kind": "MANAGEMENT_ESTIMATE",
+      "method": "160 equally weighted leaf rows 0/0.5/1; frontend UI acceptance distinct from overall source/tactical content, no taxonomy-count or pass-rate weighting",
+      "areas": [
+        {
+          "id": "1",
+          "n": 19,
+          "overall_pct": 50.0,
+          "frontend_pct": 50.0
+        },
+        {
+          "id": "2",
+          "n": 32,
+          "overall_pct": 54.7,
+          "frontend_pct": 78.1
+        },
+        {
+          "id": "3",
+          "n": 48,
+          "overall_pct": 44.8,
+          "frontend_pct": 49.0
+        },
+        {
+          "id": "4",
+          "n": 19,
+          "overall_pct": 21.1,
+          "frontend_pct": 21.1
+        },
+        {
+          "id": "5",
+          "n": 13,
+          "overall_pct": 42.3,
+          "frontend_pct": 42.3
+        },
+        {
+          "id": "6",
+          "n": 17,
+          "overall_pct": 50.0,
+          "frontend_pct": 61.8
+        },
+        {
+          "id": "7",
+          "n": 12,
+          "overall_pct": 50.0,
+          "frontend_pct": 50.0
+        }
+      ],
+      "overall_pct": 45.3,
+      "frontend_pct": 52.5,
+      "main_sha": "d1d00053dfd3710bb94e08549c7ca256ab0c43ee",
+      "as_of": "2026-10-25T11:23:44Z",
+      "live_receipt": "evidence/actual-evidence/gameplan-2plus3-20261025/live/receipt.json",
+      "changes": [
+        {
+          "id": "3.2.4",
+          "old": {
+            "overall_score": 0.5,
+            "frontend_score": 0.5,
+            "reason": "partial existing scoped implementation",
+            "full_feature_acceptance": false
+          },
+          "new": {
+            "overall_score": 0.5,
+            "frontend_score": 1,
+            "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
+            "full_feature_acceptance": false
+          }
+        },
+        {
+          "id": "3.2.6",
+          "old": {
+            "overall_score": 0.5,
+            "frontend_score": 0.5,
+            "reason": "partial existing scoped implementation",
+            "full_feature_acceptance": false
+          },
+          "new": {
+            "overall_score": 0.5,
+            "frontend_score": 1,
+            "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
+            "full_feature_acceptance": false
+          }
+        },
+        {
+          "id": "3.6.1",
+          "old": {
+            "overall_score": 0.5,
+            "frontend_score": 0.5,
+            "reason": "partial existing scoped implementation",
+            "full_feature_acceptance": false
+          },
+          "new": {
+            "overall_score": 0.5,
+            "frontend_score": 1,
+            "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
+            "full_feature_acceptance": false
+          }
+        },
+        {
+          "id": "3.6.4",
+          "old": {
+            "overall_score": 0.5,
+            "frontend_score": 0.5,
+            "reason": "partial existing scoped implementation",
+            "full_feature_acceptance": false
+          },
+          "new": {
+            "overall_score": 0.5,
+            "frontend_score": 1,
+            "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
+            "full_feature_acceptance": false
+          }
+        },
+        {
+          "id": "3.7.4",
+          "old": {
+            "overall_score": 0.5,
+            "frontend_score": 0.5,
+            "reason": "partial existing scoped implementation",
+            "full_feature_acceptance": false
+          },
+          "new": {
+            "overall_score": 1,
+            "frontend_score": 1,
+            "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
+            "full_feature_acceptance": true
+          }
+        },
+        {
+          "id": "5.5.2",
+          "old": {
+            "overall_score": 0.5,
+            "frontend_score": 0.5,
+            "reason": "partial existing scoped implementation",
+            "full_feature_acceptance": false
+          },
+          "new": {
+            "overall_score": 1,
+            "frontend_score": 1,
+            "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
+            "full_feature_acceptance": true
+          }
+        },
+        {
+          "id": "6.4.1",
+          "old": {
+            "overall_score": 0.5,
+            "frontend_score": 0.5,
+            "reason": "partial existing scoped implementation",
+            "full_feature_acceptance": false
+          },
+          "new": {
+            "overall_score": 0.5,
+            "frontend_score": 1,
+            "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
+            "full_feature_acceptance": false
+          }
+        },
+        {
+          "id": "6.5.2",
+          "old": {
+            "overall_score": 0.5,
+            "frontend_score": 0.5,
+            "reason": "partial existing scoped implementation",
+            "full_feature_acceptance": false
+          },
+          "new": {
+            "overall_score": 0.5,
+            "frontend_score": 1,
+            "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
+            "full_feature_acceptance": false
+          }
+        },
+        {
+          "id": "6.6.1",
+          "old": {
+            "overall_score": 0.5,
+            "frontend_score": 0.5,
+            "reason": "partial existing scoped implementation",
+            "full_feature_acceptance": false
+          },
+          "new": {
+            "overall_score": 0.5,
+            "frontend_score": 1,
+            "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
+            "full_feature_acceptance": false
+          }
+        },
+        {
+          "id": "6.6.2",
+          "old": {
+            "overall_score": 0.5,
+            "frontend_score": 0.5,
+            "reason": "partial existing scoped implementation",
+            "full_feature_acceptance": false
+          },
+          "new": {
+            "overall_score": 0.5,
+            "frontend_score": 1,
+            "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
+            "full_feature_acceptance": false
+          }
+        }
+      ],
+      "note": "Actual video/tactical efficacy N0. New all-tier/cross-role opponent expansion remains IN_PROGRESS and contributes no score here."
+    },
+    "area2": {
+      "n": 32,
+      "overall_score_sum": 19,
+      "frontend_score_sum": 25,
+      "overall_pct_exact": 59.375,
+      "frontend_pct_exact": 78.125
+    },
+    "new_acquired": 0,
+    "cross_role_matches": 0,
+    "tactical_or_user_approval_n": 0,
+    "game_effect_n": 0,
+    "publication_gate": "ACTUAL_PUBLIC_VERIFIED",
+    "prior_publication_live": "af297/sourceb0actualFAILED320BODYCSS200; e1/sourceb236actualFAILED_DIALOG (body/saved100PASS)",
+    "main_sha": "be0b83faf24db19a5f2ff05410c9c2ed979f33db",
+    "note": "Only three partial author-reference rows gain0.5 overall each; unchanged157rows and allfrontend scores. Data acquisition0, cross-role0, USER/tacticalapproval0; realgame/videoN0. Root active results-only writer.",
     "areas": [
       {
         "id": "1",
         "n": 19,
+        "overall_score_sum": 9.5,
+        "frontend_score_sum": 9.5,
         "overall_pct": 50.0,
         "frontend_pct": 50.0
       },
       {
         "id": "2",
         "n": 32,
-        "overall_pct": 54.7,
-        "frontend_pct": 78.1
+        "overall_score_sum": 19.0,
+        "frontend_score_sum": 25.0,
+        "overall_pct": 59.375,
+        "frontend_pct": 78.125
       },
       {
         "id": "3",
         "n": 48,
-        "overall_pct": 44.8,
-        "frontend_pct": 49.0
+        "overall_score_sum": 21.5,
+        "frontend_score_sum": 23.5,
+        "overall_pct": 44.791666666666664,
+        "frontend_pct": 48.958333333333336
       },
       {
         "id": "4",
         "n": 19,
-        "overall_pct": 21.1,
-        "frontend_pct": 21.1
+        "overall_score_sum": 4.0,
+        "frontend_score_sum": 4.0,
+        "overall_pct": 21.05263157894737,
+        "frontend_pct": 21.05263157894737
       },
       {
         "id": "5",
         "n": 13,
-        "overall_pct": 42.3,
-        "frontend_pct": 42.3
+        "overall_score_sum": 5.5,
+        "frontend_score_sum": 5.5,
+        "overall_pct": 42.30769230769231,
+        "frontend_pct": 42.30769230769231
       },
       {
         "id": "6",
         "n": 17,
+        "overall_score_sum": 8.5,
+        "frontend_score_sum": 10.5,
         "overall_pct": 50.0,
-        "frontend_pct": 61.8
+        "frontend_pct": 61.76470588235294
       },
       {
         "id": "7",
         "n": 12,
+        "overall_score_sum": 6.0,
+        "frontend_score_sum": 6.0,
         "overall_pct": 50.0,
         "frontend_pct": 50.0
       }
-    ],
-    "overall_pct": 45.3,
-    "frontend_pct": 52.5,
-    "main_sha": "d1d00053dfd3710bb94e08549c7ca256ab0c43ee",
-    "as_of": "2026-10-25T11:23:44Z",
-    "live_receipt": "evidence/actual-evidence/gameplan-2plus3-20261025/live/receipt.json",
-    "changes": [
-      {
-        "id": "3.2.4",
-        "old": {
-          "overall_score": 0.5,
-          "frontend_score": 0.5,
-          "reason": "partial existing scoped implementation",
-          "full_feature_acceptance": false
-        },
-        "new": {
-          "overall_score": 0.5,
-          "frontend_score": 1,
-          "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
-          "full_feature_acceptance": false
-        }
-      },
-      {
-        "id": "3.2.6",
-        "old": {
-          "overall_score": 0.5,
-          "frontend_score": 0.5,
-          "reason": "partial existing scoped implementation",
-          "full_feature_acceptance": false
-        },
-        "new": {
-          "overall_score": 0.5,
-          "frontend_score": 1,
-          "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
-          "full_feature_acceptance": false
-        }
-      },
-      {
-        "id": "3.6.1",
-        "old": {
-          "overall_score": 0.5,
-          "frontend_score": 0.5,
-          "reason": "partial existing scoped implementation",
-          "full_feature_acceptance": false
-        },
-        "new": {
-          "overall_score": 0.5,
-          "frontend_score": 1,
-          "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
-          "full_feature_acceptance": false
-        }
-      },
-      {
-        "id": "3.6.4",
-        "old": {
-          "overall_score": 0.5,
-          "frontend_score": 0.5,
-          "reason": "partial existing scoped implementation",
-          "full_feature_acceptance": false
-        },
-        "new": {
-          "overall_score": 0.5,
-          "frontend_score": 1,
-          "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
-          "full_feature_acceptance": false
-        }
-      },
-      {
-        "id": "3.7.4",
-        "old": {
-          "overall_score": 0.5,
-          "frontend_score": 0.5,
-          "reason": "partial existing scoped implementation",
-          "full_feature_acceptance": false
-        },
-        "new": {
-          "overall_score": 1,
-          "frontend_score": 1,
-          "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
-          "full_feature_acceptance": true
-        }
-      },
-      {
-        "id": "5.5.2",
-        "old": {
-          "overall_score": 0.5,
-          "frontend_score": 0.5,
-          "reason": "partial existing scoped implementation",
-          "full_feature_acceptance": false
-        },
-        "new": {
-          "overall_score": 1,
-          "frontend_score": 1,
-          "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
-          "full_feature_acceptance": true
-        }
-      },
-      {
-        "id": "6.4.1",
-        "old": {
-          "overall_score": 0.5,
-          "frontend_score": 0.5,
-          "reason": "partial existing scoped implementation",
-          "full_feature_acceptance": false
-        },
-        "new": {
-          "overall_score": 0.5,
-          "frontend_score": 1,
-          "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
-          "full_feature_acceptance": false
-        }
-      },
-      {
-        "id": "6.5.2",
-        "old": {
-          "overall_score": 0.5,
-          "frontend_score": 0.5,
-          "reason": "partial existing scoped implementation",
-          "full_feature_acceptance": false
-        },
-        "new": {
-          "overall_score": 0.5,
-          "frontend_score": 1,
-          "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
-          "full_feature_acceptance": false
-        }
-      },
-      {
-        "id": "6.6.1",
-        "old": {
-          "overall_score": 0.5,
-          "frontend_score": 0.5,
-          "reason": "partial existing scoped implementation",
-          "full_feature_acceptance": false
-        },
-        "new": {
-          "overall_score": 0.5,
-          "frontend_score": 1,
-          "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
-          "full_feature_acceptance": false
-        }
-      },
-      {
-        "id": "6.6.2",
-        "old": {
-          "overall_score": 0.5,
-          "frontend_score": 0.5,
-          "reason": "partial existing scoped implementation",
-          "full_feature_acceptance": false
-        },
-        "new": {
-          "overall_score": 0.5,
-          "frontend_score": 1,
-          "reason": "Verified complete presentation/navigation and missing/error states for this row; source/tactical content remains partial unless overall score is 1.",
-          "full_feature_acceptance": false
-        }
-      }
-    ],
-    "note": "Actual video/tactical efficacy N0. New all-tier/cross-role opponent expansion remains IN_PROGRESS and contributes no score here."
+    ]
   }
 }
