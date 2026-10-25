@@ -1,6 +1,6 @@
 # GP23·6.학습실 통합 결과
 
-2026-10-25. 시작 main `8e67cce63a29decae9f64a21f7c387bf73824507`. 제품 소스 `6e2e255dc774525b0054ae1e711d9a7953d83957` 및 뒤따르는 브라우저 fixture·결과 기록. 이 기록의 원격 CI/병합/배포/Notion 상태는 아래 출고 절차가 실제 완료될 때 갱신한다. 현재 구현과 로컬 검증이 완료됐고 원격 출고는 준비 중이다.
+2026-10-25. 제품 [PR143](https://github.com/kco994553-star/lol-coach/pull/143) head `739851e9c4258defc72bf91d3b68a2f38dd8db09`를 정상 병합한 main `d1d00053dfd3710bb94e08549c7ca256ab0c43ee`가 출고 정본이다. 아래 검증·게시·실환경 확인은 완료됐다. 현재 `work/gp23-learning-results-20261025`는 영수증·관리 추정·인계만 기록하는 결과 전용 브랜치이며 이 브랜치의 push/PR/CI/병합은 상위 실행자가 별도로 수행한다. 동일 제품을 재게시하지 않는다.
 
 ## 바뀐 것
 
@@ -17,11 +17,11 @@
 | 전체 회귀 | `python -m unittest discover -v -s tests_pregame`: **965 PASS / 164.112s**. 실행 전후 CURRENT 전체 해시 동일. `full-pregame-stable.json`, `logs/full-pregame-stable.log` |
 | 기능 의미 | 출처/stale/웨이브/호응/정글/탱커/solo/기회 소진/지원 범위/동일결과 태그 검사. 학습20개 데이터·11개 프론트·6개 통합, FE/Python 검색37벡터 및 HTTP 원본 패치12개 라벨 검증. 수량은 전체965와 중복 합산하지 않는다. |
 | 새 브라우저 | `browser_gameplan_2plus3.py`:1440/390/320·200%·키보드·공유/변경/초기화/기존 링크/지원 부족. `browser_learning.py`:33검사. `browser_champions.py`:55검사·18PNG. `browser/`의 소스 해시/영수증 참조. |
-| 기존 브라우저 | 기존 current DOM·legacy widget/지도/조건/스킬/개인·프로 fixture 흐름 통과. 마지막 presentation 단계의 예전 한타 제목 단언은 새 요구에 맞춰 정확한 새 제목으로 수정했고5그룹을 재실행해 PASS. 기존6장면 directions와 game-info도 별도 PASS. 최초 실패 전체 로그를 보존했다. 필수 CI에서 전체 순서를 다시 확인한다. |
+| 기존 브라우저 | 기존 current DOM·legacy widget/지도/조건/스킬/개인·프로 fixture 흐름 통과. 마지막 presentation 단계의 예전 한타 제목 단언은 새 요구에 맞춰 정확한 새 제목으로 수정했고5그룹을 재실행해 PASS. 기존6장면 directions와 game-info도 별도 PASS. 최초 실패 전체 로그를 보존했다. 정확 PR/main의 원격 browser-regression에서 전체 순서와 강화된 코칭 본문 단언을 다시 통과했다. |
 | 독립 검토 | 두 도메인 검토와 최종 whole-branch 검토. 검색 맥락 유실, HTTP 패치/역할 정규화, 기회 종료 문장·태그 불일치를 RED→GREEN으로 수정하고 재검토했다. 최종 SPEC PASS / QUALITY PASS(명시 P2 후속). `reviews/final-review.md` |
 | 원문5쌍 | `node scripts/export_gameplan_2plus3.js --seed 20261025 --require-bound`: EXACT_COMMIT6e2e255, 10회 재실행·5개 단일 조건 변화 일치. 원문 수작업 교정 없음. `examples/manifest.json` |
 | 실영상·실경기 | **UNMEASURED / N=0**. 실제 Windows/LCU·새 영상·코칭 효과 검사 PASS가 아니다. `live-evaluation-plan.md` |
-| 원격 CI·배포 | PENDING: 정상 PR, 필수3검사, main 검사와 Pages/HTTPS 확인 후 갱신. 과거 ac48506/b0ec3cb 출고를 이번 성공으로 복사하지 않는다. |
+| 원격 CI·배포 | PR143 필수3 SUCCESS, 정확 main 필수3 SUCCESS. Pages `47e241dbf8ddddc612b22902141ed3a2e2411372` / run40188291641 SUCCESS. 실제 HTTPS106/106 자산 SHA·29브라우저검사·24PNG PASS. `pr143-ci.json`, `product-main-ci.json`, `pages-ci.json`, `live/receipt.json` |
 
 ## 냉철한 품질 판정과 미완성
 
@@ -31,17 +31,34 @@ GP23-23의 대상별 현재 위협 우선순위는 UNKNOWN이다. 상세의 이�
 
 학습 카드의 목표·위협·이유·대기 비용·회복이 원문에 없으면 미확인이다. 반례를 확인된 회복 행동으로 바꾸지 않는다. 바텀 조합 주장에 Lux가 등장한다고 SUPPORT 적용 강의를 생성하지 않는다. `validate_index` 단독으로 외부 claim의 진위를 인증한다고 보장하지 않는다. 정상 builder와 오프라인 bridge의 결속 범위를 유지한다.
 
-## 원격 통합·동기화·진행률
+## 정확 출고·실환경 영수증
 
-브랜치 `work/gameplan-2plus3-20261025`. PR·커밋·필수 CI·병합·공개 아티팩트·롤백·최종 Notion 영수증은 결과 전용 후속에서 추가한다. 기존 사용자 결정 이슈·Frozen350·원자료·승인/실패 이력·쿼터·스케줄·인증·프로 참고 자료를 바꾸지 않았다. 유료/AI/provider 수집 호출0, 새 사용자 승인0.
+| 단계 | 정확 대상·실제 결과 |
+|---|---|
+| 정상 PR | [PR143](https://github.com/kco994553-star/lol-coach/pull/143), head739851e9c4258defc72bf91d3b68a2f38dd8db09. [40186976680](https://github.com/kco994553-star/lol-coach/actions/runs/40186976680) pregame / [40186976699](https://github.com/kco994553-star/lol-coach/actions/runs/40186976699) regression·browser-regression 전부 SUCCESS |
+| 정확 제품 main | `d1d00053dfd3710bb94e08549c7ca256ab0c43ee`. [40187456643](https://github.com/kco994553-star/lol-coach/actions/runs/40187456643) pregame / [40187456649](https://github.com/kco994553-star/lol-coach/actions/runs/40187456649) regression·browser-regression 전부 SUCCESS |
+| 공개 게시 | artifact `47e241dbf8ddddc612b22902141ed3a2e2411372`, [native Pages40188291641](https://github.com/kco994553-star/lol-coach/actions/runs/40188291641) SUCCESS. `pages-ci.json` |
+| 실제 HTTPS | 2026-10-25 11:23:28.444602~11:23:44.604393 UTC. [공개 사이트](https://kco994553-star.github.io/lol-coach/)의106/106자산 SHA·root/build-info·비공개경로 경계 PASS. `live/receipt.json` |
+| 실제 브라우저 | 29검사·24PNG,1440/768/390/320폭·200%·키보드. input-v5→학습→정확한 계획 복귀, 챔피언→학습→필터 복귀, 실제 기존 공개 PRO_REFERENCE Galio승리7/4/6→복기→학습→같은 원래 기록 복귀 PASS. route/fixture/숫자 주입0, API/provider 호출0. `live/browser.json` |
+| 보존·롤백 | 공개 pro SHA `64d4830149af4ba515ac3b5e6c745629f80d00b0b7e416c30a5e27d4afd8c6e3`, typed validation·export 전후 일치. 이전 artifact `b0ec3cb8e15f0fa4cc6aa0454897317c23e979c9`를 롤백 대상으로 기록. `publication-prepared.json` |
+| Notion | 기존 관리자/상세/그래프/학습실/게임플랜5개에 최신 절만 append,5/5읽기 재확인. ID·이전본문·자식링크 보존. `notion-sync.json`, `notion-sync.md` |
 
-기존160행 대응표와 관리용 전체44.7%/프론트49.4%는 분류80개 또는 문서 작성으로 올리지 않는다. 실제 정상 통합·브라우저·공개 흐름 확인 뒤 같은 0/0.5/1 행별 기준으로 재평가한다. 실제 기능의 검증·배포 상태와 관리용 추정치를 구분한다.
+첫 실환경 harness 실행의 IPv6 보조 요청 실패는 `/workspace/gp23-artifacts/live/release-d1d0005`에 그대로 남긴다. 소스/자료 결함으로 판정하지 않았으며 최종 성공은 별도 `release-d1d0005-final`에서 확보해 `live/`에 보존했다. 기존 presentation의 구 한타 제목 단언 실패도 로그로 보존하고 새 정확 제목으로 고친 뒤5그룹 PASS; 강화된 코칭 본문 검사는 원격 CI에서 실행했다. 실패를 성공으로 덮어쓰지 않았다.
 
-## 재개 지점
+**실제 outage/retry는 NOT_RUN**: 실제 공개 source outage가 없었다. 로컬 fixture의 오류·재시도 상태 검사는 PASS이며 실제 장애 복구 측정과 구분한다. 원래 live receipt의 `source_error_state=BLOCKED`는 장애가 없는 재현조건 부재를 의미하며 최종 정상 흐름 실패가 아니다.
 
-1. 제품 변경·브라우저 fixture·원문과 로그를 정상 PR로 제출해 필수 CI와 정확 main 검사를 확인한다.
-2. 기존 pro reference를 typed validation으로 보존하며 명시적 public allowlist를 내보낸다. Pages 성공과 실제 HTTPS 자산/흐름을 확인하고 이전 artifact로의 롤백 경로를 기록한다.
-3. GitHub의 실제 결과에 맞춰 GP23-01~44 상태,160행 대응표, Notion 관리자/상세/그래프/게임플랜/학습실을 갱신한다.
-4. 이후 자율 작업: source-bound 역할·매치업 콘텐츠와 대상별 위협 근거, 허용된 자막 수용과 장면 검토. 새 허용 원문이 없으면 관련 수집만 BLOCKED로 두고 분류/검색/화면을 가짜 자료로 채우지 않는다.
+## 동기화·관리 추정·아직 못 하는 것
 
-정확한 재개 명령은 `contracts/learning-room-v1.md`의 오프라인 manifest CLI와 `docs/gameplan-content/gameplan-2-plus-3-status.md`를 따른다. 유료 서비스·보안 권한 완화·원자료 파괴·사용자 전술 승인 변경은 별도 의사결정 대상이다.
+GP23-01~44는 **DONE41 / PARTIAL3(23,26,39)**다. 현재 대상별 위협순위 UNKNOWN, 다른 역할 고유전술·임의픽 원문의 구체성 부족을 공개한다. 실제 새 영상/수용자막/시각검토/게임효과 **N=0, UNMEASURED**. 허용 자막 미확보만 BLOCKED이며 구현된 색인·검색·조건 성찰·복귀를 막지 않는다. 외부 claim을 validate_index 단독으로 인증하지 않는 P2 경계와 지원범위 발견성 개선도 남아 있다.
+
+현재 **MANAGEMENT_ESTIMATE 전체45.3% / 프론트52.5%, 학습실50.0% /61.8%, 게임플랜44.8% /49.0%**. `progress-assessment.json`과 기존160행 feature matrix의 동일가중0/0.5/1 판정을 사용한다. 실제 제품 기준은 main `d1d00053dfd3710bb94e08549c7ca256ab0c43ee`이며 테스트 통과율·taxonomy80개·자료수·실경기 전술 정확도가 아니다. 이 결과 브랜치의 변경된 평가/신규 영수증은 정상 PR·CI 후 main에 들어간다. 이미 출고한 제품의 성공과 결과문서 병합 상태를 혼동하지 않는다.
+
+사용자 승인 방향·기존160 ID·Frozen350·보호 결정·원자료/실패이력·쿼터·스케줄·인증을 보존했다. 신규 유료/AI/provider 호출0, 새 USER 전술승인0. Notion5개 최신절의 상세URL과 readback/source hashes는 `notion-sync.json`에 있다. 전체 과거 페이지 내용은 공개 저장소에 복사하지 않았다.
+
+## 다음 작업 — 기존 목표 유지
+
+1. 상위 실행자는 결과 전용 브랜치 push → 정상 PR → 필수 CI → 일반 병합을 수행한다. source seal과 정확 결과 SHA/CI는 최종 인계에 추가한다. 동일 product 재게시 없음.
+2. 사용자 추가 목표 **티어/상대포지션 확장 IN_PROGRESS**는 별도 `/workspace/lol-coach-champion-tiers`에서 계속한다. 실제 신규 확보0, 만료키/기존 호출창으로 실제 수집 BLOCKED이며 이번 GP23 출고·관리 추정에 포함하지 않는다. 관련 독립 준비 작업은 진행한다.
+3. GP23 후속은 source-bound 역할/매치업 고유 내용·대상별 위협 근거·지원 범위 발견성, 허용 오프라인 자막/장면 검토다. 새 허용 원문이 없으면 자료 수용만 BLOCKED, 가짜 예시나 자동 승인으로 채우지 않는다.
+
+원문재현 `node scripts/export_gameplan_2plus3.js --seed 20261025 --require-bound`; 전체검사 `python -m unittest discover -v -s tests_pregame`. 자막 재개는 `contracts/learning-room-v1.md`의 기존 manifest CLI를 따른다. 현재 소스에 재실행할 때 원문6e2e255과 실행 source가 일치하는지 먼저 확인한다.
