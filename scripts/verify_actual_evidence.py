@@ -49,6 +49,7 @@ CURRENT=MODIFIED|{
     'tests_pregame/test_champion_baseline.py',
     'docs/gameplan-content/champion-baseline-backend-v1.md',
     'docs/superpowers/plans/2026-10-25-champion-baseline-backend.md',
+    'docs/gameplan-content/champion-search-baseline-v0.1.md',
     'docs/gameplan-content/tag-criteria-v1.md',
     'scripts/export_gameplan_five.js',
     'docs/gameplan-content/five-examples/examples.md',
