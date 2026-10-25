@@ -1,3 +1,21 @@
+# Frontend hierarchy v2.0 — completed / writer released
+- run_token: `codex-20261025-frontend-hierarchy-v2-mvngyku7`
+- status: IDLE
+- writer_active: false
+- owner_branch: `docs/frontend-hierarchy-v2-20261025`
+- main_sha: `b26269247537561e3c172364bb895f5078cacc41`
+- PR: https://github.com/kco994553-star/lol-coach/pull/139 (merged normally)
+- Required checks: exact PR head and merged main pregame / regression / browser-regression all SUCCESS. Main contract readback exactly matches the reviewed content (SHA256 024518a6bf6b91b7f13dbfe8a35937419e674c1b2859a9e8eb3288660d6bdc2b).
+- Published: six main menus plus support utility, 40 groups / 160 requirement rows (125 preserved + 35 added connections); champion selection -> detail -> gameplan; user-corrected time-based power graph with specific opponent comparison and level/item conditions.
+- GitHub canonical path remains contracts/information-architecture-v1.md, content v2.0. Exact prior source retained in appendix C. Only the existing document hash entry changed in the seal; source checks, product code and deployment unchanged.
+- Notion: updated 15 existing pages and added 5 functional/canonical pages. Readbacks verified 40 groups/160 unique rows, champion six groups/32 rows, project three children and detail all fifteen children preserved, renamed gameplan3/helper4, historical progress kept under original scope.
+- Notion canonical: https://app.notion.com/p/404f975df2e881608bb3ffaf18df77c5
+- Notion champion search: https://app.notion.com/p/404f975df2e881f1a25edb8faf35ba79
+- Corrected downloadable spec updated with the same power-graph meaning and publication links. Documentation synchronization does not claim new product UI implementation, deployment or gameplay efficacy.
+- No remaining work in this authorized documentation synchronization scope. PR137/138 and protected user decision issues were not modified.
+
+---
+
 # Frontend hierarchy v2.0 — main CI pending / writer released
 - run_token: `codex-20261025-frontend-hierarchy-v2-mvngyku7`
 - status: CI_PENDING
